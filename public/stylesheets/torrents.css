@@ -1,0 +1,157 @@
+body {
+  background: #151515 url(http://images.apple.com/macbookpro/images/backgroundbody20060109.jpg) repeat-x scroll left top; 
+  color: #a1a5a9;
+  text-align: center;
+  margin-top: 0;
+  font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
+  width: 70%
+}
+
+body>div {
+  padding: 10px;
+}
+
+#header {
+  position: float;
+  float: left;
+  width: 70%;
+  text-align: left;
+  background: black;
+  color: white;
+}
+
+#group_selector {
+  position: float;
+  float: left;
+  width: 70%;
+  text-align: left;
+  background: black;
+  color: white;
+}
+
+#content {
+  position: float;
+  float: left;
+  width: 70%;
+  text-align: left;
+  background: black;
+  color: white;
+}
+
+#torrent {
+  float: left;
+  width: 450px;
+  text-align: left;
+}
+
+#sidebar {
+  float: top;
+  width: 180px;
+  text-align: center;
+}
+
+#sidebar>div {
+  margin: 10px;
+  padding: 5px;
+  border: thin solid gray;
+}
+
+
+
+#header div.box {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#header h1 {
+  font: 23px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
+  color: #666666;
+  font-weight: bold;
+  display: inline;
+}
+
+#header h2 {
+   position: absolute;
+   right: 10px;
+   display: inline;
+}
+
+#header ul.nav {
+ display: inline;
+}
+
+#header ul.nav>li{
+	display: table-cell;
+	position: relative;
+	padding: 2px 9px;
+}
+
+#header a {text-decoration: none; color: #666; font-size: 11px; font-weight: bold;}
+#header a:hover {color: #444;}
+
+
+.percent_container {
+  position: relative;
+  left: 3px;
+  right: 13px;
+  width: 98%;
+  height: 12px;
+  background: black;
+  border: 1px solid #888888;
+  padding: 0;
+} 
+
+.percent_bar {
+  height:10px; 
+  margin: 1;
+  padding: 0;
+  background: #666666;
+  text-align: center;
+}
+
+span.percent {
+  display: inline;
+   text-align: center;
+  font-size: 8px;
+}
+
+#group_selector ul {
+  display: inline;
+  padding-left: 1em;
+  margin-left: 0px;
+}
+
+#group_selector ul>li {
+  list-style: none;
+  display: inline;
+  border: 1px solid white;
+  padding: 4px;
+  margin-right: 3px;
+  background-color: #a1a5a9;
+  color:  black;
+ }
+
+#group_selector li>a {
+  color:  black;
+}
+
+#content table {
+  font-size: 100%;
+}
+
+#content table tr td {
+  padding: 0.3em;
+}
+
+
+#watchlist>div {
+  padding: 5px;
+  margin: 5px;
+  background: #333;
+}
+#watchlist>div,
+#watchlist>div h3 {
+  font-size: 50%;
+}

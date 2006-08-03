@@ -1,0 +1,10 @@
+<h1>User Settings</h1>
+<% form_for :user, @user, :url => { :action => 'user_settings' }  do |f| %>
+Login: <%= f.text_field :login %><br />
+eMail: <%= f.text_field :email %><br />
+Jabber: <%= f.text_field :jabber %><br />
+notify me by Jabber: <%= f.check_box :notify_via_jabber %><br />
+watch for new Torrents <%= f.check_box :notify_on_new_torrents %>
+<br />
+<%= submit_tag "Save" %>
+<% end %>

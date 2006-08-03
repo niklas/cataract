@@ -1,0 +1,4 @@
+default:
+  type: xmpp4r
+  jid: fnord@foobar.de/penta
+  password: verysecret

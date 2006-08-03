@@ -1,0 +1,2 @@
+<h3>Watchlist for <%= current_user.login -%></h3>
+<%= render :partial => 'watchlist_item', :collection => current_user.torrents %>

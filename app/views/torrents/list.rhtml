@@ -1,0 +1,3 @@
+<%= torrent_table(%w(title progress actions), @torrents) do |t|
+  [t.short_title, progress(t), action_buttons_for(t)]
+end %>
