@@ -1,0 +1,2 @@
+page[:actions].update render(:partial => 'form')
+page[:actions].visual_effect :toggle_slide

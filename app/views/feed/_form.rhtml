@@ -1,0 +1,4 @@
+<% form_for :feed, @feed, :url => { :action => 'create' } do |f| %>
+URL:   <%= f.text_field :url %> <br />
+Title: <%= f.text_field :title %> <br />
+<% end %>
