@@ -12,7 +12,6 @@ body>div {
 }
 
 #header {
-  position: float;
   float: left;
   width: 70%;
   text-align: left;
@@ -21,7 +20,6 @@ body>div {
 }
 
 #group_selector {
-  position: float;
   float: left;
   width: 70%;
   text-align: left;
@@ -30,7 +28,6 @@ body>div {
 }
 
 #content {
-  position: float;
   float: left;
   width: 70%;
   text-align: left;
@@ -45,7 +42,7 @@ body>div {
 }
 
 #sidebar {
-  float: top;
+  float: right;
   width: 180px;
   text-align: center;
 }
