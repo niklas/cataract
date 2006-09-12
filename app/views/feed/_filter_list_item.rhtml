@@ -1,0 +1,5 @@
+<% @filter = filter_list_item if filter_list_item %>
+<li id="filter_<%= @filter.id -%>">
+  <%= in_place_editor_field(:filter, :expression) %>
+  <%= link_to_remote "delete", :url => { :action => 'delete_filter', :id => @filter.id } %>
+</li>

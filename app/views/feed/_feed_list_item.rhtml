@@ -1,4 +1,6 @@
 <li>
-<%= feed_list_item.title -%>:
+<%= link_to feed_list_item.title, :action => 'show', :id => feed_list_item.id -%>:
 <%= feed_list_item.url-%>
+&nbsp;
+(<%= pluralize feed_list_item.filters_count, 'filter' %>)
 </li>

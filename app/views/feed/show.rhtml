@@ -1,0 +1,14 @@
+<h1>Feed [<%= @feed.id -%>]</h1>
+<b>URL:</b>   <%= in_place_editor_field :feed, :url %> <br />
+<b>Title:</b> <%= in_place_editor_field :feed, :title %> <br />
+
+<h2>Filters</h2>
+<ul id="filter_list">
+  <%= render :partial => 'filter_list_item', :collection => @feed.filters %>
+</ul>
+<%= link_to_remote 'add filter', :url => { :action => 'new_filter', :feed => @feed.id } %>
+
+<h2>Items</h2>
+<ul id="feed_items">
+  <%= render :partial => 'feed_item', :collection => @feed.items %>
+</ul>

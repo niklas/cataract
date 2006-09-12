@@ -1,2 +1,1 @@
-page[:actions].update render(:partial => 'form')
-page[:actions].visual_effect :toggle_slide
+page.insert_html :top, :feed_list, render(:partial => 'form')

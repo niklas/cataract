@@ -1,4 +1,10 @@
-<% form_for :feed, @feed, :url => { :action => 'create' } do |f| %>
-URL:   <%= f.text_field :url %> <br />
-Title: <%= f.text_field :title %> <br />
+<% remote_form_for :feed, @feed, :html => {:id => 'feed_form' }, :url => { :action => 'create' }  do |f| %>
+<%= error_messages_for :feed %>
+URL:   <%= f.text_field :url %>
+<%= submit_tag "type url", :id => 'add_button' %>
+<%= observe_field "feed_url", 
+  :url => { :action => 'check' },
+  :with => 'url',
+  :frequency => 5
+%>
 <% end %>
