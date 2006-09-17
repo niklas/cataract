@@ -5,6 +5,7 @@ module ConfigHelper
     (help ? content_tag('div', help, {:class => 'help'}) : '') +
     in_place_editor(name,
       :url => { :action => 'save_setting', :var => name },
-      :rows => 1, :cols => 42)
+      :rows => 1, :cols => 42,
+      :submit_on_blur => true)
   end
 end
