@@ -152,3 +152,36 @@ span.percent {
 #watchlist>div h3 {
   font-size: 50%;
 }
+
+.editfield
+{
+  background-color: rgb(20,20,20) !important;
+  color: rgb(200,200,200);
+}
+
+.editfield:hover {
+  background-color: rgb(200,42,20) !important;
+  color: rgb(200,240,200);
+}
+
+form.inplaceeditor-form {
+  display: inline;
+}
+
+form.inplaceeditor-form input[type=text] {
+  background-color: rgb(42,42,42) !important;
+  color: rgb(200,200,200);
+  border: none;
+}
+
+#content p {
+  position: relative;
+}
+
+div.help {
+  font-size: 60%;
+  margin: 0.3em 0 0.2em 5em;
+  padding: 0.7em;
+  background-color: rgb(42,42,42);  
+}
+

@@ -5,6 +5,15 @@ class ConfigController < ApplicationController
   def settings
   end
 
+  def save_setting
+    var = params[:var]
+    value = params[:value]
+    if var && value
+      Settings[var] = value
+    end
+    render :text => Settings[var]
+  end
+
   def user_settings
     if request.post?
       current_user.update_attributes(params[:user])
