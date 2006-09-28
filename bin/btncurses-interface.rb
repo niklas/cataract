@@ -99,6 +99,7 @@ class BTCurses
     statusmsg = status_for(torrent)
     Ncurses.wattron(@c,Ncurses::A_BOLD)
     thing = @view_filename ? torrent.filename : torrent.short_title
+    thing.gsub! /%/, '%%'
     Ncurses.mvwprintw(@c,pos,2,thing)
 
     Ncurses.wattroff(@c,Ncurses::A_BOLD)
