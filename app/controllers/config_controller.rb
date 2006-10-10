@@ -2,6 +2,8 @@ class ConfigController < ApplicationController
   before_filter :login_required
   layout "torrents"
 
+  helper :torrents
+
   def settings
   end
 
