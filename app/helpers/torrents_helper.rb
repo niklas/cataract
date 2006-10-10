@@ -46,11 +46,11 @@ module TorrentsHelper
   end
 
   def button(t,action)
-      link_to_remote(image_tag(action), :url => {:action => action, :id => t.id })
+      link_to_remote(image_tag("buttons/#{action}"), :url => {:action => action, :id => t.id })
   end
 
   def watchbutton(t)
-    link_to_remote image_tag('watch'),
+    link_to_remote image_tag('buttons/watch'),
       :url => { :action => 'watch', :id => t.id},
       :update => { :success => 'watchlist'}
   end
@@ -62,7 +62,6 @@ module TorrentsHelper
   end
 
   def torrent_table(headings,torrents)
-    even = true
     if torrents and !torrents.empty?
       content_tag('table', 
         content_tag('tr', headings.collect { |h| 
@@ -72,7 +71,7 @@ module TorrentsHelper
           even = !even
           content_tag('tr', yield(t).collect { |d| 
             content_tag('td', d )
-          }.to_s, {:class => even ? 'even_row' : 'odd_row', :id => "torrent_#{t.id}" })
+          }.to_s, {:class => cycle("even", "odd"), :id => "torrent_#{t.id}" })
         }.to_s
       )
     else
@@ -81,7 +80,7 @@ module TorrentsHelper
   end
 
   def details_remote_link(t,caption=nil)
-    link_to_remote image_tag("details"),
+    link_to_remote image_tag("buttons/details"),
       :update => 'torrent',
       :url => { :action => 'show', :id => t.id }
   end
