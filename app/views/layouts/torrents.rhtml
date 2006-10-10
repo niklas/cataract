@@ -37,11 +37,9 @@
 
   <div id="sidebar">
 
-    <% if flash[:notice] %>
     <div id="notice">
       <%= flash[:notice] %>
     </div>
-    <% end %>
 
     <% if @controller.controller_name == 'torrents' %>
     <%= periodically_call_remote :update => 'summary',
