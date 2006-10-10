@@ -6,57 +6,57 @@
   </head>
   <body>
 
-   <div id="header">
-    <div class="box">
-      <h1><%= @page_title -%></h1>
-      <h2>
-        <ul class="nav">
-        <li><a href="foo">Add single Torrent</a></li>
-        <li><%= link_to 'Feeds', :controller => 'feed' %></li>
-        </ul>
-      </h2>
+  <div id="header" onmouseover="MenuHovered()" onmouseout="MenuUnhovered()">
+    <%= image_tag('cataract', :class => 'logo', :onlick => "new Effect.SlideUp('actions')") %>
+    <%= image_tag('layout/corner_left', :style => 'float:left') %>
+    <%= image_tag('layout/corner_right', :style => 'float:right') %>
+	 <div id="actions" style="display:none">
+	   <ul>
+	     <li><a href="#">Add single Torrent</a></li>
+	     <li><a href="#">Add Torrent Feed</a></li>
+      </ul>
     </div>
-    <hr style="background-color: #2b2b2b; height: 1px; border: 0 none;" />
   </div>
 
-  <div id="group_selector">
-    <ul>
-      <li><%= link_to "Running", :action => 'running', :controller => 'torrents' -%></li>
-      <li><%= link_to "Paused", :action => 'paused' , :controller => 'torrents'-%></li>
-      <li><%= link_to "History", :action => 'history' , :controller => 'torrents'-%></li>
-      <li><%= link_to "invalid", :action => 'invalid' , :controller => 'torrents'-%></li>
+  <div id="main">
+    <ul id="groups">
+      <%= group_link('running') %>
+      <%= group_link('paused') %>
+      <%= group_link('history') %>
+      <%= group_link('invalid') %>
       <li><%= link_to "my settings", :action => 'user_settings' , :controller => 'config'-%></li>
+      <li id="menustatus">blubb</li>
     </ul>
-  </div>
-
-  <div id="content">
-    <%= @content_for_layout %>
-  </div>
-
-  <div id="torrent"></div>
-
-  <div id="sidebar">
 
     <div id="notice">
       <%= flash[:notice] %>
     </div>
 
-    <% if @controller.controller_name == 'torrents' %>
-    <%= periodically_call_remote :update => 'summary',
-      :frequency => 42,
-      :url => {:action => 'summary'} %>
     <div id="summary">
-        <%= render 'torrents/summary' %>
+        <%= render '/torrents/summary' %>
     </div>
-    <%= periodically_call_remote :update => 'watchlist',
-      :frequency => 42,
-      :url => {:action => 'watchlist'} %>
+
+    <div id="content">
+      <%= yield  %>
+    </div>
+
     <div id="watchlist">
-      <%= render :partial => 'watchlist' %>
+      <%= render :partial => '/torrents/watchlist' %>
     </div>
-    <% end %>
 
   </div>
+
+
+  <% if false && @controller.controller_name == 'torrents' %>
+  <%= periodically_call_remote :update => 'summary',
+    :frequency => 42,
+    :url => {:action => 'summary'} %>
+
+  <%= periodically_call_remote :update => 'watchlist',
+    :frequency => 42,
+    :url => {:action => 'watchlist'} %>
+  <% end %>
+
 
   </body>
 </html>

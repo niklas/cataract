@@ -1,167 +1,222 @@
 body {
-  background: #151515 url(http://images.apple.com/macbookpro/images/backgroundbody20060109.jpg) repeat-x scroll left top; 
-  color: #a1a5a9;
-  text-align: center;
-  margin-top: 0;
   font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
-  width: 70%
+  margin: 0;
+  padding: 0 10px;
+  text-align: center;
+  background-color: #34363b;
+  color: white;
 }
 
-body>div {
-  padding: 10px;
+img {
+  border: none;
 }
 
 #header {
-  float: left;
-  width: 70%;
-  text-align: left;
-  background: black;
-  color: white;
+  position: absolute;
+  top: 0;
+  left: 5%;
+  width: 90%;
+  height: 100px;
+  color: #666; 
+  font-weight: bold;
+  text-align: center;
+  background: url(../images/layout/header_background.png) top repeat-x;
+  z-index: 2;
 }
 
-#group_selector {
-  float: left;
-  width: 70%;
-  text-align: left;
-  background: black;
-  color: white;
+#actions {
+  position: absolute;
+  top: 30px;
+  left: 5%;
+  height: 70px;
+  width: 90%;
+  text-align: center;
+  z-index: 3;
 }
+
+#actions > ul {
+  margin: 0 auto;
+  padding: 50px 5px 5px 5px;
+  width: 790px;
+  height: 15px;
+  color: white;
+  background: url(../images/layout/actions.png);
+}
+
+#actions > ul > li {
+  display: inline;
+  position: relative;
+  padding: 0 0.7em;
+  margin: 0;
+}
+
+#actions > ul > li > a {
+  text-decoration: none; 
+  color: #666; 
+  font-weight: bold;
+}
+
+#actions > ul > li > a:hover {
+  color: #444;
+}
+
+#header > img.logo {
+  float: none !important;
+  margin: 0 auto;
+  padding: 0 0 0 4px;
+}
+
+#header > img {
+  margin: -60px 0 0 0;
+
+}
+
+#main {
+  margin: 125px auto;
+  padding: 0;
+  width: 90%;
+  text-align: left;
+  background-color: inherit;
+}
+
+#content > table {
+  width: 100%;
+  padding: 0 23px 0 2px;
+}
+
+#content > table tr {
+  height: 1.6em;
+}
+
+#content > table th {
+  background: #444;
+}
+
+#content > table tr.even {
+  background-color: #34413C;
+}
+
+#content > table tr.odd {
+  background-color: #343c41;
+}
+
 
 #content {
+  padding: 0 20px 0 -20px;
+  margin: 0;
   float: left;
   width: 70%;
-  text-align: left;
-  background: black;
-  color: white;
+  background: url(../images/layout/left.png) left repeat-y;
+  background-color: inherit;
 }
 
-#torrent {
+#content > * {
+  margin: 10px 23px;
+}
+
+#content:before {
+  display: block;
+  line-height: 0;
+  background: url(../images/layout/top.png) top right repeat-x;
+  content: url(../images/layout/top_left.png);
+}
+
+#content:after {
+  display: block;
+  margin-top: 10em;
+  line-height: 0;
+  background: url(../images/layout/bottom.png) top right repeat-x;
+  content: url(../images/layout/bottom_left.png);
+}
+
+#watchlist {
   float: left;
-  width: 450px;
+  padding: 0 !important;
+  width: 15%;
+  margin: 0 !important; 
+  background: url(../images/layout/right.png) right repeat-y;
+}
+
+#watchlist:before {
+  text-align: right;
+  display: block;
+  line-height: 0;
+  background: url(../images/layout/top.png) top right repeat-x;
+  content: url(../images/layout/top_right.png);
+}
+
+#watchlist > * {
+  margin: 15px 15px 5px 15px;
+}
+
+#watchlist:after {
+  text-align: right;
+  display: block;
+  line-height: 0;
+  background: url(../images/layout/bottom.png) top right repeat-x;
+  content: url(../images/layout/bottom_right.png);
+}
+
+
+#groups {
+  margin: 52px 0 0 0;
+  padding: 0;
+  width: 10%;
+  float: left;
+  text-align: right;
+  background: #34363b url(../images/layout/left.png) left repeat-y;
+}
+
+#groups:before {
   text-align: left;
+  display: block;
+  line-height: 0;
+  content: url(../images/layout/border_top.png);
 }
 
-#sidebar {
-  float: right;
-  width: 180px;
-  text-align: center;
+#groups:after {
+  text-align: left;
+  display: block;
+  line-height: 0;
+  content: url(../images/layout/border_bottom.png);
 }
 
-#sidebar>div {
-  margin: 10px;
-  padding: 5px;
-  border: thin solid gray;
+#groups > li {
+  padding: 2px 5px 2px 1px;
+  margin: 0;
+  list-style: none;
 }
 
-
-
-#header div.box {
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+#groups > li > a {
+  color: white;
+  text-decoration: none;
 }
 
-#header h1 {
-  font: 23px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
-  color: #666666;
+#groups > li.active  {
   font-weight: bold;
-  display: inline;
 }
 
-#header h2 {
-   position: absolute;
-   right: 10px;
-   display: inline;
-}
-
-#header ul.nav {
- display: inline;
-}
-
-#header ul.nav>li{
-	display: table-cell;
-	position: relative;
-	padding: 2px 9px;
-}
-
-#header a {text-decoration: none; color: #666; font-size: 11px; font-weight: bold;}
-#header a:hover {color: #444;}
-
-
-.percent_container {
-  position: relative;
-  left: 3px;
-  right: 13px;
-  width: 98%;
-  height: 12px;
-  background: black;
-  border: 1px solid #888888;
-  padding: 0;
-} 
-
-.percent_bar {
-  height:10px; 
-  margin: 1;
-  padding: 0;
-  background: #666666;
+#summary {
+  margin: 5px auto;
   text-align: center;
+}
+
+#summary > b {
+  margin-left: 0.7em;
+}
+
+div.percent_container {
+  border: 1px solid #222222;
+  padding: 1px;
+  text-align: center;
+}
+
+div.percent_bar {
+  background: #444;
 }
 
 span.percent {
-  display: inline;
-   text-align: center;
-  font-size: 8px;
-}
-
-#group_selector ul {
-  display: inline;
-  padding-left: 1em;
-  margin-left: 0px;
-}
-
-#group_selector ul>li {
-  list-style: none;
-  display: inline;
-  border: 1px solid white;
-  padding: 4px;
-  margin-right: 3px;
-  background-color: #a1a5a9;
-  color:  black;
- }
-
-#group_selector li>a {
-  color:  black;
-}
-
-#content table {
-  font-size: 100%;
-}
-
-#content table tr td {
-  padding: 0.3em;
-}
-
-
-#watchlist>div {
-  padding: 5px;
-  margin: 5px;
-  background: #333;
-}
-#watchlist>div,
-#watchlist>div h3 {
-  font-size: 50%;
-}
-
-.editfield
-{
-  background-color: rgb(20,20,20) !important;
-  color: rgb(200,200,200);
-}
-
-.editfield:hover {
-  background-color: rgb(200,42,20) !important;
-  color: rgb(200,240,200);
+  font-size: 80%;
 }
 
 form.inplaceeditor-form {
@@ -173,15 +228,3 @@ form.inplaceeditor-form input[type=text] {
   color: rgb(200,200,200);
   border: none;
 }
-
-#content p {
-  position: relative;
-}
-
-div.help {
-  font-size: 60%;
-  margin: 0.3em 0 0.2em 5em;
-  padding: 0.7em;
-  background-color: rgb(42,42,42);  
-}
-
