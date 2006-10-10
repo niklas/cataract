@@ -46,7 +46,7 @@ module TorrentsHelper
   end
 
   def button(t,action)
-      link_to(image_tag(action), {:action => action, :id => t.id })
+      link_to_remote(image_tag(action), :url => {:action => action, :id => t.id })
   end
 
   def watchbutton(t)
@@ -72,7 +72,7 @@ module TorrentsHelper
           even = !even
           content_tag('tr', yield(t).collect { |d| 
             content_tag('td', d )
-          }.to_s, {:class => even ? 'even_row' : 'odd_row' })
+          }.to_s, {:class => even ? 'even_row' : 'odd_row', :id => "torrent_#{t.id}" })
         }.to_s
       )
     else

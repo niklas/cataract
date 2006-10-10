@@ -36,8 +36,8 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @torrent.archive
     if @torrent.save
-      flash[:notice] = @torrent.short_title + " was moved to history"
-      redirect_to :action => :history
+      @notice = @torrent.short_title + " was moved to history"
+      render :partial => 'remove', :object => @torrent
     end
   end
 
@@ -45,8 +45,8 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @torrent.pause
     if @torrent.save
-      flash[:notice] = @torrent.short_title + " has been paused"
-      redirect_to :action => :paused
+      @notice = @torrent.short_title + " has been paused"
+      render :partial => 'remove', :object => @torrent
     end
   end
 
@@ -54,8 +54,8 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @torrent.start
     if @torrent.save
-      flash[:notice] = @torrent.short_title + " has been started for transfer"
-      redirect_to :action => :running
+      @notice = @torrent.short_title + " has been started for transfer"
+      render :partial => 'remove', :object => @torrent
     end
   end
 
