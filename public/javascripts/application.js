@@ -4,21 +4,21 @@ var show_menu = false;
 var menu_ani = false;
 var observer = false;
 function MenuHovered() {
-   $('menustatus').innerHTML = 'hovered';
+//   $('menustatus').innerHTML = 'hovered';
    clearTimeout(observer);
    if (!show_menu) {
       show_menu = true;
       menu_ani = new Effect.SlideDown('actions');
    }
-   $('menustatus').innerHTML = 'opened';
+//   $('menustatus').innerHTML = 'opened';
 }
 function MenuUnhovered() {
-   $('menustatus').innerHTML = 'unhovered';
+//   $('menustatus').innerHTML = 'unhovered';
    observer = setTimeout(function() {
-      $('menustatus').innerHTML = 'closing';
+//      $('menustatus').innerHTML = 'closing';
       show_menu = false;
       menu_ani = new Effect.SlideUp('actions');
-      $('menustatus').innerHTML = 'closed';
+//      $('menustatus').innerHTML = 'closed';
    }, 1000);
 }
 
