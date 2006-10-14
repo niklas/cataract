@@ -31,7 +31,7 @@ img {
   height: 70px;
   width: 90%;
   text-align: center;
-  z-index: 3;
+  z-index: 1;
 }
 
 #actions > ul {
@@ -60,10 +60,18 @@ img {
   color: #444;
 }
 
-#header > img.logo {
+#header > span.logo {
   float: none !important;
   margin: 0 auto;
-  padding: 0 0 0 4px;
+  padding: 0;
+  width: 800px;
+  height: 60px;
+}
+
+#header > span > img.test {
+  position: relative;
+  top: 0;
+  z-index: 3;
 }
 
 #header > img {
@@ -106,80 +114,109 @@ img {
   margin: 0;
   float: left;
   width: 70%;
-  background: url(../images/layout/left.png) left repeat-y;
-  background-color: inherit;
+  background-color: #222222;
 }
 
 #content > * {
   margin: 10px 23px;
 }
 
-#content:before {
+#content::before {
+  background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
+  margin-bottom: -20px;
+  height: 22px;
   display: block;
-  line-height: 0;
-  background: url(../images/layout/top.png) top right repeat-x;
+  border: none;
   content: url(../images/layout/top_left.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
 }
 
-#content:after {
+#content::after {
   display: block;
-  margin-top: 10em;
-  line-height: 0;
-  background: url(../images/layout/bottom.png) top right repeat-x;
-  content: url(../images/layout/bottom_left.png);
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left.png);
+  margin: 0 0 -1px 0;
+  height: 22px;
+  background: transparent url(../images/layout/bottom_right.png) scroll no-repeat bottom right ;
+  padding: 0;
+  margin-top: -20px;
 }
 
 #watchlist {
   float: left;
   padding: 0 !important;
-  width: 15%;
-  margin: 0 !important; 
-  background: url(../images/layout/right.png) right repeat-y;
-}
-
-#watchlist:before {
-  text-align: right;
-  display: block;
-  line-height: 0;
-  background: url(../images/layout/top.png) top right repeat-x;
-  content: url(../images/layout/top_right.png);
+  width: 19%;
+  margin: 0 0 0 1% !important; 
+  background: #444;
+  text-align: center;
 }
 
 #watchlist > * {
   margin: 15px 15px 5px 15px;
 }
 
-#watchlist:after {
-  text-align: right;
+#watchlist::before {
+  text-align: left;
+  background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
+  margin-bottom: -20px;
+  height: 22px;
   display: block;
-  line-height: 0;
-  background: url(../images/layout/bottom.png) top right repeat-x;
-  content: url(../images/layout/bottom_right.png);
+  border: none;
+  content: url(../images/layout/top_left.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
 }
 
+#watchlist::after {
+  text-align: left;
+  display: block;
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left.png);
+  margin: 0 0 -1px 0;
+  height: 22px;
+  background: transparent url(../images/layout/bottom_right.png) scroll no-repeat bottom right ;
+  padding: 0;
+  margin-top: -20px;
+}
 
 #groups {
-  margin: 52px 0 0 0;
+  margin: 52px 0 -22px 0;
   padding: 0;
   width: 10%;
   float: left;
   text-align: right;
-  background: #34363b url(../images/layout/left.png) left repeat-y;
+  background: #444; 
 }
 
-#groups:before {
+#groups::before {
   text-align: left;
+  margin-bottom: -20px;
+  height: 22px;
   display: block;
-  line-height: 0;
-  content: url(../images/layout/border_top.png);
+  border: none;
+  content: url(../images/layout/top_left.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
 }
 
-#groups:after {
+#groups::after {
   text-align: left;
   display: block;
-  line-height: 0;
-  content: url(../images/layout/border_bottom.png);
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left.png);
+  margin: 0 0 -1px 0;
+  height: 22px;
+  padding: 0;
+  margin-top: -20px;
 }
+
 
 #groups > li {
   padding: 2px 5px 2px 1px;
@@ -195,6 +232,7 @@ img {
 #groups > li.active  {
   font-weight: bold;
 }
+
 
 #summary {
   margin: 5px auto;
