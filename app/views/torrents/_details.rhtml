@@ -1,0 +1,10 @@
+<tr id="details_for_<%= details.id-%>" class="details">
+  <td colspan="4">
+    <div>
+    <b>full path:</b> <%= details.fullpath %><br />
+    <b>Transferred (down/up):</b> <%= human_transfer(@torrent.transferred_down) -%>/s - <%= human_transfer(@torrent.transferred_up) -%>/s<br />
+    <b>Peers:</b> <%= @torrent.peers -%> &nbsp; <b>Seeds:</b> <%= @torrent.seeds -%><br />
+    <b>distributed copies:</b> <%= @torrent.distributed_copies %><br />
+    </div>
+  </td>
+</tr>

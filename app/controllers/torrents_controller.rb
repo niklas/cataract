@@ -61,7 +61,10 @@ class TorrentsController < ApplicationController
 
   def show
     @torrent = Torrent.find(params[:id])
-    render :layout => false
+
+    respond_to do |want|
+      want.js
+    end
   end
 
   def edit

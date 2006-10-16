@@ -104,12 +104,15 @@ img {
   background-color: #333;
 }
 
+#content > table tr.details > td > div  {
+  overflow: auto;
+  font-size: 80%;
+}
 div.percent_container {
   border: 1px solid #222222;
   padding: 1px;
   text-align: center;
 }
-
 #content > table tr.even div.percent_bar {
   background: #333;
 }

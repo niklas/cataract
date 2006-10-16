@@ -42,7 +42,7 @@ module TorrentsHelper
       "[WTF: status #{t.status}]"
     end +
     watchbutton(t) +
-    details_remote_link(t,'details')
+    details_remote_link(t)
   end
 
   def button(t,action)
@@ -80,8 +80,8 @@ module TorrentsHelper
   end
 
   def details_remote_link(t,caption=nil)
-    link_to_remote image_tag("buttons/details"),
-      :update => 'torrent',
+    caption ||= image_tag("buttons/details")
+    link_to_remote caption,
       :url => { :action => 'show', :id => t.id }
   end
 end
