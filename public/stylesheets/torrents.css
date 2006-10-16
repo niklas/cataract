@@ -1,10 +1,12 @@
 body {
   font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
   margin: 0;
-  padding: 0 10px;
+  padding: 0;
   text-align: center;
   background-color: #34363b;
   color: white;
+  scroll: none;
+  height: 100%;
 }
 
 img {
@@ -79,19 +81,10 @@ img {
 
 }
 
-#main {
-  margin: 125px auto;
-  padding: 0;
-  width: 90%;
-  text-align: left;
-  background-color: inherit;
-}
-
-
 #content > table {
   width: 97%;
   padding: 0;
-  margin: 5px auto 400px auto;
+  margin: 5px auto;
   font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
   text-align: center;
 }
@@ -130,11 +123,15 @@ span.percent {
 }
 
 #content {
-  padding: 0 20px 0 -20px;
-  margin: 0;
+  position: absolute;
+  left: 10%;
+  bottom: 0;
+  top: 125px;
+  height: auto; 
   float: left;
   width: 70%;
   background-color: #222222;
+  overflow: hidden;
 }
 
 #content > * {
@@ -142,32 +139,23 @@ span.percent {
 }
 
 #content::before {
-  text-align: right;
+  text-align: left;
   background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
   margin-bottom: -20px;
   height: 22px;
   display: block;
   border: none;
-  content: url(../images/layout/top_right.png);
+  content: url(../images/layout/top_left.png);
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
-}
-
-#content::after {
-  display: block;
-  line-height: 0.1;
-  font-size: 1px;
-  content:  url(../images/layout/bottom_left.png);
-  margin: 0 0 -1px 0;
-  height: 22px;
-  padding: 0;
-  margin-top: -20px;
 }
 
 #watchlist {
-  float: right;
-  padding: 0 !important;
+  position: absolute;
+  bottom: 0;
+  right: 0; 
+  top: 223px;
   width: 19%;
   margin: 0 0 0 1% !important; 
   background: inherit;
@@ -189,7 +177,7 @@ div.watchlist_item {
 }
 
 div.watchlist_item img {
-  padding: 1px 0 0 2px;
+  padding: 5px 0 0 15px;
   white-space: nowrap;
   text-align: left;
   float: left;
@@ -199,14 +187,18 @@ div.watchlist_item > h1 {
   font-weight: bold;
   font-size: 10px;
   padding: 2px;
-  margin: 0 15px 5px 0;
+  margin: 0 2px 5px 0;
   white-space: nowrap;
-  text-align: left;
+  text-align: right;
   overflow: hidden;
 }
 
+div.watchlist_item > br {
+  line-height: 0.1em;
+}
+
 div.watchlist_item > div.percent_container {
-  margin: 0 2px 2px 2px;
+  margin: 0 2px 2px 15px;
 }
 
 div.watchlist_item > div.percent_bar {
@@ -215,13 +207,13 @@ div.watchlist_item > div.percent_bar {
 
 
 div.watchlist_item::before {
-  text-align: right;
-  background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
+  text-align: left;
+  background: transparent url(../images/layout/top_left.png) scroll no-repeat top left;
   margin-bottom: -20px;
   height: 22px;
   display: block;
   border: none;
-  content: url(../images/layout/top_right.png);
+  content: url(../images/layout/top_left.png);
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
@@ -240,18 +232,18 @@ div.watchlist_item::after {
 }  
 
 #groups {
-  margin: 52px 0 -22px 0;
+  margin: 125px 1% 0 0;
   padding: 0;
-  width: 10%;
+  width: 9%;
   float: left;
-  text-align: right;
+  text-align: left;
   background: #444; 
 }
 
 #groups::before {
-  text-align: left;
+  text-align: right;
   margin-bottom: -10px;
-  content: "";
+  content: url(../images/layout/top_right.png);
   height: 22px;
   display: block;
   border: none;
@@ -261,11 +253,11 @@ div.watchlist_item::after {
 }
 
 #groups::after {
-  text-align: left;
+  text-align: right;
   display: block;
   line-height: 0.1;
   font-size: 1px;
-  content:  url(../images/layout/bottom_left.png);
+  content:  url(../images/layout/bottom_right.png);
   margin: 0 0 -1px 0;
   height: 22px;
   padding: 0;
@@ -274,7 +266,7 @@ div.watchlist_item::after {
 
 
 #groups > li {
-  padding: 2px 5px 2px 1px;
+  padding: 2px 5px 2px 5px;
   margin: 0;
   list-style: none;
 }
@@ -293,7 +285,8 @@ div.watchlist_item::after {
   float: right;
   padding: 0 !important;
   width: 19%;
-  margin: 0 0 15px 1% !important; 
+  height: 83px;
+  margin: 125px 0 15px 1% !important; 
   background: #444;
   text-align: center;
   font-size: 10px;
@@ -301,10 +294,11 @@ div.watchlist_item::after {
 }
 
 #summary > h1 {
+  text-align: right;
   font-weight: bold;
   font-size: 10px;
   padding: 2px 2px 2px 5px;
-  margin: 0 0 5px 0;
+  margin: 0 2px 5px 0;
 }
 
 #summary > b {
@@ -312,13 +306,12 @@ div.watchlist_item::after {
 }
 
 #summary::before {
-  text-align: right;
-  background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
+  text-align: left;
   margin-bottom: -20px;
   height: 22px;
   display: block;
   border: none;
-  content: url(../images/layout/top_right.png);
+  content: url(../images/layout/top_left.png);
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
