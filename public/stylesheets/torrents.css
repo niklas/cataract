@@ -87,27 +87,47 @@ img {
   background-color: inherit;
 }
 
+
 #content > table {
-  width: 100%;
-  padding: 0 23px 0 2px;
+  width: 97%;
+  padding: 0;
+  margin: 5px auto 400px auto;
+  font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
+  text-align: center;
 }
 
 #content > table tr {
-  height: 1.6em;
 }
 
 #content > table th {
-  background: #444;
+  font-size: 11px;
 }
 
 #content > table tr.even {
-  background-color: #34413C;
+  background-color: #444;
 }
 
 #content > table tr.odd {
-  background-color: #343c41;
+  background-color: #333;
 }
 
+div.percent_container {
+  border: 1px solid #222222;
+  padding: 1px;
+  text-align: center;
+}
+
+#content > table tr.even div.percent_bar {
+  background: #333;
+}
+
+#content > table tr.odd div.percent_bar {
+  background: #444;
+}
+
+span.percent {
+  font-size: 80%;
+}
 
 #content {
   padding: 0 20px 0 -20px;
@@ -118,16 +138,17 @@ img {
 }
 
 #content > * {
-  margin: 10px 23px;
+  margin: 10px auto;
 }
 
 #content::before {
+  text-align: right;
   background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
   margin-bottom: -20px;
   height: 22px;
   display: block;
   border: none;
-  content: url(../images/layout/top_left.png);
+  content: url(../images/layout/top_right.png);
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
@@ -140,38 +161,73 @@ img {
   content:  url(../images/layout/bottom_left.png);
   margin: 0 0 -1px 0;
   height: 22px;
-  background: transparent url(../images/layout/bottom_right.png) scroll no-repeat bottom right ;
   padding: 0;
   margin-top: -20px;
 }
 
 #watchlist {
-  float: left;
+  float: right;
   padding: 0 !important;
   width: 19%;
   margin: 0 0 0 1% !important; 
+  background: inherit;
+  text-align: left;
+}
+
+#watchlist > h1 {
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0;
+  margin: 5px 0 15px 0;
+}
+
+div.watchlist_item {
+  margin: 0 0 15px 0;
   background: #444;
+  font-size: 10px;
   text-align: center;
 }
 
-#watchlist > * {
-  margin: 15px 15px 5px 15px;
+div.watchlist_item img {
+  padding: 1px 0 0 2px;
+  white-space: nowrap;
+  text-align: left;
+  float: left;
 }
 
-#watchlist::before {
+div.watchlist_item > h1 {
+  font-weight: bold;
+  font-size: 10px;
+  padding: 2px;
+  margin: 0 15px 5px 0;
+  white-space: nowrap;
   text-align: left;
+  overflow: hidden;
+}
+
+div.watchlist_item > div.percent_container {
+  margin: 0 2px 2px 2px;
+}
+
+div.watchlist_item > div.percent_bar {
+  background: #333;
+}
+
+
+div.watchlist_item::before {
+  text-align: right;
   background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
   margin-bottom: -20px;
   height: 22px;
   display: block;
   border: none;
-  content: url(../images/layout/top_left.png);
+  content: url(../images/layout/top_right.png);
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
 }
 
-#watchlist::after {
+div.watchlist_item::after {
   text-align: left;
   display: block;
   line-height: 0.1;
@@ -179,9 +235,9 @@ img {
   content:  url(../images/layout/bottom_left.png);
   margin: 0 0 -1px 0;
   height: 22px;
-  background: transparent url(../images/layout/bottom_right.png) scroll no-repeat bottom right ;
   padding: 0;
-}
+  margin-top: -17px;
+}  
 
 #groups {
   margin: 52px 0 -22px 0;
@@ -194,11 +250,11 @@ img {
 
 #groups::before {
   text-align: left;
-  margin-bottom: -20px;
+  margin-bottom: -10px;
+  content: "";
   height: 22px;
   display: block;
   border: none;
-  content: url(../images/layout/top_left.png);
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
@@ -213,7 +269,7 @@ img {
   margin: 0 0 -1px 0;
   height: 22px;
   padding: 0;
-  margin-top: -20px;
+  margin-top: -10px;
 }
 
 
@@ -234,26 +290,50 @@ img {
 
 
 #summary {
-  margin: 5px auto;
+  float: right;
+  padding: 0 !important;
+  width: 19%;
+  margin: 0 0 15px 1% !important; 
+  background: #444;
   text-align: center;
+  font-size: 10px;
+  text-align: left;
+}
+
+#summary > h1 {
+  font-weight: bold;
+  font-size: 10px;
+  padding: 2px 2px 2px 5px;
+  margin: 0 0 5px 0;
 }
 
 #summary > b {
-  margin-left: 0.7em;
+  margin-left: 15px;
 }
 
-div.percent_container {
-  border: 1px solid #222222;
-  padding: 1px;
-  text-align: center;
+#summary::before {
+  text-align: right;
+  background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
+  margin-bottom: -20px;
+  height: 22px;
+  display: block;
+  border: none;
+  content: url(../images/layout/top_right.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
 }
 
-div.percent_bar {
-  background: #444;
-}
-
-span.percent {
-  font-size: 80%;
+#summary::after {
+  text-align: left;
+  display: block;
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left.png);
+  margin: 0 0 -1px 0;
+  height: 22px;
+  padding: 0;
+  margin-top: -15px;
 }
 
 form.inplaceeditor-form {

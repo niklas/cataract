@@ -31,18 +31,16 @@
       <%= flash[:notice] %>
     </div>
 
-    <div id="summary">
-        <%= render '/torrents/summary' %>
-    </div>
-
     <div id="content">
       <%= yield  %>
     </div>
-
+    
+    <div id="summary">
+      <%= render '/torrents/summary' %>
+    </div>
     <div id="watchlist">
       <%= render :partial => '/torrents/watchlist' %>
     </div>
-
   </div>
 
 
