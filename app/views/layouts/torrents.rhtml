@@ -45,15 +45,13 @@
     </div>
 
 
-  <% if false && @controller.controller_name == 'torrents' %>
   <%= periodically_call_remote :update => 'summary',
     :frequency => 42,
-    :url => {:action => 'summary'} %>
+    :url => {:action => 'summary', :controller => 'torrents'} %>
 
   <%= periodically_call_remote :update => 'watchlist',
     :frequency => 42,
-    :url => {:action => 'watchlist'} %>
-  <% end %>
+    :url => {:action => 'watchlist', :controller => 'torrents'} %>
 
 
   </body>
