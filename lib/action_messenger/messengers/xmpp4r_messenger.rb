@@ -22,11 +22,26 @@ module ActionMessenger
      
         self.connect
         
-        @client.on_exception do |ex|
-          sleep 5
-          log "exception caught: #{e.exception}" 
-          @client.reconnect
-        end
+        @client.on_exception do |ex,client,action|
+          log "exception caught: #{ex.exception},#{client},#{action}" 
+          case ex
+          when Errno::EPIPE
+            log "broken pipe while #{action}"
+            log "stopped sending"
+            client.fd.close
+            sleep 5
+            #log "reconnecting..."
+            #self.reconnect
+          when IOError
+            log "ioerror: #{ex.exception},#{client} while #{action}"
+            sleep 5
+            #log "reconnecting..."
+            #self.reconnect
+          else
+            log "exception caught: #{ex.exception},#{client} while #{action}"
+          end
+          #self.shutdown
+        end if @client
 
         @client.add_message_callback do |jabber_message|
           message = ActionMessenger::Message.new
