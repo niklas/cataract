@@ -303,7 +303,7 @@ class Torrent < ActiveRecord::Base
   def notify_users_and_add_it
     User.find_all_by_notify_on_new_torrents(true).each do |user|
       Notifier.send_new(user,self) if user.notifiable_via_jabber?
-      user.watch(self)
+      user.watch(self) unless user.dont_watch_new_torrents?
     end
   end
 end
