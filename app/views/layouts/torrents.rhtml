@@ -26,16 +26,19 @@
       <li><%= link_to "my settings", :action => 'user_settings' , :controller => 'config'-%></li>
     </ul>
 
-    <div id="notice">
-      <%= flash[:notice] %>
-    </div>
 
+
+    <div id="john_cage">
     <div id="content">
       <%= yield  %>
     </div>
-    
+    </div>
+
     <div id="summary">
       <%= render '/torrents/summary' %>
+        <div id="notice">
+      <%= flash[:notice] %>
+    </div>
     </div>
     <div id="watchlist">
       <%= render :partial => '/torrents/watchlist' %>
