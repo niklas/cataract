@@ -112,8 +112,9 @@ class BTOutputEater
         torrent.brake 
       else
         info "pausing #{filename}"
-        torrent.pause # and save last updates
+        torrent.pause if torrent.status == 'running'
       end
+      torrent.save
     else
       info "WWW: unknown torrent dropped: '#{filename}'"
     end
