@@ -277,7 +277,7 @@ class Torrent < ActiveRecord::Base
       File.open(self.fullpath, 'w') do |file|
         file.write resp.body
       end
-      self.start
+      self.status='running'
       self.save
       return self
     else
