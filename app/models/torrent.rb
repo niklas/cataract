@@ -179,6 +179,7 @@ class Torrent < ActiveRecord::Base
     {
       'archived' => File.join(Settings.history_dir, filename),
       'paused'   => File.join(Settings.torrent_dir, filename) + '.paused',
+      'fetching' => File.join(Settings.torrent_dir, filename) + '.fetching',
       'running'  => File.join(Settings.torrent_dir, filename)
     }
   end
@@ -246,15 +247,42 @@ class Torrent < ActiveRecord::Base
   def fetchable?
     uri = URI.parse(url)
     resp = Net::HTTP.get_response(uri)
-    if resp.is_a?(Net::HTTPSuccess) and resp['content-type'] =~ /torrent/
-      return true
+    if resp.is_a?(Net::HTTPSuccess) and resp.content_type == "application/x-bittorrent"
+      return resp
     else
       errors.add :url, "Code: #{resp.code}, Content-type: #{resp['content-type']}"
       return false
     end
-  rescue URI::InvalidURIError,NoMethodError,SocketError
-    errors.add :url, 'is not valid'
+  rescue URI::InvalidURIError
+    errors.add :url, "is not valid (#{uri.to_s})"
     return false
+  rescue NoMethodError,SocketError
+    errors.add :url, "is invalid (#{uri.to_s})"
+    return false
+  end
+
+  def fetch
+    if resp = fetchable?
+      unless self.filename
+        if cdis = resp['content-disposition']
+          self.filename = cdis.sub(/^.*filename=(.+)$/,'\1')
+          self.filename.sub! /^"+/, ''
+          self.filename.sub! /"+$/, ''
+        else
+          self.filename = self.url.sub(/.*\//,'')
+        end
+        self.filename += '.torrent' unless self.filename =~ /\.torrent$/
+      end
+      write_attribute(:status, 'fetching')
+      File.open(self.fullpath, 'w') do |file|
+        file.write resp.body
+      end
+      self.start
+      self.save
+      return self
+    else
+      return false
+    end
   end
 
   attr_accessor :url
