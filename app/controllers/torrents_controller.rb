@@ -123,6 +123,14 @@ class TorrentsController < ApplicationController
   end
 
   def create
+    @torrent = Torrent.new(params[:torrent])
+    if @torrent.fetch
+      render :update do |page|
+        page[:checked_url].update "Torrent fetched: #{@torrent.filename}"
+      end
+    else
+      render :partial => 'probe_fail'
+    end
   end
 
   private

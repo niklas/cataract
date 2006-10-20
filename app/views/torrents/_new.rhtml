@@ -1,9 +1,11 @@
-<% remote_form_for :torrent, @torrent, :url => {:controller => 'torrents', :action => 'create'} do |f| %>
+<% remote_form_for :torrent, @torrent, 
+      :url => {:controller => 'torrents', :action => 'create'},
+      :loading => "$$('#add_torrent_submit').each(function(value, index) { value.remove(); });Element.update('checked_url','fetching ... ')" do |f| %>
 <%= f.text_field :url, :size => 42 %>
 <% end %>
 <div id="checked_url">Please enter an URL</div>
 <%= observe_field 'torrent_url', 
-      :url => {:action => 'probe'}, 
+      :url => {:controller => 'torrents', :action => 'probe'}, 
       :loading => "$$('#add_torrent_submit').each(function(value, index) { value.remove(); });Element.update('checked_url','probing ... ')",
       :frequency => 3, 
       :with => 'url'
