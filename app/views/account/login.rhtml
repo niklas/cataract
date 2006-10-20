@@ -8,4 +8,6 @@
 <p><%= submit_tag 'Log in' %></p>
 <%= end_form_tag %>
 
+<% unless Settings.signup_forbidden %>
 No Account? then <%= link_to "Sign up", :action => 'signup' -%>
+<% end %>

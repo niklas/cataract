@@ -14,6 +14,7 @@ class AccountController < ApplicationController
   end
 
   def signup
+    redirect_to :action => 'login' if Settings.signup_forbidden
     @user = User.new(params[:user])
     return unless request.post?
     if @user.save
