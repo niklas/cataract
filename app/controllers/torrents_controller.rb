@@ -125,6 +125,7 @@ class TorrentsController < ApplicationController
   def create
     @torrent = Torrent.new(params[:torrent])
     if @torrent.fetch
+      current_user.watch(@torrent)
       render :update do |page|
         page[:checked_url].update "Torrent fetched: #{@torrent.filename}"
       end
