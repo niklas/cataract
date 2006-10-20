@@ -1,3 +1,7 @@
 target_domid = "torrent_#{@torrent.id}"
 details_domid = "details_for_#{@torrent.id}"
-page.insert_html :after, target_domid, render(:partial => '/torrents/details', :object => @torrent)
+if page[details_domid]
+  page[details_domid].remove
+else
+  page.insert_html :after, target_domid, render(:partial => '/torrents/details', :object => @torrent)
+end
