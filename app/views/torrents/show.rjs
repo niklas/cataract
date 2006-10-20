@@ -2,9 +2,10 @@ target_domid = "torrent_#{@torrent.id}"
 details_domid = "details_for_#{@torrent.id}"
 details_domid_div = details_domid + '_div'
 
-page << "if($('#{details_domid}')) {"
+page << "if($('#{details_domid_div}')) {"
 page.visual_effect :blind_up, details_domid_div, :duration => 1.3
 page.delay(2) do
+  page.remove details_domid_div
   page.remove details_domid
 end
 page << "} else { "
