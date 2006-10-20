@@ -1,5 +1,7 @@
 require 'ftools'
 require 'rubytorrent'
+require 'net/http'
+require 'uri'
 class Torrent < ActiveRecord::Base
   has_many :watchings, :dependent => true
   has_many :users, :through => :watchings
@@ -240,6 +242,22 @@ class Torrent < ActiveRecord::Base
     end
   end
 
+  # methods for external fetching
+  def fetchable?
+    uri = URI.parse(url)
+    resp = Net::HTTP.get_response(uri)
+    if resp.is_a?(Net::HTTPSuccess) and resp['content-type'] =~ /torrent/
+      return true
+    else
+      errors.add :url, "Code: #{resp.code}, Content-type: #{resp['content-type']}"
+      return false
+    end
+  rescue URI::InvalidURIError,NoMethodError,SocketError
+    errors.add :url, 'is not valid'
+    return false
+  end
+
+  attr_accessor :url
   # checks is the torrent was just finished downloading 
   # and notifies all subscripted users if this is the case
   def notify_if_just_finished
