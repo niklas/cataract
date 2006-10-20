@@ -84,4 +84,15 @@ module TorrentsHelper
     link_to_remote caption,
       :url => { :action => 'show', :id => t.id }
   end
+
+  def nice_error_messages_for(object_name, options = {})
+    options = options.symbolize_keys
+    object = instance_variable_get("@#{object_name}")
+    "Bad #{object_name.to_s.gsub("_", " ")}: " +
+    if object && !object.errors.empty?
+      object.errors.full_messages.join(', ')
+    else
+      ""
+    end
+  end
 end
