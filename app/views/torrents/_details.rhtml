@@ -5,7 +5,17 @@
     <b>Transferred (d/u):</b> <%= human_transfer(@torrent.transferred_down) -%>/s - <%= human_transfer(@torrent.transferred_up) -%>/s<br />
     <b>Peers:</b> <%= @torrent.peers -%> &nbsp; <b>Seeds:</b> <%= @torrent.seeds -%><br />
     <b>Distributed Copies:</b> <%= @torrent.distributed_copies %><br />
-    <b>Files:</b> <%= @torrent.files.join(",") %></br />
+    <b>Files:</b> 
+     
+    <% maxfiles = 7 %>
+    <% if @torrent.files.size > maxfiles %>
+    <%= content_tag('ul', @torrent.files[0...maxfiles].collect { |f| content_tag('li',f)} ) %>
+    <%= link_to_function "... #{@torrent.files.size - maxfiles} more", "Element.toggle('more_files_for_#{details.id}',this)" %>
+    <%= content_tag('ul', @torrent.files[maxfiles..-1].collect { |f| content_tag('li',f)}, 
+            {:style => 'display: none', :id => "more_files_for_#{details.id}" } ) %>
+    <% else %>
+    <%= content_tag('ul', @torrent.files.collect { |f| content_tag('li',f)} ) %>
+    <% end %>
     </div>
   </td>
 </tr>
