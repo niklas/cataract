@@ -162,6 +162,17 @@ class Torrent < ActiveRecord::Base
     File.join(Settings.target_dir,metainfo.name)
   end
 
+  # returns the current url to the content for the user
+  # the user has to specify his moutpoints for that to happen
+  def content_url(usr)
+    if status == 'archived'
+      return File.join(usr.target_dir_mountpoint,metainfo.name) if usr.target_dir_mountpoint
+    else
+      return File.join(usr.content_dir_mountpoint,metainfo.name) if usr.content_dir_mountpoint
+    end
+    return nil
+  end
+
   def finished?
     percent == 100 and statusmsg == 'seeding'
   end

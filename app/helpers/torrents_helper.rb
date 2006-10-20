@@ -95,4 +95,12 @@ module TorrentsHelper
       ""
     end
   end
+
+  def link_to_content(torrent,label='content')
+    if content_url = torrent.content_url(current_user)
+      link_to label, content_url
+    else
+      ''
+    end
+  end
 end
