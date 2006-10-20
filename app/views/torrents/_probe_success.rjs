@@ -1,0 +1,2 @@
+page[:checked_url].update "Torrent OK"
+page.insert_html :after, 'torrent_url', submit_tag('Add',:id => :add_torrent_submit)

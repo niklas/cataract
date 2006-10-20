@@ -12,7 +12,7 @@
     <%= image_tag('layout/corner_right', :style => 'float:right') %>
 	 <div id="actions" style="display:none">
 	   <ul>
-	     <li><a href="#">Add single Torrent</a></li>
+        <li><%= link_to_remote 'Add single Torrent', :url => {:action => 'new', :controller => 'torrents'} %></li>
 	     <li><a href="#">Add Torrent Feed</a></li>
       </ul>
     </div>

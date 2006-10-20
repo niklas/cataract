@@ -99,6 +99,32 @@ class TorrentsController < ApplicationController
     render :layout => false
   end
 
+  def new
+    @torrent = Torrent.new
+    respond_to do |want|
+      want.js
+    end
+  end
+
+  def probe
+    if params[:url] and !params[:url].empty?
+      @torrent = Torrent.new(:url => params[:url].strip)
+      
+      if @torrent.fetchable?
+        render :partial => 'probe_success'
+      else
+        render :partial => 'probe_fail'
+      end
+    else
+      render :update do |page|
+        page[:checked_url].update "Please enter an URL"
+      end
+    end
+  end
+
+  def create
+  end
+
   private
   def set_default_page_title
     @page_title = 'torrents'

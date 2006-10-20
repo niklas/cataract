@@ -1,0 +1,1 @@
+page[:checked_url].update nice_error_messages_for :torrent
