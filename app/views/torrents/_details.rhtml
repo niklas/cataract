@@ -1,6 +1,6 @@
 <tr id="details_for_<%= details.id-%>" class="details">
   <td colspan="4">
-    <div>
+    <div id="details_for_<%= details.id -%>_div" style="display: none">
     <b>Full Path:</b> <%= details.fullpath %><br />
     <b>Transferred (d/u):</b> <%= human_transfer(@torrent.transferred_down) -%>/s - <%= human_transfer(@torrent.transferred_up) -%>/s<br />
     <b>Peers:</b> <%= @torrent.peers -%> &nbsp; <b>Seeds:</b> <%= @torrent.seeds -%><br />

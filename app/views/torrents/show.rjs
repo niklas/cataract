@@ -1,7 +1,13 @@
 target_domid = "torrent_#{@torrent.id}"
 details_domid = "details_for_#{@torrent.id}"
-if page[details_domid]
-  page[details_domid].remove
-else
-  page.insert_html :after, target_domid, render(:partial => '/torrents/details', :object => @torrent)
+details_domid_div = details_domid + '_div'
+
+page << "if($('#{details_domid}')) {"
+page.visual_effect :blind_up, details_domid_div, :duration => 1.3
+page.delay(2) do
+  page.remove details_domid
 end
+page << "} else { "
+page.insert_html :after, target_domid, render(:partial => '/torrents/details', :object => @torrent)
+page.visual_effect :blind_down, details_domid_div, :duration => 1.3
+page << "}"
