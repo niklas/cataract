@@ -13,7 +13,7 @@
 	 <div id="actions" style="display:none">
 	   <ul>
         <li><%= link_to_remote 'Add single Torrent', :url => {:action => 'new', :controller => 'torrents'} %></li>
-	     <li><a href="#">Add Torrent Feed</a></li>
+        <li><%= link_to 'Feeds', {:controller => 'feed'} %></li>
       </ul>
     </div>
   </div>

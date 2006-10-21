@@ -1,5 +1,7 @@
 class FeedController < ApplicationController
   layout 'torrents'
+  helper :torrents
+  before_filter :login_required
   in_place_edit_for :filter, :expression
   in_place_edit_for :feed, :url
   in_place_edit_for :feed, :title
@@ -11,19 +13,23 @@ class FeedController < ApplicationController
     @feed = Feed.new
   end
 
-  def check
-    url = params[:url]
-    if Feed.avaiable(url)
+  def probe
+    @feed = Feed.new :url => params[:url]
+    if @feed.fetchable?
       render :update do |page|
+        page[:feed_title].value = @feed.title
         page[:feed_url].class = 'found'
         page[:add_button].disabled = false
         page[:add_button].value = 'add'
+        page[:error].update '' 
       end
     else
       render :update do |page|
         page[:feed_url].class = 'not_found'
         page[:add_button].disabled = true
         page[:add_button].value = 'not found'
+        page[:error].update nice_error_messages_for :feed
+        page[:feed_title].value = '' 
       end
     end
   end
@@ -44,6 +50,12 @@ class FeedController < ApplicationController
 
   def show
     @feed = Feed.find params[:id], :include => 'filters'
+  end
+
+  def delete
+    @feed = Feed.find params[:id]
+    @feed.destroy
+    redirect_to :action => 'index'
   end
 
   def new_filter

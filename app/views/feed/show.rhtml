@@ -12,3 +12,5 @@
 <ul id="feed_items">
   <%= render :partial => 'feed_item', :collection => @feed.items %>
 </ul>
+
+<%= link_to 'All Feeds', {:action => 'index'} %>

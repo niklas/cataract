@@ -1,10 +1,13 @@
 <% remote_form_for :feed, @feed, :html => {:id => 'feed_form' }, :url => { :action => 'create' }  do |f| %>
-<%= error_messages_for :feed %>
+<div id="error"><%= nice_error_messages_for :feed %></div>
 URL:   <%= f.text_field :url %>
 <%= submit_tag "type url", :id => 'add_button' %>
 <%= observe_field "feed_url", 
-  :url => { :action => 'check' },
+  :loading => "Element.update('error','probing ...')",
+  :url => { :action => 'probe' },
   :with => 'url',
   :frequency => 5
 %>
+<br />
+Title:   <%= f.text_field :title %>
 <% end %>
