@@ -297,7 +297,6 @@ class Torrent < ActiveRecord::Base
     end
   end
 
-  attr_accessor :url
   # checks is the torrent was just finished downloading 
   # and notifies all subscripted users if this is the case
   def notify_if_just_finished
