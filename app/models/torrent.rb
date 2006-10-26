@@ -165,6 +165,7 @@ class Torrent < ActiveRecord::Base
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen
   def content_url(usr)
+    return nil unless metainfo
     if status == 'archived'
       return File.join(usr.target_dir_mountpoint,metainfo.name) if usr.target_dir_mountpoint
     else
