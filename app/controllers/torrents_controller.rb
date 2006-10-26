@@ -7,28 +7,11 @@ class TorrentsController < ApplicationController
   end
 
   def list
-    @torrents = Torrent.find(:all,:order => 'filename')
-  end
-
-  # Torrent groups
-  def running
-    @active_group = "running"
-    @torrents = Torrent.running
-  end
-
-  def paused
-    @active_group = "paused"
-    @torrents = Torrent.paused
-  end
-
-  def history
-    @active_group = "history"
-    @torrents = Torrent.archived
-  end
-
-  def invalid
-    @active_group = "invalid"
-    @torrents = Torrent.invalid_status
+    if status = params[:status]
+      @torrents = Torrent.by_status(status)
+    else
+      @torrents = Torrent.find(:all,:order => 'filename')
+    end
   end
 
   # actions
