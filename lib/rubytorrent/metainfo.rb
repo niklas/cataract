@@ -158,7 +158,7 @@ class MetaInfo
   def check
     if @s.announce_list
       @s.announce_list.each do |tier|
-        tier.each { |track| raise MetaInfoFormatError, "expecting HTTP URL in announce-list, got #{track} instead" unless track.is_a? URI::HTTP }
+        tier.each { |track| raise MetaInfoFormatError, "expecting HTTP URL in announce-list, got #{track} instead" unless track.is_a? URI }
       end
     end
   end
