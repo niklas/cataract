@@ -1,1 +1,2 @@
 page.remove "filter_#{@filter.id}"
+page[:feed_items].update render(:partial => 'feed_item', :collection => @filter.feed.filtered_items)

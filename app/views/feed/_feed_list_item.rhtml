@@ -2,7 +2,7 @@
 <%= link_to feed_list_item.title, :action => 'show', :id => feed_list_item.id -%>:
 <%= feed_list_item.url-%>
 &nbsp;
-(<%= pluralize feed_list_item.filters_count, 'filter' %>)
+(<%= pluralize feed_list_item.tags_count, 'filter' %>)
 &nbsp;
 <%= link_to 'delete', {:action => 'delete', :id => feed_list_item.id}, :confirm => 'really delete feed?' -%>
 </li>

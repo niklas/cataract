@@ -49,7 +49,7 @@ class FeedController < ApplicationController
   end
 
   def show
-    @feed = Feed.find params[:id], :include => 'filters'
+    @feed = Feed.find params[:id]
   end
 
   def delete
@@ -65,6 +65,15 @@ class FeedController < ApplicationController
   def delete_filter
     @filter = Filter.find params[:id]
     @filter.destroy
+  end
+
+  def feed_items
+    @feed = Feed.find params[:id], :include => 'filters'
+  end
+
+  def sset_filter_expression
+    @filter = Filter.find params[:id]
+    @filter.update_attribute(:value, params[:value])
   end
 
 end
