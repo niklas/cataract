@@ -360,3 +360,5 @@ form.inplaceeditor-form input[type=text] {
 }
 
 
+.match {color: white; }
+.no_match {color: #888; }
