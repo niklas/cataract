@@ -56,8 +56,8 @@ module TorrentsHelper
   end
 
   def human_transfer(kb)
-    return 0 unless kb
-    return 0 unless kb.kind_of?(Numeric)
+    return '' unless kb
+    return '' unless kb.kind_of?(Numeric)
     human_size(kb.kilobytes)
   end
 
