@@ -7,18 +7,15 @@ class TorrentsController < ApplicationController
   end
 
   def list
-    if status = params[:status]
-      @torrents = Torrent.by_status(status)
-    else
-      @torrents = Torrent.find(:all,:order => 'filename')
-    end
+    status = params[:status].to_sym || :running
+    @torrents = Torrent.find_in_state(:all,status)
   end
 
   # actions
   def stop
     @torrent = Torrent.find(params[:id])
-    @torrent.archive
-    if @torrent.save
+    @torrent.archive!
+    if @torrent.save!
       @notice = @torrent.short_title + " was moved to history"
       render :partial => 'remove', :object => @torrent
     end
@@ -26,8 +23,8 @@ class TorrentsController < ApplicationController
 
   def pause
     @torrent = Torrent.find(params[:id])
-    @torrent.pause
-    if @torrent.save
+    @torrent.pause!
+    if @torrent.save!
       @notice = @torrent.short_title + " has been paused"
       render :partial => 'remove', :object => @torrent
     end
@@ -35,8 +32,8 @@ class TorrentsController < ApplicationController
 
   def start
     @torrent = Torrent.find(params[:id])
-    @torrent.start
-    if @torrent.save
+    @torrent.start!
+    if @torrent.save!
       @notice = @torrent.short_title + " has been started for transfer"
       render :partial => 'remove', :object => @torrent
     end
