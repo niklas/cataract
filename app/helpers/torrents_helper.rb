@@ -36,6 +36,8 @@ module TorrentsHelper
     when 'paused'
       button(t,'start') +
       button(t,'stop')
+    when 'remote'
+      button(t,'fetch')
     when 'missing'
       'file missing'
     else

@@ -98,7 +98,7 @@ class Torrent < ActiveRecord::Base
 
   def fullpath(wanted_state=nil)
     wanted_state ||= current_state
-    raise 'no filename' unless filename
+    return 'no filename' unless filename
     return "bad status: #{status}" unless filepath_status[wanted_state]
     filepath_status[wanted_state]
   end

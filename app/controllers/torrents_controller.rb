@@ -104,13 +104,28 @@ class TorrentsController < ApplicationController
 
   def create
     @torrent = Torrent.new(params[:torrent])
-    if @torrent.fetch
+    if @torrent.fetch!
       current_user.watch(@torrent)
       render :update do |page|
         page[:checked_url].update "Torrent fetched: #{@torrent.filename}"
       end
     else
       render :partial => 'probe_fail'
+    end
+  end
+
+  def fetch
+    @torrent = Torrent.find(params[:id])
+    begin
+      @torrent.fetch!
+      current_user.watch(@torrent)
+      render :update do |page|
+        page[:notice].update "Torrent fetched: #{@torrent.filename}"
+      end
+    rescue => e
+      render :update do |page|
+        page[:notice].update e.to_s
+      end
     end
   end
 
