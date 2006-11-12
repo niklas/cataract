@@ -3,7 +3,7 @@ class TorrentsController < ApplicationController
   before_filter :set_default_page_title
 
   def index
-    redirect_to :action => 'list' :state => :running
+    redirect_to :action => 'list', :state => 'running'
   end
 
   def list
