@@ -5,6 +5,7 @@
     <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%>/s - <%= human_transfer(details.transferred_up) -%>/s<br />
     <b>Peers:</b> <%= details.peers -%> &nbsp; <b>Seeds:</b> <%= details.seeds -%><br />
     <b>Distributed Copies:</b> <%= details.distributed_copies %><br />
+    <% if details.files %>
     <b>Files:</b> 
     <%= link_to_content(details) %>
      
@@ -17,6 +18,7 @@
     <% else %>
     <%= content_tag('ul', details.files.collect { |f| content_tag('li',f)} ) %>
     <% end %>
+  <% end %>
     </div>
   </td>
 </tr>

@@ -114,6 +114,12 @@ class TorrentsController < ApplicationController
     end
   end
 
+  def search
+    @term = params[:term]
+    @torrents = Torrent.search(@term)
+    render :action => 'list', :layout => false, :locals => { :fields => %w(title state)}
+  end
+
   private
   def set_default_page_title
     @page_title = 'torrents'

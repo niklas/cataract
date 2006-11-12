@@ -1,7 +1,14 @@
 <% if @torrents and !@torrents.empty? %>
-<%= torrent_table(%w(title progress actions), @torrents) do |t|
+<% fields ||= %w(title progress state actions) %>
+<%= torrent_table(fields, @torrents) do |t|
   [t.short_title, progress(t), action_buttons_for(t)]
   end %>
   <% else %>
-<p>No <%= @status.to_s %> torrents </p>
+  <p>
+  No <%= @status.to_s %> torrents found.
+  <% if @term %>
+  You searched for '<%= @term %>'.
+  <% end %>
+  </p>
+
 <% end %>

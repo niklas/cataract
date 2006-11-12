@@ -22,8 +22,15 @@
       <%= group_link('running') %>
       <%= group_link('paused') %>
       <li><%= link_to "my settings", :action => 'user_settings' , :controller => 'config'-%></li>
-    </ul>
 
+    <%= text_field_tag('search',params[:term], :id => 'search_field', :size => 8) %>
+    <%= observe_field('search_field',
+      :url => { :action => 'search', :controller => 'torrents'},
+      :update => 'content',
+      :frequency => 2.3,
+      :with => 'term'
+      ) %>
+    </ul>
 
 
     <div id="john_cage">

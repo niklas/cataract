@@ -2,6 +2,7 @@ require 'ftools'
 require 'rubytorrent'
 require 'net/http'
 require 'uri'
+require_dependency 'search'
 class Torrent < ActiveRecord::Base
   has_many :watchings, :dependent => true
   has_many :users, :through => :watchings
@@ -13,6 +14,8 @@ class Torrent < ActiveRecord::Base
   before_update :notify_if_just_finished
   after_create :notify_users_and_add_it
   before_create :set_default_values
+
+  searches_on :title, :filename, :url
 
   acts_as_taggable
   acts_as_state_machine :initial => :running, :column => :status
@@ -96,7 +99,7 @@ class Torrent < ActiveRecord::Base
   def fullpath(wanted_state=nil)
     wanted_state ||= current_state
     raise 'no filename' unless filename
-    raise "bad status: #{status}" unless filepath_status[wanted_state]
+    return "bad status: #{status}" unless filepath_status[wanted_state]
     filepath_status[wanted_state]
   end
 
@@ -144,6 +147,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def files
+    return unless metainfo
     @files ||= 
       if metainfo.single?
         [metainfo.name]
@@ -202,7 +206,7 @@ class Torrent < ActiveRecord::Base
   def metainfo
     begin
       @mii ||= RubyTorrent::MetaInfo.from_location(fullpath).info
-    rescue RubyTorrent::MetaInfoFormatError
+    rescue # RubyTorrent::MetaInfoFormatError
       # no UDP supprt yet
       @mii = nil
     end
