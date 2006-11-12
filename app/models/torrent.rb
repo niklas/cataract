@@ -161,6 +161,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def store_metainfo
+    return unless metainfo
     if metainfo.single?
       self.size = metainfo.length
     else
@@ -171,11 +172,13 @@ class Torrent < ActiveRecord::Base
 
   # Here lies the content while it is being downloaded
   def content_path
+    return '' unless metainfo
     File.join(Settings.torrent_dir,metainfo.name)
   end
 
   # When a torrent is archived, the content will be moved here
   def target_path
+    return '' unless metainfo
     File.join(Settings.target_dir,metainfo.name)
   end
 
