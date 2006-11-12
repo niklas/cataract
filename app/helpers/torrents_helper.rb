@@ -62,21 +62,19 @@ module TorrentsHelper
   end
 
   def torrent_table(headings,torrents)
-    if torrents and !torrents.empty?
-      content_tag('table', 
-        content_tag('tr', headings.collect { |h| 
-          content_tag('th', h)
-        }.to_s ) +
-        torrents.collect { |t| 
-          even = !even
-          content_tag('tr', yield(t).collect { |d| 
-            content_tag('td', d )
-          }.to_s, {:class => cycle("even", "odd"), :id => "torrent_#{t.id}" })
-        }.to_s
-      )
-    else
-      content_tag('p', "no torrents for #{@active_group}")
-    end
+    return unless torrents
+    return if torrents.empty?
+    content_tag('table', 
+      content_tag('tr', headings.collect { |h| 
+        content_tag('th', h)
+      }.to_s ) +
+      torrents.collect { |t| 
+        even = !even
+        content_tag('tr', yield(t).collect { |d| 
+          content_tag('td', d )
+        }.to_s, {:class => cycle("even", "odd"), :id => "torrent_#{t.id}" })
+      }.to_s
+    )
   end
 
   def details_remote_link(t,caption=nil)
