@@ -2,8 +2,8 @@
 module ApplicationHelper
   def group_link(status)
     content_tag('li',
-                link_to(status.capitalize, :status => status),
-                { :class => (params[:status] == status ? 'active' : '')}
+                link_to(status.capitalize, :controller => 'torrents', :action => 'list', :status => status),
+                { :class => (@status == status ? 'active' : '')}
     )
   end
 end
