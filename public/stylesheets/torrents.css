@@ -103,10 +103,13 @@ img {
   background-color: #333;
 }
 
+#content > table tr.details  {
+}
 #content > table tr.details > td > div  {
   overflow: auto;
   font-size: 80%;
   text-align: left;
+  width: 100%;
 }
 
 div.percent_container {
