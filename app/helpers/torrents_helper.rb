@@ -3,9 +3,8 @@ module TorrentsHelper
     p = torrent.percent.to_i
     label = "#{p.to_s}%&nbsp;(#{torrent.statusmsg})"
     content_tag('div',
-               content_tag('div',
-                          content_tag('span', label, {:class => 'percent'}),
-                          {:class => 'percent_bar', :style => "width: #{p}%"}),
+               content_tag('div', "#{p.to_s}%",
+                          {:class => 'percent_bar', :style => "width: #{p}%", :title => label}),
                {:class => 'percent_container'}
                )
   end
