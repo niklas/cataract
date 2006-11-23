@@ -68,6 +68,9 @@ class Torrent < ActiveRecord::Base
     find(:all, :conditions => condition, :order => 'created_at')
   end
 
+  def self.running
+    find_in_state(:all, :running)
+  end
   # aggregates
   def self.rate_up
     Torrent.sum('rate_up',:conditions => "status = 'running'") || 0
