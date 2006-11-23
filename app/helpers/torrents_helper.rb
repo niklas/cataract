@@ -39,6 +39,10 @@ module TorrentsHelper
       button(t,'fetch')
     when 'missing'
       'file missing'
+    when 'stopping'
+      '[stopping]'
+    when 'fetching'
+      '[fetching]'
     else
       "[WTF: status #{t.status}]"
     end +
