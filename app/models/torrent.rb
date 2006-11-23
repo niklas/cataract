@@ -24,9 +24,13 @@ class Torrent < ActiveRecord::Base
     t.moveto(t.fullpath(:paused))
     t.brake
   }
+  state :stopping, :enter => Proc.new { |t| 
+    t.moveto(t.fullpath(:stopping))
+    t.archive!
+  }
   state :archived, :enter => Proc.new { |t| 
-    t.moveto(t.fullpath(:archived))
     t.archive_content
+    t.moveto(t.fullpath(:archived))
   }
   state :running, :enter => Proc.new { |t|
     t.unarchive_content
@@ -45,9 +49,11 @@ class Torrent < ActiveRecord::Base
     transitions :from => [:paused, :archived, :fetching], :to => :running
   end
   event :archive do
-    transitions :from => [:paused,:running], :to => :archived
+    transitions :from => [:stopping], :to => :archived
   end
-  alias_method :stop!, :archive!
+  event :stop do
+    transitions :from => [:paused,:running], :to => :stopping
+  end
   event :fetch do
     transitions :from => :remote, :to => :fetching
   end
@@ -288,6 +294,7 @@ class Torrent < ActiveRecord::Base
       :archived => File.join(Settings.history_dir, filename),
       :paused   => File.join(Settings.torrent_dir, filename) + '.paused',
       :fetching => File.join(Settings.torrent_dir, filename) + '.fetching',
+      :stopping => File.join(Settings.torrent_dir, filename) + '.stopping',
       :running  => File.join(Settings.torrent_dir, filename),
       :remote   => ''
     }

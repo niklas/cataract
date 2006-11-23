@@ -14,10 +14,15 @@ class TorrentsController < ApplicationController
   # actions
   def stop
     @torrent = Torrent.find(params[:id])
+    @torrent.stop!
     @torrent.archive!
-    if @torrent.save!
+    if @torrent.errors.empty?
       @notice = @torrent.short_title + " was moved to history"
       render :partial => 'remove', :object => @torrent
+    else
+      render :update do |page|
+        page[:content].update @torrent.errors.full_messages.join ','
+      end
     end
   end
 
