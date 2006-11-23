@@ -117,12 +117,9 @@ div.percent_container {
   padding: 1px;
   text-align: center;
 }
-#content > table tr.even div.percent_bar {
-  background: #333;
-}
 
-#content > table tr.odd div.percent_bar {
-  background: #444;
+div.percent_bar {
+  background: #515A65;
 }
 
 #content > table div {
