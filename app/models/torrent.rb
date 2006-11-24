@@ -267,7 +267,7 @@ class Torrent < ActiveRecord::Base
   def archive_content
     return unless metainfo
     begin
-      move(content_path,target_path)
+      move(content_path,target_path) if File.exists?(content_path)
     rescue SystemCallError => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
@@ -276,7 +276,7 @@ class Torrent < ActiveRecord::Base
   def unarchive_content
     return unless metainfo
     begin
-      move(target_path,content_path)
+      move(target_path,content_path) if File.exists?(target_path)
     rescue SystemCallError => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
