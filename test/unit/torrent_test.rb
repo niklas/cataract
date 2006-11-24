@@ -41,6 +41,10 @@ class TorrentTest < Test::Unit::TestCase
     assert @lebelge.file_exists?
 
     @lebelge.stop!
+    assert @lebelge.stopping?
+    assert @lebelge.file_exists?
+
+    @lebelge.archive!
     assert @lebelge.archived?
     assert @lebelge.file_exists?
 
