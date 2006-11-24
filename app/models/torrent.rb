@@ -1,9 +1,11 @@
 require 'ftools'
+require 'fileutils'
 require 'rubytorrent'
 require 'net/http'
 require 'uri'
 require_dependency 'search'
 class Torrent < ActiveRecord::Base
+  include FileUtils
   has_many :watchings, :dependent => true
   has_many :users, :through => :watchings
   belongs_to :feed
@@ -265,7 +267,7 @@ class Torrent < ActiveRecord::Base
   def archive_content
     return unless metainfo
     begin
-      File.move(content_path,target_path)
+      move(content_path,target_path)
     rescue SystemCallError => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
@@ -274,7 +276,7 @@ class Torrent < ActiveRecord::Base
   def unarchive_content
     return unless metainfo
     begin
-      File.move(target_path,content_path)
+      move(target_path,content_path)
     rescue SystemCallError => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
@@ -286,7 +288,7 @@ class Torrent < ActiveRecord::Base
     return unless target
     return unless File.exists? source
     begin
-      File.move(source,target)
+      move(source,target)
     rescue SystemCallError => e
       errors.add :filename, "^error on moving torrent: #{e.to_s}"
     end
