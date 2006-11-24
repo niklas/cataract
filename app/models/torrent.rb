@@ -263,6 +263,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def archive_content
+    return unless metainfo
     begin
       File.move(content_path,target_path)
     rescue SystemCallError => e
@@ -271,6 +272,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def unarchive_content
+    return unless metainfo
     begin
       File.move(target_path,content_path)
     rescue SystemCallError => e
