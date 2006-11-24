@@ -38,7 +38,6 @@ class Torrent < ActiveRecord::Base
   }
   state :fetching, :enter => Proc.new { |t|
     t.fetch_by_url
-    t.start!
   }
   state :remote
 
