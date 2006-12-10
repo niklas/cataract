@@ -112,7 +112,7 @@ class BTOutputEater
         torrent.brake 
       else
         info "pausing #{filename}"
-        torrent.pause if torrent.status == 'running'
+        torrent.pause! if torrent.status == 'running'
       end
       torrent.save
     else
