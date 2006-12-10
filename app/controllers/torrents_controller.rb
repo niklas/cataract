@@ -8,7 +8,7 @@ class TorrentsController < ApplicationController
 
   def list
     @status = (params[:status] || :running).to_sym
-    @torrents = Torrent.find_in_state(:all,@status)
+    @torrents = Torrent.find_in_state(:all,@status, :order => 'created_at desc')
   end
 
   # actions
