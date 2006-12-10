@@ -124,7 +124,7 @@ class BTOutputEater
     torrent = Torrent.find_by_filename(filename)
     unless torrent
       info "creating #{filename}"
-      torrent = Torrent.create(:filename => filename)
+      torrent = Torrent.create(:filename => filename, :status => :running)
     end
   end
 
