@@ -70,7 +70,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def self.running
-    find_in_state(:all, :running)
+    find_in_state(:all, :running, :order => 'created_at desc')
   end
   # aggregates
   def self.rate_up
