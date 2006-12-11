@@ -18,6 +18,8 @@
     </div>
   </div>
 
+  <div id="left">
+
     <ul id="groups">
       <%= group_link('running') %>
       <%= group_link('paused') %>
@@ -32,31 +34,37 @@
       ) %>
     </ul>
 
+  </div>
 
-    <div id="john_cage">
-    <div id="content">
-      <%= yield  %>
-    </div>
-    </div>
-
-    <div id="summary">
-      <%= render '/torrents/summary' %>
-    </div>
-    <div id="notice">
+  <div id="notice">
     <%= flash[:notice] %> 
-    </div>
-    <div id="watchlist">
-      <%= render :partial => '/torrents/watchlist' %>
-    </div>
+  </div>
 
+  <div id="summary">
+    <%= render '/torrents/summary' %>
+  </div>
 
   <%= periodically_call_remote :update => 'summary',
     :frequency => 42,
     :url => {:action => 'summary', :controller => 'torrents'} %>
 
+  <div id="john_cage">
+    <div id="content">
+      <%= yield  %>
+    </div>
+  </div>
+
+  <div id="right">
+
+    <div id="watchlist">
+      <%= render :partial => '/torrents/watchlist' %>
+    </div>
+
   <%= periodically_call_remote :update => 'watchlist',
     :frequency => 42,
     :url => {:action => 'watchlist', :controller => 'torrents'} %>
+
+  </div>
 
 
   </body>

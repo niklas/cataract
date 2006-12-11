@@ -1,5 +1,4 @@
-<h1>Summary</h1>
-<b>Rate (d/u):</b> <%= human_transfer(Torrent.rate_down) -%>/s - <%= human_transfer(Torrent.rate_up) -%>/s<br />
-<b>Transferred (d/u):</b> <%= human_transfer(Torrent.transferred_down) -%> - <%= human_transfer(Torrent.transferred_up) -%><br />
-<b>updated</b> <%= time_ago_in_words(Torrent.last_update) %> ago <br />
-<b>Disk free:</b> <%= human_transfer(Torrent.diskfree) %><br />
+<b>Rate (d/u):</b> <%= human_transfer(Torrent.rate_down) -%>/s - <%= human_transfer(Torrent.rate_up) -%>/s | 
+<b>Transferred (d/u):</b> <%= human_transfer(Torrent.transferred_down) -%> - <%= human_transfer(Torrent.transferred_up) -%> | 
+<b>Disk free:</b> <%= human_transfer(Torrent.diskfree) %> | 
+<b>updated</b> <%= time_ago_in_words(Torrent.last_update) %> ago
