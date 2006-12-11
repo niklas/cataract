@@ -3,6 +3,7 @@
     <div id="details_for_<%= details.id -%>_div" style="display: none">
     <b>Full Path:</b> <%= details.fullpath %><br />
     <b>URL:</b> <%= details.url %><br />
+    <b>Size:</b> <%= human_transfer(details.size) %><br />
     <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%>/s - <%= human_transfer(details.transferred_up) -%>/s<br />
     <b>Peers:</b> <%= details.peers -%> &nbsp; <b>Seeds:</b> <%= details.seeds -%><br />
     <b>Distributed Copies:</b> <%= details.distributed_copies %><br />
