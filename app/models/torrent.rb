@@ -268,7 +268,7 @@ class Torrent < ActiveRecord::Base
     return unless metainfo
     begin
       move(content_path,target_path) if File.exists?(content_path)
-    rescue SystemCallError => e
+    rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
   end
@@ -277,7 +277,7 @@ class Torrent < ActiveRecord::Base
     return unless metainfo
     begin
       move(target_path,content_path) if File.exists?(target_path)
-    rescue SystemCallError => e
+    rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
   end
@@ -289,8 +289,8 @@ class Torrent < ActiveRecord::Base
     return unless File.exists? source
     begin
       move(source,target)
-    rescue SystemCallError => e
-      errors.add :filename, "^error on moving torrent: #{e.to_s}"
+    rescue Exception => e
+      errors.add :filename, "^error while moving torrent: #{e.to_s}"
     end
   end
 
