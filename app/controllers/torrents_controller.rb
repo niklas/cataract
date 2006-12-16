@@ -52,6 +52,14 @@ class TorrentsController < ApplicationController
     end
   end
 
+  def preview
+    @torrent = Torrent.find(params[:id])
+
+    respond_to do |want|
+      want.js
+    end
+  end
+
   def edit
   end
 

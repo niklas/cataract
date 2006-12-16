@@ -352,3 +352,30 @@ form.inplaceeditor-form input[type=text] {
 
 .match {color: white; }
 .no_match {color: #888; }
+
+.details,
+.preview {
+  margin: 0;
+  float: left;
+  padding: 0.3em;
+}
+
+.preview {
+  max-width: 23em;
+}
+
+.details_preview > div {
+  padding: 0;
+  margin: 0;
+}
+  
+
+.details > h1,
+.details > h1 > a,
+.preview > h1,
+.preview > h1 > a
+ {
+  font-size: 110%;
+  text-decoration: none;
+}
+

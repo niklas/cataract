@@ -1,12 +1,15 @@
-<tr id="details_for_<%= details.id-%>" class="details">
-  <td colspan="4">
-    <div id="details_for_<%= details.id -%>_div" style="display: none">
-    <b>Full Path:</b> <%= details.fullpath %><br />
-    <b>URL:</b> <%= details.url %><br />
-    <b>Size:</b> <%= human_transfer(details.size) %><br />
-    <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%>/s - <%= human_transfer(details.transferred_up) -%>/s<br />
-    <b>Peers:</b> <%= details.peers -%> &nbsp; <b>Seeds:</b> <%= details.seeds -%><br />
+<div id="torrent_<%= details.id -%>" class="details">
+  <h1>
+    <%= link_to_remote details.short_title, :url => { :action => 'preview', :id => details.id}, :title => 'Preview' %>
+    <%= progress(details) %>
+  </h1>
+  <div id="details_for_<%= details.id -%>" style="display: none">
+    <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%> - <%= human_transfer(details.transferred_up) -%><br />
     <b>Distributed Copies:</b> <%= details.distributed_copies %><br />
+    <b>Peers:</b> <%= details.peers -%> &nbsp; <b>Seeds:</b> <%= details.seeds -%><br />
+    <b>Size:</b> <%= human_transfer(details.size) %><br />
+    <b>Filename:</b> <span title="<%= details.fullpath -%>"> <%= details.filename %></span><br />
+    <b>URL:</b> <%= details.url %><br />
     <% if details.files %>
     <b>Files:</b> 
     <%= link_to_content(details) %>
@@ -21,6 +24,5 @@
     <%= content_tag('ul', details.files.collect { |f| content_tag('li',f)} ) %>
     <% end %>
   <% end %>
-    </div>
-  </td>
-</tr>
+  </div>
+</div>

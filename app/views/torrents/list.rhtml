@@ -1,9 +1,6 @@
 <% if @torrents and !@torrents.empty? %>
-<% fields ||= %w(title progress state actions) %>
-<%= torrent_table(fields, @torrents) do |t|
-  [t.short_title, progress(t), t.status, action_buttons_for(t)]
-  end %>
-  <% else %>
+  <%= render :partial => 'preview', :collection => @torrents %>
+<% else %>
   <p>
   No <%= @status.to_s %> torrents found.
   <% if @term %>
