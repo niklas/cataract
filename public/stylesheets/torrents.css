@@ -198,8 +198,9 @@ span.percent {
   width: auto;
 }
 
-#right > div > h1,
-#right > div > div > h1
+#watchlist h1, #watchlist h1 > a,
+div.preview h1, div.preview h1 > a,
+div.details h1, div.details h1 > a
 {
   text-align: center;
   font-weight: bold;
@@ -208,6 +209,7 @@ span.percent {
   margin: 0 2px 5px 0;
   white-space: nowrap;
   overflow: hidden;
+  color: white;
 }
 
 #watchlist {
@@ -355,9 +357,11 @@ form.inplaceeditor-form input[type=text] {
 
 .details,
 .preview {
-  margin: 0.5em;
+  margin: 5px;
   float: left;
   padding: 0.3em;
+  overflow: hidden;
+  background: #444;
 }
 
 .preview {
@@ -383,4 +387,30 @@ form.inplaceeditor-form input[type=text] {
   font-size: 110%;
   text-decoration: none;
 }
+
+
+div.preview:before {
+  text-align: left;
+  background: transparent;
+  margin: 0 0 -3px 0 ;
+  height: 5px;
+  display: block;
+  border: none;
+  content: url(../images/layout/top_left_small.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
+}
+
+
+div.preview:after {
+  text-align: left;
+  display: block;
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left_small.png);
+  margin: 0 0 -1px 0;
+  height: 5px;
+  padding: 0;
+}  
 
