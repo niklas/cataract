@@ -3,6 +3,7 @@
     <%= link_to_remote details.short_title, :url => { :action => 'preview', :id => details.id}, :title => 'Preview' %>
     <%= progress(details) %>
   </h1>
+  <%= action_buttons_for(details) %>
   <div id="details_for_<%= details.id -%>" style="display: none">
     <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%> - <%= human_transfer(details.transferred_up) -%><br />
     <b>Distributed Copies:</b> <%= details.distributed_copies %><br />

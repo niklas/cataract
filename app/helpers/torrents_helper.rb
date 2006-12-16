@@ -46,8 +46,7 @@ module TorrentsHelper
     else
       "[WTF: status #{t.status}]"
     end +
-    watchbutton(t) +
-    details_remote_link(t)
+    watchbutton(t)
   end
 
   def button(t,action)

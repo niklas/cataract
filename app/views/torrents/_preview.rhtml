@@ -3,4 +3,5 @@
     <%= link_to_remote preview.short_title, :url => { :action => 'show', :id => preview.id}, :title => 'Details' %>
     <%= progress(preview) %>
   </h1>
+  <%= action_buttons_for(preview) %>
 </div>
