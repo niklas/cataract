@@ -355,14 +355,19 @@ form.inplaceeditor-form input[type=text] {
 
 .details,
 .preview {
-  margin: 0;
+  margin: 0.5em;
   float: left;
   padding: 0.3em;
 }
 
 .preview {
-  max-width: 23em;
+  width: 30%;
 }
+
+.details {
+  width: 95%;
+}
+
 
 .details_preview > div {
   padding: 0;
