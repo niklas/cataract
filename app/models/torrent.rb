@@ -1,5 +1,5 @@
 require 'ftools'
-require 'fileutils'
+require 'fileutils_monkeypatch'
 require 'rubytorrent'
 require 'net/http'
 require 'uri'
