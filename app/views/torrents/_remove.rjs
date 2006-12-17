@@ -1,8 +1,8 @@
 # removes the given torrent from the list or table
 domid = "torrent_#{remove.id}"
-if page[domid]
-  page.visual_effect :slide_up, domid
+page.visual_effect :fade, domid, :duration => 2
+page.delay(2) do
   page[domid].remove 
-  page[:notice].update @notice || ''
-  page.visual_effect :highlight, :notice
 end
+page[:notice].update @notice || ''
+page.visual_effect :highlight, :notice if @notice
