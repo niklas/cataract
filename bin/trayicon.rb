@@ -139,12 +139,13 @@ class CataractTrayIcon < Gtk::TrayIcon
 
     tab = Gtk::Table.new(torrents.size,2)
     tab.row_spacings = 6
-    tab.column_spacings = 3
+    tab.column_spacings = 6
 
     n = 0
     torrents.each do |torrent|
       text = torrent.title || torrent.filename || 'unknown'
       label = Gtk::Label.new(text)
+      label.set_alignment(1,0)
       tab.attach_defaults( label, 0, 1, n, n+1)
       bar = Gtk::ProgressBar.new
       bar.set_fraction(torrent.percent_done.to_f/100)
