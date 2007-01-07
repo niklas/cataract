@@ -149,7 +149,7 @@ class CataractTrayIcon < Gtk::TrayIcon
       tab.attach_defaults( label, 0, 1, n, n+1)
       bar = Gtk::ProgressBar.new
       bar.set_fraction(torrent.percent_done.to_f/100)
-      bar.text = torrent.status
+      bar.text = torrent.statusmsg
       tab.attach_defaults( bar, 1, 2, n, n+1 )
       n+=1
     end
