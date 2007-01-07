@@ -135,7 +135,7 @@ class CataractTrayIcon < Gtk::TrayIcon
 
   def torrent_table
     torrents = @fetcher.get_torrents
-    return Gtk::Label('no torrents') if !torrents or torrents.size == 0
+    return Gtk::Label.new('no torrents') if !torrents or torrents.size == 0
 
     tab = Gtk::Table.new(torrents.size,2)
     tab.row_spacings = 6
@@ -187,7 +187,8 @@ class TorrentFetcher
      'user' => 'username',
      'password' => 'foo',
      'host' => '192.168.1.1',
-     'port' => 80
+     'port' => 80,
+     'url' => '/torrents/watchlist'
    }
    File.open(CONFIG,'w') do |file|
      file.puts conf.to_yaml
@@ -196,7 +197,7 @@ class TorrentFetcher
 
   def fetch_xml
     http = Net::HTTP.new(@config['host'],@config['port'])
-    req = Net::HTTP::Get.new '/torrents/watchlist', { 'Accept' => 'application/xml'}
+    req = Net::HTTP::Get.new @config['url'], { 'Accept' => 'application/xml'}
     req.basic_auth @config['user'], @config['password']
     res = http.request(req)
     res.body
