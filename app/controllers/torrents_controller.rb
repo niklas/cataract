@@ -87,7 +87,7 @@ class TorrentsController < ApplicationController
   def watchlist
     respond_to do |wants|
       wants.js  { render :partial => 'watchlist' }
-      wants.xml { render :text => current_user.torrents.to_xml() }
+      wants.xml { render :layout => false }
     end
   end
 

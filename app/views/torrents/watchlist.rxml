@@ -1,0 +1,16 @@
+xml.instruct!
+xml.torrents {
+  current_user.torrents.each do |t|
+    xml.torrent {
+      xml.id t.id
+      xml.title t.short_title
+      xml.percent_done t.percent_done
+      xml.rate_up t.rate_up
+      xml.rate_down t.rate_down
+      xml.peers t.peers
+      xml.seeds t.seeds
+      xml.statusmsg t.statusmsg
+      xml.filename t.filename
+    }
+  end
+}
