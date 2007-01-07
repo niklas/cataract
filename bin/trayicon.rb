@@ -1,4 +1,7 @@
 require 'gtktrayicon'
+require 'net/http'
+require 'rexml/document'
+require 'yaml'
 
 class NotificationAreaTooltip
   attr_accessor :timeout
@@ -100,6 +103,7 @@ end
 class CataractTrayIcon < Gtk::TrayIcon
   def initialize(title="Cataract")
     @title = title
+    @fetcher = TorrentFetcher.new
     super(@title)
     populate
     show_all
@@ -130,18 +134,83 @@ class CataractTrayIcon < Gtk::TrayIcon
   end
 
   def torrent_table
-    tab = Gtk::Table.new(3,2)
+    torrents = @fetcher.get_torrents
+    return Gtk::Label('no torrents') if !torrents or torrents.size == 0
+
+    tab = Gtk::Table.new(torrents.size,2)
     tab.row_spacings = 6
     tab.column_spacings = 3
-    tab.attach_defaults(Gtk::Label.new("One ooooooooooh"),0,1,0,1)
-    tab.attach_defaults(Gtk::ProgressBar.new.set_fraction(0.3),1,2,0,1)
-    tab.attach_defaults(Gtk::Label.new("Two"),0,1,1,2)
-    tab.attach_defaults(Gtk::Label.new("2%"),1,2,1,2)
-    tab.attach_defaults(Gtk::Label.new("Three"),0,1,2,3)
-    tab.attach_defaults(Gtk::Label.new("3%"),1,2,2,3)
+
+    n = 0
+    torrents.each do |torrent|
+      text = torrent.title || torrent.filename || 'unknown'
+      label = Gtk::Label.new(text)
+      tab.attach_defaults( label, 0, 1, n, n+1)
+      bar = Gtk::ProgressBar.new
+      bar.set_fraction(torrent.percent_done.to_f/100)
+      bar.text = torrent.status
+      tab.attach_defaults( bar, 1, 2, n, n+1 )
+      n+=1
+    end
+    return tab
   end
 end
 
+class MockTorrent
+  def initialize(rexml)
+    @rexml = rexml
+  end
+  def method_missing(name)
+    name = name.to_s.gsub /_/, '-'
+    e = @rexml.get_elements(name).first
+    e ? e.text : nil
+  end
+end
+
+class TorrentFetcher
+  CONFIG = ENV['HOME'] + '/.cataract.yml'
+  def initialize
+    unless File.exists?(CONFIG)
+      write_default_config
+      puts "please edit #{CONFIG} and restart"
+      exit
+    end
+    read_config
+  end
+
+  def read_config
+    @config = YAML.load(File.open(CONFIG))
+  end
+
+  def write_default_config
+   conf = {
+     'user' => 'username',
+     'password' => 'foo',
+     'host' => '192.168.1.1',
+     'port' => 80
+   }
+   File.open(CONFIG,'w') do |file|
+     file.puts conf.to_yaml
+   end
+  end
+
+  def fetch_xml
+    http = Net::HTTP.new(@config['host'],@config['port'])
+    req = Net::HTTP::Get.new '/torrents/watchlist', { 'Accept' => 'application/xml'}
+    req.basic_auth @config['user'], @config['password']
+    res = http.request(req)
+    res.body
+  end
+
+  def get_torrents
+    xml = fetch_xml
+    torrents = []
+    REXML::Document.new(xml).root.elements.each do |xmltorrent|
+      torrents << MockTorrent.new(xmltorrent)
+    end
+    return torrents
+  end
+end
 
 tray = CataractTrayIcon.new
 Gtk.main
