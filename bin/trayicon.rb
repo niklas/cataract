@@ -15,9 +15,9 @@ class NotificationAreaTooltip
   def create_window
     @win ||= Gtk::Window.new(Gtk::Window::POPUP)
     @win.title = "gtk-tooltips"
-    #@win.border = 3
+    @win.border_width = 9
     #@win.resizeable = false
-    @win.set_default_size(100,400)
+    #@win.set_default_size(100,400)
     @win.set_events(Gdk::Event::POINTER_MOTION_MASK)
 
     @win.signal_connect_after("expose_event") do
@@ -89,31 +89,59 @@ class NotificationAreaTooltip
 
   def populate(data)
     create_window
-    @win.add(Gtk::Label.new(data.to_s))
+    if data.is_a?(Gtk::Widget)
+      @win.add(data)
+    else
+      @win.add(Gtk::Label.new(data.to_s))
+    end
+  end
+end
+
+class CataractTrayIcon < Gtk::TrayIcon
+  def initialize(title="Cataract")
+    @title = title
+    super(@title)
+    populate
+    show_all
+  end
+
+  def populate
+    @popup = NotificationAreaTooltip.new
+
+    event_box = Gtk::EventBox.new
+    event_box.visible = false
+    event_box.add(Gtk::Label.new(@title))
+    event_box.set_events(Gdk::Event::POINTER_MOTION_MASK)
+    event_box.signal_connect("motion_notify_event") do |widget,event|
+      position = widget.window.origin
+      if @popup.id != position
+        @popup.id = position
+        @popup.show_tooltip(torrent_table)
+      end
+    end
+    event_box.signal_connect("leave_notify_event") do |widget,event|
+      position = widget.window.origin
+      if @popup.id == position
+        @popup.hide_tooltip
+      end
+    end
+
+    self.add(event_box)
+  end
+
+  def torrent_table
+    tab = Gtk::Table.new(3,2)
+    tab.row_spacings = 6
+    tab.column_spacings = 3
+    tab.attach_defaults(Gtk::Label.new("One ooooooooooh"),0,1,0,1)
+    tab.attach_defaults(Gtk::Label.new("1%"),1,2,0,1)
+    tab.attach_defaults(Gtk::Label.new("Two"),0,1,1,2)
+    tab.attach_defaults(Gtk::Label.new("2%"),1,2,1,2)
+    tab.attach_defaults(Gtk::Label.new("Three"),0,1,2,3)
+    tab.attach_defaults(Gtk::Label.new("3%"),1,2,2,3)
   end
 end
 
 
-tray = Gtk::TrayIcon.new("Cataract")
-popup = NotificationAreaTooltip.new
-event_box = Gtk::EventBox.new
-event_box.visible = false
-event_box.add(Gtk::Label.new("Cataract"))
-event_box.set_events(Gdk::Event::POINTER_MOTION_MASK)
-event_box.signal_connect("motion_notify_event") do |widget,event|
-  position = widget.window.origin
-  if popup.id != position
-    popup.id = position
-    popup.show_tooltip("foo")
-  end
-end
-event_box.signal_connect("leave_notify_event") do |widget,event|
-  position = widget.window.origin
-  if popup.id == position
-    popup.hide_tooltip
-  end
-end
-tray.add(event_box)
-tray.show_all
-
+tray = CataractTrayIcon.new
 Gtk.main
