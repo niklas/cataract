@@ -134,7 +134,7 @@ class CataractTrayIcon < Gtk::TrayIcon
     tab.row_spacings = 6
     tab.column_spacings = 3
     tab.attach_defaults(Gtk::Label.new("One ooooooooooh"),0,1,0,1)
-    tab.attach_defaults(Gtk::Label.new("1%"),1,2,0,1)
+    tab.attach_defaults(Gtk::ProgressBar.new.fraction=0.3,1,2,0,1)
     tab.attach_defaults(Gtk::Label.new("Two"),0,1,1,2)
     tab.attach_defaults(Gtk::Label.new("2%"),1,2,1,2)
     tab.attach_defaults(Gtk::Label.new("Three"),0,1,2,3)
