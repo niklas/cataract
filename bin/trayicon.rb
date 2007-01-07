@@ -162,7 +162,7 @@ class MockTorrent
     @rexml = rexml
   end
   def method_missing(name)
-    name = name.to_s.gsub /_/, '-'
+    name = name.to_s
     e = @rexml.get_elements(name).first
     e ? e.text : nil
   end
