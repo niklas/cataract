@@ -85,7 +85,10 @@ class TorrentsController < ApplicationController
   end
 
   def watchlist
-    render :partial => 'watchlist'
+    respond_to do |wants|
+      wants.js  { render :partial => 'watchlist' }
+      wants.xml { render :text => current_user.torrents.to_xml() }
+    end
   end
 
   def summary
