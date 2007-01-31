@@ -1,14 +1,15 @@
 # 
-# = fileutilspatch.rb
+# = fileutils_monkeypatch.rb
 # 
-# * monkey-patches the Fileutils.mv method to move file korrect between different FIlesystems
-# * the Veriso in Ubuntu Dapper didn*t get this update, but the edgy's does.
+# * monkey-patches the Fileutils.mv method to move file correctly between different Filesystems
+# * the version in Ubuntu Dapper didn't get this update, but the Edgy's did.
 #
 # by Niklas Hofer for Cataract
 #
+require 'fileutils'
 module FileUtils
 
-  def mv(src, dest, options = {})
+  def bad_mv(src, dest, options = {})
     fu_check_options options, :force, :noop, :verbose
     fu_output_message "mv#{options[:force] ? ' -f' : ''} #{[src,dest].flatten.join ' '}" if options[:verbose]
     return if options[:noop]
@@ -31,6 +32,15 @@ module FileUtils
       rescue SystemCallError
         raise unless options[:force]
       end
+    end
+  end
+  def mv(src, dest, options = {})
+    fu_check_options options, :force, :noop, :verbose
+    return if options[:noop]
+    raise Errno::EEXIST, dest if File.exist?(dest)
+    raise Errno::ENOENT, src unless File.exist?(src)
+    unless system('/bin/mv',src,dest)
+      raise SystemCallError, $?.to_s
     end
   end
   module_function :mv
