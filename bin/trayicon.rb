@@ -60,7 +60,7 @@ class NotificationAreaTooltip
 
       if @wanty + req[1] > @screen.height
         # flip tooltip up
-        @wanty -= req[1] + @win.height + 8
+        @wanty -= req[1] + @win.height_request + 8
       end
       @wanty = 0 if @wanty < 0
       @win.move(@wantx,@wanty)
