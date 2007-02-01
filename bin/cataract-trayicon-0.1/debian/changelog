@@ -1,0 +1,7 @@
+cataract-trayicon (0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #10)
+  * This is my first Debian package.
+
+ -- Niklas Hofer <niklas+cataract@lanpartei.de>  Thu,  1 Feb 2007 17:43:04 +0100
+

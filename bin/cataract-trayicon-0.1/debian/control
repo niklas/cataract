@@ -1,0 +1,18 @@
+Source: cataract-trayicon
+Section: x11
+Priority: optional
+Maintainer: Niklas Hofer <niklas+cataract@lanpartei.de>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: cataract-trayicon
+Architecture: any
+Depends: librexml-ruby
+Description: gnome trayicon for cataract
+ This package contains a (more or less) simple ruby script that shows
+ a tray icon in the notification area.
+ 
+ Now you can watch your downloading torrents with a simple mouse hovering.
+
+ It will break on the first start, creating a config file in ~/.cataract.yml.
+ Please edit this and start again.
