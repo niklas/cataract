@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'gtktrayicon'
 require 'net/http'
 require 'rexml/document'
