@@ -48,21 +48,7 @@ body {
   font-weight: bold;
 }
 
-
-
-
 #summary {
   background: #444;
   text-align: center;
-}
-
-#watchlist h1,   #watchlist h1 > a,
-div.preview h1, div.preview h1 > a,
-div.details h1, div.details h1 > a
-{
-  font-weight: bold;
-  font-size: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  color: white;
 }

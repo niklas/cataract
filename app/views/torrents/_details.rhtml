@@ -1,9 +1,8 @@
-<div id="torrent_<%= details.id -%>" class="details">
+<div id="torrent_<%= details.id -%>" class="torrent details">
   <h1>
     <%= link_to_remote details.short_title, :url => { :action => 'preview', :id => details.id}, :title => 'Preview' %>
-    <%= progress(details) %>
   </h1>
-  <%= action_buttons_for(details) %>
+  <%= render :partial => 'minimal', :object => details %>
   <div id="details_for_<%= details.id -%>" style="display: none">
     <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%> - <%= human_transfer(details.transferred_up) -%><br />
     <b>Distributed Copies:</b> <%= details.distributed_copies %><br />

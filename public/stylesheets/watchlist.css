@@ -45,3 +45,15 @@ div.watchlist_item:before,
   line-height: 0.1;
   font-size: 1px;
 }
+
+#watchlist h1, #watchlist h1 > a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  color: white;
+  text-align: left;
+  padding: 0;
+  margin: 0.1em;
+}

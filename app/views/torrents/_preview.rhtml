@@ -1,9 +1,7 @@
-<div id="torrent_<%= preview.id -%>" class="preview">
+<div id="torrent_<%= preview.id -%>" class="torrent preview">
   <h1>
-    <%= link_to_remote preview.short_title, :url => { :action => 'show', :id => preview.id}, :title => 'Details' %>
+    <%= link_to_remote preview.short_title, :url => { 
+          :action => 'show', :id => preview.id}, :title => 'Details' %>
   </h1>
-  <div class="action_buttons">
-    <%= action_buttons_for(preview) %>
-  </div>
-  <%= progress(preview) %>
+  <%= render :partial => 'minimal', :object => preview %>
 </div>
