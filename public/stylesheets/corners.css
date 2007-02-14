@@ -24,9 +24,25 @@ div.watchlist_item:after,
   padding: 0;
 }  
 
-#groups:before {
+
+
+
+/*
+ small corners defaults
+*/
+
+div.torrent,
+#groups
+{
+  padding: 10px 0 10px 10px !important;
+}
+
+/* top */
+div.torrent:before,
+#groups:before
+{
   text-align: right;
-  content: url(../images/layout/top_right_small.png);
+  background-color: transparent;
   height: 5px;
   display: block;
   border: none;
@@ -36,39 +52,36 @@ div.watchlist_item:after,
   margin: -10px 0 -3px -10px ;
 }
 
+/* bottom */
+div.torrent:after,
 #groups:after {
   text-align: right;
   display: block;
   line-height: 0.1;
   font-size: 1px;
+  margin: 5px 0 -10px -10px;
+  height: 5px;
+  padding: 0;
+}
+
+/* small corners graphics (must be 5x5) */
+div.torrent:before 
+{
+  background: url(../images/layout/corner_small_test.png) top left no-repeat;
+  content: url(../images/layout/corner_small_test.png);
+}
+div.torrent:after
+{
+  content:  url(../images/layout/corner_small_test.png);
+  background: url(../images/layout/corner_small_test.png) bottom left no-repeat;
+}
+#groups:before
+{
+  /* top left not rounded */
+  content: url(../images/layout/top_right_small.png);
+}
+#groups:after
+{
+  /* bottom left not rounded */
   content:  url(../images/layout/bottom_right_small.png);
-  margin: 5px -1px -10px 0;
-  height: 5px;
-  padding: 0;
 }
-
-div.preview:before {
-  text-align: left;
-  background: transparent;
-  margin: 0 0 -3px 0 ;
-  height: 5px;
-  display: block;
-  border: none;
-  content: url(../images/layout/top_left_small.png);
-  padding: 0;
-  line-height: 0.1;
-  font-size: 1px;
-}
-
-
-div.preview:after {
-  text-align: left;
-  display: block;
-  line-height: 0.1;
-  font-size: 1px;
-  content:  url(../images/layout/bottom_left_small.png);
-  margin: 0 0 -1px 0;
-  height: 5px;
-  padding: 0;
-}  
-
