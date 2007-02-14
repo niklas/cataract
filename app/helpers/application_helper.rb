@@ -6,4 +6,10 @@ module ApplicationHelper
                 { :class => (@status == status ? 'active' : '')}
     )
   end
+
+  def all_stylesheets
+    %w(layout style watchlist torrents forms corners).map do |style|
+      stylesheet_link_tag style
+    end
+  end
 end

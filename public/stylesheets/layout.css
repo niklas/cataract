@@ -1,0 +1,148 @@
+/*
+ * Here should be only layout specifications like
+ *   position
+ *   height + width
+ *   padding + margin
+ *
+ * NO
+ *   fonts, colors, backgrounds (goto styles)
+ */
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+img {
+  border: none;
+}
+
+#header {
+  position: absolute;
+  top: 0;
+  left: 5%;
+  width: 90%;
+  height: 100px;
+  z-index: 2;
+}
+
+#actions {
+  position: absolute;
+  top: 30px;
+  left: 5%;
+  height: 70px;
+  width: 90%;
+  z-index: 1;
+}
+
+#actions > ul {
+  margin: 0 auto;
+  padding: 50px 5px 5px 5px;
+  width: 790px;
+  height: 15px;
+}
+
+#actions > ul > li {
+  display: inline;
+  position: relative;
+  padding: 0 0.7em;
+  margin: 0;
+}
+
+#header > span.logo {
+  float: none !important;
+  margin: 0 auto;
+  padding: 0;
+  width: 800px;
+  height: 60px;
+}
+
+#header > span > img.test {
+  position: relative;
+  top: 0;
+  z-index: 3;
+}
+
+#header > img {
+  margin: -60px 0 0 0;
+}
+
+#john_cage {
+  position: absolute;
+  top: 125px;
+  left: 10%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  bottom: 0;
+  height: auto; 
+  width: 70%;
+}
+
+#john_cage > * {
+  margin: 15px;
+}
+
+
+#left {
+  position: absolute;
+  top: 125px;
+  left: 0; 
+  width: 9%;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+
+#right {
+  position: absolute;
+  top: 125px;
+  bottom: 0;
+  right: 0; 
+  width: 19%;
+  height: auto;
+  margin: 0 0 0 5px;
+  padding: 0;
+}
+
+#left > * {
+  width: auto;
+}
+
+#right > * {
+  width: auto;
+}
+
+#content {
+  height: 95%;
+  overflow: auto;
+}
+
+#summary:before {
+  margin: -10px 0 -3px -10px ;
+}
+
+#summary:after {
+  margin: 5px 0 -10px -10px ;
+}
+
+#groups {
+  padding: 10px 0 10px 10px !important;
+  margin: 0 0 3em 0 !important;
+}
+
+#groups > li {
+  padding: 2px 5px 2px 5px;
+  margin: 0;
+}
+
+#summary {
+  position: absolute;
+  top: 55px;
+  left: 3%;
+  width: 90%;
+  height: auto;
+  padding: 0.7em !important;
+  margin: 1% !important;
+}
+

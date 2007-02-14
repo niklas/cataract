@@ -1,0 +1,68 @@
+body {
+  font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
+  background-color: #34363b;
+  color: white;
+  text-align: center;
+}
+
+#header {
+  color: #666;
+  background: url(../images/layout/header_background.png) top repeat-x;
+  font-weight: bold;
+  text-align: center;
+}
+
+#actions > ul {
+  color: white;
+  background: url(../images/layout/actions.png);
+}
+
+#actions > ul > li > a {
+  text-decoration: none; 
+  color: #666; 
+  font-weight: bold;
+}
+
+#actions > ul > li > a:hover {
+  color: #444;
+}
+
+#john_cage {
+  background-color: #222222;
+}
+
+#groups {
+  text-align: left;
+  background: #444; 
+  overflow: hidden;
+}
+#groups > li {
+  list-style: none;
+}
+
+#groups > li > a {
+  color: white;
+  text-decoration: none;
+}
+#groups > li.active  {
+  font-weight: bold;
+}
+
+
+
+
+#summary {
+  background: #444;
+  text-align: center;
+}
+
+#watchlist h1,   #watchlist h1 > a,
+div.preview h1, div.preview h1 > a,
+div.details h1, div.details h1 > a
+{
+  font-weight: bold;
+  font-size: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  color: white;
+}

@@ -1,0 +1,74 @@
+#john_cage:before {
+  text-align: left;
+  background: transparent url(../images/layout/top_right.png) scroll no-repeat top right;
+  margin-bottom: -20px;
+  height: 22px;
+  display: block;
+  border: none;
+  content: url(../images/layout/top_left.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
+}
+
+
+div.watchlist_item:after,
+#summary:after {
+  text-align: left;
+  display: block;
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left_small.png);
+  margin: 0 0 -1px 0;
+  height: 5px;
+  padding: 0;
+}  
+
+#groups:before {
+  text-align: right;
+  content: url(../images/layout/top_right_small.png);
+  height: 5px;
+  display: block;
+  border: none;
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
+  margin: -10px 0 -3px -10px ;
+}
+
+#groups:after {
+  text-align: right;
+  display: block;
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_right_small.png);
+  margin: 5px -1px -10px 0;
+  height: 5px;
+  padding: 0;
+}
+
+div.preview:before {
+  text-align: left;
+  background: transparent;
+  margin: 0 0 -3px 0 ;
+  height: 5px;
+  display: block;
+  border: none;
+  content: url(../images/layout/top_left_small.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
+}
+
+
+div.preview:after {
+  text-align: left;
+  display: block;
+  line-height: 0.1;
+  font-size: 1px;
+  content:  url(../images/layout/bottom_left_small.png);
+  margin: 0 0 -1px 0;
+  height: 5px;
+  padding: 0;
+}  
+

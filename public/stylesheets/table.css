@@ -1,0 +1,41 @@
+#content > table {
+  width: 99%;
+  padding: 0;
+  margin: 5px 0 0 0;
+  font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
+  text-align: center;
+}
+
+#content > table tr {
+}
+
+#content > table th {
+  font-size: 120%;
+}
+
+#content > table tr.even {
+  background-color: #444;
+}
+
+#content > table tr.odd {
+  background-color: #333;
+}
+
+#content > table tr.details  {
+}
+#content > table tr.details > td > div  {
+  overflow: auto;
+  font-size: 80%;
+  text-align: left;
+  width: 100%;
+}
+
+#content > table div {
+  text-align: left;
+}
+
+#content > table div > ul > li {
+  font-size: 80%;
+  list-style: none;
+}
+

@@ -1,0 +1,47 @@
+#watchlist {
+  margin: 0 0 0 0 !important; 
+  background: inherit;
+  text-align: left;
+  overflow: auto;
+  height: 100%;
+}
+
+div.watchlist_item {
+  margin: 0 0 1em 0;
+  background: #444;
+  font-size: 90%;
+  text-align: center;
+}
+
+div.watchlist_item img {
+  padding: 5px 0 0 1px;
+  white-space: nowrap;
+  float: left;
+}
+
+div.watchlist_item > br {
+  line-height: 0.1em;
+}
+
+div.watchlist_item > div.percent_container {
+  margin: 0 2px 2px 15px;
+}
+
+div.watchlist_item > div.percent_bar {
+  background: #333;
+}
+
+
+div.watchlist_item:before,
+#summary:before {
+  text-align: left;
+  background: transparent;
+  margin: 0 0 -3px 0 ;
+  height: 5px;
+  display: block;
+  border: none;
+  content: url(../images/layout/top_left_small.png);
+  padding: 0;
+  line-height: 0.1;
+  font-size: 1px;
+}
