@@ -31,21 +31,6 @@ div.watchlist_item > div.percent_bar {
   background: #333;
 }
 
-
-div.watchlist_item:before,
-#summary:before {
-  text-align: left;
-  background: transparent;
-  margin: 0 0 -3px 0 ;
-  height: 5px;
-  display: block;
-  border: none;
-  content: url(../images/layout/top_left_small.png);
-  padding: 0;
-  line-height: 0.1;
-  font-size: 1px;
-}
-
 #watchlist h1, #watchlist h1 > a {
   text-decoration: none;
   font-weight: bold;

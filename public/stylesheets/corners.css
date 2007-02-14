@@ -12,34 +12,24 @@
 }
 
 
-div.watchlist_item:after,
-#summary:after {
-  text-align: left;
-  display: block;
-  line-height: 0.1;
-  font-size: 1px;
-  content:  url(../images/layout/bottom_left_small.png);
-  margin: 0 0 -1px 0;
-  height: 5px;
-  padding: 0;
-}  
-
-
-
-
 /*
  small corners defaults
 */
 
+#groups,
+#summary,
 div.torrent,
-#groups
+div.watchlist_item
 {
   padding: 10px 0 10px 10px !important;
+  margin: 0;
 }
 
 /* top */
+#groups:before,
+#summary:before,
 div.torrent:before,
-#groups:before
+div.watchlist_item:before
 {
   text-align: right;
   background-color: transparent;
@@ -49,12 +39,15 @@ div.torrent:before,
   padding: 0;
   line-height: 0.1;
   font-size: 1px;
-  margin: -10px 0 -3px -10px ;
+  margin: -10px 0 -3px -10px;
 }
 
 /* bottom */
+#groups:after,
+#summary:after,
 div.torrent:after,
-#groups:after {
+div.watchlist_item:after
+{
   text-align: right;
   display: block;
   line-height: 0.1;
@@ -84,4 +77,25 @@ div.torrent:after
 {
   /* bottom left not rounded */
   content:  url(../images/layout/bottom_right_small.png);
+}
+#summary:before
+{
+  background: url(../images/layout/top_left_small.png) top left no-repeat;
+  content: url(../images/layout/top_right_small.png);
+}
+#summary:after
+{
+  background: url(../images/layout/bottom_left_small.png) bottom left no-repeat;
+  content:  url(../images/layout/bottom_right_small.png);
+}
+div.watchlist_item:before
+{
+  background: url(../images/layout/top_left_small.png) top left no-repeat;
+  content: " ";
+  /* top right not rounded */
+}
+div.watchlist_item:after
+{
+  background: url(../images/layout/bottom_left_small.png) top left no-repeat;
+  content: " ";
 }
