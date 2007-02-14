@@ -30,7 +30,7 @@ div.torrent h1, div.torrent h1 > a
 div.torrent {
   position: relative;
   width: 95%;
-  margin: 0.3em;
+  margin: 0.7em 0.3em;
   padding: 0.2em;
   overflow: hidden;
   background: #444;
