@@ -92,7 +92,7 @@ img {
 }
 
 #content > table th {
-  font-size: 11px;
+  font-size: 120%;
 }
 
 #content > table tr.even {
@@ -202,11 +202,11 @@ span.percent {
 div.preview h1, div.preview h1 > a,
 div.details h1, div.details h1 > a
 {
-  text-align: center;
+  text-align: left;
   font-weight: bold;
-  font-size: 10px;
-  padding: 2px 2px 2px 2px;
-  margin: 0 2px 5px 0;
+  font-size: 100%;
+  padding: 0.1em;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   color: white;
@@ -355,17 +355,23 @@ form.inplaceeditor-form input[type=text] {
 .match {color: white; }
 .no_match {color: #888; }
 
-.details,
 .preview {
-  margin: 5px;
-  float: left;
+  position: relative;
+  width: 95%;
+  margin: 0.5em;
   padding: 0.3em;
   overflow: hidden;
   background: #444;
 }
 
-.preview {
-  width: 30%;
+div.preview > div.action_buttons {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  float: right;
+}
+div.preview > div.action_buttons a {
+  float: right;
 }
 
 .details {
