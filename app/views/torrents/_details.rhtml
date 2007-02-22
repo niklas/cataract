@@ -23,7 +23,7 @@
         <%= dir %>
         <ul>
           <% for file in files %>
-          <li><%= file.join '/' %></li>
+          <li><%= file[1..-1].join '/' %></li>
           <% end %>
         </ul>
       </li>

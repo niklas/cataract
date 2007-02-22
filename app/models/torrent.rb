@@ -170,7 +170,7 @@ class Torrent < ActiveRecord::Base
     return {} unless metainfo
     metainfo.files.
       map      { |file| file.path }.
-      group_by { |path| path.shift }
+      group_by { |path| path.first }
   end
 
   def before_validation
