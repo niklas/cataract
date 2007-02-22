@@ -166,6 +166,13 @@ class Torrent < ActiveRecord::Base
       end
   end
 
+  def files_hierarchy
+    return {} unless metainfo
+    metainfo.files.
+      map      { |file| file.path }.
+      group_by { |path| path.shift }
+  end
+
   def before_validation
     fix_filename
   end
