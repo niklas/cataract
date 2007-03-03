@@ -70,36 +70,36 @@ img {
 
 #john_cage {
   position: absolute;
-  top: 125px;
-  left: 10%;
+  top: 158px;
+  left: 0;
   margin: 0;
   padding: 0;
   text-align: left;
   bottom: 0;
   height: auto; 
-  width: 70%;
+  width: 69%;
 }
 
 #john_cage > * {
-  margin: 15px;
+  margin: 0 0.5em 0 0;
 }
 
 
 #left {
   position: absolute;
-  top: 125px;
-  left: 0; 
-  width: 9%;
+  top: 110px;
+  left: 1%; 
+  width: 98%;
   margin: 0 5px 0 0;
   padding: 0;
 }
 
 #right {
   position: absolute;
-  top: 125px;
+  top: 158px;
   bottom: 0;
   right: 0; 
-  width: 19%;
+  width: 28%;
   height: auto;
   margin: 0 0 0 5px;
   padding: 0;
@@ -127,16 +127,21 @@ img {
 }
 
 #groups {
-  padding: 10px 0 10px 10px !important;
-  margin: 0 0 3em 0 !important;
+  margin: 0 0 0 0 !important;
 }
 
 #groups > li {
-  padding: 2px 5px 2px 5px;
-  margin: 0;
+  position: relative;
+  top: 4px;
+  padding: 0;
+  margin: 1px 5px 3px 5px;
+  display: inline;
 }
 
-#summary {
+#groups > li > a{
+}
+
+#summary, #notice {
   position: absolute;
   top: 55px;
   left: 3%;
@@ -144,5 +149,10 @@ img {
   height: auto;
   padding: 0.7em !important;
   margin: 1% !important;
+}
+
+#notice {
+  z-index: 3;
+  background: #000;
 }
 

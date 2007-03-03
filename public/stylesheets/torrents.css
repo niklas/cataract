@@ -21,7 +21,11 @@ div.torrent h1, div.torrent h1 > a
   color: white;
   text-align: left;
   padding: 0;
-  margin: 0.1em;
+}
+
+
+div.torrent > * {
+  margin: 0.3em 1em 0.1em 1em;
 }
 
 .match {color: white; }
@@ -29,9 +33,8 @@ div.torrent h1, div.torrent h1 > a
 
 div.torrent {
   position: relative;
-  width: 95%;
-  margin: 0.7em 0.3em;
-  padding: 0.2em;
+  margin: 0.7em 0.3em 0 0;
+  padding: 0em;
   overflow: hidden;
   background: #444;
 }

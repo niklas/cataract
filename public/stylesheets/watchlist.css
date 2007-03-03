@@ -1,5 +1,5 @@
 #watchlist {
-  margin: 0 0 0 0 !important; 
+  margin: 0.5em 0 0 -3px !important; 
   background: inherit;
   text-align: left;
   overflow: auto;
@@ -13,8 +13,12 @@ div.watchlist_item {
   text-align: center;
 }
 
+div.watchlist_item > *{
+  margin: 0.3em 1em 0.1em 1em !important;
+}
+
 div.watchlist_item img {
-  padding: 5px 0 0 1px;
+  margin: -5px 0 0 -5px;
   white-space: nowrap;
   float: left;
 }

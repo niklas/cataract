@@ -27,16 +27,18 @@ body {
   color: #444;
 }
 
-#john_cage {
+#john_cage, #right {
   background-color: #222222;
 }
 
 #groups {
   text-align: left;
-  background: #444; 
+  background: #222222; 
   overflow: hidden;
 }
+
 #groups > li {
+  font-size: 140%;
   list-style: none;
 }
 

@@ -1,34 +1,35 @@
-#john_cage:before {
-  text-align: left;
-  background: transparent url(../images/layout/corner_tr_background.png) scroll no-repeat top right;
-  margin-bottom: -20px;
-  height: 22px;
-  display: block;
-  border: none;
-  content: url(../images/layout/corner_tl_background.png);
-  padding: 0;
-  line-height: 0.1;
-  font-size: 1px;
-}
-
-
 /*
  small corners defaults
 */
 
-#groups,
-#summary,
+/* rechts rund */
 div.torrent,
-div.watchlist_item
+#john_cage
+{
+  padding: 10px 0 10px 0 !important;
+}
+
+/* links rund */
+div.watchlist_item,
+#right
 {
   padding: 10px 0 10px 10px !important;
 }
 
+#groups,
+#summary
+{
+  padding: 10px 0px 10px 10px !important;
+}
+
+/* beide */
 /* top */
 #groups:before,
 #summary:before,
 div.torrent:before,
-div.watchlist_item:before
+div.watchlist_item:before,
+#john_cage:before,
+#right:before
 {
   text-align: right;
   background-color: transparent;
@@ -59,42 +60,46 @@ div.watchlist_item:after
 /* small corners graphics (must be 5x5) */
 div.torrent:before 
 {
-  background: url(../images/layout/corner_tl_content_small.png) top left no-repeat;
+  background: none;
   content: url(../images/layout/corner_tr_content_small.png);
 }
 div.torrent:after
 {
   content:  url(../images/layout/corner_br_content_small.png);
-  background: url(../images/layout/corner_bl_content_small.png) bottom left no-repeat;
+  background: none;
 }
+#summary:before,
 #groups:before
-{
-  /* top left not rounded */
-  content: url(../images/layout/corner_tr_background_small.png);
-}
-#groups:after
-{
-  /* bottom left not rounded */
-  content:  url(../images/layout/corner_br_background_small.png);
-}
-#summary:before
 {
   background: url(../images/layout/corner_tl_background_small.png) top left no-repeat;
   content: url(../images/layout/corner_tr_background_small.png);
 }
-#summary:after
+#summary:after,
+#groups:after
 {
   background: url(../images/layout/corner_bl_background_small.png) bottom left no-repeat;
   content:  url(../images/layout/corner_br_background_small.png);
 }
-div.watchlist_item:before
+#john_cage:before
+{
+  background: none;
+  content: url(../images/layout/corner_tr_background_small.png);
+}
+#right:before
 {
   background: url(../images/layout/corner_tl_background_small.png) top left no-repeat;
   content: " ";
   /* top right not rounded */
 }
+
+div.watchlist_item:before
+{
+  background: url(../images/layout/corner_tl_content_small.png) top left no-repeat;
+  content: " ";
+  /* top right not rounded */
+}
 div.watchlist_item:after
 {
-  background: url(../images/layout/corner_bl_background_small.png) top left no-repeat;
+  background: url(../images/layout/corner_bl_content_small.png) top left no-repeat;
   content: " ";
 }
