@@ -168,6 +168,8 @@ class Torrent < ActiveRecord::Base
 
   def files_hierarchy
     return {} unless metainfo
+    return {metainfo.name => ''} if metainfo.single?
+    return {} unless metainfo.files
     metainfo.files.
       map      { |file| file.path }.
       group_by { |path| path.first }
