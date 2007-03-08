@@ -40,9 +40,9 @@ module TorrentsHelper
     when 'missing'
       'file missing'
     when 'stopping'
-      '[stopping]'
+      activity_effect_content(t,"stopping")
     when 'fetching'
-      '[fetching]'
+      activity_effect_content(t,"fetching")
     else
       "[WTF: status #{t.status}]"
     end +
@@ -109,8 +109,12 @@ module TorrentsHelper
     end
   end
 
-  def activity_effect(torrent,message="loading")
-    what = message + image_tag('spinner.gif', :class => 'spinner')
+  def activity_effect(torrent,message=nil)
+    what = activity_effect_content(torrent,message)
     "$('torrent_#{torrent.id}').getElementsByTagName('div')[0].innerHTML='#{what}'"
+  end
+
+  def activity_effect_content(torrent,message="loading")
+    message + image_tag('spinner.gif', :class => 'spinner')
   end
 end
