@@ -41,7 +41,9 @@
     <% if details.file_exists? %>
     <b>Filename:</b> <span title="<%= details.fullpath -%>"> <%= details.filename %></span><br />
     <% end %>
+    <% unless details.url.blank? %>
     <b>Source:</b> <%= link_to details.url %><br />
+    <% end %>
     <% if details.files %>
     <b>Files: <%= details.files.size %> </b> 
     <%  files_dom_id = "files_for_#{details.id}" %>
