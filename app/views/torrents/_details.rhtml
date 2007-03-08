@@ -3,14 +3,45 @@
     <%= link_to_remote details.short_title, :url => { :action => 'preview', :id => details.id}, :title => 'Preview', :loading => activity_effect(details, 'closing details') %>
   </h1>
   <%= render :partial => 'minimal', :object => details %>
+
   <div id="details_for_<%= details.id -%>" style="display: none">
-    <b>Transferred (d/u):</b> <%= human_transfer(details.transferred_down) -%> - <%= human_transfer(details.transferred_up) -%><br />
-    <b>Distributed Copies:</b> <%= details.distributed_copies %><br />
-    <b>Peers:</b> <%= details.peers -%> &nbsp; <b>Seeds:</b> <%= details.seeds -%><br />
+    <table>
+      <tr>
+        <th></th>
+        <th>down</th>
+        <th>up</th>
+      </tr>
+      <% if details.running? %>
+      <tr>
+        <th><b>Rate</b></th>
+        <td><%= human_transfer(details.rate_down) -%>/s</td>
+        <td><%= human_transfer(details.rate_down) -%>/s</td>
+      </tr>
+      <tr>
+        <th><b>Peers / Seeds</b></th>
+        <td><%= details.peers -%></td>
+        <td><%= details.seeds -%></td>
+      </tr>
+      <tr>
+        <th><b>Distributed Copies</b></th>
+        <td><%= details.distributed_copies -%></td>
+      </tr>
+      <% end %>
+      <tr>
+        <th><b>Transferred</b></th>
+        <td><%= human_transfer(details.transferred_down) -%></td>
+        <td><%= human_transfer(details.transferred_down) -%></td>
+      </tr>
+    </table>
+    <% if details.size.to_i > 0 %>
     <b>Size:</b> <%= human_size(details.size) %><br />
+    <% end %>
+    <b>ID:</b> <%= details.id -%><br />
     <b>created/updated:</b> <%= details.created_at %> / <%= details.updated_at %> <br />
+    <% if details.file_exists? %>
     <b>Filename:</b> <span title="<%= details.fullpath -%>"> <%= details.filename %></span><br />
-    <b>URL:</b> <%= details.url %><br />
+    <% end %>
+    <b>Source:</b> <%= link_to details.url %><br />
     <% if details.files %>
     <b>Files: <%= details.files.size %> </b> 
     <%  files_dom_id = "files_for_#{details.id}" %>

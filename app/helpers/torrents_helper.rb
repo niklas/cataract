@@ -1,7 +1,7 @@
 module TorrentsHelper
-  def progress_bar(torrent)
+  def progress_bar(torrent, label=nil)
     p = torrent.percent.to_i
-    label = "#{p.to_s} (#{torrent.statusmsg})"
+    label ||= "#{p.to_s} (#{torrent.statusmsg})"
     content_tag('div',
                content_tag('div', "#{p.to_s}%",
                           {:class => 'percent_bar', :style => "width: #{p}%", :title => label}),
