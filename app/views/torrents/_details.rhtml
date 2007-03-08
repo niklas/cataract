@@ -15,7 +15,7 @@
       <tr>
         <th><b>Rate</b></th>
         <td><%= human_transfer(details.rate_down) -%>/s</td>
-        <td><%= human_transfer(details.rate_down) -%>/s</td>
+        <td><%= human_transfer(details.rate_up) -%>/s</td>
       </tr>
       <tr>
         <th><b>Peers / Seeds</b></th>
@@ -30,7 +30,7 @@
       <tr>
         <th><b>Transferred</b></th>
         <td><%= human_transfer(details.transferred_down) -%></td>
-        <td><%= human_transfer(details.transferred_down) -%></td>
+        <td><%= human_transfer(details.transferred_up) -%></td>
       </tr>
     </table>
     <% if details.size.to_i > 0 %>
