@@ -1,6 +1,6 @@
 <div id="torrent_<%= details.id -%>" class="torrent details">
   <h1>
-    <%= link_to_remote details.short_title, :url => { :action => 'preview', :id => details.id}, :title => 'Preview' %>
+    <%= link_to_remote details.short_title, :url => { :action => 'preview', :id => details.id}, :title => 'Preview', :loading => activity_effect(details, 'closing details') %>
   </h1>
   <%= render :partial => 'minimal', :object => details %>
   <div id="details_for_<%= details.id -%>" style="display: none">

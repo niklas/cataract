@@ -50,7 +50,10 @@ module TorrentsHelper
   end
 
   def button(t,action)
-      link_to_remote(image_tag("buttons/#{action}"), :url => {:action => action, :id => t.id })
+      link_to_remote(
+        image_tag("buttons/#{action}"), 
+        :url => {:action => action, :id => t.id },
+        :loading => activity_effect(t,action + 'ing'))
   end
 
   def watchbutton(t)
@@ -104,5 +107,9 @@ module TorrentsHelper
     else
       ''
     end
+  end
+
+  def activity_effect(torrent,message="loading")
+    "$('torrent_#{torrent.id}').getElementsByTagName('div')[0].innerHTML='#{message}'"
   end
 end

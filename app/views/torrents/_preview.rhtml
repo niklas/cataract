@@ -1,7 +1,9 @@
 <div id="torrent_<%= preview.id -%>" class="torrent preview">
   <h1>
     <%= link_to_remote preview.short_title, :url => { 
-          :action => 'show', :id => preview.id}, :title => 'Details' %>
+      :action => 'show', :id => preview.id}, :title => 'Details',
+      :loading => activity_effect(preview,'loading details')
+    %>
   </h1>
   <%= render :partial => 'minimal', :object => preview %>
 </div>
