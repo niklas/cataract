@@ -110,6 +110,7 @@ module TorrentsHelper
   end
 
   def activity_effect(torrent,message="loading")
-    "$('torrent_#{torrent.id}').getElementsByTagName('div')[0].innerHTML='#{message}'"
+    what = message + image_tag('spinner.gif', :class => 'spinner')
+    "$('torrent_#{torrent.id}').getElementsByTagName('div')[0].innerHTML='#{what}'"
   end
 end

@@ -42,14 +42,22 @@ div.torrent {
 div.torrent > div.action_buttons {
   position: absolute;
   right: 0.5em;
-  top: 0.3em;
-  float: right;
+  top: 0.1em;
   width: 50%;
+  text-align: right;
+  vertical-align: top;
+  padding: 0 0 0.3em 0;
 }
 
 div.torrent > div.action_buttons a {
   float: right;
 }
+
+div.torrent > div.action_buttons img.spinner {
+  margin: 0 0 0 0.5em;
+}
+
+
 
 div.torrent table {
   width: 100%;
@@ -77,3 +85,7 @@ div.torrent a {
   color: #d1dAf5;
   text-decoration: none;
 }
+
+
+
+
