@@ -87,9 +87,10 @@ img {
 
 #left {
   position: absolute;
-  top: 110px;
-  left: 1%; 
-  width: 98%;
+  top: 123px;
+  left: 1%;
+  width: 97%;
+  text-align: center; 
   margin: 0 5px 0 0;
   padding: 0;
 }
@@ -149,6 +150,10 @@ img {
   height: auto;
   padding: 0.7em !important;
   margin: 1% !important;
+}
+
+#summary b {
+  margin-left: 2.3em;
 }
 
 #notice {

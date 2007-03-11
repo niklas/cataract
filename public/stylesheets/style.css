@@ -1,13 +1,13 @@
 body {
   font: 12px 'Lucida Grande', Geneva, Arial, Verdana, sans-serif;
-  background-color: #34363b;
+  background-color: #021b10;
   color: white;
   text-align: center;
 }
 
 #header {
   color: #666;
-  background: url(../images/layout/header_background.png) top repeat-x;
+  background: transparent;
   font-weight: bold;
   text-align: center;
 }
@@ -28,12 +28,11 @@ body {
 }
 
 #john_cage, #right {
-  background-color: #222222;
+  background-color: #011009;
 }
 
 #groups {
-  text-align: left;
-  background: #222222; 
+  text-align: center;
   overflow: hidden;
 }
 
@@ -50,7 +49,11 @@ body {
   font-weight: bold;
 }
 
+#groups input {
+  border: 5px solid #2c0d0f; 
+  background: #273327;
+}
+
 #summary {
-  background: #444;
   text-align: center;
 }

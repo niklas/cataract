@@ -16,16 +16,8 @@ div.watchlist_item,
   padding: 10px 0 10px 10px !important;
 }
 
-#groups,
-#summary
-{
-  padding: 10px 0px 10px 10px !important;
-}
-
 /* beide */
 /* top */
-#groups:before,
-#summary:before,
 div.torrent:before,
 div.watchlist_item:before,
 #john_cage:before,
@@ -43,8 +35,6 @@ div.watchlist_item:before,
 }
 
 /* bottom */
-#groups:after,
-#summary:after,
 div.torrent:after,
 div.watchlist_item:after
 {
@@ -67,18 +57,6 @@ div.torrent:after
 {
   content:  url(../images/layout/corner_br_content_small.png);
   background: none;
-}
-#summary:before,
-#groups:before
-{
-  background: url(../images/layout/corner_tl_background_small.png) top left no-repeat;
-  content: url(../images/layout/corner_tr_background_small.png);
-}
-#summary:after,
-#groups:after
-{
-  background: url(../images/layout/corner_bl_background_small.png) bottom left no-repeat;
-  content:  url(../images/layout/corner_br_background_small.png);
 }
 #john_cage:before
 {
