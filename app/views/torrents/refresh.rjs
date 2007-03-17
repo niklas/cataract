@@ -1,2 +1,4 @@
 page << render(:partial => 'refresh_preview', :collection => @previewed)
 page << render(:partial => 'refresh_details', :collection => @shown)
+page[:summary].update   render(:partial => 'summary')
+page[:watchlist].update render(:partial => 'watchlist')
