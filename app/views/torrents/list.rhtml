@@ -1,5 +1,7 @@
 <% if @torrents and !@torrents.empty? %>
   <%= render :partial => 'preview', :collection => @torrents %>
+  <%= periodically_call_remote :frequency => 42,
+    :url => {:action => 'refresh', :controller => 'torrents'} %>
 <% else %>
   <p>
   No <%= @status.to_s %> torrents found.

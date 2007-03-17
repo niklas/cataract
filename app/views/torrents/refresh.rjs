@@ -1,0 +1,2 @@
+page << render(:partial => 'refresh_preview', :collection => @previewed)
+page << render(:partial => 'refresh_details', :collection => @shown)

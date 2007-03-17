@@ -9,6 +9,16 @@ class TorrentsController < ApplicationController
   def list
     @status = (params[:status] || :running).to_sym
     @torrents = Torrent.find_in_state(:all,@status, :order => 'created_at desc')
+    forget_all
+    memorize_preview(@torrents)
+  end
+
+  def refresh
+    @previewed = Torrent.find_collection(session[:previewed_torrents])
+    @shown = Torrent.find_collection(session[:shown_torrents])
+    respond_to do |wants|
+      wants.js 
+    end
   end
 
   # actions
@@ -18,6 +28,7 @@ class TorrentsController < ApplicationController
     @torrent.archive!
     if @torrent.errors.empty?
       @notice = @torrent.short_title + " was moved to history"
+      forget(@torrent)
       render :partial => 'remove', :object => @torrent
     else
       render :update do |page|
@@ -31,6 +42,7 @@ class TorrentsController < ApplicationController
     @torrent.pause!
     if @torrent.save!
       @notice = @torrent.short_title + " has been paused"
+      forget(@torrent)
       render :partial => 'remove', :object => @torrent
     end
   end
@@ -40,6 +52,7 @@ class TorrentsController < ApplicationController
     @torrent.start!
     if @torrent.save!
       @notice = @torrent.short_title + " has been started for transfer"
+      forget(@torrent)
       render :partial => 'remove', :object => @torrent
     end
   end
@@ -47,6 +60,7 @@ class TorrentsController < ApplicationController
   def show
     @torrent = Torrent.find(params[:id])
 
+    mark_shown(@torrent)
     respond_to do |want|
       want.js
     end
@@ -55,6 +69,7 @@ class TorrentsController < ApplicationController
   def preview
     @torrent = Torrent.find(params[:id])
 
+    mark_preview(@torrent)
     respond_to do |want|
       want.js
     end
@@ -153,11 +168,39 @@ class TorrentsController < ApplicationController
   def search
     @term = params[:term]
     @torrents = Torrent.search(@term)
+    forget_all
+    memorize_preview(@torrents)
     render :action => 'list', :layout => false, :locals => { :fields => %w(title state)}
   end
 
   private
   def set_default_page_title
     @page_title = 'torrents'
+  end
+
+  def forget(torrent)
+    session[:previewed_torrents].delete(torrent.id)
+    session[:shown_torrents].delete(torrent.id)
+  end
+
+  def forget_all
+    session[:previewed_torrents] = []
+    session[:shown_torrents] = []
+  end
+
+  def memorize_preview(torrents)
+    session[:previewed_torrents] = torrents.collect(&:id)
+  end
+
+  def mark_shown(torrent)
+    tid = torrent.id
+    session[:previewed_torrents].delete(tid)
+    session[:shown_torrents] << tid unless session[:shown_torrents].include?(tid)
+  end
+
+  def mark_preview(torrent)
+    tid = torrent.id
+    session[:shown_torrents].delete(tid)
+    session[:previewed_torrents] << tid unless session[:previewed_torrents].include?(tid)
   end
 end

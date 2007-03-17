@@ -2,19 +2,19 @@ module TorrentsHelper
   def progress_bar(torrent, label=nil)
     p = torrent.percent.to_i
     label ||= "#{p.to_s} (#{torrent.statusmsg})"
-    content_tag('div',
-               content_tag('div', "#{p.to_s}%",
-                          {:class => 'percent_bar', :style => "width: #{p}%", :title => label}),
-               {:class => 'percent_container'}
-               )
+    content_tag('div', "#{p.to_s}%",
+      {:class => 'percent_bar', :style => "width: #{p}%", :title => label})
   end
 
   def progress(torrent)
-    if torrent.running?
-      progress_bar(torrent)
-    else
-      torrent.statusmsg || 'finished'
-    end
+    content_tag('div',
+      if torrent.running?
+        progress_bar(torrent)
+      else
+        torrent.statusmsg || 'finished'
+      end,
+      {:class => 'progress', :id => "progress_#{torrent.id}"}
+    )
   end
 
   def transfer(torrent)
