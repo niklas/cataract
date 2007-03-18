@@ -32,7 +32,7 @@ class TorrentsController < ApplicationController
       render :partial => 'remove', :object => @torrent
     else
       render :update do |page|
-        page[:content].update @torrent.errors.full_messages.join ','
+        page[:content].update(@torrent.errors.full_messages.join(','))
       end
     end
   end
@@ -164,18 +164,18 @@ class TorrentsController < ApplicationController
 
   def search
     @term = params[:term]
-    if URI.regexp.match(@term)
-      params[:url] = @term
-      probe
-      return
-    end
+    #if URI.regexp.match(@term)
+      #params[:url] = @term
+    #  render :text => 'fetching.....'
+    #  return
+    #end
     @torrents = Torrent.search(@term)
     forget_all
     memorize_preview(@torrents)
     respond_to do |wants|
       wants.js {
         render :update do |page|
-          page[:content].update(render(:action => 'list', :layout => false))
+          page[:content].update(render('/torrents/list'))
         end
       }
     end
