@@ -117,4 +117,16 @@ module TorrentsHelper
   def activity_effect_content(torrent,message="loading")
     message + image_tag('spinner.gif', :class => 'spinner')
   end
+
+  def shown?(torrent)
+    session[:shown_torrents].include?(torrent.id)
+  end
+
+  def previewed?(torrent)
+    session[:previewed_torrents].include?(torrent.id)
+  end
+
+  def viewed?(torrent)
+    shown?(torrent) || previewed?(torrent)
+  end
 end

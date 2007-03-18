@@ -59,11 +59,10 @@ class TorrentsController < ApplicationController
 
   def show
     @torrent = Torrent.find(params[:id])
-
-    mark_shown(@torrent)
     respond_to do |want|
-      want.js
+      want.js 
     end
+    mark_shown(@torrent)
   end
 
   def preview
