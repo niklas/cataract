@@ -22,10 +22,9 @@
   <div id="left">
 
     <ul id="groups">
-      <%= text_field_tag('search',params[:term], :id => 'search_field', :size => 23) %>
+      <%= text_field_tag('search',params[:term], :id => 'search_field', :size => 42) %>
       <%= observe_field('search_field',
         :url => { :action => 'search', :controller => 'torrents'},
-        :update => 'content',
         :frequency => 2.3,
         :with => 'term'
         ) %>
@@ -38,12 +37,8 @@
   </div>
 
   <div id="summary">
-    <%= render '/torrents/summary' %>
+    <%= render :partial => 'summary' %>
   </div>
-
-  <%= periodically_call_remote :update => 'summary',
-    :frequency => 42,
-    :url => {:action => 'summary', :controller => 'torrents'} %>
 
   <div id="john_cage">
     <div id="content">
@@ -56,10 +51,6 @@
     <div id="watchlist">
       <%= render :partial => '/torrents/watchlist' %>
     </div>
-
-  <%= periodically_call_remote :update => 'watchlist',
-    :frequency => 42,
-    :url => {:action => 'watchlist', :controller => 'torrents'} %>
 
   </div>
 

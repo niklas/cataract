@@ -106,10 +106,6 @@ class TorrentsController < ApplicationController
     end
   end
 
-  def summary
-    render :layout => false
-  end
-
   def new
     @torrent = Torrent.new
     respond_to do |want|
@@ -128,7 +124,9 @@ class TorrentsController < ApplicationController
       end
     else
       render :update do |page|
-        page[:checked_url].update "Please enter an URL"
+        page[:notice].update "Please enter a URL"
+        page[:notice].show
+        page.visual_effect :highlight, 'notice'
       end
     end
   end
@@ -167,10 +165,21 @@ class TorrentsController < ApplicationController
 
   def search
     @term = params[:term]
+    if URI.regexp.match(@term)
+      params[:url] = @term
+      probe
+      return
+    end
     @torrents = Torrent.search(@term)
     forget_all
     memorize_preview(@torrents)
-    render :action => 'list', :layout => false, :locals => { :fields => %w(title state)}
+    respond_to do |wants|
+      wants.js {
+        render :update do |page|
+          page[:content].update(render(:action => 'list', :layout => false))
+        end
+      }
+    end
   end
 
   private

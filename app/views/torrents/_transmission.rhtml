@@ -1,0 +1,28 @@
+<table id="transmission_<%= transmission.id -%>">
+  <tr>
+    <th></th>
+    <th>down</th>
+    <th>up</th>
+  </tr>
+  <% if transmission.running? %>
+  <tr>
+    <th><b>Rate</b></th>
+    <td><%= human_transfer(transmission.rate_down) -%>/s</td>
+    <td><%= human_transfer(transmission.rate_up) -%>/s</td>
+  </tr>
+  <tr>
+    <th><b>Peers / Seeds</b></th>
+    <td><%= transmission.peers -%></td>
+    <td><%= transmission.seeds -%></td>
+  </tr>
+  <tr>
+    <th><b>Distributed Copies</b></th>
+    <td><%= transmission.distributed_copies -%></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th><b>Transferred</b></th>
+    <td><%= human_transfer(transmission.transferred_down) -%></td>
+    <td><%= human_transfer(transmission.transferred_up) -%></td>
+  </tr>
+</table>

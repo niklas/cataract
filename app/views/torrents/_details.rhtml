@@ -5,34 +5,7 @@
   <%= render :partial => 'minimal', :object => details %>
 
   <div id="details_for_<%= details.id -%>" style="display: none">
-    <table>
-      <tr>
-        <th></th>
-        <th>down</th>
-        <th>up</th>
-      </tr>
-      <% if details.running? %>
-      <tr>
-        <th><b>Rate</b></th>
-        <td><%= human_transfer(details.rate_down) -%>/s</td>
-        <td><%= human_transfer(details.rate_up) -%>/s</td>
-      </tr>
-      <tr>
-        <th><b>Peers / Seeds</b></th>
-        <td><%= details.peers -%></td>
-        <td><%= details.seeds -%></td>
-      </tr>
-      <tr>
-        <th><b>Distributed Copies</b></th>
-        <td><%= details.distributed_copies -%></td>
-      </tr>
-      <% end %>
-      <tr>
-        <th><b>Transferred</b></th>
-        <td><%= human_transfer(details.transferred_down) -%></td>
-        <td><%= human_transfer(details.transferred_up) -%></td>
-      </tr>
-    </table>
+    <%= render(:partial => 'transmission', :object => details) %>
     <% if details.size.to_i > 0 %>
     <b>Size:</b> <%= human_size(details.size) %><br />
     <% end %>
