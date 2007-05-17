@@ -181,6 +181,28 @@ class TorrentsController < ApplicationController
     end
   end
 
+  def delete_content
+    @torrent = Torrent.find(params[:id])
+    if params[:delete_confirmation] == 'DELETE'
+      if @torrent.delete_content!
+        render :update do |page| 
+          page[:notice].update "the torrent's content has been deleted, #{@torrent.actual_size} Byte freed" 
+          page[:notice].visual_effect :appear
+        end
+      else
+        render :update do |page| 
+          page[:notice].update "error deleting contents: #{@torrent.errors.on(:filename)}"
+          page[:notice].visual_effect :appear
+        end
+      end
+    else
+      render :update do |page| 
+        page[:notice].update "need a confirmation to delete content"
+        page[:notice].visual_effect :appear
+      end
+    end
+  end
+
   private
   def set_default_page_title
     @page_title = 'torrents'

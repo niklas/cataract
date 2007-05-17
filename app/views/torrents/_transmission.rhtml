@@ -1,3 +1,4 @@
+<% if transmission.running? %>
 <table id="transmission_<%= transmission.id -%>">
   <tr>
     <th></th>
@@ -26,3 +27,4 @@
     <td><%= human_transfer(transmission.transferred_up) -%></td>
   </tr>
 </table>
+<% end %>

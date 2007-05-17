@@ -6,10 +6,20 @@
 
   <div id="details_for_<%= details.id -%>" style="display: none">
     <%= render(:partial => 'transmission', :object => details) %>
-    <% if details.size.to_i > 0 %>
-    <b>Size:</b> <%= human_size(details.size) %><br />
+    <% if details.content_size.to_i > 0 %>
+    <b>Size:</b> <%= human_size(details.content_size.to_i) %><br />
     <% end %>
-    <b>ID:</b> <%= details.id -%><br />
+    <b>ID:</b> <%= details.id -%>
+    <% deldom = "delelte_confirmation_for_#{details.id}" %>
+    <%= link_to_function('delete content', visual_effect(:appear, deldom)) %>
+    <br />
+    <div id="<%= deldom -%>" style="display: none">
+      <% remote_form_for :torrent, @torrent, :url => { :action => 'delete_content', :id => details.id } do %>
+      <p>Enter "DELETE" in the Text field below, if you really want to delete the contents</p>
+      <%= text_field_tag :delete_confirmation, '', :size => 6 %>
+      <%= submit_tag 'delete' %>
+      <% end %>
+    </div>
     <b>created/updated:</b> <%= details.created_at %> / <%= details.updated_at %> <br />
     <% if details.file_exists? %>
     <b>Filename:</b> <span title="<%= details.fullpath -%>"> <%= details.filename %></span><br />
@@ -17,8 +27,8 @@
     <% unless details.url.blank? %>
     <b>Source:</b> <%= link_to details.url %><br />
     <% end %>
-    <% if details.files %>
-    <b>Files: <%= details.files.size %> </b> 
+    <% unless details.content_filenames.blank? %>
+    <b>Files: <%= details.content_filenames.size %> </b> 
     <%  files_dom_id = "files_for_#{details.id}" %>
     (<%= link_to_function "show all", visual_effect(:slide_down, files_dom_id ) %>)
     (<%= link_to_content(details) %>)

@@ -14,6 +14,7 @@ class Torrent < ActiveRecord::Base
   validates_format_of :url, :with => URI.regexp, :if => Proc.new {|torrent| torrent.remote? }
 
   before_update :notify_if_just_finished
+  before_save :sync
   after_create :notify_users_and_add_it
   before_create :set_default_values
 
@@ -112,6 +113,10 @@ class Torrent < ActiveRecord::Base
     percent_done
   end
 
+  def actual_size
+    content_size * percent / 100
+  end
+
   def fullpath(wanted_state=nil)
     wanted_state ||= current_state
     return 'no filename' unless filename
@@ -155,21 +160,13 @@ class Torrent < ActiveRecord::Base
   def validate
     if !remote? and !File.exists?(fullpath)
       validate_file_status
+    else
+      true
     end
   end
 
   def before_destroy
     File.delete(fullpath) if validate_file_status
-  end
-
-  def files
-    return unless metainfo
-    @files ||= 
-      if metainfo.single?
-        [metainfo.name]
-      else
-        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
-      end
   end
 
   def files_hierarchy
@@ -185,14 +182,19 @@ class Torrent < ActiveRecord::Base
     fix_filename
   end
 
-  def store_metainfo
+  def set_metainfo
     return unless metainfo
-    if metainfo.single?
-      self.size = metainfo.length
+    self[:content_size] = if metainfo.single?
+      metainfo.length
     else
-      self.size = metainfo.files.inject(0) { |sum, f| sum + f.length}
+      metainfo.files.inject(0) { |sum, f| sum + f.length}
     end
-    save
+    self[:content_filenames] = 
+      if metainfo.single?
+        [metainfo.name]
+      else
+        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
+      end
   end
 
   # Here lies the content while it is being downloaded
@@ -297,6 +299,26 @@ class Torrent < ActiveRecord::Base
     end
   end
 
+  def delete_content!
+    return unless metainfo
+    begin
+      opfer = if archived?
+                target_path
+              else
+                content_path
+              end
+      if File.exists?(opfer) 
+        rm_rf(opfer) 
+        true
+      else
+        errors.add :filename, "^content not found: #{opfer}"
+        false
+      end
+    rescue Exception => e
+      errors.add :filename, "^error on deleting content: #{e.to_s}"
+    end
+  end
+
   def moveto(target)
     source = fullpath
     return unless source
@@ -307,6 +329,18 @@ class Torrent < ActiveRecord::Base
     rescue Exception => e
       errors.add :filename, "^error while moving torrent: #{e.to_s}"
     end
+  end
+
+  def sync
+    sync! if needs_to_be_synced?
+  end
+
+  def sync!
+    set_metainfo && synced_at = Time.now
+  end
+
+  def needs_to_be_synced?
+    synched_at.blank? || (Time.now - synched_at > 1.day)
   end
 
   private
@@ -338,7 +372,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def set_default_values
-    self.size      ||= 0
+    self.content_size      ||= 0
     self.rate_down ||= 0
     self.rate_up   ||= 0
     self.seeds     ||= 0
