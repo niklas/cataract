@@ -113,6 +113,10 @@ class Torrent < ActiveRecord::Base
     percent_done
   end
 
+  def content_size
+    self[:content_size].to_i
+  end
+
   def actual_size
     content_size * percent / 100
   end
