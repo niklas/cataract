@@ -186,7 +186,7 @@ class TorrentsController < ApplicationController
     if params[:delete_confirmation] == 'DELETE'
       if @torrent.delete_content!
         render :update do |page| 
-          page[:notice].update "the torrent's content has been deleted, #{@torrent.actual_size} Byte freed" 
+          page[:notice].update "the torrent's content has been deleted, max. #{@torrent.content_size} Byte freed" 
           page[:notice].visual_effect :appear
         end
       else
