@@ -6,8 +6,10 @@
   </head>
   <body>
 
-  <div id="header" onmouseover="MenuHovered()" onmouseout="MenuUnhovered()">
-    <span class="logo" onclick="MenuReset()"><%= image_tag('cataract', :class => "test") %></span>
+    <% js_open_menu = visual_effect(:slideDown, 'actions', :queue => {:position => :front, :scope => :actionmenu, :limit => 2}) %>
+    <% js_close_menu = visual_effect(:slideUp, 'actions', :queue => {:position => :end, :scope => :actionmenu, :limit => 2}, :delay => 3) %>
+  <div id="header" onmouseover="<%=h js_open_menu %>" onmouseout="<%=h js_close_menu %>">
+    <span class="logo"><%= image_tag('cataract', :class => "test") %></span>
 	 <div id="actions" style="display:none">
 	   <ul>
         <li><%= link_to_remote 'Add single Torrent', :url => {:action => 'new', :controller => 'torrents'} %></li>
