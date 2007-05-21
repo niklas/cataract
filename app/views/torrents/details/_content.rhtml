@@ -1,0 +1,16 @@
+<% torrent = content %>
+<h3>Content</h3>
+<% if torrent.content_size.to_i > 0 %>
+<b>Size:</b> <%= human_size(torrent.content_size.to_i) %><br />
+<% end %>
+<b>ID:</b> <%= torrent.id -%>
+<% deldom = "delelte_confirmation_for_#{torrent.id}" %>
+<%= link_to_function('delete content', visual_effect(:appear, deldom)) %>
+<br />
+<div id="<%= deldom -%>" style="display: none">
+  <% remote_form_for :torrent, @torrent, :url => { :action => 'delete_content', :id => torrent.id } do %>
+  <p>Enter "DELETE" in the Text field below, if you really want to delete the contents</p>
+  <%= text_field_tag :delete_confirmation, '', :size => 6 %>
+  <%= submit_tag 'delete' %>
+  <% end %>
+</div>

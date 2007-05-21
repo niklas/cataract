@@ -1,0 +1,32 @@
+<% torrent = transmission %>
+<h3>Transmission</h3>
+<% if torrent.running? %>
+<table id="transmission_<%= torrent.id -%>">
+  <tr>
+    <th></th>
+    <th>down</th>
+    <th>up</th>
+  </tr>
+  <% if torrent.running? %>
+  <tr>
+    <th><b>Rate</b></th>
+    <td><%= human_transfer(torrent.rate_down) -%>/s</td>
+    <td><%= human_transfer(torrent.rate_up) -%>/s</td>
+  </tr>
+  <tr>
+    <th><b>Peers / Seeds</b></th>
+    <td><%= torrent.peers -%></td>
+    <td><%= torrent.seeds -%></td>
+  </tr>
+  <tr>
+    <th><b>Distributed Copies</b></th>
+    <td><%= torrent.distributed_copies -%></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th><b>Transferred</b></th>
+    <td><%= human_transfer(torrent.transferred_down) -%></td>
+    <td><%= human_transfer(torrent.transferred_up) -%></td>
+  </tr>
+</table>
+<% end %>
