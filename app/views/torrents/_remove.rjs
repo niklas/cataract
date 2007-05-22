@@ -4,5 +4,4 @@ page.visual_effect :fade, domid, :duration => 2
 page.delay(2) do
   page[domid].remove 
 end
-page[:notice].update @notice || ''
-page.visual_effect :highlight, :notice if @notice
+page << render_pending_notifications

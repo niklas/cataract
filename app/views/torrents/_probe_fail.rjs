@@ -1,3 +1,1 @@
-page[:notice].update nice_error_messages_for :torrent
-page[:notice].show
-page.visual_effect :highlight, 'notice'
+flash[:notice] = nice_error_messages_for :torrent

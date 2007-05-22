@@ -27,7 +27,7 @@ class TorrentsController < ApplicationController
     @torrent.stop!
     @torrent.archive!
     if @torrent.errors.empty?
-      @notice = @torrent.short_title + " was moved to history"
+      flash[:notice] = @torrent.short_title + " was moved to history"
       forget(@torrent)
       render :partial => 'remove', :object => @torrent
     else
@@ -41,7 +41,7 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @torrent.pause!
     if @torrent.save!
-      @notice = @torrent.short_title + " has been paused"
+      flash[:notice] = @torrent.short_title + " has been paused"
       forget(@torrent)
       render :partial => 'remove', :object => @torrent
     end
@@ -51,7 +51,7 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @torrent.start!
     if @torrent.save!
-      @notice = @torrent.short_title + " has been started for transfer"
+      flash[:notice] = @torrent.short_title + " has been started for transfer"
       forget(@torrent)
       render :partial => 'remove', :object => @torrent
     end

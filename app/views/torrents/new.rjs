@@ -1,1 +1,2 @@
 page[:content].update render :partial => 'new'
+page << render_pending_notifications

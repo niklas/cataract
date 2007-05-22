@@ -142,7 +142,7 @@ img {
 #groups > li > a{
 }
 
-#summary, #notice {
+#summary {
   position: absolute;
   top: 55px;
   left: 3%;
@@ -157,7 +157,16 @@ img {
 }
 
 #notice {
+  position: absolute;
+  bottom: 0;
+  left: 1%;
+  width: 96%;
   z-index: 3;
-  background: #000;
+  background: #FFF;
+  color: #000;
+  height: auto;
+  text-align: left;
+  padding: 0.7em;
+  margin: 0;
 }
 

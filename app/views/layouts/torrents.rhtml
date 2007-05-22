@@ -35,7 +35,6 @@
   </div>
 
   <div id="notice" style="display: none;">
-    <%= flash[:notice] %> 
   </div>
 
   <div id="summary">
@@ -56,6 +55,7 @@
 
   </div>
 
+  <%= javascript_tag(render_pending_notifications) %>
 
   </body>
 </html>
