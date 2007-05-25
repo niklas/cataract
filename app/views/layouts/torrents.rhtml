@@ -30,6 +30,7 @@
         :frequency => 2.3,
         :with => 'term'
         ) %>
+      <%= link_to_remote 'fnord', :url => { :action => 'fnord'} if current_user.login == 'niklas' %>
     </ul>
 
   </div>
@@ -54,8 +55,6 @@
     </div>
 
   </div>
-
-  <%= javascript_tag(render_pending_notifications) %>
 
   </body>
 </html>
