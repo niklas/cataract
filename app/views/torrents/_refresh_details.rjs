@@ -1,2 +1,2 @@
 page["progress_#{refresh_details.id}"].replace progress(refresh_details)
-page["transmission_#{refresh_details.id}"].replace render(:partial => 'transmission', :object => refresh_details)
+page["transmission_#{refresh_details.id}"].replace render(:partial => '/torrents/details/transmission', :object => refresh_details)
