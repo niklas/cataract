@@ -117,6 +117,14 @@ class Torrent < ActiveRecord::Base
     self[:content_size].to_i
   end
 
+  def has_files?
+    !self[:content_filenames].blank?
+  end
+
+  def content_filenames
+    @content_filenames ||= YAML.load(self[:content_filenames])
+  end
+
   def actual_size
     content_size * percent / 100
   end

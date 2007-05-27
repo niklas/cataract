@@ -83,7 +83,11 @@ div.torrent table th {
 
 div.torrent a {
   color: #d1dAf5;
-  text-decoration: none;
+  text-decoration: underline;
+}
+
+div.torrent ul.files > li {
+  list-style: none;
 }
 
 

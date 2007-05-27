@@ -1,6 +1,8 @@
 <% torrent = meta %>
 <h3>Meta</h3>
-<b>created/updated:</b> <%= torrent.created_at %> / <%= torrent.updated_at %> <br />
+<b>ID:</b> <%= torrent.id -%><br />
+<b>created:</b> <%= torrent.created_at %><br />
+<b>updated:</b> <%= torrent.updated_at %> <br />
 <% if torrent.file_exists? %>
 <b>Filename:</b> <span title="<%= torrent.fullpath -%>"> <%= torrent.filename %></span><br />
 <% end %>

@@ -3,10 +3,16 @@
 <% if torrent.content_size.to_i > 0 %>
 <b>Size:</b> <%= human_size(torrent.content_size.to_i) %><br />
 <% end %>
-<b>ID:</b> <%= torrent.id -%>
-<% deldom = "delelte_confirmation_for_#{torrent.id}" %>
+
+<% if torrent.has_files? %>
+<b>Files: <%= torrent.content_filenames.size %></b> 
+<%  files_dom_id = "files_for_#{torrent.id}" %>
+<%= link_to_function "show all", visual_effect(:slide_down, files_dom_id ) %>
+<%= link_to_content(torrent, 'open') %>
+
+<% deldom = "delete_confirmation_for_#{torrent.id}" %>
 <%= link_to_function('delete content', visual_effect(:appear, deldom)) %>
-<br />
+
 <div id="<%= deldom -%>" style="display: none">
   <% remote_form_for :torrent, @torrent, :url => { :action => 'delete_content', :id => torrent.id } do %>
   <p>Enter "DELETE" in the Text field below, if you really want to delete the contents</p>
@@ -14,3 +20,12 @@
   <%= submit_tag 'delete' %>
   <% end %>
 </div>
+
+<ul id="<%= files_dom_id -%>" style="display: none" class="files">
+  <% torrent.content_filenames.each do |file| %>
+  <li> <%= file %> </li>
+  <% end %>
+</ul>
+
+<% end %>
+
