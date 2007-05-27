@@ -4,6 +4,6 @@ class FeedIdForTorrents < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :torrents, :feed_id
+    remove_column :torrents, :feed_id
   end
 end

@@ -5,7 +5,7 @@ class SyncForFeeds < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :feeds, :synced_at
-    drop_column :feeds, :item_limit
+    remove_column :feeds, :synced_at
+    remove_column :feeds, :item_limit
   end
 end

@@ -4,6 +4,6 @@ class PositionForWatching < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :watchings, :position
+    remove_column :watchings, :position
   end
 end
