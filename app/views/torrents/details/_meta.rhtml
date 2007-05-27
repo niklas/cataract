@@ -7,5 +7,5 @@
 <b>Filename:</b> <span title="<%= torrent.fullpath -%>"> <%= torrent.filename %></span><br />
 <% end %>
 <% unless torrent.url.blank? %>
-<b>Source:</b> <%= link_to torrent.url %><br />
+<b>Source:</b> <%= link_to torrent.url, torrent.url %><br />
 <% end %>
