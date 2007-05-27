@@ -1,13 +1,16 @@
-<%= start_form_tag %>
+<% form_tag do -%>
 <p><label for="login">Login</label><br/>
 <%= text_field_tag 'login' %></p>
 
 <p><label for="password">Password</label><br/>
 <%= password_field_tag 'password' %></p>
 
-<p><%= submit_tag 'Log in' %></p>
-<%= end_form_tag %>
+<p><label for="remember_me">Remember me:</label>
+<%= check_box_tag 'remember_me' %></p>
 
-<% unless Settings.signup_forbidden %>
-No Account? then <%= link_to "Sign up", :action => 'signup' -%>
-<% end %>
+<p><%= submit_tag 'Log in' %></p>
+<% end -%>
+
+-<% unless Settings.signup_forbidden %>
+-No Account? then <%= link_to "Sign up", :action => 'signup' -%>
+-<% end %>

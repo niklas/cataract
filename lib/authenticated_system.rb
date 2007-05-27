@@ -3,17 +3,17 @@ module AuthenticatedSystem
     # Returns true or false if the user is logged in.
     # Preloads @current_user with the user model if they're logged in.
     def logged_in?
-      (@current_user ||= session[:user] ? User.find_by_id(session[:user]) : :false).is_a?(User)
+      current_user != :false
     end
     
     # Accesses the current user from the session.
     def current_user
-      @current_user if logged_in?
+      @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
     end
     
     # Store the given user in the session.
     def current_user=(new_user)
-      session[:user] = new_user.nil? ? nil : new_user.id
+      session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_user = new_user
     end
     
@@ -30,7 +30,7 @@ module AuthenticatedSystem
     #    current_user.login != "bob"
     #  end
     def authorized?
-       true
+      true
     end
 
     # Filter method to enforce a login requirement.
@@ -50,19 +50,7 @@ module AuthenticatedSystem
     def login_required
       username, passwd = get_auth_data
       self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
-      return true if logged_in? && authorized?
-      respond_to do |accepts|
-        accepts.html do
-          session[:return_to] = request.request_uri
-          redirect_to :controller => 'account', :action => 'login'
-        end
-        accepts.xml do
-          headers["Status"]           = "Unauthorized"
-          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => "Could't authenticate you", :status => '401 Unauthorized'
-        end
-      end
-      false
+      logged_in? && authorized? ? true : access_denied
     end
     
     # Redirect as appropriate when an access request fails.
@@ -74,7 +62,18 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      redirect_to :controller => '/account', :action => 'login'
+      respond_to do |accepts|
+        accepts.html do
+          store_location
+          redirect_to :controller => '/account', :action => 'login'
+        end
+        accepts.xml do
+          headers["Status"]           = "Unauthorized"
+          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+          render :text => "Could't authenticate you", :status => '401 Unauthorized'
+        end
+      end
+      false
     end  
     
     # Store the URI of the current request in the session.
@@ -111,22 +110,11 @@ module AuthenticatedSystem
     end
 
   private
+    @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
     # gets BASIC auth info
     def get_auth_data
-      user, pass = nil, nil
-      # extract authorisation credentials 
-      if request.env.has_key? 'X-HTTP_AUTHORIZATION' 
-        # try to get it where mod_rewrite might have put it 
-        authdata = request.env['X-HTTP_AUTHORIZATION'].to_s.split 
-      elsif request.env.has_key? 'HTTP_AUTHORIZATION' 
-        # this is the regular location 
-        authdata = request.env['HTTP_AUTHORIZATION'].to_s.split  
-      end 
-       
-      # at the moment we only support basic authentication 
-      if authdata && authdata[0] == 'Basic' 
-        user, pass = Base64.decode64(authdata[1]).split(':')[0..1] 
-      end 
-      return [user, pass] 
+      auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+      auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
+      return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
     end
 end
