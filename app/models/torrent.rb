@@ -56,6 +56,9 @@ class Torrent < ActiveRecord::Base
   event :stop do
     transitions :from => [:paused,:running], :to => :stopping
   end
+  event :halt do
+    transitions :from => [:paused, :running], :to => :archived
+  end
   event :fetch do
     transitions :from => :remote, :to => :fetching
   end
