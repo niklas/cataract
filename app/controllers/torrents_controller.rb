@@ -184,15 +184,16 @@ class TorrentsController < ApplicationController
   def delete_content
     @torrent = Torrent.find(params[:id])
     if params[:delete_confirmation] == 'DELETE'
-      if @torrent.delete_content!
+      if @torrent.delete_content! 
+        @torrent.halt!
+        forget(@torrent)
         render :update do |page| 
-          page[:notice].update "the torrent's content has been deleted, max. #{@torrent.content_size} Byte freed" 
-          page[:notice].visual_effect :appear
+          page << notification("'#{@torrent.short_title}' has been stopped and its content deleted, max. #{@torrent.content_size} Byte freed" )
+          page << render(:partial => 'remove', :object => @torrent)
         end
       else
         render :update do |page| 
-          page[:notice].update "error deleting contents: #{@torrent.errors.on(:filename)}"
-          page[:notice].visual_effect :appear
+          page << notification("error deleting contents: #{@torrent.errors.full_messages}")
         end
       end
     else
