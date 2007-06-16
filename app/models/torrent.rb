@@ -252,6 +252,10 @@ class Torrent < ActiveRecord::Base
       # no UDP supprt yet
       @mii = nil
     end
+    unless @mii
+      errors.add :filename, "no metainfo found"
+    end
+    @mii
   end
   
   def fetchable?
