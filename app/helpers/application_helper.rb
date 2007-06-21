@@ -12,4 +12,8 @@ module ApplicationHelper
       stylesheet_link_tag style
     end
   end
+
+  def context
+    page.instance_variable_get("@context").instance_variable_get("@template")
+  end
 end
