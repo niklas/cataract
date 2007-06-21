@@ -85,7 +85,7 @@ img {
 }
 
 
-#left {
+#search {
   position: absolute;
   top: 123px;
   left: 1%;
@@ -93,6 +93,9 @@ img {
   text-align: center; 
   margin: 0 5px 0 0;
   padding: 0;
+}
+
+#reply {
 }
 
 #right {
@@ -127,20 +130,24 @@ img {
   margin: 5px 0 -10px -10px ;
 }
 
-#groups {
+#search {
   margin: 0 0 0 0 !important;
 }
 
-#groups > li {
-  position: relative;
-  top: 4px;
-  padding: 0;
-  margin: 1px 5px 3px 5px;
-  display: inline;
+#reply {
+  max-width: 40%;
+  float: left;
+}
+#search > input {
+  padding: 0.1em 0.3em;
+  margin: 1px 2em 3px 2em;
+  float: left;
 }
 
-#groups > li > a{
+#search >a {
+  float: right;
 }
+
 
 #summary {
   position: absolute;

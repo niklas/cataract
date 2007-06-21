@@ -1,1 +1,1 @@
-flash[:notice] = nice_error_messages_for :torrent
+page[:reply].update short_error_messages_for :torrent

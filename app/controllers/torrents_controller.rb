@@ -113,8 +113,8 @@ class TorrentsController < ApplicationController
   end
 
   def probe
-    if params[:url] and !params[:url].empty?
-      @torrent = Torrent.new(:url => params[:url].strip)
+    if (params[:url] and !params[:url].empty?) or @torrent
+      @torrent ||= Torrent.new(:url => params[:url].strip)
       
       if @torrent.fetchable?
         render :partial => 'probe_success'
@@ -132,15 +132,16 @@ class TorrentsController < ApplicationController
 
   # create torrent
   # TODO: other ways than fetching with url
-  def create
-    @torrent = Torrent.new(params[:torrent])
+  def fetch_by_url
+    @torrent = Torrent.new(:url => params[:url])
     @torrent.status = :remote
     @torrent.fetch!
     if @torrent.errors.empty?
       @torrent.start!
       current_user.watch(@torrent)
       render :update do |page|
-        page[:checked_url].update "Torrent fetched: #{@torrent.filename}"
+        flash[:notice] = "Torrent fetched: #{@torrent.short_title}"
+        redirect_to :action => :list
       end
     else
       render :partial => 'probe_fail'
@@ -153,29 +154,37 @@ class TorrentsController < ApplicationController
       @torrent.fetch!
       current_user.watch(@torrent)
       render :update do |page|
-        page[:notice].update "Torrent fetched: #{@torrent.filename}"
+        page.notification("Torrent fetched: #{@torrent.short_title}")
       end
     rescue => e
       render :update do |page|
-        page[:notice].update e.to_s
+        page.notification(e.to_s)
       end
     end
   end
 
   def search
     @term = params[:term]
-    #if URI.regexp.match(@term)
-      #params[:url] = @term
-    #  render :text => 'fetching.....'
-    #  return
-    #end
-    @torrents = Torrent.search(@term)
+    if @term.is_a?(String) && !@term.empty? 
+      if URI.regexp.match(@term)
+        @torrent = Torrent.new(:url => @term)
+        probe
+        return
+      else
+        @torrents = Torrent.search(@term)
+        @reply = "searched for #{@term}"
+      end
+    else
+      @torrents = Torrent.find_in_state(:all, :running, :order => 'created_at desc')
+      @reply = ''
+    end
     forget_all
     memorize_preview(@torrents)
     respond_to do |wants|
       wants.js {
         render :update do |page|
           page[:content].update(render('/torrents/list'))
+          page[:reply].update @reply
         end
       }
     end

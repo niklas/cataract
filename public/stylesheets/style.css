@@ -31,25 +31,18 @@ body {
   background-color: #011009;
 }
 
-#groups {
-  text-align: center;
+#search {
+  text-align: left;
   overflow: hidden;
-}
-
-#groups > li {
   font-size: 140%;
-  list-style: none;
 }
 
-#groups > li > a {
+#search a {
   color: white;
   text-decoration: none;
 }
-#groups > li.active  {
-  font-weight: bold;
-}
 
-#groups input {
+#search input {
   border: 5px solid #2c0d0f; 
   background: #273327;
 }
