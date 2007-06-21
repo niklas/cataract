@@ -197,12 +197,12 @@ class TorrentsController < ApplicationController
         @torrent.halt!
         forget(@torrent)
         render :update do |page| 
-          page << notification("'#{@torrent.short_title}' has been stopped and its content deleted, max. #{@torrent.content_size} Byte freed" )
+          page.notification("'#{@torrent.short_title}' has been stopped and its content deleted, max. #{@torrent.content_size} Byte freed" )
           page << render(:partial => 'remove', :object => @torrent)
         end
       else
         render :update do |page| 
-          page << notification("error deleting contents: #{@torrent.errors.full_messages}")
+          page.notification("error deleting contents: #{@torrent.errors.full_messages}")
         end
       end
     else
