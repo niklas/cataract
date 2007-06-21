@@ -8,4 +8,4 @@ reaction =
     content_tag('span', "incomplete URL", { :class => 'front_of_search' } )
   end
 page.insert_html :top, :groups, reaction
-page << render_pending_notifications
+page.render_pending_notifications

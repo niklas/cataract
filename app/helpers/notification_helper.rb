@@ -21,10 +21,13 @@ module NotificationHelper
   end
 
   def render_pending_notifications
-    js = ''
-    js << notification(flash[:notice]) unless flash[:notice].blank?
-    js << @messages.collect { |m| notification(m) }.join(';') if @messages && !@messages.empty?
-    js << notification(flash[:error], {:class => 'error'}) unless flash[:error].blank?
-    js
+    pc =  page.context
+    notification(pc.flash[:notice]) unless pc.flash[:notice].blank?
+    mess = pc.flash[:messages]
+    mess.each do |m| 
+      notification(m)
+    end if (mess && !mess.empty?)
+    notification(pc.flash[:error], {:class => 'error'}) unless pc.flash[:error].blank?
+    pc.flash.discard
   end
 end
