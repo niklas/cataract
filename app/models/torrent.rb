@@ -148,14 +148,16 @@ class Torrent < ActiveRecord::Base
   # * kills renaming spaces
   def short_title
     title ||
-    filename.
-      gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
-      gsub(/\[.*?\]/,'').
-      gsub(/\(.*?\)/,'').
-      sub(/\d{5,}.TPB/,'').
-      sub(/\.?torrent$/i,'').
-      gsub(/[._-]+/,' ').
-      gsub(/\s{2,}/,' ').rstrip.lstrip
+      filename ? 
+        filename.
+          gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
+          gsub(/\[.*?\]/,'').
+          gsub(/\(.*?\)/,'').
+          sub(/\d{5,}.TPB/,'').
+          sub(/\.?torrent$/i,'').
+          gsub(/[._-]+/,' ').
+          gsub(/\s{2,}/,' ').rstrip.lstrip :
+        "Torrent ##{id}"
   end
   # synonym for short_title
   def nice_title
