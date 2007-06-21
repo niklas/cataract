@@ -6,20 +6,18 @@ module NotificationHelper
 
   def notification(message, css_class = '')
     domid = "notice_" + (rand*5000000).to_i.to_s
-    update_page do |page|
-      page.insert_html :top, :notice, notification_tag(message, {:id => domid})
-      page.visual_effect :blind_up, domid, {
-        :queue => {:position => 'front', :scope => 'notice' }, 
-        :delay => 3, 
-        :duration => 1.5,
-        :afterFinish => "function() { noticeWillBeRemoved(); $('#{domid}').remove() }"
-      }
-      page.visual_effect :blind_down, domid, {
-        :queue => {:position => 'front', :scope => 'notice' }, 
-        :duration => 0.5,
-        :afterFinish => "noticeWasInserted"
-      }
-    end
+    page.insert_html :top, :notice, notification_tag(message, {:id => domid})
+    page.visual_effect :blind_up, domid, {
+      :queue => {:position => 'front', :scope => 'notice' }, 
+      :delay => 3, 
+      :duration => 1.5,
+      :afterFinish => "function() { noticeWillBeRemoved(); $('#{domid}').remove() }"
+    }
+    page.visual_effect :blind_down, domid, {
+      :queue => {:position => 'front', :scope => 'notice' }, 
+      :duration => 0.5,
+      :afterFinish => "noticeWasInserted"
+    }
   end
 
   def render_pending_notifications
