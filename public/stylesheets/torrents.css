@@ -1,14 +1,5 @@
-div.progress {
-  border: 1px solid #222222;
-  margin: 0.5em 0.5em 0.2em 0.5em;
-  padding: 1px;
-  text-align: center;
-}
-
-div.percent_bar {
-  background: #515A65;
-  line-height: 50%;
-  font-size: 110%;
+span.progress {
+  margin-right: 0.3em;
 }
 
 div.torrent h1, div.torrent h1 > a
