@@ -1,5 +1,6 @@
 <div id="torrent_<%= details.id -%>" class="torrent details">
   <h1>
+    <%= progress(details) %>
     <%= link_to_remote details.short_title, 
           :url => { :action => 'preview', :id => details.id}, 
           :title => 'Preview', 

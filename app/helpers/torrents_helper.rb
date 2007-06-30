@@ -7,9 +7,14 @@ module TorrentsHelper
   end
 
   def progress(torrent)
-    content_tag('div',
+    content_tag('span',
       if torrent.running?
-        progress_bar(torrent)
+        sparkline_tag [torrent.percent], 
+          :type => :pie, 
+          :remain_color => '#222222',
+          :share_color => 'lightgrey',
+          :background_color => 'none',
+          :diameter => 16
       else
         torrent.statusmsg || 'finished'
       end,
