@@ -9,63 +9,66 @@ class Torrent < ActiveRecord::Base
   has_many :watchings, :dependent => true
   has_many :users, :through => :watchings
   belongs_to :feed
-  validates_uniqueness_of :filename, :if => Proc.new { |torrent| !torrent.remote? }
-#  validates_presence_of :filename
-  validates_format_of :url, :with => URI.regexp, :if => Proc.new {|torrent| torrent.remote? }
+  validates_uniqueness_of :filename, :allow_nil => true
+  validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   before_update :notify_if_just_finished
   before_save :sync
+  before_validation :fix_filename, :auto_set_status
   after_create :notify_users_and_add_it
   before_create :set_default_values
 
   searches_on :title, :filename, :url
 
   acts_as_taggable
-  acts_as_state_machine :initial => :running, :column => :status
 
-  state :paused, :enter => Proc.new { |t| 
-    t.moveto(t.fullpath(:paused))
-    t.brake
-  }
-  state :stopping, :enter => Proc.new { |t| 
-    t.moveto(t.fullpath(:stopping))
-    t.archive!
-  }
-  state :archived, :enter => Proc.new { |t| 
-    t.archive_content
-    t.moveto(t.fullpath(:archived))
-  }
-  state :running, :enter => Proc.new { |t|
-    t.unarchive_content
-    t.moveto(t.fullpath(:running))
-  }
-  state :fetching, :enter => Proc.new { |t|
-    t.fetch_by_url
-  }
-  state :remote
+  # lets simulate the state machine
+  def current_state
+    status ? status.to_sym : :nostatus
+  end
+  def pause!
+    event_from :running do 
+      moveto( fullpath(:paused) )
+      brake
+      status = :paused
+      save
+    end
+  end
 
-  event :pause do
-    transitions :from => [:running], :to => :paused
+  def start!
+    event_from [:paused, :archived, :fetching] do 
+      unarchive_content
+      moveto( fullpath(:running) )
+      status = :running
+      save
+    end
   end
-  event :start do
-    transitions :from => [:paused, :archived, :fetching], :to => :running
+
+  def stop!
+    event_from [:paused, :running, :stopping] do
+      moveto( fullpath(:stopping) ) if status != :stopping
+      archive_content
+      moveto( fullpath(:archived) )
+      status = :archived
+      save
+    end
   end
-  event :archive do
-    transitions :from => [:stopping], :to => :archived
+
+  def halt!
+    event_from [:paused, :running, :stopping, :fetching] do
+      moveto( fullpath(:archived) ) and update_attribute(:status,:archived)
+    end
   end
-  event :stop do
-    transitions :from => [:paused,:running], :to => :stopping
-  end
-  event :halt do
-    transitions :from => [:paused, :running], :to => :archived
-  end
-  event :fetch do
-    transitions :from => :remote, :to => :fetching
+
+  def fetch!
+    event_from [:remote] do
+      fetch_by_url and update_attribute(:status,:fetching)
+    end and
+    halt! # and keep in the archive until get start!ed
   end
 
   def fetch_and_start!
-    fetch!
-    start!
+    fetch! && start!
   end
 
   def self.invalid
@@ -74,7 +77,15 @@ class Torrent < ActiveRecord::Base
   end
 
   def self.running
-    find_in_state(:all, :running, :order => 'created_at desc')
+    find_in_state(:running, :order => 'created_at desc')
+  end
+
+  def running?
+    status.to_s == 'running'
+  end
+
+  def self.find_in_state(state, opts={})
+    find_all_by_status(state.to_s,opts)
   end
 
   def self.find_collection(ids)
@@ -145,7 +156,9 @@ class Torrent < ActiveRecord::Base
   # * removes some 1337 comments about format/group in the filename
   # * cuts the .torrent extention
   # * tranforms interpunctuations into spaces
-  # * kills renaming spaces
+  # * kills renaming spaces 
+  # or
+  # 3) takes a Title with the torrent's id
   def short_title
     title ||
       filename ? 
@@ -165,7 +178,11 @@ class Torrent < ActiveRecord::Base
   end
 
   def file_exists?
-    File.exists?(fullpath)
+    filename && fullpath && File.exists?(fullpath)
+  end
+
+  def remote?
+    current_state == :remote
   end
 
   # set rates to 0
@@ -174,16 +191,21 @@ class Torrent < ActiveRecord::Base
     self.rate_down = 0
   end
 
-  def validate
-    if !remote? and !File.exists?(fullpath)
-      validate_file_status
-    else
-      true
-    end
+  def auto_set_status
+    status = 
+      unless file_exists?
+        unless url.empty?
+          :remote
+        else
+          status_by_file_location
+        end
+      else
+        status
+      end
   end
 
   def before_destroy
-    File.delete(fullpath) if validate_file_status
+    File.delete(fullpath) if file_exists?
   end
 
   def files_hierarchy
@@ -193,10 +215,6 @@ class Torrent < ActiveRecord::Base
     metainfo.files.
       map      { |file| file.path }.
       group_by { |path| path.first }
-  end
-
-  def before_validation
-    fix_filename
   end
 
   def set_metainfo
@@ -252,50 +270,61 @@ class Torrent < ActiveRecord::Base
 
   def metainfo
     begin
-      @mii ||= RubyTorrent::MetaInfo.from_location(fullpath).info
+      if !@mii and file_exists?
+        @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
+      end
     rescue # RubyTorrent::MetaInfoFormatError
       # no UDP supprt yet
       @mii = nil
     end
-    unless @mii
-      errors.add :filename, "no metainfo found"
-    end
     @mii
   end
-  
-  def fetchable?
-    uri = URI.parse(url)
-    resp = Net::HTTP.get_response(uri)
-    if resp.is_a?(Net::HTTPSuccess) and resp.content_type == "application/x-bittorrent"
-      return resp
+ 
+  def uri
+    if @uri
+      @uri
     else
-      errors.add :url, "Code: #{resp.code}, Content-type: #{resp['content-type']}"
-      return false
+      u = url
+      u = URI.escape u
+      u = URI.escape u, /[\[\]]/
+      @uri = URI.parse(u)
+    end
+  end
+
+  def fetchable?
+    Net::HTTP.start(uri.host, uri.port) do |http|
+      resp = http.head(uri.path)
+      if resp.is_a?(Net::HTTPSuccess) and (resp['content-type'] =~ /application\/x-bittorrent/i)
+        return resp
+      else
+        errors.add :url, "HTTP Error: #{resp.inspect}, Content-type: #{resp['content-type']}"
+        return false
+      end
     end
   rescue URI::InvalidURIError
-    errors.add :url, "is not valid (#{uri.to_s})"
+    errors.add :url, "is not valid (#{url.to_s})"
     return false
-  rescue NoMethodError,SocketError
-    errors.add :url, "is invalid (#{uri.to_s})"
+  rescue SocketError, NoMethodError => e
+    errors.add :url, "unfetchable (#{e.to_s})"
     return false
   end
 
   def fetch_by_url
-    if resp = fetchable?
-      unless self.filename
-        if cdis = resp['content-disposition']
-          self.filename = cdis.sub(/^.*filename=(.+)$/,'\1')
-          self.filename.sub! /^"+/, ''
-          self.filename.sub! /"+$/, ''
-        else
-          self.filename = self.url.sub(/.*\//,'')
-        end
-        self.filename += '.torrent' unless self.filename =~ /\.torrent$/
+    if resp = Net::HTTP::get_response(uri) and resp.is_a?(Net::HTTPSuccess)
+      unless filename
+        fn = if cdis = resp['content-disposition']
+               cdis.sub(/^.*filename=(.+)$/,'\1').
+                    sub(/^"+/, '').
+                    sub(/"+$/, '')
+             else
+               url.sub(/.*\//,'')
+             end
+        fn += '.torrent' unless fn =~ /\.torrent$/
+        update_attribute :filename, fn
       end
       File.open(fullpath(:fetching), 'w') do |file|
         file.write resp.body
       end
-      self.save
       return self
     else
       return false
@@ -364,7 +393,7 @@ class Torrent < ActiveRecord::Base
     synched_at.blank? || (Time.now - synched_at > 1.day)
   end
 
-  private
+ private
   def filepath_status
     {
       :archived => File.join(Settings.history_dir, filename),
@@ -376,15 +405,10 @@ class Torrent < ActiveRecord::Base
     }
   end
 
-  def validate_file_status
-    return true if remote?
-    filepath_status.each do |s,p|
-      if File.exists?(p) 
-        write_attribute(:status, s)
-        return true
-      end
-    end
-    return false
+  def status_by_file_location
+    filepath_status.select { |s,f| File.exists?(f) }.first.first
+  rescue NoMethodError
+    return :invalid
   end
 
   # removes the leading './' or path from the filename
@@ -393,6 +417,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def set_default_values
+    self.status ||= 'running'
     self.content_size      ||= 0
     self.rate_down ||= 0
     self.rate_up   ||= 0
@@ -423,6 +448,14 @@ class Torrent < ActiveRecord::Base
     User.find_all_by_notify_on_new_torrents(true).each do |user|
       Notifier.send_new(user,self) if user.notifiable_via_jabber?
       user.watch(self) unless user.dont_watch_new_torrents?
+    end
+  end
+
+  def event_from(old_states=[])
+    if old_states.empty? || old_states.include?(current_state)
+      yield
+    else
+      nil
     end
   end
 end

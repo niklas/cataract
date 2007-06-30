@@ -1,11 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 lebelge:
   id: 1
-  url: 'http://localhost/LeBelgeElectrod%20-%20AudioDestruction%20Part%20I%20--%20Jamendo%20-%20MP3%20VBR%20192k%20-%202006.03.23%20%5Bwww.jamendo.com%5D.torrent'
-  filename: 'LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent'
-  title: "LeBelgeElectrod - AudioDestruction Part I"
+  url: 'http://torrent1.jamendo.com/1473/LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent'
   status: 'remote'
 another:
   id: 2
-  url: 'http://torrent1.jamendo.com/1473/LeBelgeElectrod%20-%20AudioDestruction%20Part%20I%20--%20Jamendo%20-%20MP3%20VBR%20192k%20-%202006.03.23%20%5Bwww.jamendo.com%5D.torrent'
+  url: 'http://torrent1.jamendo.com/1473/LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent'
+  filename: 'LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent'
+  title: "LeBelgeElectrod - AudioDestruction Part I"
 

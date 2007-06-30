@@ -8,7 +8,7 @@ class TorrentsController < ApplicationController
 
   def list
     @status = (params[:status] || :running).to_sym
-    @torrents = Torrent.find_in_state(:all,@status, :order => 'created_at desc')
+    @torrents = Torrent.find_in_state(@status, :order => 'created_at desc')
     forget_all
     memorize_preview(@torrents)
   end
@@ -135,14 +135,16 @@ class TorrentsController < ApplicationController
   def fetch_by_url
     @torrent = Torrent.new(:url => params[:url])
     @torrent.status = :remote
+    unless @torrent.save
+      render :partial => 'probe_fail'
+      return
+    end
     @torrent.fetch!
     if @torrent.errors.empty?
       @torrent.start!
       current_user.watch(@torrent)
-      render :update do |page|
-        flash[:notice] = "Torrent fetched: #{@torrent.short_title}"
-        redirect_to :action => :list
-      end
+      flash[:notice] = "Torrent fetched: #{@torrent.short_title}"
+      redirect_to :action => :list
     else
       render :partial => 'probe_fail'
     end

@@ -10,10 +10,12 @@ class File
 end
 
 class FileUtilsTest < Test::Unit::TestCase
-  @@other_filesystem = '/media/more/test/'
+  @@other_filesystem = '/tmp/catatact_test/'
 
   def setup
-    @sandbox = '../sandbox/'
+    prepare_directories
+    Dir.mkdir @@other_filesystem unless File.directory?(@@other_filesystem)
+    @sandbox = Settings.torrent_dir
     @richdir = @sandbox + 'richdir/'
     @target1 = @sandbox + 'richdir2'
     @target2 = @@other_filesystem + 'richdir'
@@ -29,7 +31,7 @@ class FileUtilsTest < Test::Unit::TestCase
   end
 
   def teardown
-    [@richdir,@target1,@target2].each do |d|
+    [@richdir,@target1,@target2,@@other_filesystem].each do |d|
       d += '/' unless d.last == '/'
       delete_if_exists d + '/1/' + '42'
       delete_if_exists d + '/1/' + '5'

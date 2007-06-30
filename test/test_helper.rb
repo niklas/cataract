@@ -25,4 +25,18 @@ class Test::Unit::TestCase
   self.use_instantiated_fixtures  = true
 
   # Add more helper methods to be used by all tests here...
+
+  def prepare_directories
+    Settings.torrent_dir = File.dirname(__FILE__) + '/../sandbox/'
+    Settings.target_dir  = File.dirname(__FILE__) + '/../sandbox/__finished/'
+    Settings.history_dir = File.dirname(__FILE__) + '/../sandbox/history/'
+    %w(torrent_dir target_dir history_dir).each do |var|
+      dir = Settings[var]
+      Dir.mkdir dir unless File.exists?(dir)
+      assert File.exists?(dir)
+      assert File.directory?(dir)
+    end
+  end
+
+
 end

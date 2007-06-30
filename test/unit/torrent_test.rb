@@ -4,27 +4,40 @@ class TorrentTest < Test::Unit::TestCase
   fixtures :torrents
 
   def setup
-    Settings.torrent_dir = File.dirname(__FILE__) + '/../sandbox/'
-    Settings.target_dir  = File.dirname(__FILE__) + '/../sandbox/__finished/'
-    Settings.history_dir = File.dirname(__FILE__) + '/../sandbox/history/'
-    
+    prepare_directories
   end
 
-  def test_settings_and_directories
-    assert File.exists?(Settings.torrent_dir)
-    assert File.exists?(Settings.target_dir)
-    assert File.exists?(Settings.history_dir)
+  def test_status_methods
+    assert @lebelge.status.to_sym == :remote
+    assert @lebelge.current_state == :remote
+    assert @lebelge.remote?
+  end
+
+  def test_a_remote_torrent
+    assert_equal :remote, @lebelge.current_state
+    assert @lebelge.remote?, 'not remote'
+    assert @lebelge.valid?, 'not valid'
+    unless @lebelge.fetchable?
+      assert @lebelge.errors.empty?, @lebelge.errors.full_messages
+      flunk 'not fetchable'
+    end
   end
 
   def test_fetch_and_lifecycle
-    assert_equal :remote, @lebelge.current_state
-    assert @lebelge.remote?
-    assert @lebelge.fetchable?
-    @lebelge.fetch!
-    assert @lebelge.file_exists?
+    assert @lebelge.fetch!, 'could not fetch'
+    # after that the file should lay in the history dir
+    assert_kind_of String, @lebelge.fullpath
+    assert !@lebelge.fullpath.empty?, 'empty path'
+    assert_equal Settings.history_dir + 'LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent', @lebelge.fullpath, 'wrong path'
+    assert @lebelge.file_exists?, 'file missing'
+
     @lebelge.start!
     assert_equal :running, @lebelge.current_state
     assert @lebelge.running?
+    assert_kind_of String, @lebelge.fullpath
+    assert !@lebelge.fullpath.empty?
+    assert_equal Settings.torrent_dir + '/LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent', @lebelge.fullpath
+    assert @lebelge.file_exists?
 
     # start again, for verpeiling users
     @lebelge.start!
