@@ -7,6 +7,7 @@
 # by Niklas Hofer for Cataract
 #
 require 'fileutils'
+
 module FileUtils
 
   def bad_mv(src, dest, options = {})
@@ -39,8 +40,12 @@ module FileUtils
     return if options[:noop]
     raise Errno::EEXIST, dest if File.exist?(dest)
     raise Errno::ENOENT, src unless File.exist?(src)
-    unless system('/bin/mv',src,dest)
-      raise SystemCallError, $?.to_s
+    puts "running mv"
+    mess = `/bin/mv #{src} #{dest} 2>&1`
+    puts "finished"
+    unless $? == 0
+      raise SystemCallError, (mess.empty? ? $?.to_s : mess)
+      #          question mark hell ??? ^^^
     end
   end
   module_function :mv
