@@ -25,7 +25,6 @@ class TorrentsController < ApplicationController
   def stop
     @torrent = Torrent.find(params[:id])
     @torrent.stop!
-    @torrent.archive!
     if @torrent.errors.empty?
       flash[:notice] = @torrent.short_title + " was moved to history"
       forget(@torrent)
