@@ -22,49 +22,68 @@ class Torrent < ActiveRecord::Base
 
   acts_as_taggable
 
+  STATES = [:running,:fetching,:paused,:archived,:remote,:stopping]
+
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus
   end
+  def self.states
+    STATES
+  end
+  STATES.each do |st|
+    src = <<-END_SRC
+      def #{st.to_s}?
+        current_state == :#{st}
+      end
+    END_SRC
+    class_eval src, __FILE__, __LINE__
+  end
+
+  
   def pause!
     event_from :running do 
       moveto( fullpath(:paused) )
       brake
-      status = :paused
-      save
+      update_attribute(:status, :paused)
     end
   end
 
   def start!
-    event_from [:paused, :archived, :fetching] do 
+    event_from [:paused, :archived, :fetching, :running] do 
       unarchive_content
       moveto( fullpath(:running) )
-      status = :running
+      update_attribute(:status, :running)
       save
     end
   end
 
   def stop!
     event_from [:paused, :running, :stopping] do
-      moveto( fullpath(:stopping) ) if status != :stopping
-      archive_content
+      if current_state != :stopping
+        moveto( fullpath(:stopping) ) 
+        update_attribute(:status, :stopping)
+        archive_content
+      end
       moveto( fullpath(:archived) )
-      status = :archived
-      save
+      update_attribute(:status, :archived)
     end
   end
 
   def halt!
     event_from [:paused, :running, :stopping, :fetching] do
-      moveto( fullpath(:archived) ) and update_attribute(:status,:archived)
+      moveto( fullpath(:archived) ) && update_attribute(:status,:archived)
+      true
     end
   end
 
   def fetch!
     event_from [:remote] do
-      fetch_by_url and update_attribute(:status,:fetching)
-    end and
-    halt! # and keep in the archive until get start!ed
+      update_attribute(:status, :fetching)
+      fetch_by_url
+      moveto( fullpath(:archived) )
+      update_attribute(:status, :archived)
+    end
   end
 
   def fetch_and_start!
@@ -78,10 +97,6 @@ class Torrent < ActiveRecord::Base
 
   def self.running
     find_in_state(:running, :order => 'created_at desc')
-  end
-
-  def running?
-    status.to_s == 'running'
   end
 
   def self.find_in_state(state, opts={})
@@ -327,6 +342,7 @@ class Torrent < ActiveRecord::Base
       end
       return self
     else
+      raise "could not fetch: #{resp.inspect}"
       return false
     end
   end
@@ -452,10 +468,11 @@ class Torrent < ActiveRecord::Base
   end
 
   def event_from(old_states=[])
+    old_states = [old_states] unless old_states.is_a? Array
     if old_states.empty? || old_states.include?(current_state)
       yield
     else
-      nil
+      raise RuntimeError, "#{current_state} is not a valid state for this transition"
     end
   end
 end

@@ -38,5 +38,9 @@ class Test::Unit::TestCase
     end
   end
 
+  def cleanup_directories
+    FileUtils.rm_rf Settings.torrent_dir
+  end
+
 
 end

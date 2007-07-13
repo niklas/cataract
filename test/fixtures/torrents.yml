@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 lebelge:
   id: 1
-  url: 'http://torrent1.jamendo.com/1473/LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent'
+  url: 'http://lanpartei.de/lebelge.torrent'
   status: 'remote'
 another:
   id: 2
