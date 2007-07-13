@@ -1,8 +1,7 @@
 <% t = watchlist_item %>
-<div class="watchlist_item">
+<div class="watchlist_item" id="watched_torrent_<%= t.id -%>">
   <%= link_to_remote image_tag('close'),
-    :url => { :action => 'unwatch', :id => t },
-    :update => { :success => 'watchlist' } %>
+    :url => { :action => 'unwatch', :id => t } %>
     <h1><%= link_to_remote t.short_title, :url => {:action => 'show', :id => t} -%></h1>
   <%= progress(t) -%><br />
   <%= transfer(t) -%>

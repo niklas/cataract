@@ -88,13 +88,29 @@ class TorrentsController < ApplicationController
 
   def watch
     @torrent = Torrent.find(params[:id])
-    current_user.watch(@torrent)
-    watchlist
+    if current_user.watch(@torrent)
+      render :update do |page|
+        page.insert_html :top, :watchlist, render(:partial => 'watchlist_item', :object => @torrent)
+        page.notification("Added '#{@torrent.short_title}' to watchlist")
+      end
+    else
+      render :update do |page|
+        page.notification("Already watching '#{@torrent.short_title}'")
+      end
+    end
   end
 
   def unwatch
     current_user.unwatch(params[:id])
-    watchlist
+    @torrent = Torrent.find(params[:id])
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page.remove("watched_torrent_#{@torrent.id}")
+          page.notification("Removed '#{@torrent.short_title}' from watchlist")
+        end
+      end
+    end
   end
 
   def watchlist

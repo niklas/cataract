@@ -46,11 +46,16 @@ class User < ActiveRecord::Base
   end
 
   def watch(torrent)
+    return if is_watching(torrent)
     self.watchings.create(:torrent => torrent, :apprise => true)
   end
 
   def unwatch(torrent_id)
     self.watchings.find_by_torrent_id(torrent_id).destroy
+  end
+
+  def is_watching(torrent)
+    watchings.find_by_torrent_id(torrent.id)
   end
 
   def remember_token?
