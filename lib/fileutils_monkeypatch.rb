@@ -40,9 +40,7 @@ module FileUtils
     return if options[:noop]
     raise Errno::EEXIST, dest if File.exist?(dest)
     raise Errno::ENOENT, src unless File.exist?(src)
-    puts "running mv"
     mess = `/bin/mv #{src} #{dest} 2>&1`
-    puts "finished"
     unless $? == 0
       raise SystemCallError, (mess.empty? ? $?.to_s : mess)
       #          question mark hell ??? ^^^
