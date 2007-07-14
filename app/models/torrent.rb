@@ -28,6 +28,9 @@ class Torrent < ActiveRecord::Base
   def current_state
     status ? status.to_sym : :nostatus
   end
+  def status=(new_status)
+    self[:status] = new_status.to_s
+  end
   def self.states
     STATES
   end
