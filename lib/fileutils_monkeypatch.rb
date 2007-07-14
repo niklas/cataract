@@ -40,7 +40,9 @@ module FileUtils
     return if options[:noop]
     raise Errno::EEXIST, dest if File.exist?(dest)
     raise Errno::ENOENT, src unless File.exist?(src)
-    mess = `/bin/mv #{src} #{dest} 2>&1`
+    good_dest = dest.gsub(/'/, '\'')
+    good_src  =  src.gsub(/'/, '\'')
+    mess = `/bin/mv '#{good_src}' '#{good_dest}' 2>&1`
     unless $? == 0
       raise SystemCallError, (mess.empty? ? $?.to_s : mess)
       #          question mark hell ??? ^^^
