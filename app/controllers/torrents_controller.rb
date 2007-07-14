@@ -200,7 +200,7 @@ class TorrentsController < ApplicationController
         @reply = "searched for #{@term}"
       end
     else
-      @torrents = Torrent.find_in_state(:all, :running, :order => 'created_at desc')
+      @torrents = Torrent.find_in_state(:running, :order => 'created_at desc')
       @reply = ''
     end
     forget_all
