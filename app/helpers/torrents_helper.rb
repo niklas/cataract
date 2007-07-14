@@ -18,7 +18,8 @@ module TorrentsHelper
       else
         torrent.statusmsg || 'finished'
       end,
-      {:class => 'progress', :id => "progress_#{torrent.id}"}
+      {:class => 'progress', :id => "progress_#{torrent.id}", 
+        :title => "#{torrent.percent.to_i}%"}
     )
   end
 
