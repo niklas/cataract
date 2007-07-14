@@ -1,2 +1,1 @@
-page[:reply].update "Torrent OK" +
-  link_to_remote('add', :url => { :action => 'fetch_by_url', :url => @torrent.url })
+page[:reply].update link_to_remote('add!', :url => { :action => 'fetch_by_url', :url => @torrent.url })

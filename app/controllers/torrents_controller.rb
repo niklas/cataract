@@ -155,11 +155,19 @@ class TorrentsController < ApplicationController
       return
     end
     @torrent.fetch!
-    if @torrent.errors.empty?
+    if @torrent.valid?
       @torrent.start!
       current_user.watch(@torrent)
-      flash[:notice] = "Torrent fetched: #{@torrent.short_title}"
-      redirect_to :action => :list
+      respond_to do |wants|
+        wants.js do
+          render :update do |page|
+            page[:reply].update ""
+            page.insert_html :top, :content, 
+              render(:partial => 'preview', :object => @torrent)
+            page.notification("Torrent fetched: #{@torrent.short_title}")
+          end
+        end
+      end
     else
       render :partial => 'probe_fail'
     end
