@@ -31,22 +31,22 @@ module TorrentsHelper
   end
 
   def action_buttons_for(t)
-    case t.status
-    when 'running'
+    case t.current_state
+    when :running
       button(t,'stop') +
       button(t,'pause')
-    when 'archived'
+    when :archived
       button(t,'start')
-    when 'paused'
+    when :paused
       button(t,'start') +
       button(t,'stop')
-    when 'remote'
+    when :remote
       button(t,'fetch')
-    when 'missing'
+    when :missing
       'file missing'
-    when 'stopping'
+    when :stopping
       activity_effect_content(t,"stopping")
-    when 'fetching'
+    when :fetching
       activity_effect_content(t,"fetching")
     else
       "[WTF: status #{t.status}]"
