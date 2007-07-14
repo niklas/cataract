@@ -31,7 +31,7 @@ class TorrentsController < ApplicationController
       render :partial => 'remove', :object => @torrent
     else
       render :update do |page|
-        page[:content].update(@torrent.errors.full_messages.join(','))
+        page.notification("Error while stopping: #{@torrent.errors.full_messages.join(',')}")
       end
     end
   end
