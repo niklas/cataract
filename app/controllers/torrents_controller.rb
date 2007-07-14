@@ -154,9 +154,7 @@ class TorrentsController < ApplicationController
       render :partial => 'probe_fail'
       return
     end
-    @torrent.fetch!
-    if @torrent.valid?
-      @torrent.start!
+    if @torrent.fetch_and_start!
       current_user.watch(@torrent)
       respond_to do |wants|
         wants.js do
