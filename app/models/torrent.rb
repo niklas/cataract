@@ -212,7 +212,7 @@ class Torrent < ActiveRecord::Base
   def auto_set_status
     status = 
       unless file_exists?
-        unless url.empty?
+        unless url.blank?
           :remote
         else
           status_by_file_location
