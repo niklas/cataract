@@ -6,9 +6,9 @@ module NotificationHelper
 
   def notification(message, css_class = '')
     domid = "notice_" + (rand*5000000).to_i.to_s
-    page.insert_html :top, :notice, page.context.notification_tag(message, {:id => domid})
-    page.visual_effect :blind_up, domid, {
-      :queue => {:position => 'front', :scope => 'notice' }, 
+    page.insert_html :bottom, :notice, page.context.notification_tag(message, {:id => domid})
+    page.visual_effect :fade, domid, {
+      :queue => {:position => 'end', :scope => 'notice' }, 
       :delay => 3, 
       :duration => 1.5,
       :afterFinish => "function() { noticeWillBeRemoved(); $('#{domid}').remove() }"
