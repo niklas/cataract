@@ -12,7 +12,6 @@
     <span class="logo"><%= image_tag('cataract', :class => "test") %></span>
 	 <div id="actions" style="display:none">
 	   <ul>
-        <li><%= link_to_remote 'Add single Torrent', :url => {:action => 'new', :controller => 'torrents'} %></li>
         <li><%= link_to 'Feeds', {:controller => 'feed'} %></li>
         <%= group_link('running') %>
         <%= group_link('paused') %>
