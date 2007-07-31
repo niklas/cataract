@@ -129,14 +129,19 @@ class Torrent < ActiveRecord::Base
   end
 
   # side info
-  def self.diskfree
-    dir = Settings.torrent_dir
+  def self.diskfree(which=nil)
+    dir = which || Settings.torrent_dir
     cmd = '/bin/df'
     if File.exists?(dir) and File.exists?(cmd)
       `#{cmd} '#{dir}'`.split[10].to_i
     else
       0
     end
+  end
+
+  def self.disksfree
+    %w(torrent_dir history_dir target_dir).
+      inject({}) { |hsh,dir| hsh.merge({ dir => Torrent.diskfree(Settings[dir]) }) }
   end
 
 
