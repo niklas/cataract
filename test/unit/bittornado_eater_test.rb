@@ -22,7 +22,7 @@ class BittornadoEaterTest < Test::Unit::TestCase
   end
 
   def test_scrubs
-    line = '"./[Snarf-It.org] Scrubs.S06E02.PDTV.XviD-NoTV.avi.torrent": "seeding" (100.0%) - 0P0s0.000D u0.0K/s-d0.0K/s u4096K-d0K ""'
+    line = '"./[Snarf-It.org] Scrubs.S06E02.PDTV.XviD-NoTV.avi.torrent": "seeding" (100.0%) - 0P0s0.000D u0.0K/s-d0.0K/s u4096K-d0K "Problem connecting to tracker - timeout exceeded"'
     t = @eater.match_torrent_entry(line)
     assert t
     assert_equal '[Snarf-It.org] Scrubs.S06E02.PDTV.XviD-NoTV.avi.torrent', t[:filename]
@@ -35,7 +35,7 @@ class BittornadoEaterTest < Test::Unit::TestCase
     assert_equal 0.0, t[:rate_down]
     assert_equal 4096, t[:transferred_up]
     assert_equal 0, t[:transferred_down]
-    assert_equal '', t[:errormsg]
+    assert_equal 'Problem connecting to tracker - timeout exceeded', t[:errormsg]
   end
 
   def test_warcry
