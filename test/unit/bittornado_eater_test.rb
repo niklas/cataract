@@ -55,4 +55,21 @@ class BittornadoEaterTest < Test::Unit::TestCase
     assert_equal '', t[:errormsg]
   end
 
+  def test_simpsons
+    line = '"/home/leeacher/cataract_sandbox/Simpsons Season 15 - Complete [rl] .torrent": "downloading" (0.0%) - 3P0S0.961D u0.0K/s-d0.0K/s u0K-d0K ""'
+    t = @eater.match_torrent_entry(line)
+    assert t
+    assert_equal 'Simpsons Season 15 - Complete [rl] .torrent', t[:filename]
+    assert_equal 'downloading', t[:statusmsg]
+    assert_equal 0.0, t[:percent_done]
+    assert_equal 3, t[:peers]
+    assert_equal 0, t[:seeds]
+    assert_equal 0.961, t[:distributed_copies]
+    assert_equal 0.0, t[:rate_up]
+    assert_equal 0.0, t[:rate_down]
+    assert_equal 0, t[:transferred_up]
+    assert_equal 0, t[:transferred_down]
+    assert_equal '', t[:errormsg]
+  end
+
 end
