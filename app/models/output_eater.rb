@@ -1,8 +1,16 @@
+require 'open3'
 class OutputEater
-  def initialize(source='flupp')
+  def initialize(source='flupp',runnable=false)
     @source = source
-    @logfile = 'bt.log'
+    @runnable = runnable
+    @logfile = '/tmp/cataract_eater.log'
+    prepare
   end
+
+  def prepare
+    # here you insert you own code, run directly after new
+  end
+
 
   def startup 
     @stop = false
@@ -22,10 +30,19 @@ class OutputEater
 
   def eater(some_time=1)
     while not @stop # keeps reading until something other happens
-      info "opening #{@source} for input"
-      File.open(@source) do |input|
-        while line = input.gets
-          process_line(line)
+      if @runnable
+        info "running #{@source} and reading its input"
+        Open3.popen3(@source) do |stdin, stdout, stderr|
+          while line = stdout.gets
+            process_line(line)
+          end
+        end
+      else
+        info "opening #{@source} for input"
+        File.open(@source) do |input|
+          while line = input.gets
+            process_line(line)
+          end
         end
       end
       sleep some_time
@@ -54,7 +71,7 @@ class OutputEater
     filename = attribs[:filename]
     torrent = Torrent.find_by_filename(filename)
     unless torrent
-      info "WWW: unknown torrent updated, registering: #{filename}'"
+      info "new torrent found: #{filename}'"
       torrent = Torrent.create(:filename => filename)
     end
     torrent.update_attributes(attribs)

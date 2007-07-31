@@ -3,8 +3,8 @@ class BittornadoEater < OutputEater
     ri = '(\d+)'         # an integer
     rf = '(\d+\.\d+)'    # a float
     re_torrentstatus = /^
-        "\.\/                 # preceeding foo
-          ([^"]+\.torrent)    # filename
+        ".*\/                 # preceeding foo
+          ([^"]+\.torrent)    # just the filename
         ":\s*"
           ([^"]*)             # statusmsg
         "\s*
@@ -48,13 +48,16 @@ class BittornadoEater < OutputEater
   end
   def match_logentry(line)
     re_logentry = /^###\s*(.*)$/
+    re_path = '.*\/'
     if re_logentry.match(line)
       entry = $1.chomp
       case entry
-      when /^dropped\s+"\.\/(.+)"$/
+      when /^dropped\s+"#{re_path}(.+)"$/
         dropped($1)
-      when /^added\s+"\.\/(.+)"$/
+      when /^added\s+"#{re_path}(.+)"$/
         added($1)
+      when /^\*\*warning\*\* .*dummy.torrent has errors$/
+        info "found dummy torrent"
       when 'shutting down'
         # we follow the king to death!
         info "waiting for bittorrent to quit (this can take a while)..."
@@ -66,5 +69,26 @@ class BittornadoEater < OutputEater
     else
       return false
     end
+  end
+  def prepare
+    system("touch '#{File.expand_path('dummy.torrent', Settings.torrent_dir)}'")
+    here = File.dirname(__FILE__)
+    client = File.expand_path('../../bin/BitTornado-CVS/btlaunchmany.py', here )
+    @source = <<BITTORNADO
+        python -u #{client} '#{Settings.torrent_dir}'
+                --display_interval #{Settings.interval} 
+                --spew 1 
+                --random_port 0
+                --minport #{Settings.min_port}
+                --maxport #{Settings.max_port}
+                --buffer_reads 0
+                --auto_flush 60
+                --saveas_style 2
+                --max_upload_rate #{Settings.max_up_rate}
+                --max_uploads 2
+BITTORNADO
+    @source.gsub!(/\n/,' ')
+    @source.squeeze!(' ')
+    @source.strip!
   end
 end
