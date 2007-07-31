@@ -3,7 +3,7 @@ class BittornadoEater < OutputEater
     ri = '(\d+)'         # an integer
     rf = '(\d+\.\d+)'    # a float
     re_torrentstatus = /^
-        "\.\/
+        "\.\/                 # preceeding foo
           ([^"]+\.torrent)    # filename
         ":\s*"
           ([^"]*)             # statusmsg
@@ -13,17 +13,21 @@ class BittornadoEater < OutputEater
           #{ri}P              # peers
           #{ri}S              # seeds
           #{rf}D              # distributed_copies
-        \s*u
-          #{rf}               # rate_up
-        K\/s\s*-d
-          #{rf}               # rate_down
-        K\/s\s*u
-          #{ri}               # transferred_up
-        K-d
-          #{ri}               # transferred_down
-        K\s*"
-          ([^"]*)             # errormsg
-        "$/xi
+        \s*
+          u#{rf}               # rate_up
+        K\/s\s*-
+          d#{rf}               # rate_down
+        K\/s\s*
+          u#{ri}               # transferred_up
+        K-
+          d#{ri}               # transferred_down
+        K\s*
+          (?:
+           "
+            ([^"]*)             # optional errormsg
+           " 
+          )?
+        $/xi
     if la = re_torrentstatus.match(line)
       return {
         :filename     => la[1],

@@ -36,7 +36,7 @@ class OutputEater
     line.chomp!
     return if line =~ /^\s*$/
 
-    update( match_logentry(line) ) or
+    match_logentry(line) or
     update( match_torrent_entry(line) ) or
     info "EEE: don't know how to process or something went wrong: #{line}\n"
   end
