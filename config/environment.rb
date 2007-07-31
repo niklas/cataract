@@ -7,6 +7,19 @@
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '1.2.3'
 
+
+module SettingsDefaults
+  DEFAULTS = {
+    :history_dir => '[must be configured]',
+    :torrent_dir => '[must be configured]',
+    :target_dir  => '[must be configured]',
+    :min_port    => 6881,
+    :max_port    => 6889,
+    :interval    => 42,
+    :max_up_rate => 5
+  }
+end
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -50,16 +63,5 @@ end
 #   inflect.uncountable %w( fish sheep )
 # end
 
-
-module SettingsDefaults
-  DEFAULTS = {
-    :history_dir => '[must be configured]',
-    :torrent_dir => '[must be configured]',
-    :target_dir  => '[must be configured]',
-    :min_port    => 6881,
-    :max_port    => 6889,
-    :interval    => 42
-  }
-end
 
 # Include your application configuration below
