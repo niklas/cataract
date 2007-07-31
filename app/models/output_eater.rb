@@ -1,9 +1,12 @@
 require 'open3'
 class OutputEater
+  attr_accessor :verbose
+
   def initialize(source='flupp',runnable=false)
     @source = source
     @runnable = runnable
     @logfile = '/tmp/cataract_eater.log'
+    @verbose = false
     prepare
   end
 
@@ -68,13 +71,14 @@ class OutputEater
 
   def update(attribs)
     return unless attribs
-    filename = attribs[:filename]
+    filename = attribs.delete(:filename)
     torrent = Torrent.find_by_filename(filename)
     unless torrent
       info "new torrent found: #{filename}'"
       torrent = Torrent.create(:filename => filename)
     end
     torrent.update_attributes(attribs)
+    info "#{torrent.percent_done}% (#{torrent.statusmsg}) #{torrent.filename}"
   end
 
   def dropped(filename)
@@ -104,7 +108,9 @@ class OutputEater
   def info(*args)
     File.open(@logfile,'a+') do |f| 
       args.each do |line|
-        f.puts "#{self.class}: #{line}"
+        out = "#{self.class}: #{line}"
+        f.puts out
+        puts line if @verbose
       end
     end
   end
