@@ -71,4 +71,8 @@ class Settings < ActiveRecord::Base
       @@cache[var_name] = value
     end
   end
+
+  def self.defaults
+    @@defaults
+  end
 end
