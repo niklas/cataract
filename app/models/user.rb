@@ -51,7 +51,8 @@ class User < ActiveRecord::Base
   end
 
   def unwatch(torrent_id)
-    self.watchings.find_by_torrent_id(torrent_id).destroy
+    w = self.watchings.find_by_torrent_id(torrent_id)
+    w.destroy if w
   end
 
   def is_watching(torrent)
