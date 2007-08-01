@@ -1,8 +1,8 @@
 # removes the given torrent from the list or table
 domid = "torrent_#{remove.id}"
-details_domid = "details_for_#{@torrent.id}"
+details_domid = "details_for_#{@torrent.id}" 
 
-page.visual_effect :blind_up, "details_for_#{@torrent.id}", :duration => 1
+page.visual_effect :blind_up, "details_for_#{@torrent.id}", :duration => 1 if @removed_shown_torrent == @torrent.id
 page.visual_effect :fade, domid, :duration => 2
 page.delay(2.3) do
   page[domid].remove 

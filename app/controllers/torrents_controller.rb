@@ -242,8 +242,8 @@ class TorrentsController < ApplicationController
   end
 
   def forget(torrent)
-    session[:previewed_torrents].delete(torrent.id)
-    session[:shown_torrents].delete(torrent.id)
+    @removed_preview_torrent = session[:previewed_torrents].delete(torrent.id)
+    @removed_shown_torrent = session[:shown_torrents].delete(torrent.id)
   end
 
   def forget_all
