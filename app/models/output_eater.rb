@@ -21,6 +21,10 @@ class OutputEater
     teardown
   end
 
+  def stop(io=nil)
+    info "stopping the feeder.. "
+  end
+
   def update_interface
     info "updating the interface"
     sleep 3
@@ -36,6 +40,10 @@ class OutputEater
       if @runnable
         info "running #{@source} and reading its input"
         Open3.popen3(@source) do |stdin, stdout, stderr|
+          trap "INT" do
+            self.stop(stdin)
+            @stop = true
+          end
           while line = stdout.gets
             process_line(line)
           end

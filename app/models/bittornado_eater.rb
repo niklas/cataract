@@ -60,7 +60,7 @@ class BittornadoEater < OutputEater
         info "found dummy torrent"
       when 'shutting down'
         # we follow the king to death!
-        info "waiting for bittorrent to quit (this can take a while)..."
+        info "bittornado is quitting, saving caches (this can take a while)..."
         @stop = true
       else
         info "unknown message from btlaunchmany: #{entry}"
@@ -90,5 +90,10 @@ BITTORNADO
     @source.gsub!(/\n/,' ')
     @source.squeeze!(' ')
     @source.strip!
+  end
+
+  def stop(io)
+    info "stopping bittornado, waiting for feedback.."
+    io.puts "q" if io.is_a? IO
   end
 end
