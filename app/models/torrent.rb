@@ -160,6 +160,7 @@ class Torrent < ActiveRecord::Base
 
   def content_filenames
     @content_filenames ||= YAML.load(self[:content_filenames])
+  rescue TypeError
   end
 
   def actual_size
