@@ -95,11 +95,11 @@ class CataractTrayIcon < Gtk::TrayIcon
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
     add_events(Gdk::Event::BUTTON_RELEASE_MASK)
     signal_connect('button-press-event') do |widget,event|
-      @popup.toggle(torrent_table)
+      @popup.toggle(initiate_list)
     end
   end
 
-  def torrent_table
+  def initiate_list
     torrents = @fetcher.get_torrents
     return Gtk::Label.new('no torrents') if !torrents or torrents.empty?
 
@@ -121,6 +121,17 @@ class CataractTrayIcon < Gtk::TrayIcon
       n+=1
     end
     return tab
+  rescue Exception => e
+    return Gtk::Label.new(e.message)
+  end
+
+  def update_list
+    @fetcher.update_torrents.each do |t|
+      i = t.id
+      if b = @bar[i]
+        b.set_fraction(t.percent_done / 100)
+      end
+    end
   rescue Exception => e
     return Gtk::Label.new(e.message)
   end
@@ -180,6 +191,10 @@ class TorrentFetcher
       torrents << MockTorrent.new(thash)
     end
     return torrents
+  end
+
+  def update_torrents
+    rpc.call('UpdateWatchlist')
   end
 end
 
