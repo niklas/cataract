@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'gtktrayicon'
-require 'net/http'
-require 'rexml/document'
+require "xmlrpc/client"
 require 'yaml'
 
 class NotificationAreaTooltip
@@ -106,6 +105,7 @@ class CataractTrayIcon < Gtk::TrayIcon
   def initialize(title="Cataract")
     @title = title
     @fetcher = TorrentFetcher.new
+    @bar = []
     super(@title)
     populate
     show_all
@@ -114,25 +114,20 @@ class CataractTrayIcon < Gtk::TrayIcon
   def populate
     @popup = NotificationAreaTooltip.new
 
-    event_box = Gtk::EventBox.new
-    event_box.visible = false
-    event_box.add(Gtk::Label.new(@title))
-    event_box.set_events(Gdk::Event::POINTER_MOTION_MASK)
-    event_box.signal_connect("motion_notify_event") do |widget,event|
+    icon = Gtk::Image.new 'public/images/globe24.png'
+    icon.set_icon_size Gtk::IconSize::BUTTON
+    add icon 
+    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+    add_events(Gdk::Event::BUTTON_RELEASE_MASK)
+    signal_connect('button-press-event') do |widget,event|
       position = widget.window.origin
-      if @popup.id != position
+      if @popup.id == position
+        @popup.hide_tooltip
+      else
         @popup.id = position
         @popup.show_tooltip(torrent_table)
       end
     end
-    event_box.signal_connect("leave_notify_event") do |widget,event|
-      position = widget.window.origin
-      if @popup.id == position
-        @popup.hide_tooltip
-      end
-    end
-
-    self.add(event_box)
   end
 
   def torrent_table
@@ -152,6 +147,7 @@ class CataractTrayIcon < Gtk::TrayIcon
       bar = Gtk::ProgressBar.new
       bar.set_fraction(torrent.percent_done.to_f/100)
       bar.text = torrent.statusmsg
+      @bar[torrent.id] = bar
       tab.attach_defaults( bar, 1, 2, n, n+1 )
       n+=1
     end
@@ -160,17 +156,20 @@ class CataractTrayIcon < Gtk::TrayIcon
 end
 
 class MockTorrent
-  def initialize(rexml)
-    @rexml = rexml
+  def initialize(hsh)
+    @hsh = hsh
   end
   def method_missing(name)
     name = name.to_s
-    e = @rexml.get_elements(name).first
-    e ? e.text : nil
+    @hsh[name]
+  end
+  def id
+    @hsh['id']
   end
 end
 
 class TorrentFetcher
+  attr_reader :rpc
   CONFIG = ENV['HOME'] + '/.cataract.yml'
   def initialize
     unless File.exists?(CONFIG)
@@ -179,6 +178,12 @@ class TorrentFetcher
       exit
     end
     read_config
+    @rpc = XMLRPC::Client.new(
+      @config['host'], @config['url'], @config['port'].to_i,
+      nil, nil, # proxy
+      @config['user'], @config['password']
+    )
+    @rpc.http_header_extra = {'Accept' => 'application/xml, text/xml' }
   end
 
   def read_config
@@ -191,26 +196,17 @@ class TorrentFetcher
      'password' => 'foo',
      'host' => '192.168.1.1',
      'port' => 80,
-     'url' => '/torrents/watchlist'
+     'url' => '/backend/api'
    }
    File.open(CONFIG,'w') do |file|
      file.puts conf.to_yaml
    end
   end
 
-  def fetch_xml
-    http = Net::HTTP.new(@config['host'],@config['port'])
-    req = Net::HTTP::Get.new @config['url'], { 'Accept' => 'application/xml'}
-    req.basic_auth @config['user'], @config['password']
-    res = http.request(req)
-    res.body
-  end
-
   def get_torrents
-    xml = fetch_xml
     torrents = []
-    REXML::Document.new(xml).root.elements.each do |xmltorrent|
-      torrents << MockTorrent.new(xmltorrent)
+    rpc.call('Watchlist').each do |thash|
+      torrents << MockTorrent.new(thash)
     end
     return torrents
   end
