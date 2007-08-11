@@ -1,0 +1,25 @@
+#!/bin/sh
+
+VERSION=0.2-1
+DIR=cataract-trayicon
+mkdir -p ./$DIR/usr/bin
+mkdir -p ./$DIR/usr/share/icons
+mkdir -p ./$DIR/DEBIAN
+
+cat > ./$DIR/DEBIAN/control <<DEBCONTROL
+Package: $DIR
+Version: ${VERSION}
+Section: all
+Priority: optional
+Architecture: all
+Depends: libgtk-trayicon-ruby (>= 0.1.0-6), libxmlrpc-ruby (>= 1.8.2-1)
+Maintainer: Niklas Hofer <niklas+cataract@lanpartei.de>
+Description: A trayicon that shows your watchlist of a cataract instance.
+DEBCONTROL
+
+cp trayicon ./$DIR/usr/bin/
+cp ../public/images/globe24.png ./$DIR/usr/share/doc/
+
+dpkg-deb --build $DIR
+rm -Rf 
+mv $DIR $DIR_${VERSION}_all.deb
