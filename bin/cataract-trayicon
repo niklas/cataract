@@ -33,7 +33,7 @@ class NotificationAreaTooltip
     end
 
     @win.signal_connect("motion_notify_event") do
-      hide_tooltip
+      close
     end
 
     @win.signal_connect("size_request") do |widget,req|
@@ -42,20 +42,28 @@ class NotificationAreaTooltip
     end
 
     @screen = @win.screen
+    @win
   end
 
-  def show_tooltip(data='fn0rd23')
+  def appear(data='fn0rd23')
     populate(data)
     @win.ensure_style
     @win.show_all
   end
 
-  def hide_tooltip
+  def close
     if @win
       @win.destroy
       @win = nil
     end
-    @id = nil
+  end
+
+  def toggle(data=nil)
+    if @win
+      close
+    else
+      appear(data)
+    end
   end
 
   def populate(data)
@@ -74,11 +82,11 @@ class CataractTrayIcon < Gtk::TrayIcon
     @fetcher = TorrentFetcher.new
     @bar = []
     super(@title)
-    populate
+    create_icon
     show_all
   end
 
-  def populate
+  def create_icon
     @popup = NotificationAreaTooltip.new
 
     icon = Gtk::Image.new 'public/images/globe24.png'
@@ -87,19 +95,13 @@ class CataractTrayIcon < Gtk::TrayIcon
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
     add_events(Gdk::Event::BUTTON_RELEASE_MASK)
     signal_connect('button-press-event') do |widget,event|
-      position = widget.window.origin
-      if @popup.id == position
-        @popup.hide_tooltip
-      else
-        @popup.id = position
-        @popup.show_tooltip(torrent_table)
-      end
+      @popup.toggle(torrent_table)
     end
   end
 
   def torrent_table
     torrents = @fetcher.get_torrents
-    return Gtk::Label.new('no torrents') if !torrents or torrents.size == 0
+    return Gtk::Label.new('no torrents') if !torrents or torrents.empty?
 
     tab = Gtk::Table.new(torrents.size,2)
     tab.row_spacings = 6
@@ -107,7 +109,7 @@ class CataractTrayIcon < Gtk::TrayIcon
 
     n = 0
     torrents.each do |torrent|
-      text = torrent.title || torrent.filename || 'unknown'
+      text = torrent.title || torrent.filename || '<no title>'
       label = Gtk::Label.new(text)
       label.set_alignment(1,0)
       tab.attach_defaults( label, 0, 1, n, n+1)
@@ -119,6 +121,8 @@ class CataractTrayIcon < Gtk::TrayIcon
       n+=1
     end
     return tab
+  rescue Exception => e
+    return Gtk::Label.new(e.message)
   end
 end
 
