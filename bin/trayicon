@@ -1,0 +1,202 @@
+#!/usr/bin/env ruby
+
+require 'gtktrayicon'
+require "xmlrpc/client"
+require 'yaml'
+
+class NotificationAreaTooltip
+  attr_accessor :timeout
+  attr_accessor :id
+
+  def initialize
+    @timeout = 0
+    @wantx = 0
+    @wanty = 0
+    @win = nil
+    @id = nil
+  end
+
+  def create_window
+    @win ||= Gtk::Window.new
+    @win.title = "Cataract"
+
+    @win.keep_above = true
+    @win.accept_focus = true
+    @win.border_width = 9
+    @win.decorated = false
+    @win.resizable = false
+    @win.type_hint = Gdk::Window::TYPE_HINT_DOCK
+    @win.set_events(Gdk::Event::POINTER_MOTION_MASK)
+
+    @win.signal_connect_after("expose_event") do
+      # build up windo content
+    end
+
+    @win.signal_connect("motion_notify_event") do
+      close
+    end
+
+    @win.signal_connect("size_request") do |widget,req|
+      # stick it to the upper right, dumb way
+      @win.move(5,29)
+    end
+
+    @screen = @win.screen
+    @win
+  end
+
+  def appear(data='fn0rd23')
+    populate(data)
+    @win.ensure_style
+    @win.show_all
+  end
+
+  def close
+    if @win
+      @win.destroy
+      @win = nil
+    end
+  end
+
+  def toggle(data=nil)
+    if @win
+      close
+    else
+      appear(data)
+    end
+  end
+
+  def populate(data)
+    create_window
+    if data.is_a?(Gtk::Widget)
+      @win.add(data)
+    else
+      @win.add(Gtk::Label.new(data.to_s))
+    end
+  end
+end
+
+class CataractTrayIcon < Gtk::TrayIcon
+  def initialize(title="Cataract")
+    @title = title
+    @fetcher = TorrentFetcher.new
+    @bar = []
+    super(@title)
+    create_icon
+    show_all
+  end
+
+  def create_icon
+    @popup = NotificationAreaTooltip.new
+
+    icon = Gtk::Image.new 'public/images/globe24.png'
+    icon.set_icon_size Gtk::IconSize::BUTTON
+    add icon 
+    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+    add_events(Gdk::Event::BUTTON_RELEASE_MASK)
+    signal_connect('button-press-event') do |widget,event|
+      @popup.toggle(initiate_list)
+    end
+  end
+
+  def initiate_list
+    torrents = @fetcher.get_torrents
+    return Gtk::Label.new('no torrents') if !torrents or torrents.empty?
+
+    tab = Gtk::Table.new(torrents.size,2)
+    tab.row_spacings = 6
+    tab.column_spacings = 6
+
+    n = 0
+    torrents.each do |torrent|
+      text = torrent.title || torrent.filename || '<no title>'
+      label = Gtk::Label.new(text)
+      label.set_alignment(1,0)
+      tab.attach_defaults( label, 0, 1, n, n+1)
+      bar = Gtk::ProgressBar.new
+      bar.set_fraction(torrent.percent_done.to_f/100)
+      bar.text = torrent.statusmsg
+      @bar[torrent.id] = bar
+      tab.attach_defaults( bar, 1, 2, n, n+1 )
+      n+=1
+    end
+    return tab
+  rescue Exception => e
+    return Gtk::Label.new(e.message)
+  end
+
+  def update_list
+    @fetcher.update_torrents.each do |t|
+      i = t.id
+      if b = @bar[i]
+        b.set_fraction(t.percent_done / 100)
+      end
+    end
+  rescue Exception => e
+    return Gtk::Label.new(e.message)
+  end
+end
+
+class MockTorrent
+  def initialize(hsh)
+    @hsh = hsh
+  end
+  def method_missing(name)
+    name = name.to_s
+    @hsh[name]
+  end
+  def id
+    @hsh['id']
+  end
+end
+
+class TorrentFetcher
+  attr_reader :rpc
+  CONFIG = ENV['HOME'] + '/.cataract.yml'
+  def initialize
+    unless File.exists?(CONFIG)
+      write_default_config
+      puts "please edit #{CONFIG} and restart"
+      exit
+    end
+    read_config
+    @rpc = XMLRPC::Client.new(
+      @config['host'], @config['url'], @config['port'].to_i,
+      nil, nil, # proxy
+      @config['user'], @config['password']
+    )
+    @rpc.http_header_extra = {'Accept' => 'application/xml, text/xml' }
+  end
+
+  def read_config
+    @config = YAML.load(File.open(CONFIG))
+  end
+
+  def write_default_config
+   conf = {
+     'user' => 'username',
+     'password' => 'foo',
+     'host' => '192.168.1.1',
+     'port' => 80,
+     'url' => '/backend/api'
+   }
+   File.open(CONFIG,'w') do |file|
+     file.puts conf.to_yaml
+   end
+  end
+
+  def get_torrents
+    torrents = []
+    rpc.call('Watchlist').each do |thash|
+      torrents << MockTorrent.new(thash)
+    end
+    return torrents
+  end
+
+  def update_torrents
+    rpc.call('UpdateWatchlist')
+  end
+end
+
+tray = CataractTrayIcon.new
+Gtk.main
