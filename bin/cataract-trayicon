@@ -17,32 +17,19 @@ class NotificationAreaTooltip
   end
 
   def create_window
-    @win ||= Gtk::Window.new(Gtk::Window::POPUP)
-    @win.title = "gtk-tooltips"
+    @win ||= Gtk::Window.new
+    @win.title = "Cataract"
+
+    @win.keep_above = true
+    @win.accept_focus = true
     @win.border_width = 9
-    #@win.resizeable = false
-    #@win.set_default_size(100,400)
+    @win.decorated = false
+    @win.resizable = false
+    @win.type_hint = Gdk::Window::TYPE_HINT_DOCK
     @win.set_events(Gdk::Event::POINTER_MOTION_MASK)
 
     @win.signal_connect_after("expose_event") do
-      style = @win.style
-      size = @win.size
-      style.paint_flat_box(
-        @win.window, Gtk::STATE_NORMAL, Gtk::SHADOW_OUT, 
-        nil, @win, 'tooltip', 0, 0, -1, 1
-      )
-      style.paint_flat_box(
-        @win.window, Gtk::STATE_NORMAL, Gtk::SHADOW_OUT, 
-        nil, @win, 'tooltip', 0, size[1]-1, -1, 1
-      )
-      style.paint_flat_box(
-        @win.window, Gtk::STATE_NORMAL, Gtk::SHADOW_OUT, 
-        nil, @win, 'tooltip', 0, 0, 1, -1
-      )
-      style.paint_flat_box(
-        @win.window, Gtk::STATE_NORMAL, Gtk::SHADOW_OUT, 
-        nil, @win, 'tooltip', size[0]-1, 0, 1, -1
-      )
+      # build up windo content
     end
 
     @win.signal_connect("motion_notify_event") do
@@ -50,35 +37,15 @@ class NotificationAreaTooltip
     end
 
     @win.signal_connect("size_request") do |widget,req|
-      half_width = req[0] / 2 + 1
-      if @wantx < half_width
-        @wantx = 0
-      elsif @wantx + req[0] > @screen.width + half_width
-        @wantx = @screen.width - req[0]
-      else
-        @wantx -= half_width
-      end
-
-      if @wanty + req[1] > @screen.height
-        # flip tooltip up
-        @wanty -= req[1] + @win.height_request + 8
-      end
-      @wanty = 0 if @wanty < 0
-      @win.move(@wantx,@wanty)
+      # stick it to the upper right, dumb way
+      @win.move(5,29)
     end
 
     @screen = @win.screen
-    #@win.keep_above = true
-    #@win.accept_focus = true
   end
 
   def show_tooltip(data='fn0rd23')
     populate(data)
-    # get mouse position
-    pointer = @screen.display.pointer
-    @wantx = pointer[1]
-    @wanty = pointer[2] +4
-    @win.move(@wantx,@wanty)
     @win.ensure_style
     @win.show_all
   end
