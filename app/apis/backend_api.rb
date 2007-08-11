@@ -2,6 +2,10 @@ class SlimTorrent < ActionWebService::Struct
   member :id, :int
   member :percent_done, :float
   member :status, :string
+
+  def self.from_torrent(t)
+    new :id => t.id, :percent_done => t.percent_done, :status => t.status 
+  end
 end
 
 class BackendApi < ActionWebService::API::Base
