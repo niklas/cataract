@@ -33,7 +33,7 @@ class NotificationAreaTooltip
     end
 
     @win.signal_connect("motion_notify_event") do
-      close
+      #close
     end
 
     @win.signal_connect("size_request") do |widget,req|
@@ -103,26 +103,36 @@ class CataractTrayIcon < Gtk::TrayIcon
     torrents = @fetcher.get_torrents
     return Gtk::Label.new('no torrents') if !torrents or torrents.empty?
 
-    tab = Gtk::Table.new(torrents.size,2)
-    tab.row_spacings = 6
-    tab.column_spacings = 6
+    list = Gtk::VBox.new(true)
 
-    n = 0
     torrents.each do |torrent|
-      text = torrent.title || torrent.filename || '<no title>'
-      label = Gtk::Label.new(text)
-      label.set_alignment(1,0)
-      tab.attach_defaults( label, 0, 1, n, n+1)
-      bar = Gtk::ProgressBar.new
-      bar.set_fraction(torrent.percent_done.to_f/100)
-      bar.text = torrent.statusmsg
-      @bar[torrent.id] = bar
-      tab.attach_defaults( bar, 1, 2, n, n+1 )
-      n+=1
+      list.pack_end(torrent_line(torrent))
     end
-    return tab
+    return list
   rescue Exception => e
     return Gtk::Label.new(e.message)
+  end
+
+  def torrent_line(torrent)
+    title = torrent.title || torrent.filename || '[no title]'
+
+    bar = Gtk::ProgressBar.new
+    bar.set_fraction(torrent.percent_done.to_f/100)
+    bar.add_events(Gdk::Event::BUTTON_PRESS_MASK)
+    bar.add_events(Gdk::Event::BUTTON_RELEASE_MASK)
+    # FIXME must get updated value
+    bar.signal_connect('button-press-event') do |widget,event|
+      if widget.text =~ /^\d+.\d+%$/
+        widget.text = title
+      else
+        widget.text = "#{torrent.percent_done}%"
+      end
+    end
+    bar.text = title
+
+    @bar[torrent.id] = bar
+    
+    bar
   end
 
   def update_list
