@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 VERSION=0.2-1
 DIR=cataract-trayicon
@@ -7,7 +7,7 @@ mkdir -p ./$DIR/usr/share/icons
 mkdir -p ./$DIR/DEBIAN
 
 cat > ./$DIR/DEBIAN/control <<DEBCONTROL
-Package: $DIR
+Package: ${DIR}
 Version: ${VERSION}
 Section: all
 Priority: optional
@@ -17,9 +17,10 @@ Maintainer: Niklas Hofer <niklas+cataract@lanpartei.de>
 Description: A trayicon that shows your watchlist of a cataract instance.
 DEBCONTROL
 
-cp trayicon ./$DIR/usr/bin/
-cp ../public/images/globe24.png ./$DIR/usr/share/doc/
+cp trayicon ./$DIR/usr/bin/cataract-trayicon
+chmod 775 ./$DIR/usr/bin/cataract-trayicon
+cp ../public/images/globe24.png ./$DIR/usr/share/icons/cataract.png
 
 dpkg-deb --build $DIR
-rm -Rf 
-mv $DIR $DIR_${VERSION}_all.deb
+rm -Rf $DIR
+mv $DIR.deb ${DIR}_${VERSION}_all.deb

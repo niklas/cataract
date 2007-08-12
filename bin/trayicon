@@ -89,7 +89,7 @@ class CataractTrayIcon < Gtk::TrayIcon
   def create_icon
     @popup = NotificationAreaTooltip.new
 
-    icon = Gtk::Image.new 'public/images/globe24.png'
+    icon = Gtk::Image.new '/usr/share/icons/cataract.png'
     icon.set_icon_size Gtk::IconSize::BUTTON
     add icon 
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
