@@ -2,8 +2,8 @@ module TagsHelper
   def tag_cloud(css_classes_count = 5)
     tags = Torrent.tag_counts
     count = tags.size
-    min = tags.collect(&:count).min
-    max = tags.collect(&:count).max
+    min = tags.collect(&:count).min || 1
+    max = tags.collect(&:count).max || 2
     span = (max-min).abs + 1
     class_size = span.to_f / css_classes_count
     tags.collect do |tag|
