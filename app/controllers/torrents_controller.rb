@@ -1,6 +1,7 @@
 class TorrentsController < ApplicationController
   before_filter :login_required
   before_filter :set_default_page_title
+  helper :tags
 
   def index
     redirect_to :action => 'list', :state => 'running'

@@ -52,8 +52,12 @@
 
   <div id="right">
 
+    <%= sidebar_switcher %>
     <div id="watchlist">
       <%= render :partial => '/torrents/watchlist' %>
+    </div>
+    <div id="tag_cloud" style="display: none">
+      <%= tag_cloud %>
     </div>
 
   </div>

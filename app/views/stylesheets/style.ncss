@@ -12,20 +12,24 @@ body {
   text-align: center;
 }
 
-#actions > ul {
-  color: white;
-  background: url(../images/layout/actions.png);
+#actions {
+  > ul {
+    color: white;
+    background: url(../images/layout/actions.png);
+    > li {
+      > a {
+        text-decoration: none; 
+        color: #666; 
+        font-weight: bold;
+      }
+      > a:hover {
+        color: #444;
+      }
+    }
+  }
 }
 
-#actions > ul > li > a {
-  text-decoration: none; 
-  color: #666; 
-  font-weight: bold;
-}
 
-#actions > ul > li > a:hover {
-  color: #444;
-}
 
 #john_cage, #right {
   background-color: #011009;
@@ -49,4 +53,14 @@ body {
 
 #summary {
   text-align: center;
+}
+
+div#tag_cloud {
+  span {
+    .tag01 { font-size:  70% }
+    .tag02 { font-size:  80% }
+    .tag03 { font-size:  90% }
+    .tag04 { font-size: 100% }
+    .tag05 { font-size: 110% }
+  }
 }
