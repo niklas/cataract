@@ -67,10 +67,11 @@ module TorrentsHelper
       :url => { :action => 'watch', :id => t.id}
   end
 
-  def human_transfer(kb)
+  def human_transfer(kb, rate=true)
     return '' unless kb
     return '' unless kb.kind_of?(Numeric)
-    human_size(kb.kilobytes)
+    human_size(kb.kilobytes).sub(/ytes$/,'') +
+      (rate ? '/s' : '')
   end
 
   def torrent_table(headings,torrents)
