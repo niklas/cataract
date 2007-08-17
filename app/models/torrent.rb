@@ -110,8 +110,13 @@ class Torrent < ActiveRecord::Base
     return [] if ids.empty?
     find_all_by_id(ids)
   end
-  def self.find_by_term(term)
-    query = term.split(/ /).map { |s| "*#{s}*"}.join(' ')
+  def self.find_by_term_and_tags(term,tagstring)
+    query = term.blank? ? '' : term.split(/ /).map { |s| "*#{s}*"}.join(' ')
+    unless tagstring.blank?
+      tagnames = Tag.parse(tagstring) || []
+      query += " tag_list:(#{tagnames.join(' ')})"
+    end
+    logger.debug("Ferret search for [#{query}]")
     find_with_ferret(query)
   end
   # aggregates

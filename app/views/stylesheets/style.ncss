@@ -57,10 +57,16 @@ body {
 
 div#tag_cloud {
   span {
+    font-size: 140%;
     .tag01 { font-size:  70% }
     .tag02 { font-size:  80% }
     .tag03 { font-size:  90% }
     .tag04 { font-size: 100% }
     .tag05 { font-size: 110% }
+    a {
+      text-decoration: none;
+      .add   { color: white }
+      .remove { color: grey}
+    }
   }
 }

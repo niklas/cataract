@@ -8,6 +8,7 @@ class TorrentsController < ApplicationController
   end
 
   def list
+    @searched_tags = []
     @status = (params[:status] || :running).to_sym
     @torrents = Torrent.find_in_state(@status, :order => 'created_at desc')
     forget_all
@@ -189,18 +190,18 @@ class TorrentsController < ApplicationController
 
   def search
     @term = params[:term]
-    if @term.is_a?(String) && !@term.empty? 
-      if URI.regexp.match(@term)
-        @torrent = Torrent.new(:url => @term)
-        probe
-        return
-      else
-        @torrents = Torrent.find_by_term @term
-        @reply = "searched for #{@term}"
-      end
+    if @term.is_a?(String) && !@term.empty? && URI.regexp.match(@term)
+      @torrent = Torrent.new(:url => @term)
+      probe
+      return
+    end
+    @searched_tags = Tag.parse(params[:tags])
+    if !@term.blank? or !@searched_tags.empty?
+      @torrents = Torrent.find_by_term_and_tags @term, params[:tags]
+      flash[:reply] = "searched for #{@term} and #{@searched_tags.join(', ')}"
     else
       @torrents = Torrent.find_in_state(:running, :order => 'created_at desc')
-      @reply = ''
+      flash[:reply]= ''
     end
     forget_all
     memorize_preview(@torrents)
@@ -208,8 +209,12 @@ class TorrentsController < ApplicationController
       wants.js {
         render :update do |page|
           page[:content].update(render('/torrents/list'))
-          page[:reply].update @reply
+          page[:tag_cloud].update(render(:partial => '/torrents/tag_cloud'))
+          page[:reply].update flash[:reply]
         end
+      }
+      wants.html {
+        render :action => 'list'
       }
     end
   end
