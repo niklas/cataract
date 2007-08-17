@@ -1,6 +1,7 @@
 class TorrentsController < ApplicationController
   before_filter :login_required
   before_filter :set_default_page_title
+  before_filter :set_sidebar
   helper :tags
 
   def index
@@ -198,7 +199,7 @@ class TorrentsController < ApplicationController
     @searched_tags = Tag.parse(params[:tags])
     if !@term.blank? or !@searched_tags.empty?
       @torrents = Torrent.find_by_term_and_tags @term, params[:tags]
-      flash[:reply] = "searched for #{@term} and #{@searched_tags.join(', ')}"
+      flash[:reply] = "searched for #{@term}"
     else
       @torrents = Torrent.find_in_state(:running, :order => 'created_at desc')
       flash[:reply]= ''
@@ -249,8 +250,17 @@ class TorrentsController < ApplicationController
     render :text => @torrent.tag_list.to_s
   end
 
+  def switch_sidebar
+    which = params[:to]
+    session[:sidebar] = which
+    render :update do |page|
+      page[:sidebar].update render(:partial => '/layouts/sidebar')
+    end
+  end
+
   private
   def set_default_page_title
+    @searched_tags ||= []
     @page_title = 'torrents'
   end
 
@@ -278,5 +288,9 @@ class TorrentsController < ApplicationController
     tid = torrent.id
     session[:shown_torrents].delete(tid)
     session[:previewed_torrents] << tid unless session[:previewed_torrents].include?(tid)
+  end
+
+  def set_sidebar
+    session[:sidebar] ||= 'watchlist'
   end
 end

@@ -20,4 +20,22 @@ module ApplicationHelper
   def nice_date(d)
     d.to_s(:db)
   end
+
+  def sidebar_switcher(divs=%w(watchlist tag_cloud))
+    human_divs = divs.map(&:humanize).join(' / ')
+    divs.map do |domid|
+      if session[:sidebar] == domid 
+        content_tag('span', domid.humanize)
+      else
+        link_to_remote domid.humanize, :url => { :action => 'switch_sidebar', :to => domid}
+      end
+    end.join(' ')
+  end
+
+  def sidebar_div(domid, &block)
+    style = session[:sidebar] == domid ? '' : 'display: none'
+    concat(%Q[<div id="#{domid}" style="#{style}">], block.binding)
+    yield 
+    concat(%Q[</div>], block.binding)
+  end
 end

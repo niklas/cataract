@@ -17,14 +17,6 @@ module TagsHelper
     end.join(' ')
   end
 
-  def sidebar_switcher(divs=%w(watchlist tag_cloud))
-    human_divs = divs.map(&:humanize).join(' / ')
-    link_to_function human_divs, nil, {:id => 'sidebar_switcher'} do |page|
-      page.toggle :watchlist
-      page.toggle :tag_cloud
-    end
-  end
-
   # toggle the given tag for the search criteria
   def toggle_tag_link(tag)
     tag = tag.name if tag.is_a?(Tag)

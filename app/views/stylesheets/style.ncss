@@ -55,6 +55,19 @@ body {
   text-align: center;
 }
 
+div#sidebar {
+  span {
+    background-color: black;
+    color: white;
+  }
+  a {
+    font-weight: bold;
+    text-decoration: none;
+    background-color: black;
+    color: grey;
+  }
+}
+
 div#tag_cloud {
   span {
     font-size: 140%;
@@ -66,7 +79,7 @@ div#tag_cloud {
     a {
       text-decoration: none;
       .add   { color: white }
-      .remove { color: grey}
+      .remove { color: grey; border: thin solid grey}
     }
   }
 }

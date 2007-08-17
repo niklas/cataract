@@ -22,7 +22,7 @@
 
   <div id="search">
 
-    <%= text_field_tag('search',params[:term], :id => 'search_field', :size => 42) %>
+    <%= text_field_tag('search',params[:term], :id => 'search_field', :size => 42, :autocomplete => 'off') %>
     <%= observe_field('search_field',
                       :url => { :action => 'search', :controller => 'torrents', 
                                 :tags => @searched_tags.join(',')},
@@ -51,16 +51,8 @@
     </div>
   </div>
 
-  <div id="right">
-
-    <%= sidebar_switcher %>
-    <div id="watchlist">
-      <%= render :partial => '/torrents/watchlist' %>
-    </div>
-    <div id="tag_cloud" style="display: none">
-      <%= render :partial => '/torrents/tag_cloud' %>
-    </div>
-
+  <div id="sidebar">
+    <%= render :partial => '/layouts/sidebar' %>
   </div>
 
   </body>
