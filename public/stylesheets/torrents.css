@@ -48,10 +48,39 @@ div.torrent > div.action_buttons img.spinner {
   margin: 0 0 0 0.5em;
 }
 
+div.torrent.details > div > div {
+  margin: 0.1em;
+  padding: 0.2em;
+}
 
+div.torrent.details h3 {
+  font-size: 90%;
+  background-color: black;
+  color: white;
+  padding: 0.15em;
+  margin: 0.1em 0;
+}
+
+div.torrent.details ul.files {
+  margin: 0.1em;
+  padding: 0.2em;
+}
+
+div.torrent div.transmission {
+  width: 15em;
+  float: right;
+}
+
+div.torrent div.meta {
+  float: left;
+}
+
+div.torrent div.content {
+  clear: both;
+  width: 100%;
+}
 
 div.torrent table {
-  width: 100%;
   font-size: 100%;
   margin-bottom: 2em;
   background: transparent;
@@ -80,6 +109,7 @@ div.torrent a {
 div.torrent ul.files > li {
   list-style: none;
 }
+
 
 
 

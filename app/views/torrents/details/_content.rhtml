@@ -1,4 +1,5 @@
 <% torrent = content %>
+<div class="content" id="content_<%= torrent.id -%>">
 <h3>Content</h3>
 <% if torrent.content_size.to_i > 0 %>
 <b>Size:</b> <%= human_size(torrent.content_size.to_i) %><br />
@@ -33,4 +34,4 @@
 </ul>
 
 <% end %>
-
+</div>

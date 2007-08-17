@@ -1,29 +1,31 @@
 <% torrent = transmission %>
-<table id="transmission_<%= torrent.id -%>">
+<div class="transmission" id="transmission_<%= torrent.id -%>">
+<% if torrent.running? %>
+<h3>Transmission</h3>
+<table>
   <tr>
-    <th></th>
-    <th>down</th>
-    <th>up</th>
-  </tr>
-  <% if torrent.running? %>
-  <tr>
-    <th><b>Rate</b></th>
-    <td><%= human_transfer(torrent.rate_down) -%>/s</td>
-    <td><%= human_transfer(torrent.rate_up) -%>/s</td>
+    <th>DL</th>
+    <td><%= human_transfer(torrent.rate_down) -%></td>
+    <td><%= human_transfer(torrent.transferred_down, false) -%></td>
   </tr>
   <tr>
-    <th><b>Peers / Seeds</b></th>
-    <td><%= torrent.peers -%></td>
-    <td><%= torrent.seeds -%></td>
+    <th>UL</th>
+    <td><%= human_transfer(torrent.rate_up) -%></td>
+    <td><%= human_transfer(torrent.transferred_up,false) -%></td>
   </tr>
   <tr>
-    <th><b>Distributed Copies</b></th>
+    <th>
+      <%= torrent.status %>
+    </th>
+    <td colspan="2">
+      <%= torrent.peers -%> Peers,
+      <%= torrent.seeds -%> Seeds
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2">Distributed Copies</th>
     <td><%= torrent.distributed_copies -%></td>
   </tr>
-  <% end %>
-  <tr>
-    <th><b>Transferred</b></th>
-    <td><%= human_transfer(torrent.transferred_down) -%></td>
-    <td><%= human_transfer(torrent.transferred_up) -%></td>
-  </tr>
 </table>
+<% end %>
+</div>

@@ -10,8 +10,8 @@
 
   <div id="details_for_<%= details.id -%>" style="display: none">
     <% det = '/torrents/details/' %>
+    <%= render(:partial => "#{det}meta", :object => details) %>
     <%= render(:partial => "#{det}transmission", :object => details) %>
     <%= render(:partial => "#{det}content", :object => details) %>
-    <%= render(:partial => "#{det}meta", :object => details) %>
   </div>
 </div>
