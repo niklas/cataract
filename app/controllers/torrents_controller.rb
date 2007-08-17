@@ -236,6 +236,13 @@ class TorrentsController < ApplicationController
     end
   end
 
+  def set_torrent_tag_list
+    @torrent = Torrent.find(params[:id])
+    @torrent.tag_list = params[:value]
+    @torrent.save
+    render :text => @torrent.tag_list.to_s
+  end
+
   private
   def set_default_page_title
     @page_title = 'torrents'

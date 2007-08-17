@@ -1,0 +1,5 @@
+<% torrent = tags %>
+<div class="tags" id="tags_<%= torrent.id -%>">
+  <h3>Tags <span id="tags_list_button_<%= torrent.id -%>" class="button">edit</span></h3>
+  <%= in_place_editor_field :torrent, :tag_list, {}, {:cols => 42, :external_control => "tags_list_button_#{torrent.id}"} %>
+</div>

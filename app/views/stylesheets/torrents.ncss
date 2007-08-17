@@ -52,6 +52,10 @@ div.torrent {
       margin: 0 0 0 0.5em;
     }
   }
+  span.button {
+    border: thin solid <%= color1 %>;
+    margin-left: 3em;
+  }
   div.transmission {
     width: 15em;
     float: right;
@@ -61,7 +65,7 @@ div.torrent {
     float: left;
   }
 
-  div.content {
+  div.content, div.tags {
     clear: both;
     width: 100%;
   }
