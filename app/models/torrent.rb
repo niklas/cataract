@@ -3,7 +3,6 @@ require 'fileutils_monkeypatch'
 require 'rubytorrent'
 require 'net/http'
 require 'uri'
-require_dependency 'search'
 class Torrent < ActiveRecord::Base
   include FileUtils
   has_many :watchings, :dependent => true
@@ -18,7 +17,7 @@ class Torrent < ActiveRecord::Base
   after_create :notify_users_and_add_it
   before_create :set_default_values
 
-  searches_on :title, :filename, :url
+  acts_as_ferret :fields => [:title, :filename, :url, :tag_list]
 
   acts_as_taggable
 
@@ -110,6 +109,10 @@ class Torrent < ActiveRecord::Base
     return [] unless ids
     return [] if ids.empty?
     find_all_by_id(ids)
+  end
+  def self.find_by_term(term)
+    query = term.split(/ /).map { |s| "*#{s}*"}.join(' ')
+    find_with_ferret(query)
   end
   # aggregates
   def self.rate_up

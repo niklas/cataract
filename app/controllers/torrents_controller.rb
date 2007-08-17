@@ -194,7 +194,7 @@ class TorrentsController < ApplicationController
         probe
         return
       else
-        @torrents = Torrent.search(@term)
+        @torrents = Torrent.find_by_term @term
         @reply = "searched for #{@term}"
       end
     else
