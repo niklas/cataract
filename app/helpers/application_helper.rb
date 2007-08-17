@@ -16,4 +16,8 @@ module ApplicationHelper
   def context
     page.instance_variable_get("@context").instance_variable_get("@template")
   end
+
+  def nice_date(d)
+    d.to_s(:db)
+  end
 end
