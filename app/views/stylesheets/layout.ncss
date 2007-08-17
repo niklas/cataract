@@ -34,38 +34,38 @@ img {
   height: 70px;
   width: 90%;
   z-index: 1;
+  > ul {
+    margin: 0 auto;
+    padding: 50px 5px 5px 5px;
+    width: 790px;
+    height: 15px;
+    > li {
+      display: inline;
+      position: relative;
+      padding: 0 0.7em;
+      margin: 0;
+    }
+  }
 }
 
-#actions > ul {
-  margin: 0 auto;
-  padding: 50px 5px 5px 5px;
-  width: 790px;
-  height: 15px;
-}
 
-#actions > ul > li {
-  display: inline;
-  position: relative;
-  padding: 0 0.7em;
-  margin: 0;
-}
 
-#header > span.logo {
-  float: none !important;
-  margin: 0 auto;
-  padding: 0;
-  width: 800px;
-  height: 60px;
-}
-
-#header > span > img.test {
-  position: relative;
-  top: 0;
-  z-index: 3;
-}
-
-#header > img {
-  margin: -60px 0 0 0;
+#header {
+  > span.logo {
+    float: none !important;
+    margin: 0 auto;
+    padding: 0;
+    width: 800px;
+    height: 60px;
+  }
+  > span > img.test {
+    position: relative;
+    top: 0;
+    z-index: 3;
+  }
+  img {
+    margin: -60px 0 0 0;
+  }
 }
 
 #john_cage {
@@ -91,14 +91,23 @@ img {
   left: 1%;
   width: 97%;
   text-align: center; 
-  margin: 0 5px 0 0;
+  margin: 0 0 0 0 !important;
   padding: 0;
+  input {
+    padding: 0.1em 0.3em;
+    margin: 1px 2em 3px 2em;
+    float: left;
+    autocomplete: off;
+  }
+  > a {
+    float: right;
+  }
 }
 
 #reply {
 }
 
-#right {
+#sidebar{
   position: absolute;
   top: 158px;
   bottom: 0;
@@ -107,13 +116,12 @@ img {
   height: auto;
   margin: 0 0 0 5px;
   padding: 0;
+  > * {
+    width: auto;
+  }
 }
 
 #left > * {
-  width: auto;
-}
-
-#right > * {
   width: auto;
 }
 
@@ -122,31 +130,14 @@ img {
   overflow: auto;
 }
 
-#summary:before {
-  margin: -10px 0 -3px -10px ;
-}
-
-#summary:after {
-  margin: 5px 0 -10px -10px ;
-}
-
-#search {
-  margin: 0 0 0 0 !important;
+#summary {
+  :before { margin: -10px 0 -3px -10px ; }
+  :after  { margin: 5px 0 -10px -10px ; }
 }
 
 #reply {
   max-width: 40%;
   float: left;
-}
-#search > input {
-  padding: 0.1em 0.3em;
-  margin: 1px 2em 3px 2em;
-  float: left;
-  autocomplete: off;
-}
-
-#search >a {
-  float: right;
 }
 
 
@@ -158,11 +149,11 @@ img {
   height: auto;
   padding: 0.7em !important;
   margin: 1% !important;
+  b {
+    margin-left: 2.3em;
+  }
 }
 
-#summary b {
-  margin-left: 2.3em;
-}
 
 #notice {
   position: absolute;
