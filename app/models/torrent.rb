@@ -112,6 +112,9 @@ class Torrent < ActiveRecord::Base
   end
   def self.find_by_term_and_tags(term,tagstring)
     query = term.blank? ? '' : term.split(/ /).map { |s| "*#{s}*"}.join(' ')
+    unless query.blank?
+      query = "(#{query} OR tag_list:(#{query}))"
+    end
     unless tagstring.blank?
       tagnames = Tag.parse(tagstring) || []
       query += " tag_list:(#{tagnames.join(' ')})"
