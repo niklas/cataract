@@ -6,10 +6,14 @@ require File.dirname(__FILE__) + '/../config/environment'
 class TorrentTagFS < FuseFS::FuseDir
   def directory? path
       tag, torrent, payload = scan_path path
-      puts "directory? #{tag} - #{torrent} - #{payload}"
+      puts "directory? [#{tag}] [#{torrent}] [#{payload}]"
       case
       when payload
-        false
+        if t = Torrent.find(torrent) && t.content_single?
+          false
+        else
+          true
+        end
       when !torrent.blank? # /tag/torrent
         true
       when !tag.blank?     # /tag
@@ -20,8 +24,17 @@ class TorrentTagFS < FuseFS::FuseDir
   end
   def file? path
       tag, torrent, payload = scan_path path
-      puts "file? #{tag}:#{torrent}:#{payload}"
-      !payload.blank?
+      puts "file? [#{tag}] [#{torrent}] [#{payload}]"
+      if payload
+        t = Torrent.find(torrent)
+        if t.content_single?
+          payload == t.content_root.first
+        else
+          t.content_root.include?(payload)
+        end
+      else
+        false
+      end
   end
   def can_delete?; false end
   def can_write? path; false end
@@ -37,9 +50,18 @@ class TorrentTagFS < FuseFS::FuseDir
         torrents = Torrent.find_tagged_with tag
         torrents.map { |t| [t.id,t.short_title].join('-') }
       elsif payload.blank?
-        [Torrent.find(torrent).content_root]
+        if t = Torrent.find(torrent)
+          t.content_root
+        else
+          ["torrent not found"]
+        end
       else
-        ["contents of #{payload}"]
+        t = Torrent.find(torrent)
+        if t.content_single?
+          false
+        else
+          t.content_filenames
+        end
       end
   end
   def read_file path

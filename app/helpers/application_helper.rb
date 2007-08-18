@@ -29,7 +29,8 @@ module ApplicationHelper
           content_tag('span', domid.humanize)
         else
           link_to_remote domid.humanize, :url => { :action => 'switch_sidebar', :to => domid},
-            :before => %Q[Element.toggle(#{divs.map {|d| "'#{d}'"}.join(',')})]
+            :before => %Q[Element.hide(#{(divs-[domid]).map {|d| "'#{d}'"}.join(',')});] + 
+                       %Q[Element.show('#{domid}')] 
         end
       end.join(' '),
       { :id => 'sidebar_switcher' }

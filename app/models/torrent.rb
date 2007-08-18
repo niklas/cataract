@@ -161,6 +161,19 @@ class Torrent < ActiveRecord::Base
     percent_done
   end
 
+  # for fuse
+  def content_root
+    if content_single?
+      content_filenames
+    else
+      content_filenames.map {|f| f.gsub /^.*?\//, ''} # strip the leading directory name
+    end
+  end
+
+  def content_single?
+    content_filenames.size == 1
+  end
+
   def content_size
     self[:content_size].to_i
   end
