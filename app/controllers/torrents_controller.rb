@@ -247,7 +247,11 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @torrent.tag_list = params[:value]
     @torrent.save
-    render :text => @torrent.tag_list.to_s
+    render :update do |page|
+      page["torrent_tag_list_#{@torrent.id}_in_place_editor"].replace_html @torrent.tag_list.to_s
+      page[:tag_cloud].replace_html render(:partial => 'tag_cloud')
+    end
+    
   end
 
   def switch_sidebar
