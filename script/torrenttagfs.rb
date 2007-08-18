@@ -112,15 +112,16 @@ class TorrentTagFS < FuseFS::FuseDir
     tag, torrent, payload = scan_path path
     return unless t = Torrent.find(torrent)
     dir = t.content_path
-    payload.sub(/^.*?\//,'') unless t.content_single?
-    File.join(dir,payload)
+    t.content_single? ? dir : File.join(dir,payload)
   end
 end
 
 if (File.basename($0) == File.basename(__FILE__))
     root = TorrentTagFS.new
     FuseFS.set_root(root)
-    FuseFS.mount_under(ARGV[0],'allow_other')
+    target = ARGV[0]
+    puts "mounting #{target}"
+    FuseFS.mount_under(target,'allow_other')
     FuseFS.run # This doesn't return until we're unmounted.
 end
 
