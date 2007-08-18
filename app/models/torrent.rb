@@ -281,7 +281,7 @@ class Torrent < ActiveRecord::Base
   end
 
   # Here lies the content while it is being downloaded
-  def content_path
+  def working_path
     return '' unless metainfo
     File.join(Settings.torrent_dir,metainfo.name)
   end
@@ -290,6 +290,11 @@ class Torrent < ActiveRecord::Base
   def target_path
     return '' unless metainfo
     File.join(Settings.target_dir,metainfo.name)
+  end
+
+  # where to find the contents, either #working_path or #target_path
+  def content_path
+    archived? ? target_path : working_path
   end
 
   # returns the current url to the content for the user
@@ -383,7 +388,7 @@ class Torrent < ActiveRecord::Base
   def archive_content
     return unless metainfo
     begin
-      move(content_path,target_path) if File.exists?(content_path)
+      move(working_path,target_path) if File.exists?(working_path)
     rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
@@ -392,7 +397,7 @@ class Torrent < ActiveRecord::Base
   def unarchive_content
     return unless metainfo
     begin
-      move(target_path,content_path) if File.exists?(target_path)
+      move(target_path,working_path) if File.exists?(target_path)
     rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
@@ -404,7 +409,7 @@ class Torrent < ActiveRecord::Base
       opfer = if archived?
                 target_path
               else
-                content_path
+                working_path
               end
       if File.exists?(opfer) 
         rm_rf(opfer) 
