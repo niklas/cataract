@@ -254,7 +254,8 @@ class TorrentsController < ApplicationController
     which = params[:to]
     session[:sidebar] = which
     render :update do |page|
-      page[:sidebar].update render(:partial => '/layouts/sidebar')
+      page[:sidebar_switcher].replace sidebar_switcher
+      page[which].replace_html render(:partial => which)
     end
   end
 

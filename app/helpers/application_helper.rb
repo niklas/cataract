@@ -23,13 +23,17 @@ module ApplicationHelper
 
   def sidebar_switcher(divs=%w(watchlist tag_cloud))
     human_divs = divs.map(&:humanize).join(' / ')
-    divs.map do |domid|
-      if session[:sidebar] == domid 
-        content_tag('span', domid.humanize)
-      else
-        link_to_remote domid.humanize, :url => { :action => 'switch_sidebar', :to => domid}
-      end
-    end.join(' ')
+    content_tag('div',
+      divs.map do |domid|
+        if session[:sidebar] == domid 
+          content_tag('span', domid.humanize)
+        else
+          link_to_remote domid.humanize, :url => { :action => 'switch_sidebar', :to => domid},
+            :before => %Q[Element.toggle(#{divs.map {|d| "'#{d}'"}.join(',')})]
+        end
+      end.join(' '),
+      { :id => 'sidebar_switcher' }
+    )
   end
 
   def sidebar_div(domid, &block)
