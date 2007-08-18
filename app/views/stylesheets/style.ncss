@@ -55,7 +55,7 @@ body {
   text-align: center;
 }
 
-div#sidebar {
+div#sidebar_switcher {
   span {
     background-color: black;
     color: white;
