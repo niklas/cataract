@@ -120,7 +120,7 @@ class Torrent < ActiveRecord::Base
       query += " tag_list:(#{tagnames.join(' ')})"
     end
     logger.debug("Ferret search for [#{query}]")
-    find_with_ferret(query)
+    find_with_ferret(query, {:limit => :all})
   end
   # aggregates
   def self.rate_up
