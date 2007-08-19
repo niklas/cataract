@@ -17,7 +17,7 @@ class Torrent < ActiveRecord::Base
   after_create :notify_users_and_add_it
   before_create :set_default_values
 
-  acts_as_ferret :fields => [:title, :filename, :url, :tag_list]
+  acts_as_ferret :fields => [:title, :filename, :url, :tag_list], :remote => true
 
   acts_as_taggable
 
