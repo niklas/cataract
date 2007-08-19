@@ -81,6 +81,7 @@ class OutputEater
     return unless attribs
     filename = attribs.delete(:filename)
     torrent = Torrent.find_by_filename(filename)
+    attribs[:status] = 'running'
     unless torrent
       info "new torrent found: #{filename}'"
       torrent = Torrent.create(:filename => filename)
