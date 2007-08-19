@@ -121,5 +121,7 @@ class OutputEater
         puts line if @verbose
       end
     end
+  rescue Exception => e
+    puts "could not write to logfile: #{e.message}"
   end
 end
