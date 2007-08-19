@@ -45,7 +45,7 @@ module TagsHelper
 
   def modified_link(label, opts = {}, html_opts = {})
     opts[:action] = 'search'
-    [:commit, :status, :value].each { |p| opts[p] = nil }
+    [:commit, :status, :value, :id].each { |p| opts[p] = nil }
     link_to label, url_for(:overwrite_params => opts), html_opts
   end
 end
