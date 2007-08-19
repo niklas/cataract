@@ -117,11 +117,16 @@ class TorrentTagFS < FuseFS::FuseDir
 end
 
 if (File.basename($0) == File.basename(__FILE__))
+  target = ARGV[0]
+  puts "no mountpoint given" and exit unless target
+  pid = fork do
+    Signal.trap('HUP', 'IGNORE') # Don't die upon logout
     root = TorrentTagFS.new
     FuseFS.set_root(root)
-    target = ARGV[0]
     puts "mounting #{target}"
     FuseFS.mount_under(target,'allow_other')
     FuseFS.run # This doesn't return until we're unmounted.
+  end
+  Process.detach(pid)
 end
 
