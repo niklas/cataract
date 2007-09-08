@@ -4,116 +4,71 @@ require 'gtktrayicon'
 require "xmlrpc/client"
 require 'yaml'
 
-class NotificationAreaTooltip
-  attr_accessor :timeout
-  attr_accessor :id
-
-  def initialize
-    @timeout = 0
-    @wantx = 0
-    @wanty = 0
-    @win = nil
-    @id = nil
-  end
-
-  def create_window
-    @win ||= Gtk::Window.new
-    @win.title = "Cataract"
-
-    @win.keep_above = true
-    @win.accept_focus = true
-    @win.border_width = 9
-    @win.decorated = false
-    @win.resizable = false
-    @win.type_hint = Gdk::Window::TYPE_HINT_DOCK
-    @win.set_events(Gdk::Event::POINTER_MOTION_MASK)
-
-    @win.signal_connect_after("expose_event") do
-      # build up windo content
-    end
-
-    @win.signal_connect("motion_notify_event") do
-      #close
-    end
-
-    @win.signal_connect("size_request") do |widget,req|
-      # stick it to the upper right, dumb way
-      @win.move(5,29)
-    end
-
-    @screen = @win.screen
-    @win
-  end
-
-  def appear(data='fn0rd23')
-    populate(data)
-    @win.ensure_style
-    @win.show_all
-  end
-
-  def close
-    if @win
-      @win.destroy
-      @win = nil
-    end
-  end
-
-  def toggle(data=nil)
-    if @win
-      close
-    else
-      appear(data)
-    end
-  end
-
-  def populate(data)
-    create_window
-    if data.is_a?(Gtk::Widget)
-      @win.add(data)
-    else
-      @win.add(Gtk::Label.new(data.to_s))
-    end
-  end
-end
-
-class CataractTrayIcon < Gtk::TrayIcon
-  def initialize(title="Cataract")
-    @title = title
-    @fetcher = TorrentFetcher.new
+class CataractWindow < Gtk::Window
+  def initialize(title='Cataract')
+    super(title)
     @bar = []
-    super(@title)
-    create_icon
+    #signal_connect_after("expose_event") do
+    #end
+  end
+  def fetcher=(new_fetcher)
+    @fetcher = new_fetcher
+  end
+  def toggle
+    if visible?
+      hide
+    else
+      init_content
+      ensure_style
+      show_all
+      Thread.new do
+        init_torrents
+      end
+    end
+  end
+  def clear
+    each do |child|
+      child.destroy
+    end
+  end
+
+  def init_content
+    clear
+    add Gtk::Label.new('initializing')
     show_all
   end
-
-  def create_icon
-    @popup = NotificationAreaTooltip.new
-
-    icon = Gtk::Image.new '/usr/share/icons/cataract.png'
-    icon.set_icon_size Gtk::IconSize::BUTTON
-    add icon 
-    add_events(Gdk::Event::BUTTON_PRESS_MASK)
-    add_events(Gdk::Event::BUTTON_RELEASE_MASK)
-    signal_connect('button-press-event') do |widget,event|
-      @popup.toggle(initiate_list)
+  def init_torrents
+    torrents = @fetcher.get_torrents
+    if !torrents or torrents.empty?
+      clear
+      add Gtk::Label.new('no torrents')
+      return
     end
+    list = Gtk::VBox.new(true)
+    torrents.each do |torrent|
+      list.pack_end(item_for_torrent(torrent))
+    end
+    clear
+    add list
+    show_all
+  rescue Exception => e
+    clear
+    add Gtk::Label.new(e.message)
+    return
   end
 
-  def initiate_list
-    torrents = @fetcher.get_torrents
-    return Gtk::Label.new('no torrents') if !torrents or torrents.empty?
-
-    list = Gtk::VBox.new(true)
-
-    torrents.each do |torrent|
-      list.pack_end(torrent_line(torrent))
+  def update_torrents
+    @fetcher.update_torrents.each do |t|
+      i = t.id
+      if b = @bar[i]
+        b.set_fraction(t.percent_done / 100)
+      end
     end
-    return list
   rescue Exception => e
     return Gtk::Label.new(e.message)
   end
 
-  def torrent_line(torrent)
+  def item_for_torrent(torrent)
     title = torrent.title || torrent.filename || '[no title]'
 
     bar = Gtk::ProgressBar.new
@@ -131,19 +86,32 @@ class CataractTrayIcon < Gtk::TrayIcon
     bar.text = title
 
     @bar[torrent.id] = bar
+    bar.show
     
     bar
   end
+end
 
-  def update_list
-    @fetcher.update_torrents.each do |t|
-      i = t.id
-      if b = @bar[i]
-        b.set_fraction(t.percent_done / 100)
-      end
+class CataractTrayIcon < Gtk::TrayIcon
+  def initialize(title="Cataract")
+    @title = title
+    super(@title)
+    create_icon
+    show_all
+  end
+
+  def create_icon
+    @popup = CataractWindow.new
+    @popup.fetcher = TorrentFetcher.new
+
+    icon = Gtk::Image.new '/usr/share/icons/cataract.png'
+    icon.set_icon_size Gtk::IconSize::BUTTON
+    add icon 
+    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+    add_events(Gdk::Event::BUTTON_RELEASE_MASK)
+    signal_connect('button-press-event') do |widget,event|
+      @popup.toggle
     end
-  rescue Exception => e
-    return Gtk::Label.new(e.message)
   end
 end
 
@@ -196,6 +164,7 @@ class TorrentFetcher
   end
 
   def get_torrents
+    puts "getting torrents"
     torrents = []
     rpc.call('Watchlist').each do |thash|
       torrents << MockTorrent.new(thash)
