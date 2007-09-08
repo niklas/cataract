@@ -113,10 +113,41 @@ class CataractTrayIcon < Gtk::TrayIcon
     add icon 
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
     add_events(Gdk::Event::BUTTON_RELEASE_MASK)
+
+    menu = Gtk::Menu.new
+
+    @menu_show = menu_show = Gtk::MenuItem.new("Show")
+    @menu_hide = menu_hide = Gtk::MenuItem.new("Hide")
+    menu_show.signal_connect('activate') { |w,e| toggle_popup }
+    menu_hide.signal_connect('activate') { |w,e| toggle_popup }
+    menu_quit = Gtk::MenuItem.new("Quit")
+    menu_quit.signal_connect('activate') { |w,e| Gtk.main_quit }
+    menu.append(menu_show.show)
+    menu.append(menu_hide)
+    menu.append(menu_quit.show)
+    menu.show
+
     signal_connect('button-press-event') do |widget,event|
-      puts event.inspect.to_s
-      @popup.toggle
+      case event.button 
+      when 1
+        toggle_popup
+      when 3
+        menu.popup(nil,nil,event.button,event.time)
+      else
+        puts "Button #{event.button} not used"
+      end
     end
+  end
+
+  def toggle_popup
+    if @popup.visible?
+      @menu_show.show
+      @menu_hide.hide
+    else
+      @menu_show.hide
+      @menu_hide.show
+    end
+    @popup.toggle
   end
 end
 
