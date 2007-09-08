@@ -36,9 +36,10 @@ class CataractWindow < Gtk::Window
   end
 
   def init_content
-    clear
-    add Gtk::Label.new('initializing')
-    show_all
+    unless child
+      add Gtk::Label.new('initializing')
+      show_all
+    end
   end
   def init_torrents
     torrents = @fetcher.get_torrents
