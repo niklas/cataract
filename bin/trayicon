@@ -13,9 +13,7 @@ class CataractWindow < Gtk::Window
     signal_connect_after("delete_event") do
       hide
     end
-  end
-  def fetcher=(new_fetcher)
-    @fetcher = new_fetcher
+    @fetcher = TorrentFetcher.new
   end
   def toggle
     if visible?
@@ -106,7 +104,6 @@ class CataractTrayIcon < Gtk::TrayIcon
 
   def create_icon
     @popup = CataractWindow.new
-    @popup.fetcher = TorrentFetcher.new
 
     icon = Gtk::Image.new '/usr/share/icons/cataract.png'
     icon.set_icon_size Gtk::IconSize::BUTTON
