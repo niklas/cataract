@@ -10,6 +10,9 @@ class CataractWindow < Gtk::Window
     @bar = []
     #signal_connect_after("expose_event") do
     #end
+    signal_connect_after("delete_event") do
+      hide
+    end
   end
   def fetcher=(new_fetcher)
     @fetcher = new_fetcher
@@ -110,6 +113,7 @@ class CataractTrayIcon < Gtk::TrayIcon
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
     add_events(Gdk::Event::BUTTON_RELEASE_MASK)
     signal_connect('button-press-event') do |widget,event|
+      puts event.inspect.to_s
       @popup.toggle
     end
   end
