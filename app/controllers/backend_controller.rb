@@ -5,13 +5,7 @@ class BackendController < ApplicationController
   before_filter :login_required
 
   def watchlist
-    current_user.torrents
-  end
-
-  def update_watchlist
-    watchlist.map do |t|
-      SlimTorrent.from_torrent t
-    end
+    current_user.torrents.map { |t| WatchlistItem.from_torrent t }
   end
 
   def find_torrent_by_id(tid)

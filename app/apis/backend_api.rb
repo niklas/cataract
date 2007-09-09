@@ -1,18 +1,28 @@
-class SlimTorrent < ActionWebService::Struct
+class WatchlistItem < ActionWebService::Struct
   member :id, :int
-  member :percent_done, :float
+  member :progress, :float
   member :status, :string
+  member :title, :string
+  member :rate_up, :float
+  member :rate_down, :float
+  member :seeds, :int
+  member :peers, :int
 
   def self.from_torrent(t)
-    new :id => t.id, :percent_done => t.percent_done, :status => t.status 
+    new :id => t.id, 
+        :progress => t.percent_done, 
+        :status => t.status,
+        :title => t.nice_title,
+        :rate_up => t.rate_up,
+        :rate_down => t.rate_down,
+        :seeds => t.seeds,
+        :peers => t.peers
   end
 end
 
 class BackendApi < ActionWebService::API::Base
   api_method :watchlist, 
-             :returns => [[Torrent]]
-  api_method :update_watchlist, 
-             :returns => [[SlimTorrent]]
+             :returns => [[WatchlistItem]]
   api_method :find_torrent_by_id,
              :returns => [Torrent],
              :expects => [:int]

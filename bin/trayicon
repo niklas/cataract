@@ -43,20 +43,18 @@ class TorrentView < Gtk::TreeView
     t2.each do |id,inp| # new items
       append_torrent(inp)
     end
-    raise NeedFullUpdate unless t2.empty?
   end
 
   private
   def append_torrent(torrent)
-    return unless torrent.full?
     row = @list.append
-    row[0] = torrent.id
-    row[1] = torrent.title || torrent.filename || "Torrent ##{torrent.id}"
-    row[2] = torrent.status
-    row[3] = torrent.percent_done
+    update_torrent(row,torrent)
   end
   def update_torrent(row,torrent)
-    row[3] = torrent.percent_done
+    row[0] = torrent.id
+    row[1] = torrent.title || "Torrent ##{torrent.id}"
+    row[2] = torrent.status
+    row[3] = torrent.progress
   end
 end
 
@@ -90,11 +88,7 @@ class CataractWindow < Gtk::Window
       show_all
       Thread.new do
         loop do
-          begin
-            @view.refresh_torrents(@fetcher.update_torrents) if visible?
-          rescue NeedFullUpdate => e
-            init_torrents
-          end
+          populate_torrent_view if visible?
           sleep 23
         end
       end
@@ -117,17 +111,15 @@ class CataractWindow < Gtk::Window
     set_status('initializing')
     show_all
   end
-  def init_torrents
+  def populate_torrent_view 
     set_status "Fetching torrents"
-    torrents = @fetcher.get_torrents
+    torrents = @fetcher.get_watchlist
     if !torrents or torrents.empty?
       clear
       set_status('no torrents')
       return
     end
     @view.refresh_torrents torrents
-  rescue NeedFullUpdate => e
-    # already done that
   rescue Exception => e
     set_status(e.message)
     return
@@ -208,11 +200,12 @@ end
 
 class TorrentFetcher
   attr_reader :rpc
-  CONFIG = ENV['HOME'] + '/.cataract.yml'
   def initialize
-    unless File.exists?(CONFIG)
+    @configfile = ARGV.shift || (ENV['HOME'] + '/.cataract.yml')
+    puts "Using config file #{@configfile}"
+    unless File.exists?(@configfile)
       write_default_config
-      puts "please edit #{CONFIG} and restart"
+      puts "please edit #{@configfile} and restart"
       exit
     end
     read_config
@@ -225,7 +218,7 @@ class TorrentFetcher
   end
 
   def read_config
-    @config = YAML.load(File.open(CONFIG))
+    @config = YAML.load(File.open(@configfile))
   end
 
   def write_default_config
@@ -236,17 +229,13 @@ class TorrentFetcher
      'port' => 80,
      'url' => '/backend/api'
    }
-   File.open(CONFIG,'w') do |file|
+   File.open(@configfile,'w') do |file|
      file.puts conf.to_yaml
    end
   end
 
-  def get_torrents
-    rpc.call('Watchlist').map {|thash| MockTorrent.new(thash,true) }
-  end
-
-  def update_torrents
-    rpc.call('UpdateWatchlist').map {|thash| MockTorrent.new(thash) }
+  def get_watchlist
+    rpc.call('Watchlist').map {|thash| MockTorrent.new(thash) }
   end
 end
 
