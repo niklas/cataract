@@ -25,10 +25,8 @@ class TorrentView < Gtk::TreeView
     append_column( @right_column )
   end
   def refresh_torrents(torrents)
-    #puts "pure torrents: #{torrents.inspect}"
     t2 = {}
     torrents.each { |e| t2[e.id] = e }
-    #puts "mapped torrents: #{t2.inspect}"
     disappeared = []
     @list.each do |model,path,iter|
       id = iter[0]
@@ -50,7 +48,6 @@ class TorrentView < Gtk::TreeView
 
   private
   def append_torrent(torrent)
-    puts "appending torrent #{torrent.id}"
     return unless torrent.full?
     row = @list.append
     row[0] = torrent.id
@@ -59,7 +56,6 @@ class TorrentView < Gtk::TreeView
     row[3] = torrent.percent_done
   end
   def update_torrent(row,torrent)
-    #puts "updating torrent #{torrent.inspect}"
     row[3] = torrent.percent_done
   end
 end
@@ -99,7 +95,7 @@ class CataractWindow < Gtk::Window
           rescue NeedFullUpdate => e
             init_torrents
           end
-          sleep 3
+          sleep 23
         end
       end
     end
@@ -246,12 +242,10 @@ class TorrentFetcher
   end
 
   def get_torrents
-    puts "getting torrents"
     rpc.call('Watchlist').map {|thash| MockTorrent.new(thash,true) }
   end
 
   def update_torrents
-    puts "updating torrents"
     rpc.call('UpdateWatchlist').map {|thash| MockTorrent.new(thash) }
   end
 end
