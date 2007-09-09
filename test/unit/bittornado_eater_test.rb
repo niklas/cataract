@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 class BittornadoEaterTest < Test::Unit::TestCase
   def setup
+    prepare_directories
     @eater = BittornadoEater.new('/dev/null')
   end
 
