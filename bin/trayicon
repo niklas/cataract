@@ -4,6 +4,45 @@ require 'gtktrayicon'
 require "xmlrpc/client"
 require 'yaml'
 
+class TorrentView < Gtk::TreeView
+  def initialize
+    #                          title, status, progress
+    @list = Gtk::ListStore.new(String, String, Integer)
+    super(@list)
+    @torrents = {}
+    @title_renderer = Gtk::CellRendererText.new
+    @progress_renderer = Gtk::CellRendererProgress.new
+
+    @left_column =  Gtk::TreeViewColumn.new( "Title", @title_renderer) 
+    @left_column.set_cell_data_func(@title_renderer) do |col, renderer, model, iter|
+      renderer.markup = "<b>#{iter[0]}</b>\n<small>#{iter[1]}</small>"
+    end
+    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => 2)
+
+    append_column( @left_column )
+    append_column( @right_column )
+  end
+  def append_torrent(torrent)
+    row = @list.append
+    title = (torrent.title || torrent.filename || '[no title]')
+    row[0] = title
+    row[1] = torrent.status
+    row[2] = torrent.percent_done
+    @torrents[torrent.id.to_s] = row
+  end
+  def update_torrent(torrent)
+    if row = row_for(torrent)
+      row[2] = t["percent_done"]
+    end
+  end
+  def has_torrent?(torrent)
+    @torrents.has_key? torrent.id.to_s
+  end
+  def row_for(torrent)
+    @torrents[torrent.id.to_s]
+  end
+end
+
 class CataractWindow < Gtk::Window
   def initialize(title='Cataract')
     super(title)
@@ -51,17 +90,12 @@ class CataractWindow < Gtk::Window
       add Gtk::Label.new('no torrents')
       return
     end
-    list = Gtk::ListStore.new(String, Integer)
+    @view = TorrentView.new
     torrents.each do |torrent|
-      append_torrent(torrent, list)
+      @view.append_torrent(torrent)
     end
-    view = Gtk::TreeView.new(list)
-    renderer = Gtk::CellRendererText.new
-    view.append_column( Gtk::TreeViewColumn.new("Title", renderer, :markup => 0) )
-    renderer = Gtk::CellRendererProgress.new
-    view.append_column( Gtk::TreeViewColumn.new("Progress", renderer, :value => 1) )
     clear
-    add view
+    add @view
     show_all
   rescue Exception => e
     clear
@@ -69,22 +103,10 @@ class CataractWindow < Gtk::Window
     return
   end
 
-  def append_torrent(torrent,list=nil)
-    if list
-      row = list.append
-      title = (torrent.title || torrent.filename || '[no title]')
-      row[0] = "<b>#{title}</b>\n<small>#{torrent.status}</small>"
-      row[1] = torrent.percent_done
-      @bar[torrent.id.to_s] = row
-    end
-  end
 
   def update_torrents
     @fetcher.update_torrents.each do |t|
-      i = t["id"].to_s
-      if b = @bar[i]
-        b[1] = t["percent_done"]
-      end
+      @view.update_torrent(t)
     end
   rescue Exception => e
     return Gtk::Label.new(e.message)
