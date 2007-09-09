@@ -42,7 +42,7 @@ module FileUtils
     raise Errno::ENOENT, src unless File.exist?(src)
     good_dest = dest.gsub(/'/, '\'')
     good_src  =  src.gsub(/'/, '\'')
-    mess = `/bin/mv '#{good_src}' '#{good_dest}' 2>&1`
+    mess = `/bin/mv -- '#{good_src}' '#{good_dest}' 2>&1`
     unless $? == 0
       raise SystemCallError, (mess.empty? ? $?.to_s : mess)
       #          question mark hell ??? ^^^
