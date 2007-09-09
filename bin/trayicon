@@ -53,14 +53,11 @@ class CataractWindow < Gtk::Window
     end
     list = Gtk::ListStore.new(String, Integer)
     torrents.each do |torrent|
-      row = list.append
-      row[0] = torrent.title || torrent.filename || '[no title]'
-      row[1] = torrent.percent_done
-      @bar[torrent.id.to_s] = row
+      append_torrent(torrent, list)
     end
     view = Gtk::TreeView.new(list)
     renderer = Gtk::CellRendererText.new
-    view.append_column( Gtk::TreeViewColumn.new("Title", renderer, :text => 0) )
+    view.append_column( Gtk::TreeViewColumn.new("Title", renderer, :markup => 0) )
     renderer = Gtk::CellRendererProgress.new
     view.append_column( Gtk::TreeViewColumn.new("Progress", renderer, :value => 1) )
     clear
@@ -70,6 +67,16 @@ class CataractWindow < Gtk::Window
     clear
     add Gtk::Label.new(e.message)
     return
+  end
+
+  def append_torrent(torrent,list=nil)
+    if list
+      row = list.append
+      title = (torrent.title || torrent.filename || '[no title]')
+      row[0] = "<b>#{title}</b>\n<small>#{torrent.status}</small>"
+      row[1] = torrent.percent_done
+      @bar[torrent.id.to_s] = row
+    end
   end
 
   def update_torrents
