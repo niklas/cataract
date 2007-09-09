@@ -8,20 +8,32 @@ class NeedFullUpdate < Exception
 end
 
 class TorrentView < Gtk::TreeView
+  ID, TITLE, STATUS, PROGRESS, RATE_DOWN, RATE_UP, PEERS, SEEDS, MESSAGE = (0..23).to_a
+
   def initialize
     #                          id,      title,  status, progress,down,  up,    peers,   seeds,   message
     @list = Gtk::ListStore.new(Integer, String, String, Integer, Float, Float, Integer, Integer, String)
     super(@list)
+    cell_layout
+    self
+  end
+  def cell_layout
     @title_renderer = Gtk::CellRendererText.new
     @progress_renderer = Gtk::CellRendererProgress.new
 
     @left_column =  Gtk::TreeViewColumn.new( "Title", @title_renderer) 
     @left_column.set_cell_data_func(@title_renderer) do |col, renderer, model, iter|
       renderer.markup = %Q[<b>#{iter[1]}</b>] +
-        %Q[\n<small>#{iter[8]} (#{iter[6]} peers, #{iter[7]} seeds)</small>] +
-        %Q[\n<small>up: #{iter[5]}, down: #{iter[4]}</small>]
+        %Q[\n<small>#{iter[MESSAGE]} (#{iter[PEERS]} peers, #{iter[SEEDS]} seeds)</small>] +
+        %Q[\n<small>up: #{iter[RATE_UP]}, down: #{iter[RATE_DOWN]}</small>]
     end
-    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => 3)
+
+
+    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => PROGRESS)
+    text_cell_renderer = Gtk::CellRendererText.new
+    @right_column.pack_end text_cell_renderer, true
+    @right_column.add_attribute text_cell_renderer, :text, MESSAGE
+    @right_column.resizable = false
 
     append_column( @left_column )
     append_column( @right_column )
@@ -31,7 +43,7 @@ class TorrentView < Gtk::TreeView
     torrents.each { |e| t2[e.id] = e }
     disappeared = []
     @list.each do |model,path,iter|
-      id = iter[0]
+      id = iter[ID]
       if inp = t2[id] # we have a row and an update is avaiable
         update_torrent(iter,inp)
         t2.delete id
@@ -53,15 +65,15 @@ class TorrentView < Gtk::TreeView
     update_torrent(row,torrent)
   end
   def update_torrent(row,torrent)
-    row[0] = torrent.id
-    row[1] = torrent.title || "Torrent ##{torrent.id}"
-    row[2] = torrent.status
-    row[3] = torrent.progress
-    row[4] = torrent.rate_down
-    row[5] = torrent.rate_up
-    row[6] = torrent.peers
-    row[7] = torrent.seeds
-    row[8] = torrent.message
+    row[ID] = torrent.id
+    row[TITLE] = torrent.title || "Torrent ##{torrent.id}"
+    row[STATUS] = torrent.status
+    row[PROGRESS] = torrent.progress
+    row[RATE_DOWN] = torrent.rate_down
+    row[RATE_UP] = torrent.rate_up
+    row[PEERS] = torrent.peers
+    row[SEEDS] = torrent.seeds
+    row[MESSAGE] = torrent.message
   end
 end
 
@@ -81,10 +93,13 @@ class CataractWindow < Gtk::Window
     @box = Gtk::VBox.new
     add @box
     @view = TorrentView.new
-    @box.pack_start @view
+    @scrolled = Gtk::ScrolledWindow.new
+    @scrolled.add @view
+    @box.pack_start @scrolled
     @statusbar = Gtk::Statusbar.new
     @context = @statusbar.get_context_id "23"
-    @box.pack_end @statusbar
+    @box.pack_end @statusbar, false, false
+    resize(400,600)
   end
   def toggle
     if visible?
