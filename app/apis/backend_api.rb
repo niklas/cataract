@@ -7,6 +7,7 @@ class WatchlistItem < ActionWebService::Struct
   member :rate_down, :float
   member :seeds, :int
   member :peers, :int
+  member :message, :string
 
   def self.from_torrent(t)
     new :id => t.id, 
@@ -16,7 +17,8 @@ class WatchlistItem < ActionWebService::Struct
         :rate_up => t.rate_up,
         :rate_down => t.rate_down,
         :seeds => t.seeds,
-        :peers => t.peers
+        :peers => t.peers,
+        :message => t.download_status
   end
 end
 

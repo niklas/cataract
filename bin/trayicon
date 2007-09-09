@@ -9,15 +9,17 @@ end
 
 class TorrentView < Gtk::TreeView
   def initialize
-    #                          id,      title,  status, progress
-    @list = Gtk::ListStore.new(Integer, String, String, Integer)
+    #                          id,      title,  status, progress,down,  up,    peers,   seeds,   message
+    @list = Gtk::ListStore.new(Integer, String, String, Integer, Float, Float, Integer, Integer, String)
     super(@list)
     @title_renderer = Gtk::CellRendererText.new
     @progress_renderer = Gtk::CellRendererProgress.new
 
     @left_column =  Gtk::TreeViewColumn.new( "Title", @title_renderer) 
     @left_column.set_cell_data_func(@title_renderer) do |col, renderer, model, iter|
-      renderer.markup = "<b>#{iter[1]}</b>\n<small>#{iter[2]}</small>"
+      renderer.markup = %Q[<b>#{iter[1]}</b>] +
+        %Q[\n<small>#{iter[8]} (#{iter[6]} peers, #{iter[7]} seeds)</small>] +
+        %Q[\n<small>up: #{iter[5]}, down: #{iter[4]}</small>]
     end
     @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => 3)
 
@@ -55,6 +57,11 @@ class TorrentView < Gtk::TreeView
     row[1] = torrent.title || "Torrent ##{torrent.id}"
     row[2] = torrent.status
     row[3] = torrent.progress
+    row[4] = torrent.rate_down
+    row[5] = torrent.rate_up
+    row[6] = torrent.peers
+    row[7] = torrent.seeds
+    row[8] = torrent.message
   end
 end
 

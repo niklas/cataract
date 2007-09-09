@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.3-1
+VERSION=0.4-1
 DIR=cataract-trayicon
 mkdir -p ./$DIR/usr/bin
 mkdir -p ./$DIR/usr/share/icons
