@@ -12,28 +12,24 @@ class TorrentView < Gtk::TreeView
 
   def initialize
     #                          id,      title,  status, progress,down,  up,    peers,   seeds,   message
-    @list = Gtk::ListStore.new(Integer, String, String, Integer, Float, Float, Integer, Integer, String)
+    @list = Gtk::ListStore.new(Integer, String, String, Float,   Float, Float, Integer, Integer, String)
     super(@list)
     cell_layout
     self
   end
   def cell_layout
     @title_renderer = Gtk::CellRendererText.new
+    
     @progress_renderer = Gtk::CellRendererProgress.new
 
     @left_column =  Gtk::TreeViewColumn.new( "Title", @title_renderer) 
     @left_column.set_cell_data_func(@title_renderer) do |col, renderer, model, iter|
-      renderer.markup = %Q[<b>#{iter[1]}</b>] +
+      renderer.markup = %Q[<b>#{iter[TITLE]}</b>] +
         %Q[\n<small>#{iter[MESSAGE]} (#{iter[PEERS]} peers, #{iter[SEEDS]} seeds)</small>] +
         %Q[\n<small>up: #{iter[RATE_UP]}, down: #{iter[RATE_DOWN]}</small>]
     end
 
-
-    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => PROGRESS)
-    text_cell_renderer = Gtk::CellRendererText.new
-    @right_column.pack_end text_cell_renderer, true
-    @right_column.add_attribute text_cell_renderer, :text, MESSAGE
-    @right_column.resizable = false
+    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value=> PROGRESS)
 
     append_column( @left_column )
     append_column( @right_column )
@@ -99,7 +95,7 @@ class CataractWindow < Gtk::Window
     @statusbar = Gtk::Statusbar.new
     @context = @statusbar.get_context_id "23"
     @box.pack_end @statusbar, false, false
-    resize(400,600)
+    resize(600,400)
   end
   def toggle
     if visible?
