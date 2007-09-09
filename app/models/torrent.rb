@@ -161,6 +161,18 @@ class Torrent < ActiveRecord::Base
     percent_done
   end
 
+  def download_status
+    if !errormsg.blank?
+      "#{statusmsg} - #{errormsg}"
+    elsif statusmsg =~ /[\d:]+/
+      "#{statusmsg} remaining"
+    elsif statusmsg.blank?
+      "[unknown status]"
+    else
+      statusmsg
+    end
+  end
+
   # for fuse
   def content_root
     if content_single?
