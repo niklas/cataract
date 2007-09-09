@@ -7,7 +7,7 @@ require 'yaml'
 class CataractWindow < Gtk::Window
   def initialize(title='Cataract')
     super(title)
-    @bar = []
+    @bar = {}
     #signal_connect_after("expose_event") do
     #end
     signal_connect_after("delete_event") do
@@ -25,6 +25,10 @@ class CataractWindow < Gtk::Window
       show_all
       Thread.new do
         init_torrents
+        loop do
+          sleep 23
+          update_torrents if visible?
+        end
       end
     end
   end
@@ -52,6 +56,7 @@ class CataractWindow < Gtk::Window
       row = list.append
       row[0] = torrent.title || torrent.filename || '[no title]'
       row[1] = torrent.percent_done
+      @bar[torrent.id.to_s] = row
     end
     view = Gtk::TreeView.new(list)
     renderer = Gtk::CellRendererText.new
@@ -69,9 +74,9 @@ class CataractWindow < Gtk::Window
 
   def update_torrents
     @fetcher.update_torrents.each do |t|
-      i = t.id
+      i = t["id"].to_s
       if b = @bar[i]
-        b.set_fraction(t.percent_done / 100)
+        b[1] = t["percent_done"]
       end
     end
   rescue Exception => e
@@ -222,6 +227,7 @@ class TorrentFetcher
   end
 
   def update_torrents
+    puts "updating torrents"
     rpc.call('UpdateWatchlist')
   end
 end
