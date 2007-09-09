@@ -437,8 +437,8 @@ class Torrent < ActiveRecord::Base
 
   def moveto(target)
     source = fullpath
-    return unless source
-    return unless target
+    return if source.blank?
+    return if target.blank?
     return unless File.exists? source
     begin
       move(source,target)
