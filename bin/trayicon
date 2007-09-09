@@ -14,6 +14,7 @@ class CataractWindow < Gtk::Window
       hide
     end
     @fetcher = TorrentFetcher.new
+    toggle
   end
   def toggle
     if visible?
@@ -46,12 +47,19 @@ class CataractWindow < Gtk::Window
       add Gtk::Label.new('no torrents')
       return
     end
-    list = Gtk::VBox.new(true)
+    list = Gtk::ListStore.new(String, Integer)
     torrents.each do |torrent|
-      list.pack_end(item_for_torrent(torrent))
+      row = list.append
+      row[0] = torrent.title || torrent.filename || '[no title]'
+      row[1] = torrent.percent_done
     end
+    view = Gtk::TreeView.new(list)
+    renderer = Gtk::CellRendererText.new
+    view.append_column( Gtk::TreeViewColumn.new("Title", renderer, :text => 0) )
+    renderer = Gtk::CellRendererProgress.new
+    view.append_column( Gtk::TreeViewColumn.new("Progress", renderer, :value => 1) )
     clear
-    add list
+    add view
     show_all
   rescue Exception => e
     clear
@@ -73,6 +81,8 @@ class CataractWindow < Gtk::Window
   def item_for_torrent(torrent)
     title = torrent.title || torrent.filename || '[no title]'
 
+    return title
+
     bar = Gtk::ProgressBar.new
     bar.set_fraction(torrent.percent_done.to_f/100)
     bar.add_events(Gdk::Event::BUTTON_PRESS_MASK)
@@ -88,9 +98,15 @@ class CataractWindow < Gtk::Window
     bar.text = title
 
     @bar[torrent.id] = bar
-    bar.show
+
+    left = Gtk::Label.new(title)
+    right = bar
     
-    bar
+    item = Gtk::HBox.new
+    item.pack_end right
+    item.pack_end left
+    item.show_all
+    item
   end
 end
 
