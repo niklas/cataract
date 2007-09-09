@@ -4,56 +4,86 @@ require 'gtktrayicon'
 require "xmlrpc/client"
 require 'yaml'
 
+class NeedFullUpdate < Exception
+end
+
 class TorrentView < Gtk::TreeView
   def initialize
-    #                          title, status, progress
-    @list = Gtk::ListStore.new(String, String, Integer)
+    #                          id,      title,  status, progress
+    @list = Gtk::ListStore.new(Integer, String, String, Integer)
     super(@list)
-    @torrents = {}
     @title_renderer = Gtk::CellRendererText.new
     @progress_renderer = Gtk::CellRendererProgress.new
 
     @left_column =  Gtk::TreeViewColumn.new( "Title", @title_renderer) 
     @left_column.set_cell_data_func(@title_renderer) do |col, renderer, model, iter|
-      renderer.markup = "<b>#{iter[0]}</b>\n<small>#{iter[1]}</small>"
+      renderer.markup = "<b>#{iter[1]}</b>\n<small>#{iter[2]}</small>"
     end
-    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => 2)
+    @right_column = Gtk::TreeViewColumn.new("Progress", @progress_renderer, :value => 3)
 
     append_column( @left_column )
     append_column( @right_column )
   end
-  def append_torrent(torrent)
-    row = @list.append
-    title = (torrent.title || torrent.filename || '[no title]')
-    row[0] = title
-    row[1] = torrent.status
-    row[2] = torrent.percent_done
-    @torrents[torrent.id.to_s] = row
-  end
-  def update_torrent(torrent)
-    if row = row_for(torrent)
-      row[2] = t["percent_done"]
+  def refresh_torrents(torrents)
+    #puts "pure torrents: #{torrents.inspect}"
+    t2 = {}
+    torrents.each { |e| t2[e.id] = e }
+    #puts "mapped torrents: #{t2.inspect}"
+    disappeared = []
+    @list.each do |model,path,iter|
+      id = iter[0]
+      if inp = t2[id] # we have a row and an update is avaiable
+        update_torrent(iter,inp)
+        t2.delete id
+      else # we have a row, but no update avaible
+        disappeared.push Gtk::TreeRowReference.new(model,path)
+      end
     end
+    disappeared.each do |rowref| # remove the items we don't get updates for
+      (path = rowref.path) and @list.remove(@list.get_iter(path))
+    end
+    t2.each do |id,inp| # new items
+      append_torrent(inp)
+    end
+    raise NeedFullUpdate unless t2.empty?
   end
-  def has_torrent?(torrent)
-    @torrents.has_key? torrent.id.to_s
+
+  private
+  def append_torrent(torrent)
+    puts "appending torrent #{torrent.id}"
+    return unless torrent.full?
+    row = @list.append
+    row[0] = torrent.id
+    row[1] = torrent.title || torrent.filename || "Torrent ##{torrent.id}"
+    row[2] = torrent.status
+    row[3] = torrent.percent_done
   end
-  def row_for(torrent)
-    @torrents[torrent.id.to_s]
+  def update_torrent(row,torrent)
+    #puts "updating torrent #{torrent.inspect}"
+    row[3] = torrent.percent_done
   end
 end
 
 class CataractWindow < Gtk::Window
   def initialize(title='Cataract')
     super(title)
-    @bar = {}
     #signal_connect_after("expose_event") do
     #end
     signal_connect_after("delete_event") do
       hide
     end
+    layout
     @fetcher = TorrentFetcher.new
     toggle
+  end
+  def layout
+    @box = Gtk::VBox.new
+    add @box
+    @view = TorrentView.new
+    @box.pack_start @view
+    @statusbar = Gtk::Statusbar.new
+    @context = @statusbar.get_context_id "23"
+    @box.pack_end @statusbar
   end
   def toggle
     if visible?
@@ -63,12 +93,22 @@ class CataractWindow < Gtk::Window
       ensure_style
       show_all
       Thread.new do
-        init_torrents
         loop do
-          sleep 23
-          update_torrents if visible?
+          begin
+            @view.refresh_torrents(@fetcher.update_torrents) if visible?
+          rescue NeedFullUpdate => e
+            init_torrents
+          end
+          sleep 3
         end
       end
+    end
+  end
+  def set_status(message)
+    message_id = @statusbar.push(@context,message)
+    Thread.new do
+      sleep 23
+      @statusbar.remove(@context,message_id)
     end
   end
   def clear
@@ -78,70 +118,25 @@ class CataractWindow < Gtk::Window
   end
 
   def init_content
-    unless child
-      add Gtk::Label.new('initializing')
-      show_all
-    end
+    set_status('initializing')
+    show_all
   end
   def init_torrents
+    set_status "Fetching torrents"
     torrents = @fetcher.get_torrents
     if !torrents or torrents.empty?
       clear
-      add Gtk::Label.new('no torrents')
+      set_status('no torrents')
       return
     end
-    @view = TorrentView.new
-    torrents.each do |torrent|
-      @view.append_torrent(torrent)
-    end
-    clear
-    add @view
-    show_all
+    @view.refresh_torrents torrents
+  rescue NeedFullUpdate => e
+    # already done that
   rescue Exception => e
-    clear
-    add Gtk::Label.new(e.message)
+    set_status(e.message)
     return
   end
 
-
-  def update_torrents
-    @fetcher.update_torrents.each do |t|
-      @view.update_torrent(t)
-    end
-  rescue Exception => e
-    return Gtk::Label.new(e.message)
-  end
-
-  def item_for_torrent(torrent)
-    title = torrent.title || torrent.filename || '[no title]'
-
-    return title
-
-    bar = Gtk::ProgressBar.new
-    bar.set_fraction(torrent.percent_done.to_f/100)
-    bar.add_events(Gdk::Event::BUTTON_PRESS_MASK)
-    bar.add_events(Gdk::Event::BUTTON_RELEASE_MASK)
-    # FIXME must get updated value
-    bar.signal_connect('button-press-event') do |widget,event|
-      if widget.text =~ /^\d+.\d+%$/
-        widget.text = title
-      else
-        widget.text = "#{torrent.percent_done}%"
-      end
-    end
-    bar.text = title
-
-    @bar[torrent.id] = bar
-
-    left = Gtk::Label.new(title)
-    right = bar
-    
-    item = Gtk::HBox.new
-    item.pack_end right
-    item.pack_end left
-    item.show_all
-    item
-  end
 end
 
 class CataractTrayIcon < Gtk::TrayIcon
@@ -199,8 +194,9 @@ class CataractTrayIcon < Gtk::TrayIcon
 end
 
 class MockTorrent
-  def initialize(hsh)
+  def initialize(hsh,full=false)
     @hsh = hsh
+    @full = full
   end
   def method_missing(name)
     name = name.to_s
@@ -208,6 +204,9 @@ class MockTorrent
   end
   def id
     @hsh['id']
+  end
+  def full?
+    @full
   end
 end
 
@@ -248,18 +247,15 @@ class TorrentFetcher
 
   def get_torrents
     puts "getting torrents"
-    torrents = []
-    rpc.call('Watchlist').each do |thash|
-      torrents << MockTorrent.new(thash)
-    end
-    return torrents
+    rpc.call('Watchlist').map {|thash| MockTorrent.new(thash,true) }
   end
 
   def update_torrents
     puts "updating torrents"
-    rpc.call('UpdateWatchlist')
+    rpc.call('UpdateWatchlist').map {|thash| MockTorrent.new(thash) }
   end
 end
 
+Thread.abort_on_exception = true
 tray = CataractTrayIcon.new
 Gtk.main
