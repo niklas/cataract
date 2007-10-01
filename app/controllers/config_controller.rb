@@ -1,6 +1,6 @@
 class ConfigController < ApplicationController
   before_filter :login_required
-  layout "torrents"
+  layout "slim"
 
   helper :torrents
 
