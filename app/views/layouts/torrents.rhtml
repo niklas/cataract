@@ -25,7 +25,7 @@
     <%= text_field_tag('search',params[:term], :id => 'search_field', :size => 42, :autocomplete => 'off') %>
     <%= observe_field('search_field',
                       :url => { :action => 'search', :controller => 'torrents', 
-                                :tags => @searched_tags.join(',')},
+                                :tags => (@searched_tags ? @searched_tags.join(','): nil)},
       :frequency => 2.3,
       :with => 'term',
       :loading => update_page do |page|
