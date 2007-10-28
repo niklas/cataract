@@ -53,6 +53,16 @@ class Torrent < ActiveRecord::Base
   acts_as_taggable
 
   STATES = [:running,:fetching,:paused,:archived,:remote,:stopping]
+  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message]
+
+  RTORRENT_METHODS.each do |meth|
+    src = <<-END_SRC
+    def #{meth}
+      rtorrent.for_torrent :#{meth}, self
+    end
+    END_SRC
+    class_eval src, __FILE__, __LINE__
+  end
 
   # lets simulate the state machine
   def current_state
@@ -121,6 +131,14 @@ class Torrent < ActiveRecord::Base
 
   def fetch_and_start!
     fetch! && start!
+  end
+
+  def self.rtorrent
+    @@rtorrent ||= RTorrent.new
+  end
+
+  def rtorrent
+    self.class.rtorrent
   end
 
   def self.invalid
@@ -202,6 +220,15 @@ class Torrent < ActiveRecord::Base
     else
       statusmsg
     end
+  end
+
+  def calculate_info_hash
+    return unless metainfo
+    metainfo.sha1.unpack('H*').first
+  end
+
+  def info_hash
+    self[:info_hash] ||= calculate_info_hash
   end
 
   # for fuse
@@ -310,6 +337,7 @@ class Torrent < ActiveRecord::Base
 
   def set_metainfo
     return unless metainfo
+    calculate_info_hash
     self[:content_size] = if metainfo.single?
       metainfo.length
     else

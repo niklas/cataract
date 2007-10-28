@@ -64,4 +64,6 @@ end
 # end
 
 
+require 'rtorrent'
+
 # Include your application configuration below
