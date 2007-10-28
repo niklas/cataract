@@ -1,4 +1,5 @@
 class SparklinesController < ApplicationController
+  skip_before_filter :login_from_cookie
 
   # Handles requests for sparkline graphs from views.
   #
