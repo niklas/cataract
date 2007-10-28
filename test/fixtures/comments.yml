@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 28
+#
+# Table name: comments
+#
+#  id         :integer       not null, primary key
+#  torrent_id :integer       
+#  user_id    :integer       
+#  content    :string(255)   
+#  created_at :datetime      
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1

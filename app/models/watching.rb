@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 28
+#
+# Table name: watchings
+#
+#  id         :integer       not null, primary key
+#  user_id    :integer       not null
+#  torrent_id :integer       not null
+#  created_at :datetime      
+#  apprise    :boolean       
+#  position   :integer       
+#
+
 class Watching < ActiveRecord::Base
   belongs_to :torrent
   belongs_to :user

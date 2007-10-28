@@ -1,3 +1,18 @@
+# == Schema Information
+# Schema version: 28
+#
+# Table name: feeds
+#
+#  id         :integer       not null, primary key
+#  url        :string(2048)  
+#  title      :string(255)   
+#  user_id    :integer       
+#  created_at :datetime      
+#  fetched_at :datetime      
+#  synced_at  :datetime      
+#  item_limit :integer       default(100)
+#
+
 require 'uri'
 require 'rss/0.9'
 require 'rss/1.0'
