@@ -5,6 +5,7 @@ require "xmlrpc/client"
 class RTorrent
   def initialize
     @rpc = XMLRPC::Client.new '127.0.0.1', '/rtorrentrpc', 80
+    @methods = call 'system.listMethods'
   end
 
   def call *a 
@@ -20,19 +21,29 @@ class RTorrent
       if e.message =~ /Could not find info-hash./
         raise TorrentNotRunning, 'this torrent is not being downloaded currently'
       else
-        raise e
+        raise RTorrentException, e.message
       end
     end
   end
 
   def remote_methods
-    call 'system.listMethods'
+    @methods
   end
 
-  def for_torrent what, torrent
+  def attrib_for_torrent what, torrent
     hsh = torrent.info_hash rescue nil
     raise TorrentHasNoInfoHash unless hsh
-    call "d.get_#{what}",hsh
+    meth = "get_d_#{what}"
+    raise RTorrentException, "no such rpc method: #{meth}" unless @methods.include? meth
+    call meth, hsh
+  end
+
+  def method_missing method, *args
+    if @methods.include? method
+      call method, *args
+    else
+      raise RTorrentException, "no such rpc method: #{method}"
+    end
   end
 end
 

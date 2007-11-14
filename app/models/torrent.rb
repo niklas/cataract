@@ -40,6 +40,7 @@ class Torrent < ActiveRecord::Base
   has_many :users, :through => :watchings
   belongs_to :feed
   validates_uniqueness_of :filename, :allow_nil => true
+  validates_format_of :info_hash, :with => /[0-9a-f]{40}/i, :unless => :remote?
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   before_update :notify_if_just_finished
@@ -47,23 +48,13 @@ class Torrent < ActiveRecord::Base
   before_validation :fix_filename, :auto_set_status
   after_create :notify_users_and_add_it
   before_create :set_default_values
+  before_destroy :stop!
 
   acts_as_ferret :fields => [:title, :filename, :url, :tag_list], :remote => true
 
   acts_as_taggable
 
   STATES = [:running,:fetching,:paused,:archived,:remote,:stopping]
-  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message]
-
-  RTORRENT_METHODS.each do |meth|
-    src = <<-END_SRC
-    def #{meth}
-      rtorrent.for_torrent :#{meth}, self
-    end
-    END_SRC
-    class_eval src, __FILE__, __LINE__
-  end
-
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus
@@ -86,37 +77,28 @@ class Torrent < ActiveRecord::Base
   
   def pause!
     event_from :running do 
-      moveto( fullpath(:paused) )
-      brake
+      rpc 'd_stop'
       update_attribute(:status, :paused)
     end
   end
 
   def start!
     event_from [:paused, :archived, :fetching, :running] do 
-      unarchive_content
-      moveto( fullpath(:running) )
+      # copy the file because rtorrent deletes file on #stop!
+      moveto( fullpath(:running), :copy => true )
+      rtorrent.load self.fullpath
+      rpc 'set_d_directory', Settings.torrent_dir
+      rpc 'd_start'
       update_attribute(:status, :running)
-      save
     end
   end
 
   def stop!
-    event_from [:paused, :running, :stopping] do
-      if current_state != :stopping
-        moveto( fullpath(:stopping) ) 
-        update_attribute(:status, :stopping)
-        archive_content
-      end
-      moveto( fullpath(:archived) )
+    event_from [:paused, :running] do
+      rpc 'd_stop'
+      rpc 'd_close'
+      rpc 'd_erase'
       update_attribute(:status, :archived)
-    end
-  end
-
-  def halt!
-    event_from [:paused, :running, :stopping, :fetching] do
-      moveto( fullpath(:archived) ) && update_attribute(:status,:archived)
-      true
     end
   end
 
@@ -133,12 +115,32 @@ class Torrent < ActiveRecord::Base
     fetch! && start!
   end
 
+
+
+  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message]
+
+  RTORRENT_METHODS.each do |meth|
+    src = <<-END_SRC
+    def #{meth}
+      rtorrent.attrib_for_torrent :#{meth}, self
+    end
+    END_SRC
+    class_eval src, __FILE__, __LINE__
+  end
+
   def self.rtorrent
     @@rtorrent ||= RTorrent.new
   end
 
   def rtorrent
     self.class.rtorrent
+  end
+
+  def rpc *args
+    meth, rest = args
+    rtorrent.call meth, info_hash, rest
+  rescue RTorrentException => e
+    errors.add :filename, e.message
   end
 
   def self.invalid
@@ -494,13 +496,17 @@ class Torrent < ActiveRecord::Base
     end
   end
 
-  def moveto(target)
+  def moveto(target,opts={})
     source = fullpath
     return if source.blank?
     return if target.blank?
     return unless File.exists? source
     begin
-      move(source,target)
+      if opts[:copy]
+        copy(source,target)
+      else
+        move(source,target)
+      end
     rescue Exception => e
       errors.add :filename, "^error while moving torrent: #{e.to_s}"
     end
@@ -514,18 +520,55 @@ class Torrent < ActiveRecord::Base
     set_metainfo && synced_at = Time.now
   end
 
+
+  SYNC_INTERVAL = 1.day unless defined? SYNC_INTERVAL
   def needs_to_be_synced?
-    synched_at.blank? || (Time.now - synched_at > 1.day)
+    synched_at.blank? || (Time.now - synched_at > SYNC_INTERVAL)
+  end
+
+  # checks all torrents in database
+  #  * exists the file?
+  #  * reads the hash if it is not already in the db
+  #  * ..
+  def self.sync
+    recognize_new.each do |t|
+      t.start!
+    end
+    find_all_outdated.each do |t|
+      t.sync!
+      unless t.valid?
+        # FIXME beware!! check validations first
+        #t.destroy
+        Logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
+      else
+        t.save
+      end
+    end
+  end
+  def self.find_all_outdated
+    find(:all, 
+         :conditions => ['synched_at < ?', Time.now - SYNC_INTERVAL]
+        )
+  end
+
+  # looks in the torrent_dir for new torrent files and creates them
+  def self.recognize_new
+    created = []
+    Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
+      filename = File.basename filepath
+      torrent = self.new(:filename => filename, :status => 'running')
+      created << torrent if torrent.save
+    end
+    return created
   end
 
  private
   def filepath_status
     {
       :archived => File.join(Settings.history_dir, filename),
-      :paused   => File.join(Settings.torrent_dir, filename) + '.paused',
-      :fetching => File.join(Settings.torrent_dir, filename) + '.fetching',
-      :stopping => File.join(Settings.torrent_dir, filename) + '.stopping',
-      :running  => File.join(Settings.torrent_dir, filename),
+      :fetching => File.join(Settings.history_dir, filename) + '.fetching',
+      :paused   => File.join(Settings.torrent_dir, 'active', filename),
+      :running  => File.join(Settings.torrent_dir, 'active', filename),
       :remote   => ''
     }
   end
