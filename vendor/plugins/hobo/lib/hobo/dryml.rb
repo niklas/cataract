@@ -88,7 +88,7 @@ module Hobo
       
       
       def controller_class_for(page)
-        controller, view = Controller.controller_and_view_for(page)
+        controller, view = ::Hobo::Controller.controller_and_view_for(page)
         "#{controller.camelize}Controller".constantize
       end
       
