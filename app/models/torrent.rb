@@ -34,6 +34,9 @@ require 'fileutils_monkeypatch'
 require 'rubytorrent'
 require 'net/http'
 require 'uri'
+require 'rtorrent'
+require 'rtorrent_proxy'
+
 class Torrent < ActiveRecord::Base
   include FileUtils
   has_many :watchings, :dependent => :destroy
@@ -48,13 +51,12 @@ class Torrent < ActiveRecord::Base
   before_validation :fix_filename, :auto_set_status
   after_create :notify_users_and_add_it
   before_create :set_default_values
-  before_destroy :stop!
 
   acts_as_ferret :fields => [:title, :filename, :url, :tag_list], :remote => true
 
   acts_as_taggable
 
-  STATES = [:running,:fetching,:paused,:archived,:remote,:stopping]
+  STATES = [:running,:fetching,:paused,:archived,:remote]
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus
@@ -77,27 +79,29 @@ class Torrent < ActiveRecord::Base
   
   def pause!
     event_from :running do 
-      rpc 'd_stop'
+      remote.stop!
       update_attribute(:status, :paused)
     end
   end
 
   def start!
-    event_from [:paused, :archived, :fetching, :running] do 
+    event_from [:paused, :archived] do 
       # copy the file because rtorrent deletes file on #stop!
       moveto( fullpath(:running), :copy => true )
-      rtorrent.load self.fullpath
-      rpc 'set_d_directory', Settings.torrent_dir
-      rpc 'd_start'
+      unless paused?
+        remote.load self.fullpath :running
+        remote.directory = Settings.torrent_dir
+      end
+      remote.start!
       update_attribute(:status, :running)
     end
   end
 
   def stop!
     event_from [:paused, :running] do
-      rpc 'd_stop'
-      rpc 'd_close'
-      rpc 'd_erase'
+      remote.stop!
+      remote.close!
+      remote.erase! # WARNING! will delete the torrent file
       update_attribute(:status, :archived)
     end
   end
@@ -119,13 +123,13 @@ class Torrent < ActiveRecord::Base
 
   RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message]
 
-  RTORRENT_METHODS.each do |meth|
-    src = <<-END_SRC
-    def #{meth}
-      rtorrent.attrib_for_torrent :#{meth}, self
+  alias :method_missing_without_xmlrpc :method_missing
+  def method_missing(m, *args, &blk)
+    if RTORRENT_METHODS.include?(m.to_sym)
+      remote.send m, *args, &blk
+    else
+      method_missing_without_xmlrpc m, *args, &blk
     end
-    END_SRC
-    class_eval src, __FILE__, __LINE__
   end
 
   def self.rtorrent
@@ -136,11 +140,8 @@ class Torrent < ActiveRecord::Base
     self.class.rtorrent
   end
 
-  def rpc *args
-    meth, rest = args
-    rtorrent.call meth, info_hash, rest
-  rescue RTorrentException => e
-    errors.add :filename, e.message
+  def remote
+    @remote ||= RTorrentProxy.new(self,rtorrent)
   end
 
   def self.invalid
@@ -325,6 +326,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def before_destroy
+    stop! if valid? and running?
     File.delete(fullpath) if file_exists?
   end
 
@@ -562,6 +564,7 @@ class Torrent < ActiveRecord::Base
     return created
   end
 
+
  private
   def filepath_status
     {
@@ -587,19 +590,13 @@ class Torrent < ActiveRecord::Base
   def set_default_values
     self.status ||= 'running'
     self.content_size      ||= 0
-    self.rate_down ||= 0
-    self.rate_up   ||= 0
-    self.seeds     ||= 0
-    self.peers     ||= 0
     self.description     ||= ''
-    self.percent_done    ||= 0
-    self.transferred_up   ||= 0
-    self.transferred_down ||= 0
   end
 
   # checks is the torrent was just finished downloading 
   # and notifies all subscripted users if this is the case
   def notify_if_just_finished
+    return # disabled for now
     if percent_done == 100
       old = Torrent.find(self.id)
       if old.percent_done < 100 and statusmsg == 'seeding'

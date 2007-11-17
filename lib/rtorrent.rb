@@ -30,6 +30,10 @@ class RTorrent
     @methods
   end
 
+  def remote_respond_to?(meth)
+    @methods.include? meth.to_s
+  end
+
   def attrib_for_torrent what, torrent
     hsh = torrent.info_hash rescue nil
     raise TorrentHasNoInfoHash unless hsh
