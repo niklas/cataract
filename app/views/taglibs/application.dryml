@@ -1,0 +1,6 @@
+<!-- Define your application-wide tags here -->
+
+<include src="plugins/hobo/tags/rapid"/>
+<include src="lcars" />
+<include src="pages" />
+<include src="torrent" />

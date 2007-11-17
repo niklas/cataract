@@ -26,7 +26,7 @@
 
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  has_many :watchings, :dependent => true
+  has_many :watchings, :dependent => :destroy
   has_many :torrents, :through => :watchings
 
   has_many :comments

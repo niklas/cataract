@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+
+
   # Add your own custom routes here.
   # The priority is based upon order of creation: first created -> highest priority.
   
@@ -11,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.connect 'torrents/list/:status', :controller => 'torrents', :action => 'list', :status => 'running'
   map.connect '', :controller => "torrents", :action => 'list'
+
+  #Hobo.add_routes(map)
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

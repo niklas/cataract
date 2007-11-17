@@ -3,6 +3,7 @@ class TorrentsController < ApplicationController
   before_filter :set_default_page_title
   before_filter :set_sidebar
   helper :tags
+  layout false
 
   def index
     redirect_to :action => 'list', :state => 'running'

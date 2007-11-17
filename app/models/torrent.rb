@@ -36,7 +36,7 @@ require 'net/http'
 require 'uri'
 class Torrent < ActiveRecord::Base
   include FileUtils
-  has_many :watchings, :dependent => true
+  has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
   belongs_to :feed
   validates_uniqueness_of :filename, :allow_nil => true

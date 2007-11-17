@@ -1,0 +1,228 @@
+<%
+  base_color = 'black'
+  slim_border = 0.4
+  big_border = 1.7
+  $borders = [big_border, slim_border] * 2
+  color1 = '#FFFF00'
+  color1_light = '#111100'
+  color2 = '#662211'
+
+  wide_border = (big_border + slim_border);
+
+  box = Object.new
+  def box.ems(vals)
+    (0..3).collect do |i|
+      vals[i] > 0 ? "#{$borders[i]}em" : '0'
+    end
+  end
+
+  def box.padding(*vals)
+    "padding: #{ems(vals).join ' '};"
+  end
+
+  def box.positions(*vals)
+    e = ems(vals)
+    out = ''
+    %w(top right bottom left).each_with_index do |w,i|
+      out << "#{w}: #{e[i]}; "
+    end
+    out
+  end
+
+%>
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  max-height: 100%;
+  border: 0;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  max-height: 100%;
+  border: 0;
+  background-color: <%= base_color %>;
+  color: white; 
+}
+
+
+div.lcars {
+  background-color: <%= color1 %>;
+  margin: <%= slim_border %>em;
+  font-family: Arial, sans-serif;
+  [variant~="en"] {
+    <%= box.padding(1,1,0,0) %>
+    > div.inner { <%= box.positions(1,1,0,0) %> }
+  }
+  [variant~="nw"] {
+    <%= box.padding(1,0,0,1) %>
+    > div.inner { <%= box.positions(1,0,0,1) %> }
+  }
+  [variant~="ws"] {
+    <%= box.padding(0,0,1,1) %>
+    > div.inner { <%= box.positions(0,0,1,1) %> }
+  }
+  [variant~="se"] {
+    <%= box.padding(0,1,1,0) %>
+    > div.inner { <%= box.positions(0,1,1,0) %> }
+  }
+  [variant~="enw"], [variant="wne"] {
+    <%= box.padding(1,1,0,1) %>
+    > div.inner { <%= box.positions(1,1,0,1) %> }
+  }
+  [variant~="nws"], [variant="swn"]{
+    <%= box.padding(1,0,1,1) %>
+    > div.inner { <%= box.positions(1,0,1,1) %> }
+  }
+  [variant~="wse"], [variant="esw"] {
+    <%= box.padding(0,1,1,1) %>
+    > div.inner { <%= box.positions(0,1,1,1) %> }
+  }
+  [variant="sen"], [variant="nes"] {
+    <%= box.padding(1,1,1,0) %>
+    > div.inner { <%= box.positions(1,1,1,0) %> }
+  }
+  > div > * {
+    font-size: <%= big_border - 0.2 %>em;
+  }
+  > img.decoration {
+    position: absolute;
+    height: <%= big_border %>em;
+    width: <%= big_border %>em
+    .bow {
+      background-color: inherit;
+      margin-top: <%= big_border %>em;
+      margin-right: <%= slim_border %>em;
+      margin-bottom: <%= big_border %>em;
+      margin-left: <%= slim_border %>em;
+    }
+    .stump.n, .stump.s {
+      width: <%= slim_border %>em;
+      height: <%= slim_border %>em;
+    }
+    .ne {
+      top: 0;
+      right: 0;
+    }
+    .nw, .Nw {
+      top: 0;
+      left: 0;
+    }
+    .se {
+      bottom: 0;
+      right: 0;
+    }
+    .sw {
+      bottom: 0;
+      left: 0;
+    }
+  }
+  > div.top { top: 0; }
+  > div.bottom { bottom: 0; }
+  > div.top, > div.bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    padding: 0 <%= wide_border %>em;
+    height: <%= big_border %>em;
+    > span.title {
+      display: inline;
+      padding: 0 <%= big_border * 0.2 %>em;
+      color: <%= color1 %>;
+      background-color: <%= base_color %>;
+    }
+    > ul.menu {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      > li {
+        display: inline;
+      }
+      > li > a{
+        text-decoration: none;
+        padding: 0 <%= big_border * 0.1 %>em;
+        background-color: <%= color2 %>;
+        color: <%= base_color %>;
+        :hover {
+          background-color: #a86453; 
+        }
+      }
+      > li > input[type="text"] {
+        background-color: <%= color1_light %>;
+        color: <%= color1 %>;
+        border: none;
+        font-size: 1em;
+        padding: 0 <%= slim_border %>em;
+      }
+    }
+  }
+  > div.inner {
+    position: absolute;
+    background-color: <%= base_color %>;
+    padding: <%= 0.45 * big_border %>em;
+    > div.content {
+      position: relative;
+      overflow: auto;
+      z-index: 5;
+      height: 100%;
+      font-size: 1em;
+      form {
+        label {
+           width: 30%;
+           text-align: right;
+           float: left;
+           margin: 0.3em 0.1em 0 0;
+           font-size: 0.7em;
+        }
+        label + input[type="text"],
+        label + input[type="textarea"],
+        label + input[type="password"]
+        {
+           width: 60%;
+           margin: 0 0.3em;
+           padding: 0 0.3em;
+           background-color: #111100;
+           color: <%= color1 %>;
+           border-top: none;
+           border-bottom: none;
+           border-right: 0.7em solid <%= color1 %>;
+           border-left: 0.3em solid <%= color1 %>;
+        }
+        label + input[type="checkbox"] {
+          height: 1em;
+          width: 2em;
+          margin: 0 3em;
+        }
+        input[type="submit"] {
+          float: right;
+          background: <%= base_color %>;
+          color: <%= color1 %>;
+          border-top: none;
+          border-bottom: none;
+          border-left: 1em solid <%= color1 %>;
+          border-right: 0.1em solid <%= color1 %>;
+          cursor: pointer;
+        }
+        input:before {
+            display: block;
+            content: url(../images/layout/corner_tr_content_small.png);
+            background: red;
+            width: 1em;
+            height: 1em;
+            outline: thin solid blue;
+            line-height: 0.1;
+            font-size: 1px;
+            margin: 400px 0 0 0px;
+            padding: 0;
+            z-index: 8;
+        }
+      }
+    }
+  }
+}

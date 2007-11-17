@@ -5,17 +5,9 @@
 
 div.torrent {
   position: relative;
-  margin: 0.7em 0.3em 0 0;
+  margin: 0;
   padding: 0em;
   overflow: hidden;
-  background: <%= color1 %>;
-  > * {
-    margin: 0.3em 1em 0.1em 1em;
-  }
-  div > div {
-    margin: 0.1em;
-    padding: 0.2em;
-  }
   a {
     color: <%= color2 %>;
     text-decoration: underline;
@@ -47,6 +39,10 @@ div.torrent {
     padding: 0 0 0.3em 0;
     a {
       float: right;
+    }
+    img {
+      border:  none;
+
     }
     img.spinner {
       margin: 0 0 0 0.5em;

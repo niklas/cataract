@@ -1,0 +1,146 @@
+<def tag="LcarsBox" attrs="scale,variant">
+   <div class="#{add_classes(attributes, 'lcars_box')[:class]}" style="font-size: #{scale || '100%'}" variant="#{variant}">
+    <LcarsDecorationsNW merge="&true" if="&variant=='nw'"/>
+    <LcarsDecorationsNE merge="&true" if="&variant=='ne'"/>
+    <LcarsDecorationsSW merge="&true" if="&variant=='sw'"/>
+    <LcarsDecorationsSE merge="&true" if="&variant=='se'"/>
+  </div>
+</def>
+
+<def tag="Lcars" attrs="scale,variant">
+   <div class="#{add_classes(attributes, 'lcars')[:class]}" 
+        style="font-size: #{scale || '100%'}; #{attributes[:style]}" 
+        variant="#{variant}"
+        merge_attrs>
+     <div class="inner">
+        <div class="content" param="content" />
+     </div>
+     <LcarsTop if="&variant=~/n/" variant="#{variant}" merge/>
+     <LcarsRight if="&variant=~/e/" variant="#{variant}" merge/>
+     <LcarsLeft if="&variant=~/w/" variant="#{variant}" merge/>
+     <LcarsBottom if="&variant=~/s/" variant="#{variant}" merge/>
+  </div>
+</def>
+
+<def tag="LcarsTop" attrs="variant,title,title2">
+   <if test="&variant=~/e/">
+      <lcars_decoration kind="corner" variant="ne" />
+      <lcars_decoration kind="bow" variant="ne" />
+   </if>
+   <else>
+      <lcars_decoration kind="stump" variant="e" class="ne" />
+   </else>
+
+   <if test="&variant=~/w/">
+      <lcars_decoration kind="corner" variant="nw" />
+      <lcars_decoration kind="bow" variant="nw" />
+   </if>
+   <else>
+      <lcars_decoration kind="stump" variant="w" class="nw" />
+   </else>
+
+   <div class="top">
+      <if test="&variant=~/s.n/">
+         <span class="title" param="title2" if="&title2"><%= title2 %></span>
+         <ul class="menu" param="menu2" if="&all_parameters[:menu2]" />
+      </if>
+      <else>
+         <span class="title" param="title" if="&title"><%= title %></span>
+         <ul class="menu" param="menu" />
+      </else>
+  </div>
+</def>
+
+<def tag="LcarsBottom" attrs="variant,title,title2">
+   <if test="&variant=~/e/">
+      <lcars_decoration kind="corner" variant="se" />
+      <lcars_decoration kind="bow" variant="se" />
+   </if>
+   <else>
+      <lcars_decoration kind="stump" variant="e" class="se" />
+   </else>
+
+   <if test="&variant=~/w/">
+      <lcars_decoration kind="corner" variant="sw" />
+      <lcars_decoration kind="bow" variant="sw" />
+   </if>
+   <else>
+      <lcars_decoration kind="stump" variant="w" class="sw" />
+   </else>
+
+   <div class="bottom">
+      <if test="&variant=~/n.s/">
+         <span class="title" param="title2" if="&title2"><%= title2 %></span>
+         <ul class="menu" param="menu2" if="&all_parameters[:menu2]"/>
+      </if>
+      <else>
+         <span class="title" param="title" if="&title"><%= title %></span>
+         <ul class="menu" param="menu" />
+      </else>
+  </div>
+</def>
+
+<def tag="LcarsLeft" attrs="variant">
+   <lcars_decoration kind="stump" variant="n" class="nw" unless="&variant=~/n/" />
+   <lcars_decoration kind="stump" variant="s" class="sw" unless="&variant=~/s/" />
+</def>
+<def tag="LcarsRight" attrs="variant">
+   <lcars_decoration kind="stump" variant="n" class="ne" unless="&variant=~/n/" />
+   <lcars_decoration kind="stump" variant="s" class="se" unless="&variant=~/s/" />
+</def>
+
+<def tag="LcarsDecorationsSW" attrs="title">
+  <div class="left">
+    <lcars_decoration kind="stump" variant="n" />
+  </div> 
+  <div class="content" param="content"></div>
+  <lcars_decoration kind="bow" variant="sw" />
+  <div class="bottom">
+    <lcars_decoration kind="corner" variant="sw" />
+    <span class="title" param="title" if="&title"><%= title %></span>
+    <ul class="menu" param="menu" />
+    <lcars_decoration kind="stump" variant="e" />
+  </div>
+</def>
+
+<def tag="LcarsDecorationsSE" attrs="title">
+  <div class="right">
+    <lcars_decoration kind="stump" variant="n" />
+  </div> 
+  <div class="content" param="content"></div>
+  <lcars_decoration kind="bow" variant="se" />
+  <div class="bottom">
+    <lcars_decoration kind="corner" variant="se" />
+    <span class="title" param="title" if="&title"><%= title %></span>
+    <ul class="menu" param="menu" />
+    <lcars_decoration kind="stump" variant="w" />
+  </div>
+</def>
+
+<def tag="LcarsDecorationsNE" attrs="title">
+  <div class="right">
+    <lcars_decoration kind="stump" variant="s" />
+  </div> 
+  <div class="content" param="content"></div>
+  <lcars_decoration kind="bow" variant="ne" />
+  <div class="top">
+    <lcars_decoration kind="corner" variant="ne" />
+    <span class="title" param="title" if="&title"><%= title %></span>
+    <ul class="menu" param="menu" />
+    <lcars_decoration kind="stump" variant="w" />
+  </div>
+</def>
+
+<def tag="LcarsDecorationsNW" attrs="title">
+  <div class="left">
+    <lcars_decoration kind="stump" variant="s" />
+  </div> 
+  <div class="content" param="content"></div>
+  <lcars_decoration kind="bow" variant="nw" />
+  <div class="top">
+    <lcars_decoration kind="corner" variant="nw" />
+    <span class="title" param="title" if="&title"><%= title %></span>
+    <ul class="menu" param="menu" />
+    <lcars_decoration kind="stump" variant="e" />
+  </div>
+</def>

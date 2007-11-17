@@ -1,0 +1,14 @@
+<CataractPage>
+  <content>
+    <list_of_torrents with="&@torrents" />
+    <else>
+      no torrents found
+    </else>
+  </content>
+  <menu2> 
+     <li>
+        <%= text_field_tag( 'search', params[:term], 
+        :id => 'search_field', :autocomplete => 'off', :style => "width: 60%") %>
+     </li>
+  </menu2>
+</CataractPage>

@@ -1,0 +1,15 @@
+<def tag="card" for="Torrent">
+   <div class="torrent" id="torrent_#{this.id}">
+      <%= this.short_title %>
+      <%= progress this %>
+      <div class="action_buttons">
+         <%= action_buttons_for this %>
+      </div>
+   </div>
+</def>
+
+<def tag="list_of_torrents">
+ <repeat>
+    <card />
+ </repeat>
+</def>
