@@ -306,12 +306,6 @@ class Torrent < ActiveRecord::Base
     current_state == :remote
   end
 
-  # set rates to 0
-  def brake
-    self.rate_up = 0
-    self.rate_down = 0
-  end
-
   def auto_set_status
     self.status= 
       unless file_exists?
@@ -355,7 +349,7 @@ class Torrent < ActiveRecord::Base
       end
   end
 
-  # Here lies the content while it is being downloaded
+  # Here lies the content while it is being downloaded (default)
   def working_path
     return '' unless metainfo
     File.join(Settings.torrent_dir,metainfo.name)
@@ -367,9 +361,9 @@ class Torrent < ActiveRecord::Base
     File.join(Settings.target_dir,metainfo.name)
   end
 
-  # where to find the contents, either #working_path or #target_path
+  # where to find the contents, either saved :content_path or #working_path
   def content_path
-    archived? ? target_path : working_path
+    self[:content_path] ||= working_path
   end
 
   # returns the current url to the content for the user
@@ -473,6 +467,16 @@ class Torrent < ActiveRecord::Base
     return unless metainfo
     begin
       move(target_path,working_path) if File.exists?(target_path)
+    rescue Exception => e
+      errors.add :filename, "^error on moving content: #{e.to_s}"
+    end
+  end
+
+  def move_content_to new_path
+    begin
+      # content must be at #content_path
+      # the target should exist, but should not contain #metainfo.name ?
+      # change content_path
     rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
