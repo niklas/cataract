@@ -5,7 +5,8 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-#RAILS_GEM_VERSION = '1.2.3'
+RAILS_GEM_VERSION = '1.99.0' unless defined? RAILS_GEM_VERSION
+
 
 
 module SettingsDefaults
@@ -27,7 +28,7 @@ Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
   
   # Skip frameworks you're not going to use (only works if using vendor/rails)
-  # config.frameworks -= [ :action_web_service, :action_mailer ]
+  config.frameworks -= [ :action_web_service, :action_mailer, :active_resource ]
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
@@ -39,6 +40,7 @@ Rails::Initializer.run do |config|
   # Use the database for sessions instead of the file system
   # (create the session table with 'rake db:sessions:create')
   # config.action_controller.session_store = :active_record_store
+  config.action_controller.session = { :session_key => "_cataract_session", :secret => "I got a funny feeling you don't love me anymore." }
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper, 
