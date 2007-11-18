@@ -59,7 +59,7 @@
  </def>
 
 <def tag="CataractEngineering">
-   <Lcars variant="swn" scale="50%" id="engineering" title="Log" title2="logged in as you" merge>
+   <Lcars variant="swn" scale="50%" id="engineering" title="Log" title2="logged in as #{current_user.login}" merge>
       <content id="engineering_content" param="engineering_content">
          <event_log with="&@logs" />
       </content>
@@ -70,7 +70,7 @@
       </menu>
       <menu2>
          <li><a href="">Preferences</a></li>
-         <li><a href="">Logout</a></li>
+         <li><%= link_to 'Logout', :controller => :account, :action => 'logout' %></li>
       </menu2>
    </Lcars>
 </def>

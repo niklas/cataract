@@ -1,6 +1,7 @@
 class StylesheetsController < ApplicationController
   before_filter :set_headers
   skip_before_filter :login_from_cookie
+  skip_before_filter :login_required
   after_filter  { |c| c.cache_page }
   session :off
   layout nil

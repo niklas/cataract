@@ -1,13 +1,10 @@
 class TorrentsController < ApplicationController
-  #before_filter :login_required
   before_filter :set_default_page_title
   before_filter :set_sidebar
   before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :preview, :fetch, :delete_content, :set_torrent_tag_list]
   before_filter :create_log
   helper :tags
   layout false
-  hobo_model_controller
-  skip_before_filter :login_from_cookie
 
   def index
     redirect_to :action => 'list', :state => 'running'

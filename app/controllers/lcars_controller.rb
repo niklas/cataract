@@ -1,4 +1,6 @@
 class LcarsController < ApplicationController
+  skip_before_filter :login_from_cookie
+  skip_before_filter :login_required
   # renders and caches the round corners of the LCARS design
 
   def decoration

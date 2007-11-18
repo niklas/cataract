@@ -1,8 +1,16 @@
 class ApplicationController < ActionController::Base
-  include AuthenticatedSystem
+  hobo_controller
+  #include AuthenticatedSystem
   before_filter :login_from_cookie
+  before_filter :login_required
   helper :notification
   helper :lcars
+
+
+  # hobo hook
+  def access_denied(user_model=nil)
+    redirect_to :controller => 'account', :action => 'login'
+  end
 
   
   protected
