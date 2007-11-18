@@ -64,7 +64,7 @@ module TorrentsHelper
 
   def watchbutton(t)
     link_to_remote image_tag('buttons/watch'),
-      :url => { :action => 'watch', :id => t.id}
+      :url => {:controller => 'watches', :action => 'create', :id => t.id}
   end
 
   def human_transfer(kb, rate=true)

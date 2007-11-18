@@ -2,6 +2,8 @@ class TorrentsController < ApplicationController
   #before_filter :login_required
   before_filter :set_default_page_title
   before_filter :set_sidebar
+  before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :preview, :fetch, :delete_content, :set_torrent_tag_list]
+  before_filter :create_log
   helper :tags
   layout false
   hobo_model_controller
@@ -30,7 +32,6 @@ class TorrentsController < ApplicationController
 
   # actions
   def stop
-    @torrent = Torrent.find(params[:id])
     @torrent.stop!
     if @torrent.errors.empty?
       flash[:notice] = @torrent.short_title + " was moved to history"
@@ -44,7 +45,6 @@ class TorrentsController < ApplicationController
   end
 
   def pause
-    @torrent = Torrent.find(params[:id])
     @torrent.pause!
     if @torrent.save!
       flash[:notice] = @torrent.short_title + " has been paused"
@@ -54,7 +54,6 @@ class TorrentsController < ApplicationController
   end
 
   def start
-    @torrent = Torrent.find(params[:id])
     @torrent.start!
     if @torrent.save!
       flash[:notice] = @torrent.short_title + " has been started for transfer"
@@ -64,7 +63,6 @@ class TorrentsController < ApplicationController
   end
 
   def show
-    @torrent = Torrent.find(params[:id])
     respond_to do |want|
       want.js do
         new_helm = Hobo::Dryml.render_tag(@template, 'details', :with => @torrent)
@@ -77,8 +75,6 @@ class TorrentsController < ApplicationController
   end
 
   def preview
-    @torrent = Torrent.find(params[:id])
-
     mark_preview(@torrent)
     respond_to do |want|
       want.js
@@ -98,39 +94,6 @@ class TorrentsController < ApplicationController
     render :text => errors
   end
 
-  def watch
-    @torrent = Torrent.find(params[:id])
-    if current_user.watch(@torrent)
-      render :update do |page|
-        page.insert_html :top, :watchlist, render(:partial => 'watchlist_item', :object => @torrent)
-        page.notification("Added '#{@torrent.short_title}' to watchlist")
-      end
-    else
-      render :update do |page|
-        page.notification("Already watching '#{@torrent.short_title}'")
-      end
-    end
-  end
-
-  def unwatch
-    current_user.unwatch(params[:id])
-    @torrent = Torrent.find(params[:id])
-    respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page.remove("watched_torrent_#{@torrent.id}")
-          page.notification("Removed '#{@torrent.short_title}' from watchlist")
-        end
-      end
-    end
-  end
-
-  def watchlist
-    respond_to do |wants|
-      wants.js  { render :partial => 'watchlist' }
-      wants.xml { render :layout => false }
-    end
-  end
 
   def new
     @torrent = Torrent.new
@@ -184,7 +147,6 @@ class TorrentsController < ApplicationController
   end
 
   def fetch
-    @torrent = Torrent.find(params[:id])
     begin
       @torrent.fetch!
       current_user.watch(@torrent)
@@ -230,7 +192,6 @@ class TorrentsController < ApplicationController
   end
 
   def delete_content
-    @torrent = Torrent.find(params[:id])
     if params[:delete_confirmation] == 'DELETE'
       if @torrent.delete_content! 
         @torrent.halt!
@@ -253,7 +214,6 @@ class TorrentsController < ApplicationController
   end
 
   def set_torrent_tag_list
-    @torrent = Torrent.find(params[:id])
     @torrent.tag_list = params[:value]
     @torrent.save
     render :update do |page|
