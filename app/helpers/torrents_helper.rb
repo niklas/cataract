@@ -58,7 +58,7 @@ module TorrentsHelper
   def button(t,action)
       link_to_remote(
         image_tag("buttons/#{action}.png"), 
-        :url => {:action => action, :id => t.id },
+        :url => {:action => action, :id => t.id, :controller => 'torrents' },
         :loading => activity_effect(t,action + 'ing'))
   end
 
