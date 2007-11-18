@@ -1,8 +1,0 @@
-target_domid = "torrent_#{@torrent.id}"
-details_domid = "details_for_#{@torrent.id}"
-
-unless viewed?(@torrent)
-  page.insert_html(:top, 'content', render(:partial => 'preview', :object => @torrent))
-end
-page.replace target_domid, render(:partial => 'details', :object => @torrent)
-page.visual_effect :blind_down, details_domid, :duration => 1.3

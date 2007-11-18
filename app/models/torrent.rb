@@ -121,7 +121,7 @@ class Torrent < ActiveRecord::Base
 
 
 
-  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message]
+  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes]
 
   alias :method_missing_without_xmlrpc :method_missing
   def method_missing(m, *args, &blk)
@@ -209,8 +209,8 @@ class Torrent < ActiveRecord::Base
 
 
   # extended attributes
-  def percent
-    percent_done
+  def progress
+    (100.0 * completed_bytes.to_f / content_size.to_f).to_i
   end
 
   def download_status
@@ -553,7 +553,7 @@ class Torrent < ActiveRecord::Base
   end
   def self.find_all_outdated
     find(:all, 
-         :conditions => ['synched_at < ?', Time.now - SYNC_INTERVAL]
+         :conditions => ['synched_at IS NULL OR synched_at < ?', Time.now - SYNC_INTERVAL]
         )
   end
 

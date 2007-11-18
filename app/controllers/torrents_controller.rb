@@ -1,9 +1,11 @@
 class TorrentsController < ApplicationController
-  before_filter :login_required
+  #before_filter :login_required
   before_filter :set_default_page_title
   before_filter :set_sidebar
   helper :tags
   layout false
+  hobo_model_controller
+  skip_before_filter :login_from_cookie
 
   def index
     redirect_to :action => 'list', :state => 'running'
@@ -11,8 +13,9 @@ class TorrentsController < ApplicationController
 
   def list
     @searched_tags = []
-    @status = (params[:status] || :running).to_sym
-    @torrents = Torrent.find_in_state(@status, :order => 'created_at desc')
+    #@status = (params[:status] || :running).to_sym
+    #@torrents = Torrent.find_in_state(@status, :order => 'created_at desc')
+    @torrents = Torrent.find :all # debugging
     forget_all
     memorize_preview(@torrents)
   end
@@ -63,7 +66,12 @@ class TorrentsController < ApplicationController
   def show
     @torrent = Torrent.find(params[:id])
     respond_to do |want|
-      want.js 
+      want.js do
+        new_helm = Hobo::Dryml.render_tag(@template, 'details', :with => @torrent)
+        render :update do |page|
+          page.replace 'helm', new_helm
+        end
+      end
     end
     mark_shown(@torrent)
   end
