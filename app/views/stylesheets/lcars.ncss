@@ -143,22 +143,28 @@ div.lcars {
       padding: 0;
       > li {
         display: inline;
-      }
-      > li > a{
-        text-decoration: none;
-        padding: 0 <%= big_border * 0.1 %>em;
-        background-color: <%= color2 %>;
-        color: <%= base_color %>;
-        :hover {
-          background-color: #a86453; 
+        > a {
+          text-decoration: none;
+          padding: 0 <%= big_border * 0.1 %>em;
+          background-color: <%= color2 %>;
+          color: <%= base_color %>;
+          :hover {
+            background-color: #a86453; 
+          }
         }
-      }
-      > li > input[type="text"] {
-        background-color: <%= color1_light %>;
-        color: <%= color1 %>;
-        border: none;
-        font-size: 1em;
-        padding: 0 <%= slim_border %>em;
+        + li > a { 
+          background-color: pink;
+        }
+        + li + li > a { 
+          background-color: blue;
+        }
+        > input[type="text"] {
+          background-color: <%= color1_light %>;
+          color: <%= color1 %>;
+          border: none;
+          font-size: 1em;
+          padding: 0 <%= slim_border %>em;
+        }
       }
     }
   }
