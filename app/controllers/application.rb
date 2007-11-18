@@ -7,12 +7,42 @@ class ApplicationController < ActionController::Base
 
   hobo_controller
 
+  protected
   # hobo hook
   def access_denied(user_model=nil)
     redirect_to :controller => 'account', :action => 'login'
   end
 
-  
+  # This is called whenever to call to #render was made.
+  # It appends the log_entries annd calls multiple render actions (see #render_update).
+  def default_render
+    if request.xhr?
+      render :update do |page|
+        unless @to_render.empty?
+          @to_render.each do |task|
+            task.call page
+          end
+        end
+        append_log_to(page)
+      end
+    else
+      render
+    end
+  end
+  # call in your action
+  # render_update do |page|
+  #   page.update 'foo', 'barz'
+  # end
+  def render_update &blk
+    @to_render ||= []
+    @to_render << blk
+  end
+  def render_details_for(torrent)
+    render_update do |page|
+      page.replace :helm, Hobo::Dryml.render_tag(@template,'details', :with => torrent)
+    end
+  end
+
   def find_torrent_by_id
     @torrent = Torrent.find(params[:id]) if params[:id]
     true

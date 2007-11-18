@@ -3,12 +3,6 @@ class WatchesController < ApplicationController
   before_filter :create_log
   helper :torrents
 
-  def default_render
-    render :update do |page|
-      page.replace :helm, Hobo::Dryml.render_tag(@template,'details', :with => @torrent) if @torrent
-      append_log_to(page)
-    end
-  end
   def index
     respond_to do |wants|
       wants.js  { render :partial => 'watchlist' }
@@ -22,9 +16,12 @@ class WatchesController < ApplicationController
     else
       render_warning("Already watching '#{@torrent.short_title}'")
     end
+    render_details_for @torrent
   end
   def destroy
     current_user.unwatch(@torrent.id)
     render_info("Removed '#{@torrent.short_title}' from watchlist")
+    render_details_for @torrent
   end
+
 end
