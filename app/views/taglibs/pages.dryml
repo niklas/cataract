@@ -29,7 +29,7 @@
    <% size ||= '50%' %>
    <CataractBasePage merge>
     <body>
-       <Lcars title="untitled" variant="nw" style="height: #{size}; width: #{size}" merge />
+       <Lcars title="untitled" id="single" variant="nw" style="height: #{size}; width: #{size}" merge />
     </body>
   </CataractBasePage>
 </def>
