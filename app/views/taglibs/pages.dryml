@@ -36,44 +36,53 @@
 
 <def tag="CataractPage">
   <CataractBasePage merge>
-     <body>
-       <Lcars variant="enw" scale="70%" id="helm" title="The good, tha Bad and the Ugly">
-          <content param="helm_content">
-             Status: running, Rate, Transferred (without hover: Tracker stats)
-          </content>
-          <menu param="helm_menu">
-             <li><a href="">1234</a></li>
-             <li><a href="">4321</a></li>
-             <li><a href="">666</a></li>
-          </menu>
-       </Lcars>
-       <Lcars variant="sen" scale="50%" id="engineering" title="Log" title2="logged in as you">
-          <content param="engineering_content">
-             <ul>
-                <li>deleted "Foo bar"</li>
-                <li>fetched "Bar foo"</li>
-             </ul>
-          </content>
-          <menu>
-             <li><a href="">5 min</a></li>
-             <li><a href="">1 h</a></li>
-             <li><a href="">24 h</a></li>
-          </menu>
-          <menu2>
-             <li><a href="">Preferences</a></li>
-             <li><a href="">Logout</a></li>
-          </menu2>
-       </Lcars>
-       
-       <Lcars variant="nws" scale="90%" id="main" merge>
-          <menu> 
-            <li><%= link_to 'Search' %></li>
-            <li><%= link_to 'Running' %></li>
-            <li><%= link_to 'Watchlist' %></li>
-         </menu>
-      </Lcars>
+    <body>
+       <CataractHelm merge_attrs />
+       <CataractEngineering merge_attrs />
+       <CataractMain merge />
     </body>
   </CataractBasePage>
 </def>
 
+<def tag="CataractHelm">
+   <Lcars variant="nes" scale="70%" id="helm" title="The good, tha Bad and the Ugly" merge>
+      <content id="helm_content" param="helm_content">
+         Status: running, Rate, Transferred (without hover: Tracker stats)
+      </content>
+      <menu id="helm_menu" param="helm_menu">
+         <li><a href="">1234</a></li>
+         <li><a href="">4321</a></li>
+         <li><a href="">666</a></li>
+      </menu>
+   </Lcars>
+ </def>
 
+<def tag="CataractEngineering">
+   <Lcars variant="swn" scale="50%" id="engineering" title="Log" title2="logged in as you" merge>
+      <content id="engineering_content" param="engineering_content">
+         <ul>
+            <li>deleted "Foo bar"</li>
+            <li>fetched "Bar foo"</li>
+         </ul>
+      </content>
+      <menu>
+         <li><a href="">5 min</a></li>
+         <li><a href="">1 h</a></li>
+         <li><a href="">24 h</a></li>
+      </menu>
+      <menu2>
+         <li><a href="">Preferences</a></li>
+         <li><a href="">Logout</a></li>
+      </menu2>
+   </Lcars>
+</def>
+
+<def tag="CataractMain"> 
+   <Lcars variant="nws" scale="90%" id="main" merge>
+      <menu> 
+        <li><%= link_to 'Search' %></li>
+        <li><%= link_to 'Running' %></li>
+        <li><%= link_to 'Watchlist' %></li>
+      </menu>
+   </Lcars>
+</def>
