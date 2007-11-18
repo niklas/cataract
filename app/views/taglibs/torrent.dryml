@@ -31,3 +31,9 @@
 <def tag="link_to_details">
   <%= link_to_remote this.short_title, :url => { :action => 'show', :controller => 'torrents', :id => this.id  } %>
 </def>
+
+<def tag="event_log">
+  <UL id="event_log">
+    <li class="&this.level.to_s"><%= this.message %></li>
+  </UL>
+</def>

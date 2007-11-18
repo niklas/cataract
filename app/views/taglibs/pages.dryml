@@ -20,6 +20,7 @@
       <stylesheet name="lcars"/>
       <stylesheet name="torrents"/>
       <stylesheet name="layout"/>
+      <stylesheet name="style"/>
     </stylesheets>
   </LcarsPage>
 </def>
@@ -60,10 +61,7 @@
 <def tag="CataractEngineering">
    <Lcars variant="swn" scale="50%" id="engineering" title="Log" title2="logged in as you" merge>
       <content id="engineering_content" param="engineering_content">
-         <ul>
-            <li>deleted "Foo bar"</li>
-            <li>fetched "Bar foo"</li>
-         </ul>
+         <event_log with="&@logs" />
       </content>
       <menu>
          <li><a href="">5 min</a></li>

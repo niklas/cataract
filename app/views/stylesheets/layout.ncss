@@ -30,3 +30,8 @@ body {
     }
   }
 }
+
+ul#event_log {
+  margin: 0;
+  padding: 0;
+}
