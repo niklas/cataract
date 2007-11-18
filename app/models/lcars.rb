@@ -10,28 +10,26 @@ require 'RMagick'
 class Lcars
   class << self
     def plot(options={})
-      kind = options.delete(:kind) || :corner
       defaults = {
         :diameter => 42,
         :background_color => 'black',
-        :variant => :ne
-      }
+        :variant => :ne,
+        :kind => :corner
+      }.with_indifferent_access.merge(options)
+      kind = defaults[:kind]
+      defaults.delete :controller
+      defaults.delete :action
 
-      # HACK for HashWithIndifferentAccess
-      options_sym = Hash.new
-      options.keys.each do |key|
-        options_sym[key.to_sym] = options[key]
-      end
-      options_sym  = defaults.merge(options_sym)
+      keystr = defaults.map{|k,v| v}.join '_'
 
-      lcars = self.new(kind, options_sym)
-      lcars.send kind
+      lcars = self.new(kind, defaults)
+      return lcars.send(kind), keystr
     end
 
      # Writes a graph to disk with the specified filename, or "lcars.png"
-    def plot_to_file(filename="lcars.png", data=[], options={})
+    def plot_to_file(filename="lcars.png", options={})
       File.open( filename, 'wb' ) do |png|
-        png << self.plot( data, options)
+        png << self.plot(options)
       end
     end
 
