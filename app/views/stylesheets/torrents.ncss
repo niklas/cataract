@@ -8,9 +8,14 @@ div.torrent {
   margin: 0;
   padding: 0em;
   overflow: hidden;
+  font-size: 0.8em;
   a {
     color: <%= color2 %>;
-    text-decoration: underline;
+    text-decoration: none;
+    :hover {
+      background-color: <%= color2 %>;
+      color: black;
+    }
   }
   h1, h1 > a {
     text-decoration: none;

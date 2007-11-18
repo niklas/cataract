@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def watch(torrent)
-    return if is_watching(torrent)
+    return if is_watching?(torrent)
     self.watchings.create(:torrent => torrent, :apprise => true)
   end
 
@@ -85,9 +85,10 @@ class User < ActiveRecord::Base
     w.destroy if w
   end
 
-  def is_watching(torrent)
+  def is_watching?(torrent)
     watchings.find_by_torrent_id(torrent.id)
   end
+  alias_method :watches?, :is_watching?
 
   def remember_token?
     remember_token_expires_at && Time.now.utc < remember_token_expires_at 

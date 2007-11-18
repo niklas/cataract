@@ -1,15 +1,12 @@
 <def tag="card" for="Torrent">
    <div class="torrent" id="torrent_#{this.id}">
       <link_to_details />
-      <div class="action_buttons">
-         <%= action_buttons_for this %>
-      </div>
    </div>
 </def>
 
 <def tag="details">
    <CataractHelm title="&this.short_title">
-      <helm_content>
+      <helm_content class="torrent">
          <if test="&this.running?">
             downloading... <%= this.progress %>% <br/>
             Rate: <%= this.up_rate %> | <%= this.down_rate %> <br />
@@ -18,6 +15,9 @@
          <else>
             Archived or paused
          </else>
+         <div class="action_buttons">
+            <%= action_buttons_for this %>
+         </div>
       </helm_content>
   </CataractHelm>
 </def>
@@ -34,6 +34,9 @@
 
 <def tag="event_log">
   <UL id="event_log">
-    <li class="&this.level.to_s"><%= this.message %></li>
+    <li class="&this.level.to_s"><%= h(this.message) %></li>
   </UL>
+  <else>
+    <ul id="event_log" />
+  </else>
 </def>

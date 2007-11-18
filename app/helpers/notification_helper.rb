@@ -20,6 +20,19 @@ module NotificationHelper
     }
   end
 
+  # FIXME this is not DRY. wait for Hobo to solidate
+  def log_entry_tag(entry)
+    %Q[<li class="#{entry.level}">#{entry.message}</li>]
+  end
+  def append_log_to(page)
+    @logs << LogEntry.new(flash[:notice], :notice) unless flash[:notice].blank?
+    @logs << LogEntry.new(flash[:error], :error)   unless flash[:error].blank?
+    @logs << LogEntry.new(flash[:message], :info)  unless flash[:info].blank?
+    @logs.each do |le| 
+      page.insert_html :bottom, 'event_log', log_entry_tag(le)
+    end if @logs
+  end
+
   def render_pending_notifications
     pc =  page.context
     notification(pc.flash[:notice]) unless pc.flash[:notice].blank?

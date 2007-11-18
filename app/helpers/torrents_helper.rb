@@ -57,14 +57,19 @@ module TorrentsHelper
 
   def button(t,action)
       link_to_remote(
-        image_tag("buttons/#{action}"), 
+        image_tag("buttons/#{action}.png"), 
         :url => {:action => action, :id => t.id },
         :loading => activity_effect(t,action + 'ing'))
   end
 
   def watchbutton(t)
-    link_to_remote image_tag('buttons/watch'),
-      :url => {:controller => 'watches', :action => 'create', :id => t.id}
+    if current_user.watches? t
+      link_to_remote image_tag('buttons/unwatch.png'),
+        :url => {:controller => 'watches', :action => 'destroy', :id => t.id}
+    else
+      link_to_remote image_tag('buttons/watch.png'),
+        :url => {:controller => 'watches', :action => 'create', :id => t.id}
+    end
   end
 
   def human_transfer(kb, rate=true)
