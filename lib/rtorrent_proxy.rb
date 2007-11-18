@@ -23,6 +23,11 @@ class RTorrentProxy
       if remote.remote_respond_to? m
         return with_model(m, *args, &blk)
       end
+    when /^(.+)\?$/    # booleans? (for torrent)
+      m = "get_d_is_#{$1}"
+      if remote.remote_respond_to? m
+        return with_model(m, *args, &blk)
+      end
     else              # normal commands
       if remote.remote_respond_to? meth
         return remote.call(meth, *args, &blk)
