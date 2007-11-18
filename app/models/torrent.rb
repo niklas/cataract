@@ -212,6 +212,12 @@ class Torrent < ActiveRecord::Base
   def progress
     (100.0 * completed_bytes.to_f / content_size.to_f).to_i
   end
+  def bytes_left
+    content_size - completed_bytes
+  end
+  def eta
+    bytes_left.to_f / down_rate.to_f
+  end
 
   def download_status
     if !errormsg.blank?
