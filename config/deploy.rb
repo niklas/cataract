@@ -31,6 +31,7 @@ task :build_rtorrent, :roles => :download do
   run "svn export svn://rakshasa.no/libtorrent/tags/rtorrent-#{rtorrent_version} #{build_dir}/rtorrent"
   run <<-CMD
     cd #{build_dir}/rtorrent;
+    ./autogen.sh &&
     ./configure 
       --with-xmlrpc-c && 
     make && 
