@@ -154,7 +154,12 @@ class Torrent < ActiveRecord::Base
   end
 
   def self.find_in_state(state, opts={})
+    opts.merge!  :order => 'created_at DESC'
     find_all_by_status(state.to_s,opts)
+  end
+
+  def self.find_recent(num=23)
+    find(:all, :order => 'created_at DESC', :limit => num)
   end
 
   def self.find_collection(ids)
