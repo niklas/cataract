@@ -194,11 +194,10 @@ div.lcars {
            margin: 0 0.3em;
            padding: 0 0.3em;
            background-color: #111100;
-           color: <%= color1 %>;
-           border-top: none;
-           border-bottom: none;
-           border-right: 0.7em solid <%= color1 %>;
-           border-left: 0.3em solid <%= color1 %>;
+           color: <%= color2 %>;
+           border-width: 0 0.7em 0 0.3em;
+           border-color: <%= color1 %>;
+           border-style: none solid;
         }
         label + input[type="checkbox"] {
           height: 1em;
@@ -214,19 +213,6 @@ div.lcars {
           border-left: 1em solid <%= color1 %>;
           border-right: 0.1em solid <%= color1 %>;
           cursor: pointer;
-        }
-        input:before {
-            display: block;
-            content: url(../images/layout/corner_tr_content_small.png);
-            background: red;
-            width: 1em;
-            height: 1em;
-            outline: thin solid blue;
-            line-height: 0.1;
-            font-size: 1px;
-            margin: 400px 0 0 0px;
-            padding: 0;
-            z-index: 8;
         }
       }
     }
