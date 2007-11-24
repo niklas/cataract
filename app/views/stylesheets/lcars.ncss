@@ -194,7 +194,7 @@ div.lcars {
            margin: 0 0.3em;
            padding: 0 0.3em;
            background-color: #111100;
-           color: <%= color2 %>;
+           color: <%= color1 %>;
            border-width: 0 0.7em 0 0.3em;
            border-color: <%= color1 %>;
            border-style: none solid;
