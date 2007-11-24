@@ -1,10 +1,10 @@
 <CataractPage>
-  <content>
+  <main_content>
     <list_of_torrents with="&@torrents" />
     <else>
       no torrents found
     </else>
-  </content>
+  </main_content>
   <menu2> 
      <li>
         <%= text_field_tag( 'search', params[:term], 
