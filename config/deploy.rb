@@ -1,12 +1,14 @@
 set :application, "cataract"
 set :repository,  "svn://lanpartei.de/cataract/trunk"
-
+set :urlbase, "cataract"  # http://yourhost.bla/:urlbase
 set :deploy_to, "/usr/lib/cgi-bin/#{application}"
 
-role :app, "pomorya.local"
-role :web, "pomorya.local"
-role :download, "pomorya.local"
-role :db,  "pomorya.local", :primary => true
+single_target = ENV['TARGET'] || "poppomorya.local"
+
+role :app, single_target
+role :web, single_target
+role :download, single_target
+role :db,  single_target, :primary => true
 set :user, 'niklas'
 
 set :build_dir, '/tmp/rtorrent'
@@ -17,7 +19,7 @@ task :build_rtorrent, :roles => :download do
   sudo 'aptitude install -q -y g++ checkinstall libsigc++-2.0-dev libxmlrpc-c-dev ncurses-dev libcurl4-openssl-dev'
   sudo 'dpkg -r rtorrent libtorrent'
 
-  sudo "rm -rf #{build_dir}"
+  delete build_dir
   run "mkdir -p #{build_dir}"
 
   run "svn export svn://rakshasa.no/libtorrent/tags/libtorrent-#{libtorrent_version} #{build_dir}/libtorrent"
@@ -39,5 +41,52 @@ task :build_rtorrent, :roles => :download do
       --pkgversion #{rtorrent_version}niklas
   CMD
 
-  sudo "rm -rf #{build_dir}"
+  delete build_dir
+end
+
+namespace :deploy do
+  desc "Restart the Webserver (lighttpd)"
+  task :restart, :roles => :app do
+    sudo '/etc/init.d/lighttpd stop'
+    sudo 'killall dispatch.fcgi || true'
+    sudo '/etc/init.d/lighttpd start'
+  end
+
+  desc "Fix something after setup"
+  task :after_setup, :roles => :app do
+    group_permissions
+  end
+  task :before_restart, :roles => :app do
+    group_permissions
+  end
+  desc "More symlinks (configs etc)"
+  task :after_symlink, :roles => :app do
+    config_dir = "#{deploy_to}/shared/config"
+    sudo "mkdir -p #{config_dir}"
+    sudo "ln -fs #{config_dir}/database.yml #{current_release}/config/database.yml"
+    sudo "ln -fs #{config_dir}/messenger.yml #{current_release}/config/messenger.yml"
+    puts "Make sure to create a proper database.yml (in #{config_dir})"
+  end
+  task :group_permissions do
+    sudo "chgrp -R www-data #{deploy_to}"
+    sudo "chmod -R g+w #{deploy_to}"
+  end
+
+  desc "Configure lighttpd"
+  task :configure_lighttpd, :roles => :app do
+    require 'erb'
+    template = File.read('capistrano/recipes/templates/lighttpd.conf.template')
+    result = ERB.new(template).result(binding)
+    conf_target = "#{deploy_to}/shared/system/lighttpd.conf" 
+    put result, conf_target
+    sudo "lighty-disable-mod cataract"
+    sudo "ln -fs #{conf_target} /etc/lighttpd/conf-available/55-cataract.conf"
+    sudo "lighty-enable-mod cataract"
+  end
+  desc "Prepare config files"
+  task :configure, :roles => :app do
+    configure_lighttpd
+    put urlbase, "#{current_release}/config/urlbase.txt"
+  end
+
 end
