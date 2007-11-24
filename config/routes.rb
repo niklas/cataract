@@ -1,3 +1,10 @@
+url_base_file = File.join(RAILS_ROOT,'config','urlbase.txt')
+if File.exists? url_base_file
+  url_base = File.read url_base_file
+  url_base = "/#{url_base}" unless url_base =~ /^\//
+  ActionController::AbstractRequest.relative_url_root = url_base
+end
+
 ActionController::Routing::Routes.draw do |map|
 
 
