@@ -6,6 +6,8 @@ if File.exists? url_base_file
 end
 
 ActionController::Routing::Routes.draw do |map|
+  map.resources :settings
+
 
 
   # Add your own custom routes here.

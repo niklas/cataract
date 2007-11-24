@@ -1,0 +1,13 @@
+<h2>Settings</h2>
+<p>
+If you want to change these, please use script/console:
+</p>
+<pre><code>
+  Settings.what_is_wanted = "some value"
+</code></pre>
+
+<ul>
+  <% @settings.each do |key,value| %>
+    <li> <tt><b><%= key %>:</b> <%= value %> </tt></li>
+  <% end %>
+</ul>
