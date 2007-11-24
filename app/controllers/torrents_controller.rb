@@ -7,7 +7,8 @@ class TorrentsController < ApplicationController
   layout false
 
   def index
-    redirect_to :action => 'list', :state => 'running'
+    @torrents = Torrent.find :all # debugging
+    render :action => 'list'
   end
 
   def list
@@ -31,31 +32,30 @@ class TorrentsController < ApplicationController
   def stop
     @torrent.stop!
     if @torrent.errors.empty?
-      flash[:notice] = @torrent.short_title + " was moved to history"
-      forget(@torrent)
-      render :partial => 'remove', :object => @torrent
+      render_notice @torrent.short_title + " was moved to history"
+      render_details_for @torrent
     else
-      render :update do |page|
-        page.notification("Error while stopping: #{@torrent.errors.full_messages.join(',')}")
-      end
+      render_error "Error while stopping: #{@torrent.errors.full_messages.join(',')}"
     end
   end
 
   def pause
     @torrent.pause!
-    if @torrent.save!
-      flash[:notice] = @torrent.short_title + " has been paused"
-      forget(@torrent)
-      render :partial => 'remove', :object => @torrent
+    if @torrent.errors.empty?
+      render_notice @torrent.short_title + " has been paused"
+      render_details_for @torrent
+    else
+      render_error "Error while pausing: #{@torrent.errors.full_messages.join(',')}"
     end
   end
 
   def start
     @torrent.start!
-    if @torrent.save!
-      flash[:notice] = @torrent.short_title + " has been started for transfer"
-      forget(@torrent)
-      render :partial => 'remove', :object => @torrent
+    if @torrent.errors.empty?
+      render_notice @torrent.short_title + " has been started for transfer"
+      render_details_for @torrent
+    else
+      render_error "Error while starting: #{@torrent.errors.full_messages.join(',')}"
     end
   end
 

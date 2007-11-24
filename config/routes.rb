@@ -7,6 +7,7 @@ end
 
 ActionController::Routing::Routes.draw do |map|
   map.resources :settings
+  map.resources :torrents, :member => { :start => :post, :stop => :post, :pause => :post, :fetch => :put}
 
 
 

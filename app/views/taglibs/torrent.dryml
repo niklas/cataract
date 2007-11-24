@@ -29,7 +29,7 @@
 </def>
 
 <def tag="link_to_details">
-  <%= link_to_remote this.short_title, :url => { :action => 'show', :controller => 'torrents', :id => this.id  } %>
+   <%= link_to_remote this.short_title, :url => torrent_url(this), :method => :get %>
 </def>
 
 <def tag="event_log">
