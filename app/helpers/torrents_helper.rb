@@ -63,12 +63,14 @@ module TorrentsHelper
   end
 
   def watchbutton(t)
-    if current_user.watches? t
+    if watching = current_user.watches?(t)
       link_to_remote image_tag('buttons/unwatch.png'),
-        :url => {:controller => 'watches', :action => 'destroy', :id => t.id}
+        :url => watching_url(watching),
+        :method => :delete
     else
       link_to_remote image_tag('buttons/watch.png'),
-        :url => {:controller => 'watches', :action => 'create', :id => t.id}
+        :url => watchings_url(:torrent_id => t.id),
+        :method => :post
     end
   end
 

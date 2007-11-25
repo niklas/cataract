@@ -1,4 +1,4 @@
-class WatchesController < ApplicationController
+class WatchingsController < ApplicationController
   # TODO make resourceful
   before_filter :create_log
   helper :torrents
@@ -22,6 +22,7 @@ class WatchesController < ApplicationController
   end
   def destroy
     @watching = Watching.find params[:id]
+    @torrent = @watching.torrent
     if @watching.destroy
       render_info("Removed '#{@torrent.short_title}' from watchlist")
       render_details_for @torrent

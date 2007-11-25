@@ -7,7 +7,11 @@ end
 
 ActionController::Routing::Routes.draw do |map|
   map.resources :settings
-  map.resources :torrents, :member => { :start => :post, :stop => :post, :pause => :post, :fetch => :put}
+  map.resources :torrents, 
+    :member => { :start => :post, :stop => :post, :pause => :post, :fetch => :put},
+    :collection => { :watched => :get, :search => :get } do |torrent|
+  end
+  map.resources :watchings
 
 
 
@@ -23,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.login 'login', :controller => 'account', :action => 'login'
   map.connect 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.connect 'torrents/list/:status', :controller => 'torrents', :action => 'list', :status => 'running'
-  map.connect '', :controller => "torrents", :action => 'list'
+  map.connect '', :controller => "torrents", :action => 'search'
 
   #Hobo.add_routes(map)
 

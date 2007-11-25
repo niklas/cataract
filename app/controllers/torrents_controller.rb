@@ -12,12 +12,20 @@ class TorrentsController < ApplicationController
   end
 
   def list
-    @searched_tags = []
-    #@status = (params[:status] || :running).to_sym
-    #@torrents = Torrent.find_in_state(@status, :order => 'created_at desc')
-    @torrents = Torrent.find :all # debugging
+    @torrents = Torrent.find_recent
     forget_all
     memorize_preview(@torrents)
+  end
+
+  def search
+    @searched_tags = []
+    @status = (params[:status] || :running).to_sym
+    @torrents = Torrent.find_in_state(@status)
+  end
+
+  def watched
+    @torrents = current_user.torrents
+    render :action => 'list'
   end
 
   def refresh
