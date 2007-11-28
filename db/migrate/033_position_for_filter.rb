@@ -4,6 +4,6 @@ class PositionForFilter < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :filters, :postition
+    remove_column :filters, :position
   end
 end
