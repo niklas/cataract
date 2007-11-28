@@ -14,7 +14,11 @@
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+comic_feed:
   id: 1
-another:
+  title: 'A Feed only containing comics'
+  url: 'http://not.in.this.net/feed'
+blood_feed:
   id: 2
+  title: 'A Feed for all the Shows with lotsa blood'
+  url: 'http://alsonot.in.thins.net/feed/rss'

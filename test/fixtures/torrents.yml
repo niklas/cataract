@@ -40,3 +40,20 @@ another:
   filename: 'LeBelgeElectrod - AudioDestruction Part I -- Jamendo - MP3 VBR 192k - 2006.03.23 [www.jamendo.com].torrent'
   title: "LeBelgeElectrod - AudioDestruction Part I"
 
+# some items for the comic feed
+simpsons_23_5:
+  id: 2001
+  feed_id: 1
+  title: "Simpsons 23x05"
+  url: "http://not.valid.net/simpsons_23-5.torrent"
+simpsons_42_8:
+  id: 2002
+  feed_id: 1
+  title: "Simpsons 42x08 HDTV"
+  url: "http://not.valid.net/simpsons_42-8.torrent"
+jessica_special:
+  id: 2003
+  feed_id: 1
+  title: "Jessica Simpson at Family Guy"
+  url: "http://not.valid.net/famguy-worst-ever.torrent"
+

@@ -1,5 +1,16 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+simpson_filter:
   id: 1
-another:
+  feed_id: 1
+  expression: 'simpsons'
+  negated: false
+southpark_filter:
   id: 2
+  feed_id: 1
+  expression: 'south\s*park'
+  negated: false
+not_hd_filter:
+  id: 3
+  feed_id: 1
+  expression: 'hdtv'
+  negated: true

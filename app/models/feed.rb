@@ -20,9 +20,26 @@ require 'rss/2.0'
 require 'rss/parser'
 
 class RSS::Rss::Channel::Item
+  def title_or_description
+    title || description
+  end
 end
 class Feed < ActiveRecord::Base
-  has_many :torrents, :dependent => :nullify
+  has_many :torrents, :dependent => :nullify do
+    def outdated
+      find(:all, 
+           :order => 'created_at desc', 
+           :offset => item_limit,
+           :limit => item_limit * 10, 
+           :conditions => ['status = ?','remote']
+          )
+    end
+    def filtered
+      # FIXME what methoid/var do we use here?
+      filtered(self)
+    end
+  end
+  has_many :filters, :order => 'position'
   validates_presence_of :url, :message => "URL is needed"
   validates_format_of :url, :with => URI.regexp
   validates_presence_of :title, :message => "please give a title"
@@ -62,22 +79,13 @@ class Feed < ActiveRecord::Base
       next unless enclosure.type == 'application/x-bittorrent'
       next if item.title and Torrent.find_by_title(item.title)
       next if item.description and Torrent.find_by_title(item.description)
-      title = item.title || item.description
+      title = item.title_or_description
       next unless title
       next if Torrent.find_by_url(enclosure.url)
       torrents.create(:url => enclosure.url, :title => title, :status => 'remote')
     end
-    outdated_torrents.each { |t| t.destroy }
+    torrents.outdated.each { |t| t.destroy }
     update_attribute :synced_at, Time.now
-  end
-
-  def outdated_torrents
-    torrents.find(:all, 
-                  :order => 'created_at desc', 
-                  :offset => item_limit,
-                  :limit => item_limit * 10, 
-                  :conditions => ['status = ?','remote']
-                 )
   end
 
   def parse(data=nil)
@@ -88,12 +96,38 @@ class Feed < ActiveRecord::Base
     end
   end
 
-  def filter_regexp
-    Regexp.new /#{tags.collect(&:expression).join('|')}/i
+  # filters items or torrents
+  #  * items must match at least one positive filter
+  #  * but may not match any negated filter
+  def filtered(given=items)
+    return [] if given.empty?
+    return items if filters.empty?
+
+    wanted = []
+    given.each do |item|
+      term = item.title || item.title_or_description
+      filters.positive.each do |filter|
+        if filter.matches? term
+          wanted << item # this is what we want, take it (for now)
+          break
+        end
+      end
+    end
+
+    wanted.each do |item|
+      filters.negated.each do |filter|
+        if filter.matches? term # we don't want that, throw away
+          wanted.delete item
+          break
+        end
+      end
+    end
+
+    wanted
   end
 
   private
   def set_url_as_title
-    self.title = self.url if !self.title or self.title.empty?
+    self.title = self.url if self.title.blank?
   end
 end
