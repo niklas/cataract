@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 33
 #
 # Table name: feeds
 #
@@ -34,12 +34,8 @@ class Feed < ActiveRecord::Base
            :conditions => ['status = ?','remote']
           )
     end
-    def filtered
-      # FIXME what methoid/var do we use here?
-      filtered(self)
-    end
   end
-  has_many :filters, :order => 'position'
+  has_many :filters, :order => 'position', :extend => Filter::AssociationMethods
   validates_presence_of :url, :message => "URL is needed"
   validates_format_of :url, :with => URI.regexp
   validates_presence_of :title, :message => "please give a title"
@@ -96,10 +92,20 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  def filtered_torrents(reload=false)
+    @filtered_torrents = nil if reload
+    @filtered_torrents ||= filtered(torrents)
+  end
+
+  def filtered_items(reload=false)
+    @filtered_items = nil if reload
+    @filtered_items ||= filtered(items)
+  end
+
   # filters items or torrents
   #  * items must match at least one positive filter
   #  * but may not match any negated filter
-  def filtered(given=items)
+  def filtered(given=[])
     return [] if given.empty?
     return items if filters.empty?
 
@@ -115,6 +121,7 @@ class Feed < ActiveRecord::Base
     end
 
     wanted.each do |item|
+      term = item.title || item.title_or_description
       filters.negated.each do |filter|
         if filter.matches? term # we don't want that, throw away
           wanted.delete item

@@ -1,32 +1,24 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 33
 #
 # Table name: torrents
 #
-#  id                 :integer       not null, primary key
-#  title              :string(255)   
-#  description        :string(255)   
-#  content_size       :string(255)   
-#  filename           :string(255)   
-#  percent_done       :float         
-#  rate_up            :float         
-#  rate_down          :float         
-#  transferred_up     :integer       
-#  transferred_down   :integer       
-#  peers              :integer       
-#  seeds              :integer       
-#  distributed_copies :float         
-#  hidden             :boolean       
-#  command            :string(255)   
-#  statusmsg          :string(255)   
-#  errormsg           :string(512)   
-#  created_at         :datetime      
-#  updated_at         :datetime      
-#  status             :string(255)   
-#  url                :text          
-#  feed_id            :integer       
-#  synched_at         :datetime      
-#  content_filenames  :text          
+#  id                :integer       not null, primary key
+#  title             :string(255)   
+#  description       :string(255)   
+#  content_size      :string(255)   
+#  filename          :string(255)   
+#  hidden            :boolean       
+#  command           :string(255)   
+#  created_at        :datetime      
+#  updated_at        :datetime      
+#  status            :string(255)   
+#  url               :text          
+#  feed_id           :integer       
+#  synched_at        :datetime      
+#  content_filenames :text          
+#  info_hash         :string(40)    
+#  content_path      :string(2048)  
 #
 
 require 'ftools'

@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 33
+#
+# Table name: filters
+#
+#  id         :integer       not null, primary key
+#  expression :string(255)   
+#  feed_id    :integer       
+#  negated    :boolean       
+#  position   :integer       
+#
+
 class Filter < ActiveRecord::Base
   belongs_to :feed
   acts_as_list :scope => 'feed_id'
@@ -21,6 +33,6 @@ class Filter < ActiveRecord::Base
     self[:expression] = new_expression
   end
   def regexp
-    @regexp ||= Regexp.new expression
+    @regexp ||= Regexp.new expression, true
   end
 end

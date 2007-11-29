@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 33
+#
+# Table name: filters
+#
+#  id         :integer       not null, primary key
+#  expression :string(255)   
+#  feed_id    :integer       
+#  negated    :boolean       
+#  position   :integer       
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 simpson_filter:
   id: 1

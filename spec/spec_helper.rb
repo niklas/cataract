@@ -6,7 +6,7 @@ require 'spec/rails'
 
 Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
-  config.use_instantiated_fixtures  = false
+  config.use_instantiated_fixtures  = true
   config.fixture_path = RAILS_ROOT + '/test/fixtures'
 
   # You can declare fixtures for each behaviour like this:
