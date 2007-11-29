@@ -200,7 +200,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def self.disksfree
-    %w(torrent_dir history_dir target_dir).
+    %w(torrent_dir).
       inject({}) { |hsh,dir| hsh.merge({ dir => Torrent.diskfree(Settings[dir]) }) }
   end
 
@@ -358,12 +358,6 @@ class Torrent < ActiveRecord::Base
     File.join(Settings.torrent_dir,metainfo.name)
   end
 
-  # When a torrent is archived, the content will be moved here
-  def target_path
-    return '' unless metainfo
-    File.join(Settings.target_dir,metainfo.name)
-  end
-
   # where to find the contents, either saved :content_path or #working_path
   def content_path
     self[:content_path] ||= working_path
@@ -372,6 +366,7 @@ class Torrent < ActiveRecord::Base
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen
   def content_url(usr)
+    return nil # FIXME we have no target_dir anymore
     return nil unless metainfo
     if archived?
       return File.join(usr.target_dir_mountpoint,metainfo.name) if usr.target_dir_mountpoint
@@ -457,26 +452,10 @@ class Torrent < ActiveRecord::Base
     end
   end
 
-  def archive_content
-    return unless metainfo
-    begin
-      move(working_path,target_path) if File.exists?(working_path)
-    rescue Exception => e
-      errors.add :filename, "^error on moving content: #{e.to_s}"
-    end
-  end
-
-  def unarchive_content
-    return unless metainfo
-    begin
-      move(target_path,working_path) if File.exists?(target_path)
-    rescue Exception => e
-      errors.add :filename, "^error on moving content: #{e.to_s}"
-    end
-  end
 
   def move_content_to new_path
     begin
+      # TODO
       # content must be at #content_path
       # the target should exist, but should not contain #metainfo.name ?
       # change content_path
@@ -488,11 +467,7 @@ class Torrent < ActiveRecord::Base
   def delete_content!
     return unless metainfo
     begin
-      opfer = if archived?
-                target_path
-              else
-                working_path
-              end
+      opfer = content_path
       if File.exists?(opfer) 
         rm_rf(opfer) 
         true
@@ -563,10 +538,14 @@ class Torrent < ActiveRecord::Base
   # looks in the torrent_dir for new torrent files and creates them
   def self.recognize_new
     created = []
-    Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
+    Dir[File.join(Settings.torrent_dir,'active','*.torrent')].each do |filepath|
       filename = File.basename filepath
       torrent = self.new(:filename => filename, :status => 'running')
-      created << torrent if torrent.save
+      torrent.moveto( torrent.fullpath(:archived) )
+      if torrent.save
+        created << torrent 
+        torrent.start!
+      end
     end
     return created
   end
