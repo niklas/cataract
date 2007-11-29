@@ -83,6 +83,11 @@ class Feed < ActiveRecord::Base
     torrents.outdated.each { |t| t.destroy }
     update_attribute :synced_at, Time.now
   end
+  def self.sync(force=false)
+    num = 0
+    find(:all).each { |feed| num += 1 if feed.sync(force) }
+    num
+  end
 
   def parse(data=nil)
     @parsed ||= if data
