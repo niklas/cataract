@@ -1,6 +1,6 @@
 class CreateFilters < ActiveRecord::Migration
   def self.up
-    create_table :filters do |t|
+    create_table 'filters' do |t|
       t.column :expression, :string
       t.column :feed_id, :integer
     end
