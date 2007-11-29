@@ -4,6 +4,8 @@ set :urlbase, "cataract"  # http://yourhost.bla/:urlbase
 set :deploy_to, "/usr/lib/cgi-bin/#{application}"
 
 single_target = ENV['TARGET'] || "poppomorya.local"
+puts "  will use #{single_target} as target" 
+puts "  set env.TARGET to deploy to another machine"
 
 role :app, single_target
 role :web, single_target
