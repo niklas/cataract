@@ -69,6 +69,7 @@ class Feed < ActiveRecord::Base
 
   def sync(force=false)
     return if !force and synced_at and Time.now.ago(23.minutes) < synced_at
+    new_torrents = []
     items.each do |item|
       enclosure = item.enclosure
       next unless enclosure
@@ -78,9 +79,10 @@ class Feed < ActiveRecord::Base
       title = item.title_or_description
       next unless title
       next if Torrent.find_by_url(enclosure.url)
-      torrents.create(:url => enclosure.url, :title => title, :status => 'remote')
+      new_torrents << torrents.create(:url => enclosure.url, :title => title, :status => 'remote')
     end
     torrents.outdated.each { |t| t.destroy }
+    filtered(new_torrents).each { |t| t.start! }
     update_attribute :synced_at, Time.now
   end
 
