@@ -12,7 +12,7 @@
 
 class Filter < ActiveRecord::Base
   belongs_to :feed
-  acts_as_list :scope => 'feed_id'
+  acts_as_list :scope => :feed_id
   validates_presence_of :expression, :message => "please give a regular expression (words work, too)"
 
   scope_out :negated, :conditions => { :negated => true }
