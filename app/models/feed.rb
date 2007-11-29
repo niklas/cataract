@@ -109,6 +109,10 @@ class Feed < ActiveRecord::Base
     return [] if given.empty?
     return items if filters.empty?
 
+    # reload the filters (once)
+    filters.positive(true)
+    filters.negated(true)
+
     wanted = []
     given.each do |item|
       term = item.title || item.title_or_description
