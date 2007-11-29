@@ -21,7 +21,7 @@ task :build_rtorrent, :roles => :download do
   sudo 'aptitude install -q -y g++ checkinstall libsigc++-2.0-dev libxmlrpc-c-dev ncurses-dev libcurl4-openssl-dev'
   sudo 'dpkg -r rtorrent libtorrent'
 
-  delete build_dir
+  sudo "rm -rf #{build_dir}"
   run "mkdir -p #{build_dir}"
 
   run "svn export svn://rakshasa.no/libtorrent/tags/libtorrent-#{libtorrent_version} #{build_dir}/libtorrent"
@@ -43,7 +43,7 @@ task :build_rtorrent, :roles => :download do
       --pkgversion #{rtorrent_version}niklas
   CMD
 
-  delete build_dir
+  sudo "rm -rf #{build_dir}"
 end
 
 namespace :deploy do
