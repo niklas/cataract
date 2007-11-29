@@ -83,18 +83,11 @@ class Feed < ActiveRecord::Base
     torrents.outdated.each { |t| t.destroy }
     update_attribute :synced_at, Time.now
   end
+
   def self.sync(force=false)
     num = 0
     find(:all).each { |feed| num += 1 if feed.sync(force) }
     num
-  end
-
-  def parse(data=nil)
-    @parsed ||= if data
-      RSS::Parser.parse(data)
-    else
-      RSS::Parser.parse(open(self.url) { |fd| fd.read })
-    end
   end
 
   def filtered_torrents(reload=false)
@@ -107,6 +100,7 @@ class Feed < ActiveRecord::Base
     @filtered_items ||= filtered(items)
   end
 
+  protected
   # filters items or torrents
   #  * items must match at least one positive filter
   #  * but may not match any negated filter
@@ -140,6 +134,14 @@ class Feed < ActiveRecord::Base
     end
 
     wanted
+  end
+
+  def parse(data=nil)
+    @parsed ||= if data
+      RSS::Parser.parse(data)
+    else
+      RSS::Parser.parse(open(self.url) { |fd| fd.read })
+    end
   end
 
   private

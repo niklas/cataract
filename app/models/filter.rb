@@ -14,6 +14,7 @@ class Filter < ActiveRecord::Base
   belongs_to :feed
   acts_as_list :scope => :feed_id
   validates_presence_of :expression, :message => "please give a regular expression (words work, too)"
+  before_validation :positive_is_default
 
   scope_out :negated, :conditions => { :negated => true }
   scope_out :positive, :conditions => { :negated => false }
@@ -34,5 +35,12 @@ class Filter < ActiveRecord::Base
   end
   def regexp
     @regexp ||= Regexp.new expression, true
+  end
+
+  private
+  def positive_is_default
+    if self[:negated].nil?
+      self[:negated] = false
+    end
   end
 end
