@@ -29,8 +29,8 @@ class Feed < ActiveRecord::Base
     def outdated
       find(:all, 
            :order => 'created_at desc', 
-           :offset => item_limit,
-           :limit => item_limit * 10, 
+           :offset => proxy_owner.item_limit,
+           :limit => proxy_owner.item_limit * 10, 
            :conditions => ['status = ?','remote']
           )
     end
