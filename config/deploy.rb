@@ -18,7 +18,7 @@ set :libtorrent_version, '0.11.6'
 set :rtorrent_version, '0.7.6'
 
 task :build_rtorrent, :roles => :download do
-  sudo 'aptitude install -q -y g++ checkinstall libsigc++-2.0-dev libxmlrpc-c-dev ncurses-dev libcurl4-openssl-dev'
+  sudo 'aptitude install -q -y g++ checkinstall libsigc++-2.0-dev libxmlrpc-c-dev ncurses-dev libcurl4-openssl-dev libcurl3-openssl-dev'
   sudo 'dpkg -r rtorrent libtorrent'
 
   sudo "rm -rf #{build_dir}"
