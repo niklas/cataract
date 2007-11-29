@@ -7,14 +7,12 @@ class TorrentsController < ApplicationController
   layout false
 
   def index
-    @torrents = Torrent.find :all # debugging
+    @torrents = Torrent.find_recent
     render :action => 'list'
   end
 
   def list
-    @torrents = Torrent.find_recent
-    forget_all
-    memorize_preview(@torrents)
+    @torrents = Torrent.find_in_state(:running)
   end
 
   def search
