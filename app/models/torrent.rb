@@ -523,7 +523,7 @@ class Torrent < ActiveRecord::Base
       unless t.valid?
         # FIXME beware!! check validations first
         #t.destroy
-        Logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
+        logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
       else
         t.save
       end
