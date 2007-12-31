@@ -79,15 +79,29 @@ namespace :deploy do
     require 'erb'
     template = File.read('capistrano/recipes/templates/lighttpd.conf.template')
     result = ERB.new(template).result(binding)
+    run "mkdir -p #{deploy_to}/shared/system"
     conf_target = "#{deploy_to}/shared/system/lighttpd.conf" 
     put result, conf_target
     sudo "lighty-disable-mod cataract"
     sudo "ln -fs #{conf_target} /etc/lighttpd/conf-available/55-cataract.conf"
     sudo "lighty-enable-mod cataract"
   end
+
+  desc "Configure Rtorrent" 
+  task :configure_rtorrent do
+    result = File.read('capistrano/recipes/templates/rtorrent-lighttpd.conf')
+    conf_target = "#{deploy_to}/shared/system/rtorrent-lighttpd.conf"
+    put result, conf_target
+    sudo "lighty-disable-mod rtorrent"
+    sudo "ln -fs #{conf_target} /etc/lighttpd/conf-available/11-rtorrent.conf"
+    sudo "lighty-enable-mod rtorrent"
+    put "scgi_port = localhost:5000\n", "#{deploy_to}/shared/system/rtorrent.rc"
+  end
+
   desc "Prepare config files"
   task :configure, :roles => :app do
     configure_lighttpd
+    configure_rtorrent
     put urlbase, "#{current_release}/config/urlbase.txt"
   end
 

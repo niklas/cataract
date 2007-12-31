@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.login 'login', :controller => 'account', :action => 'login'
   map.connect 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.connect 'torrents/list/:status', :controller => 'torrents', :action => 'list', :status => 'running'
-  map.connect '', :controller => "torrents", :action => 'search'
+  map.connect '', :controller => "torrents", :action => 'index'
 
   #Hobo.add_routes(map)
 
