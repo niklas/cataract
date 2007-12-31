@@ -115,14 +115,17 @@ class Torrent < ActiveRecord::Base
 
   RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes]
 
-  alias :method_missing_without_xmlrpc :method_missing
-  def method_missing(m, *args, &blk)
+  def method_missing_with_xml_rpc(m, *args, &blk)
     if RTORRENT_METHODS.include?(m.to_sym)
       remote.send m, *args, &blk
     else
       method_missing_without_xmlrpc m, *args, &blk
     end
+  rescue TorrentNotRunning
+    update_attribute(:status, 'archived') unless archived?
+    return '[not-running]'
   end
+  alias_chain :method_missing, :xml_rpc
 
   def self.rtorrent
     @@rtorrent ||= RTorrent.new
