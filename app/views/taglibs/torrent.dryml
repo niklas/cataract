@@ -45,6 +45,6 @@
 
 <def tag="main_status">
   Rate: 
-    <%= number_to_human_rate(Torrent.rtorrent.upload_rate) %> up,
-    <%= number_to_human_rate(Torrent.rtorrent.download_rate) %> down
+    <%= number_to_human_rate(Torrent.upload_rate) %> up,
+    <%= number_to_human_rate(Torrent.download_rate) %> down
 </def>

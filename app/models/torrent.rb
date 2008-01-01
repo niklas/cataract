@@ -188,17 +188,17 @@ class Torrent < ActiveRecord::Base
     find_with_ferret(query, {:limit => :all})
   end
   # aggregates
-  def self.rate_up
-    Torrent.sum('rate_up',:conditions => "status = 'running'") || 0
+  def self.upload_rate
+    rtorrent.upload_rate
   end
-  def self.rate_down
-    Torrent.sum('rate_down',:conditions => "status = 'running'") || 0
+  def self.download_rate
+    rtorrent.download_rate
   end
   def self.transferred_up
-    Torrent.sum('transferred_up',:conditions => "status = 'running'") || 0
+    -23
   end
   def self.transferred_down
-    Torrent.sum('transferred_down',:conditions => "status = 'running'") || 0
+    -42
   end
   def self.last_update
     Torrent.maximum('updated_at', :conditions => "status = 'running'") || 23.days.ago
