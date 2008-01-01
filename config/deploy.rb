@@ -66,9 +66,13 @@ namespace :deploy do
     config_dir = "#{deploy_to}/shared/config"
     sudo "mkdir -p #{config_dir}"
     sudo "ln -fs #{config_dir}/database.yml #{current_release}/config/database.yml"
+    sudo "ln -fs #{config_dir}/ferret_server.yml #{current_release}/config/ferret_server.yml"
     sudo "ln -fs #{config_dir}/messenger.yml #{current_release}/config/messenger.yml"
     sudo "ln -fs #{config_dir}/urlbase.txt #{current_release}/config/urlbase.txt"
     puts "Make sure to create a proper database.yml (in #{config_dir})"
+    sudo "mkdir -p #{deploy_to}/shared/index"
+    sudo "rm -rf #{current_release}/index"
+    sudo "ln -fs #{deploy_to}/shared/index #{current_release}/index"
   end
   task :group_permissions do
     sudo "chgrp -R www-data #{deploy_to}"
