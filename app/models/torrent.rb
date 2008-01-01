@@ -35,7 +35,7 @@ class Torrent < ActiveRecord::Base
   has_many :users, :through => :watchings
   belongs_to :feed
   validates_uniqueness_of :filename, :allow_nil => true
-  validates_format_of :info_hash, :with => /[0-9a-f]{40}/i, :unless => :remote?
+  validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   before_update :notify_if_just_finished
@@ -51,7 +51,7 @@ class Torrent < ActiveRecord::Base
 
   acts_as_taggable
 
-  STATES = [:running,:fetching,:paused,:archived,:remote,:invalid]
+  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid]
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus
@@ -71,6 +71,10 @@ class Torrent < ActiveRecord::Base
     class_eval src, __FILE__, __LINE__
   end
 
+  def status_from_rtorrent
+    (remote.state ==  1 ? 'running' : 'paused')
+  end
+
   
   def pause!
     event_from :running do 
@@ -82,7 +86,7 @@ class Torrent < ActiveRecord::Base
   def start!
     event_from [:paused, :archived] do 
       # copy the file because rtorrent deletes file on #stop!
-      moveto( fullpath(:running), :copy => true )
+      moveto( :running, :copy => true )
       unless paused?
         remote.load(self.fullpath(:running))
         remote.directory = Settings.torrent_dir
@@ -109,7 +113,7 @@ class Torrent < ActiveRecord::Base
     event_from [:remote] do
       update_attribute(:status, :fetching)
       fetch_by_url
-      moveto( fullpath(:archived) )
+      moveto( :archived )
       update_attribute(:status, :archived)
     end
   end
@@ -242,7 +246,7 @@ class Torrent < ActiveRecord::Base
 
   def calculate_info_hash
     return unless metainfo
-    metainfo.sha1.unpack('H*').first
+    metainfo.sha1.unpack('H*').first.upcase
   end
 
   def info_hash
@@ -282,8 +286,8 @@ class Torrent < ActiveRecord::Base
   def fullpath(wanted_state=nil)
     wanted_state ||= current_state
     return 'no filename' unless filename
-    return "bad status: #{status}" unless filepath_status[wanted_state]
-    filepath_status[wanted_state]
+    return "bad status: #{status}" unless filepath_by_status(wanted_state)
+    filepath_by_status(wanted_state)
   end
 
   # nice title 
@@ -316,12 +320,13 @@ class Torrent < ActiveRecord::Base
       rstrip.lstrip
   end
 
-  def file_exists?
-    filename && fullpath && File.exists?(fullpath)
-  end
-
-  def remote?
-    current_state == :remote
+  def file_exists?(stat=current_state)
+    if filename
+      unless (path = fullpath[stat.to_sym]).blank?
+        File.exists?(path)
+      end
+    end
+    false
   end
 
   def auto_set_status
@@ -330,7 +335,7 @@ class Torrent < ActiveRecord::Base
         unless url.blank?
           :remote
         else
-          status_by_file_location
+          status_by_filepath
         end
       else
         status
@@ -500,6 +505,7 @@ class Torrent < ActiveRecord::Base
     return if source.blank?
     return if target.blank?
     return unless File.exists? source
+    target = fullpath(target) if target.is_a?(Symbol)
     begin
       if opts[:copy]
         copy(source,target)
@@ -509,6 +515,24 @@ class Torrent < ActiveRecord::Base
     rescue Exception => e
       errors.add :filename, "^error while moving torrent: #{e.to_s}"
     end
+  end
+
+  # make sure that a copy of this torrent is in the archive
+  def assure_file_in_archive!
+    if file_exists?
+      moveto( :archived, :copy => true) unless file_exists?(:archived)
+    elsif !(real_path = remote.tied_to_file).blank?
+      copy( real_path, fullpath(:archived) ) unless file_exists?(:archived)
+      copy( real_path, fullpath )
+    elsif !(real_path = find_file).blank?
+      copy( real_path, fullpath(:archived) ) unless file_exists?(:archived)
+      copy( real_path, fullpath )
+    end
+  rescue TorrentNotRunning, TorrentHasNoInfoHash
+    false
+  rescue Exception => e
+    errors.add :filename, "^error while assure_file_in_archive: #{e.to_s}"
+    false
   end
 
   def sync
@@ -553,10 +577,10 @@ class Torrent < ActiveRecord::Base
   # looks in the torrent_dir for new torrent files and creates them
   def self.recognize_new
     created = []
-    Dir[File.join(Settings.torrent_dir,'active','*.torrent')].each do |filepath|
+    Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
       filename = File.basename filepath
-      torrent = self.new(:filename => filename, :status => 'running')
-      torrent.moveto( torrent.fullpath(:archived) )
+      torrent = self.new(:filename => filename, :status => 'new')
+      torrent.moveto(:archived)
       if torrent.save
         created << torrent 
         torrent.start!
@@ -565,27 +589,72 @@ class Torrent < ActiveRecord::Base
     return created
   end
 
-
- private
-  def filepath_status
-    {
-      :archived => File.join(Settings.history_dir, filename),
-      :fetching => File.join(Settings.history_dir, filename) + '.fetching',
-      :paused   => File.join(Settings.torrent_dir, 'active', filename),
-      :running  => File.join(Settings.torrent_dir, 'active', filename),
-      :remote   => ''
-    }
+  # Looks into rtorrent's download_list and adds the running torrents to the db
+  # unless they exist already
+  # FIXME: what if somebody adds a torrent somewhere on the filesystem?
+  # FIXME: rtorrent does not give us the torrent's filename, just the name of hte directory
+  # => gggrml!
+  def self.recognize_running
+    saved = []
+    hashes = rtorrent.download_list
+    hashes.each do |hash|
+      if torrent = find_by_info_hash(hash)
+        torrent.filename ||= torrent.remote.base_filename + '.torrent'
+        torrent.status = torrent.status_from_rtorrent unless torrent.status =~ /^running|paused$/
+      else
+        torrent = new(:info_hash => hash)
+        torrent.status = torrent.status_from_rtorrent
+        torrent.filename = torrent.remote.base_filename + '.torrent'
+      end
+      torrent.assure_file_in_archive!
+      torrent.moveto(:running,:copy => true)
+      if torrent.save
+        saved << torrent
+      end
+    end
+    saved
   end
 
-  def status_by_file_location
-    filepath_status.select { |s,f| File.exists?(f) }.first.first
+ private
+  def filepath_by_status(stat)
+    case stat
+    when :fetching 
+      File.join(Settings.history_dir, filename) + '.fetching'
+    when :running  
+      File.join(Settings.torrent_dir, 'active', filename)
+    when :paused   
+      File.join(Settings.torrent_dir, 'active', filename)
+    when :new      
+      File.join(Settings.torrent_dir, filename)
+    when :archived 
+      File.join(Settings.history_dir, filename)
+    when :remote   
+      ''
+    else
+      nil
+    end
+  end
+
+  def status_by_filepath
+    STATES.find(:invalid) do |stat|
+      path = filepath_by_status(stat)
+      path.blank? || File.exists?(path)
+    end
   rescue NoMethodError
     return :invalid
   end
 
+  def find_file
+    STATES.map {|s| filepath_by_status(s) }.find { |p| File.exists?(p) }
+  end
+
   # removes the leading './' or path from the filename
+  # and adds the .torrent extension
   def fix_filename
-    filename.sub!(/^.*\/([^\/]*)$/,'\1') if filename
+    unless self.filename.blank?
+      self.filename.sub!(/^.*\/([^\/]*)$/, '\1')
+      self.filename += '.torrent' unless self.filename =~ /\.torrent$/
+    end
   end
 
   def set_default_values
