@@ -322,7 +322,7 @@ class Torrent < ActiveRecord::Base
 
   def file_exists?(stat=current_state)
     if filename
-      unless (path = fullpath[stat.to_sym]).blank?
+      unless (path = fullpath(stat.to_sym)).blank?
         File.exists?(path)
       end
     end
