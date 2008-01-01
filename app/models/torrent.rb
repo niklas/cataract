@@ -633,19 +633,21 @@ class Torrent < ActiveRecord::Base
     end
   end
 
+  # Will try to get status from rtorrent and stop the torrent
+  # if it's not open/active (in case) of and rtorrent restart etc.
   def check_if_status_is_up_to_date
-    case current_state
-    when :running
-      unless active?
-        finally_stop!
-        reload
-      end
-    when :paused
-      unless open?
-        finally_stop!
-        reload
-      end
-    end
+    good = case current_state
+           when :running
+             remote.active?
+           when :paused
+             remote.open?
+           else 
+             true
+           end
+    return good
+  rescue TorrentNotRunning, TorrentHasNoInfoHash 
+    finally_stop!           # hmm
+    reload
   end
 
 end
