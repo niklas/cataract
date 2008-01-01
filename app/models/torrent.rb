@@ -43,6 +43,9 @@ class Torrent < ActiveRecord::Base
   before_validation :fix_filename, :auto_set_status
   after_create :notify_users_and_add_it
   before_create :set_default_values
+  def after_find
+    check_if_status_is_up_to_date
+  end
 
   acts_as_ferret :fields => [:title, :filename, :url, :tag_list], :remote => true
 
@@ -94,8 +97,12 @@ class Torrent < ActiveRecord::Base
       remote.stop!
       remote.close!
       remote.erase! # WARNING! will delete the torrent file
-      update_attribute(:status, :archived)
+      finally_stop!
     end
+  end
+
+  def finally_stop!
+    update_attribute(:status, :archived)
   end
 
   def fetch!
@@ -113,7 +120,7 @@ class Torrent < ActiveRecord::Base
 
 
 
-  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes]
+  RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
 
   def method_missing_with_xml_rpc(m, *args, &blk)
     if RTORRENT_METHODS.include?(m.to_sym) and remote
@@ -122,7 +129,7 @@ class Torrent < ActiveRecord::Base
       method_missing_without_xml_rpc m, *args, &blk
     end
   rescue TorrentNotRunning
-    update_attribute(:status, 'archived') unless archived?
+    finally_stop! unless archived?
     return '[not-running]'
   end
   alias_method_chain :method_missing, :xml_rpc
@@ -329,7 +336,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def before_destroy
-    stop! if valid? and running?
+    stop! if valid? and running?(false)
     File.delete(fullpath) if file_exists?
   end
 
@@ -616,4 +623,20 @@ class Torrent < ActiveRecord::Base
       raise RuntimeError, "#{current_state} is not a valid state for this transition"
     end
   end
+
+  def check_if_status_is_up_to_date
+    case current_state
+    when :running
+      unless active?
+        finally_stop!
+        reload
+      end
+    when :paused
+      unless open?
+        finally_stop!
+        reload
+      end
+    end
+  end
+
 end
