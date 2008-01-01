@@ -74,7 +74,6 @@ class TorrentsController < ApplicationController
         end
       end
     end
-    mark_shown(@torrent)
   end
 
   def preview
