@@ -84,7 +84,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def start!
-    event_from [:paused, :archived] do 
+    event_from [:paused, :archived, :new] do 
       # copy the file because rtorrent deletes file on #stop!
       moveto( :running, :copy => true )
       unless paused?
@@ -320,10 +320,10 @@ class Torrent < ActiveRecord::Base
       rstrip.lstrip
   end
 
-  def file_exists?(stat=current_state)
-    if filename
+  def file_exists?(stat=self.current_state)
+    if self.filename
       unless (path = fullpath(stat.to_sym)).blank?
-        File.exists?(path)
+        return File.exists?(path)
       end
     end
     false
@@ -554,9 +554,7 @@ class Torrent < ActiveRecord::Base
   #  * reads the hash if it is not already in the db
   #  * ..
   def self.sync
-    recognize_new.each do |t|
-      t.start!
-    end
+    recognize_new
     find_all_outdated.each do |t|
       t.sync!
       unless t.valid?
@@ -579,7 +577,7 @@ class Torrent < ActiveRecord::Base
     created = []
     Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
       filename = File.basename filepath
-      torrent = self.new(:filename => filename, :status => 'new')
+      torrent = new(:filename => filename, :status => 'new')
       torrent.moveto(:archived)
       if torrent.save
         created << torrent 
