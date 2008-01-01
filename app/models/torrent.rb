@@ -131,6 +131,8 @@ class Torrent < ActiveRecord::Base
   rescue TorrentNotRunning
     finally_stop! unless archived?
     return '[not-running]'
+  rescue TorrentHasNoInfoHash
+    return '[no-info_hash]'
   end
   alias_method_chain :method_missing, :xml_rpc
 
