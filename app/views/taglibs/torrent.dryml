@@ -9,8 +9,10 @@
       <helm_content class="torrent">
          <if test="&this.running?">
             downloading... <%= this.progress %>% <br/>
-            Rate: <%= this.up_rate %> | <%= this.down_rate %> <br />
-            Total: <%= this.up_total %> | <%= this.down_total %> <br />
+            Rate: <%= number_to_human_rate(this.up_rate) %> up, 
+                  <%= number_to_human_rate(this.down_rate) %> down <br />
+            Total: <%= number_to_human_size(this.up_total) %> up, 
+                   <%= number_to_human_size(this.down_total) %> down<br />
          </if>
          <else>
             Archived or paused
@@ -39,4 +41,10 @@
   <else>
     <ul id="event_log" />
   </else>
+</def>
+
+<def tag="main_status">
+  Rate: 
+    <%= number_to_human_rate(Torrent.rtorrent.upload_rate) %> up,
+    <%= number_to_human_rate(Torrent.rtorrent.download_rate) %> down
 </def>

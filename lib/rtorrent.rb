@@ -43,11 +43,19 @@ class RTorrent
   end
 
   def method_missing method, *args
+    method = method.to_s
+    magic_method = "get_#{method}" # just getters for now
     if @methods.include? method
       call method, *args
+    elsif @methods.include? magic_method
+      call magic_method, *args
     else
-      raise RTorrentException, "no such rpc method: #{method}"
+      raise RTorrentException, "no such rpc method: #{method} or #{magic_method}"
     end
+  end
+
+  def running?
+    !remote_methods.empty? # initialize will fail earlier
   end
 end
 
