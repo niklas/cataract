@@ -116,16 +116,16 @@ class Torrent < ActiveRecord::Base
   RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes]
 
   def method_missing_with_xml_rpc(m, *args, &blk)
-    if RTORRENT_METHODS.include?(m.to_sym)
+    if RTORRENT_METHODS.include?(m.to_sym) and remote
       remote.send m, *args, &blk
     else
-      method_missing_without_xmlrpc m, *args, &blk
+      method_missing_without_xml_rpc m, *args, &blk
     end
   rescue TorrentNotRunning
     update_attribute(:status, 'archived') unless archived?
     return '[not-running]'
   end
-  alias_chain :method_missing, :xml_rpc
+  alias_method_chain :method_missing, :xml_rpc
 
   def self.rtorrent
     @@rtorrent ||= RTorrent.new
@@ -288,20 +288,23 @@ class Torrent < ActiveRecord::Base
   # 3) takes a Title with the torrent's id
   def short_title
     title ||
-      filename ? 
-        filename.
-          gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
-          gsub(/\[.*?\]/,'').
-          gsub(/\(.*?\)/,'').
-          sub(/\d{5,}.TPB/,'').
-          sub(/\.?torrent$/i,'').
-          gsub(/[._-]+/,' ').
-          gsub(/\s{2,}/,' ').rstrip.lstrip :
-        "Torrent ##{id}"
+      (filename.blank? ? "Torrent ##{id}" : clean_filename)
   end
   # synonym for short_title
   def nice_title
     short_title
+  end
+
+  def clean_filename
+    filename.
+      gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
+      gsub(/\[.*?\]/,'').
+      gsub(/\(.*?\)/,'').
+      sub(/\d{5,}.TPB/,'').
+      sub(/\.?torrent$/i,'').
+      gsub(/[._-]+/,' ').
+      gsub(/\s{2,}/,' ').
+      rstrip.lstrip
   end
 
   def file_exists?
