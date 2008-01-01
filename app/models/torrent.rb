@@ -84,7 +84,7 @@ class Torrent < ActiveRecord::Base
       # copy the file because rtorrent deletes file on #stop!
       moveto( fullpath(:running), :copy => true )
       unless paused?
-        remote.load self.fullpath :running
+        remote.load(self.fullpath(:running))
         remote.directory = Settings.torrent_dir
       end
       remote.start!
