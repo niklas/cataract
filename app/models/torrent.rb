@@ -51,7 +51,7 @@ class Torrent < ActiveRecord::Base
 
   acts_as_taggable
 
-  STATES = [:running,:fetching,:paused,:archived,:remote]
+  STATES = [:running,:fetching,:paused,:archived,:remote,:invalid]
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus
@@ -620,7 +620,14 @@ class Torrent < ActiveRecord::Base
   def event_from(old_states=[])
     old_states = [old_states] unless old_states.is_a? Array
     if old_states.empty? || old_states.include?(current_state)
-      yield
+      begin
+        yield
+      rescue TorrentNotRunning
+        finally_stop!
+      rescue TorrentHasNoInfoHash
+        update_attribute(:status,:invalid)
+        reload
+      end
     else
       raise RuntimeError, "#{current_state} is not a valid state for this transition"
     end
