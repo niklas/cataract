@@ -22,6 +22,11 @@ module ApplicationHelper
     d.to_s(:db)
   end
 
+  def number_to_human_rate(num=nil,precision=1)
+    size = number_to_human_size(num,precision)
+    size ? "#{size}/s" : size
+  end
+
   def sidebar_switcher(divs=%w(watchlist tag_cloud))
     human_divs = divs.map(&:humanize).join(' / ')
     content_tag('div',
