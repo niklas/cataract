@@ -502,10 +502,10 @@ class Torrent < ActiveRecord::Base
 
   def moveto(target,opts={})
     source = fullpath
+    target = fullpath(target) if target.is_a?(Symbol)
     return if source.blank?
     return if target.blank?
     return unless File.exists? source
-    target = fullpath(target) if target.is_a?(Symbol)
     begin
       if opts[:copy]
         copy(source,target)
@@ -615,7 +615,7 @@ class Torrent < ActiveRecord::Base
 
  private
   def filepath_by_status(stat)
-    case stat
+    case stat.to_sym
     when :fetching 
       File.join(Settings.history_dir, filename) + '.fetching'
     when :running  
