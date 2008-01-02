@@ -36,7 +36,7 @@ module FileUtils
     end
   end
   def mv(src, dest, options = {})
-    fu_check_options options, :force, :noop, :verbose
+    #fu_check_options options, :force, :noop, :verbose
     return if options[:noop]
     raise Errno::EEXIST, dest if File.exist?(dest)
     raise Errno::ENOENT, src unless File.exist?(src)
