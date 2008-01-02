@@ -79,6 +79,7 @@
    <Lcars variant="nws" scale="90%" id="main" merge>
       <content id="main_content" param="main_content" />
       <menu> 
+         <li><%= link_to 'New', torrents_url %></li>
          <li><%= link_to 'Running', search_torrents_url %></li>
          <li><%= link_to 'Paused', search_torrents_url(:status => 'paused') %></li>
          <li><%= link_to 'Watchlist', watched_torrents_url %></li>
