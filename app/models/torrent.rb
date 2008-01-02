@@ -122,6 +122,13 @@ class Torrent < ActiveRecord::Base
     fetch! && start!
   end
 
+  def self.fetch_and_start_by_url(new_url)
+    if t = create(:url => new_url, :status => 'remote')
+      t.fetch! && t.start!
+    end
+    t
+  end
+
 
 
   RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
@@ -343,7 +350,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def before_destroy
-    stop! if valid? and running?(false)
+    stop! if valid? and running?
     File.delete(fullpath) if file_exists?
   end
 
@@ -512,8 +519,8 @@ class Torrent < ActiveRecord::Base
       else
         move(source,target)
       end
-    rescue Exception => e
-      errors.add :filename, "^error while moving torrent: #{e.to_s}"
+    #rescue Exception => e
+    #  errors.add :filename, "^error while moving torrent: #{e.to_s}"
     end
   end
 

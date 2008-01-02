@@ -15,12 +15,6 @@ class TorrentsController < ApplicationController
     @torrents = Torrent.find_in_state(:running)
   end
 
-  def search
-    @searched_tags = []
-    @status = (params[:status] || :running).to_sym
-    @torrents = Torrent.find_in_state(@status)
-  end
-
   def watched
     @torrents = current_user.torrents
     render :action => 'list'
@@ -124,27 +118,17 @@ class TorrentsController < ApplicationController
 
   # create torrent
   # TODO: other ways than fetching with url
-  def fetch_by_url
-    @torrent = Torrent.new(:url => params[:url])
-    @torrent.status = :remote
-    unless @torrent.save
-      render :partial => 'probe_fail'
-      return
-    end
-    if @torrent.fetch_and_start!
-      current_user.watch(@torrent)
-      respond_to do |wants|
-        wants.js do
-          render :update do |page|
-            page[:reply].update ""
-            page.insert_html :top, :content, 
-              render(:partial => 'preview', :object => @torrent)
-            page.notification("Torrent fetched: #{@torrent.short_title}")
-          end
-        end
+  def create
+    if params[:url]
+      if @torrent = Torrent.fetch_and_start_by_url(params[:url])
+        current_user.watch(@torrent)
+        render_notice @torrent.short_title + " has been fetched"
+        render_details_for @torrent
+      else
+        render_error "Error while fetching: #{@torrent.errors.full_messages.join(',')}"
       end
     else
-      render :partial => 'probe_fail'
+      render_error "Cannot fetch without url"
     end
   end
 
@@ -177,14 +161,13 @@ class TorrentsController < ApplicationController
       @torrents = Torrent.find_in_state(:running, :order => 'created_at desc')
       flash[:reply]= ''
     end
-    forget_all
-    memorize_preview(@torrents)
+    #forget_all
+    #memorize_preview(@torrents)
     respond_to do |wants|
       wants.js {
+        new_list = Hobo::Dryml.render_tag(@template,'list_of_torrents', :with => @torrents)
         render :update do |page|
-          page[:content].update(render('/torrents/list'))
-          page[:tag_cloud].update(render(:partial => '/torrents/tag_cloud'))
-          page[:reply].update flash[:reply]
+          page[:main_content].update new_list
         end
       }
       wants.html {
