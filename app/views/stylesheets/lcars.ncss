@@ -152,6 +152,9 @@ div.lcars {
             background-color: #a86453; 
           }
         }
+        img {
+          border: none;
+        }
         + li > a { 
           background-color: pink;
         }

@@ -7,21 +7,38 @@
 <def tag="details">
    <CataractHelm title="&this.short_title">
       <helm_content class="torrent">
-         <if test="&this.running?">
-            downloading... <%= this.progress %>% <br/>
-            Rate: <%= number_to_human_rate(this.up_rate) %> up, 
-                  <%= number_to_human_rate(this.down_rate) %> down <br />
-            Total: <%= number_to_human_size(this.up_total) %> up, 
-                   <%= number_to_human_size(this.down_total) %> down<br />
-         </if>
-         <else>
-            Archived or paused
-         </else>
-         <div class="action_buttons">
-            <%= action_buttons_for this %>
-         </div>
+         <% div_for this do %>
+            <details_for_running if="&this.running?" />
+            <details_for_paused if="&this.paused?" />
+            <details_for_archived if="&this.archived?" />
+            <details_for_remote if="&this.remote?" />
+         <% end %>
+         <% periodically_call_remote :url => torrent_url(this), :frequency => 5, :method => :get, :condition => "$('#{dom_id(this)}') != null" %>
       </helm_content>
+      <helm_menu>
+         <%= action_buttons_for this %>
+      </helm_menu>
   </CataractHelm>
+</def>
+
+<def tag="details_for_running">
+  downloading... <%= this.progress %>% <br/>
+  Rate: <%= number_to_human_rate(this.up_rate) %> up, 
+        <%= number_to_human_rate(this.down_rate) %> down <br />
+  Total: <%= number_to_human_size(this.up_total) %> up, 
+         <%= number_to_human_size(this.down_total) %> down<br />
+</def>
+
+<def tag="details_for_archived">
+  Archived
+</def>
+
+<def tag="details_for_paused">
+  Paused
+</def>
+
+<def tag="details_for_remote">
+  remote: <%= this.url %>
 </def>
 
 <def tag="list_of_torrents">

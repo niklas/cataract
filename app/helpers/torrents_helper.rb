@@ -52,23 +52,25 @@ module TorrentsHelper
     else
       "[WTF: status #{t.status}]"
     end +
-    watchbutton(t)
+    content_tag('li', watchbutton(t))
   end
 
   def button(t,action)
+    content_tag('li',
       link_to_remote(
-        image_tag("buttons/#{action}.png"), 
+        action, 
         :url => {:action => action, :id => t.id, :controller => 'torrents' },
         :loading => activity_effect(t,action + 'ing'))
+               )
   end
 
   def watchbutton(t)
     if watching = current_user.watches?(t)
-      link_to_remote image_tag('buttons/unwatch.png'),
+      link_to_remote "unwatch",
         :url => watching_url(watching),
         :method => :delete
     else
-      link_to_remote image_tag('buttons/watch.png'),
+      link_to_remote 'watch',
         :url => watchings_url(:torrent_id => t.id),
         :method => :post
     end
