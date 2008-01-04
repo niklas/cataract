@@ -51,9 +51,6 @@
          <main_status />
       </content>
       <menu id="helm_menu" param="helm_menu">
-         <li><a href="">1234</a></li>
-         <li><a href="">4321</a></li>
-         <li><a href="">666</a></li>
       </menu>
    </Lcars>
  </def>
