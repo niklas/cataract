@@ -23,7 +23,7 @@ class AccountController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      redirect_back_or_default('/')
+      redirect_back_or_default(torrents_url)
       flash[:notice] = "Logged in successfully"
     end
   end
@@ -33,7 +33,7 @@ class AccountController < ApplicationController
     return unless request.post?
     @user.save!
     self.current_user = @user
-    redirect_back_or_default(:controller => '/torrents')
+    redirect_back_or_default(torrents_url)
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
