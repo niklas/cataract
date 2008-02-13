@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+require 'gnome2'
+
+ID, TITLE, PROGRESS, STATUS, RATE_DOWN, RATE_UP, PEERS, SEEDS, MESSAGE = (0..23).to_a
+
+#                          id       title   progress
+@list = Gtk::ListStore.new(Integer, String, Float)
+@view = Gtk::TreeView.new(@list)
+
+@id_renderer = Gtk::CellRendererText.new
+@title_renderer = Gtk::CellRendererText.new
+@progress_renderer = Gtk::CellRendererText.new
+
+@view.append_column Gtk::TreeViewColumn.new("Id", @id_renderer, :text => ID)
+@view.append_column Gtk::TreeViewColumn.new("Title", @title_renderer, :text => TITLE)
+@view.append_column Gtk::TreeViewColumn.new("Progress", @progress_renderer, :text => PROGRESS)
+
+def append(list,id,title,progress)
+  row = @list.append
+  row[ID] = id
+  row[TITLE] = title
+  row[PROGRESS] = progress
+end
+
+1.upto(20) do |i|
+  append(@list,i,"Nummer #{i}",rand)
+end
+
+@scrolled = Gtk::ScrolledWindow.new
+@scrolled.add @view
+
+@box = Gtk::VBox.new
+@box.pack_start @scrolled
+
+@window = Gtk::Window.new("Test it out")
+@window.add @box
+@window.resize(400,300)
+@window.show_all
+
+Thread.abort_on_exception = true
+Gtk.main
