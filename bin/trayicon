@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'gtktrayicon'
+require 'gnome2'
 require "xmlrpc/client"
 require 'yaml'
 
@@ -145,29 +145,26 @@ class CataractWindow < Gtk::Window
 
 end
 
-class CataractTrayIcon < Gtk::TrayIcon
+class CataractTrayIcon < Gtk::StatusIcon
   def initialize(title="Cataract")
     @title = title
-    super(@title)
+    super()
+    @icon = Gdk::Pixbuf.new '/usr/share/icons/cataract.png'
     create_icon
-    show_all
+    #show_all
   end
 
   def create_icon
     @popup = CataractWindow.new
 
-    icon = Gtk::Image.new '/usr/share/icons/cataract.png'
-    icon.set_icon_size Gtk::IconSize::BUTTON
-    add icon 
-    add_events(Gdk::Event::BUTTON_PRESS_MASK)
-    add_events(Gdk::Event::BUTTON_RELEASE_MASK)
+    self.pixbuf = @icon
 
     menu = Gtk::Menu.new
 
     @menu_show = menu_show = Gtk::MenuItem.new("Show")
     @menu_hide = menu_hide = Gtk::MenuItem.new("Hide")
-    menu_show.signal_connect('activate') { |w,e| toggle_popup }
-    menu_hide.signal_connect('activate') { |w,e| toggle_popup }
+    #menu_show.signal_connect('activate') { |w,e| toggle_popup }
+    #menu_hide.signal_connect('activate') { |w,e| toggle_popup }
     menu_quit = Gtk::MenuItem.new("Quit")
     menu_quit.signal_connect('activate') { |w,e| Gtk.main_quit }
     menu.append(menu_show.show)
@@ -175,15 +172,13 @@ class CataractTrayIcon < Gtk::TrayIcon
     menu.append(menu_quit.show)
     menu.show
 
-    signal_connect('button-press-event') do |widget,event|
-      case event.button 
-      when 1
-        toggle_popup
-      when 3
-        menu.popup(nil,nil,event.button,event.time)
-      else
-        puts "Button #{event.button} not used"
+    signal_connect('popup-menu') do |widget,button,time|
+      menu.popup(nil,nil,button,time) do
+        position_menu(menu)
       end
+    end
+    signal_connect('activate') do |widget|
+      toggle_popup
     end
   end
 

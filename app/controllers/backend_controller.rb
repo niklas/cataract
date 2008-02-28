@@ -1,6 +1,7 @@
 class BackendController < ApplicationController
-  wsdl_service_name 'Backend'
-  web_service_dispatching_mode :direct
+  #wsdl_service_name 'Backend'
+  #web_service_dispatching_mode :direct
+  web_service_api ::BackendApi
 
   before_filter :login_required
 

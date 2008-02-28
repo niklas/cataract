@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40
   validates_length_of       :email,    :within => 3..100
-  validates_length_of       :jabber, :on => :update,   :within => 3..100
+  validates_length_of       :jabber, :on => :update,   :within => 3..100, :allow_nil => true
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password 
   before_update :send_test_message_if_changed

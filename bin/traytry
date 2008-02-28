@@ -3,24 +3,26 @@
 require 'gnome2'
 
 ID, TITLE, PROGRESS, STATUS, RATE_DOWN, RATE_UP, PEERS, SEEDS, MESSAGE = (0..23).to_a
+ICON_SIZE = 24
 
 #                          id       title   progress
-@list = Gtk::ListStore.new(Integer, String, Float)
+@list = Gtk::ListStore.new(Integer, String, Gdk::Pixbuf)
 @view = Gtk::TreeView.new(@list)
 
 @id_renderer = Gtk::CellRendererText.new
 @title_renderer = Gtk::CellRendererText.new
-@progress_renderer = Gtk::CellRendererText.new
+@progress_renderer = Gtk::CellRendererPixbuf.new
 
 @view.append_column Gtk::TreeViewColumn.new("Id", @id_renderer, :text => ID)
 @view.append_column Gtk::TreeViewColumn.new("Title", @title_renderer, :text => TITLE)
-@view.append_column Gtk::TreeViewColumn.new("Progress", @progress_renderer, :text => PROGRESS)
+@view.append_column Gtk::TreeViewColumn.new("Progress", @progress_renderer, :pixbuf => PROGRESS)
 
 def append(list,id,title,progress)
   row = @list.append
   row[ID] = id
   row[TITLE] = title
-  row[PROGRESS] = progress
+  #row[PROGRESS] = progress
+  row[PROGRESS] = Gdk::Pixbuf.new(Gdk::Pixbuf::COLORSPACE_RGB,true,8,ICON_SIZE,ICON_SIZE)
 end
 
 1.upto(20) do |i|

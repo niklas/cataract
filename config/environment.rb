@@ -28,10 +28,10 @@ Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
   
   # Skip frameworks you're not going to use (only works if using vendor/rails)
-  config.frameworks -= [ :action_web_service, :action_mailer, :active_resource ]
+  config.frameworks -= [ :action_mailer, :active_resource ]
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/app/apis )
 
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)

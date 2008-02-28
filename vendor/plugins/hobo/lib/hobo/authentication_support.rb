@@ -39,6 +39,8 @@ module Hobo
     #
     def login_required(user_model=nil)
       auth_model = user_model || UserController.user_models.first
+      # hack to use our User model
+      auth_model = ::User
       if current_user.guest? 
         username, passwd = get_auth_data
         self.current_user = auth_model.authenticate(username, passwd) || nil if username && passwd && auth_model
