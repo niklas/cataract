@@ -35,7 +35,7 @@ class Feed < ActiveRecord::Base
           )
     end
   end
-  has_many :filters, :order => 'position', :extend => Filter::AssociationMethods
+  has_many :filters, :order => 'position'
   validates_presence_of :url, :message => "URL is needed"
   validates_format_of :url, :with => URI.regexp
   validates_presence_of :title, :message => "please give a title"
