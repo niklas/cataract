@@ -76,6 +76,28 @@ div.lcars {
      left: <%= slim_side_border %>em;
   }
 
+  /* distance on empty side */
+  [variant~="nes"],[variant~="sen"] {
+     > div.inner {
+       left: 0;
+     }
+  }
+  [variant~="nws"],[variant~="swn"] {
+     > div.inner {
+       right: 0;
+     }
+  }
+  [variant~="wse"],[variant~="esw"] {
+     > div.inner {
+       top: 0;
+     }
+  }
+  [variant~="wne"],[variant~="enw"] {
+     > div.inner {
+       bottom: 0;
+     }
+  }
+
   /* with left menu */
   > div.left {
      padding-left: <%= big_side_border %>em;
@@ -172,6 +194,7 @@ div.lcars {
   > div.top, > div.bottom {
     left: 0;
     right: 0;
+    padding: 0 <%= big_border/2 %>em;
     height: <%= big_border %>em;
     > span.title {
       display: inline;
