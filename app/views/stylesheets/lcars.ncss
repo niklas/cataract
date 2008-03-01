@@ -161,6 +161,10 @@ div.lcars {
       width: <%= slim_border %>em;
       height: <%= slim_border %>em;
     }
+    .corner {
+       height: <%= 2 * big_border %>em;
+       width: <%= 2 * big_border %>em
+    }
     .ne {
       top: 0;
       right: 0;
