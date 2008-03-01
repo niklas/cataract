@@ -1,8 +1,11 @@
 <%
   base_color = 'black'
   slim_border = 0.4
+  slim_side_border = 0.4
   big_border = 1.7
-  $borders = [big_border, slim_border] * 2
+  big_side_border = 5.0
+  $big_borders  = [big_border,big_side_border] * 2
+  $slim_borders = [slim_border, slim_side_border] * 2
   color1 = '#FFFF00'
   color1_light = '#111100'
   color2 = '#662211'
@@ -12,7 +15,14 @@
   box = Object.new
   def box.ems(vals)
     (0..3).collect do |i|
-      vals[i] > 0 ? "#{$borders[i]}em" : '0'
+      case vals[i]
+      when 1
+        "#{$slim_borders[i]}em"
+      when 2
+        "#{$big_borders[i]}em"
+      else
+        '0'
+      end
     end
   end
 
@@ -52,40 +62,64 @@ body {
 
 
 div.lcars {
+  outline: thin solid <%= base_color %>;
   background-color: <%= color1 %>;
   margin: <%= slim_border %>em;
   font-family: Arial, sans-serif;
-  [variant~="en"] {
-    <%= box.padding(1,1,0,0) %>
-    > div.inner { <%= box.positions(1,1,0,0) %> }
+  position: absolute;
+
+  /* without menu or title */
+  > div.inner {
+     top: <%= slim_border %>em;
+     right: <%= slim_side_border %>em;
+     bottom: <%= slim_border %>em;
+     left: <%= slim_side_border %>em;
   }
-  [variant~="nw"] {
-    <%= box.padding(1,0,0,1) %>
-    > div.inner { <%= box.positions(1,0,0,1) %> }
+
+  /* with left menu */
+  > div.left {
+     padding-left: <%= big_side_border %>em;
+     ~ div.inner {
+       left: <%= big_side_border %>em;
+     }
+     ~ div.top {
+        padding-left: <%= big_side_border + big_border %>em;
+     }
+     ~ img.decoration.bow {
+        margin-left: <%= big_side_border %>em;
+     }
   }
-  [variant~="ws"] {
-    <%= box.padding(0,0,1,1) %>
-    > div.inner { <%= box.positions(0,0,1,1) %> }
+  /* with right menu */
+  > div.right {
+     padding-right: <%= big_side_border %>em;
+     ~ div.inner {
+       right: <%= big_side_border %>em;
+     }
+     ~ div.top {
+        padding-right: <%= big_side_border  + big_border %>em;
+     }
+     ~ img.decoration.bow {
+        margin-right: <%= big_side_border %>em;
+     }
   }
-  [variant~="se"] {
-    <%= box.padding(0,1,1,0) %>
-    > div.inner { <%= box.positions(0,1,1,0) %> }
+  /* with top element */
+  > div.top {
+     ~ div.inner {
+       top: <%= big_border %>em;
+     }
+     ~ img.decoration.bow {
+        margin-top: <%= big_border %>em;
+     }
   }
-  [variant~="enw"], [variant="wne"] {
-    <%= box.padding(1,1,0,1) %>
-    > div.inner { <%= box.positions(1,1,0,1) %> }
-  }
-  [variant~="nws"], [variant="swn"]{
-    <%= box.padding(1,0,1,1) %>
-    > div.inner { <%= box.positions(1,0,1,1) %> }
-  }
-  [variant~="wse"], [variant="esw"] {
-    <%= box.padding(0,1,1,1) %>
-    > div.inner { <%= box.positions(0,1,1,1) %> }
-  }
-  [variant="sen"], [variant="nes"] {
-    <%= box.padding(1,1,1,0) %>
-    > div.inner { <%= box.positions(1,1,1,0) %> }
+  /* with bottom element */
+  > div.bottom {
+     padding-bottom: <%= big_border %>em;
+     ~ div.inner {
+       bottom: <%= big_border %>em;
+     }
+     ~ img.decoration.bow {
+        margin-bottom: <%= big_border %>em;
+     }
   }
   > div > * {
     font-size: <%= big_border - 0.2 %>em;
@@ -96,10 +130,10 @@ div.lcars {
     width: <%= big_border %>em
     .bow {
       background-color: inherit;
-      margin-top: <%= big_border %>em;
-      margin-right: <%= slim_border %>em;
-      margin-bottom: <%= big_border %>em;
-      margin-left: <%= slim_border %>em;
+      margin-top: <%= slim_border %>em;
+      margin-right: <%= slim_side_border %>em;
+      margin-bottom: <%= slim_border %>em;
+      margin-left: <%= slim_side_border %>em;
     }
     .stump.n, .stump.s {
       width: <%= slim_border %>em;
@@ -122,14 +156,22 @@ div.lcars {
       left: 0;
     }
   }
+
+  > div.top, > div.bottom, > div.left, > div.right {
+    position: absolute;
+    overflow: hidden;
+  }
   > div.top { top: 0; }
   > div.bottom { bottom: 0; }
+  > div.right { right: 0; }
+  > div.left { left: 0; }
+
+  > div.right, > div.left {
+    width: <%= big_border %>em;
+  }
   > div.top, > div.bottom {
-    position: absolute;
     left: 0;
     right: 0;
-    overflow: hidden;
-    padding: 0 <%= wide_border %>em;
     height: <%= big_border %>em;
     > span.title {
       display: inline;
@@ -219,5 +261,41 @@ div.lcars {
         }
       }
     }
+  }
+  .cols4 { 
+      width: 25% 
+     .x1 { left:   0; right: 75%; }
+     .x2 { left: 25%; right: 50%; }
+     .x3 { left: 50%; right: 25%; }
+     .x4 { left: 75%; right:   0; }
+  }
+  .rows4 { 
+      height: 25%
+     .y1 { top:   0; bottom: 75%; }
+     .y2 { top: 25%; bottom: 50%; }
+     .y3 { top: 50%; bottom: 25%; }
+     .y4 { top: 75%; bottom:   0; }
+  }
+  .cols3 { 
+      width: 33.3% 
+     .x1 { left:   0; right: 66%; }
+     .x2 { left: 33%; right: 33%; }
+     .x3 { left: 66%; right:   0; }
+  }
+  .rows3 { 
+      height: 33.3%
+     .y1 { top:   0; bottom: 66%; }
+     .y2 { top: 33%; bottom: 33%; }
+     .y3 { top: 66%; bottom:   0; }
+  }
+  .cols2 { 
+      width: 50% 
+     .x1 { left:   0; right: 50%; }
+     .x2 { left: 50%; right:   0; }
+  }
+  .rows2 { 
+      height: 50%
+     .y1 { top:   0; bottom: 50%; }
+     .y2 { top: 50%; bottom:   0; }
   }
 }

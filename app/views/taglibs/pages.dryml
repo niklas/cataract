@@ -46,7 +46,7 @@
 </def>
 
 <def tag="CataractHelm">
-   <Lcars variant="nes" scale="70%" id="helm" title="Cataract" merge>
+   <Lcars variant="nEs" scale="70%" id="helm" title="Cataract" merge>
       <content id="helm_content" param="helm_content">
          <main_status />
       </content>

@@ -1,0 +1,66 @@
+<def tag="samplemenu">
+   <ul>
+      <li>ABC</li>
+      <li>XYZ</li>
+      <li>LMN</li>
+   </ul>
+</def>
+
+<LcarsPage>
+   <body>
+      <Lcars variant="nws" class="cols3 rows2 x1 y1">
+         <content>
+            Only Content
+         </content>
+      </Lcars>
+      <Lcars variant="nes" class="cols3 rows2 x2 y1">
+         <content>
+            Content with Right Menu
+         </content>
+         <rightmenu>
+            <samplemenu />
+         </rightmenu>
+      </Lcars>
+      <Lcars variant="nws" class="cols3 rows2 x3 y1">
+         <content>
+            Content with Left Menu
+         </content>
+         <leftmenu>
+            <samplemenu />
+         </leftmenu>
+      </Lcars>
+      <Lcars variant="nes" class="cols3 rows2 x1 y2">
+         <content>
+            Content with Top Title and Right Menu
+         </content>
+         <rightmenu>
+            <samplemenu />
+         </rightmenu>
+         <toptitle>
+            Top Title
+         </toptitle>
+      </Lcars>
+      <Lcars variant="nws" class="cols3 rows2 x2 y2">
+         <content>
+            Content with Top Title and Left Menu
+         </content>
+         <leftmenu>
+            <samplemenu />
+         </leftmenu>
+         <toptitle>
+            Top Title
+         </toptitle>
+      </Lcars>
+      <Lcars variant="nws" class="cols3 rows2 x3 y2">
+         <content>
+            Content with Bottom Title and Left Menu
+         </content>
+         <leftmenu>
+            <samplemenu />
+         </leftmenu>
+         <bottomtitle>
+            Top Title
+         </bottomtitle>
+      </Lcars>
+   </body>
+</LcarsPage>
