@@ -28,33 +28,29 @@
   <LcarsBottom  merge/>
 </def>
 
-<def tag="LcarsTitle" attrs="toptitle,bottomtitle,variant">
-   <if test="&all_parameters[:toptitle]">
+<def tag="LcarsTitle" attrs="top,bottom,variant">
+   <if test="&all_parameters[:top]">
       <if test="&variant=~/n/">
-         <div class="top">
-            <span class="title" param="toptitle"><%= toptitle %></span>
+         <div class="top" param="top">
         </div>
       </if>
    </if>
 
-   <if test="&bottomtitle">
+   <if test="&all_parameters[:bottom]">
       <if test="&variant=~/s/">
-         <div class="bottom">
-            <span class="title" param="bottomtitle"><%= bottomtitle %></span>
+         <div class="bottom" param="bottom">
         </div>
       </if>
    </if>
 </def>
 
-<def tag="LcarsMenu" attrs="rightmenu,leftmenu,variant">
-   <if test="&(all_parameters[:leftmenu] && variant=~/w/)">
-      <div class="left">
-         <ul class="menu" param="leftmenu" />
+<def tag="LcarsMenu" attrs="right,left,variant">
+   <if test="&(all_parameters[:left] && variant=~/w/)">
+      <div class="left" param="left">
      </div>
    </if>
-   <if test="&(all_parameters[:rightmenu] && variant=~/e/)">
-      <div class="right">
-         <ul class="menu" param="rightmenu" />
+   <if test="&(all_parameters[:right] && variant=~/e/)">
+      <div class="right" param="right">
      </div>
    </if>
 </def>

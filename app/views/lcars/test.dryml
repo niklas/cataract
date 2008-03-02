@@ -1,8 +1,8 @@
 <def tag="samplemenu">
    <ul>
-      <li>ABC</li>
-      <li>XYZ</li>
-      <li>LMN</li>
+      <li><a href="#">ABCDEF</a></li>
+      <li><a href="#">XYZ ZYX</a></li>
+      <li><a href="#">LMN</a></li>
    </ul>
 </def>
 
@@ -17,50 +17,50 @@
          <content>
             Content with Right Menu
          </content>
-         <rightmenu>
+         <right>
             <samplemenu />
-         </rightmenu>
+         </right>
       </Lcars>
       <Lcars variant="nws" class="cols3 rows2 x3 y1">
          <content>
             Content with only Top Title
          </content>
-         <toptitle>
-            Top Title
-         </toptitle>
+         <top>
+            <span class="title">Top Title</span>
+         </top>
       </Lcars>
       <Lcars variant="nes" class="cols3 rows2 x1 y2">
          <content>
             Content with Top Title and Right Menu
          </content>
-         <rightmenu>
+         <right>
             <samplemenu />
-         </rightmenu>
-         <toptitle>
-            Top Title
-         </toptitle>
+         </right>
+         <top>
+            <span class="title">Top Title</span>
+         </top>
       </Lcars>
       <Lcars variant="nws" class="cols3 rows2 x2 y2">
          <content>
             Content with Top Title and Left Menu
          </content>
-         <leftmenu>
+         <left>
             <samplemenu />
-         </leftmenu>
-         <toptitle>
-            Top Title
-         </toptitle>
+         </left>
+         <top>
+            <span class="title">Top Title</span>
+         </top>
       </Lcars>
       <Lcars variant="nws" class="cols3 rows2 x3 y2">
          <content>
             Content with Bottom Title and Left Menu
          </content>
-         <leftmenu>
+         <left>
             <samplemenu />
-         </leftmenu>
-         <bottomtitle>
-            Top Title
-         </bottomtitle>
+         </left>
+         <bottom>
+            <span class="title">Top Title</span>
+         </bottom>
       </Lcars>
    </body>
 </LcarsPage>
