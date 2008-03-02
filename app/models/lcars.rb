@@ -11,7 +11,7 @@ class Lcars
   class << self
     def plot(options={})
       defaults = {
-        :diameter => 42,
+        :diameter => 100,
         :background_color => 'black',
         :variant => :ne,
         :kind => :corner
@@ -97,7 +97,7 @@ class Lcars
       @draw.circle(dia2,0,dia,0)
     when :w
       create_canvas(dia2, dia, background_color)
-      @draw.circle(dia,dia2,dia,0)
+      @draw.circle(dia2,dia2,dia2,0)
     when :e
       create_canvas(dia2, dia, background_color)
       @draw.circle(0,dia2,0,0)
