@@ -101,7 +101,7 @@ body {
 div.lcars {
   outline: thin solid <%= base_color %>;
   background-color: <%= color1 %>;
-  margin: <%= slim_border %>em;
+  margin: <%= u %>em;
   font-family: Arial, sans-serif;
   position: absolute;
 
@@ -113,40 +113,30 @@ div.lcars {
      left: <%= slim_side_border %>em;
   }
 
-  /* variants by present side */
-  [variant~="n"] {
-  }
-  [variant~="e"] {
-     > div.top, > div.bottom {
-       right: <%= slim_padding(:right) %>em;
-     }
-  }
-  [variant~="s"] {
-  }
-  [variant~="w"] {
-     > div.top, > div.bottom {
-      left: <%= slim_padding(:left) %>em;
-     }
-  }
 
   /* variants by non-present side */
+
+  /* !=/w/ */
   [variant~="nes"],[variant~="sen"] {
-     > div.inner {
+     > div.inner, > div.left, > div.top, > div.bottom {
        left: 0;
      }
   }
+  /* !=/e/ */
   [variant~="nws"],[variant~="swn"] {
-     > div.inner {
+     > div.inner, > div.right, > div.top, > div.bottom {
        right: 0;
      }
   }
+  /* !=/n/ */
   [variant~="wse"],[variant~="esw"] {
-     > div.inner {
+     > div.inner, > div.top, > div.left, > div.right {
        top: 0;
      }
   }
+  /* !=/s/ */
   [variant~="wne"],[variant~="enw"] {
-     > div.inner {
+     > div.inner, > div.bottom, > div.left, > div.right {
        bottom: 0;
      }
   }
@@ -156,7 +146,7 @@ div.lcars {
      ~ div.inner {
        left: <%= big_side_border %>em;
      }
-     ~ div.top {
+     ~ div.top, ~ div.bottom {
         left: <%= elbow_width %>em;
      }
      ~ img.decoration.bow {
@@ -169,7 +159,7 @@ div.lcars {
      ~ div.inner {
        right: <%= big_side_border %>em;
      }
-     ~ div.top {
+     ~ div.top, ~div.bottom {
         right: <%= elbow_width + (2*u) %>em;
      }
      ~ img.decoration.bow {
@@ -312,8 +302,8 @@ div.lcars {
     }
   }
   > div.top, > div.bottom {
-    left: <%= slim_padding(:left) %>em;
-    right: <%= slim_padding(:left) %>em;
+    left: <%=  elbow_height %>em;
+    right: <%= elbow_height %>em;
     padding: 0 <%= label_size %>em;
     margin: 0 <%= u %>em;
     height: <%= big_border %>em;
@@ -391,13 +381,13 @@ div.lcars {
      .y4 { top: 75%; bottom:   0; }
   }
   .cols3 { 
-      width: 33% 
+      width: 32% 
      .x1 { left:   0; right: 66%; }
      .x2 { left: 33%; right: 33%; }
      .x3 { left: 66%; right:   0; }
   }
   .rows3 { 
-      height: 33%
+      height: 32%
      .y1 { top:   0; bottom: 66%; }
      .y2 { top: 33%; bottom: 33%; }
      .y3 { top: 66%; bottom:   0; }
