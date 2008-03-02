@@ -168,8 +168,13 @@ div.lcars {
         margin-bottom: <%= big_border %>em;
      }
   }
-  > div > * {
+
+  > div > * > *, > div > span {
     font-size: <%= big_border - 0.2 %>em;
+  }
+  > div + div.inner ~ img.decoration.corner {
+     height: <%= 2 * big_border %>em;
+     width: <%= 2 * big_border %>em
   }
   > img.decoration {
     position: absolute;
@@ -193,8 +198,8 @@ div.lcars {
        }
     }
     .corner {
-       height: <%= 2 * big_border %>em;
-       width: <%= 2 * big_border %>em
+       height: <%= 2 * slim_border %>em;
+       width: <%= 2 * slim_border %>em
     }
     .ne {
       top: 0;
@@ -223,8 +228,46 @@ div.lcars {
   > div.right { right: 0; }
   > div.left { left: 0; }
 
+  ul {
+    margin: 0;
+    padding: 0;
+    > li {
+      background-color: <%= base_color %>;
+      > a {
+        text-decoration: none;
+        padding: 0 <%= big_border * 0.1 %>em;
+        background-color: <%= color2 %>;
+        color: <%= base_color %>;
+        :hover {
+          background-color: #a86453; 
+        }
+      }
+      img {
+        border: none;
+      }
+      + li > a { 
+        background-color: pink;
+      }
+      + li + li > a { 
+        background-color: blue;
+      }
+    }
+  }
+
   > div.right, > div.left {
-    width: <%= big_border %>em;
+    top: 0;
+    bottom: 0;
+    width: <%= big_side_border %>em;
+    padding: 0;
+    ul {
+      margin: <%= big_side_border %>em 0;
+      > li {
+        margin: 0.1em 0;
+        > a {
+          display: block;
+        }
+      }
+    }
   }
   > div.top, > div.bottom {
     left: 0;
@@ -233,42 +276,13 @@ div.lcars {
     height: <%= big_border %>em;
     > span.title {
       display: inline;
-      padding: 0 <%= big_border * 0.2 %>em;
+      padding: 0 <%= big_border * magic_factor %>em;
       color: <%= color1 %>;
       background-color: <%= base_color %>;
     }
-    > ul.menu {
+    ul {
       display: inline;
-      margin: 0;
-      padding: 0;
-      > li {
-        display: inline;
-        > a {
-          text-decoration: none;
-          padding: 0 <%= big_border * 0.1 %>em;
-          background-color: <%= color2 %>;
-          color: <%= base_color %>;
-          :hover {
-            background-color: #a86453; 
-          }
-        }
-        img {
-          border: none;
-        }
-        + li > a { 
-          background-color: pink;
-        }
-        + li + li > a { 
-          background-color: blue;
-        }
-        > input[type="text"] {
-          background-color: <%= color1_light %>;
-          color: <%= color1 %>;
-          border: none;
-          font-size: 1em;
-          padding: 0 <%= slim_border %>em;
-        }
-      }
+      > li { display: inline; }
     }
   }
   > div.inner {
