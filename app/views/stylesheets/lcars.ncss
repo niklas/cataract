@@ -276,7 +276,7 @@ div.lcars {
     height: <%= big_border %>em;
     > span.title {
       display: inline;
-      padding: 0 <%= big_border * magic_factor %>em;
+      padding: 0 <%= big_border * 0.2 %>em;
       color: <%= color1 %>;
       background-color: <%= base_color %>;
     }
