@@ -76,7 +76,23 @@ div.lcars {
      left: <%= slim_side_border %>em;
   }
 
-  /* distance on empty side */
+  /* variants by present side */
+  [variant~="n"] {
+  }
+  [variant~="e"] {
+     > div.top, > div.bottom {
+        padding-right: <%= big_border * 2 %>em;
+     }
+  }
+  [variant~="s"] {
+  }
+  [variant~="w"] {
+     > div.top, > div.bottom {
+        padding-left: <%= big_border * 2 %>em;
+     }
+  }
+
+  /* variants by non-present side */
   [variant~="nes"],[variant~="sen"] {
      > div.inner {
        left: 0;

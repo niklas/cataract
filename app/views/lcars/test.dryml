@@ -23,11 +23,11 @@
       </Lcars>
       <Lcars variant="nws" class="cols3 rows2 x3 y1">
          <content>
-            Content with Left Menu
+            Content with only Top Title
          </content>
-         <leftmenu>
-            <samplemenu />
-         </leftmenu>
+         <toptitle>
+            Top Title
+         </toptitle>
       </Lcars>
       <Lcars variant="nes" class="cols3 rows2 x1 y2">
          <content>
