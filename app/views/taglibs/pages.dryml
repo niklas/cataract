@@ -2,6 +2,7 @@
   <BasePage merge>
     <stylesheets>
       <stylesheet name="lcars"/>
+      <stylesheet name="lcars-colors"/>
     </stylesheets>
     <scripts>
       <default_tagbody/>

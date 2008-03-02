@@ -78,10 +78,6 @@
   
   $big_borders  = [big_border,big_side_border] * 2
   $slim_borders = [slim_border, slim_side_border] * 2
-  base_color = 'black'
-  color1 = '#FFFF00'
-  color1_light = '#111100'
-  color2 = '#662211'
 
   wide_border = (big_border + slim_border);
 
@@ -102,14 +98,10 @@ body {
   padding: 0;
   max-height: 100%;
   border: 0;
-  background-color: <%= base_color %>;
-  color: white; 
 }
 
 
 div.lcars {
-  outline: thin solid <%= base_color %>;
-  background-color: <%= color1 %>;
   margin: <%= u %>em;
   font-family: Arial, sans-serif;
   position: absolute;
@@ -271,26 +263,13 @@ div.lcars {
   ul {
     margin: 0;
     padding: 0;
-    background-color: <%= base_color %>;
     > li {
-      background-color: <%= base_color %>;
       > a {
         text-decoration: none;
         padding: 0 <%= big_border * 0.1 %>em;
-        background-color: <%= color2 %>;
-        color: <%= base_color %>;
-        :hover {
-          background-color: #a86453; 
-        }
       }
       img {
         border: none;
-      }
-      + li > a { 
-        background-color: pink;
-      }
-      + li + li > a { 
-        background-color: blue;
       }
     }
   }
@@ -320,10 +299,9 @@ div.lcars {
     padding: 0 <%= label_size %>em;
     margin: 0 ;
     height: <%= big_border %>em;
+    line-height: <%= big_border %>em;
     > span.title {
       padding: 0 <%= big_border * 0.2 %>em;
-      color: <%= color1 %>;
-      background-color: <%= base_color %>;
     }
     ul {
       display: inline;
@@ -332,7 +310,6 @@ div.lcars {
   }
   > div.inner {
     position: absolute;
-    background-color: <%= base_color %>;
     padding: <%= magic_factor * big_border %>em;
     > div.content {
       position: relative;
@@ -355,10 +332,7 @@ div.lcars {
            width: 60%;
            margin: 0 0.3em;
            padding: 0 0.3em;
-           background-color: #111100;
-           color: <%= color1 %>;
            border-width: 0 0.7em 0 0.3em;
-           border-color: <%= color1 %>;
            border-style: none solid;
         }
         label + input[type="checkbox"] {
@@ -368,12 +342,8 @@ div.lcars {
         }
         input[type="submit"] {
           float: right;
-          background: <%= base_color %>;
-          color: <%= color1 %>;
           border-top: none;
           border-bottom: none;
-          border-left: 1em solid <%= color1 %>;
-          border-right: 0.1em solid <%= color1 %>;
           cursor: pointer;
         }
       }

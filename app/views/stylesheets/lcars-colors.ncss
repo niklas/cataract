@@ -1,0 +1,81 @@
+/* Color Schemes based on info from http://www.lcarsdeveloper.com */
+
+<%
+   color_schemes = {
+      :primary => {
+         :base => '#000000',
+         :text => '#FFFFFF',
+         :elbows => '#F1DF6F',
+         :offline => '#FF0000',
+         :offline_off => '#330000',
+         :unavailable => '#3399FF',
+         :primary => '#99CCFF',
+         :color1 => '#FFFF33',
+         :color2 => '#FFFFCC',
+         :input => '#111100'
+      }
+   }
+   colors = color_schemes[:primary]
+%>
+
+
+body {
+  background-color: <%= colors[:base] %>;
+  color: <%= colors[:text] %>;
+}
+
+div.lcars {
+  outline: thin solid <%= colors[:base] %>;
+  background-color: <%= colors[:elbows] %>;
+  ul {
+    background-color: <%= colors[:base] %>;
+    > li {
+      background-color: <%= colors[:base] %>;
+      > a {
+        color: <%= colors[:base] %>;
+        background-color: <%= colors[:primary] %>;
+        :hover {
+          background-color: <%= colors[:text] %>;
+        }
+      }
+      + li > a {
+        background-color: <%= colors[:color1] %>;
+      }
+      + li + li > a {
+        background-color: <%= colors[:color2] %>;
+      }
+    }
+  }
+  > div {
+    .top, .bottom {
+      > span.title {
+        background-color: <%= colors[:base] %>;
+        color: <%= colors[:color1] %>;
+      }
+    }
+    .inner {
+      background-color: <%= colors[:base] %>;
+    }
+    > div.content {
+      la
+      form {
+        input[type="submit"] {
+          background: <%= colors[:base] %>;
+          color: <%= colors[:color1] %>;
+        }
+        label + input[type="text"],
+        label + input[type="textarea"],
+        label + input[type="password"] {
+           color: <%= colors[:color1] %>;
+           border-color: <%= colors[:color1] %>;
+           background-color: <%= colors[:input] %>;
+        }
+        input[type="submit"] {
+          border-left: 1em solid <%= colors[:color1] %>;
+          border-right: 0.1em solid <%= colors[:color1] %>;
+        }
+      }
+    }
+  }
+}
+
