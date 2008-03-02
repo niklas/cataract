@@ -1,3 +1,5 @@
+/* Based on Trekker Reactor desgin info */
+
 <%
   base_color = 'black'
   slim_border = 0.4
