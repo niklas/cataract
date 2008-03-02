@@ -13,10 +13,16 @@
       corner_radius + (u*1)
     end
     def vertical_space_between_buttons
-      u*2.0
+      u*1.3
     end
     def horizontal_space_between_buttons
       vertical_space_between_buttons
+    end
+    def vertical_space_between_panes
+      u*1.0
+    end
+    def horizontal_space_between_panes
+      vertical_space_between_panes
     end
     def slim_border
       4.0*u
@@ -41,6 +47,9 @@
     end
     def label_size
       big_border
+    end
+    def button_size1
+      9.0 * u
     end
     def big_side_border
       25.0*u
@@ -262,6 +271,7 @@ div.lcars {
   ul {
     margin: 0;
     padding: 0;
+    background-color: <%= base_color %>;
     > li {
       background-color: <%= base_color %>;
       > a {
@@ -290,13 +300,16 @@ div.lcars {
     bottom: <%= elbow_height %>em;
     width: <%= big_side_border %>em;
     padding: 0;
-    margin: <%= u %>em 0;
+    margin: 0;
     ul {
       margin: 0;
+      position: absolute;
+      left: 0; right: 0;
       > li {
         margin: <%= vertical_space_between_buttons %>em 0;
         > a {
           display: block;
+          height: <%= button_size1 %>em;
         }
       }
     }
@@ -305,7 +318,7 @@ div.lcars {
     left: <%=  elbow_height %>em;
     right: <%= elbow_height %>em;
     padding: 0 <%= label_size %>em;
-    margin: 0 <%= u %>em;
+    margin: 0 ;
     height: <%= big_border %>em;
     > span.title {
       padding: 0 <%= big_border * 0.2 %>em;
