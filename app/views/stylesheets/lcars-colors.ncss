@@ -98,9 +98,18 @@ div.lcars {
     }
     > div {
       .top, .bottom {
+        > span {
+          background-color: <%= colors[:primary] %>;
+          color: <%= colors[:base] %>;
+        }
         > span.title {
           background-color: <%= colors[:base] %>;
           color: <%= colors[:color1] %>;
+        }
+        > input[type="text"] {
+           background-color: <%= colors[:input] %>;
+           color: <%= colors[:primary] %>;
+           border: none;
         }
       }
       .inner {

@@ -300,7 +300,12 @@ div.lcars {
     margin: 0 ;
     height: <%= big_border %>em;
     line-height: <%= big_border %>em;
-    > span.title {
+    > * {
+      font-size: 72%; /* TODO huh? */
+      display: block;
+    }
+    > span {
+      float: left;
       padding: 0 <%= big_border * 0.2 %>em;
     }
     ul {

@@ -13,9 +13,11 @@
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
    </content>
-   <menu>
-     <li unless="&Settings.signup_forbidden">
-       <%= link_to "Sign up", :action => 'signup' -%>
-     </li>
-   </menu>
+   <left>
+     <ul>
+       <li unless="&Settings.signup_forbidden">
+         <%= link_to "Sign up", :action => 'signup' -%>
+       </li>
+     </ul>
+   </left>
 </CataractSinglePage>

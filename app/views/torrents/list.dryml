@@ -5,12 +5,10 @@
       no torrents found
     </else>
   </main_content>
-  <menu2> 
-     <li>
-        <%= text_field_tag( 'search', params[:term], 
-        :id => 'search_field', :autocomplete => 'off', :style => "width: 60%") %>
-        <%= observe_field('search_field', :url => search_torrents_url,
-        :frequency => 2.3, :with => 'term') %>
-     </li>
-  </menu2>
+  <top> 
+      <%= text_field_tag( 'search', params[:term], 
+      :id => 'search_field', :autocomplete => 'off', :style => "width: 60%") %>
+      <%= observe_field('search_field', :url => search_torrents_url,
+      :frequency => 2.3, :with => 'term') %>
+  </top>
 </CataractPage>

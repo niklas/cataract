@@ -19,6 +19,7 @@
   <LcarsPage merge>
     <stylesheets>
       <stylesheet name="lcars"/>
+      <stylesheet name="lcars-colors"/>
       <stylesheet name="torrents"/>
       <stylesheet name="layout"/>
       <stylesheet name="style"/>
@@ -47,40 +48,47 @@
 </def>
 
 <def tag="CataractHelm">
-   <Lcars variant="nEs" scale="70%" id="helm" title="Cataract" merge>
+   <Lcars variant="nes" scale="120%" id="helm" title="Cataract" merge>
       <content id="helm_content" param="helm_content">
          <main_status />
       </content>
-      <menu id="helm_menu" param="helm_menu">
-      </menu>
+      <right id="helm_menu" param="helm_menu" >
+         &nbsp;
+      </right>
    </Lcars>
  </def>
 
 <def tag="CataractEngineering">
-   <Lcars variant="swn" scale="50%" id="engineering" title="Log" title2="logged in as #{current_user.login}" merge>
+   <Lcars variant="swn" scale="90%" id="engineering" scheme="ancillary" merge>
       <content id="engineering_content" param="engineering_content">
          <event_log with="&@logs" />
       </content>
-      <menu>
-         <li><a href="">5 min</a></li>
-         <li><a href="">1 h</a></li>
-         <li><a href="">24 h</a></li>
-      </menu>
-      <menu2>
-        <li><%= link_to_remote 'Settings', :url => hash_for_settings_url, :method => :get %></li>
-         <li><%= link_to 'Logout', :controller => :account, :action => 'logout' %></li>
-      </menu2>
+      <top>
+         <span class="title">Log</span>
+         <span>logged in as <%= current_user.login %></span>
+      </top>
+      <left>
+         <ul>
+            <li><a href="">5 min</a></li>
+            <li><a href="">1 h</a></li>
+            <li><a href="">24 h</a></li>
+            <li><%= link_to_remote 'Settings', :url => hash_for_settings_url, :method => :get %></li>
+            <li><%= link_to 'Logout', :controller => :account, :action => 'logout' %></li>
+         </ul>
+      </left>
    </Lcars>
 </def>
 
 <def tag="CataractMain"> 
-   <Lcars variant="nws" scale="90%" id="main" merge>
+   <Lcars variant="nws" scale="120%" id="main" scheme="secondary" merge>
       <content id="main_content" param="main_content" />
-      <menu> 
-         <li><%= link_to 'New', torrents_url %></li>
-         <li><%= link_to 'Running', search_torrents_url %></li>
-         <li><%= link_to 'Paused', search_torrents_url(:status => 'paused') %></li>
-         <li><%= link_to 'Watchlist', watched_torrents_url %></li>
-      </menu>
+      <left> 
+         <ul>
+            <li><%= link_to 'New', torrents_url %></li>
+            <li><%= link_to 'Running', search_torrents_url %></li>
+            <li><%= link_to 'Paused', search_torrents_url(:status => 'paused') %></li>
+            <li><%= link_to 'Watchlist', watched_torrents_url %></li>
+         </ul>
+      </left>
    </Lcars>
 </def>

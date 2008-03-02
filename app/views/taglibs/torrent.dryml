@@ -5,7 +5,7 @@
 </def>
 
 <def tag="details">
-   <CataractHelm title="&this.short_title">
+   <CataractHelm>
       <helm_content class="torrent">
          <% div_for this do %>
             <details_for_running if="&this.running?" />
@@ -16,8 +16,13 @@
          <% periodically_call_remote :url => torrent_url(this), :frequency => 5, :method => :get, :condition => "$('#{dom_id(this)}') != null" %>
       </helm_content>
       <helm_menu>
-         <%= action_buttons_for this %>
+        <ul>
+          <%= action_buttons_for this %>
+        </ul>
       </helm_menu>
+      <top>
+        <span class="title"><%= this.short_title %></span>
+      </top>
   </CataractHelm>
 </def>
 
