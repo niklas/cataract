@@ -4,6 +4,7 @@
   slim_side_border = 0.4
   big_border = 1.7
   big_side_border = 5.0
+  magic_factor = 0.45
   $big_borders  = [big_border,big_side_border] * 2
   $slim_borders = [slim_border, slim_side_border] * 2
   color1 = '#FFFF00'
@@ -145,8 +146,16 @@ div.lcars {
      ~ div.inner {
        top: <%= big_border %>em;
      }
-     ~ img.decoration.bow {
-        margin-top: <%= big_border %>em;
+     ~ img.decoration {
+        .bow {
+           margin-top: <%= big_border %>em;
+        }
+        .stump {
+           .w,.e {
+            width: <%= big_border / 2 %>em;
+            height: <%= big_border %>em;
+           }
+        }
      }
   }
   /* with bottom element */
@@ -173,9 +182,15 @@ div.lcars {
       margin-bottom: <%= slim_border %>em;
       margin-left: <%= slim_side_border %>em;
     }
-    .stump.n, .stump.s {
-      width: <%= slim_border %>em;
-      height: <%= slim_border %>em;
+    .stump {
+       .e, .w {
+         width: <%= magic_factor * big_border / 4 %>em;
+         height: <%= magic_factor * big_border / 2 %>em;
+       }
+       .n, .s {
+         width: <%= magic_factor * big_border / 2 %>em;
+         height: <%= magic_factor * big_border / 4 %>em;
+       }
     }
     .corner {
        height: <%= 2 * big_border %>em;
@@ -259,7 +274,7 @@ div.lcars {
   > div.inner {
     position: absolute;
     background-color: <%= base_color %>;
-    padding: <%= 0.45 * big_border %>em;
+    padding: <%= magic_factor * big_border %>em;
     > div.content {
       position: relative;
       overflow: auto;
@@ -306,38 +321,38 @@ div.lcars {
     }
   }
   .cols4 { 
-      width: 25% 
+      width: 24% 
      .x1 { left:   0; right: 75%; }
      .x2 { left: 25%; right: 50%; }
      .x3 { left: 50%; right: 25%; }
      .x4 { left: 75%; right:   0; }
   }
   .rows4 { 
-      height: 25%
+      height: 24%
      .y1 { top:   0; bottom: 75%; }
      .y2 { top: 25%; bottom: 50%; }
      .y3 { top: 50%; bottom: 25%; }
      .y4 { top: 75%; bottom:   0; }
   }
   .cols3 { 
-      width: 33.3% 
+      width: 33% 
      .x1 { left:   0; right: 66%; }
      .x2 { left: 33%; right: 33%; }
      .x3 { left: 66%; right:   0; }
   }
   .rows3 { 
-      height: 33.3%
+      height: 33%
      .y1 { top:   0; bottom: 66%; }
      .y2 { top: 33%; bottom: 33%; }
      .y3 { top: 66%; bottom:   0; }
   }
   .cols2 { 
-      width: 50% 
+      width: 49% 
      .x1 { left:   0; right: 50%; }
      .x2 { left: 50%; right:   0; }
   }
   .rows2 { 
-      height: 50%
+      height: 49%
      .y1 { top:   0; bottom: 50%; }
      .y2 { top: 50%; bottom:   0; }
   }

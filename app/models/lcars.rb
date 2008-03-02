@@ -88,15 +88,18 @@ class Lcars
     dia2 = dia/2
     background_color = @options[:background_color]
     variant = @options[:variant].to_sym
-    create_canvas(dia, dia, background_color)
     case variant
     when :n
+      create_canvas(dia, dia2, background_color)
       @draw.circle(dia2,dia,0,dia)
     when :s
+      create_canvas(dia, dia2, background_color)
       @draw.circle(dia2,0,dia,0)
     when :w
+      create_canvas(dia2, dia, background_color)
       @draw.circle(dia,dia2,dia,0)
     when :e
+      create_canvas(dia2, dia, background_color)
       @draw.circle(0,dia2,0,0)
     else
       raise "Illegal variant #{variant}"
