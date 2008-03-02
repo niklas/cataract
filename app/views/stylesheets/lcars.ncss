@@ -1,46 +1,80 @@
 /* Based on Trekker Reactor desgin info */
 
 <%
-  base_color = 'black'
-  slim_border = 0.4
-  slim_side_border = 0.4
-  big_border = 1.7
-  big_side_border = 5.0
+
+  class << self
+    def u
+      0.23
+    end
+    def elbow_width
+      45.0 * elbow_height / 14.0
+    end
+    def elbow_height
+      corner_radius + (u*1)
+    end
+    def vertical_space_between_buttons
+      u*2.0
+    end
+    def horizontal_space_between_buttons
+      vertical_space_between_buttons
+    end
+    def slim_border
+      4.0*u
+    end
+    def inner_radius
+      6.5*u
+    end
+    def outer_radius
+      inner_radius + slim_border
+    end
+    def corner_radius
+      13.0*u
+    end
+    def stump_radius
+      big_border / 2.0
+    end
+    def slim_side_border
+      4.0*u
+    end
+    def big_border
+      4.0*u
+    end
+    def label_size
+      big_border
+    end
+    def big_side_border
+      25.0*u
+    end
+    def slim_padding(w)
+      case w
+      when 0, :t, :top, 2, :b, :bottom
+        slim_border + vertical_space_between_buttons
+      when 1, :l, :left, 3, :r, :right
+        slim_side_border + horizontal_space_between_buttons
+      else
+        0
+      end
+    end
+    def big_padding(w)
+      case w
+      when 0, :t, :top, 2, :b, :bottom
+        big_border + vertical_space_between_buttons
+      when 1, :l, :left, 3, :r, :right
+        big_side_border + horizontal_space_between_buttons
+      end
+    end
+  end
+
   magic_factor = 0.45
+  
   $big_borders  = [big_border,big_side_border] * 2
   $slim_borders = [slim_border, slim_side_border] * 2
+  base_color = 'black'
   color1 = '#FFFF00'
   color1_light = '#111100'
   color2 = '#662211'
 
   wide_border = (big_border + slim_border);
-
-  box = Object.new
-  def box.ems(vals)
-    (0..3).collect do |i|
-      case vals[i]
-      when 1
-        "#{$slim_borders[i]}em"
-      when 2
-        "#{$big_borders[i]}em"
-      else
-        '0'
-      end
-    end
-  end
-
-  def box.padding(*vals)
-    "padding: #{ems(vals).join ' '};"
-  end
-
-  def box.positions(*vals)
-    e = ems(vals)
-    out = ''
-    %w(top right bottom left).each_with_index do |w,i|
-      out << "#{w}: #{e[i]}; "
-    end
-    out
-  end
 
 %>
 
@@ -84,14 +118,14 @@ div.lcars {
   }
   [variant~="e"] {
      > div.top, > div.bottom {
-        padding-right: <%= big_border * 2 %>em;
+       right: <%= slim_padding(:right) %>em;
      }
   }
   [variant~="s"] {
   }
   [variant~="w"] {
      > div.top, > div.bottom {
-        padding-left: <%= big_border * 2 %>em;
+      left: <%= slim_padding(:left) %>em;
      }
   }
 
@@ -116,15 +150,14 @@ div.lcars {
        bottom: 0;
      }
   }
-
   /* with left menu */
   > div.left {
-     padding-left: <%= big_side_border %>em;
+    left: 0;
      ~ div.inner {
        left: <%= big_side_border %>em;
      }
      ~ div.top {
-        padding-left: <%= big_side_border + big_border %>em;
+        left: <%= elbow_width %>em;
      }
      ~ img.decoration.bow {
         margin-left: <%= big_side_border %>em;
@@ -132,12 +165,12 @@ div.lcars {
   }
   /* with right menu */
   > div.right {
-     padding-right: <%= big_side_border %>em;
+     right: 0;
      ~ div.inner {
        right: <%= big_side_border %>em;
      }
      ~ div.top {
-        padding-right: <%= big_side_border  + big_border %>em;
+        right: <%= elbow_width + (2*u) %>em;
      }
      ~ img.decoration.bow {
         margin-right: <%= big_side_border %>em;
@@ -145,6 +178,12 @@ div.lcars {
   }
   /* with top element */
   > div.top {
+     top: 0;
+     left: <%= slim_side_border %>em;
+     right: <%= slim_side_border %>em;
+     ~ div.right, ~ div.left {
+        top: <%= big_padding(:top) %>em;
+     }
      ~ div.inner {
        top: <%= big_border %>em;
      }
@@ -154,14 +193,15 @@ div.lcars {
         }
         .stump {
            .w,.e {
-            width: <%= big_border / 2 %>em;
-            height: <%= big_border %>em;
+            width: <%= stump_radius %>em;
+            height: <%= + stump_radius * 2 %>em;
            }
         }
      }
   }
   /* with bottom element */
   > div.bottom {
+     bottom: 0;
      padding-bottom: <%= big_border %>em;
      ~ div.inner {
        bottom: <%= big_border %>em;
@@ -169,39 +209,43 @@ div.lcars {
      ~ img.decoration.bow {
         margin-bottom: <%= big_border %>em;
      }
+     ~ div.right, ~ div.left {
+       bottom: <%= elbow_height + (2*u) %>
+     }
   }
 
   > div > * > *, > div > span {
-    font-size: <%= big_border - 0.2 %>em;
+    font-size: <%= label_size %>em;
+    display: block;
   }
   > div + div.inner ~ img.decoration.corner {
-     height: <%= 2 * big_border %>em;
-     width: <%= 2 * big_border %>em
+     height: <%= corner_radius %>em;
+     width: <%= corner_radius %>em
   }
   > img.decoration {
     position: absolute;
-    height: <%= big_border %>em;
-    width: <%= big_border %>em
     .bow {
       background-color: inherit;
       margin-top: <%= slim_border %>em;
       margin-right: <%= slim_side_border %>em;
       margin-bottom: <%= slim_border %>em;
       margin-left: <%= slim_side_border %>em;
+      height: <%= inner_radius %>em;
+      width: <%= inner_radius %>em;
     }
     .stump {
        .e, .w {
-         width: <%= magic_factor * big_border / 4 %>em;
-         height: <%= magic_factor * big_border / 2 %>em;
+         height: <%= stump_radius * 2 %>em;
+         width: <%= stump_radius %>em;
        }
        .n, .s {
-         width: <%= magic_factor * big_border / 2 %>em;
-         height: <%= magic_factor * big_border / 4 %>em;
+         height: <%= stump_radius %>em;
+         width: <%= stump_radius * 2 %>em;
        }
     }
     .corner {
-       height: <%= 2 * slim_border %>em;
-       width: <%= 2 * slim_border %>em
+       height: <%= outer_radius %>em;
+       width: <%= outer_radius %>em
     }
     .ne {
       top: 0;
@@ -225,11 +269,6 @@ div.lcars {
     position: absolute;
     overflow: hidden;
   }
-  > div.top { top: 0; }
-  > div.bottom { bottom: 0; }
-  > div.right { right: 0; }
-  > div.left { left: 0; }
-
   ul {
     margin: 0;
     padding: 0;
@@ -257,14 +296,15 @@ div.lcars {
   }
 
   > div.right, > div.left {
-    top: 0;
-    bottom: 0;
+    top: <%= elbow_height %>em;
+    bottom: <%= elbow_height %>em;
     width: <%= big_side_border %>em;
     padding: 0;
+    margin: <%= u %>em 0;
     ul {
-      margin: <%= big_side_border %>em 0;
+      margin: 0;
       > li {
-        margin: 0.1em 0;
+        margin: <%= vertical_space_between_buttons %>em 0;
         > a {
           display: block;
         }
@@ -272,12 +312,12 @@ div.lcars {
     }
   }
   > div.top, > div.bottom {
-    left: 0;
-    right: 0;
-    padding: 0 <%= big_border/2 %>em;
+    left: <%= slim_padding(:left) %>em;
+    right: <%= slim_padding(:left) %>em;
+    padding: 0 <%= label_size %>em;
+    margin: 0 <%= u %>em;
     height: <%= big_border %>em;
     > span.title {
-      display: inline;
       padding: 0 <%= big_border * 0.2 %>em;
       color: <%= color1 %>;
       background-color: <%= base_color %>;
