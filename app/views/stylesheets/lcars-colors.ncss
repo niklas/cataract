@@ -2,7 +2,7 @@
 
 <%
    color_schemes = {
-      :primary => {
+      'primary' => {
          :base => '#000000',
          :text => '#FFFFFF',
          :elbows => '#F1DF6F',
@@ -13,69 +13,120 @@
          :color1 => '#FFFF33',
          :color2 => '#FFFFCC',
          :input => '#111100'
+      },
+      'secondary' => {
+         :base => '#000000',
+         :text => '#FFFFFF',
+         :elbows => '#B1957A',
+         :offline => '#FF0000',
+         :offline_off => '#330000',
+         :unavailable => '#5355DE',
+         :primary => '#99CCFF',
+         :color1 => '#FFCC00',
+         :color2 => '#FFFF99',
+         :input => '#111100'
+      },
+      'ancillary' => {
+         :base => '#000000',
+         :text => '#FFFFFF',
+         :elbows => '#F1B1AF',
+         :offline => '#FF0000',
+         :offline_off => '#330000',
+         :unavailable => '#A27FA5',
+         :primary => '#ADACD8',
+         :color1 => '#FFFF33',
+         :color2 => '#E6B0D4',
+         :input => '#111100'
+      },
+      'database' => {
+         :base => '#000000',
+         :text => '#FFFFFF',
+         :elbows => '#CC6666',
+         :offline => '#FF0000',
+         :offline_off => '#330000',
+         :unavailable => '#CCCCFF',
+         :primary => '#99CCFF',
+         :color1 => '#FF9900',
+         :color2 => '#99CCFF',
+         :input => '#111100'
+      },
+      'red_alert' => {
+         :base => '#000000',
+         :text => '#FFFFFF',
+         :elbows => '#FF0000',
+         :offline => '#FF0000',
+         :offline_off => '#330000',
+         :unavailable => '#FF0000',
+         :primary => '#FF0000',
+         :color1 => '#FF0000',
+         :color2 => '#FF0000',
+         :input => '#111100'
       }
    }
-   colors = color_schemes[:primary]
+   default_scheme = 'primary'
 %>
 
 
 body {
-  background-color: <%= colors[:base] %>;
-  color: <%= colors[:text] %>;
+  background-color: <%= color_schemes[default_scheme][:base] %>;
+  color: <%= color_schemes[default_scheme][:text] %>;
 }
 
+<% color_schemes.each do |scheme,colors| %>
 div.lcars {
-  outline: thin solid <%= colors[:base] %>;
-  background-color: <%= colors[:elbows] %>;
-  ul {
-    background-color: <%= colors[:base] %>;
-    > li {
+  .<%= scheme %> {
+    outline: thin solid <%= colors[:base] %>;
+    background-color: <%= colors[:elbows] %>;
+    ul {
       background-color: <%= colors[:base] %>;
-      > a {
-        color: <%= colors[:base] %>;
-        background-color: <%= colors[:primary] %>;
-        :hover {
-          background-color: <%= colors[:text] %>;
+      > li {
+        background-color: <%= colors[:base] %>;
+        > a {
+          color: <%= colors[:base] %>;
+          background-color: <%= colors[:primary] %>;
+          :hover {
+            background-color: <%= colors[:text] %>;
+          }
+        }
+        + li > a {
+          background-color: <%= colors[:color1] %>;
+        }
+        + li + li > a {
+          background-color: <%= colors[:color2] %>;
         }
       }
-      + li > a {
-        background-color: <%= colors[:color1] %>;
-      }
-      + li + li > a {
-        background-color: <%= colors[:color2] %>;
-      }
     }
-  }
-  > div {
-    .top, .bottom {
-      > span.title {
-        background-color: <%= colors[:base] %>;
-        color: <%= colors[:color1] %>;
-      }
-    }
-    .inner {
-      background-color: <%= colors[:base] %>;
-    }
-    > div.content {
-      la
-      form {
-        input[type="submit"] {
-          background: <%= colors[:base] %>;
+    > div {
+      .top, .bottom {
+        > span.title {
+          background-color: <%= colors[:base] %>;
           color: <%= colors[:color1] %>;
         }
-        label + input[type="text"],
-        label + input[type="textarea"],
-        label + input[type="password"] {
-           color: <%= colors[:color1] %>;
-           border-color: <%= colors[:color1] %>;
-           background-color: <%= colors[:input] %>;
-        }
-        input[type="submit"] {
-          border-left: 1em solid <%= colors[:color1] %>;
-          border-right: 0.1em solid <%= colors[:color1] %>;
+      }
+      .inner {
+        background-color: <%= colors[:base] %>;
+      }
+      > div.content {
+        form {
+          input[type="submit"] {
+            background: <%= colors[:base] %>;
+            color: <%= colors[:color1] %>;
+          }
+          label + input[type="text"],
+          label + input[type="textarea"],
+          label + input[type="password"] {
+             color: <%= colors[:color1] %>;
+             border-color: <%= colors[:color1] %>;
+             background-color: <%= colors[:input] %>;
+          }
+          input[type="submit"] {
+            border-left: 1em solid <%= colors[:color1] %>;
+            border-right: 0.1em solid <%= colors[:color1] %>;
+          }
         }
       }
     }
   }
 }
+<% end %>
 

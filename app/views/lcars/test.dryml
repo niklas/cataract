@@ -13,7 +13,7 @@
             Only Content
          </content>
       </Lcars>
-      <Lcars variant="nes" class="cols3 rows2 x2 y1">
+      <Lcars variant="nes" class="cols3 rows2 x2 y1" scheme="secondary">
          <content>
             Content with Right Menu
          </content>
@@ -40,7 +40,7 @@
             <span class="title">Top Title</span>
          </top>
       </Lcars>
-      <Lcars variant="nws" class="cols3 rows2 x2 y2">
+      <Lcars variant="nws" class="cols3 rows2 x2 y2" scheme="secondary">
          <content>
             Content with Top Title and Left Menu
          </content>
@@ -51,7 +51,7 @@
             <span class="title">Top Title</span>
          </top>
       </Lcars>
-      <Lcars variant="nws" class="cols3 rows2 x3 y2">
+      <Lcars variant="nws" class="cols3 rows2 x3 y2" scheme="ancillary">
          <content>
             Content with Bottom Title and Left Menu
          </content>
