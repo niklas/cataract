@@ -17,3 +17,16 @@ Ajax.Responders.register({
    }
  } 
 });
+
+
+var myrules = {
+	'div.torrent a' : function(el) {
+      if (el.href =~ /torrents\/\d+/) {
+        el.onclick = function(){
+          alert("foo");
+        }
+      }
+	}
+};
+
+Behaviour.register(myrules);

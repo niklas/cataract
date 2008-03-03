@@ -5,6 +5,7 @@
       <stylesheet name="lcars-colors"/>
     </stylesheets>
     <scripts>
+      <javascript name="behaviour" />
       <default_tagbody/>
       <hobo_rapid_javascripts param/>
     </scripts>

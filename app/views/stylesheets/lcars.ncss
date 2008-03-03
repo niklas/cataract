@@ -51,6 +51,9 @@
     def button_size1
       9.0 * u
     end
+    def button_size2
+      19.0 * u
+    end
     def big_side_border
       25.0*u
     end
@@ -215,6 +218,7 @@ div.lcars {
   }
   > img.decoration {
     position: absolute;
+    z-index: 4;
     .bow {
       background-color: inherit;
       margin-top: <%= slim_border %>em;
@@ -354,15 +358,16 @@ div.lcars {
       }
     }
   }
-  div.loading {
+  div.modal {
     text-align: center;
-    margin: <%= big_side_border %>em 0;
-    height: <%= big_side_border %>em;
+    display: none;
     position: absolute;
+    padding: 0;
+    z-index: 10
     > div.message {
-      position: absolute;
-      top: 0; left:0; right :0; bottom: 0;
-      font-size: <%= big_side_border %>em;
+      position: relative;
+      font-size: <%= button_size2 %>em;
+      top: 40%;
     }
   }
   .cols4 { 

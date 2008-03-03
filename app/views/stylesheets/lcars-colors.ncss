@@ -115,7 +115,9 @@ div.lcars {
       .inner {
         background-color: <%= colors[:base] %>;
       }
-      .loading {
+      .modal {
+         opacity: 0.8;
+         background-color: <%= colors[:base] %>;
          > div.message {
             opacity: 0.8;
             z-index: 5;
@@ -146,4 +148,15 @@ div.lcars {
   }
 }
 <% end %>
+
+
+div.lcars.busy {
+  background-color: #666666;
+  > img.decoration {
+    z-index: 23;
+  }
+  > div.modal {
+    display: block;
+  }
+}
 
