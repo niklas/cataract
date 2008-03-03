@@ -354,6 +354,17 @@ div.lcars {
       }
     }
   }
+  div.loading {
+    text-align: center;
+    margin: <%= big_side_border %>em 0;
+    height: <%= big_side_border %>em;
+    position: absolute;
+    > div.message {
+      position: absolute;
+      top: 0; left:0; right :0; bottom: 0;
+      font-size: <%= big_side_border %>em;
+    }
+  }
   .cols4 { 
       width: 24% 
      .x1 { left:   0; right: 75%; }

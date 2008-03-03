@@ -18,6 +18,7 @@
         <div class="content" param="content" />
      </div>
      <LcarsImages merge />
+     <LcarsLoading merge />
   </div>
 </def>
 
@@ -26,6 +27,14 @@
   <LcarsLeft    merge/>
   <LcarsRight   merge/>
   <LcarsBottom  merge/>
+</def>
+
+<def tag="LcarsLoading">
+   <div class="loading inner" style="display: none">
+      <div class="message" param="message">
+         Loading
+      </div>
+   </div>
 </def>
 
 <def tag="LcarsTitle" attrs="top,bottom,variant">

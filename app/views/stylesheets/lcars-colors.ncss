@@ -115,6 +115,14 @@ div.lcars {
       .inner {
         background-color: <%= colors[:base] %>;
       }
+      .loading {
+         > div.message {
+            opacity: 0.8;
+            z-index: 5;
+            background-color: <%= colors[:offline] %>;
+            color: <%= colors[:text] %>;
+         }
+      }
       > div.content {
         form {
           input[type="submit"] {
