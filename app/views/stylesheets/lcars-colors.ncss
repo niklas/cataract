@@ -1,8 +1,8 @@
 /* Color Schemes based on info from http://www.lcarsdeveloper.com */
 
 <%
-   color_schemes = {
-      'primary' => {
+   color_schemes = [
+     {   :Name => 'primary',
          :base => '#000000',
          :text => '#FFFFFF',
          :elbows => '#F1DF6F',
@@ -14,7 +14,7 @@
          :color2 => '#FFFFCC',
          :input => '#111100'
       },
-      'secondary' => {
+     {   :Name => 'secondary',
          :base => '#000000',
          :text => '#FFFFFF',
          :elbows => '#B1957A',
@@ -26,7 +26,7 @@
          :color2 => '#FFFF99',
          :input => '#111100'
       },
-      'ancillary' => {
+     {   :Name => 'ancillary',
          :base => '#000000',
          :text => '#FFFFFF',
          :elbows => '#F1B1AF',
@@ -38,7 +38,7 @@
          :color2 => '#E6B0D4',
          :input => '#111100'
       },
-      'database' => {
+     {   :Name => 'database',
          :base => '#000000',
          :text => '#FFFFFF',
          :elbows => '#CC6666',
@@ -50,7 +50,7 @@
          :color2 => '#99CCFF',
          :input => '#111100'
       },
-      'red_alert' => {
+     {   :Name => 'error',
          :base => '#000000',
          :text => '#FFFFFF',
          :elbows => '#FF0000',
@@ -62,8 +62,8 @@
          :color2 => '#FF0000',
          :input => '#111100'
       }
-   }
-   default_scheme = 'primary'
+   ]
+   default_scheme = 0 # 'primary'
 %>
 
 
@@ -72,9 +72,9 @@ body {
   color: <%= color_schemes[default_scheme][:text] %>;
 }
 
-<% color_schemes.each do |scheme,colors| %>
+<% color_schemes.each do |colors| %>
 div.lcars {
-  .<%= scheme %> {
+  .<%= colors[:Name] %> {
     outline: thin solid <%= colors[:base] %>;
     background-color: <%= colors[:elbows] %>;
     ul.buttons {
