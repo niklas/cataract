@@ -8,6 +8,7 @@
       <default_tagbody/>
       <!-- <hobo_rapid_javascripts param/> -->
       <javascript name="lowpro" />
+      <javascript name="lcars" />
       <javascript name="behaviours" />
     </scripts>
 
