@@ -1,4 +1,4 @@
-<CataractSinglePage title="Signup" variant="en">
+<CataractSinglePage variant="en">
   <content>
 <%= error_messages_for :user %>
 <% form_for :user do |f| -%>
@@ -17,10 +17,17 @@
 <p><%= submit_tag 'Sign up' %></p>
 <% end -%>
   </content>
-  <menu>
-    <li>
-      <%= link_to "Login", :action => 'login' -%>
-    </li>
-  </menu>
+  <top>
+    <span class="title">
+      Signup
+    </span>
+  </top>
+  <right>
+    <buttons>
+      <li>
+        <%= link_to "Login", :action => 'login' -%>
+      </li>
+    </buttons>
+  </right>
 </CataractSinglePage>
 
