@@ -16,9 +16,9 @@
          <% periodically_call_remote :url => torrent_url(this), :frequency => 5, :method => :get, :condition => "$('#{dom_id(this)}') != null" %>
       </helm_content>
       <helm_menu>
-        <ul>
+        <buttons>
           <%= action_buttons_for this %>
-        </ul>
+        </buttons>
       </helm_menu>
       <top>
         <span class="title"><%= this.short_title %></span>

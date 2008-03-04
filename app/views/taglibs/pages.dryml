@@ -71,13 +71,13 @@
          <span>logged in as <%= current_user.login %></span>
       </top>
       <left>
-         <ul>
+         <buttons>
             <li><a href="">5 min</a></li>
             <li><a href="">1 h</a></li>
             <li><a href="">24 h</a></li>
             <li><%= link_to_remote 'Settings', :url => hash_for_settings_url, :method => :get %></li>
             <li><%= link_to 'Logout', :controller => :account, :action => 'logout' %></li>
-         </ul>
+         </buttons>
       </left>
    </Lcars>
 </def>
@@ -86,12 +86,12 @@
    <Lcars variant="nws" scale="120%" id="main" scheme="secondary" merge>
       <content id="main_content" param="main_content" />
       <left> 
-         <ul>
+         <buttons>
             <li><%= link_to 'New', torrents_url %></li>
             <li><%= link_to 'Running', search_torrents_url %></li>
             <li><%= link_to 'Paused', search_torrents_url(:status => 'paused') %></li>
             <li><%= link_to 'Watchlist', watched_torrents_url %></li>
-         </ul>
+         </buttons>
       </left>
    </Lcars>
 </def>

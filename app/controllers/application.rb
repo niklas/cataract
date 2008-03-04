@@ -42,6 +42,11 @@ class ApplicationController < ActionController::Base
       page.replace :helm, Hobo::Dryml.render_tag(@template,'details', :with => torrent)
     end
   end
+  def render_list_of(torrents)
+    render_update do |page|
+      page.replace :main, Hobo::Dryml.render_tag(@template, 'list_of_torrents', :with => torrents)
+    end
+  end
 
   def find_torrent_by_id
     @torrent = Torrent.find(params[:id]) if params[:id]

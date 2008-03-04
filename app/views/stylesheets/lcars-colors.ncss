@@ -77,7 +77,7 @@ div.lcars {
   .<%= scheme %> {
     outline: thin solid <%= colors[:base] %>;
     background-color: <%= colors[:elbows] %>;
-    ul {
+    ul.buttons {
       background-color: <%= colors[:base] %>;
       > li {
         background-color: <%= colors[:base] %>;

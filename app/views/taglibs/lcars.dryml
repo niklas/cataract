@@ -29,6 +29,12 @@
   <LcarsBottom  merge/>
 </def>
 
+<def tag="buttons">
+   <ul class="buttons" merge_attrs>
+      <tagbody>no Buttons</tagbody>
+   </ul>
+</def>
+
 <def tag="LcarsLoading">
    <div class="inner modal">
       <div class="message" param="message">

@@ -13,6 +13,11 @@ class TorrentsController < ApplicationController
 
   def list
     @torrents = Torrent.find_in_state(:running)
+
+    respond_to do |wants|
+      wants.html
+      wants.js { render_list_of(torrents) }
+    end
   end
 
   def watched
