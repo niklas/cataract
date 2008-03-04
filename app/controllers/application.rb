@@ -5,12 +5,40 @@ class ApplicationController < ActionController::Base
   helper :notification
   helper :lcars
 
+  rescue_from Exception, :with => :render_lcars_error
+
   hobo_controller
 
   protected
   # hobo hook
   def access_denied(user_model=nil)
     redirect_to :controller => 'account', :action => 'login'
+  end
+
+  def render_lcars_error(exception)
+    @exception = exception
+    respond_to do |wants|
+      wants.css do
+        render :text => @exception.inspect.to_s
+      end
+      wants.html do
+        render :file => 'errors/some', :use_full_path => true
+      end
+      wants.js do
+        update_lcars('helm') do |helm,page|
+          helm.content.update h(exception.inspect.to_s)
+        end
+      end
+    end
+    response.headers['Status'] = interpret_status(500)
+  end
+
+  # FIXME update more than one (use render_update - does not work for errors yet...)
+  def update_lcars(target='helm')
+    render :update do |page|
+      foo = page.lcars.by_id(target)
+      yield(foo,page)
+    end
   end
 
   # This is called whenever to call to #render was made.
@@ -71,5 +99,8 @@ class ApplicationController < ActionController::Base
   def create_log
     @logs = []
     true
+  end
+  def h(stringy)
+    CGI.escapeHTML(stringy)
   end
 end

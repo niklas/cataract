@@ -1,0 +1,10 @@
+<CataractSinglePage>
+  <content>
+    <%=h @exception.inspect.to_s %>
+  </content>
+  <top>
+    <span class="title">
+      <%= h @exception.message %>
+    </span>
+  </top>
+</CataractSinglePage>
