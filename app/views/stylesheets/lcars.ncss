@@ -217,10 +217,6 @@ div.lcars {
      }
   }
 
-  > div > span {
-    font-size: <%= label_size %>em;
-    display: block;
-  }
   > div + div.inner ~ img.decoration.corner {
      height: <%= corner_radius %>em;
      width: <%= corner_radius %>em
@@ -315,10 +311,13 @@ div.lcars {
     line-height: <%= big_border %>em;
     > * {
       display: block;
-    }
-    > span {
-      float: left;
       padding: 0 <%= big_border * 0.2 %>em;
+      font-size: <%= 0.72 * big_border %>em;
+      height: 100%;
+      float: left;
+    }
+    > input {
+      line-height: <%= big_border %>em;
     }
     ul.buttons {
       display: inline;
