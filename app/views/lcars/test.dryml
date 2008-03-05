@@ -1,9 +1,9 @@
 <def tag="samplemenu">
-   <ul>
+   <buttons>
       <li><a href="#">ABCDEF</a></li>
       <li><a href="#">XYZ ZYX</a></li>
       <li><a href="#">LMN</a></li>
-   </ul>
+   </buttons>
 </def>
 
 <LcarsPage>

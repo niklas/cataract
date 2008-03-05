@@ -36,6 +36,9 @@
     def corner_radius
       13.0*u
     end
+    def slim_stump_radius
+      slim_border / 2.0
+    end
     def stump_radius
       big_border / 2.0
     end
@@ -43,7 +46,7 @@
       4.0*u
     end
     def big_border
-      4.0*u
+      8.0*u
     end
     def label_size
       big_border
@@ -186,7 +189,7 @@ div.lcars {
            margin-top: <%= big_border %>em;
         }
         .stump {
-           .w,.e {
+           .nw,.ne {
             width: <%= stump_radius %>em;
             height: <%= + stump_radius * 2 %>em;
            }
@@ -201,14 +204,20 @@ div.lcars {
        bottom: <%= big_border %>em;
      }
      ~ img.decoration.bow {
-        margin-bottom: <%= big_border %>em;
+       margin-bottom: <%= big_border %>em;
+     }
+     ~ img.decoration.stump {
+       .se, .sw {
+         height: <%= stump_radius * 2 %>em;
+         width: <%= stump_radius %>em;
+       }
      }
      ~ div.right, ~ div.left {
        bottom: <%= elbow_height + (2*u) %>
      }
   }
 
-  > div > * > *, > div > span {
+  > div > span {
     font-size: <%= label_size %>em;
     display: block;
   }
@@ -230,12 +239,12 @@ div.lcars {
     }
     .stump {
        .e, .w {
-         height: <%= stump_radius * 2 %>em;
-         width: <%= stump_radius %>em;
+         height: <%= slim_stump_radius * 2 %>em;
+         width: <%= slim_stump_radius %>em;
        }
        .n, .s {
-         height: <%= stump_radius %>em;
-         width: <%= stump_radius * 2 %>em;
+         height: <%= slim_stump_radius %>em;
+         width: <%= slim_stump_radius * 2 %>em;
        }
     }
     .corner {
@@ -305,7 +314,6 @@ div.lcars {
     height: <%= big_border %>em;
     line-height: <%= big_border %>em;
     > * {
-      font-size: 72%; /* TODO huh? */
       display: block;
     }
     > span {
