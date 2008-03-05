@@ -1,14 +1,14 @@
-<CataractPage>
-  <main_content>
-    <list_of_torrents with="&@torrents" />
+<cataract-page>
+  <main-content:>
+    <list-of-torrents with="&@torrents" />
     <else>
       no torrents found
     </else>
-  </main_content>
-  <top> 
+  </main-content>
+  <top:> 
       <%= text_field_tag( 'search', params[:term], 
       :id => 'search_field', :autocomplete => 'off', :style => "width: 60%") %>
       <%= observe_field('search_field', :url => search_torrents_url,
       :frequency => 2.3, :with => 'term') %>
   </top>
-</CataractPage>
+</cataract-page>

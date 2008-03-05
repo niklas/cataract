@@ -27,7 +27,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   hobo_user_model
-  set_login_attr :login
   alias_attribute :to_s, :name
 
   has_many :watchings, :dependent => :destroy

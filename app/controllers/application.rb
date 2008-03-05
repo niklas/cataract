@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
         render :text => @exception.inspect.to_s
       end
       wants.html do
-        render_tag 'CataractErrorPage', :with => @exception
+        render_tag 'cataract-error-page', :with => @exception
       end
       wants.js do
         update_lcars('helm') do |helm,page|

@@ -1,56 +1,56 @@
-<def tag="LcarsDecorationsSW" attrs="title">
+<def tag="lcars-decorations-sw" attrs="title">
   <div class="left">
-    <lcars_decoration kind="stump" variant="n" />
+    <lcars-decoration kind="stump" variant="n" />
   </div> 
   <div class="content" param="content"></div>
-  <lcars_decoration kind="bow" variant="sw" />
+  <lcars-decoration kind="bow" variant="sw" />
   <div class="bottom">
-    <lcars_decoration kind="corner" variant="sw" />
+    <lcars-decoration kind="corner" variant="sw" />
     <span class="title" param="title" if="&title"><%= title %></span>
     <ul class="menu" param="menu" />
-    <lcars_decoration kind="stump" variant="e" />
+    <lcars-decoration kind="stump" variant="e" />
   </div>
 </def>
 
-<def tag="LcarsDecorationsSE" attrs="title">
+<def tag="lcars-decorations-se" attrs="title">
   <div class="right">
-    <lcars_decoration kind="stump" variant="n" />
+    <lcars-decoration kind="stump" variant="n" />
   </div> 
   <div class="content" param="content"></div>
-  <lcars_decoration kind="bow" variant="se" />
+  <lcars-decoration kind="bow" variant="se" />
   <div class="bottom">
-    <lcars_decoration kind="corner" variant="se" />
+    <lcars-decoration kind="corner" variant="se" />
     <span class="title" param="title" if="&title"><%= title %></span>
     <ul class="menu" param="menu" />
-    <lcars_decoration kind="stump" variant="w" />
+    <lcars-decoration kind="stump" variant="w" />
   </div>
 </def>
 
-<def tag="LcarsDecorationsNE" attrs="title">
+<def tag="lcars-decorations-ne" attrs="title">
   <div class="right">
-    <lcars_decoration kind="stump" variant="s" />
+    <lcars-decoration kind="stump" variant="s" />
   </div> 
   <div class="content" param="content"></div>
-  <lcars_decoration kind="bow" variant="ne" />
+  <lcars-decoration kind="bow" variant="ne" />
   <div class="top">
-    <lcars_decoration kind="corner" variant="ne" />
+    <lcars-decoration kind="corner" variant="ne" />
     <span class="title" param="title" if="&title"><%= title %></span>
     <ul class="menu" param="menu" />
-    <lcars_decoration kind="stump" variant="w" />
+    <lcars-decoration kind="stump" variant="w" />
   </div>
 </def>
 
-<def tag="LcarsDecorationsNW" attrs="title">
+<def tag="lcars-decorations-nw" attrs="title">
   <div class="left">
-    <lcars_decoration kind="stump" variant="s" />
+    <lcars-decoration kind="stump" variant="s" />
   </div> 
   <div class="content" param="content"></div>
-  <lcars_decoration kind="bow" variant="nw" />
+  <lcars-decoration kind="bow" variant="nw" />
   <div class="top">
-    <lcars_decoration kind="corner" variant="nw" />
+    <lcars-decoration kind="corner" variant="nw" />
     <span class="title" param="title" if="&title"><%= title %></span>
     <ul class="menu" param="menu" />
-    <lcars_decoration kind="stump" variant="e" />
+    <lcars-decoration kind="stump" variant="e" />
   </div>
 </def>
 

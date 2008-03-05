@@ -1,5 +1,5 @@
-<CataractSinglePage size="50%">
-   <content>
+<cataract-single-page size="50%">
+   <content:>
 <% form_tag do -%>
 <p><label for="login">Name</label>
 <%= text_field_tag 'login' %></p>
@@ -13,14 +13,14 @@
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
    </content>
-   <top>
+   <top:>
      <span class="title">Login</span>
    </top>
-   <left>
+   <left:>
      <buttons>
        <li unless="&Settings.signup_forbidden">
          <%= link_to "Sign up", :action => 'signup' -%>
        </li>
      </buttons>
    </left>
-</CataractSinglePage>
+</cataract-single-page>

@@ -6,61 +6,61 @@
    </buttons>
 </def>
 
-<LcarsPage>
-   <body>
-      <Lcars variant="nws" class="cols3 rows2 x1 y1">
-         <content>
+<lcars-page>
+   <body:>
+      <lcars variant="nws" class="cols3 rows2 x1 y1">
+         <content:>
             Only Content
          </content>
-      </Lcars>
-      <Lcars variant="nes" class="cols3 rows2 x2 y1" scheme="secondary">
-         <content>
+      </lcars>
+      <lcars variant="nes" class="cols3 rows2 x2 y1" scheme="secondary">
+         <content:>
             Content with Right Menu
          </content>
-         <right>
+         <right:>
             <samplemenu />
          </right>
-      </Lcars>
-      <Lcars variant="nws" class="cols3 rows2 x3 y1">
-         <content>
+      </lcars>
+      <lcars variant="nws" class="cols3 rows2 x3 y1">
+         <content:>
             Content with only Top Title
          </content>
-         <top>
+         <top:>
             <span class="title">Top Title</span>
          </top>
-      </Lcars>
-      <Lcars variant="nes" class="cols3 rows2 x1 y2">
-         <content>
+      </lcars>
+      <lcars variant="nes" class="cols3 rows2 x1 y2">
+         <content:>
             Content with Top Title and Right Menu
          </content>
-         <right>
+         <right:>
             <samplemenu />
          </right>
-         <top>
+         <top:>
             <span class="title">Top Title</span>
          </top>
-      </Lcars>
-      <Lcars variant="nws" class="cols3 rows2 x2 y2" scheme="secondary">
-         <content>
+      </lcars>
+      <lcars variant="nws" class="cols3 rows2 x2 y2" scheme="secondary">
+         <content:>
             Content with Top Title and Left Menu
          </content>
-         <left>
+         <left:>
             <samplemenu />
          </left>
-         <top>
+         <top:>
             <span class="title">Top Title</span>
          </top>
-      </Lcars>
-      <Lcars variant="nws" class="cols3 rows2 x3 y2" scheme="ancillary">
-         <content>
+      </lcars>
+      <lcars variant="nws" class="cols3 rows2 x3 y2" scheme="ancillary">
+         <content:>
             Content with Bottom Title and Left Menu
          </content>
-         <left>
+         <left:>
             <samplemenu />
          </left>
-         <bottom>
+         <bottom:>
             <span class="title">Top Title</span>
          </bottom>
-      </Lcars>
+      </lcars>
    </body>
-</LcarsPage>
+</lcars-page>

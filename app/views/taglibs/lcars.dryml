@@ -1,41 +1,32 @@
-<def tag="LcarsBox" attrs="scale,variant">
-   <div class="#{add_classes(attributes, 'lcars_box')[:class]}" style="font-size: #{scale || '100%'}" variant="#{variant}">
-    <LcarsDecorationsNW merge="&true" if="&variant=='nw'"/>
-    <LcarsDecorationsNE merge="&true" if="&variant=='ne'"/>
-    <LcarsDecorationsSW merge="&true" if="&variant=='sw'"/>
-    <LcarsDecorationsSE merge="&true" if="&variant=='se'"/>
-  </div>
-</def>
-
-<def tag="Lcars" attrs="scale,scheme">
+<def tag="lcars" attrs="scale,scheme">
     <div class="#{add_classes(attributes, 'lcars')[:class]} #{scheme || 'primary'}" 
         style="font-size: #{scale || '100%'}; #{attributes[:style]}" 
-        merge_attrs
+        merge-attrs
         variant="#{attributes[:variant] += ' ' +attributes[:variant].split(//).join(' ')}">
-     <LcarsMenu  merge />
-     <LcarsTitle merge />
+     <lcars-menu  merge />
+     <lcars-title merge />
      <div class="inner">
         <div class="content" param="content" />
      </div>
-     <LcarsImages merge />
-     <LcarsLoading merge />
+     <lcars-images merge />
+     <lcars-loading merge />
   </div>
 </def>
 
-<def tag="LcarsImages">
-  <LcarsTop     merge/>
-  <LcarsLeft    merge/>
-  <LcarsRight   merge/>
-  <LcarsBottom  merge/>
+<def tag="lcars-images">
+  <lcars-top     merge/>
+  <lcars-left    merge/>
+  <lcars-right   merge/>
+  <lcars-bottom  merge/>
 </def>
 
 <def tag="buttons">
-   <ul class="buttons" merge_attrs>
-      <tagbody>no Buttons</tagbody>
+   <ul class="buttons" merge-attrs>
+      <do param="default">no Buttons</do>
    </ul>
 </def>
 
-<def tag="LcarsLoading">
+<def tag="lcars-loading">
    <div class="inner modal">
       <div class="message" param="message">
          Loading
@@ -43,7 +34,7 @@
    </div>
 </def>
 
-<def tag="LcarsTitle" attrs="top,bottom,variant">
+<def tag="lcars-title" attrs="top,bottom,variant">
    <if test="&all_parameters[:top]">
       <if test="&variant=~/n/">
          <div class="top" param="top">
@@ -59,7 +50,7 @@
    </if>
 </def>
 
-<def tag="LcarsMenu" attrs="right,left,variant">
+<def tag="lcars-menu" attrs="right,left,variant">
    <if test="&(all_parameters[:left] && variant=~/w/)">
       <div class="left" param="left">
      </div>
@@ -70,59 +61,64 @@
    </if>
 </def>
 
-<def tag="LcarsTop" attrs="variant">
+<def tag="lcars-top" attrs="variant">
    <if test="&variant=~/n/">
       <if test="&variant=~/e/">
-         <lcars_decoration kind="corner" variant="ne" />
-         <lcars_decoration kind="bow"    variant="ne" />
+         <lcars-decoration kind="corner" variant="ne" />
+         <lcars-decoration kind="bow"    variant="ne" />
       </if>
       <else>
-         <lcars_decoration kind="stump" variant="e" class="ne" />
+         <lcars-decoration kind="stump" variant="e" class="ne" />
       </else>
 
       <if test="&variant=~/w/">
-         <lcars_decoration kind="corner" variant="nw" />
-         <lcars_decoration kind="bow"    variant="nw" />
+         <lcars-decoration kind="corner" variant="nw" />
+         <lcars-decoration kind="bow"    variant="nw" />
       </if>
       <else>
-         <lcars_decoration kind="stump" variant="w" class="nw" />
+         <lcars-decoration kind="stump" variant="w" class="nw" />
       </else>
    </if>
 </def>
 
-<def tag="LcarsBottom" attrs="variant">
+<def tag="lcars-bottom" attrs="variant">
    <if test="&variant=~/s/">
       <if test="&variant=~/e/">
-         <lcars_decoration kind="corner" variant="se" />
-         <lcars_decoration kind="bow" variant="se" />
+         <lcars-decoration kind="corner" variant="se" />
+         <lcars-decoration kind="bow" variant="se" />
       </if>
       <else>
-         <lcars_decoration kind="stump" variant="e" class="se" />
+         <lcars-decoration kind="stump" variant="e" class="se" />
       </else>
 
       <if test="&variant=~/w/">
-         <lcars_decoration kind="corner" variant="sw" />
-         <lcars_decoration kind="bow" variant="sw" />
+         <lcars-decoration kind="corner" variant="sw" />
+         <lcars-decoration kind="bow" variant="sw" />
       </if>
       <else>
-         <lcars_decoration kind="stump" variant="w" class="sw" />
+         <lcars-decoration kind="stump" variant="w" class="sw" />
       </else>
    </if>
 </def>
 
-<def tag="LcarsLeft" attrs="variant">
+<def tag="lcars-left" attrs="variant">
    <if test="&variant=~/w/">
      <if test="&variant.length==3">
-        <lcars_decoration kind="stump" variant="n" class="nw" unless="&variant=~/n/" />
-        <lcars_decoration kind="stump" variant="s" class="sw" unless="&variant=~/s/" />
+        <lcars-decoration kind="stump" variant="n" class="nw" unless="&variant=~/n/" />
+        <lcars-decoration kind="stump" variant="s" class="sw" unless="&variant=~/s/" />
      </if>
    </if>
 </def>
-<def tag="LcarsRight" attrs="variant">
+<def tag="lcars-right" attrs="variant">
    <if test="&variant=~/e/">
      <if test="&variant.length==3">
-        <lcars_decoration kind="stump" variant="n" class="ne" unless="&variant=~/n/" />
-        <lcars_decoration kind="stump" variant="s" class="se" unless="&variant=~/s/" />
+        <lcars-decoration kind="stump" variant="n" class="ne" unless="&variant=~/n/" />
+        <lcars-decoration kind="stump" variant="s" class="se" unless="&variant=~/s/" />
      </if>
    </if>
+</def>
+
+<def tag="lcars-decoration" attrs="kind,variant">
+  <img class="#{variant} #{kind} #{all_attributes[:class]} decoration"
+    src="#{decoration_url(all_attributes.merge(:class => nil))}"/>
 </def>
