@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :notification
   helper :lcars
 
-  rescue_from Exception, :with => :render_lcars_error
+  rescue_from 'Exception', :with => :render_lcars_error
 
   hobo_controller
 
@@ -16,13 +16,14 @@ class ApplicationController < ActionController::Base
   end
 
   def render_lcars_error(exception)
+    logger.debug("Cought Exception: #{exception.class}")
     @exception = exception
     respond_to do |wants|
       wants.css do
         render :text => @exception.inspect.to_s
       end
       wants.html do
-        render :file => 'errors/some', :use_full_path => true
+        render_tag 'CataractErrorPage', :with => @exception
       end
       wants.js do
         update_lcars('helm') do |helm,page|

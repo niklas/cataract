@@ -1,12 +1,11 @@
 <def tag="LcarsPage">
-  <BasePage merge>
+  <Page merge>
     <stylesheets>
       <stylesheet name="lcars"/>
       <stylesheet name="lcars-colors"/>
     </stylesheets>
     <scripts>
       <default_tagbody/>
-      <!-- <hobo_rapid_javascripts param/> -->
       <javascript name="lowpro" />
       <javascript name="lcars" />
       <javascript name="behaviours" />
@@ -15,7 +14,7 @@
     <body>
       <Lcars title="untitled" variant="nw" style="height: 50%" merge />
     </body>
-  </BasePage>
+  </Page>
 </def>
 
 <def tag="CataractBasePage">
@@ -31,10 +30,13 @@
 </def>
 
 <def tag="CataractSinglePage" attrs="size">
-   <% size ||= '50%' %>
+   <% 
+      size ||= '50%'
+      offset = "#{(100-size.to_i) / 2}%"
+   %>
    <CataractBasePage merge>
     <body>
-       <Lcars title="untitled" id="single" variant="nw" style="height: #{size}; width: #{size}" merge />
+       <Lcars title="untitled" id="single" variant="nw" style="height: #{size}; width: #{size}; top: #{offset}; bottom: #{offset}; left: #{offset}; right: #{offset}" merge />
     </body>
   </CataractBasePage>
 </def>
@@ -94,4 +96,22 @@
          </buttons>
       </left>
    </Lcars>
+</def>
+
+<def tag="CataractErrorPage">
+  <CataractSinglePage scheme="error" size="80%" merge>
+    <content>
+      <%= this ? h(this.inspect.to_s) : 'no details available' %>
+    </content>
+    <top>
+      <span class="title">
+        <%= this ? h(this.message) : 'unknown Error' %>
+      </span>
+    </top>
+    <left>
+      <buttons>
+        <li><%= link_to "Back", :back %></li>
+      </buttons>
+    </left>
+  </CataractSinglePage>
 </def>
