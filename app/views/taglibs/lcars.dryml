@@ -112,13 +112,17 @@
 
 <def tag="LcarsLeft" attrs="variant">
    <if test="&variant=~/w/">
-      <lcars_decoration kind="stump" variant="n" class="nw" unless="&variant=~/n/" />
-      <lcars_decoration kind="stump" variant="s" class="sw" unless="&variant=~/s/" />
+     <if test="&variant.length==3">
+        <lcars_decoration kind="stump" variant="n" class="nw" unless="&variant=~/n/" />
+        <lcars_decoration kind="stump" variant="s" class="sw" unless="&variant=~/s/" />
+     </if>
    </if>
 </def>
 <def tag="LcarsRight" attrs="variant">
    <if test="&variant=~/e/">
-      <lcars_decoration kind="stump" variant="n" class="ne" unless="&variant=~/n/" />
-      <lcars_decoration kind="stump" variant="s" class="se" unless="&variant=~/s/" />
+     <if test="&variant.length==3">
+        <lcars_decoration kind="stump" variant="n" class="ne" unless="&variant=~/n/" />
+        <lcars_decoration kind="stump" variant="s" class="se" unless="&variant=~/s/" />
+     </if>
    </if>
 </def>

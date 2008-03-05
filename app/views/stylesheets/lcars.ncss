@@ -121,25 +121,25 @@ div.lcars {
   /* variants by non-present side */
 
   /* !=/w/ */
-  [variant~="nes"],[variant~="sen"] {
+  [variant~="nes"],[variant~="sen"],[variant~="ne"],[variant~="se"] {
      > div.inner, > div.left, > div.top, > div.bottom {
        left: 0;
      }
   }
   /* !=/e/ */
-  [variant~="nws"],[variant~="swn"] {
+  [variant~="nws"],[variant~="swn"],[variant~="sw"],[variant~="nw"] {
      > div.inner, > div.right, > div.top, > div.bottom {
        right: 0;
      }
   }
   /* !=/n/ */
-  [variant~="wse"],[variant~="esw"] {
+  [variant~="wse"],[variant~="esw"],[variant~="se"],[variant~="sw"] {
      > div.inner, > div.top, > div.left, > div.right {
        top: 0;
      }
   }
   /* !=/s/ */
-  [variant~="wne"],[variant~="enw"] {
+  [variant~="wne"],[variant~="enw"],[variant~="ne"],[variant~="nw"] {
      > div.inner, > div.bottom, > div.left, > div.right {
        bottom: 0;
      }
