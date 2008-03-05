@@ -54,7 +54,7 @@
 
 <def tag="CataractHelm">
    <Lcars variant="nes" scale="120%" id="helm" title="Cataract" merge>
-      <content id="helm_content" param="helm_content">
+      <content id="helm_content" param="helm_content" part="the_helm_content">
          <main_status />
       </content>
       <right id="helm_menu" param="helm_menu" >
