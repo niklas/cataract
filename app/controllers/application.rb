@@ -27,7 +27,8 @@ class ApplicationController < ActionController::Base
       end
       wants.js do
         update_lcars('helm') do |helm,page|
-          helm.content.update h(exception.inspect.to_s)
+          page << %Q[Lcars.helm.alert('#{exception.message}')]
+          helm.content.update %Q[<h1>#{h(exception.message)}</h1><pre>#{h(exception.clean_backtrace.join("\n"))}</pre>]
         end
       end
     end

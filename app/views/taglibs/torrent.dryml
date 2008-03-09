@@ -5,15 +5,15 @@
 </def>
 
 <def tag="details">
-   <cataract-helm>
+    <cataract-helm class="#{'error' unless this.errors.empty?}">
       <helm-content: class="torrent">
          <% div_for this do %>
-            <details-for-running if="&this.running?" />
-            <details-for-paused if="&this.paused?" />
+            <details-for-running  if="&this.running?" />
+            <details-for-paused   if="&this.paused?" />
             <details-for-archived if="&this.archived?" />
-            <details-for-remote if="&this.remote?" />
+            <details-for-remote   if="&this.remote?" />
+            <details-for-new      if="&this.new_record?" />
          <% end %>
-         <% periodically_call_remote :url => torrent_url(this), :frequency => 5, :method => :get, :condition => "$('#{dom_id(this)}') != null" %>
       </helm-content>
       <helm-menu:>
         <buttons>
@@ -21,7 +21,7 @@
         </buttons>
       </helm-menu>
       <top:>
-        <span class="title"><%= this.short_title %></span>
+        <span class="title"><%=h this.short_title %></span>
       </top>
   </cataract-helm>
 </def>
@@ -42,6 +42,15 @@
   Paused
 </def>
 
+<def tag="details-for-new">
+  <if test="&this.fetchable?">
+    Click add to save <tt><%= this.url %></tt> as <em><%=h this.filename %></em> and start it.
+  </if>
+  <else>
+    <%= error_messages_for 'torrent', :object => this %>
+  </else>
+</def>
+
 <def tag="details-for-remote">
   remote: <%= this.url %>
 </def>
@@ -53,7 +62,7 @@
 </def>
 
 <def tag="link-to-details">
-   <%= link_to this.short_title, torrent_url(this) %>
+   <%= link_to h(this.short_title), torrent_url(this) %>
 </def>
 
 <def tag="event-log">

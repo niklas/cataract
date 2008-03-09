@@ -6,6 +6,8 @@ class TorrentsController < ApplicationController
   helper :tags
   layout false
 
+  attr_accessor :offline
+
   def index
     @torrents = Torrent.find_recent
     render :action => 'list'
@@ -106,12 +108,8 @@ class TorrentsController < ApplicationController
   def probe
     if (params[:url] and !params[:url].empty?) or @torrent
       @torrent ||= Torrent.new(:url => params[:url].strip)
-      
-      if @torrent.fetchable?
-        render :partial => 'probe_success'
-      else
-        render :partial => 'probe_fail'
-      end
+      @torrent.fetchable?
+      render_details_for @torrent
     else
       render :update do |page|
         page[:notice].update "Please enter a URL"

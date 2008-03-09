@@ -1,5 +1,5 @@
 <def tag="lcars" attrs="scale,scheme">
-    <div class="#{add_classes(attributes, 'lcars')[:class]} #{scheme || 'primary'}" 
+    <div class="#{scheme || 'primary'} #{add_classes(attributes, 'lcars')[:class]}" 
         style="font-size: #{scale || '100%'}; #{attributes[:style]}" 
         merge-attrs
         variant="#{attributes[:variant] += ' ' +attributes[:variant].split(//).join(' ')}">

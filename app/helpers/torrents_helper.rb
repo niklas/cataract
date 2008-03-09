@@ -49,10 +49,14 @@ module TorrentsHelper
       activity_effect_content(t,"stopping")
     when :fetching
       activity_effect_content(t,"fetching")
+    when :nostatus
+      if t.new_record?
+        create_button(t)
+      end
     else
-      "[WTF: status #{t.status}]"
+      content_tag('li',"[WTF: status #{t.status}]")
     end +
-    content_tag('li', watchbutton(t))
+    ( t.new_record? ? '' : content_tag('li', watchbutton(t)) )
   end
 
   def button(t,action)
@@ -62,6 +66,16 @@ module TorrentsHelper
         :url => {:action => action, :id => t.id, :controller => 'torrents' },
         :loading => activity_effect(t,action + 'ing'))
                )
+  end
+
+  def create_button(t)
+    if t.fetchable?
+      content_tag('li',
+        link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post)
+      )
+    else
+      ''
+    end
   end
 
   def watchbutton(t)

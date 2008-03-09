@@ -13,7 +13,7 @@ class RTorrent
       @rpc.call *a
     rescue RuntimeError => e
       if e.message =~ /HTTP-Error: 500 Internal Server Error/
-        raise RTorrentException, 'Error 500 in the HTTP gateway - maybe rtorrent is not running?'
+        raise RTorrentNotReachable, 'Error 500 in the HTTP gateway - maybe rtorrent is not running?'
       else
         raise e
       end
