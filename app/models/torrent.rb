@@ -440,36 +440,35 @@ class Torrent < ActiveRecord::Base
     end
   end
 
-  def fetchable?
-    Net::HTTP.start(uri.host, uri.port) do |http|
-      resp = http.head(uri.path)
-      if resp.is_a?(Net::HTTPSuccess) and (resp['content-type'] =~ /application\/x-bittorrent/i)
-        return resp
-      else
-        errors.add :url, "HTTP Error: #{resp.inspect}, Content-type: #{resp['content-type']}"
-        return false
-      end
+  def fetchable?(please_reload=false)
+    unless @fetchable.nil? || please_reload
+      return @fetchable
     end
-  rescue URI::InvalidURIError
-    errors.add :url, "is not valid (#{url.to_s})"
-    return false
-  rescue SocketError, NoMethodError => e
-    errors.add :url, "unfetchable (#{e.to_s})"
-    return false
+    @fetchable =
+      begin
+        Net::HTTP.start(uri.host, uri.port) do |http|
+          resp = http.head(uri.path)
+          if resp.is_a?(Net::HTTPSuccess) and (resp['content-type'] =~ /application\/x-bittorrent/i)
+            self.filename = filename_from_http_response(resp)
+            resp
+          else
+            errors.add :url, "HTTP Error: #{resp.inspect}, Content-type: #{resp['content-type']}"
+            false
+          end
+        end
+      rescue URI::InvalidURIError
+        errors.add :url, "is not valid (#{url.to_s})"
+        false
+      rescue SocketError, NoMethodError => e
+        errors.add :url, "unfetchable (#{e.to_s})"
+        false
+      end
   end
 
   def fetch_by_url
     if resp = Net::HTTP::get_response(uri) and resp.is_a?(Net::HTTPSuccess)
       unless filename
-        fn = if cdis = resp['content-disposition']
-               cdis.sub(/^.*filename=(.+)$/,'\1').
-                    sub(/^"+/, '').
-                    sub(/"+$/, '')
-             else
-               url.sub(/.*\//,'')
-             end
-        fn += '.torrent' unless fn =~ /\.torrent$/
-        update_attribute :filename, fn
+        update_attribute :filename, filename_from_http_response(resp)
       end
       File.open(fullpath(:fetching), 'w') do |file|
         file.write resp.body
@@ -725,5 +724,22 @@ class Torrent < ActiveRecord::Base
     finally_stop!           # hmm
     reload
   end
+
+  private
+
+  def filename_from_http_response(resp)
+    fn = if cdis = resp['content-disposition']
+           cdis.sub(/^.*filename=(.+)$/,'\1').
+                sub(/^"+/, '').
+                sub(/"+$/, '')
+         elsif !self.url.blank?
+           self.url.sub(/.*\//,'')
+         else
+           %Q[downloaded-torrent-#{self.id}]
+         end
+    fn += '.torrent' unless fn =~ /\.torrent$/
+    fn
+  end
+
 
 end
