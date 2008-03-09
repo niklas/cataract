@@ -48,7 +48,7 @@ Lcars = Behavior.create({
 Object.extend(Lcars,{
   byId : function(id) {
     return Lcars[id];
-  },
+  }
 });
 
 
