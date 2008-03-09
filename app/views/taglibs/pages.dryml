@@ -101,7 +101,9 @@
 <def tag="cataract-error-page">
   <cataract-single-page scheme="error" size="80%" merge>
     <content:>
-      <%= this ? h(this.inspect.to_s) : 'no details available' %>
+       <pre>
+          <%= this ? h(this.clean_backtrace.join("\n   ")) : 'no details available' %>
+       </pre>
     </content>
     <top:>
       <span class="title">
