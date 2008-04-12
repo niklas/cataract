@@ -2,8 +2,7 @@ class ApplicationController < ActionController::Base
   #include AuthenticatedSystem
   before_filter :login_from_cookie
   before_filter :login_required
-  helper :notification
-  helper :lcars
+  helper :all
 
   rescue_from 'Exception', :with => :render_lcars_error
 

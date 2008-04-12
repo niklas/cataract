@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :torrents, 
     :member => { :start => :post, :stop => :post, :pause => :post, :fetch => :put},
     :collection => { :watched => :get, :search => :get } do |torrent|
+    torrent.resource :files, :controller => 'torrents_files'
   end
   map.resources :watchings
 

@@ -53,7 +53,7 @@
 </def>
 
 <def tag="cataract-helm">
-   <lcars variant="nes" scale="120%" id="helm" title="Cataract" merge>
+   <lcars variant="nes" scale="90%" id="helm" title="Cataract" merge>
       <content: id="helm_content" param="helm-content">
          <main-status />
       </content>
@@ -64,7 +64,7 @@
  </def>
 
 <def tag="cataract-engineering">
-   <lcars variant="swn" scale="90%" id="engineering" scheme="ancillary" merge>
+   <lcars variant="swn" scale="100%" id="engineering" scheme="ancillary" merge>
       <content: id="engineering_content" param="engineering-content">
          <event-log with="&@logs" />
       </content>

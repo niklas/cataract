@@ -112,6 +112,11 @@ div.lcars {
   font-family: Arial, sans-serif;
   position: absolute;
 
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   /* without menu or title */
   > div.inner {
      top: <%= slim_border %>em;

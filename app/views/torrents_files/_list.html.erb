@@ -1,0 +1,5 @@
+<ul class="files">
+  <% list.each do |file| %>
+    <li> <%= file.path %> ( <%=human_bytes file.length %>)</li>
+  <% end %>
+</ul>

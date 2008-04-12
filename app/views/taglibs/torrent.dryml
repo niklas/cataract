@@ -21,7 +21,12 @@
         </buttons>
       </helm-menu>
       <top:>
-        <span class="title"><%=h this.short_title %></span>
+        <span class="title">
+          <%=h this.short_title %>
+        </span>
+        <span>
+          <%= link_to 'reload', torrent_url(this) %>
+        </span>
       </top>
   </cataract-helm>
 </def>

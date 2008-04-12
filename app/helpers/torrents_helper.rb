@@ -35,12 +35,15 @@ module TorrentsHelper
     case t.current_state
     when :running
       button(t,'stop') +
-      button(t,'pause')
+      button(t,'pause') +
+      content_button(t)
     when :archived
-      button(t,'start')
+      button(t,'start') +
+      content_button(t)
     when :paused
       button(t,'start') +
-      button(t,'stop')
+      button(t,'stop') +
+      content_button(t)
     when :remote
       button(t,'fetch')
     when :missing
@@ -90,11 +93,22 @@ module TorrentsHelper
     end
   end
 
+  def content_button(t)
+    content_tag(
+      :li,
+      link_to_remote('Content', :url => torrent_files_url(t), :method => :get)
+    )
+  end
+
   def human_transfer(kb, rate=true)
     return '' unless kb
     return '' unless kb.kind_of?(Numeric)
-    human_size(kb.kilobytes).sub(/ytes$/,'') +
+    number_to_human_size(kb.kilobytes).sub(/ytes$/,'') +
       (rate ? '/s' : '')
+  end
+
+  def human_bytes(b)
+    human_transfer(b/1024,false)
   end
 
   def torrent_table(headings,torrents)
