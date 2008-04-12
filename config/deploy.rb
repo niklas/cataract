@@ -75,8 +75,8 @@ namespace :deploy do
     sudo "ln -fs #{deploy_to}/shared/index #{current_release}/index"
   end
   task :group_permissions do
-    sudo "chgrp -R www-data #{deploy_to}"
-    sudo "chmod -R g+w #{deploy_to}"
+    sudo "chgrp -R www-data #{current_release}"
+    sudo "chmod -R g+w #{current_release}"
   end
 
   desc "Configure lighttpd"
