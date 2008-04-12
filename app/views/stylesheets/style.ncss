@@ -92,3 +92,7 @@ ul#event_log > li {
   .warn   { background-color: #220000; }
   .error  { background-color: #440000; }
 }
+
+#helm > div.inner > div.content {
+  font-size: 130%;
+}
