@@ -7,7 +7,7 @@ class TorrentsFilesController < ApplicationController
     respond_to do |wants|
       wants.js do
         render :update do |page|
-          page["torrent_#{@torrent.id}"].replace_html :partial => 'list', :object => @torrent.metainfo.files
+          page["torrent_#{@torrent.id}"].replace_html :partial => 'list', :object => @torrent.files_hierarchy
         end
       end
     end

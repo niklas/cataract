@@ -1,5 +1,12 @@
 <ul class="files">
-  <% list.each do |file| %>
-    <li> <%= file.path %> ( <%=human_bytes file.length %>)</li>
+  <% list.sort.each do |name,file_or_list| %>
+    <li> 
+      <%= name %>
+      <% if file_or_list.is_a?(Hash) %>
+        <%= render :partial => 'list', :object => file_or_list %>
+      <% else %>
+        (<%=human_bytes file_or_list.length %>)
+      <% end %>
+    </li>
   <% end %>
 </ul>

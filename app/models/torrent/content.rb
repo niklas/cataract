@@ -1,11 +1,18 @@
 class Torrent
   def files_hierarchy
     return {} unless metainfo
-    return {metainfo.name => ''} if metainfo.single?
+    return {metainfo.name => metainfo} if metainfo.single?
     return {} unless metainfo.files
-    metainfo.files.
-      map      { |file| file.path }.
-      group_by { |path| path.first }
+    hier = {metainfo.name => {}}
+    base = hier[metainfo.name]
+    metainfo.files.each do |file|
+      file.path.inject(base) do |pos,component|
+        pos[component] ||= {}
+        pos[component] = file if component === file.path.last
+        pos[component]
+      end
+    end
+    hier
   end
 
   def set_metainfo
