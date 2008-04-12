@@ -143,6 +143,20 @@ div.lcars {
             border-right: 0.1em solid <%= colors[:color1] %>;
           }
         }
+        ul {
+          li {
+            background-color: <%= colors[:base] %>;
+          }
+          ul {
+            background-color: <%= colors[:color1] %>;
+            ul {
+              background-color: <%= colors[:color2] %>;
+              ul {
+                background-color: <%= colors[:primary] %>;
+              }
+            }
+          }
+        }
       }
     }
   }

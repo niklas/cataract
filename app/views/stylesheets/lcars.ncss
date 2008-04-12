@@ -337,6 +337,29 @@ div.lcars {
       overflow: auto;
       z-index: 5;
       height: 100%;
+      ul {
+        span.hoverinfo {
+          display: none;
+        }
+        li {
+          position: relative;
+        }
+        li:hover > span.hoverinfo {
+          display: block;
+          position: absolute;
+          background-color: inherit;
+          right: 0; top: <%= 0.5 * magic_factor * slim_side_border %>em;
+          padding: 0 1em;
+        }
+        ul {
+          margin: 0;
+          padding: 0 0 0 <%= slim_border %>em;
+          li {
+            margin: 0;
+            padding: <%= magic_factor * slim_side_border %>em 0 0 <%= magic_factor * slim_side_border %>em;
+          }
+        }
+      }
       form {
         label {
            width: 30%;
