@@ -4,7 +4,7 @@
       <%= name %>
       <% if file_or_list.is_a?(Hash) %>
         <span class="hoverinfo">
-          <%= file_or_list.size %> Items
+          <%= pluralize file_or_list.size, 'Item' %>
         </span>
         <%= render :partial => 'list', :object => file_or_list %>
       <% else %>
