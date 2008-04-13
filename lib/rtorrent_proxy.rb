@@ -14,17 +14,17 @@ class RTorrentProxy
   def method_missing(meth,*args,&blk)
     case meth.to_s
     when /^(.+)=$/    # setters
-      m = "set_d_#{$1}"
+      m = "d.set_#{$1}"
       if remote.remote_respond_to? m
         return with_model(m, *args, &blk)
       end
     when /^(.+)!$/    # commands (for torrent)
-      m = "d_#{$1}"
+      m = "d.#{$1}"
       if remote.remote_respond_to? m
         return with_model(m, *args, &blk)
       end
     when /^(.+)\?$/    # booleans? (for torrent)
-      m = "get_d_is_#{$1}"
+      m = "d.is_#{$1}"
       if remote.remote_respond_to? m
         return with_model(m, *args, &blk).to_i > 0
       end
@@ -33,7 +33,7 @@ class RTorrentProxy
         return remote.call(meth, *args, &blk)
       end
                       # getters 
-      m = "get_d_#{meth}"
+      m = "d.get_#{meth}"
       if remote.remote_respond_to? m
         return with_model(m, *args, &blk)
       end
