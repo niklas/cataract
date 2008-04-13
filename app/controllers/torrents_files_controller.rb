@@ -27,7 +27,7 @@ class TorrentsFilesController < ApplicationController
     respond_to do |wants|
       wants.js do
         render :update do |page|
-          page["torrent_#{@torrent.id}"].replace_html :text => params.inspect.to_s
+          page["torrent_#{@torrent.id}"].replace_html params.inspect.to_s
         end
       end
     end

@@ -17,7 +17,7 @@ SubDirSelector = Behavior.create({
     options.length = 1;
     this.subdirs.each(function(subdir) {
       if (subdir[0] == dir_id) {
-        options[options.length] = new Option(subdir[1],subdir[2]);
+        options[options.length] = new Option(subdir[1],subdir[1]);
       }
       if (options.length == 1) {
         $('content_subdir').hide();
