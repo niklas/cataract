@@ -45,48 +45,32 @@ class Torrent < ActiveRecord::Base
     check_if_status_is_up_to_date
   end
 
-  acts_as_ferret :fields => [:title, :filename, :url, :tag_list], :remote => true
-
   acts_as_taggable
 
   concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing
 
+  has_finder :invalid,
+    {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
 
-  def self.invalid
-    condition = 'NOT (' + self.class.states.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')'
-    find(:all, :conditions => condition, :order => 'created_at')
-  end
+  has_finder :running,
+    {:conditions => {:status => 'running'}}
 
-  def self.running
-    find_in_state(:running, :order => 'created_at desc')
-  end
+  has_finder :newest_first,
+    {:order => 'created_at DESC'}
 
-  def self.find_in_state(state, opts={})
-    opts.merge!  :order => 'created_at DESC'
-    find_all_by_status(state.to_s,opts)
-  end
+  has_finder :recent, lambda {|lim|
+    {:order => 'created_at DESC', :limit => (lim || 23)}
+  }
 
-  def self.find_recent(num=23)
-    find(:all, :order => 'created_at DESC', :limit => num)
-  end
+  has_finder :collection, lambda {|ids|
+    {:conditions => { :id => ids}}
+  }
 
-  def self.find_collection(ids)
-    return [] unless ids
-    return [] if ids.empty?
-    find_all_by_id(ids)
-  end
-  def self.find_by_term_and_tags(term,tagstring)
-    query = term.blank? ? '' : term.split(/ /).map { |s| "*#{s}*"}.join(' ')
-    unless query.blank?
-      query = "(#{query} OR tag_list:(#{query}))"
-    end
-    unless tagstring.blank?
-      tagnames = Tag.parse(tagstring) || []
-      query += " tag_list:(#{tagnames.join(' ')})"
-    end
-    logger.debug("Ferret search for [#{query}]")
-    find_with_ferret(query, {:limit => :all})
-  end
+  has_finder :include_everything,
+    {:include => [:tags]}
+
+  has_fulltext_search :title, :description, :filename, :url, 'tags.name'
+
   # aggregates
   def self.upload_rate
     rtorrent.upload_rate
