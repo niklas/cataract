@@ -1,0 +1,9 @@
+<h3>let's move the torrent's contents</h3>
+
+<% form_remote_tag  :html => {:method => 'dsjfput'}, :url => torrent_files_path(move) do %>
+  <%= collection_select :content, :path, Directory.all, :id, :label, {:prompt => 'Please select destination'} %>
+<br />
+  <%= select_tag :content_subdir, options_for_select(["Please select a subdir",nil]) %>
+<br />
+  <%= submit_tag 'Move' %>
+<% end %>

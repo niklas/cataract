@@ -12,4 +12,18 @@
 #
 
 class Directory < ActiveRecord::Base
+
+  def self.all
+    find(:all).select {|dir| File.directory? dir.path }
+  end
+
+  def label
+    [name,path].join(' - ')
+  end
+
+  def subdirs
+    Dir[path + '/*'].
+      select { |dir| File.directory? dir }.
+      map { |dir| dir.split('/').last }
+  end
 end

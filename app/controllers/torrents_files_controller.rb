@@ -13,7 +13,24 @@ class TorrentsFilesController < ApplicationController
     end
   end
 
+  def edit
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page["torrent_#{@torrent.id}"].replace_html :partial => 'move', :object => @torrent
+        end
+      end
+    end
+  end
+
   def update
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page["torrent_#{@torrent.id}"].replace_html :text => params.inspect.to_s
+        end
+      end
+    end
   end
 
   private

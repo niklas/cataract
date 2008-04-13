@@ -8,6 +8,7 @@
       <param-content/>
       <javascript name="lowpro" />
       <javascript name="lcars" />
+      <javascript name="dynamic_content_dirs" />
       <javascript name="behaviours" />
     </scripts>
 

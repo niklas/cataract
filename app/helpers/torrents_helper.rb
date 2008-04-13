@@ -36,14 +36,17 @@ module TorrentsHelper
     when :running
       button(t,'stop') +
       button(t,'pause') +
-      content_button(t)
+      content_button(t) +
+      move_content_button(t)
     when :archived
       button(t,'start') +
-      content_button(t)
+      content_button(t) +
+      move_content_button(t)
     when :paused
       button(t,'start') +
       button(t,'stop') +
-      content_button(t)
+      content_button(t) +
+      move_content_button(t)
     when :remote
       button(t,'fetch')
     when :missing
@@ -97,6 +100,13 @@ module TorrentsHelper
     content_tag(
       :li,
       link_to_remote('Content', :url => torrent_files_url(t), :method => :get)
+    )
+  end
+
+  def move_content_button(t)
+    content_tag(
+      :li,
+      link_to_remote('Move content', :url => edit_torrent_files_url(t), :method => :get)
     )
   end
 

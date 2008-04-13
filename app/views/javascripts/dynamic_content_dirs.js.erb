@@ -1,0 +1,30 @@
+SubDirSelector = Behavior.create({
+  initialize: function() {
+    this.subdirs = new Array();
+    this._createSubDirs();
+    $('content_subdir').hide();
+  },
+  _createSubDirs: function() {
+  <% @dirs.each do |dir| %>
+    <% dir.subdirs.each do |subdir| %>
+      this.subdirs.push(new Array('<%= dir.id %>', '<%=h subdir %>'));
+    <% end %>
+  <% end %>
+  },
+  onchange: function() {
+    dir_id = $F('content_path');
+    options = $('content_subdir').options;
+    options.length = 1;
+    this.subdirs.each(function(subdir) {
+      if (subdir[0] == dir_id) {
+        options[options.length] = new Option(subdir[1],subdir[2]);
+      }
+      if (options.length == 1) {
+        $('content_subdir').hide();
+      } else {
+        $('content_subdir').show();
+      }
+    });
+  }
+});
+
