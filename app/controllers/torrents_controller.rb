@@ -9,12 +9,12 @@ class TorrentsController < ApplicationController
   attr_accessor :offline
 
   def index
-    @torrents = Torrent.find_recent
+    @torrents = Torrent.recent
     render :action => 'list'
   end
 
   def list
-    @torrents = Torrent.find_in_state(:running)
+    @torrents = Torrent.running.newest_first
 
     respond_to do |wants|
       wants.html
@@ -156,12 +156,12 @@ class TorrentsController < ApplicationController
       probe
       return
     end
-    @searched_tags = Tag.parse(params[:tags])
-    if !@term.blank? or !@searched_tags.empty?
-      @torrents = Torrent.find_by_term_and_tags @term, params[:tags]
+    #@searched_tags = Tag.parse(params[:tags])
+    if !@term.blank?
+      @torrents = Torrent.include_everything.newest_first.search(@term)
       flash[:reply] = "searched for #{@term}"
     else
-      @torrents = Torrent.find_in_state(:running, :order => 'created_at desc')
+      @torrents = Torrent.newest_first.running
       flash[:reply]= ''
     end
     #forget_all
