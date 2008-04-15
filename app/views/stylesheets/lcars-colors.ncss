@@ -146,6 +146,9 @@ div.lcars {
         ul {
           li {
             background-color: <%= colors[:base] %>;
+            :hover {
+              background-color: <%= colors[:unavailable] %>;
+            }
           }
           ul {
             background-color: <%= colors[:color1] %>;
