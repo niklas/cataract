@@ -1,4 +1,5 @@
 class Torrent
+  class TorrentContentError < Exception; end
   def files_hierarchy
     return {} unless metainfo
     return {metainfo.name => metainfo} if metainfo.single?
@@ -67,15 +68,44 @@ class Torrent
     @mii
   end
 
-  def move_content_to new_path
+  def move_content_to target_dir
+    raise "must update BackgrounDRB. Work in Progress"
     begin
+      unless File.exists?(content_path)
+        raise TorrentContentError, "Content not found: #{content_path}"
+      end
+      unless File.directory?(target_dir)
+        raise TorrentContentError, "Target directory does not exist: #{target_dir}"
+      end
+      new_path = File.join(target_dir,metainfo.name)
+      if File.exists?(new_path)
+        raise TorrentContentError, "Target already exists: #{new_path}"
+      end
+      begin
+        FileUtils.ln content_path, new_path # will raise EXDEV
+        FileUtils.rm new_path
+        FileUtils.move content_path, new_path
+        update_attribute(:content_path, new_path)
+      rescue Errno::EXDEV # it is on another device, cannot move fast. use rsync in background
+        MiddleMan.new_worker(:class => :torrent_mover_worker, :job_key => mover_worker_job_key)
+        update_attribute(:status, 'moving')
+      end
+
+
+
       # TODO
-      # content must be at #content_path
-      # the target should exist, but should not contain #metainfo.name ?
       # change content_path
     rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
+  end
+
+  def mover_worker_job_key
+    "mover_#{self.id}".to_sym
+  end
+
+  def mover_worker
+    @mover_worker ||= MiddleMan.worker(mover_worker_job_key)
   end
 
   def delete_content!
