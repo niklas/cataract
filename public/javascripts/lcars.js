@@ -45,6 +45,48 @@ Lcars = Behavior.create({
   }
 });
 
+LcarsBox = Behavior.create({
+  initialize: function() {
+    this._addDecorations();
+    this._addMessageBox();
+  },
+  _getKind: function() {
+    this.element.classes.find(function(cl) { cl =~ /[nwse]{2,3}/ });
+  },
+  _addDecorations: function() {
+    // TODO add all the other classes, too
+    switch(this._getKind() {
+      case 'nes':
+        this._addDecoration('corner','ne');
+        this._addDecoration('bow','ne');
+        break;
+      case 'nws:
+        this._addDecoration('corner','nw');
+        this._addDecoration('bow','nw');
+        break;
+    }
+  },
+  _addDecoration: function(kind, variant, klass) {
+    img = $img(
+      class: [kind,variant,klass,'decoration'].join(' '),
+      src: ('../lcars/decoration/' + kind + '/' + variant + '.png')
+    );
+    this.element.appendChild(img);
+  },
+  _addMessageBox: function() {
+    this.messagebox = $div(class: 'message');
+    this.element.appendChild(
+      $div(class: 'inner modal', this.messagebox)
+    );
+  },
+  _setMessage: function(message) {
+    this.messagebox.update(message);
+  },
+  _decideMenuOrientation: function() {
+    // ul.menu: set class to left if _getKind =~ /w/, right if /e/
+  }
+});
+
 Object.extend(Lcars,{
   byId : function(id) {
     return Lcars[id];
