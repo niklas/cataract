@@ -8,13 +8,4 @@ describe TorrentsFilesController do
   end
 
 
-  it "GET 'show' should be successful" do
-    get 'show'
-    response.should be_success
-  end
-
-  it "GET 'update' should be successful" do
-    get 'update'
-    response.should be_success
-  end
 end

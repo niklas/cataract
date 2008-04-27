@@ -16,6 +16,9 @@ class Filter < ActiveRecord::Base
   validates_presence_of :expression, :message => "please give a regular expression (words work, too)"
   before_validation :positive_is_default
 
+  has_finder :positive, {:conditions => ['negated = ?', false]}
+  has_finder :negated, {:conditions => ['negated = ?', true]}
+
   def hits?(term)
     if negated?
       term !~ regexp

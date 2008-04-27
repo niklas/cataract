@@ -19,6 +19,9 @@ end
 
 describe "The Comic Feed" do
   fixtures :feeds, :filters, :torrents
+  before(:each) do
+    @comic_feed = feeds(:comic_feed)
+  end
 
   it do
     @comic_feed.should have(4).torrents
