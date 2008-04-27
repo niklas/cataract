@@ -45,6 +45,7 @@ Lcars = Behavior.create({
   }
 });
 
+/*
 LcarsBox = Behavior.create({
   initialize: function() {
     this._addDecorations();
@@ -55,16 +56,16 @@ LcarsBox = Behavior.create({
   },
   _addDecorations: function() {
     // TODO add all the other classes, too
-    switch(this._getKind() {
+    switch(this._getKind()) {
       case 'nes':
         this._addDecoration('corner','ne');
         this._addDecoration('bow','ne');
         break;
-      case 'nws:
+      case 'nws':
         this._addDecoration('corner','nw');
         this._addDecoration('bow','nw');
         break;
-    }
+    };
   },
   _addDecoration: function(kind, variant, klass) {
     img = $img(
@@ -86,7 +87,7 @@ LcarsBox = Behavior.create({
     // ul.menu: set class to left if _getKind =~ /w/, right if /e/
   }
 });
-
+*/
 Object.extend(Lcars,{
   byId : function(id) {
     return Lcars[id];
