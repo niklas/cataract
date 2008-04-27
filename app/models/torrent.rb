@@ -39,7 +39,7 @@ class Torrent < ActiveRecord::Base
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   before_save :sync
-  before_validation :fix_filename, :auto_set_status
+  before_validation :fix_filename, :sync_status!
   before_create :set_default_values
   def after_find
     check_if_status_is_up_to_date

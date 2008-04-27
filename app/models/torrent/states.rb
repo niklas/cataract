@@ -21,6 +21,8 @@ class Torrent
 
   def status_from_rtorrent
     (remote.state ==  1 ? 'running' : 'paused')
+  rescue TorrentNotRunning, TorrentHasNoInfoHash
+    :stopped
   end
 
   
@@ -77,17 +79,27 @@ class Torrent
     t
   end
 
-  def auto_set_status
-    self.status= 
-      unless file_exists?
-        unless url.blank?
-          :remote
-        else
-          status_by_filepath
-        end
+  # TODO eleminate auto_set_status
+  def auto_status
+    unless file_exists?
+      unless url.blank?
+        :remote
       else
-        status
+        status_by_filepath
       end
+    else
+      status
+    end
+  end
+
+  def sync_status!
+    new_status = 'new'
+    begin
+      new_status = status_from_rtorrent
+    rescue TorrentNotRunning, TorrentHasNoInfoHash
+      new_status = auto_status
+    end
+    update_attribute(:status,new_status) if new_status != current_state
   end
 
  private
