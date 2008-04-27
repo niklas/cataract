@@ -25,12 +25,14 @@ module NotificationHelper
     %Q[<li class="#{entry.level}">#{entry.message}</li>]
   end
   def append_log_to(page)
-    @logs << LogEntry.new(flash[:notice], :notice) unless flash[:notice].blank?
-    @logs << LogEntry.new(flash[:error], :error)   unless flash[:error].blank?
-    @logs << LogEntry.new(flash[:message], :info)  unless flash[:info].blank?
-    @logs.each do |le| 
-      page.insert_html :bottom, 'event_log', log_entry_tag(le)
-    end if @logs
+    if @logs
+      @logs << LogEntry.new(flash[:notice], :notice) unless flash[:notice].blank?
+      @logs << LogEntry.new(flash[:error], :error)   unless flash[:error].blank?
+      @logs << LogEntry.new(flash[:message], :info)  unless flash[:info].blank?
+      @logs.each do |le| 
+        page.insert_html :bottom, 'event_log', log_entry_tag(le)
+      end
+    end
   end
 
   def render_pending_notifications
