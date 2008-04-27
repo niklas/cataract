@@ -79,7 +79,6 @@ class Torrent
     t
   end
 
-  # TODO eleminate auto_set_status
   def auto_status
     unless file_exists?
       unless url.blank?
