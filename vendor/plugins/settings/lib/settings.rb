@@ -52,8 +52,8 @@ class Settings < ActiveRecord::Base
       value = YAML::load(var.value)
       @@cache[var_name] = value
       return value
-    elsif @@defaults[var_name]
-      return @@defaults[var_name]
+    elsif defaults[var_name]
+      return defaults[var_name]
     else
       return nil
     end
@@ -73,6 +73,10 @@ class Settings < ActiveRecord::Base
   end
 
   def self.defaults
-    @@defaults
+    if @@defaults.empty?
+      @@defaults = (defined?(SettingsDefaults) ? SettingsDefaults::DEFAULTS : {}).with_indifferent_access
+    else
+      @@defaults
+    end
   end
 end
