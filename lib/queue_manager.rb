@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "../config/boot")
+require File.join(File.dirname(__FILE__), "../config/environment")
 require 'drb'
 require 'drb/acl'
 
@@ -18,19 +18,6 @@ class QueueManager
       @finished = true
     end
   end
-  class FooJob < Job
-    def initialize(max=23)
-      @max = 23
-      super
-    end
-    def do_work
-      1.upto(@max) do |i|
-        sleep 0.5
-        status[:progress] = 100.0 * (i.to_f/@max)
-      end
-      finish!
-    end
-  end
   attr_accessor :queue
   attr_accessor :jobs
   attr_accessor :worker
@@ -38,6 +25,7 @@ class QueueManager
   def initialize
     self.queue = []
     self.jobs = {}
+    load_job_definitions
     init_worker
     @mutext = Mutex.new
   end
@@ -57,10 +45,14 @@ class QueueManager
     queue.delete job
   end
 
-  def add_foo_job(key,max=nil)
-    add_job(key,FooJob.new(max))
+  def create_job(klass_name,key,*args)
+    klass = "#{klass_name}_job".classify.constantize
+    job = klass.new(args)
+    add_job(key,job)
   end
 
+
+  protected
   def add_job(key,job)
     unless jobs[key]
       puts "Adding #{key}"
@@ -71,8 +63,6 @@ class QueueManager
       raise "there is already a job called #{key}"
     end
   end
-
-  protected
   
   def init_worker
     self.worker = Thread.new do
@@ -91,10 +81,17 @@ class QueueManager
       end
     end
   end
+
+  def load_job_definitions
+    path = File.join(File.dirname(__FILE__), 'jobs')
+    Dir["#{path}/*"].each do |jobfile|
+      require jobfile
+    end
+  end
   
 end
 
-DRb.start_service("druby://127.0.0.1:5523", qm = QueueManager.new)
+DRb.start_service(Settings.queue_manager_url, qm = QueueManager.new)
 
 puts "Ready."
 qm.worker.join
