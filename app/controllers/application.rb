@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_lcars_error(exception)
-    logger.debug("Cought Exception: #{exception.class}")
+    logger.debug("Cought Exception: #{exception.class}:#{exception.message}\nTrace:\n#{exception.clean_backtrace.join("\n")}")
     @exception = exception
     respond_to do |wants|
       wants.css do
