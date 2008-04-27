@@ -8,7 +8,9 @@
     <cataract-helm class="#{'error' unless this.errors.empty?}">
       <helm-content: class="torrent">
          <% div_for this do %>
+            <flashes />
             <details-for-running  if="&this.running?" />
+            <details-for-moving   if="&this.moving?" />
             <details-for-paused   if="&this.paused?" />
             <details-for-archived if="&this.archived?" />
             <details-for-remote   if="&this.remote?" />
@@ -31,12 +33,27 @@
   </cataract-helm>
 </def>
 
+<def tag="flashes">
+  <% [:notice, :error].each do |kind| %>
+    <% if flash[kind] %>
+    <div class="<%= kind -%>">
+      <%= flash[kind] %>
+    </div>
+    <% end %>
+  <% end %>
+
+</def>
+
 <def tag="details-for-running">
   downloading... <%= this.progress %>% <br/>
   Rate: <%= number_to_human_rate(this.up_rate) %> up, 
         <%= number_to_human_rate(this.down_rate) %> down <br />
   Total: <%= number_to_human_size(this.up_total) %> up, 
          <%= number_to_human_size(this.down_total) %> down<br />
+</def>
+
+<def tag="details-for-moving">
+  moving... <%= this.moving_progress %>% 
 </def>
 
 <def tag="details-for-archived">

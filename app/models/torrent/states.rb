@@ -1,5 +1,5 @@
 class Torrent
-  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid]
+  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid,:moving]
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus

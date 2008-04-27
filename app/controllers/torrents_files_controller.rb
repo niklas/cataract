@@ -26,9 +26,11 @@ class TorrentsFilesController < ApplicationController
   def update
     respond_to do |wants|
       wants.js do
-        render :update do |page|
-          page["torrent_#{@torrent.id}"].replace_html params.inspect.to_s
-        end
+        @dir = Directory.find(params[:content][:path])
+        target = @dir.path
+        @torrent.move_content_to target
+        flash[:notice] = "Torrent will be moved to #{target}"
+        render_details_for @torrent
       end
     end
   end

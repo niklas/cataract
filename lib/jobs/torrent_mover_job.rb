@@ -15,13 +15,16 @@ class TorrentMoverJob < QueueManager::Job
     old_state = @torrent.current_state
     @torrent.update_attribute(:status,'moving')
     Rsync.copy(@torrent.content_path, @target) do |progress,current_file,file_progress|
-      status[:progress] = progress
-      status[:action] = "Copying '#{File.basename(current_file)}'"
-      status[:file_progress] = file_progress
+      status[:progress] = progress if progress
+      status[:action] = "Copying '#{File.basename(current_file)}'" unless current_file.blank?
+      status[:file_progress] = file_progress if file_progress
     end
+    status[:action] = "Deleting old stuff."
+    FileUtils.rm_rf @torrent.content_path
     @torrent.update_attribute(:content_path, @target)
+    status[:progress] = 100
   rescue Exception => e
-    logger.error("Moving went wrong: #{e.message}")
+    puts("Moving went wrong: #{e.message}. #{e.backtrace}")
   ensure
     @torrent.update_attribute(:status,old_state.to_s)
     finish!

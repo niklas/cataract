@@ -69,7 +69,6 @@ class Torrent
   end
 
   def move_content_to target_dir
-    raise "must update BackgrounDRB. Work in Progress"
     begin
       unless File.exists?(content_path)
         raise TorrentContentError, "Content not found: #{content_path}"
@@ -82,30 +81,30 @@ class Torrent
         raise TorrentContentError, "Target already exists: #{new_path}"
       end
       begin
-        FileUtils.ln content_path, new_path # will raise EXDEV
+        finally_stop!
+        FileUtils.ln content_path, new_path # may raise EXDEV
         FileUtils.rm new_path
         FileUtils.move content_path, new_path
         update_attribute(:content_path, new_path)
       rescue Errno::EXDEV # it is on another device, cannot move fast. use rsync in background
-        MiddleMan.new_worker(:class => :torrent_mover_worker, :job_key => mover_worker_job_key)
-        update_attribute(:status, 'moving')
+        job_manager.create_job(:torrent_mover,mover_job_key,self.id,new_path)
+        self.status = :moving
       end
-
-
-
-      # TODO
-      # change content_path
     rescue Exception => e
       errors.add :filename, "^error on moving content: #{e.to_s}"
     end
   end
 
-  def mover_worker_job_key
-    "mover_#{self.id}".to_sym
+  def mover_job_key
+    "mover_#{self.id}"
   end
 
-  def mover_worker
-    @mover_worker ||= MiddleMan.worker(mover_worker_job_key)
+  def job_manager
+    @job_manager ||= DRbObject.new(nil, Settings.queue_manager_url)
+  end
+
+  def moving_progress
+    job_manager.status_for(mover_job_key)[:progress]
   end
 
   def delete_content!

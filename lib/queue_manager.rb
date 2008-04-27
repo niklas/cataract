@@ -42,22 +42,25 @@ class QueueManager
 
   def delete_job(key)
     job = jobs.delete(key)
-    queue.delete job
+    queue.delete job if job
   end
 
   def create_job(klass_name,key,*args)
     klass = "#{klass_name}_job".classify.constantize
-    job = klass.new(args)
+    job = klass.new(*args)
     add_job(key,job)
   end
 
 
   protected
   def add_job(key,job)
+    if jobs[key] && job_finished?(key)
+      delete_job(key)
+    end
     unless jobs[key]
-      puts "Adding #{key}"
       jobs[key] = job
       self.queue << job
+      puts "Added #{key}"
       self.worker.wakeup
     else
       raise "there is already a job called #{key}"
@@ -77,7 +80,7 @@ class QueueManager
     @mutext.synchronize do 
       until self.queue.empty?
         fu = self.queue.pop
-        fu.do_work
+        fu.do_work unless fu.nil?
       end
     end
   end
