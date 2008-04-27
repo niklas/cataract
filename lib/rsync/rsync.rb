@@ -4,18 +4,20 @@ class Rsync
   include Singleton
   def self.copy(from,to,&block)
     Open3.popen3(command(from,to)) do |stdin, stdout, stderr|
+      stdin.close_write
       parse(stdout,&block)
     end
   end
 
   def self.command(from,to)
-    "rsync -aP #{from} #{to}"
+    "rsync -aP '#{from.gsub(/'/,'\'')}' '#{to.gsub(/'/,'\'')}'"
   end
 
   def self.parse(io)
     total = nil
     left = nil
     current_file = nil
+    io.sync = true
     while lines = io.readline("\r")
       lines.split(/\n/).each do |line|
         line.chomp!
