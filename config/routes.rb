@@ -23,9 +23,9 @@ ActionController::Routing::Routes.draw do |map|
   # Here's a sample route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
-  map.decoration 'decoration/:kind/:variant/:background_color', 
-    :controller => 'lcars', :action => 'decoration',
-    :defaults => { :background_color => 'black', :variant => 'se', :kind => 'bow' }
+  map.decoration 'lcars/decoration/:kind/:variant.png', 
+    :controller => 'lcars', :action => 'decoration', :background_color => 'black', 
+    :defaults => { :variant => 'se', :kind => 'bow' }
 
   # You can have the root of your site routed by hooking up '' 
   # -- just remember to delete public/index.html.

@@ -129,31 +129,31 @@ div.lcars {
   /* variants by non-present side */
 
   /* !=/w/ */
-  [variant~="nes"],[variant~="sen"],[variant~="ne"],[variant~="se"] {
+  .es,.se,.e,.se,.nes,.sen {
      > div.inner, > div.left, > div.top, > div.bottom {
        left: 0;
      }
   }
   /* !=/e/ */
-  [variant~="nws"],[variant~="swn"],[variant~="sw"],[variant~="nw"] {
+  .ws,.sw,.sw,.w,.nws,.swn {
      > div.inner, > div.right, > div.top, > div.bottom {
        right: 0;
      }
   }
   /* !=/n/ */
-  [variant~="wse"],[variant~="esw"],[variant~="se"],[variant~="sw"] {
+  .wse,.esw,.se,.sw {
      > div.inner, > div.top, > div.left, > div.right {
        top: 0;
      }
   }
   /* !=/s/ */
-  [variant~="wne"],[variant~="enw"],[variant~="ne"],[variant~="nw"] {
+  .wes,.swn,.we,.ew,.e,.w {
      > div.inner, > div.bottom, > div.left, > div.right {
        bottom: 0;
      }
   }
   /* with left menu */
-  > div.left {
+  > .left {
     left: 0;
      ~ div.inner {
        left: <%= big_side_border %>em;
@@ -166,7 +166,7 @@ div.lcars {
      }
   }
   /* with right menu */
-  > div.right {
+  > .right {
      right: 0;
      ~ div.inner {
        right: <%= big_side_border %>em;
@@ -179,7 +179,7 @@ div.lcars {
      }
   }
   /* with top element */
-  > div.top {
+  > .top {
      top: 0;
      left: <%= slim_side_border %>em;
      right: <%= slim_side_border %>em;
@@ -202,7 +202,7 @@ div.lcars {
      }
   }
   /* with bottom element */
-  > div.bottom {
+  > .bottom {
      bottom: 0;
      padding-bottom: <%= big_border %>em;
      ~ div.inner {
@@ -270,7 +270,7 @@ div.lcars {
     }
   }
 
-  > div.top, > div.bottom, > div.left, > div.right {
+  > .top, > .bottom, > .left, > .right {
     position: absolute;
     overflow: hidden;
   }
@@ -288,16 +288,15 @@ div.lcars {
     }
   }
 
-  > div.right, > div.left {
+  > .right, > .left {
     top: <%= elbow_height %>em;
     bottom: <%= elbow_height %>em;
     width: <%= big_side_border %>em;
     padding: 0;
     margin: 0;
-    ul.buttons {
+    .buttons {
       margin: 0;
       position: absolute;
-      left: 0; right: 0;
       > li {
         margin: <%= vertical_space_between_buttons %>em 0;
         > a {
@@ -307,7 +306,7 @@ div.lcars {
       }
     }
   }
-  > div.top, > div.bottom {
+  > .top, > .bottom {
     left: <%=  elbow_height %>em;
     right: <%= elbow_height %>em;
     padding: 0 <%= label_size %>em;
@@ -324,7 +323,7 @@ div.lcars {
     > input {
       line-height: <%= big_border %>em;
     }
-    ul.buttons {
+    .buttons {
       display: inline;
       > li { display: inline; }
     }

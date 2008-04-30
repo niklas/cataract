@@ -45,49 +45,108 @@ Lcars = Behavior.create({
   }
 });
 
-/*
+
 LcarsBox = Behavior.create({
   initialize: function() {
     this._addDecorations();
     this._addMessageBox();
+    this._decideMenuOrientation();
   },
   _getKind: function() {
-    this.element.classes.find(function(cl) { cl =~ /[nwse]{2,3}/ });
+    return(this.element.className.match(/\b[nwse]{2,3}\b/).first());
   },
   _addDecorations: function() {
-    // TODO add all the other classes, too
-    switch(this._getKind()) {
+    this.element.getElementsBySelector('img.decoration').each(function(img) {img.remove()});
+    var kind = this._getKind();
+    switch(kind) {
       case 'nes':
         this._addDecoration('corner','ne');
         this._addDecoration('bow','ne');
+        this._addDecoration('corner','se');
+        this._addDecoration('bow','se');
+        this._addDecoration('stump','w','nw');
+        this._addDecoration('stump','w','sw');
         break;
       case 'nws':
         this._addDecoration('corner','nw');
         this._addDecoration('bow','nw');
+        this._addDecoration('corner','sw');
+        this._addDecoration('bow','sw');
+        this._addDecoration('stump','e','ne');
+        this._addDecoration('stump','e','se');
+        break;
+      case 'ne':
+        this._addDecoration('corner','ne');
+        this._addDecoration('bow','ne');
+        this._addDecoration('stump','w','nw');
+        this._addDecoration('stump','s','se');
+        break;
+      case 'nw':
+        this._addDecoration('corner','nw');
+        this._addDecoration('bow','nw');
+        this._addDecoration('stump','e','ne');
+        this._addDecoration('stump','s','sw');
+        break;
+      case 'sen':
+        this._addDecoration('corner','ne');
+        this._addDecoration('bow','ne');
+        this._addDecoration('corner','se');
+        this._addDecoration('bow','se');
+        this._addDecoration('stump','w','nw');
+        this._addDecoration('stump','w','sw');
+        break;
+      case 'swn':
+        this._addDecoration('corner','nw');
+        this._addDecoration('bow','nw');
+        this._addDecoration('corner','sw');
+        this._addDecoration('bow','sw');
+        this._addDecoration('stump','e','ne');
+        this._addDecoration('stump','e','se');
+        break;
+      case 'se':
+        this._addDecoration('corner','se');
+        this._addDecoration('bow','se');
+        this._addDecoration('stump','w','sw');
+        this._addDecoration('stump','n','ne');
+        break;
+      case 'sw':
+        this._addDecoration('corner','sw');
+        this._addDecoration('bow','sw');
+        this._addDecoration('stump','e','se');
+        this._addDecoration('stump','n','nw');
         break;
     };
   },
   _addDecoration: function(kind, variant, klass) {
-    img = $img(
+    img = $img({
       class: [kind,variant,klass,'decoration'].join(' '),
-      src: ('../lcars/decoration/' + kind + '/' + variant + '.png')
-    );
+      src: ('/lcars/decoration/' + kind + '/' + variant + '.png')
+    });
     this.element.appendChild(img);
   },
   _addMessageBox: function() {
-    this.messagebox = $div(class: 'message');
+    this.messagebox = $div({class: 'message'});
     this.element.appendChild(
-      $div(class: 'inner modal', this.messagebox)
+      $div({class: 'inner modal'}, this.messagebox)
     );
   },
   _setMessage: function(message) {
     this.messagebox.update(message);
   },
   _decideMenuOrientation: function() {
-    // ul.menu: set class to left if _getKind =~ /w/, right if /e/
+    var kind = this._getKind();
+    this.element.getElementsBySelector('ul.buttons').each(function(buttons) {
+        if (kind.match(/w/)) {
+          buttons.addClassName('left');
+          buttons.removeClassName('right');
+        } else {
+          buttons.removeClassName('left');
+          buttons.addClassName('right');
+        }
+    });
   }
 });
-*/
+
 Object.extend(Lcars,{
   byId : function(id) {
     return Lcars[id];
@@ -96,5 +155,5 @@ Object.extend(Lcars,{
 
 
 Event.addBehavior({
-    'div.lcars' : Lcars
+    'div.lcars' : LcarsBox
 });
