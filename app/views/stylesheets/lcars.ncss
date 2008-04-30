@@ -310,6 +310,15 @@ div.lcars {
           height: <%= button_size1 %>em;
         }
       }
+      :after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        margin: 0;
+        background-color: red;
+        width: <%= big_side_border %>em;
+        height: 100%;
+      }
     }
   }
   > .top, > .bottom {

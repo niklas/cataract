@@ -95,6 +95,9 @@ div.lcars {
           background-color: <%= colors[:color2] %>;
         }
       }
+      :after {
+        background-color: <%= colors[:elbows] %>;
+      }
     }
     > * {
       .top, .bottom {
