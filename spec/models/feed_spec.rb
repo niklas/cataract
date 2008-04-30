@@ -33,8 +33,8 @@ describe "The Comic Feed" do
 
   it 'should filter out only the non-hd simpsons and southpark episode(s)' do
     @comic_feed.should have(2).filtered_torrents
-    @comic_feed.filtered_torrents.should include(@simpsons_23_5)
-    @comic_feed.filtered_torrents.should include(@southpark_chef)
+    @comic_feed.filtered_torrents.should include(torrents(:simpsons_23_5))
+    @comic_feed.filtered_torrents.should include(torrents(:southpark_chef))
   end
 end
 
