@@ -130,25 +130,31 @@ div.lcars {
 
   /* !=/w/ */
   .es,.se,.e,.se,.nes,.sen {
-     > div.inner, > div.left, > div.top, > div.bottom {
+     > div.inner, > .left {
        left: 0;
+     }
+     > .top, > .bottom {
+       left: <%= big_border %>em;
      }
   }
   /* !=/e/ */
   .ws,.sw,.sw,.w,.nws,.swn {
-     > div.inner, > div.right, > div.top, > div.bottom {
+     > div.inner, > .right {
        right: 0;
+     }
+     > .top, > .bottom {
+       right: <%= big_border %>em;
      }
   }
   /* !=/n/ */
   .wse,.esw,.se,.sw {
-     > div.inner, > div.top, > div.left, > div.right {
+     > div.inner, > .top, > .left, > .right {
        top: 0;
      }
   }
   /* !=/s/ */
   .wes,.swn,.we,.ew,.e,.w {
-     > div.inner, > div.bottom, > div.left, > div.right {
+     > div.inner, > .bottom, > .left, > .right {
        bottom: 0;
      }
   }
@@ -158,8 +164,8 @@ div.lcars {
      ~ div.inner {
        left: <%= big_side_border %>em;
      }
-     ~ div.top, ~ div.bottom {
-        left: <%= elbow_width %>em;
+     ~ .top, ~ .bottom {
+        left: auto;
      }
      ~ img.decoration.bow {
         margin-left: <%= big_side_border %>em;
@@ -171,8 +177,8 @@ div.lcars {
      ~ div.inner {
        right: <%= big_side_border %>em;
      }
-     ~ div.top, ~div.bottom {
-        right: <%= elbow_width + (2*u) %>em;
+     ~ .top, ~ .bottom {
+        right: auto;
      }
      ~ img.decoration.bow {
         margin-right: <%= big_side_border %>em;
@@ -309,7 +315,7 @@ div.lcars {
   > .top, > .bottom {
     left: <%=  elbow_height %>em;
     right: <%= elbow_height %>em;
-    padding: 0 <%= label_size %>em;
+    padding: 0 <%= magic_factor * slim_border %>em;
     margin: 0 ;
     height: <%= big_border %>em;
     line-height: <%= big_border %>em;

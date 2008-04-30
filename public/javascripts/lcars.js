@@ -51,6 +51,7 @@ LcarsBox = Behavior.create({
     this._addDecorations();
     this._addMessageBox();
     this._decideMenuOrientation();
+    this._decideTitleOrientation();
   },
   _getKind: function() {
     return(this.element.className.match(/\b[nwse]{2,3}\b/).first());
@@ -142,6 +143,18 @@ LcarsBox = Behavior.create({
         } else {
           buttons.removeClassName('left');
           buttons.addClassName('right');
+        }
+    });
+  },
+  _decideTitleOrientation: function() {
+    var kind = this._getKind();
+    this.element.getElementsBySelector('span.title').each(function(title) {
+        if (kind.match(/n/)) {
+          title.addClassName('top');
+          title.removeClassName('bottom');
+        } else {
+          title.addClassName('bottom');
+          title.removeClassName('top');
         }
     });
   }
