@@ -315,7 +315,6 @@ div.lcars {
         display: block;
         position: absolute;
         margin: 0;
-        background-color: red;
         width: <%= big_side_border %>em;
         height: 100%;
       }
