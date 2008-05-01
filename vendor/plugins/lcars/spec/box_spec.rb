@@ -61,43 +61,22 @@ describe LcarsBox, "defining a box called 'helm'" do
     end
   end
 
-  describe "updating with some simple data" do
+  describe "updating with some simple data for :title, :buttons and :content" do
     before(:each) do
       @update_data = { 
         :title => 'Another Title', 
         :buttons => %w(x y z),
         :content => "Some other Content"
       }
-      @context = @template
-      #mock_title = mock('title')
-      #mock_title.should_receive(:update).with(@update_data[:title])
-
-      #mock_buttons = mock('buttons')
-      #mock_buttons.should_receive(:update)
-
-      #mock_content = mock('content')
-      #mock_content.should_receive(:update).with(@update_data[:content])
-
-      #mock_page = mock('page')
-      #mock_page.should_receive(:select).with("helm > .title").and_return([mock_title])
-      #mock_page.should_receive(:select).with("helm > .buttons").and_return([mock_buttons])
-      #mock_page.should_receive(:select).with("helm > div.inner > div.content").and_return([mock_content])
-      #@template.should_receive(:page).at_most(3).times.and_return(mock_page)
     end
-    #it "should not be empty" do
-    #  do_update
-    #  @js.should_not be_empty
-    #end
-
-    it "should select the title" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > .title")
+    it "should select and replace the title" do
+      rjs_for.update_helm(@update_data).should select_dom_element("helm > .title").and_replace_with(@update_data[:title])
     end
-
-    #it "should update the buttons"
-    #it "should update the content"
-
-    #def do_update
-    #  @js = @template.update_helm @update_data
-    #end
+    it "should select and replace the content" do
+      rjs_for.update_helm(@update_data).should select_dom_element("helm > div.inner > div.content").and_replace_with(@update_data[:content])
+    end
+    it "should select and replace the buttons" do
+      rjs_for.update_helm(@update_data).should select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
+    end
   end
 end

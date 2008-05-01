@@ -49,22 +49,26 @@ module LcarsBox
     def render_lcars_box(name, opts={}, &block)
       concat content_tag(
         :div,
-          lcars_buttons(opts[:buttons]) +
+          lcars_buttons_with_container(opts[:buttons]) +
           lcars_title(opts[:title]) +
           lcars_content_from_block(&block),
         {:class => 'lcars #{kind}', :id => name.to_s}
       ), block.binding
     end
 
-    def lcars_buttons(buttons)
+    def lcars_buttons_with_container(buttons)
       return '' if buttons.blank?
       content_tag(
         :ul,
-        buttons.collect do |button|
-          content_tag(:li,button)
-        end.join(' '),
+        lcars_buttons(buttons),
         {:class => 'buttons'}
       )
+    end
+    def lcars_buttons(buttons)
+      return '' if buttons.blank?
+      buttons.collect do |button|
+        content_tag(:li,button)
+      end.join(' ')
     end
 
     def lcars_title(title)
