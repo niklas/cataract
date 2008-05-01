@@ -1,5 +1,8 @@
 Autotest.add_hook :initialize do |at|
   at.add_mapping(%r%^lib/.*\.rb$%) {
-    at.files_matching %r%^plugins/acts_as_currency/spec/.*_spec\.rb$%
+    at.files_matching %r%^spec/.*_spec\.rb$%
+  }
+  at.add_mapping(%r%^spec/.*spec_helper\.rb$%) {
+    at.files_matching %r%^spec/.*_spec\.rb$%
   }
 end
