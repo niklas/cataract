@@ -27,6 +27,8 @@ module LcarsBox
     def list_of_lcars_boxes
       @@list_of_lcars_boxes
     end
+
+    # Selectors
     def lcars_select(name,element)
       selector = "div.lcars##{name} > " +
                  case element
@@ -42,6 +44,7 @@ module LcarsBox
       page.select(selector)
     end
 
+    # Replace Elements
     def replace_lcars_title(name,title=nil)
       return unless title
       lcars_select(name,:title).each do |element|
@@ -63,6 +66,7 @@ module LcarsBox
       end
     end
 
+    # Append Elements
     def append_lcars_content(name,content=nil)
       return if content.blank?
       lcars_select(name,:content).each do |element|
@@ -84,6 +88,7 @@ module LcarsBox
       end
     end
 
+    # Rendering
     def render_lcars_box(name, opts={}, &block)
       opts.merge! @@options_for_lcars[name]
       kind = opts[:kind]
@@ -130,7 +135,5 @@ module LcarsBox
     def context
       page.instance_variable_get("@context").instance_variable_get("@template")
     end
-
-
   end
 end
