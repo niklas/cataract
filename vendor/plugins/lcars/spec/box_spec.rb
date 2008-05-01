@@ -70,13 +70,13 @@ describe LcarsBox, "defining a box called 'helm'" do
       }
     end
     it "should select and replace the title" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > .title").and_replace_with(@update_data[:title])
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .title").and_replace_with(@update_data[:title])
     end
     it "should select and replace the content" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > div.inner > div.content").and_replace_with(@update_data[:content])
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > div.inner > div.content").and_replace_with(@update_data[:content])
     end
     it "should select and replace the buttons" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
     end
   end
 
@@ -87,13 +87,13 @@ describe LcarsBox, "defining a box called 'helm'" do
       }
     end
     it "should select and replace the title" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > .title").and_replace_with(@update_data[:title])
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .title").and_replace_with(@update_data[:title])
     end
     it "should select and replace the content" do
-      rjs_for.update_helm(@update_data).should_not select_dom_element("helm > div.inner > div.content").and_replace_with(@update_data[:content])
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > div.inner > div.content").and_replace_with(@update_data[:content])
     end
     it "should select and replace the buttons" do
-      rjs_for.update_helm(@update_data).should_not select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
     end
   end
 
@@ -105,14 +105,129 @@ describe LcarsBox, "defining a box called 'helm'" do
       }
     end
     it "should select and replace the title" do
-      rjs_for.update_helm(@update_data).should_not select_dom_element("helm > .title").and_replace_with(@update_data[:title])
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .title").and_replace_with(@update_data[:title])
     end
     it "should select and replace the content" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > div.inner > div.content").and_replace_with(@update_data[:content])
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > div.inner > div.content").and_replace_with(@update_data[:content])
     end
     it "should select and replace the buttons" do
-      rjs_for.update_helm(@update_data).should select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
     end
   end
 
+  describe "appending something to :content" do
+    before(:each) do
+      @update_data = { 
+        :append_content => "Some really other Content"
+      }
+    end
+    it "should append the specified content" do
+      rjs_for.update_helm(@update_data).should select_dom_element('div.lcars#helm > div.inner > div.content').and_append(@update_data[:append_content])
+    end
+    it "should not even select :buttons" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .buttons")
+    end
+    it "should not even select :title" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .title")
+    end
+  end
+
+  describe "appending something to :title" do
+    before(:each) do
+      @update_data = { 
+        :append_title => "with Cheeze"
+      }
+    end
+    it "should append the specified title" do
+      rjs_for.update_helm(@update_data).should select_dom_element('div.lcars#helm > .title').and_append(@update_data[:append_title])
+    end
+    it "should not even select :content" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > div.inner > div.content")
+    end
+    it "should not even select :title" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .title")
+    end
+  end
+
+  describe "appending something to :content" do
+    before(:each) do
+      @update_data = { 
+        :append_content => "Some really other Content"
+      }
+    end
+    it "should append the specified content" do
+      rjs_for.update_helm(@update_data).should select_dom_element('div.lcars#helm > div.inner > div.content').and_append(@update_data[:append_content])
+    end
+    it "should not even select :buttons" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .buttons")
+    end
+    it "should not even select :title" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .title")
+    end
+  end
+
+  describe "appending something to :content and :buttons" do
+    before(:each) do
+      @update_data = { 
+        :append_content => "Some really other Content",
+        :append_buttons => %w(me so stupitt),
+      }
+    end
+    it "should append the specified content" do
+      rjs_for.update_helm(@update_data).should select_dom_element('div.lcars#helm > div.inner > div.content').and_append(@update_data[:append_content])
+    end
+    it "should select and append new :buttons" do
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .buttons").and_append('<li>me</li> <li>so</li> <li>stupitt</li>')
+    end
+    it "should not even select :title" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .title")
+    end
+  end
+
+  describe "replacing :title and appending something to :content and :buttons" do
+    before(:each) do
+      @update_data = { 
+        :title => 'New Title',
+        :append_content => "Some really other Content",
+        :append_buttons => %w(me so stupitt),
+      }
+    end
+    it "should append the specified content" do
+      rjs_for.update_helm(@update_data).should select_dom_element('div.lcars#helm > div.inner > div.content').and_append(@update_data[:append_content])
+    end
+    it "should select and append new :buttons" do
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .buttons").and_append('<li>me</li> <li>so</li> <li>stupitt</li>')
+    end
+    it "should not append to :title" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .title").and_append('New Title')
+    end
+    it "should replace :title" do
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .title").and_replace_with('New Title')
+    end
+  end
+
+  describe "replacing :title and appending to it" do
+    before(:each) do
+      @update_data = { 
+        :title => 'New Title',
+        :append_title => ' with Cheeze'
+      }
+    end
+    it "should replace :title" do
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .title").and_replace_with('New Title')
+    end
+    it "should append to :title" do
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > .title").and_append(' with Cheeze')
+    end
+    it "should replace before append" do
+      rjs_for.update_helm(@update_data).should match(/update.*insert/sm)
+    end
+    it "should not even select :buttons" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .buttons")
+    end
+    it "should not even select :content" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > div.inner > div.content")
+    end
+
+  end
 end

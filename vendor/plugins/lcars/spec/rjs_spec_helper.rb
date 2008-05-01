@@ -20,15 +20,25 @@ module RJSSpecHelper
     def matches?(generated_rjs)
       @generated_rjs = generated_rjs
       @unescaped_rjs = unescape_rjs(@generated_rjs)
-      @unescaped_rjs =~ select_and_replace_re(@select_string,@replace_string)
+      if @replace_string
+        @unescaped_rjs =~ select_and_replace_re(@select_string,@replace_string)
+      elsif @append_string
+        @unescaped_rjs =~ select_and_append_re(@select_string,@append_string)
+      else
+        @unescaped_rjs =~ select_and_replace_re(@select_string)
+      end
     end
 
     def select_and_replace_re(sel,repl=nil)
-      #%r~\$\$\("#{sel}"\).each\(function\((\w+),\w+\)\s*\{\s+\1.update\("#{repl}"\);\s*}\)~
-      #%r~\$\$\("#{sel}"\).each\(function\(value,index\)\s*\{\s+value.update\("#{repl}"\);\s*}\)~s
       s = Regexp.escape(sel)
       r = repl.blank? ? '.*?' : Regexp.escape(repl)
       %r~\$\$\("#{s}"\).each\(function\(value,\s?index\)\s?\{\s*value.update\("#{r}"\);\s*\}\);~sm
+    end
+
+    def select_and_append_re(sel,append)
+      s = Regexp.escape(sel)
+      a = Regexp.escape(append)
+      %r~\$\$\("#{s}"\).each\(function\(value,\s?index\)\s?\{\s*value.insert\("#{a}"\);\s*\}\);~sm
     end
 
     def failure_message
@@ -45,6 +55,11 @@ module RJSSpecHelper
 
     def and_replace_with(replace_string)
       @replace_string = replace_string
+      self
+    end
+
+    def and_append(append_string)
+      @append_string = append_string
       self
     end
 
