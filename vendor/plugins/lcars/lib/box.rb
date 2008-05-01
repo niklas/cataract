@@ -92,13 +92,24 @@ module LcarsBox
     def render_lcars_box(name, opts={}, &block)
       opts.merge! @@options_for_lcars[name]
       kind = opts[:kind]
-      concat content_tag(
-        :div,
-          lcars_buttons_with_container(opts[:buttons]) +
-          lcars_title(opts[:title]) +
-          lcars_content_from_block(&block),
-        {:class => "lcars #{kind}", :id => name.to_s}
-      ), block.binding
+      rendered = 
+        content_tag(
+          :div,
+            lcars_buttons_with_container(opts[:buttons]) +
+            lcars_title(opts[:title]) +
+            content_tag(
+              :div,
+              content_tag(
+                :div,
+                lcars_content_from_opts_or_block(opts,&block),
+                {:class => 'content'}
+              ),
+              {:class => 'inner'}
+            ),
+          {:class => "lcars #{kind}", :id => name.to_s}
+        )
+      concat(rendered,block.binding) if block_given?
+      return rendered
     end
 
     def lcars_buttons_with_container(buttons)
@@ -121,16 +132,11 @@ module LcarsBox
       content_tag(:span,h(title),{:class => 'title'})
     end
 
-    def lcars_content_from_block(&block)
-      content_tag(
-        :div,
-        content_tag(
-          :div,
-          capture(&block),
-          {:class => 'content'}
-        ),
-        {:class => 'inner'}
-      )
+    def lcars_content_from_opts_or_block(opts = {},&block)
+      returning '' do |content|
+        content << opts[:content] unless opts[:content].blank?
+        content << capture(&block) if block_given?
+      end
     end
     def context
       page.instance_variable_get("@context").instance_variable_get("@template")

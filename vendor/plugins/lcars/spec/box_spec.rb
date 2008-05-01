@@ -33,6 +33,30 @@ describe LcarsBox, "defining a box called 'helm'" do
   it "should define a helper method to update_helm" do
     @template.should respond_to(:update_helm)
   end
+  
+  describe "rendering with some simple data without a block" do
+    before(:each) do
+      @html = @template.render_helm :title => 'The Title', :buttons => %w(a b c), :content => 'Some Content'
+    end
+    it "should not be empty" do
+      @html.should_not be_blank
+    end
+    it "should have a complete lcars div with given content" do
+      @html.should have_tag('div.lcars.nws#helm') do
+        with_tag('div.inner') do
+          with_tag('div.content','Some Content')
+        end
+        with_tag('ul.buttons') do
+          with_tag('li','a')
+          with_tag('li + li','b')
+          with_tag('li + li + li','c')
+        end
+        with_tag('span.title') do
+          have_text('The Title')
+        end
+      end
+    end
+  end
 
   describe "rendering with some simple data and a block" do
     before(:each) do
@@ -42,7 +66,7 @@ describe LcarsBox, "defining a box called 'helm'" do
       end
     end
     it "should not be empty" do
-      @html.should_not be_empty
+      @html.should_not be_blank
     end
     it "should have a complete lcars div with given content" do
       @html.should have_tag('div.lcars.nws#helm') do
