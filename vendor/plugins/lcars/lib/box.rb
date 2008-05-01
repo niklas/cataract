@@ -5,7 +5,7 @@ module LcarsBox
     def define_box(name, opts = {})
       @@list_of_lcars_boxes << name
 
-      kind = extract_lcars_kind_from_opts(opts)
+      @@options_for_lcars[name] = opts
 
       eval <<-EOMETH
         def update_#{name}(opts = {})
@@ -37,9 +37,6 @@ module LcarsBox
                    raise "Illegal element for Lcars: #{element}"
                  end
       page.select(selector)
-    end
-    def extract_lcars_kind_from_opts(opts = {})
-      opts.delete(:kind) || 'nes'
     end
 
     def replace_lcars_title(name,title=nil)
@@ -85,12 +82,14 @@ module LcarsBox
     end
 
     def render_lcars_box(name, opts={}, &block)
+      opts.merge! @@options_for_lcars[name]
+      kind = opts[:kind]
       concat content_tag(
         :div,
           lcars_buttons_with_container(opts[:buttons]) +
           lcars_title(opts[:title]) +
           lcars_content_from_block(&block),
-        {:class => 'lcars #{kind}', :id => name.to_s}
+        {:class => "lcars #{kind}", :id => name.to_s}
       ), block.binding
     end
 

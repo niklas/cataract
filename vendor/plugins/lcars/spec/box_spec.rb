@@ -21,7 +21,7 @@ describe LcarsBox, "defining a box called 'helm'" do
   before(:each) do
     lambda do
       @template = ActionView::Base.new
-      @template.define_box :helm
+      @template.define_box :helm, :kind => 'nws'
     end.should_not raise_error
   end
   it "should add this box to its list" do
@@ -45,7 +45,7 @@ describe LcarsBox, "defining a box called 'helm'" do
       @html.should_not be_empty
     end
     it "should have a complete lcars div with given content" do
-      @html.should have_tag('div.lcars#helm') do
+      @html.should have_tag('div.lcars.nws#helm') do
         with_tag('div.inner') do
           with_tag('div.content','Some Content')
         end
@@ -221,6 +221,7 @@ describe LcarsBox, "defining a box called 'helm'" do
     end
     it "should replace before append" do
       rjs_for.update_helm(@update_data).should match(/update.*insert/sm)
+      rjs_for.update_helm(@update_data).should_not match(/insert.*update/sm)
     end
     it "should not even select :buttons" do
       rjs_for.update_helm(@update_data).should_not select_dom_element("div.lcars#helm > .buttons")
