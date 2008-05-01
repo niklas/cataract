@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../spec/spec_helper'
-require 'init'
+require File.dirname(__FILE__) + '/spec_helper'
 describe LcarsBox do
   before(:each) do
     @box = LcarsBox
@@ -46,7 +45,7 @@ describe LcarsBox, "defining a box called 'helm'" do
       @html.should_not be_empty
     end
     it "should have a complete lcars div with given content" do
-      @html.should have_tag('div.lcars') do
+      @html.should have_tag('div.lcars#helm') do
         with_tag('div.inner') do
           with_tag('div.content','Some Content')
         end

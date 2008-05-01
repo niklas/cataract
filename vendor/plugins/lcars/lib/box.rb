@@ -12,13 +12,7 @@ module LcarsBox
           "foo"
         end
         def render_#{name}(opts = {}, &block)
-          concat content_tag(
-            :div,
-              lcars_buttons(opts[:buttons]) +
-              lcars_title(opts[:title]) +
-              lcars_content_from_block(&block),
-            {:class => 'lcars #{kind}'}
-          ), block.binding
+          render_lcars_box(:#{name}, opts, &block)
         end
       EOMETH
     end
@@ -27,6 +21,16 @@ module LcarsBox
     end
     def extract_lcars_kind_from_opts(opts = {})
       opts.delete(:kind) || 'nes'
+    end
+
+    def render_lcars_box(name, opts={}, &block)
+      concat content_tag(
+        :div,
+          lcars_buttons(opts[:buttons]) +
+          lcars_title(opts[:title]) +
+          lcars_content_from_block(&block),
+        {:class => 'lcars #{kind}', :id => name.to_s}
+      ), block.binding
     end
 
     def lcars_buttons(buttons)
