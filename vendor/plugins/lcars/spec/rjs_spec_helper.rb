@@ -37,6 +37,12 @@ module RJSSpecHelper
       " got rjs: \n  ===\n#{@unescaped_rjs}\n  ===\n"
     end
 
+    def negative_failure_message
+      "did select '#{@select_string}'" + 
+      (@replace_string.blank? ? '' : " and replaced it with '#{@replace_string}'") +
+      " got rjs: \n  ===\n#{@unescaped_rjs}\n  ===\n"
+    end
+
     def and_replace_with(replace_string)
       @replace_string = replace_string
       self
