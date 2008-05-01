@@ -249,4 +249,10 @@ describe LcarsBox, "with illegal name" do
       @template.define_box :update
     end.should raise_error
   end
+
+  it "should not accept 'david hasselhoff'" do
+    lambda do
+      @template.define_box :"david hasselhoff"
+    end.should raise_error
+  end
 end
