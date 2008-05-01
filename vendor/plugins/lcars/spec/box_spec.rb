@@ -61,7 +61,7 @@ describe LcarsBox, "defining a box called 'helm'" do
     end
   end
 
-  describe "updating with some simple data for :title, :buttons and :content" do
+  describe "updating :title, :buttons and :content" do
     before(:each) do
       @update_data = { 
         :title => 'Another Title', 
@@ -79,4 +79,40 @@ describe LcarsBox, "defining a box called 'helm'" do
       rjs_for.update_helm(@update_data).should select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
     end
   end
+
+  describe "updating only :title" do
+    before(:each) do
+      @update_data = { 
+        :title => 'Another Title'
+      }
+    end
+    it "should select and replace the title" do
+      rjs_for.update_helm(@update_data).should select_dom_element("helm > .title").and_replace_with(@update_data[:title])
+    end
+    it "should select and replace the content" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("helm > div.inner > div.content").and_replace_with(@update_data[:content])
+    end
+    it "should select and replace the buttons" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
+    end
+  end
+
+  describe "updating only :buttons and :content" do
+    before(:each) do
+      @update_data = { 
+        :buttons => %w(x y z),
+        :content => "Some other Content"
+      }
+    end
+    it "should select and replace the title" do
+      rjs_for.update_helm(@update_data).should_not select_dom_element("helm > .title").and_replace_with(@update_data[:title])
+    end
+    it "should select and replace the content" do
+      rjs_for.update_helm(@update_data).should select_dom_element("helm > div.inner > div.content").and_replace_with(@update_data[:content])
+    end
+    it "should select and replace the buttons" do
+      rjs_for.update_helm(@update_data).should select_dom_element("helm > .buttons").and_replace_with('<li>x</li> <li>y</li> <li>z</li>')
+    end
+  end
+
 end
