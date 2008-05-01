@@ -2,9 +2,12 @@ module LcarsBox
   module InstanceMethods
     @@list_of_lcars_boxes = []
     @@options_for_lcars = {}
+    InvalidLcarsNames = %w(page update)
     def define_box(name, opts = {})
-      @@list_of_lcars_boxes << name
+      raise "Invalid name for Lcars: #{name} (Blacklisted)" if InvalidLcarsNames.include?(name.to_s)
+      raise "Invalid name for Lcars: #{name} (wrong format, must be proper DOM id)" unless name.to_s =~ /\A\w+\Z/
 
+      @@list_of_lcars_boxes << name
       @@options_for_lcars[name] = opts
 
       eval <<-EOMETH

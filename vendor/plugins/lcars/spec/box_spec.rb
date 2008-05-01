@@ -232,3 +232,21 @@ describe LcarsBox, "defining a box called 'helm'" do
 
   end
 end
+
+describe LcarsBox, "with illegal name" do
+  before(:each) do
+    @template = ActionView::Base.new
+  end
+
+  it "should not accept 'page'" do
+    lambda do
+      @template.define_box :page
+    end.should raise_error
+  end
+
+  it "should not accept 'update'" do
+    lambda do
+      @template.define_box :update
+    end.should raise_error
+  end
+end
