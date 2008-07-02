@@ -91,7 +91,8 @@ module LcarsBox
     # Rendering
     def render_lcars_box(name, opts={}, &block)
       opts.merge! @@options_for_lcars[name]
-      kind = opts[:kind]
+      kind = opts[:kind] || 'nws'
+      theme = opts[:theme] || 'primary'
       rendered = 
         content_tag(
           :div,
@@ -106,7 +107,7 @@ module LcarsBox
               ),
               {:class => 'inner'}
             ),
-          {:class => "lcars #{kind}", :id => name.to_s}
+          {:class => "lcars #{kind} #{theme}", :id => name.to_s}
         )
       concat(rendered,block.binding) if block_given?
       return rendered

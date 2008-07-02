@@ -280,3 +280,8 @@ describe LcarsBox, "with illegal name" do
     end.should raise_error
   end
 end
+
+describe "Sparse definition" do
+  it "should set a default kind"
+  it "should set a default theme"
+end
