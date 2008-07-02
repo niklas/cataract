@@ -4,7 +4,6 @@ class TorrentsController < ApplicationController
   before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :preview, :fetch, :delete_content, :set_torrent_tag_list]
   before_filter :create_log
   helper :tags
-  layout false
 
   attr_accessor :offline
 
@@ -67,13 +66,8 @@ class TorrentsController < ApplicationController
   end
 
   def show
-    respond_to do |want|
-      want.js do
-        new_helm = Hobo::Dryml.render_tag(@template, 'details', :with => @torrent)
-        render :update do |page|
-          page.replace 'helm', new_helm
-        end
-      end
+    respond_to do |wants|
+      wants.js 
     end
   end
 

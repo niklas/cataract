@@ -1,19 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-  <html>
-    <head>
-      <title>Cataract</title>
-      <%= stylesheet_link_tag 'lcars' %>
-      <%= stylesheet_link_tag 'lcars-colors' %>
-      <%= stylesheet_link_tag 'torrents' %>
-      <%= stylesheet_link_tag 'layout' %>
-      <%= stylesheet_link_tag 'style' %>
-      <%= javascript_include_tag *%w(prototype effects dragdrop controls lowpro hobo-rapid) %>
-      <%= javascript_include_tag *%w(application lcars dynamic_content_dirs behaviours) %>
-    </head>
-
-<body>
-<%= render_helm %>
+<%= render_helm :title => 'Helm - FIXME' %>
 <%= render_engineering %>
-<%= render_main :title => 'List of Torrents', :content => render(:partial => 'card', :collection => @torrents)%>
-</body>
-</html>
+<%= render_main :title => 'List of Torrents', 
+                :content => { :partial => 'card', :collection => @torrents },
+                :buttons => torrent_menu_links
+%>

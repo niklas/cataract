@@ -1,4 +1,14 @@
 module TorrentsHelper
+
+  def torrent_menu_links
+    [
+      link_to('New', torrents_url),
+      link_to('Running', search_torrents_url),
+      link_to('Paused', search_torrents_url(:status => 'paused')),
+      link_to('Watchlist', watched_torrents_url),
+    ]
+  end
+
   def progress_bar(torrent, label=nil)
     p = torrent.percent.to_i
     label ||= "#{p.to_s} (#{torrent.statusmsg})"
@@ -9,7 +19,7 @@ module TorrentsHelper
   def progress(torrent)
     content_tag('span',
       if torrent.running?
-        sparkline_tag [torrent.percent], 
+        sparkline_tag [torrent.progress], 
           :type => :pie, 
           :remain_color => '#222222',
           :share_color => 'lightgrey',
@@ -31,60 +41,23 @@ module TorrentsHelper
     end
   end
 
-  def action_buttons_for(t)
-    case t.current_state
-    when :running
-      button(t,'stop') +
-      button(t,'pause') +
-      content_button(t) +
-      move_content_button(t)
-    when :archived
-      button(t,'start') +
-      content_button(t) +
-      move_content_button(t)
-    when :paused
-      button(t,'start') +
-      button(t,'stop') +
-      content_button(t) +
-      move_content_button(t)
-    when :remote
-      button(t,'fetch')
-    when :missing
-      'file missing'
-    when :stopping
-      activity_effect_content(t,"stopping")
-    when :fetching
-      activity_effect_content(t,"fetching")
-    when :nostatus
-      if t.new_record?
-        create_button(t)
+  def actions_for_torrent(t)
+    returning [] do |actions|
+      actions << link_to('start', start_torrent_path(t)) if t.archived? or t.paused?
+      actions << link_to('stop', stop_torrent_path(t)) if t.running? or t.paused?
+      actions << link_to('pause', pause_torrent_path(t)) if t.running?
+      if t.archived? or t.running? or t.paused?
+        actions << link_to('Content', torrent_files_path(t))
+        actions << link_to('Move content', edit_torrent_files_path(t))
       end
-    else
-      content_tag('li',"[WTF: status #{t.status}]")
-    end +
-    ( t.new_record? ? '' : content_tag('li', watchbutton(t)) )
-  end
-
-  def button(t,action)
-    content_tag('li',
-      link_to_remote(
-        action, 
-        :url => {:action => action, :id => t.id, :controller => 'torrents' },
-        :loading => activity_effect(t,action + 'ing'))
-               )
-  end
-
-  def create_button(t)
-    if t.fetchable?
-      content_tag('li',
-        link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post)
-      )
-    else
-      ''
+      actions << link_to('fetch', fetch_torrent_path(t)) if t.remote?
+      actions << link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
+      actions << toggle_watch_button(t) unless t.new_record?
     end
   end
 
-  def watchbutton(t)
+
+  def toggle_watch_button(t)
     if watching = current_user.watches?(t)
       link_to_remote "unwatch",
         :url => watching_url(watching),
@@ -94,20 +67,6 @@ module TorrentsHelper
         :url => watchings_url(:torrent_id => t.id),
         :method => :post
     end
-  end
-
-  def content_button(t)
-    content_tag(
-      :li,
-      link_to_remote('Content', :url => torrent_files_url(t), :method => :get)
-    )
-  end
-
-  def move_content_button(t)
-    content_tag(
-      :li,
-      link_to_remote('Move content', :url => edit_torrent_files_url(t), :method => :get)
-    )
   end
 
   def human_transfer(kb, rate=true)
@@ -137,12 +96,6 @@ module TorrentsHelper
     )
   end
 
-  def details_remote_link(t,caption=nil)
-    caption ||= image_tag("buttons/details")
-    link_to_remote caption,
-      :url => { :action => 'show', :id => t.id }
-  end
-
   def nice_error_messages_for(object_name, options = {})
     options = options.symbolize_keys
     object = instance_variable_get("@#{object_name}")
@@ -162,23 +115,6 @@ module TorrentsHelper
     else
       ""
     end
-  end
-
-  def link_to_content(torrent,label='content')
-    if content_url = torrent.content_url(current_user)
-      link_to label, content_url
-    else
-      ''
-    end
-  end
-
-  def activity_effect(torrent,message=nil)
-    what = activity_effect_content(torrent,message)
-    "$('torrent_#{torrent.id}').getElementsByTagName('div')[0].innerHTML='#{what}'"
-  end
-
-  def activity_effect_content(torrent,message="loading")
-    message + image_tag('spinner.gif', :class => 'spinner')
   end
 
   def shown?(torrent)

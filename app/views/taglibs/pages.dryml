@@ -85,20 +85,6 @@
    </lcars>
 </def>
 
-<def tag="cataract-main"> 
-   <lcars variant="nws" scale="120%" id="main" scheme="secondary" merge>
-      <content: id="main_content" param="main-content" />
-      <left:> 
-         <buttons>
-            <li><%= link_to 'New', torrents_url %></li>
-            <li><%= link_to 'Running', search_torrents_url %></li>
-            <li><%= link_to 'Paused', search_torrents_url(:status => 'paused') %></li>
-            <li><%= link_to 'Watchlist', watched_torrents_url %></li>
-         </buttons>
-      </left>
-   </lcars>
-</def>
-
 <def tag="cataract-error-page">
   <cataract-single-page scheme="error" size="80%" merge>
     <content:>

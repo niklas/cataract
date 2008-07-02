@@ -109,8 +109,8 @@ class ApplicationController < ActionController::Base
   end
 
   def setup_lcars
-    define_box :helm, :kind => 'nws'
-    define_box :main, :kind => 'nws'
-    define_box :engineering, :kind => 'nes'
+    define_box :helm, :kind => 'nws', :theme => 'primary'
+    define_box :main, :kind => 'nws', :theme => 'secondary'
+    define_box :engineering, :kind => 'nes',  :theme => 'ancillary'
   end
 end
