@@ -2,9 +2,12 @@ class ApplicationController < ActionController::Base
   #include AuthenticatedSystem
   before_filter :login_from_cookie
   before_filter :login_required
+  before_filter :setup_lcars
   helper :all
 
   rescue_from 'Exception', :with => :render_lcars_error
+
+  #define_box 'helm', :kind => 'nws'
 
   hobo_controller
 
@@ -103,5 +106,11 @@ class ApplicationController < ActionController::Base
   end
   def h(stringy)
     CGI.escapeHTML(stringy)
+  end
+
+  def setup_lcars
+    define_box :helm, :kind => 'nws'
+    define_box :main, :kind => 'nws'
+    define_box :engineering, :kind => 'nes'
   end
 end
