@@ -18,6 +18,7 @@ module LcarsBox
           append_lcars_content(:#{name},opts[:append_content])
           append_lcars_title(:#{name},opts[:append_title])
           append_lcars_buttons(:#{name},opts[:append_buttons])
+          page["#{name}"].reset_behavior
         end
         def render_#{name}(opts = {}, &block)
           render_lcars_box(:#{name}, opts, &block)
@@ -60,9 +61,15 @@ module LcarsBox
     end
 
     def replace_lcars_content(name,content=nil)
-      return if content.blank?
+      return if content.nil?
       lcars_select(name,:content).each do |element|
-        element.update(content)
+        c = case content 
+            when Hash
+              context.render(content)
+            when String
+              content
+            end
+        element.update(c)
       end
     end
 
@@ -114,7 +121,6 @@ module LcarsBox
     end
 
     def lcars_buttons_with_container(buttons)
-      return '' if buttons.blank?
       content_tag(
         :ul,
         lcars_buttons(buttons),
@@ -135,7 +141,12 @@ module LcarsBox
 
     def lcars_content_from_opts_or_block(opts = {},&block)
       returning '' do |content|
-        content << opts[:content] unless opts[:content].blank?
+        case opts[:content]
+        when Hash
+          content << render(opts[:content]) unless opts[:content].empty?
+        when String
+          content << opts[:content] unless opts[:content].blank?
+        end
         content << capture(&block) if block_given?
       end
     end

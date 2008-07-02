@@ -104,6 +104,17 @@ describe LcarsBox, "defining a box called 'helm'" do
     end
   end
 
+  describe "updating :content with Hash" do
+    before(:each) do
+      @update_data = { 
+        :content => { :inline => '<%= h("foo") %>'}
+      }
+    end
+    it "should select and replace the content" do
+      rjs_for.update_helm(@update_data).should select_dom_element("div.lcars#helm > div.inner > div.content").and_replace_with('foo')
+    end
+  end
+
   describe "updating only :title" do
     before(:each) do
       @update_data = { 
