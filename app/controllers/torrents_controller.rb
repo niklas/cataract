@@ -35,36 +35,6 @@ class TorrentsController < ApplicationController
   end
 
   # actions
-  def stop
-    @torrent.stop!
-    if @torrent.errors.empty?
-      render_notice @torrent.short_title + " was moved to history"
-      render_details_for @torrent
-    else
-      render_error "Error while stopping: #{@torrent.errors.full_messages.join(',')}"
-    end
-  end
-
-  def pause
-    @torrent.pause!
-    if @torrent.errors.empty?
-      render_notice @torrent.short_title + " has been paused"
-      render_details_for @torrent
-    else
-      render_error "Error while pausing: #{@torrent.errors.full_messages.join(',')}"
-    end
-  end
-
-  def start
-    @torrent.start!
-    if @torrent.errors.empty?
-      render_notice @torrent.short_title + " has been started for transfer"
-      render_details_for @torrent
-    else
-      render_error "Error while starting: #{@torrent.errors.full_messages.join(',')}"
-    end
-  end
-
   def show
     respond_to do |wants|
       wants.js 
@@ -103,7 +73,7 @@ class TorrentsController < ApplicationController
     if (params[:url] and !params[:url].empty?) or @torrent
       @torrent ||= Torrent.new(:url => params[:url].strip)
       @torrent.fetchable?
-      render_details_for @torrent
+      render :template => '/torrents/show'
     else
       render :update do |page|
         page[:notice].update "Please enter a URL"
@@ -120,7 +90,7 @@ class TorrentsController < ApplicationController
       if @torrent = Torrent.fetch_and_start_by_url(params[:url])
         current_user.watch(@torrent)
         render_notice @torrent.short_title + " has been fetched"
-        render_details_for @torrent
+        render :template => '/torrents/show'
       else
         render_error "Error while fetching: #{@torrent.errors.full_messages.join(',')}"
       end

@@ -1,4 +1,6 @@
 <% torrent = card %>
-<% div_for torrent do %>
-  <%= link_to h(torrent.short_title), torrent_url(torrent) %>
+<% content_tag_for :li, torrent do %>
+  <%= progress_image_for torrent %>
+  <span class="title"> <%= h torrent.short_title %> </span>
+  <%= link_to "details", torrent_url(torrent), :class => 'action show' %>
 <% end %>

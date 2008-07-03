@@ -1,6 +1,8 @@
 <%= render_helm :title => 'Helm - FIXME' %>
 <%= render_engineering %>
 <%= render_main :title => 'List of Torrents', 
-                :content => { :partial => 'card', :collection => @torrents },
-                :buttons => torrent_menu_links
+                :buttons => torrent_menu_links,
+                :content => content_tag(:ul, 
+                                        render( :partial => 'card', :collection => @torrents ), 
+                                        :class => 'torrents')
 %>

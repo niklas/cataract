@@ -10,13 +10,23 @@ class Torrent
   def self.states
     STATES
   end
+
   STATES.each do |st|
-    src = <<-END_SRC
-      def #{st.to_s}?
-        current_state == :#{st}
-      end
-    END_SRC
-    class_eval src, __FILE__, __LINE__
+    define_method "#{st.to_s}?" do
+      current_state == st
+    end
+  end
+
+  def startable?
+    archived? or paused?
+  end
+
+  def stoppable?
+    running? or paused?
+  end
+
+  def local?
+    archived? or running? or paused?
   end
 
   def status_from_rtorrent

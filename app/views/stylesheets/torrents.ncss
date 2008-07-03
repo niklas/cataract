@@ -3,6 +3,33 @@
   color2 = '#d1daf5'
 %>
 
+ul.torrents {
+  font-size: 115%;
+  line-height: 130%;
+  margin: 0;
+  padding: 0;
+  li.torrent {
+    list-style: none;
+    display: block;
+    clear: left;
+    float: left;
+    width: 99%;
+    > * {
+      display: block;
+      float: left;
+      margin-right: 0.3em;
+    }
+    a {
+      float: right;
+    }
+  }
+  span.progress {
+    img {
+      height: 1.2em;
+    }
+  }
+}
+
 div.torrent {
   position: relative;
   margin: 0;
@@ -98,10 +125,6 @@ div.torrent {
 
 .match {color: white; }
 .no_match {color: #888; }
-
-span.progress {
-  margin-right: 0.3em;
-}
 
 
 

@@ -16,20 +16,21 @@ module TorrentsHelper
       {:class => 'percent_bar', :style => "width: #{p}%", :title => label})
   end
 
-  def progress(torrent)
+  def progress_image_for(torrent)
+    p = torrent.progress.to_i
     content_tag('span',
       if torrent.running?
-        sparkline_tag [torrent.progress], 
+        sparkline_tag [p], 
           :type => :pie, 
           :remain_color => '#222222',
           :share_color => 'lightgrey',
           :background_color => 'none',
-          :diameter => 16
+          :diameter => 32
       else
-        torrent.statusmsg || 'finished'
+        image_tag('no_progress.png')
       end,
       {:class => 'progress', :id => "progress_#{torrent.id}", 
-        :title => "#{torrent.percent.to_i}%"}
+        :title => "#{p}%"}
     )
   end
 
@@ -42,17 +43,17 @@ module TorrentsHelper
   end
 
   def actions_for_torrent(t)
-    returning [] do |actions|
-      actions << link_to('start', start_torrent_path(t)) if t.archived? or t.paused?
-      actions << link_to('stop', stop_torrent_path(t)) if t.running? or t.paused?
-      actions << link_to('pause', pause_torrent_path(t)) if t.running?
-      if t.archived? or t.running? or t.paused?
-        actions << link_to('Content', torrent_files_path(t))
-        actions << link_to('Move content', edit_torrent_files_path(t))
+    returning [] do |a|
+      a << link_to_remote('start', :url => torrent_transfer_path(t), :method => :post) if t.startable?
+      a << link_to_remote('stop', :url => torrent_transfer_path(t), :method => :delete) if t.stoppable?
+      a << link_to_remote('pause', :url => pause_torrent_transfer_path(t), :method => :put) if t.running?
+      if t.local?
+        a << link_to('Content', torrent_files_path(t))
+        a << link_to('Move content', edit_torrent_files_path(t))
       end
-      actions << link_to('fetch', fetch_torrent_path(t)) if t.remote?
-      actions << link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
-      actions << toggle_watch_button(t) unless t.new_record?
+      a << link_to_remote('fetch', :url => fetch_torrent_path(t), :method => :put) if t.remote?
+      a << link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
+      a << toggle_watch_button(t) unless t.new_record?
     end
   end
 
