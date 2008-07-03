@@ -91,7 +91,7 @@ class Lcars
     case variant
     when :n
       create_canvas(dia, dia2, background_color)
-      @draw.circle(dia2,dia,0,dia)
+      @draw.circle(dia2,dia2,dia2,0)
     when :s
       create_canvas(dia, dia2, background_color)
       @draw.circle(dia2,0,dia,0)
