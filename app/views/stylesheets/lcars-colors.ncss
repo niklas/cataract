@@ -125,6 +125,10 @@ div.lcars {
          }
       }
       > div.content {
+        a.action {
+           color: <%= colors[:base] %>;
+           background-color: <%= colors[:color1] %>;
+        }
         form {
           input[type="submit"] {
             background: <%= colors[:base] %>;
