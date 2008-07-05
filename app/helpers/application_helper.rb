@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def nice_date(d)
-    d.to_s(:db)
+    d ? d.to_s(:db) : content_tag(:span,'unknown', :class => 'warning')
   end
 
   def number_to_human_rate(num=nil,precision=1)
