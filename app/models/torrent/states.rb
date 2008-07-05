@@ -45,9 +45,9 @@ class Torrent
 
   def start!
     event_from [:paused, :archived, :new] do 
-      # copy the file because rtorrent deletes file on #stop!
-      moveto( :running, :copy => true )
       unless paused?
+        # copy the file because rtorrent deletes file on #stop!
+        moveto( :running, :copy => true )
         remote.load(self.fullpath(:running))
         remote.directory = Settings.torrent_dir
       end
