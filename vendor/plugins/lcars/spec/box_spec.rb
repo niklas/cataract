@@ -295,4 +295,9 @@ end
 describe "Sparse definition" do
   it "should set a default kind"
   it "should set a default theme"
+  it "can be overridden by render_* opts"
+end
+
+describe "JS Beauty" do
+  it "should provide an alert method"
 end

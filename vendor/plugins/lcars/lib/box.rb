@@ -97,7 +97,7 @@ module LcarsBox
 
     # Rendering
     def render_lcars_box(name, opts={}, &block)
-      opts.merge! @@options_for_lcars[name]
+      opts.reverse_merge! @@options_for_lcars[name]
       kind = opts[:kind] || 'nws'
       theme = opts[:theme] || 'primary'
       rendered = 
