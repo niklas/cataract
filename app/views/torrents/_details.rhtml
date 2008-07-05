@@ -8,7 +8,7 @@
   <% if torrent.running? %>
     <dt>Up</dt>
     <dd>
-    <%= human_transfer torrent.up_rate/1024 %>
+    <%= human_transfer torrent.up_rate / 1024 %>
     (<%= human_bytes torrent.up_total %>) 
     </dd>
     <dt>Down</dt>
@@ -35,6 +35,8 @@
   <% if torrent.file_exists? %>
     <dt>Filename</dt>
     <dd><span title="<%= torrent.fullpath -%>"> <%= torrent.filename %></span></dd>
+    <dt>InfoHash</dt>
+    <dd><pre><%= torrent.info_hash %></pre></dd>
   <% end %>
 
   <% unless torrent.url.blank? %>
