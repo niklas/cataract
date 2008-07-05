@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
         render :update do |page|
           page.insert_html :bottom, 'body', render_error(
             :title => (exception.message),
-            :content => content_tag(:pre, h(exception.clean_backtrace.join("\n   "))),
+            :content => content_tag(:h3,exception.message) + content_tag(:pre, h(exception.clean_backtrace.join("\n   "))),
             :buttons => [
               link_to("Back", :back),
               link_to_function("Close") do |page|
@@ -102,6 +102,7 @@ class ApplicationController < ActionController::Base
     render_log(msg,:info)
   end
   def render_log(msg='Random Log Message',level=:log)
+    return true
     @logs << LogEntry.new(msg,level)
   end
   def create_log
