@@ -8,14 +8,9 @@ class TorrentsController < ApplicationController
 
   def index
     @torrents = Torrent.recent
-    list
-  end
-
-  def list
-    @torrents ||= Torrent.running.newest_first
-
+    #@torrents ||= Torrent.running.newest_first
     respond_to do |wants|
-      wants.html { render :action => 'list' }
+      wants.html { render :action => 'index' }
       wants.js { render_list_of(@torrents)}
     end
   end
@@ -23,14 +18,6 @@ class TorrentsController < ApplicationController
   def watched
     @torrents = current_user.torrents
     render :action => 'list'
-  end
-
-  def refresh
-    @previewed = Torrent.find_collection(session[:previewed_torrents])
-    @shown = Torrent.find_collection(session[:shown_torrents])
-    respond_to do |wants|
-      wants.js 
-    end
   end
 
   # actions

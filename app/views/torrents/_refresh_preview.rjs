@@ -1,1 +1,0 @@
-page["progress_#{refresh_preview.id}"].replace progress(refresh_preview)
