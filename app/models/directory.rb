@@ -26,4 +26,33 @@ class Directory < ActiveRecord::Base
       select { |dir| File.directory? dir }.
       map { |dir| dir.split('/').last }
   end
+
+  def path_with_optional_subdir(subdir)
+    if !subdir.blank? && subdirs.include?(subdir)
+      if File.directory?(rpath = File.join(path, subdir))
+        rpath
+      else
+        path
+      end
+    else
+      path
+    end
+  end
+
+  def is_on_same_drive?(otherdir)
+    otherdir = self.class.new(:path => otherdir) if otherdir.is_a? String
+    self.mountpoint == otherdir.mountpoint
+  end
+
+  def mountpoint
+    self.class.mountpoints.find do |mountpoint|
+      escaped = Regexp.quote(mountpoint+'/')
+      (self.path + '/') =~ /^#{escaped}/
+    end
+  end
+
+  private
+  def self.mountpoints
+    File.read('/etc/mtab').collect {|l| l.split[1] }.sort {|b,a| a.length <=> b.length }
+  end
 end
