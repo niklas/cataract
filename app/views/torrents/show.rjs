@@ -1,3 +1,3 @@
 page.update_helm :title => @torrent.short_title, 
-                 :content => { :partial => 'details', :object => @torrent },
+                 :content => { :partial => '/torrents/details', :object => @torrent },
                  :buttons => actions_for_torrent(@torrent)
