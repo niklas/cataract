@@ -5,11 +5,18 @@ class ApplicationController < ActionController::Base
   before_filter :login_required
   helper :all
 
+  layout 'torrents'
+
   rescue_from 'Exception', :with => :render_lcars_error
 
   protected
   def access_denied(user_model=nil)
-    redirect_to :controller => 'account', :action => 'login'
+    respond_to do |wants|
+      wants.html { redirect_to login_path }
+      wants.js do
+        render :template => '/sessions/new'
+      end
+    end
   end
 
   def render_lcars_error(exception)
@@ -118,6 +125,7 @@ class ApplicationController < ActionController::Base
     define_box :main, :kind => 'nw', :theme => 'secondary'
     define_box :engineering, :kind => 'nw',  :theme => 'ancillary'
     define_box :single, :kind => 'nw'
+    define_box :tiny, :kind => 'nes'
     define_box :error, :kind => 'nw'
   end
 end

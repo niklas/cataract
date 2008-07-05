@@ -1,10 +1,12 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
-
+  skip_before_filter :login_required, :except => :destroy
   # render new.rhtml
   def new
+    respond_to do |wants|
+      wants.js { render }
+      wants.html { render }
+    end
   end
 
   def create
@@ -31,7 +33,12 @@ class SessionsController < ApplicationController
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/')
+    respond_to do |wants|
+      wants.html { redirect_back_or_default('/') }
+      wants.js do
+        render :template => '/sessions/new'
+      end
+    end
   end
 
 protected

@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
-  
-
+  skip_before_filter :login_required
+  before_filter :signup_allowed, :only => :create
   # render new.rhtml
   def new
     @user = User.new
@@ -23,6 +21,15 @@ class UsersController < ApplicationController
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       render :action => 'new'
+    end
+  end
+
+  private
+  def signup_allowed
+    if Settings.signup_forbidden
+      flash[:notice] = "Signup is forbidden"
+      redirect_back_or_default('/')
+      false
     end
   end
 end

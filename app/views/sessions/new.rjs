@@ -1,0 +1,6 @@
+page.update_engineering :title => 'Log in',
+                        :content => { :partial => '/sessions/form'},
+                        :buttons => [
+                          link_to('Sign up', signup_path)
+                        ]
+
