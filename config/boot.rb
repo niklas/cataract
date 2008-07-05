@@ -6,10 +6,7 @@ RAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(RAILS_ROOT)
 module Rails
   class << self
     def boot!
-      unless booted?
-        preinitialize
-        pick_boot.run
-      end
+      pick_boot.run unless booted?
     end
 
     def booted?
@@ -22,15 +19,6 @@ module Rails
 
     def vendor_rails?
       File.exist?("#{RAILS_ROOT}/vendor/rails")
-    end
-
-    # FIXME : Ruby 1.9
-    def preinitialize
-      load(preinitializer_path) if File.exists?(preinitializer_path)
-    end
-
-    def preinitializer_path
-      "#{RAILS_ROOT}/config/preinitializer.rb"
     end
   end
 
@@ -56,7 +44,7 @@ module Rails
 
     def load_rails_gem
       if version = self.class.gem_version
-        gem 'rails', version
+        gem 'rails', "=#{version}"
       else
         gem 'rails'
       end
@@ -94,7 +82,7 @@ module Rails
       end
 
       def parse_gem_version(text)
-        $1 if text =~ /^[^#]*RAILS_GEM_VERSION\s*=\s*["']([!~<>=]*\s*[\d.]+)["']/
+        $1 if text =~ /^[^#]*RAILS_GEM_VERSION\s*=\s*'([\d.]+)'/
       end
 
       private
