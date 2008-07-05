@@ -30,12 +30,19 @@ ul.torrents {
   }
 }
 
-div.torrent {
+ul.files {
+  margin: 0.1em;
+  padding: 0.2em;
+  li {
+    list-style: none;
+  }
+}
+
+*.torrent {
   position: relative;
   margin: 0;
   padding: 0em;
   overflow: hidden;
-  font-size: 0.8em;
   a {
     color: <%= color2 %>;
     text-decoration: none;
@@ -96,13 +103,6 @@ div.torrent {
   div.content, div.tags {
     clear: both;
     width: 100%;
-  }
-  ul.files {
-    margin: 0.1em;
-    padding: 0.2em;
-    li {
-      list-style: none;
-    }
   }
   table {
     font-size: 100%;
