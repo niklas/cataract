@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :settings
   map.resources :torrents, 
     :member => {:fetch => :put},
+    :new => {:probe => :put},
     :collection => { :watched => :get, :search => :get } do |torrent|
     torrent.resource :files, :controller => 'torrents_files'
     torrent.resource :transfer, :controller => 'torrents_transfer', :member => { :pause => :put }

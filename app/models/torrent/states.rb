@@ -29,10 +29,14 @@ class Torrent
     archived? or running? or paused?
   end
 
+  def in_rtorrent?
+    remote.state && true
+  rescue TorrentNotRunning, TorrentHasNoInfoHash
+    false
+  end
+
   def status_from_rtorrent
     (remote.state ==  1 ? 'running' : 'paused')
-  rescue TorrentNotRunning, TorrentHasNoInfoHash
-    :stopped
   end
 
   
@@ -108,11 +112,12 @@ class Torrent
     rescue TorrentNotRunning, TorrentHasNoInfoHash
       new_status = auto_status
     end
-    update_attribute(:status,new_status) if new_status != current_state
+    status = new_status
   end
 
  private
   def filepath_by_status(stat)
+    return if filename.blank?
     case stat.to_sym
     when :fetching 
       File.join(Settings.history_dir, filename) + '.fetching'

@@ -7,11 +7,12 @@ class Torrent
     else
       method_missing_without_xml_rpc m, *args, &blk
     end
-  rescue TorrentNotRunning
+  rescue TorrentNotRunning => e
     finally_stop! unless archived?
-    return '[not-running]'
-  rescue TorrentHasNoInfoHash
-    return '[no-info_hash]'
+    raise e
+  rescue TorrentHasNoInfoHash => e
+    finally_stop!
+    return
   end
   alias_method_chain :method_missing, :xml_rpc
 

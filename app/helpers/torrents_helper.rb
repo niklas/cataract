@@ -2,10 +2,11 @@ module TorrentsHelper
 
   def torrent_menu_links
     [
-      link_to('New', torrents_url),
+      link_to('Recent', torrents_url),
       link_to('Running', search_torrents_url),
       link_to('Paused', search_torrents_url(:status => 'paused')),
       link_to('Watchlist', watched_torrents_url),
+      link_to('New', new_torrent_url)
     ]
   end
 
@@ -17,10 +18,9 @@ module TorrentsHelper
   end
 
   def progress_image_for(torrent)
-    p = torrent.progress.to_i
     content_tag('span',
       if torrent.running?
-        sparkline_tag [p], 
+        sparkline_tag [torrent.progress.to_i], 
           :type => :pie, 
           :remain_color => '#222222',
           :share_color => 'lightgrey',
@@ -29,8 +29,7 @@ module TorrentsHelper
       else
         image_tag('no_progress.png')
       end,
-      {:class => 'progress', :id => "progress_#{torrent.id}", 
-        :title => "#{p}%"}
+      {:class => 'progress', :id => "progress_#{torrent.id}"}
     )
   end
 

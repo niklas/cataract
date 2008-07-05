@@ -11,6 +11,7 @@ class Torrent
   end
 
   def fetchable?(please_reload=false)
+    return if url.blank?
     unless @fetchable.nil? || please_reload
       return @fetchable
     end
@@ -19,7 +20,7 @@ class Torrent
         Net::HTTP.start(uri.host, uri.port) do |http|
           resp = http.head(uri.path)
           if resp.is_a?(Net::HTTPSuccess) and (resp['content-type'] =~ /application\/x-bittorrent/i)
-            self.filename = filename_from_http_response(resp)
+            self.filename ||= filename_from_http_response(resp)
             resp
           else
             errors.add :url, "HTTP Error: #{resp.inspect}, Content-type: #{resp['content-type']}"

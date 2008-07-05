@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
   def default_render
     if request.xhr?
       render :update do |page|
-        unless @to_render.empty?
+        unless @to_render.blank?
           @to_render.each do |task|
             task.call page
           end

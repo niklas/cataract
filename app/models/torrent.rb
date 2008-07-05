@@ -34,13 +34,16 @@ class Torrent < ActiveRecord::Base
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
   belongs_to :feed
-  validates_uniqueness_of :filename, :allow_nil => true
+
+  validates_uniqueness_of :filename, :unless => :remote?
+  validates_length_of :filename, :in => 9..255, :unless => :remote?
+  
   validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   before_save :sync
-  before_validation :fix_filename, :sync_status!
-  before_create :set_default_values
+  before_validation :fix_filename
+  before_validation :sync_status!
   def after_find
     check_if_status_is_up_to_date
   end
@@ -154,10 +157,7 @@ class Torrent < ActiveRecord::Base
     title ||
       (filename.blank? ? "Torrent ##{id}" : clean_filename)
   end
-  # synonym for short_title
-  def nice_title
-    short_title
-  end
+  alias :nice_title :short_title
 
   def clean_filename
     filename.
@@ -178,6 +178,14 @@ class Torrent < ActiveRecord::Base
       end
     end
     false
+  end
+
+  after_destroy :remove_file
+
+  def remove_file
+    FileUtils.rm(fullpath) if file_exists?
+  rescue
+    true
   end
 
   def before_destroy
@@ -223,12 +231,6 @@ class Torrent < ActiveRecord::Base
       self.filename.sub!(/^.*\/([^\/]*)$/, '\1')
       self.filename += '.torrent' unless self.filename =~ /\.torrent$/
     end
-  end
-
-  def set_default_values
-    self.status ||= 'running'
-    self.content_size      ||= 0
-    self.description     ||= ''
   end
 
 end

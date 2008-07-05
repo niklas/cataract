@@ -49,15 +49,10 @@ class TorrentsController < ApplicationController
   end
 
   def probe
-    if (params[:url] and !params[:url].empty?) or @torrent
-      @torrent ||= Torrent.new(:url => params[:url].strip)
-      @torrent.fetchable?
-      render :template => '/torrents/show'
-    else
-      render :update do |page|
-        page[:notice].update "Please enter a URL"
-        page[:notice].show
-        page.visual_effect :highlight, 'notice'
+    respond_to do |wants|
+      wants.js do
+        @torrent = Torrent.new(:url => params[:url].strip)
+        render
       end
     end
   end
@@ -65,16 +60,21 @@ class TorrentsController < ApplicationController
   # create torrent
   # TODO: other ways than fetching with url
   def create
-    if params[:url]
-      if @torrent = Torrent.fetch_and_start_by_url(params[:url])
+    @torrent = Torrent.create(params[:torrent])
+    if @torrent.save
+      if params[:commit] == "Fetch"
+        @torrent.fetch_and_start!
         current_user.watch(@torrent)
-        render_notice @torrent.short_title + " has been fetched"
-        render :template => '/torrents/show'
-      else
-        render_error "Error while fetching: #{@torrent.errors.full_messages.join(',')}"
+      end
+      respond_to do |wants|
+        wants.js  { render :action => 'new' }
+        wants.html  { render :action => 'new' }
       end
     else
-      render_error "Cannot fetch without url"
+      respond_to do |wants|
+        wants.js  { render :action => 'new' }
+        wants.html  { render :action => 'new' }
+      end
     end
   end
 
@@ -126,7 +126,6 @@ class TorrentsController < ApplicationController
       page["torrent_tag_list_#{@torrent.id}_in_place_editor"].replace_html @torrent.tag_list.to_s
       page[:tag_cloud].replace_html render(:partial => 'tag_cloud')
     end
-    
   end
 
   private

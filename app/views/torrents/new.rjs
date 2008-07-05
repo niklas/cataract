@@ -1,11 +1,3 @@
-reaction = 
-  if @torrent.fetchable?
-    link_to("add", 
-        {:action => 'fetch_by_url', :url => h(@torrent.url) }, 
-        {:class => 'front_of_search'}
-        )
-  else
-    content_tag('span', "incomplete URL", { :class => 'front_of_search' } )
-  end
-page.insert_html :top, :groups, reaction
-page.render_pending_notifications
+page.update_helm :title => 'New Torrent',
+                 :content => {:partial => '/torrents/new_form', :object => @torrent}
+                
