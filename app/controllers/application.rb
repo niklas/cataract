@@ -81,13 +81,12 @@ class ApplicationController < ActionController::Base
     @to_render << blk
   end
   def render_details_for(torrent)
-    render_update do |page|
-      page.replace :helm, Hobo::Dryml.render_tag(@template,'details', :with => torrent)
-    end
+    # same as app/views/torrents/show.rjs
+    raise "dont use that anymore, please"
   end
   def render_list_of(torrents)
     render_update do |page|
-      page.replace :main, Hobo::Dryml.render_tag(@template, 'list_of_torrents', :with => torrents)
+      page.update_main :content => {:partial => '/torrents/list', :object => torrents}
     end
   end
 
