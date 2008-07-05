@@ -73,6 +73,7 @@ describe SessionsController do
     end    
     before do 
       @user = User.find(:first); 
+      @user.name = "your god"
       set_remember_token 'hello!', 5.minutes.from_now
     end    
     it 'logs in with cookie' do

@@ -6,6 +6,9 @@ include AuthenticatedTestHelper
 
 describe UsersController do
   fixtures :users
+  before(:each) do
+    Settings.should_receive(:signup_forbidden).and_return(false)
+  end
 
   it 'allows signup' do
     lambda do
@@ -52,7 +55,7 @@ describe UsersController do
   
   
   def create_user(options = {})
-    post :create, :user => { :login => 'quire', :email => 'quire@example.com',
+    post :create, :user => { :name => 'Quire', :login => 'quire', :email => 'quire@example.com',
       :password => 'quire69', :password_confirmation => 'quire69' }.merge(options)
   end
 end
