@@ -26,26 +26,4 @@ module ApplicationHelper
     size ? "#{size}/s" : size
   end
 
-  def sidebar_switcher(divs=%w(watchlist tag_cloud))
-    human_divs = divs.map(&:humanize).join(' / ')
-    content_tag('div',
-      divs.map do |domid|
-        if session[:sidebar] == domid 
-          content_tag('span', domid.humanize)
-        else
-          link_to_remote domid.humanize, :url => { :action => 'switch_sidebar', :to => domid},
-            :before => %Q[Element.hide(#{(divs-[domid]).map {|d| "'#{d}'"}.join(',')});] + 
-                       %Q[Element.show('#{domid}')] 
-        end
-      end.join(' '),
-      { :id => 'sidebar_switcher' }
-    )
-  end
-
-  def sidebar_div(domid, &block)
-    style = session[:sidebar] == domid ? '' : 'display: none'
-    concat(%Q[<div id="#{domid}" style="#{style}">], block.binding)
-    yield 
-    concat(%Q[</div>], block.binding)
-  end
 end

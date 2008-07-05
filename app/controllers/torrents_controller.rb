@@ -1,6 +1,5 @@
 class TorrentsController < ApplicationController
   before_filter :set_default_page_title
-  before_filter :set_sidebar
   before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :preview, :fetch, :delete_content, :set_torrent_tag_list]
   before_filter :create_log
   helper :tags
@@ -174,15 +173,6 @@ class TorrentsController < ApplicationController
     
   end
 
-  def switch_sidebar
-    which = params[:to]
-    session[:sidebar] = which
-    render :update do |page|
-      page[:sidebar_switcher].replace sidebar_switcher
-      page[which].replace_html render(:partial => which)
-    end
-  end
-
   private
   def set_default_page_title
     @searched_tags ||= []
@@ -215,7 +205,4 @@ class TorrentsController < ApplicationController
     session[:previewed_torrents] << tid unless session[:previewed_torrents].include?(tid)
   end
 
-  def set_sidebar
-    session[:sidebar] ||= 'watchlist'
-  end
 end
