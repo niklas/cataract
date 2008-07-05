@@ -6,7 +6,4 @@
 %>
 <%= render_main :title => 'List of Torrents', 
                 :buttons => torrent_menu_links,
-                :content => content_tag(:ul, 
-                                        render( :partial => 'card', :collection => @torrents ), 
-                                        :class => 'torrents')
-%>
+                :content => {:partial => '/torrents/list', :object => @torrents } %>

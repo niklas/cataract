@@ -13,7 +13,7 @@ class TorrentsFilesController < ApplicationController
     respond_to do |wants|
       wants.js do
         render :update do |page|
-          page["torrent_#{@torrent.id}"].replace_html :partial => 'move', :object => @torrent
+          page.update_helm :content => { :partial => 'move', :object => @torrent }
         end
       end
     end

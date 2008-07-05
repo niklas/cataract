@@ -9,15 +9,19 @@ class TorrentsController < ApplicationController
 
   def index
     @torrents = Torrent.recent
-    render :action => 'list'
+    list
   end
 
   def list
-    @torrents = Torrent.running.newest_first
+    @torrents ||= Torrent.running.newest_first
 
     respond_to do |wants|
       wants.html
-      wants.js { render_list_of(torrents) }
+      wants.js do
+        render :update do |page|
+          page.update_main :content => {:partial => 'list', :object => @torrents}
+        end
+      end
     end
   end
 
@@ -132,9 +136,8 @@ class TorrentsController < ApplicationController
     #memorize_preview(@torrents)
     respond_to do |wants|
       wants.js {
-        new_list = Hobo::Dryml.render_tag(@template,'list_of_torrents', :with => @torrents)
         render :update do |page|
-          page[:main_content].update new_list
+          page.update_main :content => {:partial => 'list', :object => @torrents}
         end
       }
       wants.html {
