@@ -1,0 +1,1 @@
+page.update_helm :content => { :partial => 'list', :object => @torrent.files_hierarchy }

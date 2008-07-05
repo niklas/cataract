@@ -1,4 +1,51 @@
 <% torrent = details %>
-<% content_tag_for :div, torrent  do %>
-  <%= torrent.short_title %>: <%= torrent.current_state %>
+<% content_tag_for :dl, torrent  do %>
+  <dt>Title</dt>
+  <dd> <%= torrent.short_title %> </dd>
+  <dt>Status</dt>
+  <dd> <%= torrent.current_state %> </dd>
+
+  <% if torrent.running? %>
+    <dt>Up</dt>
+    <dd>
+    <%= human_transfer torrent.up_rate/1024 %>
+    (<%= human_bytes torrent.up_total %>) 
+    </dd>
+    <dt>Down</dt>
+    <dd>
+    <%= human_transfer torrent.down_rate/1024 %>
+    (<%= human_bytes torrent.down_total %>) 
+    </dd>
+  <% end %>
+  
+  <% if torrent.content_size.to_i > 0 %>
+    <dt>Size</dt>
+    <dd> <%= human_bytes(torrent.content_size.to_i) %> </dd>
+  <% end %>
+
+  <dt>ID</dt>
+  <dd><%= torrent.id -%></dd>
+  <dt>created</dt>
+  <dd><%=nice_date torrent.created_at -%></dd>
+  <dt>updated</dt>
+  <dd><%=nice_date torrent.updated_at -%></dd>
+
+  <% if torrent.file_exists? %>
+    <dt>Filename</dt>
+    <dd><span title="<%= torrent.fullpath -%>"> <%= torrent.filename %></span></dd>
+  <% end %>
+
+  <% unless torrent.url.blank? %>
+    <dt>Source</dt>
+    <dd><%= link_to torrent.url, torrent.url %> </dd>
+  <% end %>
+
+  <dt>Tags</dt>
+  <dd>
+  <%# in_place_editor_field :torrent, :tag_list, {}, 
+    {:cols => 42, :external_control => "tags_list_button_#{torrent.id}", :script => true} %>
+    <%= torrent.tag_list.names.join(', ') %>
+    <span id="tags_list_button_<%= torrent.id -%>" class="action">edit</span>
+  </dd>
+
 <% end %>
