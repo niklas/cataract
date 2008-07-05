@@ -1,6 +1,6 @@
 class TorrentsController < ApplicationController
   before_filter :set_default_page_title
-  before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :preview, :fetch, :delete_content, :set_torrent_tag_list]
+  before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :fetch, :delete_content, :set_torrent_tag_list]
   before_filter :create_log
   helper :tags
 
@@ -24,13 +24,6 @@ class TorrentsController < ApplicationController
   def show
     respond_to do |wants|
       wants.js 
-    end
-  end
-
-  def preview
-    mark_preview(@torrent)
-    respond_to do |want|
-      want.js
     end
   end
 
@@ -114,8 +107,6 @@ class TorrentsController < ApplicationController
       @torrents = Torrent.newest_first.running
       flash[:reply]= ''
     end
-    #forget_all
-    #memorize_preview(@torrents)
     respond_to do |wants|
       wants.js {
         render :update do |page|
@@ -125,28 +116,6 @@ class TorrentsController < ApplicationController
       wants.html {
         render :action => 'list'
       }
-    end
-  end
-
-  def delete_content
-    if params[:delete_confirmation] == 'DELETE'
-      if @torrent.delete_content! 
-        @torrent.halt!
-        forget(@torrent)
-        render :update do |page| 
-          page.notification("'#{@torrent.short_title}' has been stopped and its content deleted, max. #{@torrent.content_size} Byte freed" )
-          page << render(:partial => 'remove', :object => @torrent)
-        end
-      else
-        render :update do |page| 
-          page.notification("error deleting contents: #{@torrent.errors.full_messages}")
-        end
-      end
-    else
-      render :update do |page| 
-        page[:notice].update "need a confirmation to delete content"
-        page[:notice].visual_effect :appear
-      end
     end
   end
 
@@ -165,31 +134,4 @@ class TorrentsController < ApplicationController
     @searched_tags ||= []
     @page_title = 'torrents'
   end
-
-  def forget(torrent)
-    @removed_preview_torrent = session[:previewed_torrents].delete(torrent.id)
-    @removed_shown_torrent = session[:shown_torrents].delete(torrent.id)
-  end
-
-  def forget_all
-    session[:previewed_torrents] = []
-    session[:shown_torrents] = []
-  end
-
-  def memorize_preview(torrents)
-    session[:previewed_torrents] = torrents.collect(&:id)
-  end
-
-  def mark_shown(torrent)
-    tid = torrent.id
-    session[:previewed_torrents].delete(tid)
-    session[:shown_torrents] << tid unless session[:shown_torrents].include?(tid)
-  end
-
-  def mark_preview(torrent)
-    tid = torrent.id
-    session[:shown_torrents].delete(tid)
-    session[:previewed_torrents] << tid unless session[:previewed_torrents].include?(tid)
-  end
-
 end
