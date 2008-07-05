@@ -23,10 +23,22 @@ class ApplicationController < ActionController::Base
         render :template => '/shared/error'
       end
       wants.js do
-        render :template => '/shared/error'
+        render :update do |page|
+          page.insert_html :bottom, 'body', render_error(
+            :title => (exception.message),
+            :content => content_tag(:pre, h(exception.clean_backtrace.join("\n   "))),
+            :buttons => [
+              link_to("Back", :back),
+              link_to_function("Close") do |page|
+                page['error'].remove
+              end
+            ],
+            :theme => 'error'
+          )
+        end
       end
     end
-    response.headers['Status'] = interpret_status(500)
+    #response.headers['Status'] = interpret_status(500)
   end
 
   # FIXME update more than one (use render_update - does not work for errors yet...)
@@ -102,8 +114,9 @@ class ApplicationController < ActionController::Base
 
   def setup_lcars
     define_box :helm, :kind => 'se', :theme => 'primary'
-    define_box :main, :kind => 'nws', :theme => 'secondary'
+    define_box :main, :kind => 'nw', :theme => 'secondary'
     define_box :engineering, :kind => 'nw',  :theme => 'ancillary'
     define_box :single, :kind => 'nw'
+    define_box :error, :kind => 'nw'
   end
 end

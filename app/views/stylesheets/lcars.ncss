@@ -106,6 +106,9 @@ body {
   border: 0;
 }
 
+div.lcars#error {
+  z-index: 10;
+}
 
 div.lcars {
   margin: <%= u %>em;
@@ -129,7 +132,7 @@ div.lcars {
   /* variants by non-present side */
 
   /* !=/w/ */
-  .es,.se,.e,.se,.nes,.sen,.ne,.en {
+  .nes,.sen,.es,.se,.ne,.en,.se,.es,.e,.n,.s {
      > div.inner, > .left {
        left: 0;
      }
@@ -138,7 +141,7 @@ div.lcars {
      }
   }
   /* !=/e/ */
-  .ws,.sw,.sw,.w,.nws,.swn,.nw,.wn {
+  .nws,.swn,.ws,.sw,.nw,.wn,.sw,.ws,.w,.n,.s {
      > div.inner, > .right {
        right: 0;
      }
@@ -147,15 +150,21 @@ div.lcars {
      }
   }
   /* !=/n/ */
-  .wse,.esw,.se,.sw {
-     > div.inner, > .top, > .left, > .right {
+  .wse,.esw,.we,.ew,.ws,.sw,.se,.es,.e,.w,.s {
+     > div.inner, > .top {
        top: 0;
+     }
+     > .left, > .right {
+       top: <%= elbow_height %>em;
      }
   }
   /* !=/s/ */
-  .wes,.swn,.we,.ew,.e,.w,.nw,.wn {
-     > div.inner, > .bottom, > .left, > .right {
+  .wne,.enw,.we,.ew,.wn,.nw,.ne,.en,.e,.w,.n {
+     > div.inner, > .bottom {
        bottom: 0;
+     }
+     > .left, > .right {
+       bottom: <%= elbow_height %>em;
      }
   }
   /* with left menu */
@@ -167,8 +176,16 @@ div.lcars {
      ~ .top, ~ .bottom {
         left: auto;
      }
-     ~ img.decoration.bow {
-        margin-left: <%= big_side_border %>em;
+     ~ img.decoration {
+       .bow {
+         margin-left: <%= big_side_border %>em;
+       }
+       .stump {
+         .sw,.nw {
+           height: <%= big_side_border/2 %>em;
+           width: <%= big_side_border %>em;
+         }
+       }
      }
   }
   /* with right menu */
@@ -180,8 +197,16 @@ div.lcars {
      ~ .top, ~ .bottom {
         right: auto;
      }
-     ~ img.decoration.bow {
-        margin-right: <%= big_side_border %>em;
+     ~ img.decoration{ 
+       .bow {
+         margin-right: <%= big_side_border %>em;
+       }
+       .stump {
+         .se,.ne {
+           height: <%= big_side_border/2 %>em;
+           width: <%= big_side_border %>em;
+         }
+       }
      }
   }
   /* with top element */
