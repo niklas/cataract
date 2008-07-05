@@ -1,0 +1,1 @@
+page.update_helm :content => { :partial => 'move', :object => @torrent }

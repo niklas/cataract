@@ -49,7 +49,7 @@ class Torrent
         # copy the file because rtorrent deletes file on #stop!
         moveto( :running, :copy => true )
         remote.load(self.fullpath(:running))
-        remote.directory = Settings.torrent_dir
+        remote.directory = download_path
       end
       remote.start!
       update_attribute(:status, :running)

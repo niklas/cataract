@@ -11,11 +11,7 @@ class TorrentsFilesController < ApplicationController
 
   def edit
     respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page.update_helm :content => { :partial => 'move', :object => @torrent }
-        end
-      end
+      wants.js
     end
   end
 
@@ -23,10 +19,15 @@ class TorrentsFilesController < ApplicationController
     respond_to do |wants|
       wants.js do
         @dir = Directory.find(params[:content][:path])
-        target = @dir.path
+        target = @dir.path_with_optional_subdir params[:content][:subdir]
+        logger.debug "Torrent will be moved to #{target}"
         @torrent.move_content_to target
-        flash[:notice] = "Torrent will be moved to #{target}"
-        render_details_for @torrent
+        if @torrent.errors.empty?
+          flash[:notice] = "Torrent will be moved to #{target}"
+          render :template => '/torrents/show'
+        else
+          render :action => 'edit'
+        end
       end
     end
   end

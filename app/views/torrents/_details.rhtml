@@ -19,6 +19,8 @@
   <% end %>
   
   <% if torrent.content_size.to_i > 0 %>
+    <dt>Content Location</dt>
+    <dd><%= torrent.content_path %></dd>
     <dt>Size</dt>
     <dd> <%= human_bytes(torrent.content_size.to_i) %> </dd>
   <% end %>

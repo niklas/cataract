@@ -1,5 +1,6 @@
-<h3>let's move the torrent's contents</h3>
+<h3>Move Content to</h3>
 
+<%= error_messages_for 'torrent', :object => move %>
 <% form_remote_tag :url => torrent_files_path(move), :method => :put do %>
   <%= collection_select :content, :path, Directory.all, :id, :label, {:prompt => 'Please select destination'} %>
 <br />

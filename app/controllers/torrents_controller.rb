@@ -16,12 +16,8 @@ class TorrentsController < ApplicationController
     @torrents ||= Torrent.running.newest_first
 
     respond_to do |wants|
-      wants.html
-      wants.js do
-        render :update do |page|
-          page.update_main :content => {:partial => 'list', :object => @torrents}
-        end
-      end
+      wants.html { render :action => 'list' }
+      wants.js { render_list_of(@torrents)}
     end
   end
 

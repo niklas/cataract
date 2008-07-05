@@ -43,6 +43,10 @@ class Torrent
     self[:content_path] ||= working_path
   end
 
+  def download_path
+    content_path.sub(%r(/[^/]*$),'')
+  end
+
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen
   def content_url(usr)
@@ -71,6 +75,7 @@ class Torrent
   def move_content_to target_dir
     begin
       unless File.exists?(content_path)
+        update_attribute(:content_path, nil)
         raise TorrentContentError, "Content not found: #{content_path}"
       end
       unless File.directory?(target_dir)
@@ -80,18 +85,17 @@ class Torrent
       if File.exists?(new_path)
         raise TorrentContentError, "Target already exists: #{new_path}"
       end
-      begin
-        finally_stop!
-        FileUtils.ln content_path, new_path # may raise EXDEV
-        FileUtils.rm new_path
+      stop!
+      finally_stop!
+      if Directory.new(:path => new_path).is_on_same_drive?(content_path)
         FileUtils.move content_path, new_path
         update_attribute(:content_path, new_path)
-      rescue Errno::EXDEV # it is on another device, cannot move fast. use rsync in background
+      else
         job_manager.create_job(:torrent_mover,mover_job_key,self.id,new_path)
         self.status = :moving
       end
-    rescue Exception => e
-      errors.add :filename, "^error on moving content: #{e.to_s}"
+#    rescue Exception => e
+#      errors.add :filename, "^error on moving content: #{e.to_s}"
     end
   end
 
