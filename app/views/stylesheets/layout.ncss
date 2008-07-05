@@ -16,21 +16,21 @@ body {
   border: 0;
   > div {
     position: absolute;
-    #single {
-      top: 23%; bottom: 23%;
-      left: 23%; right: 23%;
+    #single, #error {
+      top: 0%; bottom: 0%;
+      left: 0%; right: 0%;
     }
     #helm {
-      top:0; bottom: 70%;
-      left:0; right: 40%;
+      top:0; bottom: 30%;
+      left:60%; right: 0;
     }
     #engineering {
-      top:0; bottom: 70%;
+      top: 70%; bottom: 0;
       left: 60%; right: 0;
     }
     #main {
-      top: 30%; bottom: 0;
-      left:0; right: 0;
+      top: 0; bottom: 0;
+      left:0; right: 40%;
     }
   }
 }
