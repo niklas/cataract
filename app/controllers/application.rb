@@ -1,18 +1,13 @@
 class ApplicationController < ActionController::Base
-  #include AuthenticatedSystem
-  before_filter :login_from_cookie
-  before_filter :login_required
+  include AuthenticatedSystem
   before_filter :setup_lcars
+  #before_filter :login_from_cookie
+  before_filter :login_required
   helper :all
 
   rescue_from 'Exception', :with => :render_lcars_error
 
-  #define_box 'helm', :kind => 'nws'
-
-  hobo_controller
-
   protected
-  # hobo hook
   def access_denied(user_model=nil)
     redirect_to :controller => 'account', :action => 'login'
   end
@@ -25,13 +20,10 @@ class ApplicationController < ActionController::Base
         render :text => @exception.inspect.to_s
       end
       wants.html do
-        render_tag 'cataract-error-page', :with => @exception
+        render :template => '/shared/error'
       end
       wants.js do
-        update_lcars('helm') do |helm,page|
-          page << %Q[Lcars.helm.alert('#{exception.message}')]
-          helm.content.update %Q[<h1>#{h(exception.message)}</h1><pre>#{h(exception.clean_backtrace.join("\n"))}</pre>]
-        end
+        render :template => '/shared/error'
       end
     end
     response.headers['Status'] = interpret_status(500)
@@ -112,5 +104,6 @@ class ApplicationController < ActionController::Base
     define_box :helm, :kind => 'se', :theme => 'primary'
     define_box :main, :kind => 'nws', :theme => 'secondary'
     define_box :engineering, :kind => 'nw',  :theme => 'ancillary'
+    define_box :single, :kind => 'nw'
   end
 end

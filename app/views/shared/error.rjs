@@ -1,0 +1,10 @@
+if @exception
+  page.update_helm :title => (@exception.message),
+                   :content => content_tag(:pre, h(@exception.clean_backtrace.join("\n   "))),
+                   :buttons => [link_to("Back", :back)]
+  page << %Q[Lcars.helm.alert('#{@exception.message}')]
+else
+  page.update_helm :title => ('Unknown Error'),
+                   :content => content_tag(:pre, 'no details available'),
+                   :buttons => [link_to("Back", :back)]
+end

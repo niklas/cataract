@@ -1,0 +1,6 @@
+<%= render_single :title => (@exception.message || 'Unknown Error'),
+                :content => content_tag(:pre, h(@exception.clean_backtrace.join("\n   "))),
+                :buttons => [link_to("Back", :back)],
+                :theme => 'error'
+
+%>

@@ -1,77 +1,39 @@
-# == Schema Information
-# Schema version: 36
-#
-# Table name: users
-#
-#  id                        :integer       not null, primary key
-#  name                      :string(255)   
-#  login                     :string(255)   
-#  email                     :string(255)   
-#  jabber                    :string(255)   
-#  notify_via_jabber         :boolean       
-#  notify_on_comments        :boolean       
-#  notify_on_my_torrents     :boolean       
-#  picture_url               :string(255)   
-#  crypted_password          :string(40)    
-#  salt                      :string(40)    
-#  created_at                :datetime      
-#  updated_at                :datetime      
-#  notify_on_new_torrents    :boolean       
-#  dont_watch_new_torrents   :boolean       
-#  content_dir_mountpoint    :text          
-#  target_dir_mountpoint     :text          
-#  remember_token            :string(255)   
-#  remember_token_expires_at :datetime      
-#
-
 require 'digest/sha1'
+
 class User < ActiveRecord::Base
-  hobo_user_model
-  alias_attribute :to_s, :name
+  include Authentication
+  include Authentication::ByPassword
+  include Authentication::ByCookieToken
+
+  validates_presence_of     :login
+  validates_length_of       :login,    :within => 3..40
+  validates_uniqueness_of   :login,    :case_sensitive => false
+  validates_format_of       :login,    :with => RE_LOGIN_OK, :message => MSG_LOGIN_BAD
+
+  validates_format_of       :name,     :with => RE_NAME_OK,  :message => MSG_NAME_BAD, :allow_nil => true
+  validates_length_of       :name,     :maximum => 100
+
+  validates_presence_of     :email
+  validates_length_of       :email,    :within => 6..100 #r@a.wk
+  validates_uniqueness_of   :email,    :case_sensitive => false
+  validates_format_of       :email,    :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
+
+  validates_length_of       :jabber, :on => :update,   :within => 3..100, :allow_nil => true
 
   has_many :watchings, :dependent => :destroy
   has_many :torrents, :through => :watchings
 
   has_many :comments
-  # Virtual attribute for the unencrypted password
-  attr_accessor :password
-  # did we sent a message? (for the controller#flash)
-  attr_accessor :sent_test_message
+  
 
-  validates_presence_of     :login, :email
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :login,    :within => 3..40
-  validates_length_of       :email,    :within => 3..100
-  validates_length_of       :jabber, :on => :update,   :within => 3..100, :allow_nil => true
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
-  before_save :encrypt_password 
-  before_update :send_test_message_if_changed
+  # HACK HACK HACK -- how to do attr_accessible from here?
+  # prevents a user from submitting a crafted form that bypasses activation
+  # anything else you want your user to change should be added here.
+  attr_accessible :login, :email, :name, :password, :password_confirmation
 
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
-
-  # Encrypts some data with the salt.
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-  end
-
-  # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password, salt)
-  end
-
-  def authenticated?(password)
-    crypted_password == encrypt(password)
-  end
 
   def notifiable_via_jabber?
-    notify_via_jabber? and !jabber.empty?
+    notify_via_jabber? and !jabber.blank?
   end
 
   def watch(torrent)
@@ -89,35 +51,19 @@ class User < ActiveRecord::Base
   end
   alias_method :watches?, :is_watching?
 
-  def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at 
-  end
-
-  # These create and unset the fields required for remembering users between browser closes
-  def remember_me
-    self.remember_token_expires_at = 2.weeks.from_now.utc
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(false)
-  end
-
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(false)
+  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
+  #
+  # uff.  this is really an authorization, not authentication routine.  
+  # We really need a Dispatch Chain here or something.
+  # This will also let us return a human error message.
+  #
+  def self.authenticate(login, password)
+    u = find_by_login(login) # need to get the salt
+    u && u.authenticated?(password) ? u : nil
   end
 
   protected
-    # before filter 
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
     
-    def password_required?
-      crypted_password.blank? || !password.blank?
-    end
-
     # send a Jabber test message if
     # * the address was changed, but only if option is enabled
     # * the option was re-enabled
@@ -128,4 +74,6 @@ class User < ActiveRecord::Base
         self.sent_test_message = true
       end
     end
-  end
+
+
+end

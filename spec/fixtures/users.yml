@@ -1,43 +1,31 @@
-# == Schema Information
-# Schema version: 36
-#
-# Table name: users
-#
-#  id                        :integer       not null, primary key
-#  name                      :string(255)   
-#  login                     :string(255)   
-#  email                     :string(255)   
-#  jabber                    :string(255)   
-#  notify_via_jabber         :boolean       
-#  notify_on_comments        :boolean       
-#  notify_on_my_torrents     :boolean       
-#  picture_url               :string(255)   
-#  crypted_password          :string(40)    
-#  salt                      :string(40)    
-#  created_at                :datetime      
-#  updated_at                :datetime      
-#  notify_on_new_torrents    :boolean       
-#  dont_watch_new_torrents   :boolean       
-#  content_dir_mountpoint    :text          
-#  target_dir_mountpoint     :text          
-#  remember_token            :string(255)   
-#  remember_token_expires_at :datetime      
-#
 
 quentin:
-  id: 1
-  login: quentin
-  email: quentin@example.com
-  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
-  #crypted_password: "ce2/iFrNtQ8=\n" # quentin, use only if you're using 2-way encryption
-  created_at: <%= 5.days.ago.to_s :db %>
-  # activated_at: <%= 5.days.ago.to_s :db %> # only if you're activating new signups
+  id:                        1
+  login:                     quentin
+  email:                     quentin@example.com
+  salt:                      902ba3cda1883801594b6e1b452790cc53948fda # SHA1('0')
+  crypted_password:          2ee5c4f964e0c70c20dfddd50b14e0afad0afc14 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s %>
+  remember_token:            0ade7c2cf97f75d009975f4d720d1fa6c19f4897
+      
 aaron:
-  id: 2
-  login: aaron
-  email: aaron@example.com
-  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
-  # activation_code: aaronscode # only if you're activating new signups
-  created_at: <%= 1.days.ago.to_s :db %>
+  id:                        2
+  login:                     aaron
+  email:                     aaron@example.com
+  salt:                      fe5dbbcea5ce7e2988b8c69bcfdfde8904aabc1f # SHA1('1')
+  crypted_password:          fc7db132434e81ecc27cf6d96ff3e7befec3222f # 'monkey'
+  created_at:                <%= 1.days.ago.to_s :db %>
+  remember_token_expires_at: 
+  remember_token:            
+
+
+old_password_holder:
+  id:                        3
+  login:                     old_password_holder
+  email:                     salty_dog@example.com
+  salt:                      7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at:                <%= 1.days.ago.to_s :db %>
+
+
