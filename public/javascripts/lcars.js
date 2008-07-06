@@ -164,10 +164,10 @@ Object.extend(Lcars.Box,{
   }
 });
 
-Lcars.LinkTo = Behavior.create(Remote.Link, {
-    initialize : function($super, target, options) {
+Lcars.LinkTo = Behavior.create({
+    initialize : function(target, options) {
       this.target = target;
-      this.options = Object.extend({
+      this.options =  Object.extend({
         target: this.target,
         message: 'Loading...',
         onCreate: function(oreq) {
@@ -189,7 +189,11 @@ Lcars.LinkTo = Behavior.create(Remote.Link, {
           Lcars[target].alert("Error");
         },
       }, options || {} );
-      $super(this.options);
+
+      // do not applie to already ajaxified links (by rails)
+      if (!this.element.href.match(/#$/)) {
+        new Remote.Link(this.element, this.options);
+      }
     }
 });
 
