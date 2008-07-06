@@ -300,4 +300,6 @@ end
 
 describe "JS Beauty" do
   it "should provide an alert method"
+  it "should provide reset"
+  it "should have default content from definition"
 end

@@ -20,6 +20,11 @@ module LcarsBox
           append_lcars_buttons(:#{name},opts[:append_buttons])
           page["#{name}"].reset_behavior
         end
+        def reset_#{name}
+          replace_lcars_title(:#{name},nil)
+          replace_lcars_buttons(:#{name},nil)
+          replace_lcars_content(:#{name},nil)
+        end
         def render_#{name}(opts = {}, &block)
           render_lcars_box(:#{name}, opts, &block)
         end
