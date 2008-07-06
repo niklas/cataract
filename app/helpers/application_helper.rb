@@ -26,4 +26,10 @@ module ApplicationHelper
     size ? "#{size}/s" : size
   end
 
+  def engineering_buttons
+    [
+      link_to("Logout", logout_path)
+    ]
+  end
+
 end

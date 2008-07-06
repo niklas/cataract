@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
         render :text => @exception.inspect.to_s
       end
       wants.html do
-        render :template => '/shared/error'
+        render :partial => '/shared/exception', :object => exception, :layout => 'torrents'
       end
       wants.js do
         render :update do |page|
@@ -120,11 +120,16 @@ class ApplicationController < ActionController::Base
   end
 
   def setup_lcars
-    define_box :helm, :kind => 'se', :theme => 'primary'
-    define_box :main, :kind => 'nw', :theme => 'secondary'
-    define_box :engineering, :kind => 'nw',  :theme => 'ancillary'
-    define_box :single, :kind => 'nw'
-    define_box :tiny, :kind => 'nes'
-    define_box :error, :kind => 'nw'
+    lcars_box :helm, :kind => 'se', :theme => 'primary', :title => 'Helm'
+    lcars_box :main, :kind => 'nw', :theme => 'secondary', 
+      :title => 'List of Torrents', 
+      :buttons => :torrent_menu_links,
+      :content => lambda {{:partial => '/torrents/list', :object => @torrents }}
+    lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',
+      :title => lambda { (logged_in? ? "Logged in as #{current_user.login}" : 'Klingon Attacking') },
+      :buttons => :engineering_buttons
+    lcars_box :single, :kind => 'nw'
+    lcars_box :tiny, :kind => 'nes'
+    lcars_box :error, :kind => 'nw'
   end
 end

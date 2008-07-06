@@ -1,9 +1,3 @@
-<%= render_helm :title => 'Helm - FIXME' %>
-<%= render_engineering :title => (logged_in? ? "Logged in as #{current_user.login}" : 'Klingon Attacking'),
-                       :buttons => [
-                         link_to("Logout", logout_path)
-                       ] 
-%>
-<%= render_main :title => 'List of Torrents', 
-                :buttons => torrent_menu_links,
-                :content => {:partial => '/torrents/list', :object => @torrents } %>
+<%= render_helm %>
+<%= render_engineering %>
+<%= render_main  %>

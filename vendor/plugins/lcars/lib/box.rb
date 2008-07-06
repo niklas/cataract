@@ -21,6 +21,12 @@ module Lcars
       end
     end
 
+    [:title, :buttons, :content].each do |attrb|
+      define_method attrb do
+        opts[attrb]
+      end
+    end
+
     def build_methods
       @module ||= Module.new
 
@@ -32,7 +38,7 @@ module Lcars
           render_lcars_box(:#{name},opts,&block)
         end
         def reset_#{name}
-          reset_lcars_box(_#{name})
+          reset_lcars_box(:#{name})
         end
       EOEVAL
     end
@@ -43,6 +49,10 @@ module Lcars
     
     def self.list_of_lcars_boxes
       @@lcars_boxes.keys
+    end
+
+    def self.by_name(name)
+      all[name.to_sym]
     end
 
     def self.all
@@ -62,7 +72,11 @@ module Lcars
       end
 
       def reset_lcars_box(name)
-        update_lcars_box(@@lcars_boxes[name])
+        box = Box.by_name(name)
+        replace_lcars_title   name, box.title || ''
+        replace_lcars_buttons name, box.buttons || []
+        replace_lcars_content name, box.content || ''
+        page[name].reset_behavior
       end
 
 
@@ -90,7 +104,7 @@ module Lcars
       end
 
       def replace_lcars_buttons(name,buttons=nil)
-        return if buttons.blank?
+        return if buttons.nil?
         lcars_select(name,:buttons).each do |element|
           element.update(context.lcars_buttons(buttons))
         end
@@ -164,6 +178,8 @@ module Lcars
         )
       end
       def lcars_buttons(buttons)
+        buttons = send!(buttons) if buttons.is_a? Symbol
+        buttons = buttons.call if buttons.is_a? Proc
         return '' if buttons.blank?
         buttons.collect do |button|
           content_tag(:li,button)
@@ -171,17 +187,23 @@ module Lcars
       end
 
       def lcars_title(title)
+        title = send!(title) if title.is_a? Symbol
+        title = title.call if title.is_a? Proc
         return '' if title.blank?
         content_tag(:span,h(title),{:class => 'title'})
       end
 
       def lcars_content_from_opts_or_block(opts = {},&block)
         returning '' do |content|
-          case opts[:content]
+          c = opts[:content]
+          c = c.call if c.is_a? Proc
+          case c
+          when Symbol
+            content << send!(c)
           when Hash
-            content << render(opts[:content]) unless opts[:content].empty?
+            content << render(c) unless c.empty?
           when String
-            content << opts[:content] unless opts[:content].blank?
+            content << c unless c.blank?
           end
           content << capture(&block) if block_given?
         end

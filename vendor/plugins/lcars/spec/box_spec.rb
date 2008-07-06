@@ -296,26 +296,130 @@ describe Lcars, "with illegal name" do
 #  it "should provide an alert method"
 end
 
-#describe Lcars, "defining a box with default content" do
-#  before(:each) do
-#    @default = {
-#        :title => 'Default Title',
-#        :content => 'Default Content',
-#        :buttons => %w(d e f)
-#    }
-#    lambda do
-#      @template = ActionView::Base.new
-#      @template.lcars_box :box, @default
-#    end.should_not raise_error
-#  end
-#
-#  it "should select and reset the title to the default" do
-#    rjs_for.reset_box.should select_dom_element("div.lcars#box > .title").and_replace_with(@default[:title])
-#  end
-#  it "should select and reset the content to the default" do
-#    rjs_for.reset_box.should select_dom_element("div.lcars#box > div.inner > div.content").and_replace_with(@default[:content])
-#  end
-#  it "should select and reset the buttons to the default" do
-#    rjs_for.reset_box.should select_dom_element("div.lcars#box > .buttons").and_replace_with('<li>d</li> <li>e</li> <li>f</li>')
-#  end
-#end
+describe Lcars, "A box defined by symbols" do
+  before(:each) do
+    @default = {
+        :title => :box_title,
+        :content => :box_content,
+        :buttons => :box_buttons
+    }
+    lambda do
+      @template = ActionView::Base.new
+      @template.lcars_box :box, @default
+    end.should_not raise_error
+    @template.should_receive(:box_title).and_return("Box Title")
+    @template.should_receive(:box_content).and_return("Box Content")
+    @template.should_receive(:box_buttons).and_return(%w(b o x))
+  end
+
+  describe "rendering it without any options" do
+    before do
+      @html = @template.render_box
+    end
+
+    it "should not be empty" do
+      @html.should_not be_empty
+    end
+
+    it "should have a complete lcars div with given content" do
+      @html.should have_tag('div.lcars.nws#box') do
+        with_tag('div.inner') do
+          with_tag('div.content','Box Content')
+        end
+        with_tag('ul.buttons') do
+          with_tag('li','b')
+          with_tag('li + li','o')
+          with_tag('li + li + li','x')
+        end
+        with_tag('span.title') do
+          have_text('Box Title')
+        end
+      end
+    end
+  end
+end
+describe Lcars, "A box defined by procs/lambdas" do
+  before(:each) do
+    @default = {
+        :title => lambda { "Box Title" },
+        :content => lambda { "Box Content" },
+        :buttons => lambda { %w(b o x)}
+    }
+    lambda do
+      @template = ActionView::Base.new
+      @template.lcars_box :box, @default
+    end.should_not raise_error
+  end
+
+  describe "rendering it without any options" do
+    before do
+      @html = @template.render_box
+    end
+
+    it "should not be empty" do
+      @html.should_not be_empty
+    end
+
+    it "should have a complete lcars div with given content" do
+      @html.should have_tag('div.lcars.nws#box') do
+        with_tag('div.inner') do
+          with_tag('div.content','Box Content')
+        end
+        with_tag('ul.buttons') do
+          with_tag('li','b')
+          with_tag('li + li','o')
+          with_tag('li + li + li','x')
+        end
+        with_tag('span.title') do
+          have_text('Box Title')
+        end
+      end
+    end
+  end
+end
+
+describe Lcars, "defining a box with default content" do
+  before(:each) do
+    @default = {
+        :title => 'Default Title',
+        :content => 'Default Content',
+        :buttons => %w(d e f)
+    }
+    lambda do
+      @template = ActionView::Base.new
+      @template.lcars_box :box, @default
+    end.should_not raise_error
+  end
+
+  it "should select and reset the title to the default" do
+    rjs_for.reset_box.should select_dom_element("div.lcars#box > .title").and_replace_with(@default[:title])
+  end
+  it "should select and reset the content to the default" do
+    rjs_for.reset_box.should select_dom_element("div.lcars#box > div.inner > div.content").and_replace_with(@default[:content])
+  end
+  it "should select and reset the buttons to the default" do
+    rjs_for.reset_box.should select_dom_element("div.lcars#box > .buttons").and_replace_with('<li>d</li> <li>e</li> <li>f</li>')
+  end
+end
+
+describe Lcars, "defining a box just with a default title" do
+  before(:each) do
+    @default = {
+        :title => 'Default Title'
+    }
+    lambda do
+      @template = ActionView::Base.new
+      @template.lcars_box :box, @default
+    end.should_not raise_error
+  end
+
+  it "should select and reset the title to the default" do
+    rjs_for.reset_box.should select_dom_element("div.lcars#box > .title").and_replace_with(@default[:title])
+  end
+  it "should select and clear the content" do
+    rjs_for.reset_box.should select_dom_element("div.lcars#box > div.inner > div.content").and_replace_with('')
+  end
+  it "should select and clear the buttons" do
+    rjs_for.reset_box.should select_dom_element("div.lcars#box > .buttons").and_replace_with('')
+  end
+end
