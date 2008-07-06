@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/lib/box'
+require File.dirname(__FILE__) + '/lib/lcars'
 
-ActionView::Base.send! :include, LcarsBox::InstanceMethods
-ActionView::Helpers::PrototypeHelper::JavaScriptGenerator.send! :include, LcarsBox::InstanceMethods
-ActionController::Base.send! :include, LcarsBox::InstanceMethods
+Lcars::INCLUDEES.each do |cls|
+  cls.send! :include, Lcars
+end

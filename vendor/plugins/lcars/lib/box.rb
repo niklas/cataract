@@ -1,37 +1,53 @@
-module LcarsBox
-  module InstanceMethods
-    @@list_of_lcars_boxes = []
-    @@options_for_lcars = {}
-    InvalidLcarsNames = %w(page update)
-    def define_box(name, opts = {})
+module Lcars
+  class Box
+    @@lcars_boxes = {}
+    InvalidLcarsNames = %w(page update lcars)
+
+    def initalize(name, opts={})
+      @name = name.to_sym
+      @opts = opts
       raise "Invalid name for Lcars: #{name} (Blacklisted)" if InvalidLcarsNames.include?(name.to_s)
       raise "Invalid name for Lcars: #{name} (wrong format, must be proper DOM id)" unless name.to_s =~ /\A\w+\Z/
-
-      @@list_of_lcars_boxes << name
-      @@options_for_lcars[name] = opts
-
-      eval <<-EOMETH
-        def update_#{name}(opts = {})
-          replace_lcars_title(:#{name},opts[:title])
-          replace_lcars_buttons(:#{name},opts[:buttons])
-          replace_lcars_content(:#{name},opts[:content])
-          append_lcars_content(:#{name},opts[:append_content])
-          append_lcars_title(:#{name},opts[:append_title])
-          append_lcars_buttons(:#{name},opts[:append_buttons])
-          page["#{name}"].reset_behavior
-        end
-        def reset_#{name}
-          replace_lcars_title(:#{name},nil)
-          replace_lcars_buttons(:#{name},nil)
-          replace_lcars_content(:#{name},nil)
-        end
-        def render_#{name}(opts = {}, &block)
-          render_lcars_box(:#{name}, opts, &block)
-        end
-      EOMETH
+      @@lcars_boxes[name] = self
+      build_methods
     end
+
+    def module
+      @module
+    end
+
+    def build_methods
+      @module ||= Module.new
+
+      #@module.class_eval do
+      #  define_method "update_#{name}" do |*opts|
+      #    update_lcars_box(name,opts)
+      #  end
+      #  define_method "render_#{name}" do |*opts|
+      #    render_lcars_box(name,opts)
+      #  end
+      #  define_method "reset_#{name}" do 
+      #    reset_lcars_box(name)
+      #  end
+      #end
+    end
+
+    def update_lcars_box(name,opts={})
+      replace_lcars_title   name, opts[:title]
+      replace_lcars_buttons name, opts[:buttons]
+      replace_lcars_content name, opts[:content]
+      append_lcars_content  name, opts[:append_content]
+      append_lcars_title    name, opts[:append_title]
+      append_lcars_buttons  name, opts[:append_buttons]
+      page[name].reset_behavior
+    end
+
+    def reset_lcars_box(name)
+      update_lcars_box(@@lcars_boxes[name])
+    end
+
     def list_of_lcars_boxes
-      @@list_of_lcars_boxes
+      @@lcars_boxes.keys
     end
 
     # Selectors

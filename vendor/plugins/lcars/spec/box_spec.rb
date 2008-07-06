@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
-describe LcarsBox do
+describe Lcars::Box do
   before(:each) do
-    @box = LcarsBox
+    @box = Lcars::Box
   end
   it "should be a module" do
     @box.should be_instance_of(Module)
@@ -13,15 +13,15 @@ describe ActionView::Base do
     @template = ActionView::Base.new
   end
   it "should have a method to define a box" do
-    @template.should respond_to(:define_box)
+    @template.should respond_to(:lcars_box)
   end
 end
 
-describe LcarsBox, "defining a box called 'helm'" do
+describe Lcars::Box, "defining a box called 'helm'" do
   before(:each) do
     lambda do
       @template = ActionView::Base.new
-      @template.define_box :helm, :kind => 'nws'
+      @template.lcars_box :helm, :kind => 'nws'
     end.should_not raise_error
   end
   it "should add this box to its list" do
@@ -268,26 +268,26 @@ describe LcarsBox, "defining a box called 'helm'" do
   end
 end
 
-describe LcarsBox, "with illegal name" do
+describe Lcars::Box, "with illegal name" do
   before(:each) do
     @template = ActionView::Base.new
   end
 
   it "should not accept 'page'" do
     lambda do
-      @template.define_box :page
+      @template.lcars_box :page
     end.should raise_error
   end
 
   it "should not accept 'update'" do
     lambda do
-      @template.define_box :update
+      @template.lcars_box :update
     end.should raise_error
   end
 
   it "should not accept 'david hasselhoff'" do
     lambda do
-      @template.define_box :"david hasselhoff"
+      @template.lcars_box :"david hasselhoff"
     end.should raise_error
   end
 #  it "should set a default kind"
@@ -296,7 +296,7 @@ describe LcarsBox, "with illegal name" do
 #  it "should provide an alert method"
 end
 
-#describe LcarsBox, "defining a box with default content" do
+#describe Lcars::Box, "defining a box with default content" do
 #  before(:each) do
 #    @default = {
 #        :title => 'Default Title',
@@ -305,7 +305,7 @@ end
 #    }
 #    lambda do
 #      @template = ActionView::Base.new
-#      @template.define_box :box, @default
+#      @template.lcars_box :box, @default
 #    end.should_not raise_error
 #  end
 #

@@ -1,11 +1,12 @@
-# Lcars
-#
-# Lcars.box "helm"
-#
+require File.dirname(__FILE__) + '/box'
 module Lcars
-  module ClassMethods
-    def box(name,opts={})
-      LcarsBox.define_box name,opts
+  INCLUDEES = [ ActionView::Base, ActionView::Helpers::PrototypeHelper::JavaScriptGenerator, ActionController::Base] unless defined?(INCLUDEES)
+
+  def lcars_box(name,opts={})
+    box = Lcars::Box.new name, opts
+    INCLUDEES.each do |cls|
+      #cls.send! :include, box.module
     end
+    box
   end
 end
