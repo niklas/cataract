@@ -61,6 +61,18 @@
          :color1 => '#FF0000',
          :color2 => '#FF0000',
          :input => '#111100'
+      },
+     {   :Name => 'busy',
+         :base => '#000000',
+         :text => '#FFFFFF',
+         :elbows => '#666666',
+         :offline => '#666666',
+         :offline_off => '#666666',
+         :unavailable => '#666666',
+         :primary => '#666666',
+         :color1 => '#555555',
+         :color2 => '#777777',
+         :input => '#666666'
       }
    ]
    default_scheme = 0 # 'primary'
@@ -178,7 +190,6 @@ div.lcars {
 
 
 div.lcars.busy {
-  background-color: #666666;
   > img.decoration {
     z-index: 23;
   }
