@@ -290,16 +290,32 @@ describe LcarsBox, "with illegal name" do
       @template.define_box :"david hasselhoff"
     end.should raise_error
   end
+#  it "should set a default kind"
+#  it "should set a default theme"
+#  it "should override defaults"
+#  it "should provide an alert method"
 end
 
-describe "Sparse definition" do
-  it "should set a default kind"
-  it "should set a default theme"
-  it "can be overridden by render_* opts"
-end
-
-describe "JS Beauty" do
-  it "should provide an alert method"
-  it "should provide reset"
-  it "should have default content from definition"
-end
+#describe LcarsBox, "defining a box with default content" do
+#  before(:each) do
+#    @default = {
+#        :title => 'Default Title',
+#        :content => 'Default Content',
+#        :buttons => %w(d e f)
+#    }
+#    lambda do
+#      @template = ActionView::Base.new
+#      @template.define_box :box, @default
+#    end.should_not raise_error
+#  end
+#
+#  it "should select and reset the title to the default" do
+#    rjs_for.reset_box.should select_dom_element("div.lcars#box > .title").and_replace_with(@default[:title])
+#  end
+#  it "should select and reset the content to the default" do
+#    rjs_for.reset_box.should select_dom_element("div.lcars#box > div.inner > div.content").and_replace_with(@default[:content])
+#  end
+#  it "should select and reset the buttons to the default" do
+#    rjs_for.reset_box.should select_dom_element("div.lcars#box > .buttons").and_replace_with('<li>d</li> <li>e</li> <li>f</li>')
+#  end
+#end
