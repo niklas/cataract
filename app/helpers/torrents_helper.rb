@@ -53,6 +53,7 @@ module TorrentsHelper
       end
       a << link_to_remote('fetch', :url => fetch_torrent_path(t), :method => :put) if t.remote?
       a << link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
+      a << link_to_remote('Delete', :url => torrent_url(t), :method => :delete, :confirm => 'This can be undone. Are you sure?') unless t.new_record?
       a << toggle_watch_button(t) unless t.new_record?
     end
   end

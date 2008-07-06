@@ -48,6 +48,10 @@ class Torrent < ActiveRecord::Base
     check_if_status_is_up_to_date
   end
 
+  def before_destroy
+    stop! if running?
+  end
+
   acts_as_taggable
 
   concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing

@@ -128,6 +128,15 @@ class TorrentsController < ApplicationController
     end
   end
 
+  def destroy
+    @torrent = Torrent.find params[:id]
+    @torrent.destroy
+    respond_to do |wants|
+      wants.html { redirect_to :action => 'index' }
+      wants.js
+    end
+  end
+
   private
   def set_default_page_title
     @searched_tags ||= []
