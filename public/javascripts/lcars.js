@@ -106,10 +106,12 @@ Lcars.Box = Behavior.create({
     this.element.appendChild(img);
   },
   _addMessageBox: function() {
-    this.messagebox = $div({class: 'message'});
-    this.element.appendChild(
-      $div({class: 'inner modal'}, this.messagebox)
-    );
+    if (this.element.getElementsBySelector('div.inner.modal > div.message').length == 0) {
+      this.messagebox = $div({class: 'message'});
+      this.element.appendChild(
+        $div({class: 'inner modal'}, this.messagebox)
+      );
+    }
   },
   _setMessage: function(message) {
     this.messagebox.update(message);
