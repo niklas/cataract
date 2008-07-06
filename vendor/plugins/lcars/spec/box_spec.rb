@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
-describe Lcars::Box do
+describe Lcars do
   before(:each) do
-    @box = Lcars::Box
+    @box = Lcars
   end
   it "should be a module" do
     @box.should be_instance_of(Module)
@@ -17,7 +17,7 @@ describe ActionView::Base do
   end
 end
 
-describe Lcars::Box, "defining a box called 'helm'" do
+describe Lcars, "defining a box called 'helm'" do
   before(:each) do
     lambda do
       @template = ActionView::Base.new
@@ -268,7 +268,7 @@ describe Lcars::Box, "defining a box called 'helm'" do
   end
 end
 
-describe Lcars::Box, "with illegal name" do
+describe Lcars, "with illegal name" do
   before(:each) do
     @template = ActionView::Base.new
   end
@@ -296,7 +296,7 @@ describe Lcars::Box, "with illegal name" do
 #  it "should provide an alert method"
 end
 
-#describe Lcars::Box, "defining a box with default content" do
+#describe Lcars, "defining a box with default content" do
 #  before(:each) do
 #    @default = {
 #        :title => 'Default Title',
