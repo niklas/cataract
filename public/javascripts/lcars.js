@@ -166,14 +166,12 @@ Lcars.LinkTo = Behavior.create(Remote.Link, {
       this.options = Object.extend({
         target: target,
         onCreate: function(oreq) {
-          console.debug("Creating Request for " + this.target);
           oreq.transport.lcars_target = this.target;
           Lcars.Box[target].moreBusy();
           return true;
         },
         onComplete: function(oreq) { 
           target = oreq.transport.lcars_target;
-          console.debug("Request Completed for " + target);
           Lcars.Box[target].lessBusy();
           return true;
         },
