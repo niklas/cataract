@@ -1,0 +1,5 @@
+page.update_engineering :title => 'Sign up as a new User',
+                        :content => { :partial => '/users/form'},
+                        :buttons => [
+                          link_to('Log in', login_path)
+                        ]

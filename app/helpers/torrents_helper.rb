@@ -6,7 +6,7 @@ module TorrentsHelper
       link_to('Running', search_torrents_url),
       link_to('Paused', search_torrents_url(:status => 'paused')),
       link_to('Watchlist', watched_torrents_url),
-      link_to('New', new_torrent_url)
+      link_to('New', new_torrent_url, :class => 'torrent')
     ]
   end
 

@@ -4,8 +4,8 @@ class SessionsController < ApplicationController
   # render new.rhtml
   def new
     respond_to do |wants|
-      wants.js { render }
-      wants.html { render }
+      wants.js
+      wants.html
     end
   end
 

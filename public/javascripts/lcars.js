@@ -1,28 +1,3 @@
-// TODO
-//  * count Requests Count of $worker
-//  * only unbusy if == 0
-
-Remote.LinkWithBusy = Behavior.create({
-    initialize : function(worker) {
-       return new Remote.Link(this.element, {
-           onCreate: function() { 
-             Lcars[worker].element.addClassName('busy');
-           }, 
-           onComplete: function() { 
-             Lcars[worker].element.removeClassName('busy');
-           },
-           onFailure: function() {
-             Lcars[worker].alert("Failure");
-           },
-           onError: function() {
-             Lcars[worker].alert("Error");
-           }
-       })
-
-    }
-});
-
-
 Lcars = Behavior.create({
   initialize : function() {
     this.id = this.element.id;
@@ -46,8 +21,10 @@ Lcars = Behavior.create({
 });
 
 
-LcarsBox = Behavior.create({
+Lcars.Box = Behavior.create({
   initialize: function() {
+    Lcars.Box[this.element.id] = this;
+    this.requestCount = 0;
     this._addDecorations();
     this._addMessageBox();
     this._decideMenuOrientation();
@@ -151,6 +128,18 @@ LcarsBox = Behavior.create({
         }
     });
   },
+  moreBusy: function() {
+    this.requestCount++;
+    if (this.requestCount == 1)
+      this.element.addClassName('busy');
+  },
+  lessBusy: function() {
+    this.requestCount--;
+    if (this.requestCount < 0)
+      this.requestCount = 0;
+    if (this.requestCount == 0)
+      this.element.removeClassName('busy');
+  },
   _decideTitleOrientation: function() {
     var kind = this._getKind();
     this.element.getElementsBySelector('span.title').each(function(title) {
@@ -165,15 +154,45 @@ LcarsBox = Behavior.create({
   }
 });
 
-Object.extend(Lcars,{
+Object.extend(Lcars.Box,{
   byId : function(id) {
-    return Lcars[id];
+    return Lcars.Box[id];
   }
 });
 
+Lcars.LinkTo = Behavior.create(Remote.Link, {
+    initialize : function($super, target, options) {
+      this.target = target;
+      this.options = Object.extend({
+        target: target,
+        onCreate: function(oreq) {
+          console.debug("Creating Request for " + this.target);
+          oreq.transport.lcars_target = this.target;
+          Lcars.Box[target].moreBusy();
+          return true;
+        },
+        onComplete: function(oreq) { 
+          target = oreq.transport.lcars_target;
+          console.debug("Request Completed for " + target);
+          Lcars.Box[target].lessBusy();
+          return true;
+        },
+        onFailure: function(oreq) {
+          Lcars[target].alert("Failure");
+        },
+        onError: function(oreq) {
+          Lcars[target].alert("Error");
+        },
+      }, options || {} );
+      $super(this.options);
+    }
+});
+
+
+
 
 Event.addBehavior({
-    'div.lcars' : LcarsBox
+    'div.lcars' : Lcars.Box
 });
 
 Element.addMethods({

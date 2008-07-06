@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   # render new.rhtml
   def new
     @user = User.new
+    respond_to do |wants|
+      wants.html
+      wants.js
+    end
   end
  
   def create
