@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/box'
+require File.dirname(__FILE__) + '/decoration'
 module Lcars
   INCLUDEES = [ ActionView::Base, ActionView::Helpers::PrototypeHelper::JavaScriptGenerator, ActionController::Base] unless defined?(INCLUDEES)
   InvalidLcarsNames = %w(page update lcars) unless defined?(InvalidLcarsNames)
