@@ -106,15 +106,17 @@ Lcars.Box = Behavior.create({
     this.element.appendChild(img);
   },
   _addMessageBox: function() {
-    if (this.element.getElementsBySelector('div.inner.modal > div.message').length == 0) {
-      this.messagebox = $div({class: 'message'});
+    if (!this.messageBox()) {
       this.element.appendChild(
-        $div({class: 'inner modal'}, this.messagebox)
+        $div({class: 'inner modal'}, $div({class: 'message'}))
       );
     }
   },
-  _setMessage: function(message) {
-    this.messagebox.update(message);
+  messageBox: function() {
+    return this.element.getElementsBySelector('div.inner.modal > div.message').first();
+  },
+  setMessage: function(mess) {
+    this.messageBox().update(mess);
   },
   _decideMenuOrientation: function() {
     var kind = this._getKind();
@@ -166,16 +168,19 @@ Lcars.LinkTo = Behavior.create(Remote.Link, {
     initialize : function($super, target, options) {
       this.target = target;
       this.options = Object.extend({
-        target: target,
+        target: this.target,
+        message: 'Loading...',
         onCreate: function(oreq) {
           oreq.transport.lcars_target = this.target;
-          Lcars.Box[target].moreBusy();
-          return true;
+          box = Lcars.Box[target];
+          box.setMessage(this.message);
+          box.moreBusy();
+          return false;
         },
         onComplete: function(oreq) { 
           target = oreq.transport.lcars_target;
           Lcars.Box[target].lessBusy();
-          return true;
+          return false;
         },
         onFailure: function(oreq) {
           Lcars[target].alert("Failure");
