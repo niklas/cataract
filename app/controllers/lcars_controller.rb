@@ -4,7 +4,7 @@ class LcarsController < ApplicationController
   # renders and caches the round corners of the LCARS design
 
   def decoration
-    data, key = Lcars.plot(params) 
+    data, key = Lcars::Decoration.plot(params) 
     filename = "#{key}.png"
     cache_page data, params # we'll if this works..
     send_data(data , 
