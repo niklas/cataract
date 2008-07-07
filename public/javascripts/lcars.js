@@ -164,6 +164,8 @@ Object.extend(Lcars.Box,{
   }
 });
 
+Lcars.lastTarget = null;
+
 Lcars.LinkTo = Behavior.create({
     initialize : function(target, options) {
       this.target = target;
@@ -190,13 +192,40 @@ Lcars.LinkTo = Behavior.create({
         },
       }, options || {} );
 
-      // do not applie to already ajaxified links (by rails)
+      // do not apply to already ajaxified links (by rails)
       if (!this.element.href.match(/#$/)) {
         new Remote.Link(this.element, this.options);
+      } else {
+        e = this.element;
+        e.original_onclick = e.onclick;
+        e.onclick = function(ev) {
+          var e = ev.element();
+          target = e.className.match(/\blcars_target_(\w+)\b/)[1];
+          if (target) {
+            // FIXME Hack.. a fast-clicker could break this
+            Lcars.lastTarget = target;
+            if (box = Lcars.Box[target]) {
+              box.setMessage(e.text + 'ing');
+              box.moreBusy();
+            }
+          }
+          e.original_onclick();
+          return false;
+        }
       }
     }
 });
 
+Ajax.Responders.register({
+  onCreate : function(oreq,x) { 
+    if (!oreq.lcars_target)
+      oreq.lcars_target = Lcars.lastTarget;
+  },
+  onComplete : function(oreq) { 
+    if (target = oreq.lcars_target)
+      Lcars.Box[target].lessBusy();
+  }
+});
 
 
 

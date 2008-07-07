@@ -43,17 +43,17 @@ module TorrentsHelper
 
   def actions_for_torrent(t)
     returning [] do |a|
-      a << link_to_remote('start', :url => torrent_transfer_path(t), :method => :post) if t.startable?
-      a << link_to_remote('stop', :url => torrent_transfer_path(t), :method => :delete) if t.stoppable?
-      a << link_to_remote('pause', :url => pause_torrent_transfer_path(t), :method => :put) if t.running?
+      a << link_to_helm_remote('start', :url => torrent_transfer_path(t), :method => :post) if t.startable?
+      a << link_to_helm_remote('stop', :url => torrent_transfer_path(t), :method => :delete) if t.stoppable?
+      a << link_to_helm_remote('pause', :url => pause_torrent_transfer_path(t), :method => :put) if t.running?
       if t.local?
         a << link_to('Content', torrent_files_path(t))
         a << link_to('Move content', edit_torrent_files_path(t))
         a << link_to('Delete content', edit_torrent_files_path(t))
       end
-      a << link_to_remote('fetch', :url => fetch_torrent_path(t), :method => :put) if t.remote?
-      a << link_to_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
-      a << link_to_remote('Delete', :url => torrent_url(t), :method => :delete, :confirm => 'This can be undone. Are you sure?') unless t.new_record?
+      a << link_to_helm_remote('fetch', :url => fetch_torrent_path(t), :method => :put) if t.remote?
+      a << link_to_helm_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
+      a << link_to_helm_remote('Delete', :url => torrent_url(t), :method => :delete, :confirm => 'Deletion cannot be undone. Are you sure?') unless t.new_record?
       a << toggle_watch_button(t) unless t.new_record?
     end
   end
@@ -61,14 +61,20 @@ module TorrentsHelper
 
   def toggle_watch_button(t)
     if watching = current_user.watches?(t)
-      link_to_remote "unwatch",
+      link_to_helm_remote "unwatch",
         :url => watching_url(watching),
         :method => :delete
     else
-      link_to_remote 'watch',
+      link_to_helm_remote 'watch',
         :url => watchings_url(:torrent_id => t.id),
         :method => :post
     end
+  end
+
+  def link_to_helm_remote(name, options = {}, html_options = {})
+    html_options[:class] ||= ''
+    html_options[:class] += ' lcars_target_helm'
+    link_to_remote(name,options,html_options)
   end
 
   def human_transfer(kb, rate=true)
