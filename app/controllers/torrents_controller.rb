@@ -82,14 +82,11 @@ class TorrentsController < ApplicationController
     begin
       @torrent.fetch!
       current_user.watch(@torrent)
-      render :update do |page|
-        page.notification("Torrent fetched: #{@torrent.short_title}")
-      end
+      # page.notification("Torrent fetched: #{@torrent.short_title}")
     rescue => e
-      render :update do |page|
-        page.notification(e.to_s)
-      end
+      # page.notification(e.to_s)
     end
+    render :action => 'show'
   end
 
   def search
