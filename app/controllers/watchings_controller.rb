@@ -17,11 +17,11 @@ class WatchingsController < ApplicationController
       wants.js do
         @torrent = Torrent.find params[:torrent_id]
         if current_user.watch(@torrent)
-          render_info("Added '#{@torrent.short_title}' to watchlist")
-          render :template => '/torrents/update_buttons'
+          log_info("Added '#{@torrent.short_title}' to watchlist")
         else
-          render_warning("Already watching '#{@torrent.short_title}'")
+          log_warning("Already watching '#{@torrent.short_title}'")
         end
+        render :template => '/torrents/update_buttons'
       end
     end
   end
@@ -31,11 +31,11 @@ class WatchingsController < ApplicationController
         @watching = Watching.find params[:id]
         @torrent = @watching.torrent
         if @watching.destroy
-          render_info("Removed '#{@torrent.short_title}' from watchlist")
-          render :template => '/torrents/update_buttons'
+          log_info("Removed '#{@torrent.short_title}' from watchlist")
         else
-          render_error("Could not unwatch - hrm...")
+          log_error("Could not unwatch - hrm...")
         end
+        render :template => '/torrents/update_buttons'
       end
     end
   end

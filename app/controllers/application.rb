@@ -9,6 +9,15 @@ class ApplicationController < ActionController::Base
 
   rescue_from 'Exception', :with => :render_lcars_error
 
+  after_update_page :render_pending_logs
+  def render_pending_logs(page)
+    unless @logs.blank?
+      @logs.each do |log|
+        page.insert_html :bottom, :log, %Q[<li class="message #{log.level}">#{log.message}</li>]
+      end
+    end
+  end
+
   protected
   def access_denied(user_model=nil)
     respond_to do |wants|
@@ -30,7 +39,7 @@ class ApplicationController < ActionController::Base
         render :partial => '/shared/exception', :object => exception, :layout => 'torrents'
       end
       wants.js do
-        render :update do |page|
+        render_update do |page|
           page.insert_html :bottom, 'body', render_error(
             :title => (exception.message),
             :content => content_tag(:h3,exception.message) + content_tag(:pre, h(exception.clean_backtrace.join("\n   "))),
@@ -48,38 +57,6 @@ class ApplicationController < ActionController::Base
     #response.headers['Status'] = interpret_status(500)
   end
 
-  # FIXME update more than one (use render_update - does not work for errors yet...)
-  def update_lcars(target='helm')
-    render :update do |page|
-      foo = page.lcars.by_id(target)
-      yield(foo,page)
-    end
-  end
-
-  # This is called whenever to call to #render was made.
-  # It appends the log_entries annd calls multiple render actions (see #render_update).
-  def default_render
-    if request.xhr?
-      render :update do |page|
-        unless @to_render.blank?
-          @to_render.each do |task|
-            task.call page
-          end
-        end
-        append_log_to(page)
-      end
-    else
-      render
-    end
-  end
-  # call in your action
-  # render_update do |page|
-  #   page.update 'foo', 'barz'
-  # end
-  def render_update &blk
-    @to_render ||= []
-    @to_render << blk
-  end
   def render_details_for(torrent)
     # same as app/views/torrents/show.rjs
     raise "dont use that anymore, please"
@@ -94,21 +71,22 @@ class ApplicationController < ActionController::Base
     @torrent = Torrent.find(params[:id]) if params[:id]
     true
   end
-  def render_error(msg='Random Error Message')
-    render_log(msg,:error)
+  def log_error(msg='Random Error Message')
+    log(msg,:error)
   end
-  def render_warning(msg='Random Warning Message')
-    render_log(msg,:warn)
+  def log_warning(msg='Random Warning Message')
+    log(msg,:warn)
   end
-  alias render_warn render_warning
-  def render_info(msg='Random Info Message')
-    render_log(msg,:info)
+  alias :log_warn :log_warning
+  def log_info(msg='Random Info Message')
+    log(msg,:info)
   end
-  def render_notice(msg='Random Notice Message')
-    render_log(msg,:info)
+  def log_notice(msg='Random Notice Message')
+    log(msg,:info)
   end
-  def render_log(msg='Random Log Message',level=:log)
-    return true
+  alias :log_notification :log_notice
+  def log(msg='Random Log Message',level=:log)
+    @logs ||= []
     @logs << LogEntry.new(msg,level)
   end
   def create_log
@@ -127,7 +105,8 @@ class ApplicationController < ActionController::Base
       :content => lambda {{:partial => '/torrents/list', :object => @torrents }}
     lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',
       :title => lambda { (logged_in? ? "Logged in as #{current_user.login}" : 'Klingon Attacking') },
-      :buttons => :engineering_buttons
+      :buttons => :engineering_buttons,
+      :content => %q[<ul id="log"/>]
     lcars_box :single, :kind => 'nw'
     lcars_box :tiny, :kind => 'nes'
     lcars_box :error, :kind => 'nw'

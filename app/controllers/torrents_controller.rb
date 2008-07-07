@@ -82,9 +82,9 @@ class TorrentsController < ApplicationController
     begin
       @torrent.fetch!
       current_user.watch(@torrent)
-      # page.notification("Torrent fetched: #{@torrent.short_title}")
+      log_notification("Torrent fetched: #{@torrent.short_title}")
     rescue => e
-      # page.notification(e.to_s)
+      log_error(e.to_s)
     end
     render :action => 'show'
   end
@@ -128,6 +128,7 @@ class TorrentsController < ApplicationController
   def destroy
     @torrent = Torrent.find params[:id]
     @torrent.destroy
+    log_notification("Removed Torrent '#{@torrent.short_title}'")
     respond_to do |wants|
       wants.html { redirect_to :action => 'index' }
       wants.js
