@@ -44,6 +44,8 @@ class Torrent < ActiveRecord::Base
   before_save :sync
   before_validation :fix_filename
   before_validation :sync_status!
+  stampable
+
   def after_find
     check_if_status_is_up_to_date
   end

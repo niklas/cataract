@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   has_many :torrents, :through => :watchings
 
   has_many :comments
+
+  model_stamper
   
 
   # HACK HACK HACK -- how to do attr_accessible from here?
@@ -60,6 +62,10 @@ class User < ActiveRecord::Base
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) ? u : nil
+  end
+
+  def name_or_login
+    name.blank? ? login : name
   end
 
   protected

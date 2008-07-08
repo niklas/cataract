@@ -25,6 +25,11 @@
     <dd> <%= human_bytes(torrent.content_size.to_i) %> </dd>
   <% end %>
 
+  <% unless torrent.creator.nil? %>
+    <dt>Creator</dt>
+    <dd><%= torrent.creator.name_or_login %></dd>
+  <% end %>
+
   <dt>ID</dt>
   <dd><%= torrent.id -%></dd>
   <dt>created</dt>
