@@ -1,7 +1,6 @@
 class TorrentsController < ApplicationController
   before_filter :set_default_page_title
   before_filter :find_torrent_by_id, :only => [:show, :start, :pause, :stop, :fetch, :delete_content, :set_torrent_tag_list]
-  before_filter :create_log
   helper :tags
 
   attr_accessor :offline
@@ -22,6 +21,7 @@ class TorrentsController < ApplicationController
 
   # actions
   def show
+    flash[:notice] = "Yeeeha!!"
     respond_to do |wants|
       wants.js 
     end
@@ -82,9 +82,9 @@ class TorrentsController < ApplicationController
     begin
       @torrent.fetch!
       current_user.watch(@torrent)
-      log_notification("Torrent fetched: #{@torrent.short_title}")
+      flash[:notice] =("Torrent fetched: #{@torrent.short_title}")
     rescue => e
-      log_error(e.to_s)
+      flash[:error] =(e.to_s)
     end
     render :action => 'show'
   end
@@ -128,7 +128,7 @@ class TorrentsController < ApplicationController
   def destroy
     @torrent = Torrent.find params[:id]
     @torrent.destroy
-    log_notification("Removed Torrent '#{@torrent.short_title}'")
+    flash[:notice] =("Removed Torrent '#{@torrent.short_title}'")
     respond_to do |wants|
       wants.html { redirect_to :action => 'index' }
       wants.js

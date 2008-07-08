@@ -1,6 +1,5 @@
 class WatchingsController < ApplicationController
   # TODO make resourceful
-  before_filter :create_log
   helper :torrents
   layout false
 
@@ -17,9 +16,9 @@ class WatchingsController < ApplicationController
       wants.js do
         @torrent = Torrent.find params[:torrent_id]
         if current_user.watch(@torrent)
-          log_info("Added '#{@torrent.short_title}' to watchlist")
+          flash[:notice] =("Added '#{@torrent.short_title}' to watchlist")
         else
-          log_warning("Already watching '#{@torrent.short_title}'")
+          flash[:warning] =("Already watching '#{@torrent.short_title}'")
         end
         render :template => '/torrents/update_buttons'
       end
@@ -31,9 +30,9 @@ class WatchingsController < ApplicationController
         @watching = Watching.find params[:id]
         @torrent = @watching.torrent
         if @watching.destroy
-          log_info("Removed '#{@torrent.short_title}' from watchlist")
+          flash[:notice] =("Removed '#{@torrent.short_title}' from watchlist")
         else
-          log_error("Could not unwatch - hrm...")
+          flash[:error] =("Could not unwatch - hrm...")
         end
         render :template => '/torrents/update_buttons'
       end

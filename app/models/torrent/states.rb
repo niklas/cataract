@@ -50,6 +50,7 @@ class Torrent
     event_from :running do 
       remote.stop!
       update_attribute(:status, :paused)
+      log('was paused')
     end
   end
 
@@ -63,6 +64,7 @@ class Torrent
       end
       remote.start!
       update_attribute(:status, :running)
+      log('was started')
     end
   end
 
@@ -72,6 +74,7 @@ class Torrent
       remote.close!
       remote.erase! # WARNING! will delete the torrent file
       finally_stop!
+      log('was stopped')
     end
   end
 
@@ -85,6 +88,7 @@ class Torrent
       fetch_by_url
       moveto( :archived )
       update_attribute(:status, :archived)
+      log('was fetched')
     end
   end
 

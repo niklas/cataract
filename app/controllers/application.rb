@@ -11,12 +11,20 @@ class ApplicationController < ActionController::Base
 
   rescue_from 'Exception', :with => :render_lcars_error
 
+  after_update_page :prepare_flash_messages
   after_update_page :render_pending_logs
   def render_pending_logs(page)
     unless @logs.blank?
-      @logs.each do |log|
-        page.insert_html :bottom, :log, %Q[<li class="message #{log.level}">#{log.message}</li>]
+      @logs.each do |log_entry|
+        page.insert_html :bottom, :log, page.context.log_entry_tag(log_entry)
       end
+    end
+  end
+
+  def prepare_flash_messages(page=nil)
+    @logs ||= []
+    flash.each do |lvl,message|
+      @logs << LogEntry.new(:message => message, :level => lvl.to_s)
     end
   end
 
@@ -73,28 +81,6 @@ class ApplicationController < ActionController::Base
     @torrent = Torrent.find(params[:id]) if params[:id]
     true
   end
-  def log_error(msg='Random Error Message')
-    log(msg,:error)
-  end
-  def log_warning(msg='Random Warning Message')
-    log(msg,:warn)
-  end
-  alias :log_warn :log_warning
-  def log_info(msg='Random Info Message')
-    log(msg,:info)
-  end
-  def log_notice(msg='Random Notice Message')
-    log(msg,:info)
-  end
-  alias :log_notification :log_notice
-  def log(msg='Random Log Message',level=:log)
-    @logs ||= []
-    @logs << LogEntry.new(msg,level)
-  end
-  def create_log
-    @logs = []
-    true
-  end
   def h(stringy)
     CGI.escapeHTML(stringy)
   end
@@ -108,7 +94,7 @@ class ApplicationController < ActionController::Base
     lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',
       :title => lambda { (logged_in? ? "Logged in as #{current_user.login}" : 'Klingon Attacking') },
       :buttons => :engineering_buttons,
-      :content => %q[<ul id="log"/>]
+      :content => lambda {{:partial => '/log_entries/list', :object => (@logs || @log_entires || LogEntry.last(23))}}
     lcars_box :single, :kind => 'nw'
     lcars_box :tiny, :kind => 'nes'
     lcars_box :error, :kind => 'nw'

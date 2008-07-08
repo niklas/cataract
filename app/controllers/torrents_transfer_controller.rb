@@ -1,15 +1,16 @@
 class TorrentsTransferController < ApplicationController
   before_filter :fetch_torrent
+  layout false
   # start
   def create
     @torrent.start!
     respond_to do |wants|
       wants.js do
         if @torrent.errors.empty?
-          render_notice @torrent.short_title + " has been started for transfer"
+          flash[:notice] = @torrent.short_title + " has been started for transfer"
           render :template => '/torrents/show'
         else
-          render_error "Error while starting: #{@torrent.errors.full_messages.join(',')}"
+          flash[:error] = "Error while starting: #{@torrent.errors.full_messages.join(',')}"
         end
       end
     end
@@ -21,10 +22,10 @@ class TorrentsTransferController < ApplicationController
     respond_to do |wants|
       wants.js do
         if @torrent.errors.empty?
-          render_notice @torrent.short_title + " was moved to history"
+          flash[:notice] = @torrent.short_title + " was moved to history"
           render :template => '/torrents/show'
         else
-          render_error "Error while stopping: #{@torrent.errors.full_messages.join(',')}"
+          flash[:error] = "Error while stopping: #{@torrent.errors.full_messages.join(',')}"
         end
       end
     end
@@ -36,10 +37,10 @@ class TorrentsTransferController < ApplicationController
     respond_to do |wants|
       wants.js do
         if @torrent.errors.empty?
-          render_notice @torrent.short_title + " has been paused"
+          flash[:notice] = @torrent.short_title + " has been paused"
           render :template => '/torrents/show'
         else
-          render_error "Error while pausing: #{@torrent.errors.full_messages.join(',')}"
+          flash[:error] = "Error while pausing: #{@torrent.errors.full_messages.join(',')}"
         end
       end
     end
