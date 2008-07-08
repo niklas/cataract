@@ -20,10 +20,6 @@ module NotificationHelper
     }
   end
 
-  def log_entry_tag(entry)
-    content_tag( :li, entry.final_message, :class => "message #{entry.level}")
-  end
-
   def render_pending_notifications
     pc =  page.context
     notification(pc.flash[:notice]) unless pc.flash[:notice].blank?
