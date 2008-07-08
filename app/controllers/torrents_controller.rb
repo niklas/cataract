@@ -67,8 +67,8 @@ class TorrentsController < ApplicationController
         current_user.watch(@torrent)
       end
       respond_to do |wants|
-        wants.js  { render :action => 'new' }
-        wants.html  { render :action => 'new' }
+        wants.js  { render :action => 'show' }
+        wants.html  { render :action => 'show' }
       end
     else
       respond_to do |wants|
