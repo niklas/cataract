@@ -1,23 +1,4 @@
 Lcars = Behavior.create({
-  initialize : function() {
-    this.id = this.element.id;
-    Lcars[this.id] = this;
-  },
-  content : function() {
-    return this.element.getElementsBySelector('div.inner > div.content').first();
-  },
-  right : function() {
-    return this.element.getElementsBySelector('div.right').first();
-  },
-  alert : function(message) {
-   var title = this.element.getElementsBySelector('span.title').first();
-   if (title)
-     Element.update(title,message);
-    this.element.addClassName("error");
-  },
-  unAlert : function() {
-    this.element.removeClassName("error")
-  }
 });
 
 
@@ -146,7 +127,7 @@ Lcars.Box = Behavior.create({
   },
   _decideTitleOrientation: function() {
     var kind = this._getKind();
-    this.element.getElementsBySelector('span.title').each(function(title) {
+    this.titles().each(function(title) {
         if (kind.match(/n/)) {
           title.addClassName('top');
           title.removeClassName('bottom');
@@ -155,6 +136,17 @@ Lcars.Box = Behavior.create({
           title.removeClassName('top');
         }
     });
+  },
+  alert : function(message) {
+   if (title = this.titles().first())
+     Element.update(title,message);
+    this.element.addClassName("error");
+  },
+  unAlert : function() {
+    this.element.removeClassName("error")
+  },
+  titles: function() {
+    return $$('div#' + this.element.id + ' > span.title');
   }
 });
 
