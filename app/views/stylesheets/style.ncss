@@ -71,13 +71,13 @@ div#tag_cloud {
 }
 
 
-ul#event_log > li {
-  color: white;
-  .log    { background-color: #000000; }
-  .info   { background-color: #002200; }
-  .notice { background-color: #000022; }
-  .warn   { background-color: #220000; }
-  .error  { background-color: #440000; }
+ul#log > li {
+  color: #AAAAAA;
+  .log    { color: #AAAAAA; }
+  .info   { color: #AAAAAA; }
+  .notice { color: #FFFFFF; }
+  .warn   { color: #FFFF22; }
+  .error  { color: #FF2222; }
 }
 
 #helm > div.inner > div.content {

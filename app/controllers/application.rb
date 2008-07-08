@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def render_pending_logs(page)
     unless @logs.blank?
       @logs.each do |log_entry|
-        page.insert_html :bottom, :log, page.context.log_entry_tag(log_entry)
+        page.insert_html :top, :log, page.context.log_entry_tag(log_entry)
       end
     end
   end

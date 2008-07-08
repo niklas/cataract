@@ -39,7 +39,18 @@ body {
   }
 }
 
-ul#event_log {
+ul#log {
   margin: 0;
   padding: 0;
+  span.timestamp {
+    display: block;
+    float: left;
+    margin-right: 0.5em;
+    width: 33%;
+  }
+  span.message {
+    display: block;
+    float: left;
+    width: 60%;
+  }
 }

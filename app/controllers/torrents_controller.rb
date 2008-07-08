@@ -21,7 +21,6 @@ class TorrentsController < ApplicationController
 
   # actions
   def show
-    flash[:notice] = "Yeeeha!!"
     respond_to do |wants|
       wants.js 
     end

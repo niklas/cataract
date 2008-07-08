@@ -17,8 +17,8 @@ module ApplicationHelper
     page.instance_variable_get("@context").instance_variable_get("@template")
   end
 
-  def nice_date(d)
-    d ? d.to_s(:db) : content_tag(:span,'unknown', :class => 'warning')
+  def nice_date(d,fallback='unknown')
+    d ? d.to_s(:db) : content_tag(:span,fallback, :class => 'warning')
   end
 
   def number_to_human_rate(num=nil,precision=1)
