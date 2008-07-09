@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
     lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',
       :title => lambda { (logged_in? ? "Logged in as #{current_user.login}" : 'Klingon Attacking') },
       :buttons => :engineering_buttons,
-      :content => lambda {{:partial => '/log_entries/list', :object => (@logs || @log_entires || LogEntry.last(23))}}
+      :content => lambda {{:partial => '/log_entries/list', :object => (@logs || @log_entries || LogEntry.last.all)}}
     lcars_box :single, :kind => 'nw'
     lcars_box :tiny, :kind => 'nes'
     lcars_box :error, :kind => 'nw'

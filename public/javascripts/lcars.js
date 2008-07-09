@@ -150,6 +150,61 @@ Lcars.Box = Behavior.create({
   }
 });
 
+Lcars.EndlessList = Behavior.create({
+  initialize: function () {
+    this.timer = null;
+    this.current_page = 1;
+    // this.ajax_path = url;
+    this.interval = 1000; // 1 second
+    this.scroll_offset = 0.6; // 60%
+    //this.auth_token = auth_token;
+    this.url = this.element.getAttribute('href');
+    this.startListener();
+  },
+  scrollDistanceFromBottom: function() {
+    p = this.element.parentNode;
+    return(p.scrollHeight - p.scrollTop - p.clientHeight);
+  },
+  checkScroll: function() {
+    dist = this.scrollDistanceFromBottom();
+    if (dist < this.element.parentNode.clientHeight/5) {
+      if (this.fetchNextPage()) this.startListener(this.interval*2);
+    } 
+    else {
+      this.startListener();
+    }
+  },
+  stopListener: function () {
+    this.timer = null;
+  },
+  startListener: function (more_delay) {
+    if (!this.endOfTransmission()) {
+      this.timer = setTimeout(this.checkScroll.bind(this), more_delay ? this.interval + more_delay : this.interval);
+    }
+  },
+  endOfTransmission: function () {
+    return $A(this.element.getElementsBySelector('li.end')).last();
+  },
+  fetchNextPage: function () {
+    if (last_id = this.lastEntry().id) {
+      if (this.lastRequestedId == last_id) {
+        return false;
+      } else {
+        __list = this;
+        new Ajax.Request(this.url, { 
+            parameters: { last: last_id }, 
+            method: 'get',
+            onSuccess: function() { __list.lastRequestedId = last_id; }
+            });
+        return true;
+      }
+    } else return false
+  },
+  lastEntry: function () {
+    return $A(this.element.getElementsByTagName('li')).last();
+  },
+});
+
 Object.extend(Lcars.Box,{
   byId : function(id) {
     return Lcars.Box[id];

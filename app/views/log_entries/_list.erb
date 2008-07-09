@@ -1,5 +1,3 @@
-<ul id="log">
-  <% list.each do |entry| %>
-    <%= log_entry_tag(entry) %>
-  <% end %>
+<ul id="log" href="<%= log_entries_path -%>">
+  <%= render :partial => list %>
 </ul>

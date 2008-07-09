@@ -40,13 +40,21 @@ body {
 }
 
 ul#log {
+  width: 100%;
+  float: left;
+  padding: 0 0 6em 0;
   margin: 0;
-  padding: 0;
+  li {
+    display: block;
+    float:left;
+    width: 100%;
+  }
   span.timestamp {
     display: block;
     float: left;
+    clear: left;
     margin-right: 0.5em;
-    width: 33%;
+    width: 36%;
   }
   span.message {
     display: block;

@@ -4,7 +4,7 @@ module LogEntriesHelper
       :li,
       content_tag(:span, nice_date(entry.created_at, 'now'), :class => 'timestamp') +
       content_tag(:span, entry.final_message, :class => 'message'),
-      :class => entry.level
+      :class => entry.level, :id => dom_id(entry)
     )
   end
 end

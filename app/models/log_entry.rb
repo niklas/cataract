@@ -1,6 +1,10 @@
 class LogEntry < ActiveRecord::Base
   belongs_to :loggable, :polymorphic => true
   belongs_to :user
+
+  def self.page_size
+    23
+  end
   def self.error(msg='Random Error Message')
     log(msg,:error)
   end
@@ -36,5 +40,14 @@ class LogEntry < ActiveRecord::Base
     end
   end
 
-  has_finder :last, lambda {|num| {:order => 'created_at DESC', :limit => num}}
+  def self.after(last_entry=nil)
+    if last_entry
+      @log_entries = LogEntry.last.older_than(last_entry)
+    else
+      @log_entries = LogEntry.last
+    end
+  end
+
+  has_finder :last, lambda {{:order => 'created_at DESC', :limit => page_size}}
+  has_finder :older_than, lambda { |newest| nid = newest.split('_').last.to_i; {:conditions => ["id < ?", nid]} }
 end
