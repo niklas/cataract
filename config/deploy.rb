@@ -49,9 +49,7 @@ end
 namespace :deploy do
   desc "Restart the Webserver (lighttpd)"
   task :restart, :roles => :app do
-    sudo '/etc/init.d/lighttpd stop'
-    sudo 'killall dispatch.fcgi || true'
-    sudo '/etc/init.d/lighttpd start'
+    sudo "cd #{current_release} && mongrel_rails cluster::stop && mongrel_rails cluster::start"
   end
 
   desc "Fix something after setup"
@@ -66,7 +64,7 @@ namespace :deploy do
     config_dir = "#{deploy_to}/shared/config"
     sudo "mkdir -p #{config_dir}"
     sudo "ln -fs #{config_dir}/database.yml #{current_release}/config/database.yml"
-    sudo "ln -fs #{config_dir}/ferret_server.yml #{current_release}/config/ferret_server.yml"
+    sudo "ln -fs #{config_dir}/mongrel_cluster.yml #{current_release}/config/mongrel_cluster.yml"
     sudo "ln -fs #{config_dir}/messenger.yml #{current_release}/config/messenger.yml"
     sudo "ln -fs #{config_dir}/urlbase.txt #{current_release}/config/urlbase.txt"
     puts "Make sure to create a proper database.yml (in #{config_dir})"
