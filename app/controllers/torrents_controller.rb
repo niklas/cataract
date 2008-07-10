@@ -6,11 +6,14 @@ class TorrentsController < ApplicationController
   attr_accessor :offline
 
   def index
-    @torrents = Torrent.recent
-    #@torrents ||= Torrent.running.newest_first
+    if @term = params[:term] and !@term.blank?
+      @torrents = Torrent.include_everything.search(@term)
+    else
+      @torrents = Torrent.recent
+    end
     respond_to do |wants|
-      wants.html { render :action => 'index' }
-      wants.js { render_list_of(@torrents)}
+      wants.html
+      wants.js
     end
   end
 

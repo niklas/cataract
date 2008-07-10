@@ -190,7 +190,7 @@ module Lcars
         title = send!(title) if title.is_a? Symbol
         title = title.call if title.is_a? Proc
         return '' if title.blank?
-        content_tag(:span,h(title),{:class => 'title'})
+        content_tag(:span,title,{:class => 'title'})
       end
 
       def lcars_content_from_opts_or_block(opts = {},&block)

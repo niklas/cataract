@@ -62,3 +62,9 @@ ul#log {
     width: 60%;
   }
 }
+
+form#torrent_search {
+  input#term {
+    width: 6em;
+  }
+}

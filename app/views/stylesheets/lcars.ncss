@@ -360,13 +360,19 @@ div.lcars {
     .title {
       letter-spacing: -0.06em;
     }
-    > * {
+    * {
       padding: 0 <%= big_border * 0.2 %>em;
       height: 100%;
       float: left;
     }
-    > input {
+    input {
       line-height: <%= big_border %>em;
+      font-size: 1em;
+    }
+    form {
+      line-height: inherit;
+      padding: 0;
+      margin: 0;
     }
     .buttons {
       display: inline;

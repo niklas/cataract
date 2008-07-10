@@ -1,0 +1,9 @@
+page.update_main :content => {:partial => '/torrents/list', :object => @torrents}
+label = if @term.blank?
+          "Torrents"
+        else
+          "Torrents containing '#{@term}'"
+        end
+page[:label_for_term].replace_html label
+page[:torrent_search].reset
+page[:term].hide();

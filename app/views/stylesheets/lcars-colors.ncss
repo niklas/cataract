@@ -116,7 +116,7 @@ div.lcars {
         .title {
           background-color: <%= colors[:base] %>;
           color: <%= colors[:color1] %>;
-          > input[type="text"] {
+          input[type="text"] {
              background-color: <%= colors[:input] %>;
              color: <%= colors[:primary] %>;
              border: none;

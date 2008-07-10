@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
   def setup_lcars
     lcars_box :helm, :kind => 'se', :theme => 'primary', :title => 'Helm'
     lcars_box :main, :kind => 'nw', :theme => 'secondary', 
-      :title => 'List of Torrents', 
+      :title => :torrent_search, 
       :buttons => :torrent_menu_links,
       :content => lambda {{:partial => '/torrents/list', :object => @torrents }}
     lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',

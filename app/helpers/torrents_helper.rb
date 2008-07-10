@@ -10,6 +10,15 @@ module TorrentsHelper
     ]
   end
 
+  def torrent_search
+    returning '' do |html|
+      html << form_tag(torrents_path,:method => :get, :id => 'torrent_search', :class => 'lcars_target_main')
+      html << content_tag(:label,'Torrents', :for => 'term', :id => 'label_for_term')
+      html << text_field_tag(:term, @term || '', :id => 'term')
+      html << '</form>'
+    end
+  end
+
   def progress_bar(torrent, label=nil)
     p = torrent.percent.to_i
     label ||= "#{p.to_s} (#{torrent.statusmsg})"

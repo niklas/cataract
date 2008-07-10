@@ -113,9 +113,11 @@ Lcars.Box = Behavior.create({
         }
     });
   },
-  moreBusy: function() {
+  moreBusy: function(message) {
     this.requestCount++;
-    if (this.requestCount == 1)
+    if (message)
+      this.setMessage(message);
+    if (this.requestCount >= 1)
       this.element.addClassName('busy');
   },
   lessBusy: function() {
@@ -263,6 +265,18 @@ Lcars.LinkTo = Behavior.create({
     }
 });
 
+Lcars.SearchForm = Behavior.create({
+    initialize : function(options) {
+      this.label = this.element.getElementsBySelector('label').first();
+      this.field = this.element.getElementsBySelector('input').first();
+      this.field.hide();
+      __form = this.element;
+      this.observed = new Observed(this.field, function(field,value) { __form.request(); }, {frequency: 2});
+    },
+    onclick: function() {
+      this.field.show();
+    }
+});
 Ajax.Responders.register({
   onCreate : function(oreq,x) { 
     if (!oreq.lcars_target)
@@ -283,5 +297,9 @@ Event.addBehavior({
 Element.addMethods({
     resetBehavior: function(element) {
       $(element).$$assigned = null;
+    },
+    lcarsTarget: function(element) {
+      return $(element).className.match(/\blcars_target_(\w+)\b/)[1];
     }
 });
+
