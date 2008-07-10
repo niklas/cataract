@@ -1,4 +1,5 @@
 class TorrentsFilesController < ApplicationController
+  layout false
   helper :torrents
 
   before_filter :fetch_torrent
@@ -30,6 +31,10 @@ class TorrentsFilesController < ApplicationController
         end
       end
     end
+  end
+
+  def create
+    raise "Please start the torrent to create its files"
   end
 
   private
