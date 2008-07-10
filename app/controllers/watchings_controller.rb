@@ -1,5 +1,6 @@
 class WatchingsController < ApplicationController
-  # TODO make resourceful
+  before_filter :fetch_user
+  before_filter :authorized_user_for_watching
   helper :torrents
   layout false
 
@@ -15,7 +16,7 @@ class WatchingsController < ApplicationController
     respond_to do |wants|
       wants.js do
         @torrent = Torrent.find params[:torrent_id]
-        if current_user.watch(@torrent)
+        if @user.watch(@torrent)
           flash[:notice] =("Added '#{@torrent.short_title}' to watchlist")
         else
           flash[:warning] =("Already watching '#{@torrent.short_title}'")
@@ -29,7 +30,7 @@ class WatchingsController < ApplicationController
       wants.js do
         @watching = Watching.find params[:id]
         @torrent = @watching.torrent
-        if @watching.destroy
+        if @user.unwatch(@torrent)
           flash[:notice] =("Removed '#{@torrent.short_title}' from watchlist")
         else
           flash[:error] =("Could not unwatch - hrm...")
@@ -37,6 +38,20 @@ class WatchingsController < ApplicationController
         render :template => '/torrents/update_buttons'
       end
     end
+  end
+
+  private
+  def authorized_user_for_watching
+    unless @user == current_user
+      flash[:error] = "Watch yourself!"
+      false
+    else
+      true
+    end
+  end
+
+  def fetch_user
+    @user = User.find(params[:user_id])
   end
 
 end

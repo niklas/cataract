@@ -81,11 +81,11 @@ module TorrentsHelper
   def toggle_watch_button(t)
     if watching = current_user.watches?(t)
       link_to_helm_remote "unwatch",
-        :url => watching_url(watching),
+        :url => user_watching_url(current_user,watching),
         :method => :delete
     else
       link_to_helm_remote 'watch',
-        :url => watchings_url(:torrent_id => t.id),
+        :url => user_watchings_url(current_user, :torrent_id => t.id),
         :method => :post
     end
   end

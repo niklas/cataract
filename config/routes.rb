@@ -12,7 +12,9 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
-  map.resources :users
+  map.resources :users do |users|
+    users.resources :watchings
+  end
 
   map.resource :session
 
@@ -23,7 +25,6 @@ ActionController::Routing::Routes.draw do |map|
     torrent.resource :files, :controller => 'torrents_files'
     torrent.resource :transfer, :controller => 'torrents_transfer', :member => { :pause => :put }
   end
-  map.resources :watchings
 
 
 

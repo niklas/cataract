@@ -232,10 +232,10 @@ class Torrent < ActiveRecord::Base
     end
   end
 
-  def log(action,level=:info)
+  def log(action,level=:info,culprit = (self.updater|| self.creator))
     LogEntry.create(
       :loggable => self,
-      :user => self.updater || self.creator,
+      :user => culprit,
       :action => action,
       :level => level.to_s
     )

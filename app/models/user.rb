@@ -40,15 +40,16 @@ class User < ActiveRecord::Base
 
   def watch(torrent)
     return if is_watching?(torrent)
-    torrent.log('is now watched')
-    self.watchings.create(:torrent => torrent, :apprise => true)
+    if self.watchings.create(:torrent => torrent, :apprise => true)
+      torrent.log('is now watched', :info, self)
+    end
   end
 
-  def unwatch(torrent_id)
-    w = self.watchings.find_by_torrent_id(torrent_id)
+  def unwatch(torrent)
+    w = self.watchings.find_by_torrent_id(torrent.id)
     if w
       w.destroy 
-      torrent.log('is not watched anymore')
+      torrent.log('is not watched anymore', :info, self)
     end
   end
 
