@@ -387,6 +387,11 @@ div.lcars {
       overflow: auto;
       z-index: 5;
       height: 100%;
+      > div, > ul, > p {
+        width: 99%;
+        display: block;
+        float: left;
+      }
       a.action {
         padding-left: <%= slim_side_border %>em;
         padding-right: <%= slim_side_border %>em;
@@ -466,6 +471,15 @@ div.lcars {
           border-top: none;
           border-bottom: none;
           cursor: pointer;
+        }
+      }
+      div.pagination {
+        a, span {
+          font-size: 200%;
+          padding: 0.3em;
+          margin: 0.1em;
+          display: block;
+          float: left;
         }
       }
     }

@@ -182,6 +182,33 @@ div.lcars {
             }
           }
         }
+        div.pagination {
+          * {
+            background-color: <%= colors[:primary] %>;
+            color: <%= colors[:base] %>;
+          }
+          span {
+            .disabled {
+              color: <%= colors[:offline] %>;
+              background-color: <%= colors[:base] %>;
+            }
+            .current, .gap {
+              color: <%= colors[:color1] %>;
+              background-color: <%= colors[:base] %>;
+            }
+          }
+          a {
+            .next, .next_page {
+              background-color: <%= colors[:color1] %>;
+            }
+            .prev, .prev_page {
+              background-color: <%= colors[:color2] %>;
+            }
+            :hover {
+              background-color: <%= colors[:text] %>;
+            }
+          }
+        }
       }
     }
   }

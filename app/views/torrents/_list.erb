@@ -1,3 +1,4 @@
+<%= will_paginate(list, :inner_window => 1) %>
 <%= content_tag(:ul, 
                 render( :partial => 'card', :collection => list ), 
                 :class => 'torrents') %>

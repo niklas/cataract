@@ -16,7 +16,7 @@ class TorrentsController < ApplicationController
     if @only_watched = params[:only_watched] == 'true'
       @torrents = @torrents.watched_by(current_user)
     end
-    @torrents = @torrents.paginate(:page => params[:page], :order => 'torrents.created_at DESC') #.newest_first.first_page
+    @torrents = @torrents.paginate(:page => params[:page], :order => 'torrents.created_at DESC', :per_page => 30)
     respond_to do |wants|
       wants.html
       wants.js

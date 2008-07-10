@@ -249,7 +249,7 @@ Lcars.LinkTo = Behavior.create({
         e.original_onclick = e.onclick;
         e.onclick = function(ev) {
           var e = ev.element();
-          target = e.className.match(/\blcars_target_(\w+)\b/)[1];
+          target = e.lcarsTarget() || 'main';
           if (target) {
             // FIXME Hack.. a fast-clicker could break this
             Lcars.lastTarget = target;
