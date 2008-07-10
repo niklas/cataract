@@ -33,8 +33,9 @@ class TorrentsFilesController < ApplicationController
     end
   end
 
+  # HACK production mode does not recognize the method: 'put'
   def create
-    raise "Please start the torrent to create its files"
+    update
   end
 
   private
