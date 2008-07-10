@@ -31,7 +31,8 @@ class TorrentsController < ApplicationController
   # actions
   def show
     respond_to do |wants|
-      wants.js 
+      wants.js
+      wants.html
     end
   end
 
