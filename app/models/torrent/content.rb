@@ -85,7 +85,7 @@ class Torrent
       if File.exists?(new_path)
         raise TorrentContentError, "Target already exists: #{new_path}"
       end
-      stop!
+      stop! if running?
       finally_stop!
       if Directory.new(:path => new_path).is_on_same_drive?(content_path)
         FileUtils.move content_path, new_path
