@@ -61,18 +61,11 @@ class Torrent < ActiveRecord::Base
   has_finder :invalid,
     {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
 
-  has_finder :running,
-    {:conditions => {:status => 'running'}}
-
   has_finder :newest_first,
     {:order => 'created_at DESC'}
 
   has_finder :recent, lambda {|lim|
     {:order => 'created_at DESC', :limit => (lim || 23)}
-  }
-
-  has_finder :collection, lambda {|ids|
-    {:conditions => { :id => ids}}
   }
 
   has_finder :include_everything,
