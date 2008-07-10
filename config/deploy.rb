@@ -49,7 +49,7 @@ end
 namespace :deploy do
   desc "Restart the Webserver (lighttpd)"
   task :restart, :roles => :app do
-    sudo "cd #{current_release} && mongrel_rails cluster::stop && mongrel_rails cluster::start"
+    run "cd #{current_release} && mongrel_rails cluster::stop && mongrel_rails cluster::start"
   end
 
   desc "Fix something after setup"
