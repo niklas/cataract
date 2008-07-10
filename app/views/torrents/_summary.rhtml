@@ -1,7 +1,0 @@
-<b>Rate (d/u):</b> <%= human_transfer(Torrent.rate_down) -%>/s - <%= human_transfer(Torrent.rate_up) -%>/s  
-<b>Transferred (d/u):</b> <%= human_transfer(Torrent.transferred_down) -%> - <%= human_transfer(Torrent.transferred_up) -%>  
-<b>Disk free:</b> 
-<% Torrent.disksfree.each do |dir,free| %>
-  <span title="<%= dir -%>"> <%= human_transfer(free,false) %> </span>
-<% end %>
-<b>updated</b> <%= time_ago_in_words(Torrent.last_update) %> ago

@@ -1,3 +1,0 @@
-<%= torrent_table(%w(Title Status Actions Down/s Up/s), @torrents) do |t|
-  [t.short_title, progress(t), action_buttons_for(t), human_transfer(t.rate_down), human_transfer(t.rate_up)]
-end %>
