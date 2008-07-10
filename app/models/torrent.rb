@@ -58,18 +58,17 @@ class Torrent < ActiveRecord::Base
 
   concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing
 
-  has_finder :invalid,
+  named_scope :invalid,
     {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
 
-  has_finder :newest_first,
-    {:order => 'created_at DESC'}
-
-  has_finder :recent, lambda {|lim|
-    {:order => 'created_at DESC', :limit => (lim || 23)}
-  }
-
-  has_finder :include_everything,
+  named_scope :include_everything,
     {:include => [:tags]}
+
+  named_scope :watched_by, lambda {|user| {:include => :watchings, :conditions => ['watchings.user_id = ?', user.id]}}
+
+  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
+
+  
 
   has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 

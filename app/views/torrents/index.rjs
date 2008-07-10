@@ -4,3 +4,5 @@ if @term.blank?
   page[:torrent_search].reset
   page[:term].hide();
 end
+page[:only_watched].value = @only_watched
+page[:status].value = @status

@@ -6,23 +6,21 @@ class TorrentsController < ApplicationController
   attr_accessor :offline
 
   def index
-    @torrents =
-      if @term = params[:term] and !@term.blank?
-        Torrent.include_everything.search(@term)
-      elsif @status = params[:status]
-        Torrent.find_all_by_status(@status)
-      else
-        Torrent.recent
-      end
+    @torrents = Torrent.include_everything
+    if @term = (params[:term].blank? ? nil : params[:term])
+      @torrents = @torrents.search(@term)
+    end
+    if @status = (params[:status].blank? ? nil : params[:status])
+      @torrents = @torrents.by_status(@status)
+    end
+    if @only_watched = params[:only_watched] == 'true'
+      @torrents = @torrents.watched_by(current_user)
+    end
+    @torrents = @torrents.paginate(:page => params[:page], :order => 'torrents.created_at DESC') #.newest_first.first_page
     respond_to do |wants|
       wants.html
       wants.js
     end
-  end
-
-  def watched
-    @torrents = current_user.torrents
-    render :action => 'list'
   end
 
   # actions

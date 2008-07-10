@@ -5,7 +5,7 @@ module TorrentsHelper
       link_to('Recent', torrents_url),
       link_to('Running', torrents_url(:status => 'running')),
       link_to('Paused', torrents_url(:status => 'paused')),
-#      link_to('Watchlist', watched_torrents_url),
+      link_to('Watchlist', torrents_url(:only_watched => true)),
       link_to('New', new_torrent_url, :class => 'torrent')
     ]
   end
@@ -14,15 +14,22 @@ module TorrentsHelper
     returning '' do |html|
       html << form_tag(torrents_path,:method => :get, :id => 'torrent_search', :class => 'lcars_target_main')
       html << content_tag(:label,title_for_main, :for => 'term', :id => 'label_for_term')
-      html << text_field_tag(:term, @term || '', :id => 'term')
+      html << text_field_tag(:term, @term || '')
+      html << hidden_field_tag(:only_watched, @only_watched)
+      html << hidden_field_tag(:status, @status)
       html << '</form>'
     end
   end
 
   def title_for_main
+    if @only_watched
+      'Your '
+    else
+      ''
+    end + 
     if @status
       "#{@status} Torrents"
-    elsif !@term.blank?
+    elsif @term
       "Torrents containing '#{@term}'"
     else
       "Torrents"
