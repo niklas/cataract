@@ -1,9 +1,6 @@
-if @torrent.url.blank?
-  page['messages_for_torrent'].replace_html 'Please give direct URL to torrent (Download Link)'
-elsif @torrent.fetchable?
+if @torrent.fetchable?
   page['torrent_filename'].value = @torrent.filename
   page['torrent_submit'].value = "Fetch"
-  page['messages_for_torrent'].replace_html "Press [fetch] to download <em>#{@torrent.filename}</em>"
-else
-  page['messages_for_torrent'].replace_html 'Bad URL'
 end
+page['messages_for_torrent'].replace_html @torrent.fetchable_message
+page['messages_for_torrent'].visual_effect :highlight

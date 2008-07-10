@@ -6,7 +6,7 @@ Event.addBehavior({
     '#engineering .buttons a' : Lcars.LinkTo('engineering'),
     'select#content_path' : SubDirSelector,
     'form.new_torrent #torrent_url': Observed(function(field,value) {
-      new Ajax.Request('/torrents/new/probe?url=' + value, {method: 'put'});
+      new Ajax.Request('/torrents/new/probe', {method: 'put', parameters: {url : value}});
     }, {frequency: 1}),
     '#torrent_search': Lcars.SearchForm,
     'form.new_torrent': Remote,

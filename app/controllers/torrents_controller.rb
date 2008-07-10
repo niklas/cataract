@@ -8,6 +8,11 @@ class TorrentsController < ApplicationController
   def index
     @torrents = Torrent.include_everything
     if @term = (params[:term].blank? ? nil : params[:term])
+      if @term.is_a?(String) && !@term.empty? && URI.regexp.match(@term)
+        @torrent = Torrent.new(:url => @term)
+        render :action => 'new'
+        return
+      end
       @torrents = @torrents.search(@term)
     end
     if @status = (params[:status].blank? ? nil : params[:status])
@@ -54,8 +59,7 @@ class TorrentsController < ApplicationController
   def probe
     respond_to do |wants|
       wants.js do
-        @torrent = Torrent.new(:url => params[:url].strip)
-        render
+        @torrent ||= Torrent.new(:url => params[:url].strip)
       end
     end
   end
@@ -70,7 +74,12 @@ class TorrentsController < ApplicationController
         current_user.watch(@torrent)
       end
       respond_to do |wants|
-        wants.js  { render :action => 'show' }
+        wants.js  do
+          render_update do |page|
+            page[:torrent_search].reset
+          end
+          render :action => 'show'
+        end
         wants.html  { render :action => 'show' }
       end
     else
@@ -90,33 +99,6 @@ class TorrentsController < ApplicationController
       flash[:error] =(e.to_s)
     end
     render :action => 'show'
-  end
-
-  def search
-    @term = params[:term]
-    if @term.is_a?(String) && !@term.empty? && URI.regexp.match(@term)
-      @torrent = Torrent.new(:url => @term)
-      probe
-      return
-    end
-    #@searched_tags = Tag.parse(params[:tags])
-    if !@term.blank?
-      @torrents = Torrent.include_everything.newest_first.search(@term)
-      flash[:reply] = "searched for #{@term}"
-    else
-      @torrents = Torrent.newest_first.running
-      flash[:reply]= ''
-    end
-    respond_to do |wants|
-      wants.js {
-        render :update do |page|
-          page.update_main :content => {:partial => 'list', :object => @torrents}
-        end
-      }
-      wants.html {
-        render :action => 'list'
-      }
-    end
   end
 
   def set_torrent_tag_list

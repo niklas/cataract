@@ -36,6 +36,16 @@ class Torrent
       end
   end
 
+  def fetchable_message
+    if url.blank?
+      'Please give direct URL to torrent (from Link to Download).'
+    elsif fetchable?
+      "Ready for download."
+    else
+      "Bad URL: #{errors.on(:url)}"
+    end
+  end
+
   def fetch_by_url
     if resp = Net::HTTP::get_response(uri) and resp.is_a?(Net::HTTPSuccess)
       unless filename
