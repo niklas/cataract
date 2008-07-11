@@ -1,6 +1,6 @@
 class TorrentsFilesController < ApplicationController
   layout false
-  helper :torrents
+  helper :torrents_files
 
   before_filter :fetch_torrent
 
