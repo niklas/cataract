@@ -1,8 +1,13 @@
-<h3>Move Content to</h3>
+<% torrent = move %>
+<h3>Move Content</h3>
 
-<%= error_messages_for 'torrent', :object => move %>
-<% form_remote_tag :url => torrent_files_path(move), :method => :put do %>
-  <%= collection_select :content, :path, Directory.all, :id, :label, {:prompt => 'Please select destination'} %>
+<h4>from</h4>
+<%= torrent.content_path %>
+
+<h4>to</h4>
+<%= error_messages_for 'torrent', :object => torrent %>
+<% form_remote_tag :url => torrent_files_path(torrent), :method => :put do %>
+  <%= collection_select :content, :directory_id, Directory.all.reject {|d| torrent.content_path.starts_with? d.path}, :id, :label, {:prompt => 'Please select destination'} %>
 <br />
   <%= collection_select :content, :subdir, [], :id, :label, {:prompt => 'Please select subdirectory'} %>
 <br />

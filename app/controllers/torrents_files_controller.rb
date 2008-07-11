@@ -17,25 +17,23 @@ class TorrentsFilesController < ApplicationController
   end
 
   def update
-    respond_to do |wants|
-      wants.js do
-        @dir = Directory.find(params[:content][:path])
+    unless (dir_id = params[:content][:directory_id]).to_i > 0
+      flash[:error] = "Please specify a valid destination directory."
+    else
+      if @dir = Directory.find_by_id(dir_id)
         target = @dir.path_with_optional_subdir params[:content][:subdir]
-        logger.debug "Torrent will be moved to #{target}"
-        @torrent.move_content_to target
-        if @torrent.errors.empty?
+        if @torrent.move_content_to(target) and @torrent.errors.empty?
           flash[:notice] = "Torrent will be moved to #{target}"
           render :template => '/torrents/show'
+          return
         else
-          render :action => 'edit'
+          flash[:error] = "Could not move the torrent's content."
         end
+      else
+        flash[:error] = "No Directory found with id=#{dir_id}"
       end
     end
-  end
-
-  # HACK production mode does not recognize the method: 'put'
-  def create
-    update
+    render :action => 'edit'
   end
 
   private

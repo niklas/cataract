@@ -4,7 +4,7 @@ Event.addBehavior({
     '.torrent a, a.torrent' : Lcars.LinkTo('helm', {message: "Loading Torrent"}),
     '#helm .buttons a' : Lcars.LinkTo('helm'),
     '#engineering .buttons a' : Lcars.LinkTo('engineering'),
-    'select#content_path' : SubDirSelector,
+    'select#content_directory_id' : SubDirSelector,
     'form.new_torrent #torrent_url': Observed(function(field,value) {
       new Ajax.Request('/torrents/new/probe', {method: 'put', parameters: {url : value}});
     }, {frequency: 1}),
