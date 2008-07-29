@@ -60,8 +60,9 @@ class Torrent
     Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
       filename = File.basename filepath
       torrent = new(:filename => filename, :status => 'new')
-      torrent.moveto(:archived)
       if torrent.save
+        torrent.moveto(:archived)
+        torrent.finally_stop!
         created << torrent 
         torrent.start!
       end
