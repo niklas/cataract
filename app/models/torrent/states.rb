@@ -42,7 +42,7 @@ class Torrent
   def set_status_on_create
     self.status = 'new'
     self.status = 'remote' unless url.blank?
-    self.status = 'archived' if file_exists?
+    self.status = 'archived' if file_exists?(:archived)
   end
   before_validation_on_create  :set_status_on_create
   
