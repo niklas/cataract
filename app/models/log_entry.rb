@@ -29,8 +29,10 @@ class LogEntry < ActiveRecord::Base
 
   def final_message
     returning '' do |msg|
-      msg << unless message.blank?
+      msg << if !message.blank?
                message
+             elsif loggable.nil?
+               "something #{action}"
              else
                "'#{loggable.nice_title}' #{action}"
              end
