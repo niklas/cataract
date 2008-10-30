@@ -173,7 +173,6 @@ class Torrent
     return good
   rescue TorrentNotRunning, TorrentHasNoInfoHash 
     finally_stop!           # hmm
-    reload
   end
 
 
