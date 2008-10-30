@@ -83,7 +83,7 @@ module TorrentsHelper
       if t.local?
         a << link_to('Content', torrent_files_path(t))
         a << link_to('Move content', edit_torrent_files_path(t))
-        a << link_to('Delete content', edit_torrent_files_path(t))
+        a << link_to_remote('Delete content', :url => torrent_files_path(t), :method => :delete, :confirm => 'Really delete Content?')
       end
       a << link_to_helm_remote('fetch', :url => fetch_torrent_path(t), :method => :put) if t.remote?
       a << link_to_helm_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?

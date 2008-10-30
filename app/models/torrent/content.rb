@@ -64,6 +64,9 @@ class Torrent
     begin
       if !@mii and file_exists?
         @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
+      else
+        errors.add :content, 'no metainfo found'
+        return
       end
     rescue # RubyTorrent::MetaInfoFormatError
       # no UDP supprt yet
@@ -119,11 +122,12 @@ class Torrent
         rm_rf(opfer) 
         true
       else
-        errors.add :filename, "^content not found: #{opfer}"
+        errors.add :content, "^content not found: #{opfer}"
         false
       end
     rescue Exception => e
-      errors.add :filename, "^error on deleting content: #{e.to_s}"
+      errors.add :content, "^error on deleting content: #{e.to_s}"
+      false
     end
   end
   def calculate_info_hash

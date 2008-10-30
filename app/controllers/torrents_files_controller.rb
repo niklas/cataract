@@ -36,6 +36,16 @@ class TorrentsFilesController < ApplicationController
     render :action => 'edit'
   end
 
+  def destroy
+    bytes = @torrent.content_bytes_on_disk
+    if @torrent.delete_content!
+      flash[:notice] = "Deleted Content for #{@torrent.short_title} (#{@template.human_bytes bytes})"
+    else
+      flash[:error] = "Could not delete content: #{@torrent.errors.on(:content)}"
+    end
+    render :template => '/torrents/show'
+  end
+
   private
   def fetch_torrent
     @torrent = Torrent.find(params[:torrent_id])
