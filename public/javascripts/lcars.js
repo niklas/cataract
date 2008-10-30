@@ -254,7 +254,7 @@ Lcars.LinkTo = Behavior.create({
             // FIXME Hack.. a fast-clicker could break this
             Lcars.lastTarget = target;
             if (box = Lcars.Box[target]) {
-              box.setMessage(e.text + 'ing');
+              box.setMessage(e.text);
               box.moreBusy();
             }
           }
