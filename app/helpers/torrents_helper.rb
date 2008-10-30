@@ -53,13 +53,18 @@ module TorrentsHelper
           :share_color => 'lightgrey',
           :background_color => 'none',
           :diameter => opts[:size] || 32
-        ), :title => "#{progress}%", :alt => "#{progress}%")
+        ), :title => "#{progress}%", :alt => "#{progress}%", :class => 'progress')
       else
-        image_tag('no_progress.png')
+        no_progress_tag
       end
     rescue TorrentNotRunning, TorrentHasNoInfoHash
-      image_tag('no_progress.png')
+      no_progress_tag
     end
+  end
+
+
+  def no_progress_tag
+    image_tag('no_progress.png', :class => 'progress')
   end
 
   def transfer(torrent)

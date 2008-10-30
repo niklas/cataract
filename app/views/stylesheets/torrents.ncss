@@ -23,11 +23,9 @@ ul.torrents {
       float: right;
     }
   }
-  span.progress {
-    img {
-      height: 1.2em;
-      width: 1.2em;
-    }
+  img.progress {
+    height: 1.2em;
+    width: 1.2em;
   }
 }
 

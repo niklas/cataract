@@ -3,6 +3,8 @@ class LcarsController < ApplicationController
   skip_before_filter :login_required
   # renders and caches the round corners of the LCARS design
 
+  caches_page :decoration
+
   def decoration
     data, key = Lcars::Decoration.plot(params) 
     filename = "#{key}.png"
