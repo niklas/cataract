@@ -108,8 +108,13 @@ class Torrent < ActiveRecord::Base
 
   # extended attributes
   def progress
-    (100.0 * completed_bytes.to_f / content_size.to_f).to_i
+    (100.0 * content_bytes_on_disk / content_size).to_i
   rescue FloatDomainError
+    0
+  end
+  def content_bytes_on_disk
+    `du --block-size=1 '#{content_path.escape_quotes}'`.to_i
+  rescue
     0
   end
   def bytes_left
