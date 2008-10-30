@@ -39,6 +39,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'lcars', :action => 'decoration', :background_color => 'black', 
     :requirements => {:kind => /bow|stump|corner/, :variant => /[nsew]{1,2}/}
 
+  map.sparkline '/sparklines/:type/:diameter/:background_color/:remain_color/:share_color/:results.png',
+    :controller =>  'sparklines', :action => 'index'
+
   # You can have the root of your site routed by hooking up '' 
   # -- just remember to delete public/index.html.
   #map.login 'login', :controller => 'account', :action => 'login'
