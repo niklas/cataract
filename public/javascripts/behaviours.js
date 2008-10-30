@@ -1,6 +1,7 @@
 Event.addBehavior.reassignAfterAjax = true
 Event.addBehavior({
-    '#main .buttons a, #main div.pagination a': Lcars.LinkTo('main', {message: "Searching"}),
+    '#main > .buttons a, #main div.pagination a': Lcars.LinkTo('main', {message: "Searching"}),
+    'div.lcars#container > ul.buttons a': Lcars.LinkTo('container', {message: "Loading"}),
     '.torrent a, a.torrent' : Lcars.LinkTo('helm', {message: "Loading Torrent"}),
     '#helm .buttons a' : Lcars.LinkTo('helm'),
     '#engineering .buttons a' : Lcars.LinkTo('engineering'),

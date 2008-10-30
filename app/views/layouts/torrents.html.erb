@@ -11,6 +11,22 @@
       <%= javascript_include_tag *%w(application lcars dynamic_content_dirs behaviours) %>
     </head>
 <body id="body">
-  <%= yield %>
+  <div id="container" class="lcars se primary">
+    <ul class="buttons">
+      <li><%= link_to "Torrents", torrents_url %></li>
+      <br />
+      <li><%= link_to 'Log out', logout_path %></li>
+    </ul>
+    <span class="title">
+      <% if logged_in? %>
+        Logged in as <%= current_user.login %> 
+      <% else %>
+        Klingon Attacking
+      <% end %>
+    </span>
+    <div class="inner">
+        <%= yield %>
+    </div>
+  </div>
 </body>
 </html>

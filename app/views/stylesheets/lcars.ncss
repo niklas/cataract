@@ -388,7 +388,7 @@ div.lcars {
       z-index: 5;
       height: 100%;
       > div, > ul, > p {
-        width: 99%;
+        width: auto;
         display: block;
         float: left;
       }
