@@ -258,7 +258,9 @@ Lcars.LinkTo = Behavior.create({
               box.moreBusy();
             }
           }
-          e.original_onclick();
+          if (!e.original_onclick()) {
+            box.lessBusy();
+          }
           return false;
         }
       }
@@ -298,8 +300,20 @@ Element.addMethods({
     resetBehavior: function(element) {
       $(element).$$assigned = null;
     },
+    lcarsParent: function(element) {
+      return $(element).ancestors().find(function(e) { return e.hasClassName('lcars') })
+    },
     lcarsTarget: function(element) {
-      return $(element).className.match(/\blcars_target_(\w+)\b/)[1];
+      if (match = $(element).className.match(/\blcars_target_(\w+)\b/)) {
+        return match[1];
+      }
+      else 
+        if (parent = $(element).lcarsParent()) {
+          return(parent.id);
+        }
+        else {
+          return null;
+        }
     }
 });
 
