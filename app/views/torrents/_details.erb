@@ -1,58 +1,48 @@
-<% torrent = details %>
+<% torrent ||= details || @torrent %>
 <% content_tag_for :dl, torrent  do %>
-  <dt>Title</dt>
-  <dd> <%= torrent.short_title %> </dd>
-  <dt>Status</dt>
-  <dd> <%= torrent.current_state %> </dd>
+  <%= show torrent, :short_title, :label => 'Title' %>
+  <%= show torrent, :current_state, :label => 'Status' %>
 
   <% if torrent.running? %>
-    <dt>Up</dt>
-    <dd>
-    <%= human_transfer torrent.up_rate / 1024 %>
-    (<%= human_bytes torrent.up_total %>) 
-    </dd>
-    <dt>Down</dt>
-    <dd>
-    <%= human_transfer torrent.down_rate/1024 %>
-    (<%= human_bytes torrent.down_total %>) 
-    </dd>
+    <% show torrent, :progress do %>
+      <%= progress_image_for torrent, :size => 80 %>
+    <% end %>
+    <% show torrent, :up do %>
+      <%= human_transfer torrent.up_rate / 1024 %>
+      (<%= human_bytes torrent.up_total %>) 
+    <% end %>
+    <% show torrent, :down do %>
+      <%= human_transfer torrent.down_rate/1024 %>
+      (<%= human_bytes torrent.down_total %>) 
+    <% end %>
   <% end %>
   
   <% if torrent.content_size.to_i > 0 %>
-    <dt>Content Location</dt>
-    <dd><%= torrent.content_path %></dd>
-    <dt>Size</dt>
-    <dd> <%= human_bytes(torrent.content_size.to_i) %> </dd>
+    <%= show torrent, :content_path, :label => 'Content Location' %>
+    <% show torrent, :size do %>
+      <%= human_bytes(torrent.content_size.to_i) %> 
+    <% end %>
   <% end %>
 
   <% unless torrent.creator.nil? %>
-    <dt>Creator</dt>
-    <dd><%= torrent.creator.name_or_login %></dd>
+    <%= show torrent, :creator %>
   <% end %>
 
-  <dt>ID</dt>
-  <dd><%= torrent.id -%></dd>
-  <dt>created</dt>
-  <dd><%=nice_date torrent.created_at -%></dd>
-  <dt>updated</dt>
-  <dd><%=nice_date torrent.updated_at -%></dd>
+  <%= show torrent, :id %>
+  <%= show torrent, :created_at %>
+  <%= show torrent, :updated_at %>
 
   <% if torrent.file_exists? %>
-    <dt>Filename</dt>
-    <dd><span title="<%= torrent.fullpath -%>"> <%= torrent.filename %></span></dd>
-    <dt>InfoHash</dt>
-    <dd><pre><%= torrent.info_hash %></pre></dd>
+    <% show torrent, :filename do %>
+      <span title="<%= torrent.fullpath -%>"> <%= torrent.filename %></span>
+    <% end %>
+    <%= show torrent, :info_hash %>
   <% end %>
 
   <% unless torrent.url.blank? %>
-    <dt>Source</dt>
-    <dd><%= link_to torrent.url, torrent.url %> </dd>
+    <% show torrent, :source do %>
+      <%= link_to torrent.url, torrent.url %> 
+    <% end %>
   <% end %>
-
-  <dt>Tags</dt>
-  <dd>
-    <span class="warning">No Tags yet</span>
-    <span id="tags_list_button_<%= torrent.id -%>" class="action">edit</span>
-  </dd>
 
 <% end %>
