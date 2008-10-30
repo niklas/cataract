@@ -44,23 +44,22 @@ module TorrentsHelper
   end
 
   def progress_image_for(torrent, opts={})
-    content_tag('span',
-      begin
-        if torrent.running?
-          sparkline_tag [torrent.progress.to_i], 
-            :type => :pie, 
-            :remain_color => '#222222',
-            :share_color => 'lightgrey',
-            :background_color => 'none',
-            :diameter => opts[:size] || 32
-        else
-          image_tag('no_progress.png')
-        end
-      rescue TorrentNotRunning, TorrentHasNoInfoHash
+    begin
+      if torrent.running? && progress = torrent.progress
+        image_tag(sparkline_url(
+          :type => :pie, 
+          :results => progress,
+          :remain_color => '#222222',
+          :share_color => 'lightgrey',
+          :background_color => 'none',
+          :diameter => opts[:size] || 32
+        ), :title => "#{progress}%", :alt => "#{progress}%")
+      else
         image_tag('no_progress.png')
-      end,
-      {:class => 'progress', :id => "progress_#{torrent.id}"}
-    )
+      end
+    rescue TorrentNotRunning, TorrentHasNoInfoHash
+      image_tag('no_progress.png')
+    end
   end
 
   def transfer(torrent)
