@@ -14,6 +14,7 @@ ul.torrents {
     clear: left;
     float: left;
     width: 99%;
+    margin-bottom: 0.23em;
     > * {
       display: block;
       float: left;
