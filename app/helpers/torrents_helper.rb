@@ -43,7 +43,7 @@ module TorrentsHelper
       {:class => 'percent_bar', :style => "width: #{p}%", :title => label})
   end
 
-  def progress_image_for(torrent)
+  def progress_image_for(torrent, opts={})
     content_tag('span',
       begin
         if torrent.running?
@@ -52,7 +52,7 @@ module TorrentsHelper
             :remain_color => '#222222',
             :share_color => 'lightgrey',
             :background_color => 'none',
-            :diameter => 32
+            :diameter => opts[:size] || 32
         else
           image_tag('no_progress.png')
         end
