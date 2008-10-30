@@ -63,6 +63,22 @@ Lcars.Box = Behavior.create({
           this._addDecoration('stump','e','ne');
           this._addDecoration('stump','e','se');
           break;
+        case 'wse':
+          this._addDecoration('corner','sw');
+          this._addDecoration('bow','sw');
+          this._addDecoration('corner','se');
+          this._addDecoration('bow','se');
+          this._addDecoration('stump','n','ne');
+          this._addDecoration('stump','n','nw');
+          break;
+        case 'wne':
+          this._addDecoration('corner','nw');
+          this._addDecoration('corner','ne');
+          this._addDecoration('bow','nw');
+          this._addDecoration('bow','ne');
+          this._addDecoration('stump','s','sw');
+          this._addDecoration('stump','s','se');
+          break;
         case 'se':
           this._addDecoration('corner','se');
           this._addDecoration('bow','se');
