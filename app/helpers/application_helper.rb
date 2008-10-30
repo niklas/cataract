@@ -32,4 +32,9 @@ module ApplicationHelper
     ]
   end
 
+  # Translate mock
+  def _ string
+    string
+  end
+
 end
