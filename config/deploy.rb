@@ -14,8 +14,8 @@ role :db,  single_target, :primary => true
 set :user, 'niklas'
 
 set :build_dir, '/tmp/rtorrent'
-set :libtorrent_version, '0.11.6'
-set :rtorrent_version, '0.7.6'
+set :libtorrent_version, '0.12.1'
+set :rtorrent_version, '0.8.1'
 
 task :build_rtorrent, :roles => :download do
   sudo 'aptitude install -q -y g++ checkinstall libsigc++-2.0-dev libxmlrpc-c-dev ncurses-dev libcurl4-openssl-dev libcurl3-openssl-dev'
@@ -27,7 +27,10 @@ task :build_rtorrent, :roles => :download do
   run "svn export svn://rakshasa.no/libtorrent/tags/libtorrent-#{libtorrent_version} #{build_dir}/libtorrent"
   run <<-CMD
     cd #{build_dir}/libtorrent; 
-    ./autogen.sh && ./configure && make &&
+    ./autogen.sh && 
+    ./configure 
+      --prefix=/usr && 
+    make &&
     sudo checkinstall -y 
       --pkgversion #{libtorrent_version}cataract
   CMD
@@ -37,6 +40,7 @@ task :build_rtorrent, :roles => :download do
     cd #{build_dir}/rtorrent;
     ./autogen.sh &&
     ./configure 
+      --prefix=/usr
       --with-xmlrpc-c && 
     make && 
     sudo checkinstall -y
