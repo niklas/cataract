@@ -61,18 +61,17 @@ class Torrent
   end
 
   def metainfo
-    begin
-      if !@mii and file_exists?
-        @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
-      else
-        errors.add :content, 'no metainfo found'
-        return
-      end
-    rescue # RubyTorrent::MetaInfoFormatError
-      # no UDP supprt yet
-      @mii = nil
+    return @mii unless @mii.nil?
+    if !@mii and file_exists?
+      @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
+      return @mii
+    else
+      errors.add :content, 'no metainfo found'
+      return
     end
-    @mii
+  rescue # RubyTorrent::MetaInfoFormatError
+    # no UDP supprt yet
+    @mii = nil
   end
 
   def move_content_to target_dir
