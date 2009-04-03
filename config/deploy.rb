@@ -11,11 +11,11 @@ role :app, single_target
 role :web, single_target
 role :download, single_target
 role :db,  single_target, :primary => true
-set :user, 'niklas'
+set :user, 'torrent'
 
 set :build_dir, '/tmp/rtorrent'
-set :libtorrent_version, '0.12.1'
-set :rtorrent_version, '0.8.1'
+set :libtorrent_version, '0.12.4'
+set :rtorrent_version, '0.8.4'
 
 task :build_rtorrent, :roles => :download do
   sudo 'aptitude install -q -y g++ checkinstall libsigc++-2.0-dev libxmlrpc-c-dev ncurses-dev libcurl4-openssl-dev libcurl3-openssl-dev'
@@ -58,9 +58,6 @@ namespace :deploy do
 
   desc "Fix something after setup"
   task :after_setup, :roles => :app do
-    group_permissions
-  end
-  task :before_restart, :roles => :app do
     group_permissions
   end
   desc "More symlinks (configs etc)"
