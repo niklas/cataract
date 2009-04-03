@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
   require 'string_monkeypatches'
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
+  config.gem 'has_finder'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
