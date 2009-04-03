@@ -24,7 +24,20 @@ class Directory < ActiveRecord::Base
   def subdirs
     Dir[path + '/*'].
       select { |dir| File.directory? dir }.
-      map { |dir| dir.split('/').last }
+      map { |dir| dir.split('/').last }.
+      sort
+  end
+
+  def subdir_names
+    subdirs
+  end
+
+  def self.for_series
+    find_by_name('Serien')
+  end
+
+  def self.for_movies
+    find_by_name('Filme')
   end
 
   def path_with_optional_subdir(subdir)

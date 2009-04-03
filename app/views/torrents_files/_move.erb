@@ -6,6 +6,14 @@
 
 <h4>to</h4>
 <%= error_messages_for 'torrent', :object => torrent %>
+
+<% if torrent.is_episode? %>
+  <%= link_to_remote "Move into Series/#{torrent.series_name}", :url => torrent_files_path(torrent, :parameters => {
+  :directory_id => Director.for_series.id,
+  :subdir => torrent.series_name
+  }), :method => :put %>
+<% end %>
+
 <% form_remote_tag :url => torrent_files_path(torrent), :method => :put do %>
   <%= collection_select :content, :directory_id, Directory.all.reject {|d| torrent.content_path.starts_with? d.path}, :id, :label, {:prompt => 'Please select destination'} %>
 <br />

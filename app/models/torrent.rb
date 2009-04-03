@@ -56,7 +56,7 @@ class Torrent < ActiveRecord::Base
 
   acts_as_taggable
 
-  concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing
+  concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing, :movie
 
   named_scope :invalid,
     {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
