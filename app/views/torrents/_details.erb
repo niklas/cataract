@@ -17,7 +17,7 @@
     <% end %>
   <% end %>
   
-  <% if torrent.content_size.to_i > 0 %>
+  <% if torrent.content_exists? %>
     <%= show torrent, :content_path, :label => 'Content Location' %>
     <% show torrent, :size do %>
       <%= human_bytes(torrent.content_size.to_i) %> 

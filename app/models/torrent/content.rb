@@ -43,6 +43,10 @@ class Torrent
     self[:content_path] ||= working_path
   end
 
+  def content_exists?
+    !content_path.blank? && File.exists?(content_path)
+  end
+
   def download_path
     content_path.sub(%r(/[^/]*$),'')
   end
