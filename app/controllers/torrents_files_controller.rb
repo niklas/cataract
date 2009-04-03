@@ -27,7 +27,7 @@ class TorrentsFilesController < ApplicationController
           render :template => '/torrents/show'
           return
         else
-          flash[:error] = "Could not move the torrent's content."
+          flash[:error] = "Could not move the torrent's content: #{@torrent.errors.on(:content)}"
         end
       else
         flash[:error] = "No Directory found with id=#{dir_id}"
