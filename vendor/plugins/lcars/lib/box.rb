@@ -102,7 +102,7 @@ module Lcars
       def replace_lcars_buttons(name,buttons=nil)
         return if buttons.nil?
         lcars_select(name,:buttons).html(
-          element.update(context.lcars_buttons(buttons))
+          context.lcars_buttons(buttons)
         )
       end
 
@@ -166,19 +166,20 @@ module Lcars
       end
 
       def lcars_buttons_with_container(buttons)
-        content_tag(
-          :ul,
-          lcars_buttons(buttons),
-          {:class => 'buttons'}
-        )
+        content_tag( :ul, lcars_buttons(buttons), {:class => 'buttons'})
       end
       def lcars_buttons(buttons)
-        buttons = send!(buttons) if buttons.is_a? Symbol
-        buttons = buttons.call if buttons.is_a? Proc
+        buttons = send!(buttons)  if buttons.is_a? Symbol
+        buttons = buttons.call    if buttons.is_a? Proc
+        buttons = render(buttons) if buttons.is_a? Hash
         return '' if buttons.blank?
-        buttons.collect do |button|
-          content_tag(:li,button)
-        end.join(' ')
+        if buttons.respond_to?(:collect)
+          buttons.collect do |button|
+            content_tag(:li,button)
+          end.join(' ')
+        else
+          buttons
+        end
       end
 
       def lcars_title(title)

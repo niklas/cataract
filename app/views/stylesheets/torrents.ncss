@@ -3,17 +3,14 @@
   color2 = '#d1daf5'
 %>
 
-ul.torrents {
+div.torrents {
+  clear: both;
   font-size: 115%;
   line-height: 130%;
   margin: 0;
   padding: 0;
-  li.torrent {
-    list-style: none;
+  div.torrent {
     display: block;
-    clear: left;
-    float: left;
-    width: 99%;
     margin-bottom: 0.23em;
     > * {
       display: block;

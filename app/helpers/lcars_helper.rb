@@ -31,4 +31,18 @@ module LcarsHelper
                 opts
                )
   end
+
+  def lcars_paginate(collection, opts={})
+    will_paginate collection, opts.merge(
+      :inner_window => 1, 
+      :container => false,
+      :renderer => 'LcarsPaginateLinkRenderer'
+    )
+  end
+end
+
+class LcarsPaginateLinkRenderer < WillPaginate::LinkRenderer
+  def page_link_or_span(page, span_class, text = nil)
+    @template.content_tag(:li, super)
+  end
 end

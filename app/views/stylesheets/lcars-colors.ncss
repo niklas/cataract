@@ -99,6 +99,24 @@ div.lcars {
           :hover {
             background-color: <%= colors[:text] %>;
           }
+          .next, .next_page {
+            background-color: <%= colors[:color1] %>;
+          }
+          .prev, .prev_page {
+            background-color: <%= colors[:color2] %>;
+          }
+        }
+        > span {
+          color: <%= colors[:base] %>;
+          background-color: <%= colors[:elbows] %>;
+          .disabled {
+            color: <%= colors[:offline] %>;
+            background-color: <%= colors[:base] %>;
+          }
+          .current, .gap {
+            color: <%= colors[:color1] %>;
+            background-color: <%= colors[:base] %>;
+          }
         }
         + li > a {
           background-color: <%= colors[:color1] %>;

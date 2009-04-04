@@ -1,8 +1,9 @@
 page.update_main :content => {:partial => '/torrents/list', :object => @torrents}
-page[:label_for_term].replace_html title_for_main
-if @term.blank?
-  page[:torrent_search].reset
-  page[:term].hide();
-end
-page[:only_watched].value = @only_watched
-page[:status].value = @status
+page.update_main :buttons => {:partial => '/torrents/buttons', :object => @torrents}
+#page[:label_for_term].replace_html title_for_main
+#if @term.blank?
+#  page[:torrent_search].reset
+#  page[:term].hide();
+#end
+#page[:only_watched].value = @only_watched
+#page[:status].value = @status

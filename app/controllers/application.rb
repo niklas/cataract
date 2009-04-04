@@ -89,8 +89,8 @@ class ApplicationController < ActionController::Base
     lcars_box :helm, :kind => 'wse', :theme => 'primary', :title => 'Helm'
     lcars_box :main, :kind => 'nw', :theme => 'secondary', 
       :title => :torrent_search, 
-      :buttons => :torrent_menu_links,
-      :content => lambda {{:partial => '/torrents/list', :object => @torrents }}
+      :buttons => Proc.new {{:partial => '/torrents/buttons', :object => @torrents }},
+      :content => Proc.new {{:partial => '/torrents/list', :object => @torrents }}
     lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',
       :content => lambda {{:partial => '/log_entries/list', :object => (@logs || @log_entries || LogEntry.last.all)}}
     lcars_box :single, :kind => 'nw'

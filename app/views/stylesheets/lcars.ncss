@@ -309,7 +309,7 @@ div.lcars {
     margin: 0;
     padding: 0;
     > li {
-      > a {
+      > a, > span {
         text-decoration: none;
         letter-spacing: -0.06em;
         padding: 0 <%= big_border * 0.1 %>em;
@@ -331,7 +331,7 @@ div.lcars {
       position: absolute;
       > li {
         margin: <%= vertical_space_between_buttons %>em 0;
-        > a {
+        > a, > span {
           display: block;
           height: <%= button_size1 %>em;
         }
