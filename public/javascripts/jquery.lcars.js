@@ -96,10 +96,18 @@
           break;
       }
       $(this).find('ul.buttons').removeClass('right').removeClass('left');
-      if ( $(this).lcarsKind().match(/w/) ) {
+
+      var kind = $(this).lcarsKind();
+      if ( kind.match(/w/) ) {
         $(this).find('ul.buttons:has(li)').addClass('left');
       } else {
         $(this).find('ul.buttons:has(li)').addClass('right');
+      }
+
+      if ( kind.match(/n/) ) {
+        $(this).find(' > span.title').addClass('top').removeClass('bottom');
+      } else {
+        $(this).find(' > span.title').addClass('bottom').removeClass('top');
       }
     })
   };
@@ -118,7 +126,7 @@
   $.fn.setLcarsMessage =  function(msg) {
     return this.each(function() {
       if ( $(this).find('div.inner.modal > div.message').length == 0 ) {
-        $($.lcars.messageBox()).appendTo(this);
+        $($.lcars.messageBox()).appendTo($(this));
       }
       $(this).find('div.inner.modal > div.message').html(msg);
     })
@@ -173,7 +181,7 @@
       elem.click( function(ev) {
         ev.preventDefault();
         elem.lcarsParent().moreBusy('Loading...');
-        $.getScript( elem.attr('href'), null, function(data, textStatus) {
+        $.getScript( elem.attr('href'), function(data, textStatus) {
           elem.lcarsParent().lessBusy();
         });
       });
@@ -186,7 +194,7 @@
     ' src="/lcars/decoration/' + kind + '/' + variant + '.png" />'
   };
   $.lcars.messageBox = function() {
-    return '<div class="inner modal><div class="message" /></div>'
+    return '<div class="inner modal"><div class="message" /></div>'
   };
 
 }(jQuery));
