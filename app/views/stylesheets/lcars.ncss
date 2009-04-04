@@ -390,7 +390,6 @@ div.lcars {
       > div, > ul, > p {
         width: auto;
         display: block;
-        float: left;
       }
       a.action {
         padding-left: <%= slim_side_border %>em;
