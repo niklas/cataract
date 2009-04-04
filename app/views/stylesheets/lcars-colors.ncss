@@ -13,19 +13,68 @@ div.lcars {
     background-color: <%= colors[:elbows] %>;
     a {
       .show {
-        background: <%= colors[:base] %>;
+        background-color: <%= colors[:base] %>;
         color: <%= colors[:color2] %>;
         border-left: 1em solid <%= colors[:color2] %>;
         border-right: 0.1em solid <%= colors[:color2] %>;
         padding: 0 3px;
+        :hover {
+          background-color: <%= colors[:color2] %>;
+          color: <%= colors[:base] %>;
+        }
       }
       .edit {
-        background: <%= colors[:base] %>;
+        background-color: <%= colors[:base] %>;
         color: <%= colors[:change] %>;
         border-left: 1em solid <%= colors[:change] %>;
         border-right: 0.1em solid <%= colors[:change] %>;
         padding: 0 3px;
+        :hover {
+          background-color: <%= colors[:change] %> !important;
+          color: <%= colors[:base] %> !important;
+        }
       }
+    }
+    form {
+       input[type="submit"], button[type="submit"] {
+         background: <%= colors[:base] %>;
+         color: <%= colors[:color1] %>;
+         border: none;
+         :hover {
+           background-color: <%= colors[:text] %> !important;
+           color: <%= colors[:base] %> !important;
+         }
+       }
+       .create {
+          input[type="submit"], button[type="submit"] {
+            background: <%= colors[:base] %>;
+            color: <%= colors[:primary] %>;
+            border-color: <%= colors[:primary] %>;
+            :hover {
+              background-color: <%= colors[:primary] %> !important;
+            }
+          }
+       }
+       .destroy {
+          input[type="submit"], button[type="submit"] {
+            background: <%= colors[:base] %>;
+            color: <%= colors[:warning] %>;
+            border-color: <%= colors[:warning] %>;
+            :hover {
+              background-color: <%= colors[:warning] %> !important;
+            }
+          }
+       }
+       .update {
+          input[type="submit"], button[type="submit"] {
+            background: <%= colors[:base] %>;
+            color: <%= colors[:change] %>;
+            border-color: <%= colors[:change] %>;
+            :hover {
+              background-color: <%= colors[:change] %> !important;
+            }
+          }
+       }
     }
     ul.buttons {
       background-color: <%= colors[:base] %>;
@@ -33,6 +82,9 @@ div.lcars {
         background-color: <%= colors[:base] %>;
         > a {
           color: <%= colors[:base] %>;
+          border: none;
+          padding: 0;
+          text-align: center;
           background-color: <%= colors[:primary] %>;
           :hover {
             background-color: <%= colors[:text] %>;
@@ -42,6 +94,22 @@ div.lcars {
           }
           .prev, .prev_page {
             background-color: <%= colors[:color2] %>;
+          }
+        }
+        form.create button {
+          background-color: <%= colors[:primary] %>;
+        }
+        form.destroy button {
+          background-color: <%= colors[:warning] %>;
+        }
+        form.update button {
+          background-color: <%= colors[:change] %>;
+        }
+        form button[type="submit"] {
+          color: <%= colors[:base] %>;
+          width: 100%;
+          :hover {
+            background-color: <%= colors[:text] %> !important;
           }
         }
         > span {
@@ -113,27 +181,11 @@ div.lcars {
              background-color: <%= colors[:input] %>;
           }
           input[type="submit"], button[type="submit"] {
-            background: <%= colors[:base] %>;
-            color: <%= colors[:color1] %>;
-            border-left: 1em solid <%= colors[:color1] %>;
-            border-right: 0.1em solid <%= colors[:color1] %>;
             padding: 0;
-          }
-          .create {
-             input[type="submit"], button[type="submit"] {
-               background: <%= colors[:base] %>;
-               color: <%= colors[:primary] %>;
-               border-left: 1em solid <%= colors[:primary] %>;
-               border-right: 0.1em solid <%= colors[:primary] %>;
-             }
-          }
-          .destroy {
-             input[type="submit"], button[type="submit"] {
-               background: <%= colors[:base] %>;
-               color: <%= colors[:warning] %>;
-               border-left: 1em solid <%= colors[:warning] %>;
-               border-right: 0.1em solid <%= colors[:warning] %>;
-             }
+            border-left-width: 1em;
+            border-left-style: solid;
+            border-right-width: 0.1em;
+            border-right-style: solid;
           }
         }
         ul {

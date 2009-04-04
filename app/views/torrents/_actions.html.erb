@@ -1,12 +1,26 @@
 <% torrent ||= actions %>
 
-<%= show_torrent_link torrent, :label => (@torrent == torrent ? 'Update' : 'Details'), :target => 'helm' %>
-<%= create_torrent_transfer_form torrent, :label => 'Start' if torrent.startable? %>
-<%= destroy_torrent_transfer_form torrent, :label => 'Stop' if torrent.stoppable? %>
-<%= update_torrent_transfer_form torrent, :label => 'Pause', :action => 'pause' if torrent.running? %>
+<%= show_torrent_link torrent, :label => (@torrent == torrent ? '↻' : '➟'), 
+                               :title => (@torrent == torrent ? 'Update' : 'Details'), 
+                               :target => 'helm' %>
+
+<% unless torrent.new_record? %>
+  <% if watching = current_user.watches?(torrent) %>
+    <%= destroy_watching_form watching,     :label => '✖', :title => 'Forget' %>
+  <% else %>
+    <%= create_watching_form                :label => '❤', :title => 'Watch',  :torrent_id => torrent %>
+  <% end %>
+<% end %>
+<%= create_torrent_transfer_form torrent, :label => '▶', :title => 'Start' if torrent.startable? %>
+<%= destroy_torrent_transfer_form torrent,:label => '■', :title => 'Stop' if torrent.stoppable? %>
+<%= update_torrent_transfer_form torrent, :label => '⬚', :title => 'Pause', :action => 'pause' if torrent.running? %>
+<%= update_torrent_form torrent,          :label => '☇', :title => 'Fetch', :action => 'fetch' if torrent.remote? %>
+<%= create_torrent_form torrent,          :label => '+', :title => 'Add', :url => torrent.url if torrent.new_record? and torrent.fetchable? %>
+<%= destroy_torrent_form torrent,         :label => '♱', :title => 'Delete',  :confirm => 'Deletion cannot be undone. Are you sure?' %>
 
 <% if torrent.local? %>
-  <%= show_torrent_files_link torrent, :label => 'Content', :target => 'helm' %>
-  <%= edit_torrent_files_link torrent, :label => 'Move', :target => 'helm' %>
-  <%= destroy_torrent_files_form torrent, :label => 'Delete content', :confirm => 'Really delete Content?' %>
+  <%= show_torrent_files_link torrent,    :label => '☭', :title => 'Content', :target => 'helm' %>
+  <%= edit_torrent_files_link torrent,    :label => '♻', :title => 'Move', :target => 'helm' %>
+  <%= destroy_torrent_files_form torrent, :label => '☢', :title => 'Wipe Content',  :confirm => 'Really delete Content?' %>
 <% end %>
+

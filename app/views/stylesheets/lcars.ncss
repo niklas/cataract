@@ -120,6 +120,10 @@ div.lcars {
     color: inherit;
   }
 
+  form button[type="submit"] {
+    cursor: pointer;
+  }
+
   /* without menu or title */
   > div.inner {
      top: <%= slim_border %>em;
@@ -313,9 +317,14 @@ div.lcars {
         text-decoration: none;
         letter-spacing: -0.06em;
         padding: 0 <%= big_border * 0.1 %>em;
+        border: none;
       }
       img {
         border: none;
+      }
+      form {
+        border: none;
+        padding: 0;
       }
     }
   }
@@ -331,9 +340,11 @@ div.lcars {
       position: absolute;
       > li {
         margin: <%= vertical_space_between_buttons %>em 0;
-        > a, > span {
+        > a, > span, > form > button {
           display: block;
           height: <%= button_size1 %>em;
+          line-height: <%= button_size1 %>em;
+          padding: 0;
         }
       }
       :after {
@@ -469,13 +480,11 @@ div.lcars {
           float: right;
           border-top: none;
           border-bottom: none;
-          cursor: pointer;
         }
         button[type="submit"] {
           float: right;
           border-top: none;
           border-bottom: none;
-          cursor: pointer;
         }
       }
       div.pagination {

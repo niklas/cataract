@@ -1,5 +1,4 @@
 class WatchingsController < ApplicationController
-  before_filter :fetch_user
   before_filter :authorized_user_for_watching
   helper :torrents
   layout false
@@ -42,16 +41,7 @@ class WatchingsController < ApplicationController
 
   private
   def authorized_user_for_watching
-    unless @user == current_user
-      flash[:error] = "Watch yourself!"
-      false
-    else
-      true
-    end
-  end
-
-  def fetch_user
-    @user = User.find(params[:user_id])
+    @user = current_user
   end
 
 end

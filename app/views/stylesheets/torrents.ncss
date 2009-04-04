@@ -21,7 +21,9 @@ div.torrents {
       float: right;
     }
     form.transfer,
-    form.files
+    form.files,
+    form.watching,
+    form.torrent
       {
       float: right;
       button {

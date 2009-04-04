@@ -76,20 +76,7 @@ module TorrentsHelper
   end
 
   def actions_for_torrent(t)
-    returning [] do |a|
-      a << link_to_helm_remote('start', :url => torrent_transfer_path(t), :method => :post) if t.startable?
-      a << link_to_helm_remote('stop', :url => torrent_transfer_path(t), :method => :delete) if t.stoppable?
-      a << link_to_helm_remote('pause', :url => pause_torrent_transfer_path(t), :method => :put) if t.running?
-      if t.local?
-        a << link_to('Content', torrent_files_path(t))
-        a << link_to('Move content', edit_torrent_files_path(t))
-        a << link_to_remote('Delete content', :url => torrent_files_path(t), :method => :delete, :confirm => 'Really delete Content?')
-      end
-      a << link_to_helm_remote('fetch', :url => fetch_torrent_path(t), :method => :put) if t.remote?
-      a << link_to_helm_remote('Add', :url => torrents_url(:url => t.url), :method => :post) if t.new_record? and t.fetchable?
-      a << link_to_helm_remote('Delete', :url => torrent_url(t), :method => :delete, :confirm => 'Deletion cannot be undone. Are you sure?') unless t.new_record?
-      a << toggle_watch_button(t) unless t.new_record?
-    end
+    render :partial => 'torrents/actions', :object => t
   end
 
 
