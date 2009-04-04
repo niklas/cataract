@@ -32,6 +32,8 @@ class StylesheetsController < ApplicationController
          :primary => '#99CCFF',
          :color1 => '#FFFF33',
          :color2 => '#FFFFCC',
+         :change => '#66FF33',
+         :warning => '#FF3333',
          :input => '#111100'
       },
      'secondary' =>
@@ -45,6 +47,8 @@ class StylesheetsController < ApplicationController
          :primary => '#99CCFF',
          :color1 => '#FFCC00',
          :color2 => '#FFFF99',
+         :change => '#66FF33',
+         :warning => '#FF3333',
          :input => '#111100'
       },
      'ancillary' =>
@@ -58,6 +62,8 @@ class StylesheetsController < ApplicationController
          :primary => '#ADACD8',
          :color1 => '#FFFF33',
          :color2 => '#E6B0D4',
+         :change => '#66FF33',
+         :warning => '#FF3333',
          :input => '#111100'
       },
      'database' =>
@@ -71,6 +77,8 @@ class StylesheetsController < ApplicationController
          :primary => '#99CCFF',
          :color1 => '#FF9900',
          :color2 => '#99CCFF',
+         :change => '#66FF33',
+         :warning => '#FF3333',
          :input => '#111100'
       },
      'error' =>
@@ -85,6 +93,8 @@ class StylesheetsController < ApplicationController
          :color1 => '#FF0000',
          :color2 => '#FF0000',
          :input => '#111100',
+         :change => '#66FF33',
+         :warning => '#FF3333',
          :position => 500
       },
      'busy' =>
@@ -99,6 +109,8 @@ class StylesheetsController < ApplicationController
          :color1 => '#555555',
          :color2 => '#777777',
          :input => '#666666',
+         :change => '#66FF33',
+         :warning => '#FF3333',
          :position => 100
       }
    }

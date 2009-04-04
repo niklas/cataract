@@ -11,6 +11,22 @@ div.lcars {
   .<%= name %> {
     outline: thin solid <%= colors[:base] %>;
     background-color: <%= colors[:elbows] %>;
+    a {
+      .show {
+        background: <%= colors[:base] %>;
+        color: <%= colors[:color2] %>;
+        border-left: 1em solid <%= colors[:color2] %>;
+        border-right: 0.1em solid <%= colors[:color2] %>;
+        padding: 0 3px;
+      }
+      .edit {
+        background: <%= colors[:base] %>;
+        color: <%= colors[:change] %>;
+        border-left: 1em solid <%= colors[:change] %>;
+        border-right: 0.1em solid <%= colors[:change] %>;
+        padding: 0 3px;
+      }
+    }
     ul.buttons {
       background-color: <%= colors[:base] %>;
       > li {
@@ -89,10 +105,6 @@ div.lcars {
           }
         }
         form {
-          input[type="submit"] {
-            background: <%= colors[:base] %>;
-            color: <%= colors[:color1] %>;
-          }
           label + input[type="text"],
           label + input[type="textarea"],
           label + input[type="password"] {
@@ -100,9 +112,28 @@ div.lcars {
              border-color: <%= colors[:color1] %>;
              background-color: <%= colors[:input] %>;
           }
-          input[type="submit"] {
+          input[type="submit"], button[type="submit"] {
+            background: <%= colors[:base] %>;
+            color: <%= colors[:color1] %>;
             border-left: 1em solid <%= colors[:color1] %>;
             border-right: 0.1em solid <%= colors[:color1] %>;
+            padding: 0;
+          }
+          .create {
+             input[type="submit"], button[type="submit"] {
+               background: <%= colors[:base] %>;
+               color: <%= colors[:primary] %>;
+               border-left: 1em solid <%= colors[:primary] %>;
+               border-right: 0.1em solid <%= colors[:primary] %>;
+             }
+          }
+          .destroy {
+             input[type="submit"], button[type="submit"] {
+               background: <%= colors[:base] %>;
+               color: <%= colors[:warning] %>;
+               border-left: 1em solid <%= colors[:warning] %>;
+               border-right: 0.1em solid <%= colors[:warning] %>;
+             }
           }
         }
         ul {

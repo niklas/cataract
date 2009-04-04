@@ -2,5 +2,5 @@
 <% content_tag_for :div, torrent, :class => torrent.status do %>
   <%= progress_image_for torrent %>
   <span class="title"> <%= h torrent.short_title %> </span>
-  <%= show_torrent_link torrent, :label => 'Details', :target => 'helm' %>
+  <%= render :partial => 'actions', :object => torrent %>
 <% end %>

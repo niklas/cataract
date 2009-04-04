@@ -20,6 +20,14 @@ div.torrents {
     a {
       float: right;
     }
+    form.transfer,
+    form.files
+      {
+      float: right;
+      button {
+        float: right;
+      }
+    }
   }
   img.progress {
     height: 1.2em;

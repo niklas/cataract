@@ -106,9 +106,7 @@ module TorrentsHelper
   end
 
   def link_to_helm_remote(name, options = {}, html_options = {})
-    html_options[:class] ||= ''
-    html_options[:class] += ' lcars_target_helm'
-    link_to_remote(name,options,html_options)
+    link_to_remote(name,options,html_options.merge(:target => 'helm'))
   end
 
   def human_transfer(kb, rate=true)

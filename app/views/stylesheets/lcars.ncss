@@ -471,6 +471,12 @@ div.lcars {
           border-bottom: none;
           cursor: pointer;
         }
+        button[type="submit"] {
+          float: right;
+          border-top: none;
+          border-bottom: none;
+          cursor: pointer;
+        }
       }
       div.pagination {
         a, span {
