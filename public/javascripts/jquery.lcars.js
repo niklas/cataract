@@ -148,10 +148,12 @@
     if (count < 0)
       count = 0;
     this.data('requestCount', count);
-    var me = this;
-    this.find('div.inner.modal').fadeOut('fast', function() {
-      if (count == 0) me.removeClass('busy')
-    });
+    if (count == 0)  {
+      var me = this;
+      this.find('div.inner.modal').fadeOut('fast', function() {
+        me.removeClass('busy')
+      });
+    }
     return this
   };
 
@@ -178,13 +180,22 @@
   $.fn.lcarsParent = function() {
     return $(this).parents('div.lcars:first')
   };
+  // finds the lcars element $(this) (a) links to
+  $.fn.lcarsTarget = function() {
+    var name = $(this).attr('target');
+    if (name && (elem = Lcars.find(name)) ) {
+      return elem;
+    } else {
+      return $(this).lcarsParent();
+    }
+  };
 
   $.fn.lcarsLink = function() {
     return this.each(function() {
       var elem = $(this);
       elem.click( function(ev) {
         ev.preventDefault();
-        var parent = elem.lcarsParent();
+        var parent = elem.lcarsTarget();
         parent.moreBusy('Loading...');
         $.getScript( elem.attr('href'), function(data, textStatus) {
           parent.lessBusy();
