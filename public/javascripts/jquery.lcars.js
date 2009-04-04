@@ -136,7 +136,11 @@
     this.data('requestCount', count);
     if (message)
       this.setLcarsMessage(message);
-    return this.addClass('busy');
+    var me = this;
+    if ( !this.hasClass('busy') ) {
+      me.addClass('busy');
+      this.find('div.inner.modal').fadeIn('slow');
+    }
   };
 
   $.fn.lessBusy = function() {
@@ -144,10 +148,11 @@
     if (count < 0)
       count = 0;
     this.data('requestCount', count);
-    if (count == 0)
-      return this.removeClass('busy')
-    else
-      return this
+    var me = this;
+    this.find('div.inner.modal').fadeOut('fast', function() {
+      if (count == 0) me.removeClass('busy')
+    });
+    return this
   };
 
   $.fn.alert = function(message) {

@@ -2,5 +2,5 @@
 // This file is automatically included by javascript_include_tag :defaults
 $(document).ready(function() {
   $('div.lcars').livequery(function() { $(this).lcars() });
-  $('div.lcars ul.buttons a').livequery(function() { $(this).lcarsLink() });
+  $('div.lcars a').livequery(function() { $(this).lcarsLink() });
 });

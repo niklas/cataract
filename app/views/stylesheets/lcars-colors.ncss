@@ -1,92 +1,14 @@
 /* Color Schemes based on info from http://www.lcarsdeveloper.com */
 
-<%
-   color_schemes = [
-     {   :Name => 'primary',
-         :base => '#000000',
-         :text => '#FFFFFF',
-         :elbows => '#F1DF6F',
-         :offline => '#FF0000',
-         :offline_off => '#330000',
-         :unavailable => '#3399FF',
-         :primary => '#99CCFF',
-         :color1 => '#FFFF33',
-         :color2 => '#FFFFCC',
-         :input => '#111100'
-      },
-     {   :Name => 'secondary',
-         :base => '#000000',
-         :text => '#FFFFFF',
-         :elbows => '#B1957A',
-         :offline => '#FF0000',
-         :offline_off => '#330000',
-         :unavailable => '#5355DE',
-         :primary => '#99CCFF',
-         :color1 => '#FFCC00',
-         :color2 => '#FFFF99',
-         :input => '#111100'
-      },
-     {   :Name => 'ancillary',
-         :base => '#000000',
-         :text => '#FFFFFF',
-         :elbows => '#F1B1AF',
-         :offline => '#FF0000',
-         :offline_off => '#330000',
-         :unavailable => '#A27FA5',
-         :primary => '#ADACD8',
-         :color1 => '#FFFF33',
-         :color2 => '#E6B0D4',
-         :input => '#111100'
-      },
-     {   :Name => 'database',
-         :base => '#000000',
-         :text => '#FFFFFF',
-         :elbows => '#CC6666',
-         :offline => '#FF0000',
-         :offline_off => '#330000',
-         :unavailable => '#CCCCFF',
-         :primary => '#99CCFF',
-         :color1 => '#FF9900',
-         :color2 => '#99CCFF',
-         :input => '#111100'
-      },
-     {   :Name => 'error',
-         :base => '#000000',
-         :text => '#FFFFFF',
-         :elbows => '#FF0000',
-         :offline => '#FF0000',
-         :offline_off => '#330000',
-         :unavailable => '#FF0000',
-         :primary => '#FF0000',
-         :color1 => '#FF0000',
-         :color2 => '#FF0000',
-         :input => '#111100'
-      },
-     {   :Name => 'busy',
-         :base => '#000000',
-         :text => '#FFFFFF',
-         :elbows => '#666666',
-         :offline => '#666666',
-         :offline_off => '#666666',
-         :unavailable => '#666666',
-         :primary => '#666666',
-         :color1 => '#555555',
-         :color2 => '#777777',
-         :input => '#666666'
-      }
-   ]
-   default_scheme = 0 # 'primary'
-%>
-
 
 body {
-  background-color: <%= color_schemes[default_scheme][:base] %>;
-  color: <%= color_schemes[default_scheme][:text] %>;
+  background-color: <%= @default_theme[:base] %>;
+  color: <%= @default_theme[:text] %>;
 }
 
-<% color_schemes.each do |colors| %>
+<% @lcars_colors.sort {|a,b| a[1][:position] || 0 <=> b[1][:position] || 1 }.each do |name,colors| %>
 div.lcars {
-  .<%= colors[:Name] %> {
+  .<%= name %> {
     outline: thin solid <%= colors[:base] %>;
     background-color: <%= colors[:elbows] %>;
     ul.buttons {
@@ -237,9 +159,6 @@ div.lcars {
 div.lcars.busy {
   > img.decoration {
     z-index: 23;
-  }
-  > div.modal {
-    display: block;
   }
 }
 
