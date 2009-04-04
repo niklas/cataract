@@ -3,4 +3,5 @@
 $(document).ready(function() {
   $('div.lcars').livequery(function() { $(this).lcars() });
   $('div.lcars a').livequery(function() { $(this).lcarsLink() });
+  $('div.lcars form > button ').livequery(function() { $(this).lcarsFormButton() });
 });

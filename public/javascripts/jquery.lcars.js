@@ -204,6 +204,27 @@
     });
   };
 
+  $.fn.lcarsFormButton = function() {
+    return this.each(function() {
+      var elem = $(this);
+      elem.click( function(ev) {
+        ev.preventDefault();
+        var parent = elem.lcarsTarget();
+        parent.moreBusy('Loading...');
+        var form = elem.parents('form');
+        $.ajax({
+          type: form.find('input[type=hidden][name=_method]').val() || 'POST',
+          url: form.attr('action'),
+          data: form.serialize(),
+          dataType: "script", 
+          success: function(data, textStatus) {
+            parent.lessBusy();
+          }
+        });
+      });
+    });
+  };
+
   $.lcars = {};
   $.lcars.decoration = function(kind, variant, klass) {
     return '<img class="' + kind + ' ' + variant + ' ' + klass + ' decoration"' +
