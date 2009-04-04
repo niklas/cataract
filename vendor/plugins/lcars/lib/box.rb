@@ -68,7 +68,6 @@ module Lcars
         append_lcars_content  name, opts[:append_content]
         append_lcars_title    name, opts[:append_title]
         append_lcars_buttons  name, opts[:append_buttons]
-        page[name].reset_behavior
       end
 
       def reset_lcars_box(name)
@@ -76,7 +75,6 @@ module Lcars
         replace_lcars_title   name, box.title || ''
         replace_lcars_buttons name, box.buttons || []
         replace_lcars_content name, box.content || ''
-        page[name].reset_behavior
       end
 
 
@@ -92,35 +90,32 @@ module Lcars
                    else
                      raise "Illegal element for Lcars: #{element}"
                    end
-        page.select(selector)
+        page.lcars().find(name, element.to_s)
       end
 
       # Replace Elements
       def replace_lcars_title(name,title=nil)
         return unless title
-        lcars_select(name,:title).each do |element|
-          element.update(title)
-        end
+        lcars_select(name,:title).html(title)
       end
 
       def replace_lcars_buttons(name,buttons=nil)
         return if buttons.nil?
-        lcars_select(name,:buttons).each do |element|
+        lcars_select(name,:buttons).html(
           element.update(context.lcars_buttons(buttons))
-        end
+        )
       end
 
       def replace_lcars_content(name,content=nil)
         return if content.nil?
-        lcars_select(name,:content).each do |element|
-          c = case content 
-              when Hash
-                context.render(content)
-              when String
-                content
-              end
-          element.update(c)
-        end
+        lcars_select(name,:content).html(
+          case content 
+          when Hash
+            render(content)
+          when String
+            content
+          end
+        )
       end
 
       # Append Elements
