@@ -9,10 +9,16 @@
 <h4>to</h4>
 <%= error_messages_for 'torrent', :object => torrent %>
 
-<% if !(@series_dir && @series_dir.contains_torrent?(torrent)) && torrent.is_episode? %>
-  <%= update_torrent_files_form torrent, :label => "#{Directory.for_series.name}/#{torrent.series_name}", :with => {
-  :directory_id => Directory.for_series.id,
+<% if @series_dir && !@series_dir.contains_torrent?(torrent) && torrent.is_episode? %>
+  <%= update_torrent_files_form torrent, :label => "#{@series_dir.name}/#{torrent.series_name}", :with => {
+  :directory_id => @series_dir.id,
   :subdir => torrent.series_name
+  } %>
+  <br />
+  <h4>or</h4>
+<% elsif @movies_dir && !@movies_dir.contains_torrent?(torrent) && torrent.is_movie? %>
+  <%= update_torrent_files_form torrent, :label => "#{@movies_dir.name}", :with => {
+  :directory_id => @movies_dir.id,
   } %>
   <br />
   <h4>or</h4>

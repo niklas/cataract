@@ -12,6 +12,7 @@ class TorrentsFilesController < ApplicationController
 
   def edit
     @series_dir = Directory.for_series
+    @movies_dir = Directory.for_movies
     respond_to do |wants|
       wants.js
     end
