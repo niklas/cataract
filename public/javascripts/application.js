@@ -19,4 +19,7 @@ $(document).ready(function() {
       }
     });
   });
+  $('select#files_directory_id').livequery(function() {
+    $(this).populateSubdirs();
+  });
 });

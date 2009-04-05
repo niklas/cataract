@@ -10,18 +10,19 @@
 <%= error_messages_for 'torrent', :object => torrent %>
 
 <% if !(@series_dir && @series_dir.contains_torrent?(torrent)) && torrent.is_episode? %>
-  <%= update_torrent_files_form torrent, :label => "Move into #{Directory.for_series.name}/#{torrent.series_name}", :with => {
+  <%= update_torrent_files_form torrent, :label => "#{Directory.for_series.name}/#{torrent.series_name}", :with => {
   :directory_id => Directory.for_series.id,
   :subdir => torrent.series_name
   } %>
+  <br />
+  <h4>or</h4>
 <% end %>
 
-<% form_remote_tag :url => torrent_files_path(torrent), :method => :put do %>
-  <%= collection_select :files, :directory_id, Directory.all.reject {|d| torrent.content_path.starts_with? d.path}, :id, :label, {:prompt => 'Please select destination'} %>
-<br />
-  <%= collection_select :files, :subdir, [], :id, :label, {:prompt => 'Please select subdirectory'} %>
-<br />
-  <%= submit_tag 'Move' %>
+<% update_torrent_files_form torrent do |f| %>
+  <%= f.collection_select :directory_id, Directory.all.reject {|d| d.contains_torrent? torrent}, :id, :label, {:prompt => 'Please select destination'} %>
+  <%= f.collection_select :subdir, [], :id, :label, {:prompt => 'Please select subdirectory'} %>
+  <br />
+  <%= f.submit 'Move' %>
 <% end %>
 
 <% else %>

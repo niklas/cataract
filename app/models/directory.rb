@@ -13,8 +13,8 @@
 
 class Directory < ActiveRecord::Base
 
-  def self.all
-    find(:all).select {|dir| File.directory? dir.path }
+  def self.all(opts={})
+    find(:all, opts).select {|dir| File.directory? dir.path }
   end
 
   def label
@@ -67,6 +67,13 @@ class Directory < ActiveRecord::Base
 
   def contains_torrent?(torrent)
     torrent.content_path.starts_with? path
+  end
+
+  def self.subdirs_by_id
+    all(:conditions => {:show_sub_dirs => true}).
+      map {|d| !d.subdirs.empty? ? { d.id => d.subdirs } : nil }.
+      compact.
+      inject(&:merge)
   end
 
   private

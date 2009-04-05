@@ -1,30 +1,21 @@
-SubDirSelector = Behavior.create({
-  initialize: function() {
-    this.subdirs = new Array();
-    this._createSubDirs();
-    $('content_subdir').hide();
-  },
-  _createSubDirs: function() {
-  <% @dirs.each do |dir| %>
-    <% dir.subdirs.each do |subdir| %>
-      this.subdirs.push(new Array('<%= dir.id %>', '<%=h subdir %>'));
-    <% end %>
-  <% end %>
-  },
-  onchange: function() {
-    dir_id = $F('content_directory_id');
-    options = $('content_subdir').options;
-    options.length = 1;
-    this.subdirs.each(function(subdir) {
-      if (subdir[0] == dir_id) {
-        options[options.length] = new Option(subdir[1],subdir[1]);
-      }
-      if (options.length == 1) {
-        $('content_subdir').hide();
-      } else {
-        $('content_subdir').show();
-      }
+(function($){
+  $.subDirs = <%= Directory.subdirs_by_id.to_json %>;
+  $.fn.populateSubdirs = function() {
+    return this.each(function() {
+      var subs = $('select#files_subdir').hide();
+      $('select#files_directory_id').change(function() {
+        var for_us = $.subDirs[$(this).val()];
+        if (for_us.length) {
+          $('option[value]', subs).remove();
+          $.each(for_us, function() {
+            subs.append('<option value="'+ this + '">' + this + '</option>');
+          })
+          subs.show();
+        } else {
+          subs.hide();
+        }
+      });
     });
   }
-});
+}(jQuery));
 
