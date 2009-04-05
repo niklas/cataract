@@ -8,13 +8,13 @@
   <% if watching = current_user.watches?(torrent) %>
     <%= destroy_watching_form watching,     :label => '✖', :title => 'Forget' %>
   <% else %>
-    <%= create_watching_form                :label => '❤', :title => 'Watch',  :torrent_id => torrent %>
+    <%= create_watching_form                :label => '❤', :title => 'Watch', :with => { :torrent_id => torrent.id }  %>
   <% end %>
 <% end %>
 <%= create_torrent_transfer_form torrent, :label => '▶', :title => 'Start' if torrent.startable? %>
 <%= destroy_torrent_transfer_form torrent,:label => '■', :title => 'Stop' if torrent.stoppable? %>
 <%= update_torrent_transfer_form torrent, :label => '⬚', :title => 'Pause', :action => 'pause' if torrent.running? %>
-<%= update_torrent_form torrent,          :label => '☇', :title => 'Fetch', :action => 'fetch' if torrent.remote? %>
+<%= fetch_torrent_form torrent,           :label => '☇', :title => 'Fetch' if torrent.remote? %>
 <%= create_torrent_form torrent,          :label => '+', :title => 'Add', :url => torrent.url if torrent.new_record? and torrent.fetchable? %>
 <%= destroy_torrent_form torrent,         :label => '♱', :title => 'Delete',  :confirm => 'Deletion cannot be undone. Are you sure?' %>
 

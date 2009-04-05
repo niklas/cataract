@@ -92,6 +92,20 @@ module TorrentsHelper
     end
   end
 
+  def fetch_torrent_form(torrent, opts={})
+    opts_for_button = opts.delete(:button) || {}
+    opts_for_button.merge!(:type => 'submit')
+    opts_for_button[:title] = opts.delete(:title) if opts[:title]
+    label = opts.delete(:label) || 'Fetch'
+    opts[:class] = ResourcefulViews.resourceful_classnames('torrent', 'fetch', *(opts.delete(:class) || '').split)
+    opts[:action] = fetch_torrent_path(torrent)
+    content_tag('form', opts) do
+      token_tag.to_s +
+      hidden_field_tag('_method', 'put', :id => nil) +
+      content_tag(:button, label, opts_for_button)
+    end
+  end
+
   def link_to_helm_remote(name, options = {}, html_options = {})
     link_to_remote(name,options,html_options.merge(:target => 'helm'))
   end
