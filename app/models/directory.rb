@@ -73,7 +73,7 @@ class Directory < ActiveRecord::Base
   end
 
   def self.physical_uniq
-    all.group_by(&:mountpoint).keys.compact.map {|path| Directory.new(:path => path, :name => path)}
+    all.group_by(&:mountpoint).keys.compact.map {|path| Directory.new(:path => path, :name => File.basename(path))}
   end
 
   def self.disksfree
