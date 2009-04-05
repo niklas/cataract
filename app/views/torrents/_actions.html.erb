@@ -16,11 +16,11 @@
 <%= update_torrent_transfer_form torrent, :label => '⬚', :title => 'Pause', :action => 'pause' if torrent.running? %>
 <%= fetch_torrent_form torrent,           :label => '☇', :title => 'Fetch' if torrent.remote? %>
 <%= create_torrent_form torrent,          :label => '+', :title => 'Add', :url => torrent.url if torrent.new_record? and torrent.fetchable? %>
-<%= destroy_torrent_form torrent,         :label => '♱', :title => 'Delete',  :confirm => 'Deletion cannot be undone. Are you sure?' %>
+<%= destroy_torrent_form torrent,         :label => '♱', :title => 'Delete' %>
 
 <% if torrent.local? %>
   <%= show_torrent_files_link torrent,    :label => '☭', :title => 'Content', :target => 'helm' %>
   <%= edit_torrent_files_link torrent,    :label => '♻', :title => 'Move', :target => 'helm' %>
-  <%= destroy_torrent_files_form torrent, :label => '☢', :title => 'Wipe Content',  :confirm => 'Really delete Content?' %>
+  <%= destroy_torrent_files_form torrent, :label => '☢', :title => 'Wipe Content' %>
 <% end %>
 

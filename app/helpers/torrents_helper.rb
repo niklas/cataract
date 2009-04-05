@@ -17,6 +17,8 @@ module TorrentsHelper
       html << text_field_tag(:term, @term || '')
       html << hidden_field_tag(:only_watched, @only_watched)
       html << hidden_field_tag(:status, @status)
+      html << hidden_field_tag(:_method, 'get')
+      html << content_tag(:button, '➟', :title => 'Go', :type => 'submit')
       html << '</form>'
     end
   end

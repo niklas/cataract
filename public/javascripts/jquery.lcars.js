@@ -217,10 +217,16 @@
         var parent = elem.lcarsTarget();
         parent.moreBusy('Loading...');
         var form = elem.parents('form');
+        var verb = form.find('input[type=hidden][name=_method]').val() || 'post';
+
+        if ( verb.match(/delete/i) && !confirm("Really " + (elem.attr('title') || 'delete') + "?") ) {
+          return false;
+        }
+
         $.ajax({
-          type: form.find('input[type=hidden][name=_method]').val() || 'POST',
+          type: verb,
           url: form.attr('action'),
-          data: form.serialize(),
+          data: form.serialize() + '&commit=' + elem.val(),
           dataType: "script", 
           complete: function(data, textStatus) {
             parent.lessBusy();
