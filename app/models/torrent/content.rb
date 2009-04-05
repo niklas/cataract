@@ -1,5 +1,6 @@
 require 'drb'
 class Torrent
+  extend ActiveSupport::Memoizable
   class TorrentContentError < Exception; end
   def files_hierarchy
     return {} unless metainfo
@@ -47,10 +48,17 @@ class Torrent
   def content_exists?
     !content_path.blank? && File.exists?(content_path)
   end
+  memoize :content_exists?
 
   def download_path
     content_path.sub(%r(/[^/]*$),'')
   end
+
+  def content_dir_name
+    d = Directory.base_of content_path
+    d ? d.name : '-unknown-'
+  end
+
 
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen

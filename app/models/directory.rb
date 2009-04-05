@@ -17,6 +17,14 @@ class Directory < ActiveRecord::Base
     find(:all, opts).select {|dir| File.directory? dir.path }
   end
 
+  def self.base_of(path)
+    d = nil
+    while path != '/' && !(d = find_by_path(path))
+      path = File.dirname(path)
+    end
+    d
+  end
+
   def label
     [name,path].join(' - ')
   end
