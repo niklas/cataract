@@ -18,7 +18,7 @@
 <%= create_torrent_form torrent,          :label => '+', :title => 'Add', :url => torrent.url if torrent.new_record? and torrent.fetchable? %>
 <%= destroy_torrent_form torrent,         :label => '♱', :title => 'Delete' %>
 
-<% if torrent.local? %>
+<% if torrent.content_exists? %>
   <%= show_torrent_files_link torrent,    :label => '☭', :title => 'Content', :target => 'helm' %>
   <%= edit_torrent_files_link torrent,    :label => '♻', :title => 'Move', :target => 'helm' %>
   <%= destroy_torrent_files_form torrent, :label => '☢', :title => 'Wipe Content' %>
