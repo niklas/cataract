@@ -3,7 +3,7 @@ set :repository,  "svn://lanpartei.de/cataract/trunk"
 set :urlbase, "cataract"  # http://yourhost.bla/:urlbase
 set :deploy_to, "/usr/lib/cgi-bin/#{application}"
 
-single_target = ENV['TARGET'] || "poppomorya.local"
+single_target = ENV['TARGET'] || "schnurr.local"
 puts "  will use #{single_target} as target" 
 puts "  set env.TARGET to deploy to another machine"
 
@@ -63,11 +63,11 @@ namespace :deploy do
   desc "More symlinks (configs etc)"
   task :after_symlink, :roles => :app do
     config_dir = "#{deploy_to}/shared/config"
-    sudo "mkdir -p #{config_dir}"
-    sudo "ln -fs #{config_dir}/database.yml #{current_release}/config/database.yml"
-    sudo "ln -fs #{config_dir}/mongrel_cluster.yml #{current_release}/config/mongrel_cluster.yml"
-    sudo "ln -fs #{config_dir}/messenger.yml #{current_release}/config/messenger.yml"
-    sudo "ln -fs #{config_dir}/urlbase.txt #{current_release}/config/urlbase.txt"
+    run "mkdir -p #{config_dir}"
+    run "ln -fs #{config_dir}/database.yml #{current_release}/config/database.yml"
+    run "ln -fs #{config_dir}/mongrel_cluster.yml #{current_release}/config/mongrel_cluster.yml"
+    run "ln -fs #{config_dir}/messenger.yml #{current_release}/config/messenger.yml"
+    run "ln -fs #{config_dir}/urlbase.txt #{current_release}/config/urlbase.txt"
     puts "Make sure to create a proper database.yml (in #{config_dir})"
   end
   task :group_permissions do
