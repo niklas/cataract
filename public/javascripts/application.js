@@ -4,6 +4,7 @@ $(document).ready(function() {
   $('div.lcars').livequery(function() { $(this).lcars() });
   $('div.lcars a').livequery(function() { $(this).lcarsLink() });
   $('div.lcars form > button ').livequery(function() { $(this).lcarsFormButton() });
+  $('div.lcars form input[type=submit]').livequery(function() { $(this).lcarsFormButton() });
   $('input#term').livequery(function() {
     var form = $('form#torrent_search');
     $(this).typeWatch({
