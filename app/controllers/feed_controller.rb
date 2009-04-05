@@ -2,9 +2,9 @@ class FeedController < ApplicationController
   layout 'torrents'
   helper :torrents
   before_filter :login_required
-  in_place_edit_for :filter, :expression
-  in_place_edit_for :feed, :url
-  in_place_edit_for :feed, :title
+  #in_place_edit_for :filter, :expression
+  #in_place_edit_for :feed, :url
+  #in_place_edit_for :feed, :title
   def index
     @feeds = Feed.find(:all, :order => 'created_at desc')
   end
