@@ -1,6 +1,8 @@
 class Torrent
   extend ActiveSupport::Memoizable
   MovieRegexp = /\.(avi|mkv|vob)$/
+  MusicRegexp = /\.(mp3|ogg)$/
+
   def is_episode?
     !series_name.blank?
   end
@@ -16,5 +18,10 @@ class Torrent
     content_filenames.any? {|c| c=~ MovieRegexp}
   end
   memoize :is_movie?
+
+  def is_music?
+    content_filenames.any? {|c| c=~ MusicRegexp}
+  end
+  memoize :is_music?
 end
 

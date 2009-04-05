@@ -41,6 +41,10 @@ class Directory < ActiveRecord::Base
     find_by_name('Filme')
   end
 
+  def self.for_music
+    find_by_name('Musik')
+  end
+
   def path_with_optional_subdir(subdir)
     if !subdir.blank? && subdirs.include?(subdir)
       if File.directory?(rpath = File.join(path, subdir))
