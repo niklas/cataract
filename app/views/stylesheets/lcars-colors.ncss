@@ -41,8 +41,9 @@ div.lcars {
          color: <%= colors[:color1] %>;
          border: none;
          :hover {
-           background-color: <%= colors[:text] %> !important;
+           background-color: <%= colors[:color1] %> !important;
            color: <%= colors[:base] %> !important;
+           border-color: <%= colors[:color1] %>;
          }
        }
        .create {
