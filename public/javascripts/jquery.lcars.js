@@ -215,7 +215,6 @@
       elem.click( function(ev) {
         ev.preventDefault();
         var parent = elem.lcarsTarget();
-        parent.moreBusy('Loading...');
         var form = elem.parents('form');
         var verb = form.find('input[type=hidden][name=_method]').val() || 'post';
 
@@ -223,6 +222,7 @@
           return false;
         }
 
+        parent.moreBusy('Loading...');
         $.ajax({
           type: verb,
           url: form.attr('action'),
