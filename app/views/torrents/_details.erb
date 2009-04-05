@@ -1,5 +1,5 @@
 <% torrent ||= details || @torrent %>
-<% content_tag_for :dl, torrent  do %>
+<% content_tag :dl, :class => dom_id(torrent) + ' torrent' do %>
   <%= show torrent, :short_title, :label => 'Title' %>
   <%= show torrent, :current_state, :label => 'Status' %>
 

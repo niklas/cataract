@@ -1,3 +1,3 @@
 <%= content_tag(:div, 
                 render( :partial => 'card', :collection => list ), 
-                :class => 'torrents') %>
+                :class => ["torrents", @only_watched ? 'watchlist' : nil].compact.join(' ')) %>

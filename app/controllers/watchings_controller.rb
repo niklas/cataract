@@ -14,13 +14,12 @@ class WatchingsController < ApplicationController
   def create
     respond_to do |wants|
       wants.js do
-        @torrent = Torrent.find params[:torrent_id]
+        @torrent = Torrent.find params[:torrent_id] || (params[:watching] ? params[:watching][:torrent_id] : nil)
         if @user.watch(@torrent)
           flash[:notice] =("Added '#{@torrent.short_title}' to watchlist")
         else
           flash[:warning] =("Already watching '#{@torrent.short_title}'")
         end
-        render :template => '/torrents/update_buttons'
       end
     end
   end
@@ -34,7 +33,6 @@ class WatchingsController < ApplicationController
         else
           flash[:error] =("Could not unwatch - hrm...")
         end
-        render :template => '/torrents/update_buttons'
       end
     end
   end

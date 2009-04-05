@@ -1,1 +1,0 @@
-page.update_helm :buttons => actions_for_torrent(@torrent)

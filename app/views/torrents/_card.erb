@@ -1,6 +1,6 @@
 <% torrent = card %>
-<% content_tag_for :div, torrent, :class => torrent.status do %>
+<% content_tag :div, :class => [torrent.status, dom_id(torrent), 'torrent'].join(' ') do %>
   <%= progress_image_for torrent %>
   <span class="title"> <%= h torrent.short_title %> </span>
-  <%= render :partial => 'actions', :object => torrent %>
+  <%= render :partial => 'torrents/actions', :object => torrent %>
 <% end %>
