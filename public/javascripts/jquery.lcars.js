@@ -197,8 +197,13 @@
         ev.preventDefault();
         var parent = elem.lcarsTarget();
         parent.moreBusy('Loading...');
-        $.getScript( elem.attr('href'), function(data, textStatus) {
-          parent.lessBusy();
+        $.ajax({
+          type: 'GET',
+          url: elem.attr('href'),
+          dataType: "script", 
+          complete: function(data, textStatus) {
+            parent.lessBusy();
+          }
         });
       });
     });
@@ -217,7 +222,7 @@
           url: form.attr('action'),
           data: form.serialize(),
           dataType: "script", 
-          success: function(data, textStatus) {
+          complete: function(data, textStatus) {
             parent.lessBusy();
           }
         });
