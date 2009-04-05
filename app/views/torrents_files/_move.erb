@@ -1,4 +1,6 @@
 <% torrent = move %>
+
+<% if torrent.content_exists? %>
 <h3>Move Content</h3>
 
 <h4>from</h4>
@@ -7,17 +9,23 @@
 <h4>to</h4>
 <%= error_messages_for 'torrent', :object => torrent %>
 
-<% if torrent.is_episode? %>
-  <%= link_to_remote "Move into Series/#{torrent.series_name}", :url => torrent_files_path(torrent, :parameters => {
-  :directory_id => Director.for_series.id,
+<% if !(@series_dir && @series_dir.contains_torrent?(torrent)) && torrent.is_episode? %>
+  <%= update_torrent_files_form torrent, :label => "Move into #{Directory.for_series.name}/#{torrent.series_name}", :with => {
+  :directory_id => Directory.for_series.id,
   :subdir => torrent.series_name
-  }), :method => :put %>
+  } %>
 <% end %>
 
 <% form_remote_tag :url => torrent_files_path(torrent), :method => :put do %>
-  <%= collection_select :content, :directory_id, Directory.all.reject {|d| torrent.content_path.starts_with? d.path}, :id, :label, {:prompt => 'Please select destination'} %>
+  <%= collection_select :files, :directory_id, Directory.all.reject {|d| torrent.content_path.starts_with? d.path}, :id, :label, {:prompt => 'Please select destination'} %>
 <br />
-  <%= collection_select :content, :subdir, [], :id, :label, {:prompt => 'Please select subdirectory'} %>
+  <%= collection_select :files, :subdir, [], :id, :label, {:prompt => 'Please select subdirectory'} %>
 <br />
   <%= submit_tag 'Move' %>
+<% end %>
+
+<% else %>
+  <div class="error">
+    Torrent has no content at <%= torrent.content_path %>
+  </div>
 <% end %>

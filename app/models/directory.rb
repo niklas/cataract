@@ -25,7 +25,8 @@ class Directory < ActiveRecord::Base
     Dir[path + '/*'].
       select { |dir| File.directory? dir }.
       map { |dir| dir.split('/').last }.
-      sort
+      compact.
+      sort || []
   end
 
   def subdir_names
@@ -62,6 +63,10 @@ class Directory < ActiveRecord::Base
       escaped = Regexp.quote(mountpoint+'/')
       (self.path + '/') =~ /^#{escaped}/
     end
+  end
+
+  def contains_torrent?(torrent)
+    torrent.content_path.starts_with? path
   end
 
   private
