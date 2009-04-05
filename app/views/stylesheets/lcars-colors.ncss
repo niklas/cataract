@@ -83,9 +83,6 @@ div.lcars {
         background-color: <%= colors[:base] %>;
         > a {
           color: <%= colors[:base] %>;
-          border: none;
-          padding: 0;
-          text-align: center;
           background-color: <%= colors[:primary] %>;
           :hover {
             background-color: <%= colors[:text] %>;
