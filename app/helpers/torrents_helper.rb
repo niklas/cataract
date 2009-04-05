@@ -48,20 +48,24 @@ module TorrentsHelper
   def progress_image_for(torrent, opts={})
     begin
       if torrent.running? && progress = torrent.progress
-        image_tag(sparkline_url(
-          :type => :pie, 
-          :results => progress,
-          :remain_color => '#222222',
-          :share_color => 'lightgrey',
-          :background_color => 'none',
-          :diameter => opts[:size] || 32
-        ), :title => "#{progress}%", :alt => "#{progress}%", :class => 'progress')
+        progress_image(progress, opts)
       else
         no_progress_tag
       end
     rescue TorrentNotRunning, TorrentHasNoInfoHash
       no_progress_tag
     end
+  end
+
+  def progress_image(progress,opts={})
+    image_tag(sparkline_url(
+      :type => :pie, 
+      :results => progress,
+      :remain_color => '#222222',
+      :share_color => 'lightgrey',
+      :background_color => 'none',
+      :diameter => opts[:size] || 32
+    ), :title => "#{opts[:title]} #{progress}%", :alt => "#{progress}%", :class => 'progress')
   end
 
 

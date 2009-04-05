@@ -53,6 +53,35 @@ class Directory < ActiveRecord::Base
     find_by_name('Musik')
   end
 
+  # side info
+  def df
+    cmd = '/bin/df'
+    if File.exists?(path) and File.exists?(cmd)
+      `#{cmd} '#{path}'`.split[10].to_i
+    else
+      0
+    end
+  end
+
+  def usage_percent
+    cmd = '/bin/df'
+    if File.exists?(path) and File.exists?(cmd)
+      `#{cmd} '#{path}'`.split[11].to_i
+    else
+      0
+    end
+  end
+
+  def self.physical_uniq
+    all.group_by(&:mountpoint).keys.compact.map {|path| Directory.new(:path => path, :name => path)}
+  end
+
+  def self.disksfree
+    %w(torrent_dir).
+      inject({}) { |hsh,dir| hsh.merge({ dir => Torrent.diskfree(Settings[dir]) }) }
+  end
+
+
   def path_with_optional_subdir(subdir)
     if !subdir.blank? && subdirs.include?(subdir)
       if File.directory?(rpath = File.join(path, subdir))

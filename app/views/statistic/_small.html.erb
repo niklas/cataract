@@ -1,0 +1,5 @@
+<span class="time">Time: <%= Time.now.strftime('%H:%M') %></span>
+<% Directory.physical_uniq.each do |dir| %>
+  <span class="label"><%=h dir.name %> </span>
+  <%= progress_image dir.usage_percent, :size => 65, :title => dir.name %>
+<% end %>

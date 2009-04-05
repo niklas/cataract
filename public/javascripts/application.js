@@ -22,4 +22,9 @@ $(document).ready(function() {
   $('select#files_directory_id').livequery(function() {
     $(this).populateSubdirs();
   });
+  if ( $('div#container .stats') ) {
+    window.setInterval(function() {
+      $.getScript('/statistic');
+    }, 60000)
+  }
 });

@@ -20,6 +20,9 @@
       <li><%= link_to "Torrents", torrents_url %></li>
       <br />
       <li><%= link_to 'Log out', logout_path %></li>
+      <li class="stats">
+        <%= render :partial => 'statistic/small' %>
+      </li>
     </ul>
     <span class="title">
       <% if logged_in? %>

@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :watchings
   map.resource :session
 
+  map.resources :statistic, :controller => 'statistic'
   map.resources :settings
   map.resources :torrents, 
     :member => {:fetch => :put},

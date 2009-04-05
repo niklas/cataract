@@ -89,22 +89,6 @@ class Torrent < ActiveRecord::Base
     Torrent.maximum('updated_at', :conditions => "status = 'running'") || 23.days.ago
   end
 
-  # side info
-  def self.diskfree(which=nil)
-    dir = which || Settings.torrent_dir
-    cmd = '/bin/df'
-    if File.exists?(dir) and File.exists?(cmd)
-      `#{cmd} '#{dir}'`.split[10].to_i
-    else
-      0
-    end
-  end
-
-  def self.disksfree
-    %w(torrent_dir).
-      inject({}) { |hsh,dir| hsh.merge({ dir => Torrent.diskfree(Settings[dir]) }) }
-  end
-
 
   # extended attributes
   def progress

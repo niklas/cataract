@@ -1,0 +1,1 @@
+page.select('div#container .stats').html render(:partial => 'statistic/small')
