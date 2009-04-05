@@ -16,8 +16,8 @@ module Lcars
 
     def install(dests)
       dests.each do |dest|
-        dest.send! :include, @module
-        dest.send! :include, RenderMethods
+        dest.send :include, @module
+        dest.send :include, RenderMethods
       end
     end
 
@@ -169,7 +169,7 @@ module Lcars
         content_tag( :ul, lcars_buttons(buttons), {:class => 'buttons'})
       end
       def lcars_buttons(buttons)
-        buttons = send!(buttons)  if buttons.is_a? Symbol
+        buttons = send(buttons)  if buttons.is_a? Symbol
         buttons = buttons.call    if buttons.is_a? Proc
         buttons = render(buttons) if buttons.is_a? Hash
         return '' if buttons.blank?
@@ -183,7 +183,7 @@ module Lcars
       end
 
       def lcars_title(title)
-        title = send!(title) if title.is_a? Symbol
+        title = send(title) if title.is_a? Symbol
         title = title.call if title.is_a? Proc
         return '' if title.blank?
         content_tag(:span,title,{:class => 'title'})
@@ -195,7 +195,7 @@ module Lcars
           c = c.call if c.is_a? Proc
           case c
           when Symbol
-            content << send!(c)
+            content << send(c)
           when Hash
             content << render(c) unless c.empty?
           when String
