@@ -1,3 +1,4 @@
+require 'drb'
 class Torrent
   class TorrentContentError < Exception; end
   def files_hierarchy
@@ -70,7 +71,7 @@ class Torrent
       @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
       return @mii
     else
-      errors.add :content, 'no metainfo found'
+      errors.add :files, 'no metainfo found'
       return
     end
   rescue # RubyTorrent::MetaInfoFormatError
@@ -125,11 +126,11 @@ class Torrent
         rm_rf(opfer) 
         true
       else
-        errors.add :content, "^content not found: #{opfer}"
+        errors.add :files, "^content not found: #{opfer}"
         false
       end
     rescue Exception => e
-      errors.add :content, "^error on deleting content: #{e.to_s}"
+      errors.add :files, "^error on deleting content: #{e.to_s}"
       false
     end
   end
