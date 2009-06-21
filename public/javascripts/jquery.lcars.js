@@ -239,7 +239,7 @@
   $.lcars = {};
   $.lcars.decoration = function(kind, variant, klass) {
     return '<img class="' + kind + ' ' + variant + ' ' + klass + ' decoration"' +
-    ' src="/lcars/decoration/' + kind + '/' + variant + '.png" />'
+    ' src="lcars/decoration/' + kind + '/' + variant + '.png" />'
   };
   $.lcars.messageBox = function() {
     return '<div class="inner modal"><div class="message" /></div>'
