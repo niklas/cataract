@@ -19,9 +19,11 @@ class TorrentMoverJob < QueueManager::Job
       status[:action] = "Copying '#{File.basename(current_file)}'" unless current_file.blank?
       status[:file_progress] = file_progress if file_progress
     end
-    status[:action] = "Deleting old stuff."
-    FileUtils.rm_rf @torrent.content_path
-    @torrent.update_attribute(:content_path, @target)
+    if File.exists? @target
+      status[:action] = "Deleting old stuff."
+      FileUtils.rm_rf @torrent.content_path
+      @torrent.update_attribute(:content_path, @target)
+    end
     status[:progress] = 100
   rescue Exception => e
     puts("Moving went wrong: #{e.message}. #{e.backtrace}")
