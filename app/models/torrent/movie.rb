@@ -15,12 +15,12 @@ class Torrent
   memoize :series_name
 
   def is_movie?
-    content_filenames.any? {|c| c=~ MovieRegexp}
+    content_filenames.andand.any? {|c| c=~ MovieRegexp}
   end
   memoize :is_movie?
 
   def is_music?
-    content_filenames.any? {|c| c=~ MusicRegexp}
+    content_filenames.andand.any? {|c| c=~ MusicRegexp}
   end
   memoize :is_music?
 end
