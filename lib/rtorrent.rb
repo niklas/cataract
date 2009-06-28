@@ -9,7 +9,9 @@ class RTorrent
   end
 
   def call *a 
+    tries = 1
     begin
+      tries += 1
       @rpc.call *a
     rescue RuntimeError => e
       if e.message =~ /HTTP-Error: 500 Internal Server Error/
@@ -23,6 +25,9 @@ class RTorrent
       else
         raise RTorrentException, e.message
       end
+    rescue Errno::EPIPE
+      initialize
+      retry if tries < 5
     end
   end
 
