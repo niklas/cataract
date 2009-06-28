@@ -43,7 +43,7 @@ class Rsync
           total = nil
         else
           current_file = line
-          left -= 1.0 if line =~ %r(/$)
+          left -= 1.0 if line =~ %r(/$) and left
           debug "else: #{line}"
         end
         if total && left
