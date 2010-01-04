@@ -51,9 +51,9 @@ task :build_rtorrent, :roles => :download do
 end
 
 namespace :deploy do
-  desc "Restart the Webserver (lighttpd)"
-  task :restart, :roles => :app do
-    run "cd #{current_release} && mongrel_rails cluster::stop && mongrel_rails cluster::start"
+  desc "Restart App (Apache Passanger)"
+  task :restart do
+    run "touch #{current_release}/tmp/restart.txt"
   end
 
   desc "Fix something after setup"
