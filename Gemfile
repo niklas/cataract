@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
 
-gem 'rails', '2.3.14'
-gem 'will_paginate', '~> 2.3.2'
-gem 'has_finder'
+gem 'rails', '3.0.10'
+gem 'will_paginate'
