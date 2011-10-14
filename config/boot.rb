@@ -89,6 +89,10 @@ module Rails
           exit 1
         end
 
+        require 'thread'
+        require 'bundler/setup'
+        Bundler.require(:default, 'development')
+
       rescue LoadError
         $stderr.puts %Q(Rails requires RubyGems >= #{min_version}. Please install RubyGems and try again: http://rubygems.rubyforge.org)
         exit 1
