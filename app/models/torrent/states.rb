@@ -1,6 +1,4 @@
-class Torrent
-  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid,:moving]
-  # lets simulate the state machine
+class Torrent < ActiveRecord::Base
   def current_state
     status ? status.to_sym : :nostatus
   end

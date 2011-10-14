@@ -30,6 +30,8 @@ require 'rtorrent'
 require 'rtorrent_proxy'
 
 class Torrent < ActiveRecord::Base
+  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid,:moving]
+  # lets simulate the state machine
   include FileUtils
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
@@ -59,7 +61,7 @@ class Torrent < ActiveRecord::Base
   concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing, :movie
 
   named_scope :invalid,
-    {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
+    {:conditions => 'NOT (' + STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
 
   named_scope :include_everything,
     {:include => [:tags]}
@@ -70,7 +72,7 @@ class Torrent < ActiveRecord::Base
 
   
 
-  has_fulltext_search :title, :description, :filename, :url, 'tags.name'
+  #has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 
   # aggregates
   def self.upload_rate
