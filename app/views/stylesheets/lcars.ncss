@@ -261,50 +261,6 @@ div.lcars {
      height: <%= corner_radius %>em;
      width: <%= corner_radius %>em
   }
-  > img.decoration {
-    position: absolute;
-    z-index: 4;
-    .bow {
-      background-color: inherit;
-      margin-top: <%= slim_border %>em;
-      margin-right: <%= slim_side_border %>em;
-      margin-bottom: <%= slim_border %>em;
-      margin-left: <%= slim_side_border %>em;
-      height: <%= inner_radius %>em;
-      width: <%= inner_radius %>em;
-    }
-    .stump {
-       .e, .w {
-         height: <%= slim_stump_radius * 2 %>em;
-         width: <%= slim_stump_radius %>em;
-       }
-       .n, .s {
-         height: <%= slim_stump_radius %>em;
-         width: <%= slim_stump_radius * 2 %>em;
-       }
-    }
-    .corner {
-       height: <%= outer_radius %>em;
-       width: <%= outer_radius %>em
-    }
-    .ne {
-      top: 0;
-      right: 0;
-    }
-    .nw, .Nw {
-      top: 0;
-      left: 0;
-    }
-    .se {
-      bottom: 0;
-      right: 0;
-    }
-    .sw {
-      bottom: 0;
-      left: 0;
-    }
-  }
-
   > .top, > .bottom, > .left, > .right {
     position: absolute;
     overflow: hidden;
@@ -547,4 +503,29 @@ div.lcars {
      .y1 { top:   0; bottom: 50%; }
      .y2 { top: 50%; bottom:   0; }
   }
+}
+
+div#lcars-es {
+   -moz-border-radius-bottomright:10em 6em;
+   -moz-border-radius-topright:0;
+   border-bottom:3em solid yellow;
+   border-right:7em solid yellow;
+   display:block;
+   width:auto;
+   left: 3em;
+   div.bottom {
+      -moz-border-radius-bottomleft:0.5em;
+      -moz-border-radius-topleft:0.5em;
+      background-color:black;
+      border-left:1em solid blue;
+      bottom:-1em;
+      display:block;
+      font-size:3em;
+      height:1em;
+      left:-1em;
+      padding:0 0.3em;
+      position:absolute;
+      text-transform:uppercase;
+   }
+
 }
