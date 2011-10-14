@@ -14,7 +14,6 @@ end
 
 group :test, :development do
   gem 'pry'
-  gem 'sdoc'
 end
 
 group :development do
