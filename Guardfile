@@ -31,7 +31,7 @@ guard 'rspec', :cli => '--drb --color', :version => 2 do
 end
 
 
-guard 'cucumber', :change_format => 'pretty', :run_all => { :cli => "--drb --format progress" }, :cli => "--drb --out log/cucumber.out" do
+guard 'cucumber', :cli => "--drb" do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
@@ -41,3 +41,7 @@ end
 #guard 'process', :name => 'Notes', :command => 'bundle exec rake notes' do
 #  watch('.git/HEAD')
 #end
+
+guard 'bundler' do
+  watch('Gemfile')
+end
