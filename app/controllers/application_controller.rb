@@ -1,7 +1,4 @@
 class ApplicationController < ActionController::Base
-  include AuthenticatedSystem
-  include Userstamp
-
   before_filter :setup_lcars
   #before_filter :login_from_cookie
   before_filter :login_required
@@ -11,8 +8,9 @@ class ApplicationController < ActionController::Base
 
   rescue_from 'Exception', :with => :render_lcars_error
 
-  after_update_page :prepare_flash_messages
-  after_update_page :render_pending_logs
+  # FIXME use responders
+  #after_update_page :prepare_flash_messages
+  #after_update_page :render_pending_logs
   def render_pending_logs(page)
     unless @logs.blank?
       @logs.each do |log_entry|

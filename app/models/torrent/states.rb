@@ -44,7 +44,7 @@ class Torrent
     self.status = 'remote' unless url.blank?
     self.status = 'archived' if file_exists?(:archived)
   end
-  before_validation_on_create  :set_status_on_create
+  before_validation :set_status_on_create, :on => :create
   
   def pause!
     event_from :running do 

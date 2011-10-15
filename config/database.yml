@@ -8,9 +8,6 @@
 development:
   adapter: postgresql
   database: cataract
-  username: cataract
-  password: gagaga
-  host: localhost
 
   
 # Warning: The database defined as 'test' will be erased and
@@ -19,14 +16,8 @@ development:
 test:
   adapter: postgresql
   database: cataract_test
-  username: cataract
-  password: gagaga
-  host: localhost
 
 production:
   adapter: postgresql
-  database: cataract
-  username: cataract
-  password: gagaga
-  host: localhost
+  database: cataract_production
 

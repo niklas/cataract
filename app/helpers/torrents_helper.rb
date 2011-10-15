@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module TorrentsHelper
 
   def torrent_menu_links

@@ -18,6 +18,8 @@ end
 
 group :development do
   gem "capistrano"
+  gem 'rb-inotify'
+  gem 'libnotify'
 end
 
 group :test do
@@ -36,6 +38,7 @@ group :test do
   gem "guard-rspec"
   gem "guard-cucumber"
   gem "guard-spork", "~> 0.3.0"
+  gem "guard-process"
   gem "libnotify"
   gem "fakefs", :require => "fakefs/safe"
 end
@@ -46,3 +49,5 @@ gem "inherited_resources", "~> 1.2.2"
 gem "simple_form", "~> 1.4.2"
 gem "devise"
 gem "cancan"
+
+gem 'acts_as_list'
