@@ -582,7 +582,8 @@ class Controller
     calc_optunchokes
 
     ## this is needed. sigh.
-    break unless @running
+    # FIXME wtf???
+    # break unless @running
 
     ## send keepalives 
     @peers_m.synchronize { @peers.each { |p| p.send_keepalive if p.running? && p.last_send_time && ((Time.now - p.last_send_time) > KEEPALIVE_INTERVAL) } }

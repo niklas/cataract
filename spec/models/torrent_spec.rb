@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "A blank Torrent" do
   before(:each) do
+    pending "cannot create torrent without rtorrent running"
     @torrent = Torrent.new(:url => '', :filename => '')
   end
 

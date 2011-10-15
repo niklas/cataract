@@ -50,6 +50,12 @@ class LogEntry < ActiveRecord::Base
     end
   end
 
-  has_finder :last, lambda {{:order => 'created_at DESC', :limit => page_size}}
-  has_finder :older_than, lambda { |newest| nid = newest.split('_').last.to_i; {:conditions => ["id < ?", nid]} }
+  def self.last
+    order('created_at DESC').limit(page_size)
+  end
+
+  def self.older_than(newest)
+    nid = newest.split('_').last.to_i
+    where("id < ?", nid)
+  end
 end

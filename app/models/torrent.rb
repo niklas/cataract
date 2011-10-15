@@ -21,7 +21,6 @@
 #  content_path      :string(2048)  
 #
 
-require 'ftools'
 require 'fileutils_monkeypatch'
 require 'rubytorrent'
 require 'net/http'
@@ -44,7 +43,8 @@ class Torrent < ActiveRecord::Base
   before_save :sync
   before_validation :fix_filename
   before_validation :sync_status!
-  stampable
+  # FIXME wtf is this?
+  #stampable
 
   def after_find
     check_if_status_is_up_to_date
@@ -54,23 +54,26 @@ class Torrent < ActiveRecord::Base
     stop! if running?
   end
 
-  acts_as_taggable
+  # TODO add tagging
+  # acts_as_taggable
 
   concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing, :movie
 
-  named_scope :invalid,
-    {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
+  scope :invalid, where('NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')')
 
-  named_scope :include_everything,
-    {:include => [:tags]}
+  scope :include_everything, includes(:tags)
 
-  named_scope :watched_by, lambda {|user| {:include => :watchings, :conditions => ['watchings.user_id = ?', user.id]}}
+  def self.watched_by(user)
+    includes(:watchings).where('watchings.user_id = ?', user.id)
+  end
 
-  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
 
-  
+  def self.by_status(status)
+    where(:status => status)
+  end
 
-  has_fulltext_search :title, :description, :filename, :url, 'tags.name'
+  # TODO use psql tsearch
+  # has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 
   # aggregates
   def self.upload_rate
