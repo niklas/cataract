@@ -35,7 +35,7 @@ guard 'cucumber', :change_format => 'pretty', :run_all => { :cli => "--format pr
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
-end unless true
+end
 
 # what to watch? what indicates a bored developer?
 #guard 'process', :name => 'Notes', :command => 'bundle exec rake notes' do
