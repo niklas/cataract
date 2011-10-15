@@ -16,6 +16,7 @@ guard 'rspec', :cli => '--drb --color', :version => 2 do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
+  watch(%r{^spec/factories/.+$}) { 'spec' }
 
   # Rails example
   watch(%r{^spec/.+_spec\.rb$})
@@ -33,6 +34,7 @@ end
 
 guard 'cucumber', :cli => "--drb" do
   watch(%r{^features/.+\.feature$})
+  watch(%r{^spec/factories/.+$})            { 'features' }
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
 end
