@@ -32,7 +32,7 @@ end
 describe Torrent do
   describe "status" do
     it "should default to 'new'" do
-      Factory(:torrent, :status => nil).status.should == 'new'
+      Factory(:torrent).status.should == 'new'
     end
 
     it "should be specifiable" do

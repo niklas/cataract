@@ -59,7 +59,9 @@ module TorrentsHelper
     end
   end
 
+  # TODO progress image
   def progress_image(progress,opts={})
+    return '<TODO progress_image>'
     image_tag(sparkline_url(
       :type => :pie, 
       :results => progress,

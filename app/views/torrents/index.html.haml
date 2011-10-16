@@ -1,3 +1,6 @@
+%ul.filters
+  %li.running= link_to '.torrents.running', torrents_path(:by_status => 'running')
+  %li.archived= link_to '.torrents.archived', torrents_path(:by_status => 'archived')
 %ul.torrents
   - collection.each do |torrent|
     %li.torrent{:class => torrent.status}
