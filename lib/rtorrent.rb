@@ -3,6 +3,10 @@ require "xmlrpc/client"
 # You have to setup your webserver like described in 
 # http://libtorrent.rakshasa.no/wiki/RTorrentXMLRPCGuide
 class RTorrent
+  class Exception < RuntimeError; end
+  class NotReachable < Exception; end
+  class NoRPCMethod < Exception; end
+
   def initialize
     @rpc = XMLRPC::Client.new '127.0.0.1', '/rtorrentrpc', 80
     @methods = call 'system.listMethods'
@@ -14,8 +18,11 @@ class RTorrent
       tries += 1
       @rpc.call *a
     rescue RuntimeError => e
-      if e.message =~ /HTTP-Error: 500 Internal Server Error/
-        raise RTorrentNotReachable, 'Error 500 in the HTTP gateway - maybe rtorrent is not running?'
+      case e.message
+      when /HTTP-Error: 500 Internal Server Error/
+        raise NotReachable, 'Error 500 in the HTTP gateway - maybe rtorrent is not running?'
+      when /HTTP-Error: 404 Not Found/
+        raise NotReachable, 'Error 404 in the HTTP gateway - maybe rtorrent is not running?'
       else
         raise e
       end
@@ -23,7 +30,7 @@ class RTorrent
       if e.message =~ /Could not find info-hash./
         raise TorrentNotRunning, 'this torrent is not being downloaded currently'
       else
-        raise RTorrentException, e.message
+        raise Exception, e.message
       end
     rescue Errno::EPIPE
       initialize
@@ -43,7 +50,7 @@ class RTorrent
     hsh = torrent.info_hash rescue nil
     raise TorrentHasNoInfoHash unless hsh
     meth = "get_d_#{what}"
-    raise RTorrentException, "no such rpc method: #{meth}" unless @methods.include? meth
+    raise NoRPCMethod, "no such rpc method: #{meth}" unless @methods.include? meth
     call meth, hsh
   end
 
@@ -55,7 +62,7 @@ class RTorrent
     elsif @methods.include? magic_method
       call magic_method, *args
     else
-      raise RTorrentException, "no such rpc method: #{method} or #{magic_method}"
+      raise NoRPCMethod, "no such rpc method: #{method} or #{magic_method}"
     end
   end
 
@@ -64,7 +71,3 @@ class RTorrent
   end
 end
 
-class RTorrentException < Exception; end
-class TorrentHasNoInfoHash < RTorrentException; end
-class TorrentNotRunning < RTorrentException; end
-class RTorrentNotReachable < RTorrentException; end

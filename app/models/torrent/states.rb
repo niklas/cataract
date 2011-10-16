@@ -31,7 +31,7 @@ class Torrent
 
   def in_rtorrent?
     remote.state && true
-  rescue TorrentNotRunning, TorrentHasNoInfoHash
+  rescue NotRunning, HasNoInfoHash
     false
   end
 
@@ -119,7 +119,7 @@ class Torrent
     new_status = 'new'
     begin
       new_status = status_from_rtorrent
-    rescue TorrentNotRunning, TorrentHasNoInfoHash
+    rescue NotRunning, HasNoInfoHash
       new_status = auto_status
     end
     status = new_status
@@ -171,7 +171,7 @@ class Torrent
              true
            end
     return good
-  rescue TorrentNotRunning, TorrentHasNoInfoHash 
+  rescue NotRunning, HasNoInfoHash 
     finally_stop!           # hmm
   end
 
@@ -181,9 +181,9 @@ class Torrent
     if old_states.empty? || old_states.include?(current_state)
       begin
         yield
-      rescue TorrentNotRunning
+      rescue NotRunning
         finally_stop!
-      rescue TorrentHasNoInfoHash
+      rescue HasNoInfoHash
         update_attribute(:status,:invalid)
         reload
       end

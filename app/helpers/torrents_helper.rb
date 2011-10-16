@@ -54,7 +54,7 @@ module TorrentsHelper
       else
         no_progress_tag
       end
-    rescue TorrentNotRunning, TorrentHasNoInfoHash
+    rescue Torrent::NotRunning, Torrent::HasNoInfoHash
       no_progress_tag
     end
   end

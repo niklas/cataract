@@ -40,7 +40,7 @@ class RTorrentProxy
       end
     else              # normal commands
       if remote.remote_respond_to? meth
-        return remote.call(meth, *args, &blk)
+        return call_remote(meth, *args, &blk)
       end
                       # getters 
       m = "d.get_#{meth}"
@@ -53,13 +53,17 @@ class RTorrentProxy
 
   # overload the ruby's #load *shiver* to load the torrent into rtorrent
   def load(path)
-    remote.call 'load', path
+    call_remote 'load', path
   end
 
   private
   def with_model(m,*args,&blk)
     hsh = model.info_hash rescue nil
     raise TorrentHasNoInfoHash unless hsh
-    remote.call m, hsh, *args, &blk
+    call_remote m, hsh, *args, &blk
+  end
+
+  def call_remote(*a, &blk)
+    remote.call *a, &blk
   end
 end
