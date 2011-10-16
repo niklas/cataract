@@ -4,11 +4,29 @@
 
 class RTorrentProxy
 
-  attr_reader :model, :remote
+  class NoRemoteMethodError < NoMethodError; end
 
-  def initialize(model,remote)
+  # the XMLRPC interface to the rtorrent process
+  def self.remote
+    @@rtorrent ||= RTorrent.new
+  end
+
+  # Us tis in tests to stub away the remote
+  def self.stub_offline!
+    rtorrent = RSpec::Mocks::Mock.new name
+    rtorrent.stub(:remote_respond_to?).with(:state).and_return(true)
+    rtorrent.stub(:call).with(:state).and_return('<remote-state>')
+    stub(:remote) { rtorrent }
+  end
+
+  def remote
+    self.class.remote
+  end
+
+  attr_reader :model
+
+  def initialize(model)
     @model = model    # the ActiveRecord::Base
-    @remote = remote  # the XMLRPC wrapper
   end
 
   def method_missing(meth,*args,&blk)
@@ -30,7 +48,7 @@ class RTorrentProxy
       end
     else              # normal commands
       if remote.remote_respond_to? meth
-        return remote.call(meth, *args, &blk)
+        return call_remote(meth, *args, &blk)
       end
                       # getters 
       m = "d.get_#{meth}"
@@ -38,18 +56,22 @@ class RTorrentProxy
         return with_model(m, *args, &blk)
       end
     end
-    raise NoMethodError, "no such method: #{meth.to_s}"
+    raise NoRemoteMethodError, "RTorrent does not respond to: #{meth.to_s}"
   end
 
   # overload the ruby's #load *shiver* to load the torrent into rtorrent
   def load(path)
-    remote.call 'load', path
+    call_remote 'load', path
   end
 
   private
   def with_model(m,*args,&blk)
     hsh = model.info_hash rescue nil
     raise TorrentHasNoInfoHash unless hsh
-    remote.call m, hsh, *args, &blk
+    call_remote m, hsh, *args, &blk
+  end
+
+  def call_remote(*a, &blk)
+    remote.call *a, &blk
   end
 end

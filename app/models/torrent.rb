@@ -68,10 +68,6 @@ class Torrent < ActiveRecord::Base
   end
 
 
-  def self.by_status(status)
-    where(:status => status)
-  end
-
   # TODO use psql tsearch
   # has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 

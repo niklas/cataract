@@ -54,12 +54,14 @@ module TorrentsHelper
       else
         no_progress_tag
       end
-    rescue TorrentNotRunning, TorrentHasNoInfoHash
+    rescue Torrent::NotRunning, Torrent::HasNoInfoHash
       no_progress_tag
     end
   end
 
+  # TODO progress image
   def progress_image(progress,opts={})
+    return '<TODO progress_image>'
     image_tag(sparkline_url(
       :type => :pie, 
       :results => progress,

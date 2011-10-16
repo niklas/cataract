@@ -1,6 +1,8 @@
 class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
+  has_scope :by_status
+
   def check_all
     errors = ''
     Torrent.find_all.each do |t|

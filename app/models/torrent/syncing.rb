@@ -10,7 +10,7 @@ class Torrent
       copy( real_path, fullpath(:archived) ) unless file_exists?(:archived)
       copy( real_path, fullpath )
     end
-  rescue TorrentNotRunning, TorrentHasNoInfoHash
+  rescue NotRunning, HasNoInfoHash
     false
   rescue Exception => e
     errors.add :filename, "^error while assure_file_in_archive: #{e.to_s}"

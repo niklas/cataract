@@ -51,6 +51,7 @@ Spork.prefork do
 end
 
 Spork.each_run do
+  I18n.reload!
   FactoryGirl.reload
 end
 
