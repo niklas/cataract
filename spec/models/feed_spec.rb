@@ -18,8 +18,8 @@ describe Feed do
 end
 
 describe "The Comic Feed" do
-  fixtures :feeds, :filters, :torrents
   before(:each) do
+    pending "use factories for feeds"
     @comic_feed = feeds(:comic_feed)
   end
 
