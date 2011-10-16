@@ -1,0 +1,24 @@
+!!! 5
+%html
+  %head
+    %title
+      = yield(:title) || "Cataract"
+    %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
+    = stylesheet_link_tag 'lcars'
+    = stylesheet_link_tag 'lcars-colors'
+    = stylesheet_link_tag 'torrents'
+    = stylesheet_link_tag 'layout'
+    = stylesheet_link_tag 'style'
+    = javascript_include_tag *%w(prototype effects dragdrop controls lowpro)
+    = javascript_include_tag *%w(application lcars dynamic_content_dirs behaviours)
+    = javascript_include_tag *%w(jquery jquery.livequery jquery.typewatch jquery.lcars)
+    = javascript_include_tag *%w(dynamic_content_dirs)
+    = javascript_include_tag *%w(jrails)
+    = javascript_include_tag *%w(application)
+    = csrf_meta_tag
+    = yield(:head)
+  %body
+    #container
+      = render 'session'
+      = render 'flash', :flash => flash
+      = yield

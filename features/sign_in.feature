@@ -8,6 +8,6 @@ Feature: Signing in
       And I am on the home page
      When I fill in "Email" with "me@cataract.local"
       And I fill in "Password" with "secret"
-      And I press "Sign In"
-     Then I should see "Successfully logged in"
+      And I press "Sign in"
+     Then I should see "Signed in successfully"
 
