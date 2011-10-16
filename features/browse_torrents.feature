@@ -7,7 +7,7 @@ Feature: Browse Torrents
     Given the following torrents exist:
       | filename          |
       | Ubuntu-ozelot.iso |
-      And I am logged in
+      And I am signed in
      Then I should see a list of the following torrents:
        | filename          |
        | Ubuntu-ozelot.iso |
