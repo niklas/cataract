@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080708151527) do
+ActiveRecord::Schema.define(:version => 20111015234632) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -110,14 +110,14 @@ ActiveRecord::Schema.define(:version => 20080708151527) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "login"
-    t.string   "email"
+    t.string   "email",                   :limit => 128, :default => "", :null => false
     t.string   "jabber"
     t.boolean  "notify_via_jabber"
     t.boolean  "notify_on_comments"
     t.boolean  "notify_on_my_torrents"
     t.string   "picture_url"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "encrypted_password",      :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                          :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "notify_on_new_torrents"
@@ -125,7 +125,16 @@ ActiveRecord::Schema.define(:version => 20080708151527) do
     t.text     "content_dir_mountpoint"
     t.text     "target_dir_mountpoint"
     t.string   "remember_token"
-    t.datetime "remember_token_expires_at"
+    t.datetime "remember_created_at"
+    t.string   "reset_password_token"
+    t.integer  "sign_in_count",                          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
   create_table "watchings", :force => true do |t|
