@@ -1,11 +1,20 @@
 class Torrent
   STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid,:moving]
+
+  def self.by_status(status)
+    status = status.to_sym
+    unless STATES.include?(status)
+      raise ArgumentError, "unknown status: #{status}"
+    end
+    where(:status => status)
+  end
+
   # lets simulate the state machine
   def current_state
     status ? status.to_sym : :nostatus
   end
   def status=(new_status)
-    self[:status] = new_status.to_s
+    write_attribute :status, new_status.to_s
   end
   def self.states
     STATES
@@ -39,12 +48,20 @@ class Torrent
     (remote.state ==  1 ? 'running' : 'paused')
   end
 
-  def set_status_on_create
-    self.status = 'new'
-    self.status = 'remote' unless url.blank?
-    self.status = 'archived' if file_exists?(:archived)
+  def initialize_status
+    self.status ||= new_auto_status
   end
-  before_validation :set_status_on_create, :on => :create
+  before_validation :initialize_status, :on => :create
+
+  def new_auto_status
+    if file_exists?(:archived)
+      :archived
+    elsif url.present?
+      :remote
+    else
+      :new
+    end
+  end
   
   def pause!
     event_from :running do 

@@ -29,3 +29,20 @@ describe "A blank Torrent" do
   end
 end
 
+describe Torrent do
+  describe "status" do
+    it "should default to 'new'" do
+      Factory(:torrent, :status => nil).status.should == 'new'
+    end
+
+    it "should be specifiable" do
+      Factory(:torrent, :status => 'running').status.should == 'running'
+    end
+  end
+  describe "remote" do
+    context "not reachable" do
+      it "should catch the error"
+    end
+  end
+end
+
