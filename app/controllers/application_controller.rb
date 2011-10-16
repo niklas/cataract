@@ -1,12 +1,13 @@
 class ApplicationController < ActionController::Base
-  before_filter :setup_lcars
-  #before_filter :login_from_cookie
-  before_filter :login_required
+  before_filter :authenticate_user!
+  # TODO cells ore similar
+  # before_filter :setup_lcars
   helper :all
 
   layout 'torrents'
 
-  rescue_from 'Exception', :with => :render_lcars_error
+  # TODO rescue from errors
+  # rescue_from 'Exception', :with => :render_lcars_error
 
   # FIXME use responders
   #after_update_page :prepare_flash_messages
