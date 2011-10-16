@@ -3,11 +3,11 @@ Feature: Browse Torrents
   As a logged in user
   I want to browse torrents
 
-  Scenario: displays something
+  Scenario: displays filename
     Given the following torrents exist:
-      | filename          |
-      | Ubuntu-ozelot.iso |
+      | filename              |
+      | Ubuntu-ozelot.torrent |
       And I am signed in
      Then I should see a list of the following torrents:
-       | filename          |
-       | Ubuntu-ozelot.iso |
+       | filename              |
+       | Ubuntu-ozelot.torrent |
