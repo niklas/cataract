@@ -10,6 +10,7 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch('Gemfile.lock')
   watch('spec/spec_helper.rb')
   watch('test/test_helper.rb')
+  watch('features/support/env.rb')
 end unless ENV['NO_SPORK']
 
 guard 'rspec', :cli => '--drb --color', :version => 2 do
