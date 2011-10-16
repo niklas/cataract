@@ -17,7 +17,7 @@ class Torrent
   alias_method_chain :method_missing, :xml_rpc
 
   def self.rtorrent
-    @@rtorrent ||= RTorrent.new
+    RTorrentProxy.remote
   end
 
   def rtorrent

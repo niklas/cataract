@@ -4,11 +4,21 @@
 
 class RTorrentProxy
 
-  attr_reader :model, :remote
+  class NoRemoteMethodError < NoMethodError; end
 
-  def initialize(model,remote)
+  # the XMLRPC interface to the rtorrent process
+  def self.remote
+    @@rtorrent ||= RTorrent.new
+  end
+
+  def remote
+    self.class.remote
+  end
+
+  attr_reader :model
+
+  def initialize(model)
     @model = model    # the ActiveRecord::Base
-    @remote = remote  # the XMLRPC wrapper
   end
 
   def method_missing(meth,*args,&blk)
@@ -38,7 +48,7 @@ class RTorrentProxy
         return with_model(m, *args, &blk)
       end
     end
-    raise NoMethodError, "no such method: #{meth.to_s}"
+    raise NoRemoteMethodError, "RTorrent does not respond to: #{meth.to_s}"
   end
 
   # overload the ruby's #load *shiver* to load the torrent into rtorrent
