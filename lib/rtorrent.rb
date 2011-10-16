@@ -9,7 +9,6 @@ class RTorrent
 
   def initialize
     @rpc = XMLRPC::Client.new '127.0.0.1', '/rtorrentrpc', 80
-    @methods = call 'system.listMethods'
   end
 
   def call *a 
@@ -39,11 +38,11 @@ class RTorrent
   end
 
   def remote_methods
-    @methods
+    @methods ||= call 'system.listMethods'
   end
 
   def remote_respond_to?(meth)
-    @methods.include? meth.to_s
+    remote_methods.include? meth.to_s
   end
 
   def attrib_for_torrent what, torrent
