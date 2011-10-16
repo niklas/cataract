@@ -1,4 +1,11 @@
 %ul.torrents
   - collection.each do |torrent|
-    %li.torrent
-      = torrent.id
+    %li.torrent{:class => torrent.status}
+      = progress_image_for torrent
+      .title= torrent.short_title
+      .filename= torrent.filename
+      - if torrent.content_exists?
+        .content_dir
+          [
+          = torrent.content_dir_name
+          ]

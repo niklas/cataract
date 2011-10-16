@@ -10,6 +10,7 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch('Gemfile.lock')
   watch('spec/spec_helper.rb')
   watch('test/test_helper.rb')
+  watch('features/support/env.rb')
 end unless ENV['NO_SPORK']
 
 guard 'rspec', :cli => '--drb --color', :version => 2 do
@@ -35,7 +36,7 @@ end
 
 guard 'cucumber', :cli => "--drb" do
   watch(%r{^features/.+\.feature$})
-  watch(%r{^app/controllers/.+rb$})         { "features" }
+  watch(%r{^app/+$})                        { "features" }
   watch(%r{^spec/factories/.+$})            { 'features' }
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }

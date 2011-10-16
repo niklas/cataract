@@ -46,7 +46,8 @@ Spork.prefork do
   #   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
   #     DatabaseCleaner.strategy = :transaction
   #   end
-#
+
+  require 'cucumber/rspec/doubles'
 end
 
 Spork.each_run do
