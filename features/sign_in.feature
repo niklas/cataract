@@ -10,4 +10,5 @@ Feature: Signing in
       And I fill in "Password" with "secret"
       And I press "Sign in"
      Then I should see "Signed in successfully"
+      And I should see "me@cataract.local" within current user
 
