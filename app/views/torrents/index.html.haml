@@ -1,14 +1,5 @@
 %ul.filters
   %li.running= link_to '.torrents.running', torrents_path(:by_status => 'running')
   %li.archived= link_to '.torrents.archived', torrents_path(:by_status => 'archived')
-%ul.torrents
-  - collection.each do |torrent|
-    %li.torrent{:class => torrent.status}
-      = progress_image_for torrent
-      .title= torrent.short_title
-      .filename= torrent.filename
-      - if torrent.content_exists?
-        .content_dir
-          [
-          = torrent.content_dir_name
-          ]
+
+= render_widget :torrents

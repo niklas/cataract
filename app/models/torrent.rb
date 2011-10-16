@@ -57,7 +57,7 @@ class Torrent < ActiveRecord::Base
   # TODO add tagging
   # acts_as_taggable
 
-  concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing, :movie
+  concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing, :movie, :search
 
   scope :invalid, where('NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')')
 

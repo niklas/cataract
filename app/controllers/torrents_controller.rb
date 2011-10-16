@@ -1,7 +1,9 @@
 class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
-  has_scope :by_status
+  has_widgets do |root|
+    root << widget(:torrents)
+  end
 
   def check_all
     errors = ''

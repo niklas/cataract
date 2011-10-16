@@ -1,0 +1,6 @@
+= widget_div do
+  %ul.torrents
+    - for torrent in @torrents
+      %li.torrent{:class => torrent.status}
+        .title= torrent.short_title
+        .filename= torrent.filename

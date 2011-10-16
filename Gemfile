@@ -47,9 +47,10 @@ end
 gem "pg"
 gem "haml-rails"
 gem "inherited_resources", "~> 1.3.0"
-gem "has_scope"
 gem "simple_form", "~> 1.4.2"
 gem "devise"
 gem "cancan"
 
 gem 'acts_as_list'
+
+gem 'apotomo', '~> 1.2.1'
