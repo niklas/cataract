@@ -12,8 +12,9 @@
   %body
     %div{data: {role: 'page'}}
       %div{data: {role: 'header'}}
-        = render 'session'
         = render 'flash', :flash => flash
+        - if content_for?(:header)
+          = yield :header
       %div{data: {role: 'content'}}
         = yield
       %div{data: {role: 'footer'}}
