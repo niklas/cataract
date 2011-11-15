@@ -10,6 +10,7 @@ group :assets do
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
   gem "therubyracer", "~> 0.9.2"
+  gem "jquery_mobile-rails"
 end
 
 group :test, :development do
