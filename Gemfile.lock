@@ -138,7 +138,7 @@ GEM
     json_pure (1.6.1)
     launchy (2.0.5)
       addressable (~> 2.2.6)
-    libnotify (0.5.7)
+    libnotify (0.5.9)
     libv8 (3.3.10.2)
     mail (2.3.0)
       i18n (>= 0.4.0)
