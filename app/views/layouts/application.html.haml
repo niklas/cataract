@@ -10,7 +10,10 @@
     = csrf_meta_tag
     = yield(:head)
   %body
-    #container
-      = render 'session'
-      = render 'flash', :flash => flash
-      = yield
+    %div{data: {role: 'page'}}
+      %div{data: {role: 'header'}}
+        = render 'session'
+        = render 'flash', :flash => flash
+      %div{data: {role: 'content'}}
+        = yield
+      %div{data: {role: 'footer'}}
