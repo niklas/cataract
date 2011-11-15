@@ -18,3 +18,5 @@
       %div{data: {role: 'content'}}
         = yield
       %div{data: {role: 'footer'}}
+        - if content_for?(:footer)
+          = yield :footer
