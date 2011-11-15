@@ -1,9 +1,15 @@
 !!!5
 %html
   %head
-    %title Cataract
+    %title= yield(:title) || "Cataract"
+    %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'lib'
     = javascript_include_tag 'application'
+    = csrf_meta_tag
+    = yield(:head)
   %body
-    = yield
+    #container
+      = render 'session'
+      = render 'flash', :flash => flash
+      = yield

@@ -1,5 +1,4 @@
 class FeedController < ApplicationController
-  layout 'torrents'
   helper :torrents
   before_filter :login_required
   #in_place_edit_for :filter, :expression
