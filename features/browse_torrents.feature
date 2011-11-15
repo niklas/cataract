@@ -1,3 +1,4 @@
+@javascript
 Feature: Browse Torrents
   In order to find and control my downloads
   As a logged in user
