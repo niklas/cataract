@@ -2,7 +2,8 @@ class TorrentsWidget < JqueryMobile::Widget
   helper :torrents
 
   def display
-    @torrents = Torrent.search(params)
+    @search = Torrent.search(params)
+    @torrents = @search.results
     render
   end
 

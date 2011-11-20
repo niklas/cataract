@@ -13,6 +13,8 @@ module HtmlSelectorsHelpers
     when "current user"
       "#session .name"
 
+    when "the header"
+      "div[data-role='header']"
     when "the footer"
       "div[data-role='footer']"
 

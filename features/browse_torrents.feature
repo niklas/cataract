@@ -25,8 +25,11 @@ Feature: Browse Torrents
      Then I should see a list of the following torrents:
        | title   |
        | Current |
+      And I should see "running" within the header
 
-     When I follow "archived"
+     When I follow "Back"
+      And I follow "archived"
      Then I should see a list of the following torrents:
        | title |
        | Last  |
+      And I should see "archived" within the header
