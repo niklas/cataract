@@ -3,6 +3,7 @@ class TorrentsController < InheritedResources::Base
 
   has_widgets do |root|
     root << widget(:torrents)
+    root << widget(:torrents_navigation)
   end
 
   def check_all
