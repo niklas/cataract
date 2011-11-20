@@ -1,5 +1,4 @@
-class TorrentsNavigationWidget < Apotomo::Widget
-  helper :jquery_mobile
+class TorrentsNavigationWidget < JqueryMobile::Widget
 
   def display
     render
