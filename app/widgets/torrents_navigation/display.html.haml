@@ -1,4 +1,4 @@
 = mobile_tag role: 'listview', class: 'filters', tag: 'ul' do
   - Torrent::Search::States.each do |state|
     %li{class: state}
-      = link_to ".torrents.#{state}", torrents_url(:status => state)
+      = link_to ".torrents.#{state}", torrents_url(:status => state), :class => 'name'
