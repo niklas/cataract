@@ -4,7 +4,7 @@ class Torrent
   end
 
   class Search < HashWithIndifferentAccess
-    States = [:running, :archived]
+    States = %w(running archived)
     def results
       results = Torrent.scoped
       if status.present?
@@ -14,7 +14,7 @@ class Torrent
     end
 
     def status
-      self[:status]
+      self[:status] ||= States.first
     end
   end
 end
