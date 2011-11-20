@@ -210,6 +210,9 @@ GEM
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
       rspec-mocks (~> 2.7.0)
+    rspec-cells (0.1.0)
+      rails (~> 3.0)
+      rspec-rails (~> 2.2)
     rspec-core (2.7.0)
     rspec-expectations (2.7.0)
       diff-lcs (~> 1.1.2)
@@ -298,6 +301,7 @@ DEPENDENCIES
   pry
   rails (~> 3.1)
   rb-inotify
+  rspec-cells
   rspec-rails (~> 2.7.0)
   sass-rails (~> 3.1.0)
   simple_form (~> 1.4.2)

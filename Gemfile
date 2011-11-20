@@ -43,6 +43,7 @@ group :test do
   gem "libnotify"
   gem "fakefs", :require => "fakefs/safe"
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
+  gem "rspec-cells"
 end
 
 gem "pg"
