@@ -21,15 +21,14 @@ Feature: Browse Torrents
       And an archived torrent exists with title: "Last"
       And I am signed in
 
-     When I follow "running"
+     When I follow "running" within the footer
      Then I should see a list of the following torrents:
        | title   |
        | Current |
-      And I should see "running" within the header
+      And the button "running" should be active within the footer
 
-     When I follow "Back"
-      And I follow "archived"
+      And I follow "archived" within the footer
      Then I should see a list of the following torrents:
        | title |
        | Last  |
-      And I should see "archived" within the header
+      And the button "archived" should be active within the footer

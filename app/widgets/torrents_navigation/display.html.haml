@@ -1,4 +1,6 @@
-= mobile_tag role: 'listview', class: 'filters', tag: 'ul' do
-  - Torrent::Search::States.each do |state|
-    %li{class: state}
-      = link_to ".torrents.#{state}", torrents_url(:status => state), :class => 'name'
+= mobile_tag role: 'navbar' do
+  %ul.filters
+    - Torrent::Search::States.each do |state|
+      %li{class: state}
+        %a.name.ui-state-persist{href: torrents_url(:status => state,), class: state == @search.status && 'ui-btn-active'}
+          = ta :"torrents.#{state}"
