@@ -46,6 +46,7 @@ Spork.prefork do
   end
 
   require 'cucumber/rspec/doubles'
+  require 'kopflos/cucumber'
 end
 
 Spork.each_run do

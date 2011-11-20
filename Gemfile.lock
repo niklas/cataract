@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/niklas/kopflos.git
+  revision: d63e5cafc351d33960950b8d0f8d829a8995bd4d
+  specs:
+    kopflos (0.0.1)
+      open4
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -157,6 +164,7 @@ GEM
       net-ssh (>= 1.99.1)
     nokogiri (1.5.0)
     onfire (0.2.0)
+    open4 (1.3.0)
     orm_adapter (0.0.5)
     pg (0.11.0)
     pickle (0.4.10)
@@ -282,6 +290,7 @@ DEPENDENCIES
   inherited_resources (~> 1.3.0)
   jquery-rails
   jquery_mobile-rails
+  kopflos!
   launchy
   libnotify
   pg

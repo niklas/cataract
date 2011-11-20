@@ -42,6 +42,7 @@ group :test do
   gem "guard-process"
   gem "libnotify"
   gem "fakefs", :require => "fakefs/safe"
+  gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
 end
 
 gem "pg"
