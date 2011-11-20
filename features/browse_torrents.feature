@@ -4,6 +4,8 @@ Feature: Browse Torrents
   As a logged in user
   I want to browse torrents
 
+  # TODO must select status
+  @wip
   Scenario: displays filename and title
     Given the following torrents exist:
       | filename              | title  |

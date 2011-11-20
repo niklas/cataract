@@ -5,3 +5,8 @@ Then /^I should see a list of the following (.+):$/ do |plural, expected|
   end
   expected.diff! found.unshift(expected.column_names)
 end
+
+Then /^the item "([^"]*)" should be active$/ do |label|
+  item = page.find("li", :text => label)
+  item['class'].split.should include('active')
+end

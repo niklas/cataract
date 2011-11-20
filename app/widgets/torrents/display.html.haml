@@ -1,6 +1,5 @@
-= widget_div do
-  %ul.torrents{data: { role: 'listview'}}
-    - for torrent in @torrents
-      %li.torrent{:class => torrent.status}
-        %h3.title= torrent.short_title
-        %p.filename.ui-li-desc= torrent.filename
+= mobile_tag role: 'listview', class: 'torrents', tag: 'ul' do
+  - for torrent in @torrents
+    %li.torrent{:class => torrent.status}
+      %h3.title= torrent.short_title
+      %p.filename.ui-li-desc= torrent.filename

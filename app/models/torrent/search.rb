@@ -4,10 +4,11 @@ class Torrent
   end
 
   class Search < HashWithIndifferentAccess
+    States = [:running, :archived]
     def results
       results = Torrent.scoped
-      if has_key?(:by_status)
-        results = results.by_status( self[:by_status] )
+      if has_key?(:status)
+        results = results.by_status( self[:status] )
       end
       results
     end

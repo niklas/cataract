@@ -2,7 +2,7 @@ Cataract::Application.routes.draw do
   devise_for :users
 
   resources :torrents
-  root :to => 'torrents#index'
+  root :to => 'sessions#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

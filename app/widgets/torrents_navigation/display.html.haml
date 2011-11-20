@@ -1,4 +1,4 @@
-= mobile_tag :role => 'navbar' do
-  %ul.filters
-    %li.running= link_to '.torrents.running', torrents_path(:by_status => 'running')
-    %li.archived= link_to '.torrents.archived', torrents_path(:by_status => 'archived')
+= mobile_tag role: 'listview', class: 'filters', tag: 'ul' do
+  - Torrent::Search::States.each do |state|
+    %li{class: state}
+      = link_to ".torrents.#{state}", torrents_url(:status => state)

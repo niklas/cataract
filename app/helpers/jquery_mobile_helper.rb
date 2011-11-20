@@ -10,6 +10,8 @@ module JqueryMobileHelper
   #   :role
   def mobile_tag(options = {}, &block)
     options.reverse_merge!('data-role' => options.delete(:role)) if options.has_key?(:role)
-    widget_div(options, &block)
+    options.reverse_merge!(:id => widget_id)
+    tag_name = options.delete(:tag) || 'div'
+    content_tag tag_name, options, &block
   end
 end

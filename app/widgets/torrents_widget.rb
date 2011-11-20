@@ -1,4 +1,4 @@
-class TorrentsWidget < Apotomo::Widget
+class TorrentsWidget < JqueryMobile::Widget
   helper :torrents
 
   def display
