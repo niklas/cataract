@@ -11,6 +11,7 @@ group :assets do
   gem 'uglifier'
   gem "therubyracer", "~> 0.9.2"
   gem "jquery_mobile-rails"
+  gem "compass", '~> 0.11.5'
 end
 
 group :test, :development do
