@@ -11,6 +11,6 @@ Given /^I am signed in as #{capture_model}$/ do |user|
   step %{I fill in "Email" with "#{user.email}"}
   step %{I fill in "Password" with "#{FactoryGirl::Password}"}
   step %{I press "Sign in"}
-  step %{I should see "Signed in successfully"}
+  # step %{I should see "Signed in successfully"}
    # And %{I should see "#{user.email}" within current user}
 end
