@@ -9,6 +9,7 @@ module JqueryMobileHelper
   end
 
   attr_reader :header_options
+  attr_reader :content_options
   attr_reader :footer_options
 
   # addition options to those provided by apotomo's widget_div and rails' content_tag

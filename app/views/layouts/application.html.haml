@@ -10,13 +10,5 @@
     = csrf_meta_tag
     = yield(:head)
   %body
-    = mobile_tag :role => 'page' do
-      - if content_for?(:header)
-        = mobile_tag header_options.merge(:role => 'header') do
-          = yield :header
-      = mobile_tag :role => 'content' do
-        = render 'flash', :flash => flash
-        = yield
-      - if content_for?(:footer)
-        = mobile_tag footer_options.merge(:role => 'footer') do
-          = yield :footer
+    = render 'flash', :flash => flash
+    = yield

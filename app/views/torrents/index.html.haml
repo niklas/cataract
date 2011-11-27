@@ -1,6 +1,1 @@
-= for_header :fixed => true, :theme => 'e' do
-  = render_widget :torrents_header
-= render_widget :torrents
-
-= for_footer 'data-id' => 'torrents-navigation', :fixed => true do
-  = render_widget :torrents_navigation
+= render_widget :page, :display, widgets: { header: :torrents_header, content: :torrents, footer: :torrents_navigation }

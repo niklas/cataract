@@ -1,6 +1,7 @@
-class TorrentWidget < Apotomo::Widget
+class TorrentWidget < JqueryMobile::Widget
 
-  def details
+  def details(torrent)
+    @torrent = torrent
     render
   end
 
