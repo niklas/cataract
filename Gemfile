@@ -25,7 +25,7 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', "~> 1.1.1"
+  gem 'cucumber-rails', "~> 1.2.0"
   gem 'rspec-rails', "~> 2.7.0"
   gem "pickle"
   gem "timecop"
@@ -34,7 +34,6 @@ group :test do
   gem "factory_girl_rails", "~> 1.2.0"
   gem "spork", "~> 0.9.0.rc2"
   gem "email_spec"
-  gem "fuubar-cucumber"
   gem "guard", "~> 0.8.4"
   gem "guard-rspec", "~> 0.5.0"
   gem "guard-cucumber", "~> 0.7.3"
