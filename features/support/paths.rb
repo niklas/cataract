@@ -11,6 +11,15 @@ module NavigationHelpers
     when /^the home\s?page$/
       '/'
 
+    when /^the page of #{capture_model}$/
+      case m = model!($1)
+      when Torrent
+        torrent_path(m)
+      else
+        flunk "Can't find mapping for page of #{$1}" +
+          "Now, go and add a mapping in #{__FILE__}"
+      end
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

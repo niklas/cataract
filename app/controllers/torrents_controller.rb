@@ -5,6 +5,7 @@ class TorrentsController < InheritedResources::Base
     root << widget(:torrents)
     root << widget(:torrents_header)
     root << widget(:torrents_navigation)
+    root << widget(:torrent)
   end
 
   def check_all
