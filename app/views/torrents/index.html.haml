@@ -2,9 +2,5 @@
   = render_widget :torrents_header
 = render_widget :torrents
 
-.pies
-  - 0.upto(100) do |i|
-    = render 'pie', :percent => i
-
 = for_footer 'data-id' => 'torrents-navigation', :fixed => true do
   = render_widget :torrents_navigation
