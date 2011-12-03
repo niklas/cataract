@@ -13,6 +13,11 @@ module HtmlSelectorsHelpers
     when "current user"
       "#session .name"
 
+    when "the header"
+      "div[data-role='header']"
+    when "the footer"
+      "div[data-role='footer']"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

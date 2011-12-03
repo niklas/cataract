@@ -1,6 +1,11 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
   skip_before_filter :login_required, :except => :destroy
+
+  has_widgets do |root|
+    root << widget(:torrents_navigation)
+  end
+
   # render new.rhtml
   def new
     respond_to do |wants|

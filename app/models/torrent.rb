@@ -21,7 +21,6 @@
 #  content_path      :string(2048)  
 #
 
-require 'fileutils_monkeypatch'
 require 'rubytorrent'
 require 'net/http'
 require 'uri'

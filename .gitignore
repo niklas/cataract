@@ -4,3 +4,6 @@ log/*.log
 tmp/
 config/database.yml
 log
+public/javascripts/*.js
+public/stylesheets/*.css
+chromedriver.log

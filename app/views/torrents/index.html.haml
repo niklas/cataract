@@ -1,5 +1,1 @@
-%ul.filters
-  %li.running= link_to '.torrents.running', torrents_path(:by_status => 'running')
-  %li.archived= link_to '.torrents.archived', torrents_path(:by_status => 'archived')
-
-= render_widget :torrents
+= render_widget :page, :display, widgets: { header: :torrents_header, content: :torrents, footer: :torrents_navigation }

@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   # before_filter :setup_lcars
   helper :all
 
-  layout 'torrents'
-
   # TODO rescue from errors
   # rescue_from 'Exception', :with => :render_lcars_error
 

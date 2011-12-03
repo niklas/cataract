@@ -1,8 +1,11 @@
+@javascript
 Feature: Browse Torrents
   In order to find and control my downloads
   As a logged in user
   I want to browse torrents
 
+  # TODO must select status
+  @wip
   Scenario: displays filename and title
     Given the following torrents exist:
       | filename              | title  |
@@ -18,12 +21,14 @@ Feature: Browse Torrents
       And an archived torrent exists with title: "Last"
       And I am signed in
 
-     When I follow "running"
+     When I follow "running" within the footer
      Then I should see a list of the following torrents:
        | title   |
        | Current |
+      And the button "running" should be active within the footer
 
-     When I follow "archived"
+      And I follow "archived" within the footer
      Then I should see a list of the following torrents:
        | title |
        | Last  |
+      And the button "archived" should be active within the footer

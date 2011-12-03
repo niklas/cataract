@@ -2,6 +2,10 @@ require 'rubygems'
 require 'spork'
 
 Spork.prefork do
+  # keep devise from preloading User model, see https://gist.github.com/1344547
+  require 'rails/application'
+  Spork.trap_method(Rails::Application, :reload_routes!)
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
 
   require 'cucumber/rails'
 
@@ -10,6 +14,10 @@ Spork.prefork do
   # prefer to use XPath just remove this line and adjust any selectors in your
   # steps to use the XPath syntax.
   Capybara.default_selector = :css
+
+  Capybara.register_driver :selenium do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  end
 
   # By default, any exception happening in your Rails application will bubble up
   # to Cucumber so that your scenario will fail. This is a different from how 
@@ -28,26 +36,21 @@ Spork.prefork do
   #
   ActionController::Base.allow_rescue = false
 
-  # Remove/comment out the lines below if your app doesn't have a database.
-  # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
-  begin
+  # Database
+  require 'database_cleaner'
+  DatabaseCleaner.strategy = :transaction
+  DatabaseCleaner.clean_with :truncation
+
+  Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
+    DatabaseCleaner.strategy = :truncation, {:except => %w[widgets]}
+  end
+  
+  Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
     DatabaseCleaner.strategy = :transaction
-  rescue NameError
-    raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
   end
 
-  # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
-  # See the DatabaseCleaner documentation for details. Example:
-  #
-  #   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-  #     DatabaseCleaner.strategy = :truncation, {:except => %w[widgets]}
-  #   end
-  #
-  #   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-  #     DatabaseCleaner.strategy = :transaction
-  #   end
-
   require 'cucumber/rspec/doubles'
+  require 'kopflos/cucumber'
 end
 
 Spork.each_run do

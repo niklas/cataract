@@ -2,7 +2,12 @@ class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
   has_widgets do |root|
-    root << widget(:torrents)
+    root << widget(:page) do |page|
+      page << widget(:torrents)
+      page << widget(:torrents_header)
+      page << widget(:torrents_navigation)
+      page << widget(:torrent)
+    end
   end
 
   def check_all
