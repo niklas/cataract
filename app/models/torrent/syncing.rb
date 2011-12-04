@@ -37,16 +37,16 @@ class Torrent
   #  * ..
   def self.sync
     recognize_new
-    find_all_outdated.each do |t|
-      t.sync!
-      unless t.valid?
-        # FIXME beware!! check validations first
-        #t.destroy
-        logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
-      else
-        t.save
-      end
-    end
+    #find_all_outdated.each do |t|
+    #  t.sync!
+    #  unless t.valid?
+    #    # FIXME beware!! check validations first
+    #    #t.destroy
+    #    logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
+    #  else
+    #    t.save
+    #  end
+    #end
   end
   def self.find_all_outdated
     find(:all, 
@@ -57,14 +57,18 @@ class Torrent
   # looks in the torrent_dir for new torrent files and creates them
   def self.recognize_new
     created = []
-    Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
-      filename = File.basename filepath
-      torrent = new(:filename => filename, :status => 'new')
-      if torrent.save
-        torrent.moveto(:archived)
-        torrent.finally_stop!
-        created << torrent 
-        torrent.start!
+    Directory.watched.each do |directory|
+      Dir[File.join(directory.path,'*.torrent')].each do |filepath|
+        filename = File.basename filepath
+        torrent = new(:filename => filename, :status => 'new')
+        if torrent.save
+          #torrent.moveto(:archived)
+          #torrent.finally_stop!
+          created << torrent 
+          #torrent.start!
+        else
+          logger.info "could not create Torrent from #{filepath}: #{torrent.errors.full_messages.join(' ')}"
+        end
       end
     end
     return created

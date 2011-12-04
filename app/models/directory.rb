@@ -13,7 +13,7 @@
 
 class Directory < ActiveRecord::Base
 
-  def self.all(opts={})
+  def self.all_paths(opts={})
     find(:all, opts).select {|dir| File.directory? dir.path }
   end
 
@@ -51,6 +51,10 @@ class Directory < ActiveRecord::Base
 
   def self.for_music
     find_by_name('Musik')
+  end
+
+  def self.watched
+    where(:watched => true)
   end
 
   # side info
