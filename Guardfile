@@ -45,7 +45,6 @@ end
 
 # what to watch? what indicates a bored developer?
 guard 'shell' do
-  watch(/(.*).txt/) {|m| `tail #{m[0]}` }
   watch('.git/HEAD') do |m|
     `bundle exec rake notes`
   end
