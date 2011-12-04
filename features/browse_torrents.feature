@@ -32,3 +32,6 @@ Feature: Browse Torrents
        | title |
        | Last  |
       And the button "archived" should be active within the footer
+
+     When I follow "Last"
+     Then I should be on the page for the archived torrent
