@@ -38,15 +38,18 @@ guard 'cucumber', :cli => "--drb" do
   watch(%r{^app/+$})                        { "features" }
   watch(%r{^spec/factories/.+$})            { 'features' }
   watch(%r{^features/step_definitions/filesystem_steps.rb$})  { 'features -t @fakefs' }
-  watch(%r{sync|file|content})              { 'features -t @fakefs' }
+  watch(%r{^app/models/.*(?:sync|file|content)})  { 'features -t @fakefs' }
 #watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
 end
 
 # what to watch? what indicates a bored developer?
-#guard 'process', :name => 'Notes', :command => 'bundle exec rake notes' do
-#  watch('.git/HEAD')
-#end
+guard 'shell' do
+  watch(/(.*).txt/) {|m| `tail #{m[0]}` }
+  watch('.git/HEAD') do |m|
+    `bundle exec rake notes`
+  end
+end
 
 guard 'bundler' do
   watch('Gemfile')
