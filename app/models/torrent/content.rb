@@ -77,7 +77,6 @@ class Torrent
     return @mii unless @mii.nil?
     if !@mii and file_exists?
       @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
-      return @mii
     else
       errors.add :files, 'no metainfo found'
       return

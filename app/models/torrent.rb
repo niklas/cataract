@@ -36,7 +36,8 @@ class Torrent < ActiveRecord::Base
   validates_uniqueness_of :filename, :unless => :remote?
   validates_length_of :filename, :in => 9..255, :unless => :remote?
   
-  validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
+  # FIXME disabled. think about different states
+  #validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   before_save :sync
