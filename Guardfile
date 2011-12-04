@@ -37,8 +37,9 @@ guard 'cucumber', :cli => "--drb" do
   watch(%r{^features/.+\.feature$})
   watch(%r{^app/+$})                        { "features" }
   watch(%r{^spec/factories/.+$})            { 'features' }
-  watch(%r{^features/support/.+$})          { 'features' }
-  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
+  watch(%r{^features/step_definitions/filesystem_steps.rb$})  { 'features -t @fakefs' }
+#watch(%r{^features/support/.+$})          { 'features' }
+  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
 end
 
 # what to watch? what indicates a bored developer?
