@@ -13,6 +13,17 @@
 
 class Directory < ActiveRecord::Base
 
+  after_save :create_on_filesystem, :on => :create, :if => :auto_create?
+  attr_accessor :auto_create
+  def auto_create?
+    auto_create.present?
+  end
+  def create_on_filesystem
+    FileUtils.mkdir_p path
+  end
+
+  has_many :torrents
+
   def self.all_paths(opts={})
     find(:all, opts).select {|dir| File.directory? dir.path }
   end
@@ -39,6 +50,14 @@ class Directory < ActiveRecord::Base
 
   def subdir_names
     subdirs
+  end
+
+  def glob(pattern)
+    Dir[File.join(path,pattern)]
+  end
+
+  def pathname
+    Pathname.new(path)
   end
 
   def self.for_series

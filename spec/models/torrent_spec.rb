@@ -32,10 +32,12 @@ end
 describe Torrent do
   describe "status" do
     it "should default to 'new'" do
+      pending
       Factory(:torrent).status.should == 'new'
     end
 
     it "should be specifiable" do
+      pending
       Factory(:torrent, :status => 'running').status.should == 'running'
     end
   end

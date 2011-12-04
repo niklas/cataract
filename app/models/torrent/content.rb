@@ -18,23 +18,9 @@ class Torrent
     hier
   end
 
-  def set_metainfo
-    return unless metainfo
-    calculate_info_hash
-    self[:content_size] = if metainfo.single?
-      metainfo.length
-    else
-      metainfo.files.inject(0) { |sum, f| sum + f.length}
-    end
-    self[:content_filenames] = 
-      if metainfo.single?
-        [metainfo.name]
-      else
-        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
-      end
-  end
 
   # Here lies the content while it is being downloaded (default)
+  # FIXME respect #directory
   def working_path
     return '' unless metainfo
     File.join(Settings.torrent_dir,metainfo.name)
@@ -73,18 +59,21 @@ class Torrent
     return nil
   end
 
-  def metainfo
-    return @mii unless @mii.nil?
-    if !@mii and file_exists?
-      @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
+  def set_content_information
+    return unless metainfo
+    self[:content_size] = if metainfo.single?
+      metainfo.length
     else
-      errors.add :files, 'no metainfo found'
-      return
+      metainfo.files.inject(0) { |sum, f| sum + f.length}
     end
-  rescue # RubyTorrent::MetaInfoFormatError
-    # no UDP supprt yet
-    @mii = nil
+    self[:content_filenames] = 
+      if metainfo.single?
+        [metainfo.name]
+      else
+        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
+      end
   end
+
 
   def move_content_to target_dir
     begin
@@ -140,14 +129,6 @@ class Torrent
       errors.add :files, "^error on deleting content: #{e.to_s}"
       false
     end
-  end
-  def calculate_info_hash
-    return unless metainfo
-    metainfo.sha1.unpack('H*').first.upcase
-  end
-
-  def info_hash
-    self[:info_hash] ||= calculate_info_hash
   end
 
   # for fuse

@@ -1,7 +1,5 @@
 class Torrent
-  class InvalidError < RuntimeError; end
-  class HasNoInfoHash < InvalidError; end
-  class NotRunning < InvalidError; end
+  class NotRunning < ActiveRecord::RecordInvalid; end
   RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
 
   def method_missing_with_xml_rpc(m, *args, &blk)

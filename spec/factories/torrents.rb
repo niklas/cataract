@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence(:title)    { |i| "Torrent ##{i}" }
     sequence(:filename) { |i| "#{i}.torrent" }
     sequence(:info_hash) { |i| "%0.40d" % i }
+    directory
 
     factory :remote_torrent do
       status 'remote'

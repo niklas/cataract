@@ -51,7 +51,7 @@ class Torrent
   def initialize_status
     self.status ||= new_auto_status
   end
-  before_validation :initialize_status, :on => :create
+  #before_validation :initialize_status, :on => :create
 
   def new_auto_status
     if file_exists?(:archived)
@@ -143,7 +143,9 @@ class Torrent
   end
 
  private
+ # FIXME insane
   def filepath_by_status(stat)
+    raise "remove this"
     return if filename.blank?
     case stat.to_sym
     when :fetching 

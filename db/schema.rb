@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111204184904) do
+ActiveRecord::Schema.define(:version => 20111204201307) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -103,8 +103,10 @@ ActiveRecord::Schema.define(:version => 20111204184904) do
     t.string   "content_path",      :limit => 2048
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.integer  "directory_id"
   end
 
+  add_index "torrents", ["directory_id"], :name => "index_torrents_on_directory_id"
   add_index "torrents", ["filename"], :name => "index_torrents_on_filename"
   add_index "torrents", ["status"], :name => "index_torrents_on_status"
 
