@@ -15,7 +15,8 @@ class Torrent
   end
 
   def file_exists?(stat=current_state)
-    filename.present? && pathname.exist?
+    # cannot us pathname because fakefs does not fake it :(
+    filename.present? && File.exists?(path)
   end
 
   after_destroy :remove_file
@@ -37,9 +38,11 @@ class Torrent
         stream = RubyTorrent::BStream.new file
         @mii = RubyTorrent::MetaInfo.from_bstream( stream ).info
       end
+    else
+      raise FileNotFound.new("file does not exist: #{path}")
     end
-  #rescue Errno::ENOENT => e
-  #  raise FileNotFound.new(e.message)
+  rescue Errno::ENOENT => e
+    raise FileNotFound.new(e.message)
   #rescue # RubyTorrent::MetaInfoFormatError
   #  # no UDP supprt yet
   #  @mii = nil
