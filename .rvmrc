@@ -1,1 +1,1 @@
-rvm use ruby-1.9.2-p290@cataract --create
+rvm use ruby-1.9.3@cataract --create
