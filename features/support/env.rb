@@ -19,6 +19,11 @@ Spork.prefork do
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
+  Capybara.server do |app, port|
+    require 'rack/handler/webrick'
+    Rack::Handler::WEBrick.run(app, :Port => port, :AccessLog => [], :Logger => WEBrick::Log::new(Rails.root.join("log/capybara_test.log").to_s))
+  end
+
   # By default, any exception happening in your Rails application will bubble up
   # to Cucumber so that your scenario will fail. This is a different from how 
   # your application behaves in the production environment, where an error page will 
