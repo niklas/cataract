@@ -48,6 +48,9 @@ guard 'shell' do
   watch('.git/HEAD') do |m|
     `bundle exec rake notes`
   end
+  watch(%r~^db/migrate/\d{10}~) do |m|
+    `bundle exec rake db:migrate RAILS_ENV=test && bundle exec rake db:migrate`
+  end
 end
 
 guard 'bundler' do
