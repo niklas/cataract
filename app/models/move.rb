@@ -1,5 +1,7 @@
 class Move < ActiveRecord::Base
 
+  attr_accessible :target_id
+
   belongs_to :torrent
   belongs_to :target, :class_name => 'Directory'
 
