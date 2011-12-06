@@ -60,6 +60,8 @@ class Torrent
     metainfo.sha1.unpack('H*').first.upcase
   end
 
+  has_one :move
+
 end
 
 

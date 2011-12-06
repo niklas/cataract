@@ -4,4 +4,9 @@ FactoryGirl.define do
     sequence(:path) { |i| "/tmp/directory_#{i}" }
     watched false
   end
+
+  factory :move do
+    torrent
+    target
+  end
 end

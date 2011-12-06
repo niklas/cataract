@@ -2,7 +2,7 @@ Cataract::Application.routes.draw do
   devise_for :users
 
   resources :torrents do
-    resource :move
+    resource :move, :controller => :move
   end
   root :to => 'torrents#index', :as => 'dashboard'
 

@@ -16,5 +16,8 @@ FactoryGirl.define do
     factory :archived_torrent do
       status 'archived'
     end
+    factory :torrent_with_content do
+      status 'archived'
+    end
   end
 end
