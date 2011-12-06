@@ -13,7 +13,17 @@ describe Move do
     end
   end
 
-  it "should be able to listen"
-  it "should be able to unlisten"
+  context "listening" do
+
+    it "can be started" do
+      Move.connection.should_receive(:listen).with('moves').and_return(true)
+      Move.listen!
+    end
+    it "can be stopped" do
+      Move.connection.should_receive(:unlisten).with('moves').and_return(true)
+      Move.unlisten!
+    end
+
+  end
   it "should be able to lock a job"
 end
