@@ -18,6 +18,25 @@ class Worker
   def start
     @running = true
     handle_signals
+    while running?
+      work
+    end
+  end
+
+  def work
+    if job = next_job
+      log("locked #{job}")
+      begin
+        job.work
+        log("finished #{job}")
+      rescue Exception => e
+        log("failed #{job}:\n   #{e.inspect}")
+        handle_failure(job, e)
+      ensure
+        job.destroy
+        log("destroyed #{job}")
+      end
+    end
   end
 
   private
@@ -33,6 +52,19 @@ class Worker
         end
       end
     end
+  end
+
+  #override this method to do whatever you want
+  def handle_failure(job,e)
+    STDERR.puts "!"
+    STDERR.puts "! \t FAIL"
+    STDERR.puts "! \t \t #{job.inspect}"
+    STDERR.puts "! \t \t #{e.inspect}"
+    STDERR.puts "!"
+  end
+
+  def log(message)
+    Rails.logger.info("#{self.class} #{message}")
   end
 
 end
