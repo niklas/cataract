@@ -20,7 +20,11 @@ describe Worker do
   end
 
   context "working" do
-    subject   { Worker.new('fnords') }
+    subject   {
+      Worker.new('fnords').tap do |worker|
+        worker.stub(:wait).and_return(true)
+      end
+    }
     let(:job_class) { 
       mock('FnordClass').tap do |job_class|
         subject.stub(:job_class).and_return(job_class)
@@ -89,13 +93,34 @@ describe Worker do
     context "lock job" do
       let(:job)       { mock 'a Fnord' }
 
-      it "tries at least 3 times" do
-        subject.should_receive(:next_job).twice.and_return(nil)
-        subject.should_receive(:next_job).once.and_return(job)
-        subject.lock_job.should == job
+      context "on last attempt" do
+        before do
+          subject.should_receive(:next_job).exactly(4).times.and_return(nil)
+          subject.should_receive(:next_job).once.and_return(job)
+        end
+
+        it "tries at least 5 times" do
+          subject.lock_job.should == job
+        end
+
+        it "waits between failures" do
+          subject.should_receive(:wait).exactly(4).times
+          subject.lock_job
+        end
+
+        it "increases waiting time between failures" do
+          subject.should_receive(:wait).once.with(1)
+          subject.should_receive(:wait).once.with(2)
+          subject.should_receive(:wait).once.with(4)
+          subject.should_receive(:wait).once.with(8)
+          subject.lock_job
+        end
       end
-      it "waits between failures"
-      it "increases waiting time between failures"
+
+      it "raises if tried 5 times without success" do
+        subject.should_receive(:next_job).exactly(5).times.and_return(nil)
+        expect { subject.lock_job }.to raise_error
+      end
 
     end
 

@@ -11,7 +11,7 @@ class Worker
   def initialize(channel, options={})
     @channel = channel
     @options = options.with_indifferent_access
-    @attempts = @options.delete(:attempts) || 3
+    @attempts = @options.delete(:attempts) || 5
   end
 
   def running?
@@ -57,12 +57,15 @@ class Worker
 
   def attempting
     raise ArgumentError, "must give a block" unless block_given?
-    @attempts.times do
+    @attempts.times do |attempt|
       if success = yield
         return success
       end
+      if attempt < @attempts
+        wait 2**attempt
+      end
     end
-    raise ReachedMaxAttempts, "tried #{@attempts.times}"
+    raise ReachedMaxAttempts, "tried #{@attempts} times"
   end
 
   def handle_signals
