@@ -11,11 +11,7 @@ describe Queueable do
         model.set_table_name 'modls'
       end
     }
-    let(:connection) { # if you notice the connection, it will be stubbed
-      mock('ConnectionAdapter').tap do |connection|
-        model.stub(:connection).and_return(connection)
-      end
-    }
+    let(:connection) { model.connection } 
     before do
       model.send(:include, described_class)
     end
@@ -23,6 +19,14 @@ describe Queueable do
     it "should use table name as notice channel" do
       connection.should_receive(:notify).with('modls').and_return(true)
       model.send(:notify)
+    end
+
+    it "notifies on create" do
+      table_name = "you_hopefully_never_have_to_call_a_table_like_this"
+      connection.create_table table_name
+      model.set_table_name table_name
+      model.should_receive(:notify)
+      model.create!
     end
 
     it "can start listening" do
