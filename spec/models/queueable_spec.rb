@@ -11,9 +11,12 @@ describe Queueable do
         model.set_table_name 'modls'
       end
     }
-    let(:connection) { mock('ConnectionAdapter') }
+    let(:connection) { # if you notice the connection, it will be stubbed
+      mock('ConnectionAdapter').tap do |connection|
+        model.stub(:connection).and_return(connection)
+      end
+    }
     before do
-      model.stub(:connection).and_return(connection)
       model.send(:include, described_class)
     end
 
@@ -41,11 +44,15 @@ describe Queueable do
       model.wait_for_new_record(23)
     end
 
-    it "indicates that the correct event was received" do
-      pending "needs an actual connection, tested in implemented model for now"
-      model.listen!
-      model.send(:notify)
-      model.wait_for_new_record(1).should be_true
+    it "indicates that the correct event was received", without_transaction: true do
+      # notifications will only be delivered after transactions ends, so we do not even start one
+      # see spec_helper!
+      notification = Thread.new do
+        sleep 0.5
+        model.send(:notify)
+      end
+      model.wait_for_new_record(10).should be_true
+      notification.join
     end
 
 
