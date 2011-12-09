@@ -8,11 +8,14 @@ class Worker
 
   attr_reader :channel, :options
   attr_accessor :attempts
+  attr_writer :listen
 
   def initialize(channel, options={})
     @channel = channel
     @options = options.with_indifferent_access
     @attempts = @options.delete(:attempts) || 5
+    @listen  = @options[:listen] == false ? @options.delete(:listen) 
+                                          : true
   end
 
   def running?
@@ -51,6 +54,10 @@ class Worker
 
   def next_job
     job_class.locked.first
+  end
+
+  def listen?
+    @listen && job_class.connection.respond_to?(:wait_for_notify)
   end
 
 
@@ -97,7 +104,7 @@ class Worker
   end
 
   def wait(t)
-    if can_listen?
+    if listen?
       job_class.wait_for_new_record(t)
     else
       Kernel.sleep(t)

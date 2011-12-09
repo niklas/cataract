@@ -25,11 +25,31 @@ describe Worker do
     end
   }
 
+  context "listening" do
+    subject   { Worker.new('fnords') }
+    let(:connection) { mock('ConnectionAdapter') }
+    before do
+      job_class.stub(:connection).and_return(connection)
+    end
+    it "listens on PostgreSQL" do
+      connection.stub(:respond_to?).with(:wait_for_notify).and_return(true)
+      subject.should be_listen
+    end
+    it "won't listen on others (yet)" do
+      connection.stub(:respond_to?).with(:wait_for_notify).and_return(false)
+      subject.should_not be_listen
+    end
+    it "won't listen if forbidden" do
+      subject.listen = false
+      subject.should_not be_listen
+    end
+  end
+
   context "waiting" do
     subject   { Worker.new('fnords') }
     context "and being able to listen" do
       before do
-        subject.stub(:can_listen?).and_return(true)
+        subject.stub(:listen?).and_return(true)
       end
       it "waits for notify from the db" do
         job_class.should_receive(:wait_for_new_record).with(4)
@@ -39,7 +59,7 @@ describe Worker do
 
     context "being unable to listen" do
       before do
-        subject.stub(:can_listen?).and_return(false)
+        subject.stub(:listen?).and_return(false)
       end
       it "falls back to sleep if cannot/should_not listen" do
         Kernel.should_receive(:sleep).with(4)
