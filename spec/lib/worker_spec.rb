@@ -21,11 +21,22 @@ describe Worker do
 
   context "working" do
     subject   { Worker.new('fnords') }
+    let(:job_class) { 
+      mock('FnordClass').tap do |job_class|
+        subject.stub(:job_class).and_return(job_class)
+      end
+    }
     let(:job) { 
       mock('Job', work: true, destroy: true).tap do |job|
         subject.stub(:next_job).and_return(job)
       end
     }
+
+    it "should lock the job" do
+      job_class.should be_present
+      subject.should_receive(:lock_job).and_return(nil)
+      subject.work
+    end
 
     it "should be delegated to the job" do
       job.should_receive(:work)
@@ -66,10 +77,26 @@ describe Worker do
     end
 
     context "next job" do
-      it "returns a job"
-      it "tries multiple times"
+      let(:job)       { mock 'a Fnord' }
+
+      it "uses locked scope on job_class to return a job" do
+        job_class.stub_chain(:locked, :first).and_return(job)
+
+        subject.next_job.should == job
+      end
+    end
+
+    context "lock job" do
+      let(:job)       { mock 'a Fnord' }
+
+      it "tries at least 3 times" do
+        subject.should_receive(:next_job).twice.and_return(nil)
+        subject.should_receive(:next_job).once.and_return(job)
+        subject.lock_job.should == job
+      end
       it "waits between failures"
       it "increases waiting time between failures"
+
     end
 
     context "waiting" do

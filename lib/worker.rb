@@ -1,5 +1,7 @@
 class Worker
 
+  class ReachedMaxAttempts < RuntimeError; end
+
   def self.start(*a)
     new.start(*a)
   end
@@ -8,7 +10,8 @@ class Worker
 
   def initialize(channel, options={})
     @channel = channel
-    @options = options
+    @options = options.with_indifferent_access
+    @attempts = @options.delete(:attempts) || 3
   end
 
   def running?
@@ -24,7 +27,7 @@ class Worker
   end
 
   def work
-    if job = next_job
+    if job = lock_job
       log("locked #{job}")
       begin
         job.work
@@ -39,7 +42,28 @@ class Worker
     end
   end
 
+  def lock_job
+    attempting do
+      next_job
+    end
+  end
+
+  def next_job
+    job_class.locked.first
+  end
+
+
   private
+
+  def attempting
+    raise ArgumentError, "must give a block" unless block_given?
+    @attempts.times do
+      if success = yield
+        return success
+      end
+    end
+    raise ReachedMaxAttempts, "tried #{@attempts.times}"
+  end
 
   def handle_signals
     %W(INT TERM).each do |sig|
@@ -52,6 +76,11 @@ class Worker
         end
       end
     end
+  end
+
+  # TODO this should be decoupled. Must give class_name instead of channel to worker
+  def job_class
+    channel.classify.constantize
   end
 
   #override this method to do whatever you want
