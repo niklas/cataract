@@ -9,16 +9,27 @@ module Queueable
 
   module ClassMethods
 
+    def queue_name
+      table_name
+    end
+
+    def wait_for_new_record(timeout=100)
+      listen!
+      connection.wait_for_notify(timeout)
+    ensure
+      unlisten!
+    end
+
     def listen!
-      connection.listen table_name
+      connection.listen queue_name
     end
     def unlisten!
-      connection.unlisten table_name
+      connection.unlisten queue_name
     end
 
     private
     def notify
-      connection.notify table_name
+      connection.notify queue_name
     end
 
   end
@@ -45,8 +56,14 @@ module PostgreSQLNotifications
     execute %Q~UNLISTEN #{quote_table_name(channel)}~
   end
 
-  # #wait_for_notify is already implemented
-  # so is #notifies
+  def wait_for_notify(*a, &block)
+    @connection.wait_for_notify(*a, &block)
+  end
+
+  def notifies
+    @connection.notifies
+  end
+
 end
 
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
