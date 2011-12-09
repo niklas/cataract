@@ -7,6 +7,7 @@ class Worker
   end
 
   attr_reader :channel, :options
+  attr_accessor :attempts
 
   def initialize(channel, options={})
     @channel = channel
@@ -55,17 +56,17 @@ class Worker
 
   private
 
-  def attempting
+  def attempting(max=attempts)
     raise ArgumentError, "must give a block" unless block_given?
-    @attempts.times do |attempt|
+    max.times do |attempt|
       if success = yield
         return success
       end
-      if attempt < @attempts
+      if attempt < max
         wait 2**attempt
       end
     end
-    raise ReachedMaxAttempts, "tried #{@attempts} times"
+    raise ReachedMaxAttempts, "tried #{max} times"
   end
 
   def handle_signals
@@ -83,7 +84,7 @@ class Worker
 
   # TODO this should be decoupled. Must give class_name instead of channel to worker
   def job_class
-    channel.classify.constantize
+    @job_class ||= channel.classify.constantize
   end
 
   #override this method to do whatever you want
@@ -93,6 +94,14 @@ class Worker
     STDERR.puts "! \t \t #{job.inspect}"
     STDERR.puts "! \t \t #{e.inspect}"
     STDERR.puts "!"
+  end
+
+  def wait(t)
+    if can_listen?
+      job_class.wait_for_new_record(t)
+    else
+      Kernel.sleep(t)
+    end
   end
 
   def log(message)

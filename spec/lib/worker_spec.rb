@@ -19,15 +19,39 @@ describe Worker do
     worker.channel.should == 'fnords'
   end
 
+  let(:job_class) { 
+    mock('FnordClass').tap do |job_class|
+      subject.stub(:job_class).and_return(job_class)
+    end
+  }
+
+  context "waiting" do
+    subject   { Worker.new('fnords') }
+    context "and being able to listen" do
+      before do
+        subject.stub(:can_listen?).and_return(true)
+      end
+      it "waits for notify from the db" do
+        job_class.should_receive(:wait_for_new_record).with(4)
+        subject.send :wait, 4
+      end
+    end
+
+    context "being unable to listen" do
+      before do
+        subject.stub(:can_listen?).and_return(false)
+      end
+      it "falls back to sleep if cannot/should_not listen" do
+        Kernel.should_receive(:sleep).with(4)
+        subject.send :wait, 4
+      end
+    end
+  end
+
   context "working" do
     subject   {
       Worker.new('fnords').tap do |worker|
         worker.stub(:wait).and_return(true)
-      end
-    }
-    let(:job_class) { 
-      mock('FnordClass').tap do |job_class|
-        subject.stub(:job_class).and_return(job_class)
       end
     }
     let(:job) { 
@@ -90,31 +114,36 @@ describe Worker do
       end
     end
 
-    context "lock job" do
+    context "attempting to lock job" do
       let(:job)       { mock 'a Fnord' }
 
-      context "on last attempt" do
-        before do
-          subject.should_receive(:next_job).exactly(4).times.and_return(nil)
-          subject.should_receive(:next_job).once.and_return(job)
-        end
+      it "should try 5 times by default" do
+        subject.attempts.should == 5
+      end
 
-        it "tries at least 5 times" do
-          subject.lock_job.should == job
-        end
+      it "waits between failures" do
+        subject.attempts = 3
+        subject.should_receive(:next_job).exactly(2).times.and_return(nil)
+        subject.should_receive(:next_job).once.and_return(job)
+        subject.should_receive(:wait).exactly(2).times
+        subject.lock_job
+      end
 
-        it "waits between failures" do
-          subject.should_receive(:wait).exactly(4).times
-          subject.lock_job
-        end
-
-        it "increases waiting time between failures" do
-          subject.should_receive(:wait).once.with(1)
-          subject.should_receive(:wait).once.with(2)
-          subject.should_receive(:wait).once.with(4)
-          subject.should_receive(:wait).once.with(8)
-          subject.lock_job
-        end
+      it "increases waiting time between failures" do
+        subject.attempts = 10
+        subject.should_receive(:next_job).exactly(9).times.and_return(nil)
+        subject.should_receive(:next_job).once.and_return(job)
+        subject.should_receive(:wait).once.with(1)
+        subject.should_receive(:wait).once.with(2)
+        subject.should_receive(:wait).once.with(4)
+        subject.should_receive(:wait).once.with(8)
+        subject.should_receive(:wait).once.with(16)
+        subject.should_receive(:wait).once.with(32)
+        subject.should_receive(:wait).once.with(64)
+        subject.should_receive(:wait).once.with(128)
+        subject.should_receive(:wait).once.with(256)
+        subject.should_not_receive(:wait).with(512)
+        subject.lock_job
       end
 
       it "raises if tried 5 times without success" do
@@ -124,10 +153,6 @@ describe Worker do
 
     end
 
-    context "waiting" do
-      it "waits for notify from the db"
-      it "falls back to sleep if cannot/should_not listen"
-    end
   end
 end
 

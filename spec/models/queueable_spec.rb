@@ -10,6 +10,11 @@ describe Queueable do
     let(:including) { lambda { model.send(:include, described_class) } }
 
     it "should add scope: locked"
+    it "should add class method wait_for_new_record" do
+      pending
+      should_receive(:listen!)
+      should_receive(:unlisten!)
+    end
 
   end
 end
