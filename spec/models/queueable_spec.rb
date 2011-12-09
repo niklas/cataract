@@ -21,14 +21,6 @@ describe Queueable do
       model.send(:notify)
     end
 
-    it "notifies on create" do
-      table_name = "you_hopefully_never_have_to_call_a_table_like_this"
-      connection.create_table table_name
-      model.set_table_name table_name
-      model.should_receive(:notify)
-      model.create!
-    end
-
     it "can start listening" do
       connection.should_receive(:listen).with('modls').and_return(true)
       model.listen!
@@ -59,6 +51,24 @@ describe Queueable do
       notification.join
     end
 
+    context "with table" do
+      let(:table_name) {"you_hopefully_never_have_to_call_a_table_like_this"}
+      before do
+        connection.create_table table_name
+        model.set_table_name table_name
+      end
+
+      it "notifies on create" do
+        model.should_receive(:notify)
+        model.create!
+      end
+
+      it "should have instances acting like queuable" do
+        model.new.should be_acts_like(:queueable)
+      end
+
+
+    end
 
   end
 

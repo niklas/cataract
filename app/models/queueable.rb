@@ -34,6 +34,10 @@ module Queueable
 
   end
 
+  def acts_like_queueable?
+    true
+  end
+
   private
 
   def notify
