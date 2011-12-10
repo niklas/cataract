@@ -5,6 +5,12 @@ FactoryGirl.define do
     watched false
 
     factory :target # to move
+
+    factory :existing_directory do
+      after_create do |d|
+        FileUtils.mkdir_p d.path
+      end
+    end
   end
 
   factory :move do
