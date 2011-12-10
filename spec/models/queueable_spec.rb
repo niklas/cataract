@@ -51,6 +51,10 @@ describe Queueable do
       notification.join
     end
 
+    it "will timeout when no even was received", without_transaction: true do
+      model.wait_for_new_record(0.1).should be_false
+    end
+
     context "with table" do
       let(:table_name) {"you_hopefully_never_have_to_call_a_table_like_this"}
       before do
