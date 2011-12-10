@@ -46,5 +46,20 @@ describe Torrent do
       it "should catch the error"
     end
   end
+
+  context "metainfo" do
+    let(:torrent) { Factory :torrent }
+
+    it "should raise Torrent::FileNotFound when file does not exist" do
+      torrent.stub!(:file_exists?).and_return(false)
+      expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
+    end
+
+    it "should raise Torrent::FileNotFound when RubyTorrent::Metainfo cannot find file" do
+      torrent.stub!(:file_exists?).and_return(true)
+      RubyTorrent::MetaInfo.stub!(:from_bstream).and_raise(Errno::ENOENT)
+      expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
+    end
+  end
 end
 

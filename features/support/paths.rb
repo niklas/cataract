@@ -11,7 +11,7 @@ module NavigationHelpers
     when /^the home\s?page$/
       '/'
 
-    when /^the page of #{capture_model}$/
+    when /^the page (?:of|for) #{capture_model}$/
       case m = model!($1)
       when Torrent
         torrent_path(m)

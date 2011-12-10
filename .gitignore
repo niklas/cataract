@@ -7,3 +7,4 @@ log
 public/javascripts/*.js
 public/stylesheets/*.css
 chromedriver.log
+rerun.txt

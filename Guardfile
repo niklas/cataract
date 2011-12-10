@@ -35,7 +35,7 @@ end
 
 guard 'cucumber', :cli => "--drb" do
   watch(%r{^features/.+\.feature$})
-  watch(%r{^app/+$})                        { "features" }
+  watch(%r{^app/(controllers|widgets)})     { "features" }
   watch(%r{^spec/factories/.+$})            { 'features' }
   watch(%r{^features/step_definitions/filesystem_steps.rb$})  { 'features -t @fakefs' }
   watch(%r{^app/models/.*(?:sync|file|content)})  { 'features -t @fakefs' }
@@ -45,9 +45,11 @@ end
 
 # what to watch? what indicates a bored developer?
 guard 'shell' do
-  watch(/(.*).txt/) {|m| `tail #{m[0]}` }
   watch('.git/HEAD') do |m|
-    `bundle exec rake notes`
+    `bundle exec rake notes | tee tmp/TODO`
+  end
+  watch(%r~^db/migrate/\d{10}~) do |m|
+    `bundle exec rake db:migrate RAILS_ENV=test && bundle exec rake db:migrate`
   end
 end
 

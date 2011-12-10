@@ -7,3 +7,6 @@ en:
       torrents:
         running: running
         archived: archived
+  move:
+    show:
+      sentence: "moving %{torrent} to %{target}"
