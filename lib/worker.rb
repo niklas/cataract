@@ -34,7 +34,7 @@ class Worker
     if job = lock_job
       log("locked #{job}")
       begin
-        job.work
+        job.work!
         log("finished #{job}")
       rescue Exception => e
         log("failed #{job}:\n   #{e.inspect}")
