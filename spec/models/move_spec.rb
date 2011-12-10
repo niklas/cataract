@@ -13,11 +13,11 @@ describe Move do
   end
 
   context "in filesystem" do
-    let(:rootfs)   { Rails.root.join('tmp', 'rootfs') }
+    let(:rootfs)   { Rails.root/'tmp'/'rootfs' }
     after          { FileUtils.rm_rf(rootfs) if rootfs.exist? }
 
-    let(:incoming) { Factory :existing_directory, path: rootfs.join('incoming') }
-    let(:archive)  { Factory :existing_directory, path: rootfs.join('archive') }
+    let(:incoming) { Factory :existing_directory, path: rootfs/'incoming' }
+    let(:archive)  { Factory :existing_directory, path: rootfs/'archive' }
     let(:single)   { Factory :torrent_with_single_file, directory: incoming }
 
     it "has directoy structure to work on" do
