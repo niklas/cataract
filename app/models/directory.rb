@@ -37,7 +37,7 @@ class Directory < ActiveRecord::Base
   end
 
   def label
-    [name,path].join(' - ')
+    [name,path.to_s].join(' - ')
   end
 
   def subdirs
@@ -53,12 +53,21 @@ class Directory < ActiveRecord::Base
   end
 
   def glob(pattern)
-    Dir[File.join(path,pattern)]
+    Dir[ path/pattern ]
   end
 
-  def pathname
-    Pathname.new(path)
+  class Pathname
+    def load(text)
+      return unless text
+      ::Pathname.new(text)
+    end
+
+    def dump(pathname)
+      pathname.to_s
+    end
   end
+
+  serialize :path, Pathname.new
 
   def self.for_series
     find_by_name('Serien')

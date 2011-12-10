@@ -7,9 +7,11 @@ FactoryGirl.define do
     factory :target # to move
 
     factory :existing_directory do
-      after_create do |d|
-        FileUtils.mkdir_p d.path
-      end
+      auto_create true
+    end
+
+    after_create do |directory|
+      directory.reload # force serialization
     end
   end
 
