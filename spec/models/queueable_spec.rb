@@ -88,6 +88,12 @@ describe Queueable do
           first.should_not eql(third)
           second.should_not eql(third)
         end
+
+        it "should not fail if no records left" do
+          connection.create_queueable_lock_function
+          3.times { model.locked }
+          expect { model.locked }.not_to raise_error
+        end
       end
     end
 

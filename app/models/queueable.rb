@@ -30,7 +30,9 @@ module Queueable
     # calling this at the end of a scope chain will lock the record and fetch it from the db
     # FIXME: must reload the record because #locked_at is set to late in the psql query process,by the function in WHERE.
     def locked
-      where(["id = #{PostgreSQLNotifications::LockFunctionName}(?)", table_name]).first.reload
+      where(["id = #{PostgreSQLNotifications::LockFunctionName}(?)", table_name]).first.tap do |locked|
+        locked.reload if locked.present?
+      end
     end
 
     private
@@ -119,12 +121,14 @@ module PostgreSQLNotifications
           END;
         END LOOP;
 
-        EXECUTE 'UPDATE '
-          || tname::regclass
-          || ' SET locked_at = (CURRENT_TIMESTAMP)'
-          || ' WHERE id = $1'
-          || ' AND locked_at is NULL'
-        USING unlocked;
+        IF unlocked IS NOT NULL THEN
+          EXECUTE 'UPDATE '
+            || tname::regclass
+            || ' SET locked_at = (CURRENT_TIMESTAMP)'
+            || ' WHERE id = $1'
+            || ' AND locked_at is NULL'
+          USING unlocked;
+        END IF;
 
         RETURN unlocked;
       END;
