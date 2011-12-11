@@ -25,6 +25,9 @@ describe Move do
     def create_file(path)
       FileUtils.copy file_factory/path.basename, path
     end
+    def create_directory(path)
+      FileUtils.mkdir_p path
+    end
 
     after          { FileUtils.rm_rf(rootfs) if rootfs.exist? }
 
@@ -40,7 +43,7 @@ describe Move do
 
     let(:single) do
       build :torrent_with_content do |torrent|
-        torrent.stub content_path: incoming/'file.png', directory: source
+        torrent.stub content_path: incoming/'tails.png', directory: source
         create_file torrent.content_path
         torrent
       end
@@ -48,11 +51,35 @@ describe Move do
 
     it "should move single file" do
       move = build :move, torrent: single, target: target
-      (incoming/'file.png').should exist_as_file
-      move.torrent.should be_present
+      (incoming/'tails.png').should exist_as_file
       move.work!
-      (incoming/'file.png').should_not exist_as_file
-      (archive/'file.png').should exist_as_file
+      (incoming/'tails.png').should_not exist_as_file
+      (archive/'tails.png').should exist_as_file
+    end
+
+    let(:multiple) do
+      build :torrent_with_content do |torrent|
+        dir = incoming/'content'
+        torrent.stub content_path: dir, directory: source
+        create_directory dir
+        create_file dir/'tails.png'
+        create_file dir/'banane.poem'
+        torrent
+      end
+    end
+
+    it "should move multiple files in directory" do
+      move = build :move, torrent: multiple, target: target
+      (incoming/'content').should exist_as_directory
+      (incoming/'content'/'tails.png').should exist_as_file
+      (incoming/'content'/'banane.poem').should exist_as_file
+      move.work!
+      (incoming/'content').should_not exist_as_directory
+      (incoming/'content'/'tails.png').should_not exist_as_file
+      (incoming/'content'/'banane.poem').should_not exist_as_file
+      (archive/'content').should exist_as_directory
+      (archive/'content'/'tails.png').should exist_as_file
+      (archive/'content'/'banane.poem').should exist_as_file
     end
 
   end
