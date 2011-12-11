@@ -68,6 +68,17 @@ class Directory < ActiveRecord::Base
   end
 
   serialize :path, Pathname.new
+  def path=(new_path)
+    if new_path.is_a?(::Pathname)
+      super new_path
+    else
+      super ::Pathname.new(new_path.to_s)
+    end
+  end
+
+  validates_each :path do |record, attr, value|
+    record.errors.add attr, "is not absolute" unless value.absolute?
+  end
 
   def self.for_series
     find_by_name('Serien')

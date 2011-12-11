@@ -11,8 +11,6 @@ describe Move do
     let(:incoming) { rootfs/'incoming' }
     let(:archive)  { rootfs/'archive' }
 
-    after          { FileUtils.rm_rf(rootfs) if rootfs.exist? }
-
     let(:source)   { Factory :existing_directory, path: incoming }
     let(:target)   { Factory :existing_directory, path: archive }
 

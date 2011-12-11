@@ -17,6 +17,12 @@ describe Directory do
       directory.path.should be_a(Pathname)
       directory.path.should == pathname
     end
+
+    it "must be absolute" do
+      directory = build :directory
+      directory.path = 'tmp/lol'
+      directory.should_not be_valid
+    end
   end
 
   context "autocreation" do
@@ -27,6 +33,13 @@ describe Directory do
     it "should create on filesystem only if asked for" do
       directory = Factory :directory, :path => path
       File.directory?(path).should_not be_true
+    end
+  end
+
+  context "Factory" do
+    it "should put relative paths into rootfs" do
+      directory = build :directory, path: 'foo/bar'
+      directory.path.should == rootfs/'foo'/'bar'
     end
   end
 end

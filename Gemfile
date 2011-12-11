@@ -59,3 +59,6 @@ gem 'acts_as_list'
 gem 'apotomo', '~> 1.2.1'
 
 gem 'rubytorrent-allspice'
+
+gem 'scgi'
+gem 'xmlrpcs'
