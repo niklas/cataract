@@ -21,7 +21,7 @@ Spork.prefork do
     config.mock_with :rspec
 
     config.before :each do
-      RTorrentProxy.stub_offline!
+      #Torrent.remote.stub_offline!
     end
 
     config.before(:suite) do

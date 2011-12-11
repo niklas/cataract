@@ -11,12 +11,10 @@ class RTorrentProxy
     @@rtorrent ||= RTorrent.new
   end
 
-  # Us tis in tests to stub away the remote
-  def self.stub_offline!
-    rtorrent = RSpec::Mocks::Mock.new name
-    rtorrent.stub(:remote_respond_to?).with(:state).and_return(true)
-    rtorrent.stub(:call).with(:state).and_return('<remote-state>')
-    stub(:remote) { rtorrent }
+  # Use this in tests to stub away the remote
+  def stub_offline!
+    stub(:remote_respond_to?).with(:state).and_return(true)
+    stub(:call).with(:state).and_return('<remote-state>')
   end
 
   def remote

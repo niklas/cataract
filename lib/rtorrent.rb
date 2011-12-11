@@ -1,17 +1,25 @@
-require "xmlrpc/client"
+require 'xmlrpc/client'
+require 'xmlrpc/xmlrpcs'
+require 'socket'
+require 'scgi/wrapped_socket'
+
 # This class presents an XMLXPC-Interface to rtorrent, a fast bittorrent client.
-# You have to setup your webserver like described in 
-# http://libtorrent.rakshasa.no/wiki/RTorrentXMLRPCGuide
-class RTorrent
+# You don't need a webserver, because it uses local UNIX domain socket for XMLRPC
+# thanks to Dario Meloni's gem xmlrpcs
+
+class RTorrent < XMLRPC::ClientS
   class Exception < RuntimeError; end
   class NotReachable < Exception; end
   class NoRPCMethod < Exception; end
 
-  def initialize
-    @rpc = XMLRPC::Client.new '127.0.0.1', '/rtorrentrpc', 80
+  SCGIPath = '/RPC2'
+
+  def new_socket(socket_path, async)
+    #UNIXSocket.new(info.to_path)
+    SCGI::WrappedSocket.new( UNIXSocket.new(socket_path.to_path), SCGIPath )
   end
 
-  def call *a 
+  def old_call *a 
     tries = 1
     begin
       tries += 1
@@ -38,7 +46,7 @@ class RTorrent
   end
 
   def remote_methods
-    @methods ||= call 'system.listMethods'
+    @remote_methods ||= call 'system.listMethods'
   end
 
   def remote_respond_to?(meth)
@@ -49,16 +57,16 @@ class RTorrent
     hsh = torrent.info_hash rescue nil
     raise TorrentHasNoInfoHash unless hsh
     meth = "get_d_#{what}"
-    raise NoRPCMethod, "no such rpc method: #{meth}" unless @methods.include? meth
+    raise NoRPCMethod, "no such rpc method: #{meth}" unless @remote_methods.include? meth
     call meth, hsh
   end
 
-  def method_missing method, *args
+  def old_method_missing method, *args
     method = method.to_s
     magic_method = "get_#{method}" # just getters for now
-    if @methods.include? method
+    if @remote_methods.include? method
       call method, *args
-    elsif @methods.include? magic_method
+    elsif @remote_methods.include? magic_method
       call magic_method, *args
     else
       raise NoRPCMethod, "no such rpc method: #{method} or #{magic_method}"
@@ -69,4 +77,3 @@ class RTorrent
     !remote_methods.empty? # initialize will fail earlier
   end
 end
-

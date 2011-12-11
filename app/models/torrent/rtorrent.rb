@@ -1,3 +1,4 @@
+require_dependency 'rtorrent_proxy'
 class Torrent
   class NotRunning < ActiveRecord::RecordInvalid; end
   RTORRENT_METHODS = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
@@ -17,8 +18,8 @@ class Torrent
   end
   alias_method_chain :method_missing, :xml_rpc
 
-  def self.rtorrent
-    RTorrentProxy.remote
+  def self.remote
+    @remote ||= RTorrentProxy.new
   end
 
   def remote
