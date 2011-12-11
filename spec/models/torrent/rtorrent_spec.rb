@@ -15,6 +15,14 @@ describe Torrent do
       torrent.remote.should == proxy
     end
 
+    it "uses fixed socket path" do
+      Torrent.rtorrent_socket_path.should be_a(Pathname)
+      path = mock 'socket path'
+      Torrent.stub(:rtorrent_socket_path).and_return(path)
+      Torrent::RTorrent.should_receive(:new).with(path)
+      torrent.remote
+    end
+
     it "should be cached" do
       torrent.remote.should == torrent.remote
     end
@@ -36,7 +44,6 @@ describe Torrent::RTorrent do
     described_class.should be_offline
   end
 
-  it "uses configured socket path"
   it { described_class.should < XMLRPC::Client }
   it { described_class.should < XMLRPC::ClientS }
 
