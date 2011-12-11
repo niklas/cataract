@@ -45,7 +45,6 @@ RSpec.configure do |config|
 end
 
 if defined?(World)
-  World(FileSystem)
 
   Before '@rootfs' do
   end

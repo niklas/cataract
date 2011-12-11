@@ -37,6 +37,10 @@ class Torrent
     Rails.root/'tmp'/'sockets'/'rtorrent'
   end
 
+  def load!
+    remote.load! self
+  end
+
 
   # This Class represents the glue between 
   # the ActiveRecord Model Torrent and the 
@@ -106,8 +110,14 @@ class Torrent
     end
 
     # load the path into rtorrent
-    def load(torrent)
-      call_remote 'load', torrent.path
+    def load!(torrent)
+      call 'load', torrent.path.to_s
+    end
+
+    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
+    #       (update rtorrent to 0.9?)
+    def download_list(view='main')
+      call 'download_list'
     end
 
 
