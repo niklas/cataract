@@ -5,8 +5,6 @@ describe Torrent do
 
   describe "proxy to rtorrent" do
 
-    it "should provide class methods for global settings"
-
     let(:proxy)     { mock('Torrent::RTorrent') }
     let(:torrent)   { build :torrent }
 
@@ -111,6 +109,18 @@ describe Torrent::RTorrent do
             proxy.should_receive(:call).with("d.is_#{bool.to_s.chop}", info_hash).and_return(int)
             proxy.public_send(bool, torrent).should == out
           end
+        end
+      end
+    end
+
+    context "non-torrent related methods" do
+      let(:value) { mock 'Value' }
+      {
+        :download_list => 'download_list'
+      }.each do |meth, xml|
+        it "should use no arguments for #{meth}" do
+          proxy.should_receive(:call).with(xml).and_return(value)
+          proxy.public_send(meth).should == value
         end
       end
     end
