@@ -2,6 +2,8 @@ require 'drb'
 class Torrent
   extend ActiveSupport::Memoizable
   class TorrentContentError < Exception; end
+
+  # TODO WTF is this for?
   def files_hierarchy
     return {} unless metainfo
     return {metainfo.name => metainfo} if metainfo.single?
@@ -37,6 +39,16 @@ class Torrent
 
     def info
       torrent.metainfo
+    end
+
+    def files
+      if info.single?
+        [ path ]
+      else
+        info.files.map(&:path).flatten.sort.map do |file|
+          path/file
+        end
+      end
     end
   end
 
@@ -79,6 +91,7 @@ class Torrent
     return nil
   end
 
+  # TODO remove or replace
   def set_content_information
     return unless metainfo
     self[:content_size] = if metainfo.single?

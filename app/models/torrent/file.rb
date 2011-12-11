@@ -6,13 +6,8 @@ class Torrent
   class FileNotFound < FileError; end
   class HasNoInfoHash < FileError; end
 
-  # FIXME serialize in #path as Pathname
-  def pathname
-    directory.path.join(filename)
-  end
-
   def path
-    pathname.to_s
+    directory.path/filename
   end
 
   def file_exists?(stat=current_state)

@@ -73,7 +73,14 @@ describe Torrent do
           torrent
         end
       end
-      it "knows the name of its content file"
+      it "knows the path of its torrent file" do
+        torrent.path.should == storage.path/'single.torrent'
+      end
+      it "knows the name of its content file" do
+        torrent.content.files.should == [
+          archive.path/'tails.png'
+        ]
+      end
       it "content_path should point to file" do
         torrent.content_path.should == archive.path/'tails.png'
       end
@@ -86,7 +93,15 @@ describe Torrent do
           torrent
         end
       end
-      it "knows the names of its content files"
+      it "knows the path of its torrent file" do
+        torrent.path.should == storage.path/'multiple.torrent'
+      end
+      it "knows the names of its content files" do
+        torrent.content.files.should == [
+          archive.path/'content'/'banane.poem',
+          archive.path/'content'/'tails.png'
+        ]
+      end
       it "content_path should point to directory" do
         torrent.content_path.should == archive.path/'content'
       end
