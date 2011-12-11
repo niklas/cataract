@@ -55,7 +55,7 @@ describe Torrent::RTorrent do
   end
 
   Torrent::RTorrent::Methods.each do |meth|
-    it "should delegate ##{meth}" do
+    it "should delegate ##{meth} to proxy, supplying itself" do
       rtorrent.should_receive(meth).with(torrent)
       torrent.public_send(meth)
     end
@@ -77,7 +77,7 @@ describe Torrent::RTorrent do
 
 
   context "for torrent" do
-    let(:torrent)  { mock('Torrent') }
+    let(:torrent)  { mock('Torrent', :info_hash => info_hash) }
     let(:proxy) { described_class.new(torrent) }
 
     it "should respond to hardcoded methods" do
@@ -85,5 +85,26 @@ describe Torrent::RTorrent do
         proxy.should respond_to(meth)
       end
     end
+
+    context "calling getters" do
+      [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes].each do |getter|
+        it "should use info hash for #{getter}" do
+          proxy.should_receive(:call).with("d.get_#{getter}", info_hash).and_return(23)
+          proxy.public_send(getter, torrent).should == 23
+        end
+      end
+    end
+
+    context "calling booleans" do
+      [:open?, :active?].each do |bool|
+        { 0 => false, 1 => true }.each do |int, out|
+          it "should use info hash for #{bool}" do
+            proxy.should_receive(:call).with("d.is_#{bool.to_s.chop}", info_hash).and_return(int)
+            proxy.public_send(bool, torrent).should == out
+          end
+        end
+      end
+    end
+
   end
 end
