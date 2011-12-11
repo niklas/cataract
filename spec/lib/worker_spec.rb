@@ -75,7 +75,7 @@ describe Worker do
       end
     }
     let(:job) { 
-      mock('Job', work: true, destroy: true).tap do |job|
+      mock('Job', work!: true, destroy: true).tap do |job|
         subject.stub(:next_job).and_return(job)
       end
     }
@@ -87,7 +87,7 @@ describe Worker do
     end
 
     it "should be delegated to the job" do
-      job.should_receive(:work)
+      job.should_receive(:work!)
       subject.work
     end
 
@@ -102,7 +102,7 @@ describe Worker do
       let(:error) { RuntimeError.new("too many fnords") }
       before do
         subject.stub(:handle_failure)
-        job.stub(:work).and_raise(error)
+        job.stub(:work!).and_raise(error)
       end
       it "should destroy the job, too" do
         job.should_receive(:destroy)

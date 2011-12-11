@@ -61,5 +61,15 @@ describe Torrent do
       expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
     end
   end
+
+  context "filenames" do
+    it "set on single-file torrent"
+    it "set on multi-file torrent"
+  end
+
+  context "content_path" do
+    it "should point to file when single"
+    it "should point to directory when multiple"
+  end
 end
 

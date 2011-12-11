@@ -99,10 +99,10 @@ GEM
     erubis (2.7.0)
     execjs (1.2.9)
       multi_json (~> 1.0)
-    factory_girl (2.1.2)
+    factory_girl (2.3.2)
       activesupport
-    factory_girl_rails (1.2.0)
-      factory_girl (~> 2.1.0)
+    factory_girl_rails (1.4.0)
+      factory_girl (~> 2.3.0)
       railties (>= 3.0.0)
     fakefs (0.4.0)
     ffi (1.0.11)
@@ -280,7 +280,7 @@ DEPENDENCIES
   database_cleaner (~> 0.6.7)
   devise
   email_spec
-  factory_girl_rails (~> 1.2.0)
+  factory_girl_rails (~> 1.4.0)
   fakefs
   guard (~> 0.8.4)
   guard-bundler (~> 0.1.3)
