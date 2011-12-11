@@ -62,14 +62,36 @@ describe Torrent do
     end
   end
 
-  context "filenames" do
-    it "set on single-file torrent"
-    it "set on multi-file torrent"
-  end
+  context "in filesystem" do
+    let(:storage) { create :existing_directory, path: rootfs/'storage' }
+    let(:archive) { create :existing_directory, path: rootfs/'archive' }
 
-  context "content_path" do
-    it "should point to file when single"
-    it "should point to directory when multiple"
+    describe "with single file" do
+      let(:torrent) do
+        create :torrent_with_picture_of_tails, directory: storage, content_directory: archive do |torrent|
+          create_file storage.path/torrent.filename
+          torrent
+        end
+      end
+      it "knows the name of its content file"
+      it "content_path should point to file" do
+        torrent.content_path.should == archive.path/'tails.png'
+      end
+    end
+
+    describe "with multiple files" do
+      let(:torrent) do
+        create :torrent_with_picture_of_tails_and_a_poem, directory: storage, content_directory: archive do |torrent|
+          create_file storage.path/torrent.filename
+          torrent
+        end
+      end
+      it "knows the names of its content files"
+      it "content_path should point to directory" do
+        torrent.content_path.should == archive.path/'content'
+      end
+    end
+
   end
 end
 

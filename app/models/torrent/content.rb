@@ -26,9 +26,29 @@ class Torrent
     File.join(Settings.torrent_dir,metainfo.name)
   end
 
-  # where to find the contents, either saved :content_path or #working_path
+  class Content < Struct.new(:torrent)
+    def path
+      base_path.path/info.name
+    end
+
+    def base_path
+      torrent.content_directory
+    end
+
+    def info
+      torrent.metainfo
+    end
+  end
+
+  belongs_to :content_directory, :class_name => 'Directory'
+
+  def content
+    @content ||= Content.new(self)
+  end
+
+  # minimal path for content. Path has at least one more component than its #directory
   def content_path
-    self[:content_path] ||= working_path
+    content.path
   end
 
   def content_exists?

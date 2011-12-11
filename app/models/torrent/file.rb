@@ -1,6 +1,6 @@
 class Torrent
   belongs_to :directory, :inverse_of => :torrents
-  validates_presence_of :directory
+  validates_presence_of :directory, :if => :filename?
 
   class FileError < ActiveRecord::ActiveRecordError; end
   class FileNotFound < FileError; end

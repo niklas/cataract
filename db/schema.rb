@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209224023) do
+ActiveRecord::Schema.define(:version => 20111211011113) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -107,13 +107,15 @@ ActiveRecord::Schema.define(:version => 20111209224023) do
     t.integer  "feed_id"
     t.datetime "synched_at"
     t.text     "content_filenames"
-    t.string   "info_hash",         :limit => 40
-    t.string   "content_path",      :limit => 2048
+    t.string   "info_hash",            :limit => 40
+    t.string   "content_path",         :limit => 2048
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.integer  "content_directory_id"
     t.integer  "directory_id"
   end
 
+  add_index "torrents", ["content_directory_id"], :name => "index_torrents_on_content_directory_id"
   add_index "torrents", ["directory_id"], :name => "index_torrents_on_directory_id"
   add_index "torrents", ["filename"], :name => "index_torrents_on_filename"
   add_index "torrents", ["status"], :name => "index_torrents_on_status"

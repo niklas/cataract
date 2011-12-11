@@ -9,6 +9,8 @@ Spork.prefork do
   require 'fakefs/spec_helpers'
 
   RSpec.configure do |config|
+    include FactoryGirl::Syntax::Default
+
     # == Mock Framework
     #
     # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

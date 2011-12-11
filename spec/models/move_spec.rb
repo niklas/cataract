@@ -1,33 +1,15 @@
 require 'spec_helper'
 
-RSpec::Matchers.define :exist_as_directory do
-  match { |actual| File.directory?(actual.to_s) }
-end
-RSpec::Matchers.define :exist_as_file do
-  match { |actual| File.file?(actual.to_s) }
-end
-
 describe Move do
-  include FactoryGirl::Syntax::Default
-
   it "be marked as acting like queuable" do
     Move.new.should be_acts_like(:queueable)
   end
 
   it "should extract paths from torrent and target"
 
-  let(:file_factory) { Rails.root/'spec'/'factories'/'files' }
-
   context "in filesystem" do
-    let(:rootfs)   { Rails.root/'tmp'/'rootfs' }
     let(:incoming) { rootfs/'incoming' }
     let(:archive)  { rootfs/'archive' }
-    def create_file(path)
-      FileUtils.copy file_factory/path.basename, path
-    end
-    def create_directory(path)
-      FileUtils.mkdir_p path
-    end
 
     after          { FileUtils.rm_rf(rootfs) if rootfs.exist? }
 
