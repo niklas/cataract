@@ -1,3 +1,3 @@
 Before do
-  Torrent::RTorrentProxy.offline!
+  Torrent::RTorrent.offline!
 end

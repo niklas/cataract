@@ -1,14 +1,16 @@
-require_dependency 'rtorrent'
+require 'xmlrpc/client'
+require 'xmlrpc/xmlrpcs'
+require 'socket'
+require 'scgi/wrapped_socket'
 
 class Torrent
   class NotRunning < ActiveRecord::RecordInvalid; end
-  MethodsForRTorrent = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
 
-  def method_missing_with_xml_rpc(m, *args, &blk)
-    if MethodsForRTorrent.include?(m.to_sym) and remote
-      remote.public_send m, *args, &blk
+  def method_missing_with_xml_rpc(meth, *args, &blk)
+    if remote.respond_to?(meth)
+      remote.public_send meth, self, *args, &blk
     else
-      method_missing_without_xml_rpc m, *args, &blk
+      method_missing_without_xml_rpc meth, *args, &blk
     end
   rescue NotRunning => e
     finally_stop! unless archived?
@@ -20,11 +22,19 @@ class Torrent
   alias_method_chain :method_missing, :xml_rpc
 
   def self.remote
-    @remote ||= RTorrentProxy.new
+    @remote ||= RTorrent.new rtorrent_socket_path
+  end
+
+  def self.reset_remote!
+    @remote = nil
   end
 
   def remote
-    @remote ||= RTorrentProxy.new(self)
+    self.class.remote
+  end
+
+  def self.rtorrent_socket_path
+    Rails.root/'tmp'/'sockets'/'rtorrent'
   end
 
 
@@ -32,36 +42,49 @@ class Torrent
   # the ActiveRecord Model Torrent and the 
   # XMLRPC Client/RTorrent wrapper
 
-  class RTorrentProxy
+  class RTorrent < XMLRPC::ClientS
+    Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
+
+    class << self
+      def offline!
+        @offline = true
+      end
+      def offline?
+        @offline == true
+      end
+      def online!
+        @offline = nil
+      end
+
+    end
 
     class NoRemoteMethodError < ::NoMethodError; end
 
-    def self.offline!
-      @offline = true
-    end
-    def self.offline?
-      @offline == true
-    end
-    def self.online!
-      @offline = nil
+    SCGIPath = '/RPC2'
+
+    def new_socket(socket_path, async)
+      #UNIXSocket.new(info.to_path)
+      SCGI::WrappedSocket.new( UNIXSocket.new(socket_path.to_path), SCGIPath )
     end
 
-    # the XMLRPC interface to the rtorrent process
-    def self.remote
-      @@rtorrent ||= RTorrent.new
+    def remote_methods
+      @remote_methods ||= call 'system.listMethods'
     end
 
-    def self.call(*a, &block)
-      unless offline?
-        remote.call *a, &blk
+    def remote_respond_to?(meth)
+      remote_methods.include? meth.to_s
+    end
+
+    def running?
+      !remote_methods.empty? # initialize will fail earlier
+    end
+
+    def call(*a, &block)
+      unless self.class.offline?
+        super
       else
         Rails.logger.debug { "cannot call RTorrent because it was switched offline" }
       end
-    end
-
-    def remote
-      raise "nostubby"
-      self.class.remote
     end
 
 
@@ -71,30 +94,37 @@ class Torrent
       @model = model    # the ActiveRecord::Base
     end
 
-    def method_missing(meth,*args,&blk)
-      mapped = map_method_name(meth)
-      if remote.remote_respond_to?(mapped)
-        result = call_with_model(mapped, *args, &block)
-        if meth.ends_with?('?')
+    def respond_to_missing?(meth, include_private)
+      Methods.include?(meth.to_sym) || super
+    end
+
+    def method_missing(meth, *args, &block)
+      if respond_to_missing?(meth, false)
+        mapped = map_method_name(meth)
+        result = call_with_torrent(mapped, *args, &block)
+        if meth =~ /\?$/ # cast booleans
           result > 0
         else
           result
         end
       else
-        raise NoRemoteMethodError, "RTorrent does not respond to: #{meth}"
+        super
       end
     end
 
-    def respond_to?(meth)
-      remote.remote_respond_to?( map_method_name(meth) )
+    # load the path into rtorrent
+    def load(torrent)
+      call_remote 'load', torrent.path
     end
 
-    # load the path into rtorrent
-    def load(path)
-      call_remote 'load', path
-    end
 
     private
+    def call_with_torrent(meth, model, *args, &blk)
+      hsh = model.info_hash rescue nil
+      raise TorrentHasNoInfoHash if hash.blank?
+      call meth, hsh, *args, &blk
+    end
+
     def map_method_name(meth)
       case meth
       when /^(.+)=$/    # setters
@@ -106,16 +136,6 @@ class Torrent
       else              # getters
         "d.get_#{meth}"
       end
-    end
-
-    def call_with_model(m,*args,&blk)
-      hsh = model.info_hash rescue nil
-      raise TorrentHasNoInfoHash if hash.blank?
-      call_remote m, hsh, *args, &blk
-    end
-
-    def call_remote(*a, &blk)
-      self.class.call(*a, &block)
     end
   end
 end

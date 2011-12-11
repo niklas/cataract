@@ -1,7 +1,7 @@
 module RTorrentSpecHelper
 
   def rtorrent_socket_path
-    Rails.root/'tmp'/'sockets'/'rtorrent'
+    Rails.root/'tmp'/'sockets'/'rtorrent_test'
   end
 
   def start_rtorrent(seconds=5)
