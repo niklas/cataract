@@ -12,7 +12,7 @@ FactoryGirl.define do
 
     after_build do |directory|
       if directory.path.relative?
-        directory.path = FileSystemSpecHelper.rootfs/directory.path
+        directory.path = FileSystem.rootfs/directory.path
       end
     end
   end

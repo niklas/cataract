@@ -28,3 +28,11 @@ After '@fakefs' do
   FakeFS.deactivate!
 end
 
+require Rails.root/'spec/support/filesystem'
+
+Given /^the file for #{capture_model} exists$/ do |m|
+  FileSystem.create_file model!(m).path
+end
+
+
+

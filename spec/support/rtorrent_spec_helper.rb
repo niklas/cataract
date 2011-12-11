@@ -38,4 +38,6 @@ module RTorrentSpecHelper
 
 end
 
-include RTorrentSpecHelper
+RSpec.configure do |config|
+  config.include RTorrentSpecHelper
+end

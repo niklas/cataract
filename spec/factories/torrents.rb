@@ -20,6 +20,11 @@ FactoryGirl.define do
     end
 
     factory :torrent_with_file do
+      info_hash nil
+      filename 'please-use-a-sub-factory.torrent'
+      after_build do |torrent|
+        FileSystem.create_file torrent.path
+      end
       # btmakemetafile tails.png http://127.0.0.1:6969/announce --target single.torrent
       factory :torrent_with_picture_of_tails do
         filename 'single.torrent'
