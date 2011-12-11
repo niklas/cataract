@@ -19,32 +19,6 @@ class RTorrent < XMLRPC::ClientS
     SCGI::WrappedSocket.new( UNIXSocket.new(socket_path.to_path), SCGIPath )
   end
 
-  def old_call *a 
-    tries = 1
-    begin
-      tries += 1
-      @rpc.call *a
-    rescue RuntimeError => e
-      case e.message
-      when /HTTP-Error: 500 Internal Server Error/
-        raise NotReachable, 'Error 500 in the HTTP gateway - maybe rtorrent is not running?'
-      when /HTTP-Error: 404 Not Found/
-        raise NotReachable, 'Error 404 in the HTTP gateway - maybe rtorrent is not running?'
-      else
-        raise e
-      end
-    rescue XMLRPC::FaultException => e
-      if e.message =~ /Could not find info-hash./
-        raise TorrentNotRunning, 'this torrent is not being downloaded currently'
-      else
-        raise Exception, e.message
-      end
-    rescue Errno::EPIPE
-      initialize
-      retry if tries < 5
-    end
-  end
-
   def remote_methods
     @remote_methods ||= call 'system.listMethods'
   end

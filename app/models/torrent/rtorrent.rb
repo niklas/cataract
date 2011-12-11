@@ -1,3 +1,5 @@
+require_dependency 'rtorrent'
+
 class Torrent
   class NotRunning < ActiveRecord::RecordInvalid; end
   MethodsForRTorrent = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
@@ -58,6 +60,7 @@ class Torrent
     end
 
     def remote
+      raise "nostubby"
       self.class.remote
     end
 
@@ -83,7 +86,7 @@ class Torrent
     end
 
     def respond_to?(meth)
-      remote.respond_to?( map_method_name(meth) )
+      remote.remote_respond_to?( map_method_name(meth) )
     end
 
     # load the path into rtorrent

@@ -41,19 +41,24 @@ describe Torrent do
       Torrent::RTorrentProxy.should be_offline
     end
 
+    it "uses configured socket path"
+
 
     context "for torrent" do
-      let(:torrent) { mock('Torrent') }
+      let(:torrent)  { mock('Torrent') }
+      let(:rtorrent) { mock('RTorrent') }
       let(:proxy) do
-        Torrent::RTorrentProxy.new(torrent)
+        Torrent::RTorrentProxy.new(torrent).tap do |proxy|
+          proxy.stub(:remote).and_return(rtorrent)
+        end
       end
 
       let(:torrent_methods) { Torrent::MethodsForRTorrent }
-      #it "should responded to hardcoded methods" do
-      #  torrent_methods.each do |meth|
-      #    proxy.should respond_to(meth)
-      #  end
-      #end
+      it "should responded to hardcoded methods" do
+        torrent_methods.each do |meth|
+          proxy.should respond_to(meth)
+        end
+      end
     end
   end
 
