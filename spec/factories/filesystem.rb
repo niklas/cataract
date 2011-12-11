@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :directory do
     sequence(:name) { |i| "Directory ##{i}" }
-    sequence(:path) { |i| "/tmp/directory_#{i}" }
+    sequence(:path) { |i| "directory_#{i}" }
     watched false
 
     factory :target # to move
@@ -10,8 +10,10 @@ FactoryGirl.define do
       auto_create true
     end
 
-    after_create do |directory|
-      directory.reload # force serialization
+    after_build do |directory|
+      if directory.path.relative?
+        directory.path = FileSystemSpecHelper.rootfs/directory.path
+      end
     end
   end
 

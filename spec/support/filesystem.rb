@@ -1,4 +1,6 @@
 module FileSystemSpecHelper
+  extend self
+
   def file_factory_path
     Rails.root/'spec'/'factories'/'files'
   end
