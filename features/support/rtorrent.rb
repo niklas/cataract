@@ -1,3 +1,3 @@
 Before do
-  RTorrentProxy.stub_offline!
+  Torrent::RTorrentProxy.offline!
 end

@@ -3,11 +3,15 @@ require 'rtorrent'
 
 describe RTorrent do
   it { described_class.should < XMLRPC::Client }
+  let(:rtorrent) do
+    described_class.new(rtorrent_socket_path)
+  end
+
+  it "should throw error if cannot connect" do
+    expect { rtorrent.remote_methods }.to raise_error
+  end
 
   context "socket connection to rtorrent binary" do
-    let(:rtorrent) do
-      described_class.new(rtorrent_socket_path)
-    end
     before { start_rtorrent }
     after  { stop_rtorrent }
 
