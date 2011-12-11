@@ -87,13 +87,6 @@ class Torrent
       end
     end
 
-
-    attr_reader :model
-
-    def initialize(model)
-      @model = model    # the ActiveRecord::Base
-    end
-
     def respond_to_missing?(meth, include_private)
       Methods.include?(meth.to_sym) || super
     end
@@ -119,10 +112,10 @@ class Torrent
 
 
     private
-    def call_with_torrent(meth, model, *args, &blk)
-      hsh = model.info_hash rescue nil
-      raise TorrentHasNoInfoHash if hash.blank?
-      call meth, hsh, *args, &blk
+    def call_with_torrent(meth, torrent, *args, &blk)
+      hash = torrent.info_hash rescue nil
+      raise Torrent::HasNoInfoHash if hash.blank?
+      call meth, hash, *args, &blk
     end
 
     def map_method_name(meth)

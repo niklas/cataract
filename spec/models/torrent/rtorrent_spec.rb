@@ -86,6 +86,15 @@ describe Torrent::RTorrent do
       end
     end
 
+    it "should throw error when torrent has no info hash" do
+      torrent_without_info_hash = mock 'Torrent', :info_hash => nil
+      expect { proxy.up_rate(torrent_without_info_hash) }.to raise_error(Torrent::HasNoInfoHash)
+    end
+
+    it "should throw error if passed model does not respond to info_hash" do
+      expect { proxy.up_rate("<no torrent>") }.to raise_error(Torrent::HasNoInfoHash)
+    end
+
     context "calling getters" do
       [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes].each do |getter|
         it "should use info hash for #{getter}" do
