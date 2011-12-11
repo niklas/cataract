@@ -46,7 +46,7 @@ end
 # what to watch? what indicates a bored developer?
 guard 'shell' do
   watch('.git/HEAD') do |m|
-    `bundle exec rake notes | tee tmp/TODO`
+    `bundle exec notes --colour | tee tmp/TODO`
   end
 end
 
