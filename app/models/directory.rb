@@ -79,6 +79,8 @@ class Directory < ActiveRecord::Base
   validates_each :path do |record, attr, value|
     record.errors.add attr, "is not absolute" unless value.absolute?
   end
+  validates :path, :uniqueness => true
+
 
   def self.for_series
     find_by_name('Serien')
