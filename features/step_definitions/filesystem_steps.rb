@@ -1,10 +1,10 @@
 Before '@fakefs' do
   FileSystem.precache_files!
-  FakeFS.activate!
+  FileSystem.enable_fakefs_on_demand!
 end
 
 After '@fakefs' do
-  FakeFS.deactivate!
+  FileSystem.disable_fakefs_on_demand!
 end
 
 require Rails.root/'spec/support/filesystem'

@@ -6,18 +6,22 @@ module FileSystem
 
   def create_file(path)
     create_directory path.parent
-    if FileUtils == FakeFS::FileUtils
-      File.open(path, 'w') do |file|
-        file.write precached_files[ path.basename.to_s ] ||
-          "a non-empty file with path: '#{path}'"
+    with_optional_fakefs do |enabled|
+      if enabled
+        File.open(path, 'w') do |file|
+          file.write precached_files[ path.basename.to_s ] ||
+            "a non-empty file with path: '#{path}'"
+        end
+      else
+        FileUtils.copy file_factory_path/path.basename, path
       end
-    else
-      FileUtils.copy file_factory_path/path.basename, path
     end
   end
 
   def create_directory(path)
-    FileUtils.mkdir_p path
+    with_optional_fakefs do
+      FileUtils.mkdir_p path
+    end
   end
 
   def rootfs
@@ -47,6 +51,24 @@ module FileSystem
 
   def precached_files
     @precached_files
+  end
+
+  def with_optional_fakefs
+    if @fakefs
+      FakeFS do
+        yield(true)
+      end
+    else
+      yield(false)
+    end
+  end
+
+  def enable_fakefs_on_demand!
+    @fakefs = true
+  end
+
+  def disable_fakefs_on_demand!
+    @fakefs = false
   end
 end
 
