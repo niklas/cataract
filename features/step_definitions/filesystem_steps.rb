@@ -1,12 +1,3 @@
-Before '@fakefs' do
-  FileSystem.precache_files!
-  FileSystem.enable_fakefs_on_demand!
-end
-
-After '@fakefs' do
-  FileSystem.disable_fakefs_on_demand!
-end
-
 require Rails.root/'spec/support/filesystem'
 
 Given /^the file for #{capture_model} exists$/ do |m|

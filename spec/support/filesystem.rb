@@ -86,8 +86,7 @@ RSpec.configure do |config|
   end
 end
 
-if defined?(World)
-
+if respond_to?(:Before)
   Before '@rootfs' do
   end
 
@@ -97,5 +96,16 @@ if defined?(World)
   After do
     FileSystem.clear_filesystem!
   end
+
+  Before '@fakefs' do
+    FileSystem.precache_files!
+    FileSystem.enable_fakefs_on_demand!
+  end
+
+  After '@fakefs' do
+    FileSystem.disable_fakefs_on_demand!
+    FakeFS::FileSystem.clear
+  end
+
 end
 
