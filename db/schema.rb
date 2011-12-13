@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111211011113) do
+ActiveRecord::Schema.define(:version => 20111213172846) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20111211011113) do
     t.integer  "updated_by"
     t.integer  "content_directory_id"
     t.integer  "directory_id"
+    t.string   "content_path_infix"
   end
 
   add_index "torrents", ["content_directory_id"], :name => "index_torrents_on_content_directory_id"
