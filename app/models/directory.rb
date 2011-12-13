@@ -12,6 +12,7 @@
 #
 
 class Directory < ActiveRecord::Base
+  has_ancestry
 
   after_save :create_on_filesystem, :on => :create, :if => :auto_create?
   attr_accessor :auto_create
@@ -40,12 +41,11 @@ class Directory < ActiveRecord::Base
     [name,path.to_s].join(' - ')
   end
 
-  def subdirs
-    Dir[path + '/*'].
-      select { |dir| File.directory? dir }.
-      map { |dir| dir.split('/').last }.
-      compact.
-      sort || []
+  def sub_directories
+    glob('*')
+      .select { |dir| File.directory? dir }
+      .sort
+      .map    { |dir| ::Pathname.new(dir) }
   end
 
   def subdir_names
@@ -67,6 +67,8 @@ class Directory < ActiveRecord::Base
     end
   end
 
+  # the ancestry gem defines a path method to
+  alias_method :ancestry_path, :path
   serialize :path, Pathname.new
   def path=(new_path)
     if new_path.is_a?(::Pathname)
@@ -74,6 +76,9 @@ class Directory < ActiveRecord::Base
     else
       super ::Pathname.new(new_path.to_s)
     end
+  end
+  def path
+    read_attribute(:path)
   end
 
   validates_each :path do |record, attr, value|

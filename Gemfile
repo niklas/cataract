@@ -62,3 +62,4 @@ gem 'rubytorrent-allspice'
 
 gem 'scgi'
 gem 'xmlrpcs'
+gem 'ancestry'

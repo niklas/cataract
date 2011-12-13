@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213173732) do
+ActiveRecord::Schema.define(:version => 20111213190451) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(:version => 20111213173732) do
     t.datetime "updated_at"
     t.boolean  "show_sub_dirs",                 :default => false
     t.boolean  "watched"
+    t.string   "ancestry"
   end
+
+  add_index "directories", ["ancestry"], :name => "index_directories_on_ancestry"
 
   create_table "feeds", :force => true do |t|
     t.string   "url",        :limit => 2048

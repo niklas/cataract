@@ -46,6 +46,8 @@ GEM
       multi_json (~> 1.0)
     acts_as_list (0.1.4)
     addressable (2.2.6)
+    ancestry (1.2.4)
+      activerecord (>= 2.2.2)
     apotomo (1.2.1)
       cells (>= 3.6.7)
       hooks (~> 0.2.0)
@@ -283,6 +285,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list
+  ancestry
   apotomo (~> 1.2.1)
   cancan
   capistrano
