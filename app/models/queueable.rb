@@ -46,6 +46,16 @@ module Queueable
     true
   end
 
+  # TODO move away
+  def work!
+    work
+  #rescue RuntimeError => e
+  #  STDERR.puts("#{self.class} went wrong: #{e.message}. #{e.backtrace}")
+  #ensure
+  #  STDERR.puts("done")
+  end
+
+
   private
 
   def notify

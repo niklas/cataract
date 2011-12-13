@@ -1,9 +1,11 @@
-class Maintenance < ActiveRecord::Base
-  self.abstract_class = true
+module Maintenance
+  class Base < ActiveRecord::Base
+    set_table_name 'maintenances'
+    include Queueable
 
-  include Queueable
 
-  def run
-    raise NotImplemented, "implement #{self.class}#run"
+    def work
+      raise NotImplemented, "implement #{self.class}#run"
+    end
   end
 end

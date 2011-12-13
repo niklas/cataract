@@ -36,6 +36,7 @@ end
 guard 'cucumber', :cli => "--drb" do
   watch(%r{^features/.+\.feature$})
   watch(%r{^app/(controllers|widgets)})     { "features" }
+  watch(%r{^app/models/maintenance})        { "features/maintenance" }
   watch(%r{^spec/support/.+$})              { 'features' }
   watch(%r{^spec/factories/.+$})            { 'features' }
   watch(%r{^features/step_definitions/filesystem_steps.rb$})  { 'features -t @fakefs,@rootfs' }

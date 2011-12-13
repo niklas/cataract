@@ -13,7 +13,7 @@ Feature: recognize torrents
         | type | path                            |
         | file | /media/torrents/oneiric.torrent |
         | file | /media/else/natty.torrent       |
-     When the torrent syncer runs
+     When the Recognizer runs
      Then a torrent should exist with filename: "oneiric.torrent"
       And directory "torrents" should be the torrent's directory
       And the torrent's info_hash should not be blank

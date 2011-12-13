@@ -1,7 +1,3 @@
-When /^the torrent syncer runs$/ do
-  Torrent.sync
-end
-
 Before '@fakefs' do
   FileSystem.precache_files!
   FakeFS.activate!
