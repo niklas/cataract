@@ -34,3 +34,20 @@ Then /^the (file|directory) "([^"]+)" should not exist on disk$/ do |type, path|
   path.should_not send(:"exist_as_#{type}")
 end
 
+# deserialize columns. [foo/bar,baz] => ["foo/bar", "baz"]
+%w(content_filenames).each do |column|
+  Transform /^table:(?:.*,)?#{column}(?:,.*)?$/ do |table|
+    table.map_column!(column) do |serialized|
+      if serialized.is_a?(Array)
+        serialized # this transform is executed twice?!
+      else
+        if serialized =~ /^\[(.*)\]$/
+          $1.split(',').map(&:strip)
+        else
+          serialized
+        end
+      end
+    end
+  end
+end
+

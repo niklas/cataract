@@ -180,11 +180,6 @@ class Torrent
     !self[:content_filenames].blank?
   end
 
-  def content_filenames
-    @content_filenames ||= YAML.load(self[:content_filenames])
-  rescue TypeError
-  end
-
-
+  serialize :content_filenames, Array
  
 end
