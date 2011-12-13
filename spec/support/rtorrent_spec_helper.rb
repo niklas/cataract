@@ -15,6 +15,8 @@ module RTorrentSpecHelper
           sleep 0.1
         end
       end
+      Torrent.reset_remote!
+      Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
     end
   rescue Timeout::Error => e
     STDERR.puts "could not start rtorrent, commands:\n#{rtorrent_command.inspect}"
