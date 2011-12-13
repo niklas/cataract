@@ -20,7 +20,7 @@ Then /^the following filesystem structure should be missing on disk:$/ do |table
   end
 end
 
-Then /^the following filesystem structure should exist on disk:$/ do |table|
+Then /^the following filesystem structure should (?:still )?exist on disk:$/ do |table|
   table.hashes.each do |row|
     step %Q~the #{row['type']} "#{row['path']}" should exist on disk~
   end
