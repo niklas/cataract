@@ -48,7 +48,9 @@ module Queueable
 
   # TODO move away
   def work!
+    logger.debug { "#{self.class} working..." }
     work
+    logger.debug { "#{self.class} finished" }
   #rescue RuntimeError => e
   #  STDERR.puts("#{self.class} went wrong: #{e.message}. #{e.backtrace}")
   #ensure
