@@ -96,7 +96,7 @@ describe Queueable do
         end
       end
 
-      content "#work!" do
+      context "#work!" do
         it "should provide saveguard from exceptions"
       end
     end
