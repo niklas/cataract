@@ -1,26 +1,9 @@
-Given /^the following files exist on the filesystem:$/ do |table|
-  table.hashes.each do |row|
-    if path = row['path']
-      FileUtils.mkdir_p File.dirname(path)
-      File.open(path, 'w') do |file|
-        file.write @files[ row['source'] ] ||
-          "a non-empty file with path: '#{path}'"
-      end
-    end
-  end
-end
-
 When /^the torrent syncer runs$/ do
   Torrent.sync
 end
 
 Before '@fakefs' do
-  I18n.translate(:"warmup.fakefs")
-  @files = Dir[ Rails.root.join('spec', 'factories', 'files', '*') ].inject({}) do |files, path|
-    files[ File.basename(path) ] = File.read(path)
-    files
-  end
-  Rails.logger.debug { "precached #{@files.count} files" }
+  FileSystem.precache_files!
   FakeFS.activate!
 end
 
@@ -31,8 +14,36 @@ end
 require Rails.root/'spec/support/filesystem'
 
 Given /^the file for #{capture_model} exists$/ do |m|
-  FileSystem.create_file model!(m).path
+  step %Q~the file "#{model!(m).path}" exists on disk~
 end
 
+Given /^the following filesystem structure exists on disk:$/ do |table|
+  table.hashes.each do |row|
+    step %Q~the #{row['type']} "#{row['path']}" exists on disk~
+  end
+end
 
+Given /^the (file|directory) "([^"]+)" exists on disk$/ do |type, path|
+  FileSystem.send(:"create_#{type}", Pathname.new(path) )
+end
+
+Then /^the following filesystem structure should be missing on disk:$/ do |table|
+  table.hashes.each do |row|
+    step %Q~the #{row['type']} "#{row['path']}" should not exist on disk~
+  end
+end
+
+Then /^the following filesystem structure should exist on disk:$/ do |table|
+  table.hashes.each do |row|
+    step %Q~the #{row['type']} "#{row['path']}" should exist on disk~
+  end
+end
+
+Then /^the (file|directory) "([^"]+)" should exist on disk$/ do |type, path|
+  path.should send(:"exist_as_#{type}")
+end
+
+Then /^the (file|directory) "([^"]+)" should not exist on disk$/ do |type, path|
+  path.should_not send(:"exist_as_#{type}")
+end
 

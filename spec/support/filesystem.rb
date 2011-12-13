@@ -6,7 +6,14 @@ module FileSystem
 
   def create_file(path)
     create_directory path.parent
-    FileUtils.copy file_factory_path/path.basename, path
+    if FileUtils == FakeFS::FileUtils
+      File.open(path, 'w') do |file|
+        file.write precached_files[ path.basename.to_s ] ||
+          "a non-empty file with path: '#{path}'"
+      end
+    else
+      FileUtils.copy file_factory_path/path.basename, path
+    end
   end
 
   def create_directory(path)
@@ -27,6 +34,19 @@ module FileSystem
         raise "strange Rails.root: #{Rails.root} vs #{root}" 
       end
     end
+  end
+
+  def precache_files!
+    I18n.translate(:"provoke.loading.of.real.translations")
+    @precached_files = Dir[ file_factory_path/'*' ].inject({}) do |files, path|
+      files[ File.basename(path) ] = File.read(path)
+      files
+    end
+    Rails.logger.debug { "precached #{@precached_files.length} files" }
+  end
+
+  def precached_files
+    @precached_files
   end
 end
 
