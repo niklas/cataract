@@ -58,11 +58,6 @@ class Torrent
     @content ||= Content.new(self)
   end
 
-  # minimal path for content. Path has at least one more component than its #directory
-  def content_path
-    content.path
-  end
-
   def content_exists?
     !content_path.blank? && File.exists?(content_path)
   end

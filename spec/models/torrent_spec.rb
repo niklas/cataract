@@ -81,8 +81,9 @@ describe Torrent do
           archive.path/'tails.png'
         ]
       end
-      it "content_path should point to file" do
-        torrent.content_path.should == archive.path/'tails.png'
+      # FIXME put this on the others in own torrent/content_spec
+      it "content.path should point to file" do
+        torrent.content.path.should == archive.path/'tails.png'
       end
     end
 
@@ -102,8 +103,9 @@ describe Torrent do
           archive.path/'content'/'tails.png'
         ]
       end
-      it "content_path should point to directory" do
-        torrent.content_path.should == archive.path/'content'
+      # FIXME put this on the others in own torrent/content_spec
+      it "content.path should point to directory" do
+        torrent.content.path.should == archive.path/'content'
       end
     end
 
