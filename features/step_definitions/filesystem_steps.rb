@@ -27,11 +27,15 @@ Then /^the following filesystem structure should (?:still )?exist on disk:$/ do 
 end
 
 Then /^the (file|directory) "([^"]+)" should exist on disk$/ do |type, path|
-  path.should send(:"exist_as_#{type}")
+  FileSystem.with_optional_fakefs do
+    path.should send(:"exist_as_#{type}")
+  end
 end
 
 Then /^the (file|directory) "([^"]+)" should not exist on disk$/ do |type, path|
-  path.should_not send(:"exist_as_#{type}")
+  FileSystem.with_optional_fakefs do
+    path.should_not send(:"exist_as_#{type}")
+  end
 end
 
 # deserialize columns. [foo/bar,baz] => ["foo/bar", "baz"]
