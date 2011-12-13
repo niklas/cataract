@@ -13,8 +13,10 @@ Feature: create subdirectories
        | directory | /media/Serien/Show 1 |
        | directory | /media/Serien/Show 2 |
        | directory | /media/Serien/Show 3 |
-    When the SubDirectoryCreator runs
-     Then the following directories should exist:
+      And 1 directories should exist
+     When the SubDirectoryCreator runs
+     Then 4 directories should exist
+      And the following directories should exist:
        | path                 | show_sub_dirs |
        | /media/Serien        | true          |
        | /media/Serien/Show 1 | false         |
