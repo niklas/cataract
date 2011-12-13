@@ -5,7 +5,7 @@ module Maintenance
 
 
     def work
-      raise NotImplementedError, "implement #{self.class}#run"
+      raise NotImplementedError, "implement #{self.class}#work"
     end
   end
 end
