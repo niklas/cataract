@@ -26,8 +26,7 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', "~> 1.2.1"
-  gem 'cucumber', "~> 1.1.4"
+  gem 'cucumber-rails', "~> 1.2.0"
   gem 'rspec-rails', "~> 2.7.0"
   gem "pickle"
   gem "timecop"
