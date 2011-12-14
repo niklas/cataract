@@ -12,7 +12,8 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch('features/support/env.rb')
 end unless ENV['NO_SPORK']
 
-guard 'rspec', :cli => '--drb --color', :version => 2 do
+#                                                                             V --no-drb => skip spork to run simplecov 
+guard 'rspec', :cli => '--drb --color', :version => 2, :run_all => { :cli => "--color" } do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -32,8 +33,8 @@ guard 'rspec', :cli => '--drb --color', :version => 2 do
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
 end
 
-
-guard 'cucumber', :cli => "--drb" do
+#                                                         V --no-drb skip spork to run simplecov 
+guard 'cucumber', :cli => "--drb", :run_all => { :cli => "--format progress" } do 
   watch(%r{^features/.+\.feature$})
   watch(%r{^app/(controllers|widgets)})     { "features" }
   watch(%r{^app/models/maintenance/(.+)\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
