@@ -10,7 +10,6 @@ group :assets do
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
   gem "therubyracer", "~> 0.9.2"
-  gem "jquery_mobile-rails"
   gem "compass", '~> 0.11.5'
 end
 
@@ -65,3 +64,4 @@ gem 'rubytorrent-allspice'
 gem 'scgi'
 gem 'xmlrpcs'
 gem 'ancestry'
+gem "jquery_mobile-rails", :git => 'git://github.com/niklas/jquery_mobile-rails.git'
