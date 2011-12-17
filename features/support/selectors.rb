@@ -18,6 +18,10 @@ module HtmlSelectorsHelpers
     when "the footer"
       "div[data-role='footer']"
 
+    # TODO move to jquery_mobile
+    when /^flash (notice|alert)$/
+      "#flash .#{$1}"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
