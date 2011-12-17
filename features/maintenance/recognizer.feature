@@ -9,11 +9,11 @@ Feature: recognize torrents
         | directory | path            | watched |
         | torrents  | /media/torrents | true    |
         | else      | /media/else     | false   |
-      And the following files exist on the filesystem:
-        | path                            | source          |
-        | /media/torrents/oneiric.torrent | oneiric.torrent |
-        | /media/else/tatc.torrent        | natty.torrent   |
-     When the torrent syncer runs
+      And the following filesystem structure exists on disk:
+        | type | path                            |
+        | file | /media/torrents/oneiric.torrent |
+        | file | /media/else/natty.torrent       |
+     When the Recognizer runs
      Then a torrent should exist with filename: "oneiric.torrent"
       And directory "torrents" should be the torrent's directory
       And the torrent's info_hash should not be blank

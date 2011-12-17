@@ -95,6 +95,10 @@ describe Queueable do
           expect { model.locked }.not_to raise_error
         end
       end
+
+      context "#work!" do
+        it "should provide saveguard from exceptions"
+      end
     end
 
   end

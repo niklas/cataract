@@ -5,12 +5,31 @@ module FileSystem
   end
 
   def create_file(path)
+    path = relativate path
     create_directory path.parent
-    FileUtils.copy file_factory_path/path.basename, path
+    with_optional_fakefs do |enabled|
+      if enabled
+        File.open(path, 'w') do |file|
+          file.write precached_files[ path.basename.to_s ] ||
+            sample_content(path)
+        end
+      else
+        if (file_factory_path/path.basename).exist?
+          FileUtils.copy file_factory_path/path.basename, path
+        else
+          File.open(path, 'w') do |file|
+            file.write sample_content(path)
+          end
+        end
+      end
+    end
   end
 
   def create_directory(path)
-    FileUtils.mkdir_p path
+    path = relativate path
+    with_optional_fakefs do
+      FileUtils.mkdir_p path
+    end
   end
 
   def rootfs
@@ -28,6 +47,50 @@ module FileSystem
       end
     end
   end
+
+  def precache_files!
+    I18n.translate(:"provoke.loading.of.real.translations")
+    @precached_files = Dir[ file_factory_path/'*' ].inject({}) do |files, path|
+      files[ File.basename(path) ] = File.read(path)
+      files
+    end
+    Rails.logger.debug { "precached #{@precached_files.length} files" }
+  end
+
+  def precached_files
+    @precached_files
+  end
+
+  def with_optional_fakefs
+    if @fakefs
+      FakeFS do
+        yield(true)
+      end
+    else
+      yield(false)
+    end
+  end
+
+  def enable_fakefs_on_demand!
+    @fakefs = true
+  end
+
+  def disable_fakefs_on_demand!
+    @fakefs = false
+  end
+
+  def relativate(path)
+    path = Pathname.new(path) unless path.is_a?(Pathname)
+    if path.relative?
+      rootfs/path
+    else
+      path
+    end
+  end
+
+  def sample_content(path=nil)
+    "a non-empty file with path: '#{path}'"
+  end
 end
 
 RSpec::Matchers.define :exist_as_directory do
@@ -44,8 +107,7 @@ RSpec.configure do |config|
   end
 end
 
-if defined?(World)
-
+if respond_to?(:Before)
   Before '@rootfs' do
   end
 
@@ -55,5 +117,16 @@ if defined?(World)
   After do
     FileSystem.clear_filesystem!
   end
+
+  Before '@fakefs' do
+    FileSystem.precache_files!
+    FileSystem.enable_fakefs_on_demand!
+  end
+
+  After '@fakefs' do
+    FileSystem.disable_fakefs_on_demand!
+    FakeFS::FileSystem.clear
+  end
+
 end
 

@@ -9,12 +9,14 @@ module RTorrentSpecHelper
 
     if @rtorrent_pid = Process.spawn(*rtorrent_command)
       Process.detach @rtorrent_pid
-      Rails.logger.debug "spawned rtorrent pid:#{@rtorrent_pid}, waiting #{seconds}s"
+      Rails.logger.debug "spawned rtorrent with pid:#{@rtorrent_pid}, waiting #{seconds}s"
       Timeout.timeout(seconds) do
         while !rtorrent_socket_path.exist?
           sleep 0.1
         end
       end
+      Torrent.reset_remote!
+      Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
     end
   rescue Timeout::Error => e
     STDERR.puts "could not start rtorrent, commands:\n#{rtorrent_command.inspect}"
@@ -23,7 +25,9 @@ module RTorrentSpecHelper
 
   def stop_rtorrent
     if @rtorrent_pid
+      Rails.logger.debug "killing rtorrent with pid: #{@rtorrent_pid}"
       Process.kill 'TERM', @rtorrent_pid
+      @rtorrent_pid = nil
     end
   end
 

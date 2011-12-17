@@ -7,13 +7,13 @@ describe Directory do
 
   context "path" do
     it "should accept path as string and convert it to Pathname" do
-      directory = Factory :directory, :path => path
+      directory = create :directory, :path => path
       directory.reload
       directory.path.should be_a(Pathname)
       directory.path.should == pathname
     end
     it "serializes Pathname" do
-      directory = Factory :directory, :path => pathname
+      directory = create :directory, :path => pathname
       directory.path.should be_a(Pathname)
       directory.path.should == pathname
     end
@@ -22,6 +22,12 @@ describe Directory do
       directory = build :directory
       directory.path = 'tmp/lol'
       directory.should_not be_valid
+    end
+
+    it "cannot already exist in db" do
+      create :directory, path: '/there/can/be/only/one'
+      dir = build(:directory, path: '/there/can/be/only/one')
+      dir.should_not be_valid
     end
   end
 

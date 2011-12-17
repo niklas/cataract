@@ -45,6 +45,8 @@ group :test do
   gem "fakefs", :require => "fakefs/safe"
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
   gem "rspec-cells"
+
+  gem 'simplecov', :require => false
 end
 
 gem "pg"
@@ -62,3 +64,4 @@ gem 'rubytorrent-allspice'
 
 gem 'scgi'
 gem 'xmlrpcs'
+gem 'ancestry'

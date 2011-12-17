@@ -1,38 +1,71 @@
-Given /^the following files exist on the filesystem:$/ do |table|
+require Rails.root/'spec/support/filesystem'
+
+Given /^the file for #{capture_model} exists$/ do |m|
+  step %Q~the file "#{model!(m).path}" exists on disk~
+end
+
+Given /^the following filesystem structure exists on disk:$/ do |table|
   table.hashes.each do |row|
-    if path = row['path']
-      FileUtils.mkdir_p File.dirname(path)
-      File.open(path, 'w') do |file|
-        file.write @files[ row['source'] ] ||
-          "a non-empty file with path: '#{path}'"
+    step %Q~the #{row['type']} "#{row['path']}" exists on disk~
+  end
+end
+
+Given /^the (file|directory) "([^"]+)" exists on disk$/ do |type, path|
+  FileSystem.send(:"create_#{type}", Pathname.new(path) )
+end
+
+Then /^the following filesystem structure should be missing on disk:$/ do |table|
+  table.hashes.each do |row|
+    step %Q~the #{row['type']} "#{row['path']}" should not exist on disk~
+  end
+end
+
+Then /^the following filesystem structure should (?:still )?exist on disk:$/ do |table|
+  table.hashes.each do |row|
+    step %Q~the #{row['type']} "#{row['path']}" should exist on disk~
+  end
+end
+
+Then /^the (file|directory) "([^"]+)" should exist on disk$/ do |type, path|
+  FileSystem.with_optional_fakefs do
+    FileSystem.relativate(path).should send(:"exist_as_#{type}")
+  end
+end
+
+Then /^the (file|directory) "([^"]+)" should not exist on disk$/ do |type, path|
+  FileSystem.with_optional_fakefs do
+    FileSystem.relativate(path).should_not send(:"exist_as_#{type}")
+  end
+end
+
+# deserialize columns. [foo/bar,baz] => ["foo/bar", "baz"]
+%w(content_filenames).each do |column|
+  Transform /^table:(?:.*,)?#{column}(?:,.*)?$/ do |table|
+    table.map_column!(column) do |serialized|
+      if serialized.is_a?(Array)
+        serialized # this transform is executed twice?!
+      else
+        if serialized =~ /^\[(.*)\]$/
+          $1.split(',').map(&:strip)
+        else
+          serialized
+        end
       end
     end
   end
 end
 
-When /^the torrent syncer runs$/ do
-  Torrent.sync
-end
 
-Before '@fakefs' do
-  I18n.translate(:"warmup.fakefs")
-  @files = Dir[ Rails.root.join('spec', 'factories', 'files', '*') ].inject({}) do |files, path|
-    files[ File.basename(path) ] = File.read(path)
-    files
+Given /^the file "([^"]*)" is deleted$/ do |file|
+  if file.start_with?('/')
+    raise ArgumentError, "only relative paths please"
   end
-  Rails.logger.debug { "precached #{@files.count} files" }
-  FakeFS.activate!
+  if File.exist?(file)
+    FileUtils.rm(file)
+  end
 end
 
-After '@fakefs' do
-  FakeFS.deactivate!
+Then /^the file "([^"]*)" should contain exactly:$/ do |file, content|
+  file.should exist_as_file
+  File.read(file).should == content
 end
-
-require Rails.root/'spec/support/filesystem'
-
-Given /^the file for #{capture_model} exists$/ do |m|
-  FileSystem.create_file model!(m).path
-end
-
-
-

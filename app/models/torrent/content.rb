@@ -58,11 +58,6 @@ class Torrent
     @content ||= Content.new(self)
   end
 
-  # minimal path for content. Path has at least one more component than its #directory
-  def content_path
-    content.path
-  end
-
   def content_exists?
     !content_path.blank? && File.exists?(content_path)
   end
@@ -185,11 +180,6 @@ class Torrent
     !self[:content_filenames].blank?
   end
 
-  def content_filenames
-    @content_filenames ||= YAML.load(self[:content_filenames])
-  rescue TypeError
-  end
-
-
+  serialize :content_filenames, Array
  
 end
