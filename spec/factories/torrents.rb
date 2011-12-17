@@ -35,5 +35,15 @@ FactoryGirl.define do
         filename 'multiple.torrent'
       end
     end
+
+    after_build do |torrent|
+      unless torrent.content_path.blank?
+        path = Pathname.new(torrent.content_path)
+        if path.relative?
+          torrent.content_path = (FileSystem.rootfs/path).to_s
+        end
+      end
+    end
+
   end
 end

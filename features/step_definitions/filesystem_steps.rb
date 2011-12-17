@@ -28,13 +28,13 @@ end
 
 Then /^the (file|directory) "([^"]+)" should exist on disk$/ do |type, path|
   FileSystem.with_optional_fakefs do
-    path.should send(:"exist_as_#{type}")
+    FileSystem.relativate(path).should send(:"exist_as_#{type}")
   end
 end
 
 Then /^the (file|directory) "([^"]+)" should not exist on disk$/ do |type, path|
   FileSystem.with_optional_fakefs do
-    path.should_not send(:"exist_as_#{type}")
+    FileSystem.relativate(path).should_not send(:"exist_as_#{type}")
   end
 end
 
