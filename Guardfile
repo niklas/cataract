@@ -41,7 +41,7 @@ guard 'cucumber', :cli => "--drb", :run_all => { :cli => "--format progress" }, 
   watch(%r{^spec/support/.+$})              { 'features' }
   watch(%r{^spec/factories/.+$})            { 'features' }
   watch(%r{^features/step_definitions/filesystem_steps.rb$})  { 'features -t @fakefs,@rootfs' }
-  watch(%r{^app/models/.*(?:sync|file|content)})  { 'features -t @fakefs' }
+  watch(%r{^app/models/.*(?:sync|file|content)})  { 'features -t @fakefs,@rootfs' }
 #watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
 end
