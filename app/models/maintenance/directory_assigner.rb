@@ -6,7 +6,7 @@ class Maintenance::DirectoryAssigner < Maintenance::Base
       if dir
         torrent.content_directory = dir
         torrent.content_path_infix = infix.to_s
-        torrent.content_path = dir.path.to_s
+        torrent.content_path = nil
         torrent.save!
       end
     end

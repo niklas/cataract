@@ -15,9 +15,9 @@ Feature: compress content paths
        | Lindenstr | media/Serien/Lindenstr |
        | Tatort    | media/Serien/Tatort    |
      And the following torrents exist:
-       | torrent | title  | content_path           | content_path_infix | content_filenames         | content_directory     |
-       | T23x05  | T23x05 | media/Serien/Tatort    | Season23           | [Season23/Episode_5.mkv]  | directory "Tatort"    |
-       | L77x66  | L77x66 | media/Serien/Lindenstr | Season77           | [Season77/Episode_66.mkv] | directory "Lindenstr" |
+       | torrent | title  | content_path_infix | content_filenames         | content_directory     |
+       | T23x05  | T23x05 | Season23           | [Season23/Episode_5.mkv]  | directory "Tatort"    |
+       | L77x66  | L77x66 | Season77           | [Season77/Episode_66.mkv] | directory "Lindenstr" |
     When the ContentPathCompressor runs
     Then the following filesystem structure should exist on disk:
        | type | path                                           |
