@@ -1,3 +1,4 @@
+@rootfs
 Feature: compress content paths
   In order to find my way through 9001 gigaquods of pr0n
   As a horder
@@ -9,6 +10,7 @@ Feature: compress content paths
        | type | path                                                    |
        | file | media/Serien/Tatort/Season23/Season23/Episode_5.mkv     |
        | file | media/Serien/Lindenstr/Season77/Season77/Episode_66.mkv |
+      And the file "log/xbmc_updates.test.log" is deleted
      And the following directories exist:
        | directory | path                    |
        | Serien    | media/Serien           |
@@ -35,6 +37,9 @@ Feature: compress content paths
      And the directory "Lindenstr" should be the torrent "L77x66"'s content_directory
      And the torrent "L77x66"'s content_path should be ""
      And the torrent "L77x66"'s content_path_infix should be ""
+     And the file "log/xbmc_updates.test.log" should contain exactly:
+       """
+       UPDATE path SET strPath = replace(strPath, 'Season23/Season23', 'Season23') WHERE like('Season23/Season23', strPath);
+       UPDATE path SET strPath = replace(strPath, 'Season77/Season77', 'Season77') WHERE like('Season77/Season77', strPath);
 
-  @todo
-  Scenario: reflect path compression for changing "path" in xbmc
+       """

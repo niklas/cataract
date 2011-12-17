@@ -55,3 +55,17 @@ end
   end
 end
 
+
+Given /^the file "([^"]*)" is deleted$/ do |file|
+  if file.start_with?('/')
+    raise ArgumentError, "only relative paths please"
+  end
+  if File.exist?(file)
+    FileUtils.rm(file)
+  end
+end
+
+Then /^the file "([^"]*)" should contain exactly:$/ do |file, content|
+  file.should exist_as_file
+  File.read(file).should == content
+end
