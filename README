@@ -13,3 +13,10 @@ This version is not ready for production yet.
  * automatically download subscribed TV shows
  * mobile-friendly interface
  * out-of-box working installation procedure
+
+ == Installation Notes
+ The following will be implemented as puppet manifests, but for now we just note the specialities here
+
+ * uses ruby 1.9, preferrably 1.9.3
+ * must apply patch to support 64 bit integers in XMLRPC (i8)
+    rvm install 1.9.3-p0 config/deploy/patches/xmlrpclib-i8-support.patch
