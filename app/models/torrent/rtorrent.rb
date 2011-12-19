@@ -37,8 +37,17 @@ class Torrent
     Rails.root/'tmp'/'sockets'/'rtorrent'
   end
 
+  # rTorrent deletes the torrent file if removing a tied torrent, so we will
+  # only add a copy of our torrent to rtorrent. For this we will use
+  # #session_path
+  def session_path
+    path.to_path + '.running'
+  end
+
   def load!
-    remote.load! self
+    FileUtils.cp path, session_path
+    remote.load! session_path
+    remote.set_directory self, content_directory.path
   end
 
 
@@ -47,7 +56,7 @@ class Torrent
   # XMLRPC Client/RTorrent wrapper
 
   class RTorrent < XMLRPC::ClientS
-    Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?]
+    Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?, :start!]
 
     class << self
       def offline!
@@ -100,7 +109,7 @@ class Torrent
         mapped = map_method_name(meth)
         result = call_with_torrent(mapped, *args, &block)
         if meth =~ /\?$/ # cast booleans
-          result > 0
+          result.to_i > 0
         else
           result
         end
@@ -110,14 +119,38 @@ class Torrent
     end
 
     # load the path into rtorrent
-    def load!(torrent)
-      call 'load', torrent.path.to_s
+    def load!(path)
+      call 'load', path.to_s
     end
 
     # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
     #       (update rtorrent to 0.9?)
     def download_list(view='main')
       call 'download_list'
+    end
+
+    def set_directory(torrent, path)
+      call_with_torrent 'd.set_directory', torrent, path.to_s
+    end
+
+    def torrents
+      multicall({
+        :name             => "d.get_name=",
+        :size_bytes       => "d.get_size_bytes=",
+        :completed_bytes  => "d.get_completed_bytes=",
+        #:up_rate          => "d.get_up_rate=",
+        #:down_rate        => "d.get_down_rate=",
+        #:size_files       => "d.get_size_files=",
+        #:tracker_size     => "d.get_tracker_size=",
+        #:chunk_size       => "d.get_chunk_size=",
+        #:size_chunks      => "d.get_size_chunks=",
+        #:completed_chunks => "d.get_completed_chunks=",
+        #:ratio            => "d.get_ratio=",
+        :active           => "d.is_active=",
+        #:complete         => "d.get_complete=",
+        #:priority         => "d.get_priority=",
+        :hash             => "d.get_hash="
+      })
     end
 
 
@@ -138,6 +171,16 @@ class Torrent
         "d.is_#{$1}"
       else              # getters
         "d.get_#{meth}"
+      end
+    end
+
+    def multicall(mapping)
+      call('d.multicall', '', *mapping.values).map do |it|
+        {}.tap do |h|
+          mapping.keys.each_with_index do |meth,i|
+            h[meth] = it[i]
+          end
+        end
       end
     end
   end

@@ -3,6 +3,7 @@ Cataract::Application.routes.draw do
 
   resources :torrents do
     resource :move, :controller => :move
+    resource :transfer, :controller => :transfer, :only => [:create, :destroy]
   end
   root :to => 'torrents#index', :as => 'dashboard'
 
