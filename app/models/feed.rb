@@ -42,7 +42,8 @@ class Feed < ActiveRecord::Base
 
   before_validation :set_url_as_title
 
-  acts_as_taggable
+  # TODO tagging
+  # acts_as_taggable
 
   def fetchable?
     return false unless valid?

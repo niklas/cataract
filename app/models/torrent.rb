@@ -21,14 +21,6 @@
 #  content_path      :string(2048)  
 #
 
-require 'ftools'
-require 'fileutils_monkeypatch'
-require 'rubytorrent'
-require 'net/http'
-require 'uri'
-require 'rtorrent'
-require 'rtorrent_proxy'
-
 class Torrent < ActiveRecord::Base
   include FileUtils
   has_many :watchings, :dependent => :destroy
@@ -38,13 +30,14 @@ class Torrent < ActiveRecord::Base
   validates_uniqueness_of :filename, :unless => :remote?
   validates_length_of :filename, :in => 9..255, :unless => :remote?
   
-  validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
-  before_save :sync
-  before_validation :fix_filename
-  before_validation :sync_status!
-  stampable
+  # FIXME remove this insane stati code
+  # before_save :sync
+  # before_validation :fix_filename
+  # before_validation :sync_status!
+  # FIXME wtf is this?
+  #stampable
 
   def after_find
     check_if_status_is_up_to_date
@@ -54,23 +47,22 @@ class Torrent < ActiveRecord::Base
     stop! if running?
   end
 
-  acts_as_taggable
+  # TODO add tagging
+  # acts_as_taggable
 
-  concerned_with :states, :notifications, :remote, :content, :rtorrent, :syncing, :movie
+  concerned_with :states, :file, :notifications, :remote, :content, :rtorrent, :syncing, :movie, :search, :transfer
 
-  named_scope :invalid,
-    {:conditions => 'NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')' }
+  scope :invalid, where('NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')')
 
-  named_scope :include_everything,
-    {:include => [:tags]}
+  scope :include_everything, includes(:tags)
 
-  named_scope :watched_by, lambda {|user| {:include => :watchings, :conditions => ['watchings.user_id = ?', user.id]}}
+  def self.watched_by(user)
+    includes(:watchings).where('watchings.user_id = ?', user.id)
+  end
 
-  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
 
-  
-
-  has_fulltext_search :title, :description, :filename, :url, 'tags.name'
+  # TODO use psql tsearch
+  # has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 
   # aggregates
   def self.upload_rate
@@ -124,13 +116,6 @@ class Torrent < ActiveRecord::Base
     content_size * percent / 100
   end
 
-  def fullpath(wanted_state=nil)
-    wanted_state ||= current_state
-    return 'no filename' unless filename
-    return "bad status: #{status}" unless filepath_by_status(wanted_state)
-    filepath_by_status(wanted_state)
-  end
-
   # nice title 
   # 1) uses defined title or
   # 2) takes filename and
@@ -158,22 +143,6 @@ class Torrent < ActiveRecord::Base
       rstrip.lstrip
   end
 
-  def file_exists?(stat=self.current_state)
-    if self.filename
-      unless (path = fullpath(stat.to_sym)).blank?
-        return File.exists?(path)
-      end
-    end
-    false
-  end
-
-  after_destroy :remove_file
-
-  def remove_file
-    FileUtils.rm(fullpath) if file_exists?
-  rescue
-    true
-  end
 
   def before_destroy
     stop! if valid? and running?
@@ -227,6 +196,11 @@ class Torrent < ActiveRecord::Base
       :action => action,
       :level => level.to_s
     )
+  end
+
+  # TODO audit changes
+  def log(*)
+    Rails.logger.debug "disabled own logging"
   end
 
 end

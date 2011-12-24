@@ -1,3 +1,4 @@
+# TODO migrate to scss
 class StylesheetsController < ApplicationController
   before_filter :set_headers
   skip_before_filter :login_from_cookie
@@ -5,7 +6,6 @@ class StylesheetsController < ApplicationController
   before_filter :set_theme
   before_filter :set_default_theme
   after_filter  { |c| c.cache_page }
-  session :off
   layout nil
 
   private

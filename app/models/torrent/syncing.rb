@@ -10,7 +10,7 @@ class Torrent
       copy( real_path, fullpath(:archived) ) unless file_exists?(:archived)
       copy( real_path, fullpath )
     end
-  rescue TorrentNotRunning, TorrentHasNoInfoHash
+  rescue NotRunning, HasNoInfoHash
     false
   rescue Exception => e
     errors.add :filename, "^error while assure_file_in_archive: #{e.to_s}"
@@ -36,38 +36,22 @@ class Torrent
   #  * reads the hash if it is not already in the db
   #  * ..
   def self.sync
-    recognize_new
-    find_all_outdated.each do |t|
-      t.sync!
-      unless t.valid?
-        # FIXME beware!! check validations first
-        #t.destroy
-        logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
-      else
-        t.save
-      end
-    end
+    logger.debug { "sync start" }
+    #find_all_outdated.each do |t|
+    #  t.sync!
+    #  unless t.valid?
+    #    # FIXME beware!! check validations first
+    #    #t.destroy
+    #    logger.info "Torrent ##{t.id} seems to be invalid. We will destroy them! (Worf, 237x)"
+    #  else
+    #    t.save
+    #  end
+    #end
   end
   def self.find_all_outdated
     find(:all, 
          :conditions => ['synched_at IS NULL OR synched_at < ?', Time.now - SYNC_INTERVAL]
         )
-  end
-
-  # looks in the torrent_dir for new torrent files and creates them
-  def self.recognize_new
-    created = []
-    Dir[File.join(Settings.torrent_dir,'*.torrent')].each do |filepath|
-      filename = File.basename filepath
-      torrent = new(:filename => filename, :status => 'new')
-      if torrent.save
-        torrent.moveto(:archived)
-        torrent.finally_stop!
-        created << torrent 
-        torrent.start!
-      end
-    end
-    return created
   end
 
   # Looks into rtorrent's download_list and adds the running torrents to the db

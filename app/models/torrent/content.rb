@@ -2,6 +2,8 @@ require 'drb'
 class Torrent
   extend ActiveSupport::Memoizable
   class TorrentContentError < Exception; end
+
+  # TODO WTF is this for?
   def files_hierarchy
     return {} unless metainfo
     return {metainfo.name => metainfo} if metainfo.single?
@@ -18,31 +20,42 @@ class Torrent
     hier
   end
 
-  def set_metainfo
-    return unless metainfo
-    calculate_info_hash
-    self[:content_size] = if metainfo.single?
-      metainfo.length
-    else
-      metainfo.files.inject(0) { |sum, f| sum + f.length}
-    end
-    self[:content_filenames] = 
-      if metainfo.single?
-        [metainfo.name]
-      else
-        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
-      end
-  end
 
   # Here lies the content while it is being downloaded (default)
+  # FIXME respect #directory
   def working_path
     return '' unless metainfo
     File.join(Settings.torrent_dir,metainfo.name)
   end
 
-  # where to find the contents, either saved :content_path or #working_path
-  def content_path
-    self[:content_path] ||= working_path
+  class Content < Struct.new(:torrent)
+    def path
+      base_path.path/info.name
+    end
+
+    def base_path
+      torrent.content_directory
+    end
+
+    def info
+      torrent.metainfo
+    end
+
+    def files
+      if info.single?
+        [ path ]
+      else
+        info.files.map(&:path).flatten.sort.map do |file|
+          path/file
+        end
+      end
+    end
+  end
+
+  belongs_to :content_directory, :class_name => 'Directory'
+
+  def content
+    @content ||= Content.new(self)
   end
 
   def content_exists?
@@ -73,19 +86,22 @@ class Torrent
     return nil
   end
 
-  def metainfo
-    return @mii unless @mii.nil?
-    if !@mii and file_exists?
-      @mii = RubyTorrent::MetaInfo.from_location(fullpath).info
-      return @mii
+  # TODO remove or replace
+  def set_content_information
+    return unless metainfo
+    self[:content_size] = if metainfo.single?
+      metainfo.length
     else
-      errors.add :files, 'no metainfo found'
-      return
+      metainfo.files.inject(0) { |sum, f| sum + f.length}
     end
-  rescue # RubyTorrent::MetaInfoFormatError
-    # no UDP supprt yet
-    @mii = nil
+    self[:content_filenames] = 
+      if metainfo.single?
+        [metainfo.name]
+      else
+        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
+      end
   end
+
 
   def move_content_to target_dir
     begin
@@ -142,14 +158,6 @@ class Torrent
       false
     end
   end
-  def calculate_info_hash
-    return unless metainfo
-    metainfo.sha1.unpack('H*').first.upcase
-  end
-
-  def info_hash
-    self[:info_hash] ||= calculate_info_hash
-  end
 
   # for fuse
   def content_root
@@ -172,11 +180,6 @@ class Torrent
     !self[:content_filenames].blank?
   end
 
-  def content_filenames
-    @content_filenames ||= YAML.load(self[:content_filenames])
-  rescue TypeError
-  end
-
-
+  serialize :content_filenames, Array
  
 end

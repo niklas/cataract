@@ -1,0 +1,5 @@
+en:
+  helpers:
+    actions:
+      signin: "Sign in"
+      move: "Move"

@@ -1,0 +1,12 @@
+Crook
+=====
+
+A collection of helpers that niklas likes using
+
+Translated Links
+================
+
+   link_to '.target', url # => lookup "actions.target" through i18n to use as the name
+
+
+Copyright (c) 2011 [Niklas Hofer], released under the MIT license

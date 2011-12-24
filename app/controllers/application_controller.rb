@@ -1,18 +1,15 @@
 class ApplicationController < ActionController::Base
-  include AuthenticatedSystem
-  include Userstamp
-
-  before_filter :setup_lcars
-  #before_filter :login_from_cookie
-  before_filter :login_required
+  before_filter :authenticate_user!
+  # TODO cells ore similar
+  # before_filter :setup_lcars
   helper :all
 
-  layout 'torrents'
+  # TODO rescue from errors
+  # rescue_from 'Exception', :with => :render_lcars_error
 
-  rescue_from 'Exception', :with => :render_lcars_error
-
-  after_update_page :prepare_flash_messages
-  after_update_page :render_pending_logs
+  # FIXME use responders
+  #after_update_page :prepare_flash_messages
+  #after_update_page :render_pending_logs
   def render_pending_logs(page)
     unless @logs.blank?
       @logs.each do |log_entry|
