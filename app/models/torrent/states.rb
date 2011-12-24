@@ -26,14 +26,6 @@ class Torrent
     end
   end
 
-  def startable?
-    archived? or paused?
-  end
-
-  def stoppable?
-    running? or paused?
-  end
-
   def local?
     archived? or running? or paused?
   end
@@ -194,6 +186,7 @@ class Torrent
     finally_stop!           # hmm
   end
 
+  class InvalidSourceState < RuntimeError; end
 
   def event_from(old_states=[])
     old_states = [old_states] unless old_states.is_a? Array
@@ -207,7 +200,7 @@ class Torrent
         reload
       end
     else
-      raise RuntimeError, "#{current_state} is not a valid state for this transition"
+      raise InvalidSourceState, "#{current_state} is not a valid state for this transition"
     end
   end
 end

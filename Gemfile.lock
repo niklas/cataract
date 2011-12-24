@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/niklas/jquery_mobile-rails.git
+  revision: 4bef9e88f8942870e539e4bce40f19de83c9f8ed
+  specs:
+    jquery_mobile-rails (1.0)
+      activesupport (~> 3.1.0)
+
+GIT
   remote: git://github.com/niklas/kopflos.git
   revision: d63e5cafc351d33960950b8d0f8d829a8995bd4d
   specs:
@@ -151,7 +158,6 @@ GEM
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
-    jquery_mobile-rails (1.0)
     json (1.6.1)
     json_pure (1.6.1)
     launchy (2.0.5)
@@ -310,7 +316,7 @@ DEPENDENCIES
   haml-rails
   inherited_resources (~> 1.3.0)
   jquery-rails
-  jquery_mobile-rails
+  jquery_mobile-rails!
   kopflos!
   launchy
   libnotify

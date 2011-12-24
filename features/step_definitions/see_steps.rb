@@ -10,3 +10,8 @@ Then /^the button "([^"]*)" should be active$/ do |label|
   item = page.find("a.ui-btn", :text => label)
   item['class'].split.should include('ui-btn-active')
 end
+
+Then /^I should see (?:flash )?(notice|alerts) "([^"]*)"$/ do |severity, message|
+  step %Q~I should see "#{message}" within flash #{severity}~
+end
+

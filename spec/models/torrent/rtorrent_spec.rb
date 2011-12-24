@@ -52,14 +52,15 @@ describe Torrent::RTorrent do
   end
 
   let(:info_hash) { mock('InfoHash') }
-  let(:torrent) do 
+  let(:torrent) do
     build :torrent, :info_hash => info_hash do |torrent|
       torrent.stub(:remote).and_return(rtorrent)
       torrent
     end
   end
 
-  Torrent::RTorrent::Methods.each do |meth|
+  # FIXME start! uses File.cp, must test more specific
+  (Torrent::RTorrent::Methods - [:start!, :stop!, :close!, :erase!]).each do |meth|
     it "should delegate ##{meth} to proxy, supplying itself" do
       rtorrent.should_receive(meth).with(torrent)
       torrent.public_send(meth)
@@ -129,6 +130,37 @@ describe Torrent::RTorrent do
           proxy.should_receive(:call).with(xml).and_return(value)
           proxy.public_send(meth).should == value
         end
+      end
+    end
+
+  end
+
+  context "running" do
+    before { start_rtorrent }
+    after  { stop_rtorrent }
+
+    context "with two loaded torrents" do
+      before do
+        described_class.online!
+        incoming = create :existing_directory,
+          path: "incoming"
+        create_file incoming.path/'tails.png'
+        @first   = create :torrent_with_picture_of_tails,
+          directory: incoming, content_directory: incoming
+        @first.start!
+        @second  = create :torrent_with_picture_of_tails_and_a_poem,
+          directory: incoming, content_directory: incoming
+        @second.load!
+      end
+
+      it "should fetch all torrents at once" do
+        torrents = rtorrent.torrents
+        torrents.should be_a(Array)
+        torrents.should have(2).records
+        torrents.first.should be_a(Hash)
+        torrents.first[:hash].should == @first.info_hash
+        torrents.first[:completed_bytes].should == 73451
+        torrents.second[:hash].should == @second.info_hash
       end
     end
 

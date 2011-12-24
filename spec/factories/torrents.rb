@@ -22,6 +22,7 @@ FactoryGirl.define do
     factory :torrent_with_file do
       info_hash nil
       filename 'please-use-a-sub-factory.torrent'
+      status 'archived'
       after_build do |torrent|
         FileSystem.create_file torrent.path
       end
