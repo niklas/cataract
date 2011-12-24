@@ -56,7 +56,7 @@ class Torrent
   # XMLRPC Client/RTorrent wrapper
 
   class RTorrent < XMLRPC::ClientS
-    Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?, :start!]
+    Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?, :start!, :stop!, :close!, :erase!]
 
     class << self
       def offline!

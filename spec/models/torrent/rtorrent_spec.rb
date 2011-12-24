@@ -60,7 +60,7 @@ describe Torrent::RTorrent do
   end
 
   # FIXME start! uses File.cp, must test more specific
-  (Torrent::RTorrent::Methods - [:start!]).each do |meth|
+  (Torrent::RTorrent::Methods - [:start!, :stop!, :close!, :erase!]).each do |meth|
     it "should delegate ##{meth} to proxy, supplying itself" do
       rtorrent.should_receive(meth).with(torrent)
       torrent.public_send(meth)

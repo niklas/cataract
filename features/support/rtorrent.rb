@@ -23,8 +23,14 @@ When /^I start #{capture_model}$/ do |m|
   model!(m).start!
 end
 
-Then /^the rtorrent (\w+) view should contain #{capture_model}$/ do |view, m|
-  Torrent.remote.download_list(view).should include( model!(m).info_hash )
+Given /^#{capture_model} was started$/ do |m|
+  step "I start #{m}"
+end
+
+
+Then /^the rtorrent (\w+) view (should|should not) contain #{capture_model}$/ do |view, should_or_not, m|
+  should_or_not.gsub!(/\s/,'_')
+  Torrent.remote.download_list(view).send should_or_not, include( model!(m).info_hash )
 end
 
 Then /^rtorrent should download #{capture_model}$/ do |m|

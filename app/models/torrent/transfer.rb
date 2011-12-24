@@ -27,9 +27,9 @@ class Torrent
 
   def stop!
     event_from [:paused, :running] do
-      remote.stop!
-      remote.close!
-      remote.erase! # WARNING! will delete the torrent file
+      remote.stop! self
+      remote.close! self
+      remote.erase! self # WARNING! will delete the torrent file
       finally_stop!
       log('was stopped')
     end

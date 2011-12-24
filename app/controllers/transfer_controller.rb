@@ -6,6 +6,11 @@ class TransferController < InheritedResources::Base
     respond_with torrent
   end
 
+  def destroy
+    torrent.stop!
+    respond_with torrent
+  end
+
   private
 
   def torrent
