@@ -40,13 +40,16 @@ namespace :deploy do
     run "touch #{current_release}/tmp/restart.txt"
   end
 
-  desc "Symlink shared assets"
+  desc "Symlink shared stuff"
   task :symlink_shared, :roles => :app do
     config_dir = "#{deploy_to}/#{shared_dir}/config"
     make_link = "ln -sf #{deploy_to}/{#{shared_dir},#{version_dir}/#{release_name}}"
     run "mkdir -p #{config_dir}"
     run "#{make_link}/config/database.yml"
     run "#{make_link}/config/messenger.yml"
+    run "#{make_link}/tmp/sockets"
+
+    run "chmod a+rXw #{deploy_to}/#{shared_dir}/tmp/sockets"
   end
 
   before "deploy:assets:precompile", "deploy:symlink_shared"
