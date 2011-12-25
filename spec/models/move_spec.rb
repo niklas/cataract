@@ -5,8 +5,6 @@ describe Move do
     Move.new.should be_acts_like(:queueable)
   end
 
-  it "should extract paths from torrent and target"
-
   context "in filesystem" do
     let(:incoming) { rootfs/'incoming' }
     let(:archive)  { rootfs/'archive' }
