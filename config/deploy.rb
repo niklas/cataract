@@ -42,11 +42,11 @@ namespace :deploy do
 
   desc "Symlink shared assets"
   task :symlink_shared, :roles => :app do
-    config_dir = "#{deploy_to}/shared/config"
+    config_dir = "#{deploy_to}/#{shared_dir}/config"
+    make_link = "ln -sf #{deploy_to}/{#{shared_dir},#{version_dir}/#{release_name}}"
     run "mkdir -p #{config_dir}"
-    run "ln -sf #{deploy_to}{shared,current}/config/database.yml"
-    run "ln -sf #{deploy_to}{shared,current}/config/messanger.yml"
-    puts "Make sure to create a proper database.yml (in #{config_dir})"
+    run "#{make_link}/config/database.yml"
+    run "#{make_link}/config/messenger.yml"
   end
 
   before "deploy:assets:precompile", "deploy:symlink_shared"
