@@ -49,7 +49,7 @@ end
 # what to watch? what indicates a bored developer?
 guard 'shell' do
   watch('.git/HEAD') do |m|
-    `bundle exec notes --colour | tee tmp/TODO`
+    `bundle exec notes --colour app lib spec features bin config | tee tmp/TODO`
   end
 end
 
