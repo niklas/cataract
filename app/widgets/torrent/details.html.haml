@@ -1,5 +1,10 @@
 = widget_div do
+
   = link_to :move, new_torrent_move_path(@torrent)
-  = link_to :start, torrent_transfer_path(@torrent), :remote => true, 'data-ajax' => false, :method => :post
-  = link_to :stop, torrent_transfer_path(@torrent), :remote => true, 'data-ajax' => false, :method => :delete
+
+  - if @torrent.running?
+    = link_to :stop, torrent_transfer_path(@torrent), :remote => true, 'data-ajax' => false, :method => :delete
+  - else
+    = link_to :start, torrent_transfer_path(@torrent), :remote => true, 'data-ajax' => false, :method => :post
+
   = debug @torrent
