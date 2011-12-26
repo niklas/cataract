@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/niklas/jquery_mobile-rails.git
-  revision: 4bef9e88f8942870e539e4bce40f19de83c9f8ed
+  revision: 760f82749fdc823618b2773b10a740b8804755a3
   specs:
     jquery_mobile-rails (1.0)
       activesupport (~> 3.1.0)
@@ -19,6 +19,13 @@ GIT
     notes (0.0.3)
       rainbow (>= 1.1)
       rak (= 1.0)
+
+GIT
+  remote: git://github.com/niklas/versatile_rjs.git
+  revision: e2bba74be869446d4108701160047121d05eb2af
+  specs:
+    versatile_rjs (0.1.2)
+      rails (>= 3.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -171,7 +178,7 @@ GEM
     method_source (0.6.7)
       ruby_parser (>= 2.3.1)
     mime-types (1.17.2)
-    multi_json (1.0.3)
+    multi_json (1.0.4)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -337,4 +344,5 @@ DEPENDENCIES
   therubyracer (~> 0.9.2)
   timecop
   uglifier
+  versatile_rjs!
   xmlrpcs

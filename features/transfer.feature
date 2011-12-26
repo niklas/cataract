@@ -19,6 +19,7 @@ Feature: Transferring torrents
      #And I should see notice "started Tails"
       And the rtorrent main view should contain the torrent
       And rtorrent should download the torrent
+      And I should see no link "Start"
 
   @todo
   @wip
@@ -30,3 +31,4 @@ Feature: Transferring torrents
      When I follow "Stop"
      Then I should be on the page for the torrent
       And the rtorrent main view should not contain the torrent
+      And I should see no link "Stop"

@@ -1,14 +1,15 @@
 class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
-  has_widgets do |root|
-    root << widget(:page) do |page|
-      page << widget(:torrents)
-      page << widget(:torrents_header)
-      page << widget(:torrents_navigation)
-      page << widget(:torrent)
-    end
+  private
+  def collection
+    @torrents ||= search.results
   end
+
+  def search
+    @search ||= Torrent.search(params)
+  end
+  helper_method :search
 
   def check_all
     errors = ''

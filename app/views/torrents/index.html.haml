@@ -1,1 +1,11 @@
-= render_widget :page, :display, widgets: { header: :torrents_header, content: :torrents, footer: :torrents_navigation }
+- for_header do
+  %h1= search.status
+
+- for_footer do
+  = render 'navigation'
+
+= linked_list_of @torrents, class: 'torrents' do |torrent|
+  %li.torrent{class: torrent.status}
+    %a{href: torrent_path(torrent)}
+      %h3.title= torrent.short_title
+      %p.filename.ui-li-desc= torrent.filename
