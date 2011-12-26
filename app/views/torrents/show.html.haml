@@ -1,1 +1,7 @@
-= render_widget :torrent, :details, @torrent
+
+= render 'transfer', torrent: @torrent
+
+= link_to :move, new_torrent_move_path(@torrent)
+
+= debug @torrent
+
