@@ -1,11 +1,9 @@
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   # TODO cells ore similar
-  # before_filter :setup_lcars
   helper :all
 
   # TODO rescue from errors
-  # rescue_from 'Exception', :with => :render_lcars_error
 
   # FIXME use responders
   #after_update_page :prepare_flash_messages
@@ -35,35 +33,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_lcars_error(exception)
-    logger.warn("Cought Exception: #{exception.class}:#{exception.message}\nTrace:\n#{exception.clean_backtrace.join("\n")}")
-    @exception = exception
-    respond_to do |wants|
-      wants.css do
-        render :text => @exception.inspect.to_s
-      end
-      wants.html do
-        render :partial => '/shared/exception', :object => exception, :layout => 'torrents'
-      end
-      wants.js do
-        render_update do |page|
-          page.insert_html :bottom, 'body', render_error(
-            :title => (exception.message),
-            :content => content_tag(:h3,exception.message) + content_tag(:pre, h(exception.clean_backtrace.join("\n   "))),
-            :buttons => [
-              link_to("Back", :back),
-              link_to_function("Close") do |page|
-                page['error'].remove
-              end
-            ],
-            :theme => 'error'
-          )
-        end
-      end
-    end
-    #response.headers['Status'] = interpret_status(500)
-  end
-
   def render_details_for(torrent)
     # same as app/views/torrents/show.rjs
     raise "dont use that anymore, please"
@@ -82,16 +51,4 @@ class ApplicationController < ActionController::Base
     CGI.escapeHTML(stringy)
   end
 
-  def setup_lcars
-    lcars_box :helm, :kind => 'wse', :theme => 'primary', :title => 'Helm'
-    lcars_box :main, :kind => 'nw', :theme => 'secondary', 
-      :title => :torrent_search, 
-      :buttons => Proc.new {{:partial => '/torrents/buttons', :object => @torrents }},
-      :content => Proc.new {{:partial => '/torrents/list', :object => @torrents }}
-    lcars_box :engineering, :kind => 'nw',  :theme => 'ancillary',
-      :content => lambda {{:partial => '/log_entries/list', :object => (@logs || @log_entries || LogEntry.last.all)}}
-    lcars_box :single, :kind => 'nw'
-    lcars_box :tiny, :kind => 'nes'
-    lcars_box :error, :kind => 'nw'
-  end
 end

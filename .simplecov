@@ -1,4 +1,5 @@
 SimpleCov.start 'rails' do
-  # any custom configs like groups and filters can be here at a central place
-  add_group 'Widgets', 'app/widgets'
+  # add_group 'Widgets', 'app/widgets'
+  # does not work yet :(
+  #add_group 'Views', 'app/views'
 end
