@@ -31,4 +31,19 @@ module ApplicationHelper
     string
   end
 
+  module PartialHelper
+    def replace_partial(partial, options = {})
+      html = render(partial, options)
+      if dom = Nokogiri.parse( html ).children.first['id']
+        self[dom].replace_with(html)
+        self[dom].trigger('create')
+      else
+        raise 'element not found'
+      end
+    end
+  end
+
+  VersatileRJS::Page.class_eval do
+    include PartialHelper
+  end
 end

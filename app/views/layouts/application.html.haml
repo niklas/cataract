@@ -10,4 +10,5 @@
     = csrf_meta_tag
     = yield(:head)
   %body
+    - page_options.merge! 'data-add-back-btn' => true
     = mobile_page
