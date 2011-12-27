@@ -1,0 +1,9 @@
+@import "mixins/pies";
+
+.transfer_torrent {
+  @include pie(150px);
+  .pie {
+    float: none;
+  }
+}
+

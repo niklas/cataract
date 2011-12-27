@@ -3,3 +3,6 @@ en:
     actions:
       signin: "Sign in"
       move: "Move"
+      start: "Start"
+      stop: "Stop"
+      pause: "Pause"

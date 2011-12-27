@@ -76,9 +76,14 @@ describe Torrent do
       it "knows the path of its torrent file" do
         torrent.path.should == storage.path/'single.torrent'
       end
-      it "knows the name of its content file" do
+      it "knows the full path of its content file" do
         torrent.content.files.should == [
           archive.path/'tails.png'
+        ]
+      end
+      it "knows the name of its content file" do
+        torrent.content.relative_files.should == [
+          'tails.png'
         ]
       end
       # FIXME put this on the others in own torrent/content_spec

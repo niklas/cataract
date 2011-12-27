@@ -1,6 +1,0 @@
-= mobile_tag role: 'listview', class: 'torrents', tag: 'ul' do
-  - for torrent in @torrents
-    %li.torrent{class: torrent.status}
-      %a{href: torrent_path(torrent)}
-        %h3.title= torrent.short_title
-        %p.filename.ui-li-desc= torrent.filename

@@ -1,53 +1,18 @@
-@import "compass";
+@import 'compass';
 
-$pie_size: 23px;
-
-.pie {
-  float: left;
-  height: $pie_size;
-  width: $pie_size;
-  margin: $pie_size * 0.23;
-  .background {
-    background-color: grey;
-    position: absolute;
-    width: $pie_size;
-    height: $pie_size;
-    @include border-radius($pie_size / 2);
-    @include box-shadow(-1px 1px 3px #000);
-  }
-  .slice {
-    position: absolute;
-    width: $pie_size;
-    height: $pie_size;
-    @include border-radius($pie_size / 2);
-    clip: rect(0px, $pie_size, $pie_size, $pie_size / 2);
-
-    .p {
-      position: absolute;
-      width: $pie_size;
-      height: $pie_size;
-      @include border-radius($pie_size / 2);
-      clip: rect(0px, $pie_size / 2, $pie_size, 0px);
-      background-color: #1b458b;
+.pie .slice {
+  <% 0.upto(50) do |i| %>
+    &._<%= i %> .p {
+      @include rotate(<%= (360.0 / 100.0 * i).to_i %>deg);
     }
-
-    <% 0.upto(50) do |i| %>
-      &._<%= i %> .p {
+    &._<%= i + 50 %> {
+      @include rotate(180deg);
+      .p {
         @include rotate(<%= (360.0 / 100.0 * i).to_i %>deg);
       }
-      &._<%= i + 50 %> {
-        @include rotate(180deg);
-        .p {
-          @include rotate(<%= (360.0 / 100.0 * i).to_i %>deg);
-        }
-      }
-    <% end %>
-    &._half .p {
-      @include rotate(180deg);
     }
-
+  <% end %>
+  &._half .p {
+    @include rotate(180deg);
   }
-
 }
-
-

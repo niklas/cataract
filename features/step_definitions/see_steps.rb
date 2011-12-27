@@ -15,3 +15,6 @@ Then /^I should see (?:flash )?(notice|alerts) "([^"]*)"$/ do |severity, message
   step %Q~I should see "#{message}" within flash #{severity}~
 end
 
+Then /^I should see no link "([^"]*)"$/ do |label|
+  page.should have_no_css('a', :text => label)
+end

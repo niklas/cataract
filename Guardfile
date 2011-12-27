@@ -44,12 +44,14 @@ guard 'cucumber', :cli => "--drb", :run_all => { :cli => "--format progress" }, 
   watch(%r{^app/models/.*(?:sync|file|content)})  { 'features -t @fakefs,@rootfs' }
 #watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
+
+  watch(%r{^app/decorators/torrent})        { %w(transfer_info).map { |f| "features/#{f}.feature"} }
 end
 
 # what to watch? what indicates a bored developer?
 guard 'shell' do
   watch('.git/HEAD') do |m|
-    `bundle exec notes --colour | tee tmp/TODO`
+    `bundle exec notes --colour app lib spec features bin config | tee tmp/TODO`
   end
 end
 

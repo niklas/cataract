@@ -45,6 +45,10 @@ class Torrent
   #  raise HasNoInfoHash.new()
   end
 
+  def metainfo?
+    metainfo.present?
+  end
+
 
   def set_info_hash_from_metainfo
     write_attribute :info_hash, info_hash_from_metainfo

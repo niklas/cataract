@@ -1,0 +1,2 @@
+page.replace_partial 'torrents/transfer', torrent: @torrent
+

@@ -58,6 +58,9 @@ class Torrent
   class RTorrent < XMLRPC::ClientS
     Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?, :start!, :stop!, :close!, :erase!]
 
+    class Offline < ::RuntimeError; end
+    class CouldNotFindInfoHash < ::ArgumentError; end
+
     class << self
       def offline!
         @offline = true
@@ -96,7 +99,7 @@ class Torrent
       unless self.class.offline?
         super
       else
-        Rails.logger.debug { "cannot call RTorrent because it was switched offline" }
+        raise Offline, "cannot call RTorrent because it was switched offline"
       end
     end
 
@@ -159,6 +162,12 @@ class Torrent
       hash = torrent.info_hash rescue nil
       raise Torrent::HasNoInfoHash if hash.blank?
       call meth, hash, *args, &blk
+    rescue XMLRPC::FaultException => e
+      if e.message =~ /Could not find info-hash/
+        raise CouldNotFindInfoHash, e.message
+      else
+        raise e
+      end
     end
 
     def map_method_name(meth)
