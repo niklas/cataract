@@ -45,9 +45,25 @@ class Torrent
       if info.single?
         [ path ]
       else
-        info.files.map(&:path).flatten.sort.map do |file|
+        relative_files.map do |file|
           path/file
         end
+      end
+    end
+
+    def relative_files
+      if info.single?
+        [ info.name ]
+      else
+        info.files.map(&:path).flatten.sort
+      end
+    end
+
+    def size
+      if info.single?
+        info.length
+      else
+        info.files.map(&:length).reduce(:+)
       end
     end
   end
@@ -86,20 +102,14 @@ class Torrent
     return nil
   end
 
-  # TODO remove or replace
-  def set_content_information
-    return unless metainfo
-    self[:content_size] = if metainfo.single?
-      metainfo.length
-    else
-      metainfo.files.inject(0) { |sum, f| sum + f.length}
-    end
-    self[:content_filenames] = 
-      if metainfo.single?
-        [metainfo.name]
-      else
-        metainfo.files.map { |f| File.join(metainfo.name, f.path)}
-      end
+  on_refresh :cache_content_size, :if => :metainfo?
+  def cache_content_size
+    self.content_size = content.size
+  end
+
+  on_refresh :cache_content_filenames, :if => :metainfo?
+  def cache_content_filenames
+    self.content_filenames = content.relative_files
   end
 
 

@@ -5,6 +5,7 @@ module RTorrentSpecHelper
   end
 
   def start_rtorrent(seconds=5)
+    Torrent::RTorrent.online!
     FileUtils.rm rtorrent_socket_path if rtorrent_socket_path.exist?
 
     if @rtorrent_pid = Process.spawn(*rtorrent_command)

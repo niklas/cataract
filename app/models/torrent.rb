@@ -50,8 +50,6 @@ class Torrent < ActiveRecord::Base
   # TODO add tagging
   # acts_as_taggable
 
-  concerned_with :states, :file, :notifications, :remote, :content, :rtorrent, :syncing, :movie, :search, :transfer
-
   scope :invalid, where('NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')')
 
   scope :include_everything, includes(:tags)
@@ -79,6 +77,20 @@ class Torrent < ActiveRecord::Base
   end
   def self.last_update
     Torrent.maximum('updated_at', :conditions => "status = 'running'") || 23.days.ago
+  end
+
+  define_callbacks :refresh
+
+  def self.on_refresh(*a, &block)
+    set_callback :refresh, :after, *a, &block
+  end
+
+  def refresh
+    run_callbacks :refresh
+  end
+
+  def refresh!
+    refresh && save!
   end
 
 
@@ -203,4 +215,9 @@ class Torrent < ActiveRecord::Base
     Rails.logger.debug "disabled own logging"
   end
 
+  concerned_with :states, :file, :notifications, :remote, :content, :rtorrent, :syncing, :movie, :search, :transfer
+
 end
+
+# just mention this here to kick off preloading
+TorrentDecorator

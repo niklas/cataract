@@ -66,3 +66,5 @@ gem 'xmlrpcs'
 gem 'ancestry'
 gem "jquery_mobile-rails", :git => 'git://github.com/niklas/jquery_mobile-rails.git'
 gem 'versatile_rjs', :git => 'git://github.com/niklas/versatile_rjs.git'
+
+gem 'draper'

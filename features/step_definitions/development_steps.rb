@@ -4,3 +4,7 @@ When /^I pause$/ do
     binding.pry
   end
 end
+
+When /^nothing$/ do
+  # for scenario outlines
+end
