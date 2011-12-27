@@ -22,6 +22,15 @@ module HtmlSelectorsHelpers
     when /^flash (notice|alert)$/
       "#flash .#{$1}"
 
+    when 'the content size'
+      ".content_size"
+    when 'the progress'
+      ".progress"
+    when /^the (up|down) rate$/
+      ".#{$1}"
+    when /^the transfer of #{capture_model}$/
+      "#transfer_torrent_#{model!($1).id}"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

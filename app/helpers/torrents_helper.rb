@@ -97,17 +97,6 @@ module TorrentsHelper
     link_to_remote(name,options,html_options.merge(:target => 'helm'))
   end
 
-  def human_transfer(kb, rate=true)
-    return '' unless kb
-    return '' unless kb.kind_of?(Numeric)
-    number_to_human_size(kb.kilobytes).sub(/ytes$/,'') +
-      (rate ? '/s' : '')
-  end
-
-  def human_bytes(b)
-    human_transfer(b/1024,false)
-  end
-
   def torrent_table(headings,torrents)
     return unless torrents
     return if torrents.empty?

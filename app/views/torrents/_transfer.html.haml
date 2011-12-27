@@ -1,7 +1,10 @@
-= content_tag_for :div, @torrent, 'transfer' do
-  = mobile_tag role: 'controlgroup', type: 'horizontal' do
-    - if torrent.running?
-      = link_to :stop, torrent_transfer_path(@torrent), :remote => true, 'data-role' => 'button', 'data-ajax' => false, :method => :delete
-    - else
-      = link_to :start, torrent_transfer_path(@torrent), :remote => true, 'data-role' => 'button', 'data-ajax' => false, :method => :post
-
+= decorate torrent do |t|
+  = content_tag_for :div, torrent, 'transfer' do
+    .ui-grid-a
+      .ui-block-a
+        .progress= t.progress
+      .ui-block-b
+        %p.content_size= t.content_size
+        %p.down= t.down_rate
+        %p.up= t.up_rate
+        = render 'transfer/buttons', torrent: torrent
