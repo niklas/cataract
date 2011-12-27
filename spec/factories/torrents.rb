@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :torrent do
-    sequence(:title)    { |i| "Torrent ##{i}" }
     sequence(:info_hash) { |i| "%0.40d" % i }
     sequence(:filename) { |i| "#{i}.torrent" }
     directory

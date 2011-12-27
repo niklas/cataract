@@ -15,4 +15,4 @@ Feature: Details of a torrent
     Given a running torrent exists with title: "Ubuntu"
       And I am signed in
       And I am on the page of the torrent
-     Then I should see "Ubuntu"
+     Then I should see "Ubuntu" within the page title

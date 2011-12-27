@@ -7,5 +7,5 @@
 = linked_list_of @torrents, class: 'torrents' do |torrent|
   %li.torrent{class: torrent.status}
     %a{href: torrent_path(torrent)}
-      %h3.title= torrent.short_title
+      %h3.title= torrent.title
       %p.filename.ui-li-desc= torrent.filename

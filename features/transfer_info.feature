@@ -7,13 +7,14 @@ Feature: Transfer info
   @rtorrent
   Scenario Outline:
     Given a existing directory exists with path: "incoming"
-      And a torrent_with_picture_of_tails exists with title: "Tails", directory: the directory, content_directory: the directory
+      And a torrent_with_picture_of_tails exists with directory: the directory, content_directory: the directory
       And the file for the torrent exists
       And the torrent was refreshed
       And <scenario>
       And I am signed in
       And I am on the page for the torrent
-     Then I should see "<size>" within the content size within the transfer of the torrent
+     Then I should see "single" within the page title
+      And I should see "<size>" within the content size within the transfer of the torrent
       And I should see "<progress>" within the progress within the transfer of the torrent
       And I should see "<up>" within the up rate within the transfer of the torrent
       And I should see "<down>" within the down rate within the transfer of the torrent
