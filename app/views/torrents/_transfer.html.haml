@@ -1,7 +1,13 @@
-= content_tag_for :div, @torrent, 'transfer' do
-  = mobile_tag role: 'controlgroup', type: 'horizontal' do
-    - if torrent.running?
-      = link_to :stop, torrent_transfer_path(@torrent), :remote => true, 'data-role' => 'button', 'data-ajax' => false, :method => :delete
-    - else
-      = link_to :start, torrent_transfer_path(@torrent), :remote => true, 'data-role' => 'button', 'data-ajax' => false, :method => :post
-
+= content_tag_for :div, torrent, 'transfer' do
+  .ui-grid-a
+    .ui-block-a
+      - if torrent.running?
+        = render 'pie', percent: torrent.progress
+      - else
+        done
+    .ui-block-b
+      %p.content_size= human_bytes torrent.content.size
+      - if torrent.running?
+        %p.down= human_bytes_rate torrent.down_rate
+        %p.up= human_bytes_rate torrent.up_rate
+      = render 'transfer/buttons', torrent: torrent

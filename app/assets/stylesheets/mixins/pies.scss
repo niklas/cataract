@@ -1,0 +1,35 @@
+@import "compass";
+
+@mixin pie($size) {
+  .pie {
+    float: left;
+    height: $size;
+    width: $size;
+    margin: $size * 0.23;
+    .background {
+      background-color: grey;
+      position: absolute;
+      width: $size;
+      height: $size;
+      @include border-radius($size / 2);
+      @include box-shadow(-1px 1px 3px #000);
+    }
+    .slice {
+      position: absolute;
+      width: $size;
+      height: $size;
+      @include border-radius($size / 2);
+      clip: rect(0px, $size, $size, $size / 2);
+
+      .p {
+        position: absolute;
+        width: $size;
+        height: $size;
+        @include border-radius($size / 2);
+        clip: rect(0px, $size / 2, $size, 0px);
+        background-color: #1b458b;
+      }
+    }
+  }
+}
+
