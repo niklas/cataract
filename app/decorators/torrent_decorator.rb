@@ -24,6 +24,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def human_bytes(bytes, rate=false)
+    return if bytes.blank?
     h.number_to_human_size(bytes)
       .sub(/ytes$/,'') + (rate ? '/s' : '')
   end
