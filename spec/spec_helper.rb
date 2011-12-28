@@ -47,6 +47,9 @@ Spork.prefork do
 end
 
 Spork.each_run do
+  # rspec reports time since its started https://github.com/guard/guard-rspec/issues/61
+  $rspec_start_time = Time.now
+
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
