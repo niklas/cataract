@@ -31,8 +31,8 @@ describe Torrent do
       torrent.remote.should == Torrent.remote
     end
 
-    it "should have hardcoded methods to accept" do
-      Torrent::RTorrent::Methods.should_not be_empty
+    it "should have attributes defined" do
+      Torrent::RTorrent::Attributes.should_not be_empty
     end
   end
 
@@ -59,14 +59,6 @@ describe Torrent::RTorrent do
     end
   end
 
-  # FIXME start! uses File.cp, must test more specific
-  (Torrent::RTorrent::Methods - [:start!, :stop!, :close!, :erase!]).each do |meth|
-    it "should delegate ##{meth} to proxy, supplying itself" do
-      rtorrent.should_receive(meth).with(torrent)
-      torrent.public_send(meth)
-    end
-  end
-
   it "should throw error if cannot connect" do
     described_class.online! # offline by default in specs
     expect { rtorrent.remote_methods }.to raise_error
@@ -81,16 +73,49 @@ describe Torrent::RTorrent do
     end
   end
 
+  context "mass fetching" do
+    let(:mapping) { rtorrent.torrents_mapping }
+    it "should be a hash" do
+      mapping.should be_a(Hash)
+    end
+
+    it "should have attributes set up" do
+      mapping.should include({
+        :hash             => "d.get_hash=",
+        :name             => "d.get_name=",
+        :size_bytes       => "d.get_size_bytes=",
+        :completed_bytes  => "d.get_completed_bytes=",
+        :up_rate          => "d.get_up_rate=",
+        :down_rate        => "d.get_down_rate=",
+        :active?           => "d.is_active=",
+        #:size_files       => "d.get_size_files=",
+        #:tracker_size     => "d.get_tracker_size=",
+        #:chunk_size       => "d.get_chunk_size=",
+        #:size_chunks      => "d.get_size_chunks=",
+        #:completed_chunks => "d.get_completed_chunks=",
+        #:ratio            => "d.get_ratio=",
+        #:complete         => "d.get_complete=",
+        #:priority         => "d.get_priority=",
+      })
+    end
+  end
+
+  it { rtorrent.should respond_to(:start!) }
+  it { rtorrent.should respond_to(:stop!) }
+  it { rtorrent.should respond_to(:close!) }
+  it { rtorrent.should respond_to(:erase!) }
+  it { rtorrent.should respond_to(:size_bytes) }
+  # TODO complete list
 
   context "for torrent" do
     let(:torrent)  { mock('Torrent', :info_hash => info_hash) }
-    let(:proxy) { described_class.new(torrent) }
-
-    it "should respond to hardcoded methods" do
-      Torrent::RTorrent::Methods.each do |meth|
-        proxy.should respond_to(meth)
+    # FIXME WTF what does the torrent do here?
+    let(:proxy) do
+      described_class.new(rtorrent_socket_path).tap do |remote|
+        remote.stub(:torrents).and_return({}) # provoke getting attributes by single calls
       end
     end
+
 
     it "should throw error when torrent has no info hash" do
       torrent_without_info_hash = mock 'Torrent', :info_hash => nil
@@ -153,14 +178,34 @@ describe Torrent::RTorrent do
         @second.load!
       end
 
-      it "should fetch all torrents at once" do
-        torrents = rtorrent.torrents
-        torrents.should be_a(Array)
-        torrents.should have(2).records
-        torrents.first.should be_a(Hash)
-        torrents.first[:hash].should == @first.info_hash
-        torrents.first[:completed_bytes].should == 73451
-        torrents.second[:hash].should == @second.info_hash
+      context "mass fetching" do
+        let(:list) { rtorrent.torrents }
+        it "array" do
+          list.should be_a(Array)
+          list.should have(2).records
+        end
+
+        let(:map) { rtorrent.torrents_by_info_hash }
+        it "by info_hash" do
+          map.should be_a(Hash)
+          map.should have(2).records
+        end
+
+        it "should index by info_hash" do
+          map.keys.sort.should == list.map { |v| v[:hash] }.sort
+        end
+
+        let(:first) { list.first }
+        let(:second) { list.second }
+
+        it "should have attrs set" do
+          first.should be_a(Hash)
+          first[:hash].should == @first.info_hash
+          first[:completed_bytes].should == 73451
+
+          second.should be_a(Hash)
+          second[:hash].should == @second.info_hash
+        end
       end
     end
 
