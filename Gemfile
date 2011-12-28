@@ -58,6 +58,7 @@ gem "cancan"
 gem 'acts_as_list'
 
 gem 'apotomo', '~> 1.2.1'
+gem 'nokogiri' # for partial hack
 
 gem 'rubytorrent-allspice'
 
