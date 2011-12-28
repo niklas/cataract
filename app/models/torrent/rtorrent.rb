@@ -182,7 +182,7 @@ class Torrent
     end
 
     def torrents
-      @torrents ||= multicall(torrents_mapping)
+      multicall(torrents_mapping)
     end
 
     def torrents_by_info_hash
@@ -192,7 +192,7 @@ class Torrent
     end
 
     def clear_caches!
-      @torrents = @torrents_by_info_hash = nil
+      @torrents_by_info_hash = nil
     end
 
     def torrents_mapping
