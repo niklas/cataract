@@ -18,7 +18,7 @@ Spork.prefork do
 
   Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome).tap do |driver|
-      width, height = 480 + 8, 600 + 57
+      width, height = 480 + 8, 800 + 57
 
       # Resize window. In Firefox and Chrome, must create a new window to do this.
       # http://groups.google.com/group/webdriver/browse_thread/thread/e4e987eeedfdb586

@@ -1,7 +1,7 @@
 # RVM bootstrap
 $:.unshift(File.expand_path("~/.rvm/lib"))
 require 'rvm/capistrano'
-set :rvm_ruby_string, '1.9.3-p0@cataract'
+set :rvm_ruby_string, '1.9.3-p0-xmlrpc64bit@cataract'
 
 # bundler bootstrap
 require 'bundler/capistrano'

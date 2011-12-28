@@ -31,6 +31,9 @@ module HtmlSelectorsHelpers
     when /^the transfer of #{capture_model}$/
       "#transfer_torrent_#{model!($1).id}"
 
+    when 'the page title'
+      "h1.title:last"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

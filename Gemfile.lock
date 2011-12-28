@@ -330,6 +330,7 @@ DEPENDENCIES
   kopflos!
   launchy
   libnotify
+  nokogiri
   notes!
   pg
   pickle

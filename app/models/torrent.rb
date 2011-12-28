@@ -137,11 +137,10 @@ class Torrent < ActiveRecord::Base
   # * kills renaming spaces 
   # or
   # 3) takes a Title with the torrent's id
-  def short_title
-    title ||
+  def title
+    super.presence ||
       (filename.blank? ? "Torrent ##{id}" : clean_filename)
   end
-  alias :nice_title :short_title
 
   def clean_filename
     filename.

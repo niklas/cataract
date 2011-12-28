@@ -25,8 +25,22 @@ Then /^the rtorrent (\w+) view (should|should not) contain #{capture_model}$/ do
 end
 
 Then /^rtorrent should download #{capture_model}$/ do |m|
+  Torrent.remote.clear_caches!
   torrent = model!(m)
-  remote = Torrent.remote.torrents.find {|r| r[:hash] == torrent.info_hash }
+  torrent.info_hash.should_not be_blank
+  remote = Torrent.remote.torrents_by_info_hash[torrent.info_hash]
   remote.should_not be_blank
-  remote[:active].should == 1
+  remote[:active?].should be_true
 end
+
+Given /^rtorrent list contains the following:$/ do |table|
+  table.map_column!('hash') do |hash|
+    if hash =~ /^#{capture_model}$/
+      model!(hash).info_hash
+    else
+      hash
+    end
+  end
+  Torrent.remote.stub(:torrents).and_return(table.hashes.map(&:symbolize_keys))
+end
+
