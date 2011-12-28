@@ -1,4 +1,4 @@
-class Maintenance::DirectoryAssigner < Maintenance::Base
+class Maintenance::ContentDirectoryAssigner < Maintenance::Base
 
   def work
     Torrent.where(:content_directory_id => nil).each do |torrent|

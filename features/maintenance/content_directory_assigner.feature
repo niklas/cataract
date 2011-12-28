@@ -1,5 +1,5 @@
 @fakefs
-Feature: Assigning directories
+Feature: Assigning content directories
   In order to group torrents by their location on disk
   As a horder
   I want torrents assigned to the most specific directory
@@ -19,7 +19,7 @@ Feature: Assigning directories
        | torrent | title  | content_path                     | content_directory |
        | T23x05  | T23x05 | /media/Serien/Tatort/Season23    |                   |
        | L77x66  | L77x66 | /media/Serien/Lindenstr/Season77 |                   |
-    When the DirectoryAssigner runs
+    When the ContentDirectoryAssigner runs
     Then 2 torrents should exist
      And the directory "Tatort" should be the torrent "T23x05"'s content_directory
      And the torrent "T23x05"'s content_path_infix should be "Season23"
