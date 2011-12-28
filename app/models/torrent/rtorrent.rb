@@ -56,8 +56,6 @@ class Torrent
   # XMLRPC Client/RTorrent wrapper
 
   class RTorrent < XMLRPC::ClientS
-    Methods = [:up_rate, :up_total, :down_rate, :down_total, :size_bytes, :message, :completed_bytes, :open?, :active?, :start!, :stop!, :close!, :erase!]
-
     class Offline < ::RuntimeError; end
     class CouldNotFindInfoHash < ::ArgumentError; end
 
@@ -103,23 +101,70 @@ class Torrent
       end
     end
 
-    def respond_to_missing?(meth, include_private)
-      Methods.include?(meth.to_sym) || super
-    end
-
-    def method_missing(meth, *args, &block)
-      if respond_to_missing?(meth, false)
-        mapped = map_method_name(meth)
-        result = call_with_torrent(mapped, *args, &block)
-        if meth =~ /\?$/ # cast booleans
-          result.to_i > 0
-        else
-          result
-        end
-      else
-        super
+    def self.map_method_name(meth)
+      case meth
+      when /^(.+)=$/    # setters
+        "d.set_#{$1}"
+      when /^(.+)!$/    # commands (for torrent)
+        "d.#{$1}"
+      when /^(.+)\?$/   # booleans? (for torrent)
+        "d.is_#{$1}"
+      else              # getters
+        "d.get_#{meth}"
       end
     end
+
+    def self.readers(*all)
+      all.each { |e| reader e }
+    end
+
+    def self.bangs(*all)
+      all.each { |e| bang e }
+    end
+
+    Attributes = Set.new
+
+    Attributes << [:hash, map_method_name(:hash)]
+
+    def self.define_attribute(name, &block)
+      mapped = map_method_name(name)
+      Attributes << [name, mapped]
+      define_method name do |torrent|
+        if cached = torrents_by_info_hash[hash_for(torrent)]
+          cached[name]
+        else
+          block.call call_with_torrent(mapped, torrent)
+        end
+      end
+    end
+
+    def self.reader(name)
+      define_attribute name do |value|
+        value
+      end
+    end
+
+    def self.predicate(name)
+      define_attribute name do |value|
+        value.to_i > 0
+      end
+    end
+
+    def self.bang(name)
+      mapped = map_method_name(name)
+      define_method name do |torrent|
+        call_with_torrent(mapped, torrent)
+      end
+    end
+
+
+    readers :name
+    readers :size_bytes, :completed_bytes
+    readers :up_rate, :down_rate
+    predicate :active?
+    readers :up_total, :down_total, :message
+    predicate :open?
+    bangs :start!, :stop!, :close!, :erase!
 
     # load the path into rtorrent
     def load!(path)
@@ -137,31 +182,31 @@ class Torrent
     end
 
     def torrents
-      multicall({
-        :name             => "d.get_name=",
-        :size_bytes       => "d.get_size_bytes=",
-        :completed_bytes  => "d.get_completed_bytes=",
-        #:up_rate          => "d.get_up_rate=",
-        #:down_rate        => "d.get_down_rate=",
-        #:size_files       => "d.get_size_files=",
-        #:tracker_size     => "d.get_tracker_size=",
-        #:chunk_size       => "d.get_chunk_size=",
-        #:size_chunks      => "d.get_size_chunks=",
-        #:completed_chunks => "d.get_completed_chunks=",
-        #:ratio            => "d.get_ratio=",
-        :active           => "d.is_active=",
-        #:complete         => "d.get_complete=",
-        #:priority         => "d.get_priority=",
-        :hash             => "d.get_hash="
-      })
+      @torrents ||= multicall(torrents_mapping)
+    end
+
+    def torrents_by_info_hash
+      @torrents_by_info_hash ||= torrents.each.with_object({}) do |t,h|
+        h[ t[:hash] ] = t
+      end
+    end
+
+    def clear_caches!
+      @torrents = @torrents_by_info_hash = nil
+    end
+
+    def torrents_mapping
+      Attributes.each.with_object({}) do |(acc, int), h|
+        unless acc.to_s.ends_with?('!')
+          h[acc] = "#{int}="
+        end
+      end
     end
 
 
     private
     def call_with_torrent(meth, torrent, *args, &blk)
-      hash = torrent.info_hash rescue nil
-      raise Torrent::HasNoInfoHash if hash.blank?
-      call meth, hash, *args, &blk
+      call meth, hash_for(torrent), *args, &blk
     rescue XMLRPC::FaultException => e
       if e.message =~ /Could not find info-hash/
         raise CouldNotFindInfoHash, e.message
@@ -170,17 +215,10 @@ class Torrent
       end
     end
 
-    def map_method_name(meth)
-      case meth
-      when /^(.+)=$/    # setters
-        "d.set_#{$1}"
-      when /^(.+)!$/    # commands (for torrent)
-        "d.#{$1}"
-      when /^(.+)\?$/   # booleans? (for torrent)
-        "d.is_#{$1}"
-      else              # getters
-        "d.get_#{meth}"
-      end
+    def hash_for(torrent)
+      hash = torrent.info_hash rescue nil
+      raise Torrent::HasNoInfoHash if hash.blank?
+      hash
     end
 
     def multicall(mapping)

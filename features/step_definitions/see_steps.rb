@@ -18,3 +18,9 @@ end
 Then /^I should see no link "([^"]*)"$/ do |label|
   page.should have_no_css('a', :text => label)
 end
+
+Then /^I should see the following attributes for the torrent:$/ do |table|
+  table.rows_hash.each do |attr, value|
+    step %Q~I should see "#{value}" within the #{attr} within the transfer of the torrent~
+  end
+end
