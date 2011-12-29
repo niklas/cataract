@@ -41,6 +41,10 @@ class Directory < ActiveRecord::Base
     [name,path.to_s].join(' - ')
   end
 
+  def name
+    super.presence || path.basename.to_s.capitalize
+  end
+
   def sub_directories
     glob('*')
       .select { |dir| File.directory? dir }
