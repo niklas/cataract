@@ -2,7 +2,16 @@ FactoryGirl.define do
   factory :torrent do
     sequence(:info_hash) { |i| "%0.40d" % i }
     sequence(:filename) { |i| "#{i}.torrent" }
+
     directory
+
+    # this is just for migration
+    factory :dirless_torrent do
+      after_create do |torrent|
+        Directory.delete_all id: torrent.directory_id
+        Torrent.update_all({ directory_id: nil}, { id: torrent.id })
+      end
+    end
 
 
     factory :remote_torrent do

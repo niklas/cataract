@@ -23,14 +23,14 @@ class TorrentDecorator < ApplicationDecorator
     end
   end
 
-  def human_bytes(bytes, rate=false)
+  def human_bytes(bytes)
     return if bytes.blank?
-    h.number_to_human_size(bytes)
-      .sub(/ytes$/,'') + (rate ? '/s' : '')
+    h.number_to_human_size(bytes).sub(/ytes$/,'')
   end
 
   def human_bytes_rate(bytes)
-    human_bytes(bytes, true)
+    return if bytes.blank?
+    human_bytes(bytes) + '/s'
   end
 
   def handle_remote
