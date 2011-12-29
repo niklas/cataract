@@ -3,15 +3,15 @@ class Worker
   class ReachedMaxAttempts < RuntimeError; end
 
   def self.start(*a)
-    new.start(*a)
+    new(*a).start
   end
 
-  attr_reader :channel, :options
+  attr_reader :job_class_name, :options
   attr_accessor :attempts
   attr_writer :listen
 
-  def initialize(channel, options={})
-    @channel = channel
+  def initialize(job_class_name, options={})
+    @job_class_name = job_class_name
     @options = options.with_indifferent_access
     @attempts = @options.delete(:attempts) || 5
     @listen  = @options[:listen] == false ? @options.delete(:listen) 
@@ -26,7 +26,11 @@ class Worker
     @running = true
     handle_signals
     while running?
-      work
+      begin
+        work
+      rescue ReachedMaxAttempts => e
+        log("#{e}, retrying")
+      end
     end
   end
 
@@ -53,7 +57,7 @@ class Worker
   end
 
   def next_job
-    job_class.locked.first
+    job_class.locked
   end
 
   def listen?
@@ -91,7 +95,7 @@ class Worker
 
   # TODO this should be decoupled. Must give class_name instead of channel to worker
   def job_class
-    @job_class ||= channel.classify.constantize
+    job_class_name.constantize
   end
 
   #override this method to do whatever you want

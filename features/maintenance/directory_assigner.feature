@@ -1,34 +1,25 @@
 @fakefs
 Feature: Assigning directories
-  In order to group torrents by their location on disk
+  In order to eactly locate the torrent files
   As a horder
-  I want torrents assigned to the most specific directory
+  I want to have directories assigned to exactly matching directories
 
-  Scenario: assign existing sub-directories, noting infixes for later compression
+
+  Scenario: catches exact path
    Given the following filesystem structure exists on disk:
-       | type | path                                                     |
-       | file | /media/Serien/Tatort/Season23/Season23/Episode_5.mkv     |
-       | file | /media/Serien/Lindenstr/Season77/Season77/Episode_66.mkv |
-      # notice what a (missing) trailing ^^^^^^^ slash can make rsync do
+       | type | path                                      |
+       | file | /media/more/torrents/Lost_7x01.torrent    |
+       | file | /media/more/torrents/archive/tkkg.torrent |
      And the following directories exist:
-       | directory | path                    |
-       | Serien    | /media/Serien           |
-       | Lindenstr | /media/Serien/Lindenstr |
-       | Tatort    | /media/Serien/Tatort    |
-     And the following torrents exist:
-       | torrent | title  | content_path                     | content_directory |
-       | T23x05  | T23x05 | /media/Serien/Tatort/Season23    |                   |
-       | L77x66  | L77x66 | /media/Serien/Lindenstr/Season77 |                   |
+       | directory | path                         |
+       | torrents  | /media/more/torrents         |
+       | archive   | /media/more/torrents/archive |
+     And the following dirless torrents exist:
+       | dirless torrent | filename          |
+       | Lost            | Lost_7x01.torrent |
+       | tkkg            | tkkg.torrent      |
+
     When the DirectoryAssigner runs
     Then 2 torrents should exist
-     And the directory "Tatort" should be the torrent "T23x05"'s content_directory
-     And the torrent "T23x05"'s content_path_infix should be "Season23"
-     And the torrent "T23x05"'s content_path should be ""
-     And the directory "Lindenstr" should be the torrent "L77x66"'s content_directory
-     And the torrent "L77x66"'s content_path_infix should be "Season77"
-     And the torrent "L77x66"'s content_path should be ""
-     And the following filesystem structure should still exist on disk:
-       | type | path                                                     |
-       | file | /media/Serien/Tatort/Season23/Season23/Episode_5.mkv     |
-       | file | /media/Serien/Lindenstr/Season77/Season77/Episode_66.mkv |
-
+     And the directory "torrents" should be the torrent "Lost"'s directory
+     And the directory "archive" should be the torrent "tkkg"'s directory
