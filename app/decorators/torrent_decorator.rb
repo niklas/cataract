@@ -29,6 +29,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def human_bytes_rate(bytes)
+    return if bytes.blank?
     human_bytes(bytes) + '/s'
   end
 
