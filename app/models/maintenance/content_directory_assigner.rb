@@ -1,13 +1,15 @@
 class Maintenance::ContentDirectoryAssigner < Maintenance::Base
 
   def work
-    Torrent.where(:content_directory_id => nil).each do |torrent|
+    Torrent.where(:content_directory_id => nil).where('content_path IS NOT NULL').each do |torrent|
       dir, infix = directory_with_minimal_infix(torrent)
       if dir
         torrent.content_directory = dir
         torrent.content_path_infix = infix.to_s
         torrent.content_path = nil
         torrent.save!
+      else
+        STDERR.puts "no directory found for #{torrent.read_attribute(:content_path)}"
       end
     end
   end
