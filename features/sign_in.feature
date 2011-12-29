@@ -16,3 +16,4 @@ Feature: Signing in
         | name     |
         | running  |
         | archived |
+        | remote   |

@@ -1,0 +1,6 @@
+- torrent ||= item
+%li.torrent{class: torrent.status}
+  %a{href: torrent_path(torrent)}
+    %h3.title= torrent.title
+    %p.filename.ui-li-desc= torrent.filename
+

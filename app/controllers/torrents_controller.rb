@@ -1,6 +1,8 @@
 class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
+  respond_to :js, :html
+
   private
   def collection
     @torrents ||= search.results

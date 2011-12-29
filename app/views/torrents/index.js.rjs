@@ -1,0 +1,3 @@
+page["#{@search.status}_torrents"].append(render(:partial => 'item', :collection => @torrents))
+page["#{@search.status}_torrents"].listview('refresh')
+# FIXME remove duplication of id generation
