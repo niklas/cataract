@@ -6,5 +6,5 @@ When /^I scroll to the bottom$/ do
 end
 
 When /^I wait for the spinner to stop$/ do
-  page.should have_no_css('span.ui-icon-loading')
+  page.should have_no_css('span.ui-icon-loading', visible: true)
 end

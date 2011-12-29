@@ -1,28 +1,29 @@
-jQuery ($) ->
-  $.fn.endlessPage = ->
-    nearBottomOfPage = ->
-      $(window).scrollTop() > $(document).height() - $(window).height() - 200
+$ = jQuery
 
-    $(@).each ->
-      $list    = $(@)
-      loading  = false
-      page     = 1
-      numPages = $list.data('num-pages')
-      url      = $list.data('url')
+$.fn.endlessPage = ->
+  nearBottomOfPage = ->
+    $(window).scrollTop() > $(document).height() - $(window).height() - 200
 
-      $(window).scroll ->
-        return if loading == true
-        return if page == numPages
+  $(@).each ->
+    $list    = $(@)
+    loading  = false
+    page     = 1
+    numPages = $list.data('num-pages')
+    url      = $list.data('url')
 
-        if nearBottomOfPage()
-          loading = true
-          page++
-          $.ajax
-            url: "#{url}/page/#{page}"
-            type: 'get'
-            dataType: 'script'
-            success: ->
-              $(window).sausage('draw')
-              loading=false
+    $(window).scroll ->
+      return if loading == true
+      return if page == numPages
 
-      $(window).sausage()
+      if nearBottomOfPage()
+        loading = true
+        page++
+        $.ajax
+          url: "#{url}/page/#{page}"
+          type: 'get'
+          dataType: 'script'
+          success: ->
+            $(window).sausage('draw')
+            loading=false
+
+    $(window).sausage()
