@@ -15,8 +15,8 @@ describe Worker do
   end
 
   it "should know the channel to listen to" do
-    worker = Worker.new('fnords')
-    worker.channel.should == 'fnords'
+    worker = Worker.new('Fnord')
+    worker.job_class_name.should == 'Fnord'
   end
 
   let(:job_class) { 
@@ -128,7 +128,7 @@ describe Worker do
       let(:job)       { mock 'a Fnord' }
 
       it "uses locked scope on job_class to return a job" do
-        job_class.stub_chain(:locked, :first).and_return(job)
+        job_class.stub_chain(:locked).and_return(job)
 
         subject.next_job.should == job
       end
