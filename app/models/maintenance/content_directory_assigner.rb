@@ -14,6 +14,15 @@ class Maintenance::ContentDirectoryAssigner < Maintenance::Base
     end
   end
 
+  # DOH if we would have used Pathname#include? no content_path_infices with .. would have been created
+  #     but there also was a confusion about the union-fs, we will fix this later
+  def undo_doubledots
+    Torrent.where("content_path_infix LIKE '..%'").includes(:content_directory).each do |t| 
+      torrent.update_attributes! content_directory_id: nil, 
+                                 content_path_infix: nil, 
+                                 content_path: (torrent.content_directory.path/t.content_path_infix).to_s.sub(/more\d/,'all') }
+  end
+
   private
   def directory_with_minimal_infix(torrent)
     directories
@@ -38,3 +47,4 @@ class Pathname
     other.to_s.start_with?(self.to_s)
   end
 end
+
