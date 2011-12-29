@@ -4,5 +4,4 @@
 - for_footer do
   = render 'navigation'
 
-= linked_list_of @torrents, class: 'torrents', id: "#{@search.status}_torrents", 'data-url' => url_for(controller: 'torrents', status: @search.status), 'data-num-pages' => @torrents.num_pages do |torrent|
-  = render 'item', torrent: torrent
+= torrent_list @search
