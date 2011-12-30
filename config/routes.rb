@@ -1,4 +1,6 @@
 Cataract::Application.routes.draw do
+  get "greetings/dashboard"
+
   devise_for :users
 
   resources :torrents do
@@ -10,7 +12,7 @@ Cataract::Application.routes.draw do
     resource :move,     controller: :move, only: [:new, :create, :show]
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
-  root :to => 'torrents#index', :as => 'dashboard'
+  root :to => 'greetings#dashboard', :as => 'dashboard'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

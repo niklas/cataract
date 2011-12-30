@@ -7,7 +7,10 @@ class Torrent
     States = %w(running archived remote)
     def results
       results = Torrent.scoped
-      results = results.by_status( status )
+
+      if has_key?(:status)
+        results = results.by_status( status )
+      end
 
       results.order("created_at DESC").page(page).per(per)
     end

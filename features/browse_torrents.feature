@@ -21,7 +21,7 @@ Feature: Browse Torrents
       And an archived torrent exists with title: "Last"
       And I am signed in
 
-     When I follow "running" within the footer
+     When I follow "running"
      Then I should see a list of the following torrents:
        | title   |
        | Current |
@@ -83,7 +83,7 @@ Feature: Browse Torrents
        | Number 01 |
       And I am signed in
 
-     When I follow "archived" within the footer
+     When I follow "archived"
      Then I should see a list of the following torrents:
        | title     |
        | Number 01 |
