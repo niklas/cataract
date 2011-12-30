@@ -7,17 +7,20 @@ $.fn.endlessPage = ->
   $(@).each ->
     $list    = $(@)
     loading  = false
-    page     = 1
     numPages = $list.data('num-pages')
     url      = $list.data('url')
+    page     = $list.data('page') || 1
+
+    return if page > 1 or page >= numPages
 
     $(window).scroll ->
       return if loading == true
-      return if page == numPages
+      return if page >= numPages
 
       if nearBottomOfPage()
         loading = true
         page++
+        $list.data('page', page)
         $.ajax
           url: "#{url}/page/#{page}"
           type: 'get'
