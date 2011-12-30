@@ -153,3 +153,30 @@ Feature: Browse Torrents
        | Number 40 |
       But I should not see "Number 41"
       And I should not see "Number 42"
+
+     # toggling should reload items
+     When I follow "running"
+     Then the button "running" should be active within the footer
+     When I follow "archived"
+     Then I should see a list of the following torrents:
+       | title     |
+       | Number 01 |
+       | Number 02 |
+       | Number 03 |
+       | Number 04 |
+       | Number 05 |
+       | Number 06 |
+       | Number 07 |
+       | Number 08 |
+       | Number 09 |
+       | Number 10 |
+       | Number 11 |
+       | Number 12 |
+       | Number 13 |
+       | Number 14 |
+       | Number 15 |
+       | Number 16 |
+       | Number 17 |
+       | Number 18 |
+       | Number 19 |
+       | Number 20 |
