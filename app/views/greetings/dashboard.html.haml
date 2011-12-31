@@ -1,10 +1,10 @@
 - for_header do
   %h1= ta :dashboard
 
-= mobile_tag tag: 'ul', role: 'listview' do
+= mobile_tag tag: 'ul', role: 'listview', class: 'filters' do
   - Torrent::Search::States.each do |state|
     %li
       %a{href: url_for(controller: 'torrents', status: state)}
-        %h3.name= ta :"torrents.#{state}"
+        %h3.name= t_status state
 
 

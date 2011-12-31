@@ -22,19 +22,28 @@ Feature: Browse Torrents
       And I am signed in
 
      When I follow "running"
-     Then I should see a list of the following torrents:
+     Then I should be on the running list page
+      And I should see a list of the following torrents:
        | title   |
        | Current |
       And the button "running" should be active within the footer
 
       And I follow "archived" within the footer
-     Then I should see a list of the following torrents:
+     Then I should be on the archived list page
+      And I should see a list of the following torrents:
        | title |
        | Last  |
       And the button "archived" should be active within the footer
 
      When I follow "Last"
      Then I should be on the page for the archived torrent
+
+     When I follow "archived" within the header
+     Then I should be on the archived list page
+
+     When I follow "Dashboard"
+     Then I should see "Dashboard" within the header
+      And I should be on the dashboard page
 
   Scenario: Paginate by endless page
     Given the following archived torrents exist:
