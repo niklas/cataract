@@ -1,4 +1,4 @@
-= simple_form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
+= simple_form_for resource, :as => resource_name, :url => session_path(resource_name), html: { 'data-ajax' => false } do |f|
   = f.input :email, :hint => false
   = f.input :password, :input_html => { :size => 40 }, :hint => false
   - if devise_mapping.rememberable?
