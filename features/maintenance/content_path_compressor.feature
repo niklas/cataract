@@ -17,9 +17,10 @@ Feature: compress content paths
        | Lindenstr | media/Serien/Lindenstr |
        | Tatort    | media/Serien/Tatort    |
      And the following torrents exist:
-       | torrent | title  | content_path_infix | content_filenames         | content_directory     |
-       | T23x05  | T23x05 | Season23           | [Season23/Episode_5.mkv]  | directory "Tatort"    |
-       | L77x66  | L77x66 | Season77           | [Season77/Episode_66.mkv] | directory "Lindenstr" |
+       | torrent  | title    | content_path_infix | content_filenames         | content_directory     |
+       | T23x05   | T23x05   | Season23           | [Season23/Episode_5.mkv]  | directory "Tatort"    |
+       | L77x66   | L77x66   | Season77           | [Season77/Episode_66.mkv] | directory "Lindenstr" |
+       | NonExist | NonExist | non-exist.ogg      | [non-exist.ogg]           | directory "Serien"    |
     When the ContentPathCompressor runs
     Then the following filesystem structure should exist on disk:
        | type | path                                           |
@@ -31,15 +32,15 @@ Feature: compress content paths
        | directory | media/Serien/Tatort/Season23/Season23                   |
        | file      | media/Serien/Lindenstr/Season77/Season77/Episode_66.mkv |
        | directory | media/Serien/Lindenstr/Season77/Season77                |
+       | file      | media/Serien/non-exist.ogg                              |
     Then the directory "Tatort" should be the torrent "T23x05"'s content_directory
      And the torrent "T23x05"'s content_path should be ""
      And the torrent "T23x05"'s content_path_infix should be ""
+
      And the directory "Lindenstr" should be the torrent "L77x66"'s content_directory
      And the torrent "L77x66"'s content_path should be ""
      And the torrent "L77x66"'s content_path_infix should be ""
-     And the file "log/xbmc_updates.test.log" should contain exactly:
-       """
-       UPDATE path SET strPath = replace(strPath, 'Season23/Season23', 'Season23') WHERE like('Season23/Season23', strPath);
-       UPDATE path SET strPath = replace(strPath, 'Season77/Season77', 'Season77') WHERE like('Season77/Season77', strPath);
 
-       """
+     And the torrent "NonExist"'s current_state should be "missing"
+     And the torrent "NonExist"'s content_path should be ""
+     And the torrent "NonExist"'s content_path_infix should be ""
