@@ -18,7 +18,7 @@ set :application, "cataract"
 set :scm, :git
 set :repository,  "git@github.com:niklas/cataract.git"
 set :local_repository, "."
-set :branch, 'master'
+set :branch, ENV['BRANCH'] || 'master'
 set :git_enable_submodules, 1
 
 
