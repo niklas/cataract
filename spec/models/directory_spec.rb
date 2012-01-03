@@ -29,6 +29,11 @@ describe Directory do
       dir = build(:directory, path: '/there/can/be/only/one')
       dir.should_not be_valid
     end
+
+    it "should be used for name if none present" do
+      dir = build(:directory, path: '/just/the/last/matters to me', name: nil)
+      dir.name.should == 'Matters to me'
+    end
   end
 
   context "autocreation" do

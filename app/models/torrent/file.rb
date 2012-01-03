@@ -23,7 +23,7 @@ class Torrent
     true
   end
 
-  before_validation :set_info_hash_from_metainfo, :unless => :info_hash?
+  before_validation :set_info_hash_from_metainfo, :unless => :info_hash?, :if => :file_exists?
   validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
 
   # we must open the BStream manually because FakeFS and open-uri in MetaInfo.from_location collide

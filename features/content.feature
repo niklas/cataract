@@ -6,7 +6,7 @@ Feature: Torrent content
   @javascript
   Scenario: Move torrent
     Given a torrent with content exists with title: "Ubuntu"
-      And a directory exists with name: "Public"
+      And a directory exists with path: "/some/where/very/public", name: nil
       And I am signed in
       And I am on the page for the torrent
      When I follow "Move"

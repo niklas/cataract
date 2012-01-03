@@ -71,3 +71,5 @@ gem 'versatile_rjs', :git => 'git://github.com/niklas/versatile_rjs.git'
 gem 'draper'
 
 gem 'foreman'
+
+gem 'kaminari'

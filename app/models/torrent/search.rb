@@ -4,17 +4,27 @@ class Torrent
   end
 
   class Search < HashWithIndifferentAccess
-    States = %w(running archived)
+    States = %w(running archived remote)
     def results
       results = Torrent.scoped
-      if status.present?
+
+      if has_key?(:status)
         results = results.by_status( status )
       end
-      results
+
+      results.order("created_at DESC").page(page).per(per)
     end
 
     def status
       self[:status] ||= States.first
+    end
+
+    def page
+      self[:page] ||= 1
+    end
+
+    def per
+      self[:per] ||= 20
     end
   end
 end

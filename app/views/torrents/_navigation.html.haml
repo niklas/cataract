@@ -2,5 +2,5 @@
   %ul.filters
     - Torrent::Search::States.each do |state|
       %li{class: state}
-        %a.name.ui-state-persist{href: torrents_url(:status => state,), class: state == @search.status && 'ui-btn-active'}
+        %a.name.ui-state-persist{href: url_for(controller: 'torrents', status: state), class: state == @search.status && 'ui-btn-active'}
           = ta :"torrents.#{state}"

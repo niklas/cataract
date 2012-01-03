@@ -20,7 +20,8 @@ class Maintenance::ContentDirectoryAssigner < Maintenance::Base
     Torrent.where("content_path_infix LIKE '..%'").includes(:content_directory).each do |t| 
       torrent.update_attributes! content_directory_id: nil, 
                                  content_path_infix: nil, 
-                                 content_path: (torrent.content_directory.path/t.content_path_infix).to_s.sub(/more\d/,'all') }
+                                 content_path: (torrent.content_directory.path/t.content_path_infix).to_s.sub(/more\d/,'all')
+    end
   end
 
   private

@@ -133,4 +133,8 @@ module TorrentsHelper
       ""
     end
   end
+
+  def t_status(status)
+    ta :"torrents.#{status}"
+  end
 end
