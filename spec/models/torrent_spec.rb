@@ -90,6 +90,10 @@ describe Torrent do
       it "content.path should point to file" do
         torrent.content.path.should == archive.path/'tails.png'
       end
+
+      it "can be destroyed" do
+        expect { torrent.destroy }.to_not raise_error
+      end
     end
 
     describe "with multiple files" do
