@@ -46,10 +46,10 @@ class Torrent
     end
   rescue Errno::ENOENT => e
     raise FileNotFound.new(e.message)
-  #rescue # RubyTorrent::MetaInfoFormatError
-  #  # no UDP supprt yet
-  #  @mii = nil
-  #  raise HasNoInfoHash.new()
+  rescue RubyTorrent::MetaInfoFormatError => e
+    logger.debug { "could not set info hash from metainfo: #{e.message}" }
+    @mii = nil
+    raise HasNoInfoHash.new(e.message)
   end
 
   def metainfo?
