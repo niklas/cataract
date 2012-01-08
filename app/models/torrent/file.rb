@@ -23,6 +23,13 @@ class Torrent
     true
   end
 
+  validates_each :path do |record, attr, value|
+    begin
+      record.errors.add attr, :empty if File.size(value.to_path) < 10
+    rescue Errno::ENOENT => e
+    end
+  end
+
   before_validation :set_info_hash_from_metainfo, :unless => :info_hash?, :if => :file_exists?
   validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
 

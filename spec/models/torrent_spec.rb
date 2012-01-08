@@ -30,6 +30,16 @@ describe "A blank Torrent" do
 end
 
 describe Torrent do
+
+  context "bound to file" do
+    let(:torrent) { build :torrent_with_picture_of_tails }
+    it "needs the file not to be empty" do
+      torrent.should be_valid
+      File.truncate torrent.path, 0
+      torrent.should_not be_valid
+    end
+    it "needs the file to be a valid .torrent"
+  end
   describe "status" do
     it "should default to 'new'" do
       pending
