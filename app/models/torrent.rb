@@ -214,7 +214,14 @@ class Torrent < ActiveRecord::Base
     Rails.logger.debug "disabled own logging"
   end
 
-  concerned_with :states, :file, :remote, :content, :rtorrent, :syncing, :search, :transfer
+  concerned_with :states,
+                 :file,
+                 :remote,
+                 :content,
+                 :rtorrent,
+                 :syncing,
+                 :search,
+                 :transfer
 
 end
 
