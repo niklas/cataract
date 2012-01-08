@@ -2,7 +2,7 @@
 # instances of URI::Generic), so we loosen the checks a bit
 class RubyTorrent::MetaInfo
 
-  def url_class
+  def uri_class
     URI::Generic
   end
 
