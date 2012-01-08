@@ -21,6 +21,12 @@ GIT
       rak (= 1.0)
 
 GIT
+  remote: git://github.com/niklas/rubytorrent-allspice.git
+  revision: d7122d404659a7558af2f6e60f87f65f74c53d9e
+  specs:
+    rubytorrent-allspice (0.3.6)
+
+GIT
   remote: git://github.com/niklas/versatile_rjs.git
   revision: e2bba74be869446d4108701160047121d05eb2af
   specs:
@@ -259,7 +265,6 @@ GEM
       rspec (~> 2.7.0)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
-    rubytorrent-allspice (0.3.6)
     rubyzip (0.9.5)
     sass (3.1.10)
     sass-rails (3.1.5)
@@ -348,7 +353,7 @@ DEPENDENCIES
   rb-inotify
   rspec-cells
   rspec-rails (~> 2.7.0)
-  rubytorrent-allspice
+  rubytorrent-allspice!
   sass-rails (~> 3.1.0)
   scgi
   simple_form (~> 1.4.2)

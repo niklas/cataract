@@ -60,7 +60,7 @@ gem 'acts_as_list'
 gem 'apotomo', '~> 1.2.1'
 gem 'nokogiri' # for partial hack
 
-gem 'rubytorrent-allspice'
+gem 'rubytorrent-allspice', :git => 'git://github.com/niklas/rubytorrent-allspice.git'
 
 gem 'scgi'
 gem 'xmlrpcs'
