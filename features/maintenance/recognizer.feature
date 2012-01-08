@@ -34,6 +34,9 @@ Feature: recognize torrents
       And rtorrent should download the torrent
 
   @todo
+  Scenario: notify users by jabber
+
+  @todo
   Scenario: recognize torrents somewhere (with mlocate)
 
   @todo
