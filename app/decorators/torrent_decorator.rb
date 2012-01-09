@@ -43,6 +43,10 @@ class TorrentDecorator < ApplicationDecorator
     return error 'unavailable'
   end
 
+  def link_to_content
+    h.link_to :content, h.torrent_content_path(torrent)# , 'data-rel' => 'dialog', 'data-transition' => 'slidedown'
+  end
+
   def error(kind)
     h.content_tag :span, kind, class: kind
   end

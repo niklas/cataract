@@ -6,3 +6,5 @@ en:
       start: "Start"
       stop: "Stop"
       pause: "Pause"
+      content: "Content"
+      clear: "Clear"

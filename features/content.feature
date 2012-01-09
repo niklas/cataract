@@ -23,5 +23,15 @@ Feature: Torrent content
   @todo
   Scenario: Move torrent within same partition
 
-  @todo
+  @javascript
+  @rootfs
   Scenario: clear a torrent's content
+    Given a directory exists with path: "media/pics"
+      And a torrent with picture of tails exists with content_directory: the directory
+      And the torrent's content exists on disk
+      And I am signed in
+      And I am on the page for the torrent
+     When I follow "Content"
+      And I press "Clear"
+     Then I should see flash notice "Freed 71.7 KB"
+     Then the torrent's content should not exist on disk

@@ -29,6 +29,8 @@ class Torrent
   end
 
   class Content < Struct.new(:torrent)
+    extend ActiveModel::Naming
+
     def path
       base_path.path/info.name
     end
@@ -64,6 +66,20 @@ class Torrent
         info.length
       else
         info.files.map(&:length).reduce(:+)
+      end
+    end
+
+    def actual_size
+      `du --bytes '#{path.to_path.escape_quotes}' 2>/dev/null`.to_i
+    rescue
+      0
+    end
+
+    def destroy
+      if path.exist?
+        FileUtils.rm_rf path
+      else
+        torrent.errors.add :content, :blank
       end
     end
   end
@@ -150,23 +166,6 @@ class Torrent
 
   def moving_progress
     job_manager.status_for(mover_job_key)[:progress]
-  end
-
-  def delete_content!
-    return unless metainfo
-    begin
-      opfer = content_path
-      if File.exists?(opfer) 
-        rm_rf(opfer) 
-        true
-      else
-        errors.add :files, "^content not found: #{opfer}"
-        false
-      end
-    rescue Exception => e
-      errors.add :files, "^error on deleting content: #{e.to_s}"
-      false
-    end
   end
 
   # for fuse

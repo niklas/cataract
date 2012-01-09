@@ -8,6 +8,7 @@ Cataract::Application.routes.draw do
       get 'status/:status',            action: :index
     end
     resource :move,     controller: :move, only: [:new, :create, :show]
+    resource :content,  controller: :content, only: [:show, :destroy]
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
 
