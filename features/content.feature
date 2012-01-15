@@ -17,12 +17,6 @@ Feature: Torrent content
       And the directory should be the move's target
       And I should see "moving Ubuntu to Public"
 
-  @todo
-  Scenario: Move torrent to another partition
-
-  @todo
-  Scenario: Move torrent within same partition
-
   @javascript
   @rootfs
   Scenario: clear a torrent's content
