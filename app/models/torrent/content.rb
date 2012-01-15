@@ -43,8 +43,16 @@ class Torrent
       torrent.metainfo
     end
 
+    def single?
+      info.single?
+    end
+
+    def multiple?
+      !single?
+    end
+
     def files
-      if info.single?
+      if single?
         [ path ]
       else
         relative_files.map do |file|
@@ -54,7 +62,7 @@ class Torrent
     end
 
     def relative_files
-      if info.single?
+      if single?
         [ info.name ]
       else
         info.files.map(&:path).flatten.sort
@@ -62,7 +70,7 @@ class Torrent
     end
 
     def size
-      if info.single?
+      if single?
         info.length
       else
         info.files.map(&:length).reduce(:+)
