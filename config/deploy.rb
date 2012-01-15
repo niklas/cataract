@@ -54,10 +54,4 @@ namespace :deploy do
 
   before "deploy:assets:precompile", "deploy:symlink_shared"
 
-  task :group_permissions do
-    sudo "chgrp -R www-data #{current_release}"
-    sudo "chmod -R g+w #{current_release}"
-  end
-  after 'deploy:setup', 'deploy:group_permissions'
-
 end
