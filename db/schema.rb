@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213190451) do
+ActiveRecord::Schema.define(:version => 20120115035452) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -80,6 +80,12 @@ ActiveRecord::Schema.define(:version => 20111213190451) do
     t.datetime "updated_at"
   end
 
+  create_table "series", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "settings", :force => true do |t|
     t.string   "var",        :null => false
     t.string   "value"
@@ -124,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20111213190451) do
     t.integer  "content_directory_id"
     t.integer  "directory_id"
     t.string   "content_path_infix"
+    t.integer  "series_id"
   end
 
   add_index "torrents", ["content_directory_id"], :name => "index_torrents_on_content_directory_id"
