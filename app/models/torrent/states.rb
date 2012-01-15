@@ -40,21 +40,6 @@ class Torrent
     (remote.state ==  1 ? 'running' : 'paused')
   end
 
-  def initialize_status
-    self.status ||= new_auto_status
-  end
-  #before_validation :initialize_status, :on => :create
-
-  def new_auto_status
-    if file_exists?(:archived)
-      :archived
-    elsif url.present?
-      :remote
-    else
-      :new
-    end
-  end
-  
   def fetch!
     event_from [:remote] do
       update_attribute(:status, :fetching)
@@ -99,40 +84,6 @@ class Torrent
   end
 
  private
- # FIXME insane
-  def filepath_by_status(stat)
-    raise "remove this"
-    return if filename.blank?
-    case stat.to_sym
-    when :fetching 
-      File.join(Settings.history_dir, filename) + '.fetching'
-    when :running  
-      File.join(Settings.torrent_dir, 'active', filename)
-    when :paused   
-      File.join(Settings.torrent_dir, 'active', filename)
-    when :new      
-      File.join(Settings.torrent_dir, filename)
-    when :archived 
-      File.join(Settings.history_dir, filename)
-    when :remote   
-      ''
-    else
-      nil
-    end
-  end
-
-  def status_by_filepath
-    STATES.find(:invalid) do |stat|
-      path = filepath_by_status(stat)
-      path.blank? || File.exists?(path)
-    end
-  rescue NoMethodError
-    return :invalid
-  end
-
-  def find_file
-    STATES.map {|s| filepath_by_status(s) }.find { |p| File.exists?(p) }
-  end
 
   # Will try to get status from rtorrent and stop the torrent
   # if it's not open/active (in case) of and rtorrent restart etc.

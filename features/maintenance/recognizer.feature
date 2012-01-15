@@ -41,3 +41,6 @@ Feature: recognize torrents
 
   @todo
   Scenario: auto-fetch torrents for tv-shows
+
+  @todo
+  Scenario: recognize torrents added manually to rtorrent
