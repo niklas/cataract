@@ -16,7 +16,7 @@ set :use_sudo, false
 # application settings
 set :application, "cataract"
 set :scm, :git
-set :repository,  "git@github.com:niklas/cataract.git"
+set :repository,  "git://github.com/niklas/cataract.git"
 set :local_repository, "."
 set :branch, ENV['BRANCH'] || 'master'
 set :git_enable_submodules, 1
@@ -30,7 +30,7 @@ role :app, single_target
 role :web, single_target
 role :download, single_target
 role :db,  single_target, :primary => true
-set :user, "niklas"
+set :user, "torrent"
 
 set :deploy_to, "/home/#{user}/www/#{application}"
 
