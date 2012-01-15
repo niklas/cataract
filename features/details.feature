@@ -14,5 +14,12 @@ Feature: Details of a torrent
   Scenario: static attributes
     Given a running torrent exists with title: "Ubuntu"
       And I am signed in
-      And I am on the page of the torrent
+     When I go to the page of the torrent
      Then I should see "Ubuntu" within the page title
+
+  Scenario: series title
+    Given a series exists with title: "Tatort"
+      And a torrent exists with series: the series
+      And I am signed in
+     When I go to the page of the torrent
+     Then I should see "Tatort"

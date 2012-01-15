@@ -25,7 +25,8 @@ class Torrent < ActiveRecord::Base
   include FileUtils
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
-  belongs_to :feed
+  belongs_to :feed # TODO remove when series assigned
+  belongs_to :series
 
   validates_uniqueness_of :filename, :unless => :remote?
   validates_length_of :filename, :in => 9..255, :unless => :remote?
