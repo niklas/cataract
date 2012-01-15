@@ -33,6 +33,7 @@ role :db,  single_target, :primary => true
 set :user, "torrent"
 
 set :deploy_to, "/home/#{user}/www/#{application}"
+set :upstart_dir, "/home/#{user}/.init"
 
 namespace :deploy do
   desc "Restart App (Apache Passanger)"
@@ -53,5 +54,12 @@ namespace :deploy do
   end
 
   before "deploy:assets:precompile", "deploy:symlink_shared"
+
+  task :foreman do
+    run "mkdir -p #{upstart_dir}"
+    run "cd #{current_release} && bundle exec foreman export upstart #{upstart_dir} -a #{application}"
+  end
+
+  after "deploy:update_code", "deploy:foreman"
 
 end
