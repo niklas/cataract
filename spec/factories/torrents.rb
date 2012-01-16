@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :remote_torrent, :class => Torrent do
+    status 'remote'
+    sequence(:url) { |i| "http://cataract.local/#{i}.torrent" }
+  end
+
   factory :torrent do
     sequence(:info_hash) { |i| "%0.40d" % i }
     sequence(:filename) { |i| "#{i}.torrent" }
@@ -14,10 +19,6 @@ FactoryGirl.define do
     end
 
 
-    factory :remote_torrent do
-      status 'remote'
-      sequence(:url) { |i| "http://cataract.local/#{i}.torrent" }
-    end
 
     factory :running_torrent do
       status 'running'

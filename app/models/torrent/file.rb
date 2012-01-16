@@ -10,9 +10,12 @@ class Torrent
     directory.path/filename
   end
 
+  def path?
+    filename.present? && directory.present?
+  end
+
   def file_exists?(stat=current_state)
-    # cannot us pathname because fakefs does not fake it :(
-    filename.present? && File.exists?(path)
+    path? && File.exists?(path)
   end
 
   after_destroy :remove_file
@@ -23,7 +26,12 @@ class Torrent
     true
   end
 
-  validates_each :path do |record, attr, value|
+  before_validation :ensure_directory, :unless => :directory
+  def ensure_directory
+    self.directory ||= Directory.watched.first || Directory.first
+  end
+
+  validates_each :path, :if => :path? do |record, attr, value|
     begin
       record.errors.add attr, :empty if File.size(value.to_path) < 10
     rescue Errno::ENOENT => e

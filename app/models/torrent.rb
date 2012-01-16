@@ -215,7 +215,6 @@ class Torrent < ActiveRecord::Base
                  :remote,
                  :content,
                  :rtorrent,
-                 :syncing,
                  :search,
                  :transfer
 

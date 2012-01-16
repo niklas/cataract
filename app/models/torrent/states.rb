@@ -40,7 +40,7 @@ class Torrent
     (remote.state ==  1 ? 'running' : 'paused')
   end
 
-  def fetch!
+  def old_fetch!
     event_from [:remote] do
       update_attribute(:status, :fetching)
       fetch_by_url
