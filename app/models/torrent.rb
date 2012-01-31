@@ -45,6 +45,13 @@ class Torrent < ActiveRecord::Base
     stop! if running?
   end
 
+  def self.temporary_predicate(name)
+    attr_accessor name
+    define_method :"#{name}?" do
+      send(name).present?
+    end
+  end
+
   # TODO add tagging
   # acts_as_taggable
 

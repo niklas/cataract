@@ -1,11 +1,7 @@
 class Torrent
-  attr_accessor :fetch_automatically
 
+  temporary_predicate :fetch_automatically
   before_validation :fetch_from_url, :if => :fetch_automatically?
-
-  def fetch_automatically?
-    fetch_automatically.present?
-  end
 
   class Download < Struct.new(:torrent)
     attr_reader :payload
