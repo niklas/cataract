@@ -1,7 +1,11 @@
 class Torrent
   attr_accessor :fetch_automatically
 
-  before_validation :fetch_from_url, :if => :fetch_automatically
+  before_validation :fetch_from_url, :if => :fetch_automatically?
+
+  def fetch_automatically?
+    fetch_automatically.present?
+  end
 
   class Download < Struct.new(:torrent)
     attr_reader :payload
@@ -16,6 +20,10 @@ class Torrent
         @payload = response.body
         true
       end
+    end
+
+    def has_payload?
+      @payload && !@payload.empty?
     end
 
     private
@@ -44,7 +52,6 @@ class Torrent
 
   def fetch_from_url
     if url && !file_exists?
-      ensure_directory
       download.go!
     end
   rescue URI::InvalidURIError => e
@@ -67,13 +74,14 @@ class Torrent
   end
 
   def downloaded?
-    @download.present? && @download.payload.present?
+    download.has_payload?
   end
 
   after_save :write_file_from_download, :if => :downloaded?
 
   def write_file_from_download
-    File.open(path, 'w') { f.write download.payload }
+    ensure_directory
+    File.open(path, 'w') { |f| f.write download.payload }
   end
 
   def fetchable?(please_reload=false)

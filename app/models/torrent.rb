@@ -27,9 +27,6 @@ class Torrent < ActiveRecord::Base
   has_many :users, :through => :watchings
   belongs_to :feed # TODO remove when series assigned
   belongs_to :series
-
-  validates_uniqueness_of :filename, :unless => :remote?
-  validates_length_of :filename, :in => 9..255, :unless => :remote?
   
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
@@ -211,12 +208,12 @@ class Torrent < ActiveRecord::Base
   end
 
   concerned_with :states,
-                 :file,
                  :remote,
-                 :content,
+                 :file,
                  :rtorrent,
-                 :search,
-                 :transfer
+                 :transfer,
+                 :content,
+                 :search
 
 end
 

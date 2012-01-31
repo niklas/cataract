@@ -2,9 +2,13 @@ class Torrent
   belongs_to :directory, :inverse_of => :torrents
   validates_presence_of :directory, :if => :filename?
 
+  validates_uniqueness_of :filename, :unless => :remote?
+  validates_length_of :filename, :in => 9..255, :unless => :remote?
+
   class FileError < ActiveRecord::ActiveRecordError; end
   class FileNotFound < FileError; end
-  class HasNoInfoHash < FileError; end
+  class HasNoMetaInfo < FileError; end
+  class HasNoInfoHash < HasNoMetaInfo; end
 
   def path
     directory.path/filename
@@ -38,7 +42,7 @@ class Torrent
     end
   end
 
-  before_validation :set_info_hash_from_metainfo, :unless => :info_hash?, :if => :file_exists?
+  before_validation :set_info_hash_from_metainfo, :unless => :info_hash?
   validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
 
   # we must open the BStream manually because FakeFS and open-uri in MetaInfo.from_location collide
@@ -49,8 +53,12 @@ class Torrent
         stream = RubyTorrent::BStream.new file
         @mii = RubyTorrent::MetaInfo.from_bstream( stream ).info
       end
+    elsif downloaded?
+      StringIO.open download.payload, 'r'do |stream|
+        @mii = RubyTorrent::MetaInfo.from_stream(stream).info
+      end
     else
-      raise FileNotFound.new("file does not exist: #{path}")
+      raise HasNoMetaInfo.new("no source for metainfo found")
     end
   rescue Errno::ENOENT => e
     raise FileNotFound.new(e.message)

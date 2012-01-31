@@ -62,7 +62,7 @@ describe Torrent do
 
     it "should raise Torrent::FileNotFound when file does not exist" do
       torrent.stub!(:file_exists?).and_return(false)
-      expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
+      expect { torrent.metainfo }.to raise_error(Torrent::HasNoMetaInfo)
     end
 
     it "should raise Torrent::FileNotFound when RubyTorrent::Metainfo cannot find file" do
