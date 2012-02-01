@@ -1,5 +1,15 @@
 class Torrent
-  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid,:moving]
+  STATES = [
+    :running,
+    :paused,
+    :fetching,
+    :new,
+    :archived,
+    :remote,
+    :invalid,
+    :moving,
+    :missing
+  ]
 
   def self.by_status(status)
     status = status.to_sym
@@ -11,7 +21,7 @@ class Torrent
 
   # lets simulate the state machine
   def current_state
-    status ? status.to_sym : :nostatus
+    (self.status ||= guess_state).to_sym
   end
   def status=(new_status)
     write_attribute :status, new_status.to_s
@@ -25,6 +35,8 @@ class Torrent
       current_state == st
     end
   end
+
+  validates_inclusion_of :current_state, :in => STATES
 
   def local?
     archived? or running? or paused?
@@ -40,7 +52,7 @@ class Torrent
     (remote.state ==  1 ? 'running' : 'paused')
   end
 
-  def fetch!
+  def old_fetch!
     event_from [:remote] do
       update_attribute(:status, :fetching)
       fetch_by_url
@@ -54,6 +66,12 @@ class Torrent
     fetch! && start!
   end
 
+
+  def update_state!(new_state)
+    self.status = new_state
+    save!
+  end
+
   def self.fetch_and_start_by_url(new_url)
     if t = create(:url => new_url, :status => 'remote')
       t.fetch! && t.start!
@@ -61,26 +79,17 @@ class Torrent
     t
   end
 
-  def auto_status
-    unless file_exists?
-      unless url.blank?
-        :remote
-      else
-        status_by_filepath
-      end
+  # returns the guessed status by attributes
+  def guess_state
+    if file_exists?
+      :archived # TODO review status_from_rtorrent
     else
-      status
+      if url.blank?
+        :new
+      else
+        :remote
+      end
     end
-  end
-
-  def sync_status!
-    new_status = 'new'
-    begin
-      new_status = status_from_rtorrent
-    rescue NotRunning, HasNoInfoHash
-      new_status = auto_status
-    end
-    status = new_status
   end
 
  private

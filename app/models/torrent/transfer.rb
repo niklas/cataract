@@ -11,16 +11,18 @@ class Torrent
   def pause!
     event_from :running do 
       remote.stop!
-      update_attribute(:status, :paused)
+      update_state! :paused
       log('was paused')
     end
   end
 
   def start!
     event_from [:paused, :archived, :new] do 
+      ensure_content_directory
+      self.start_automatically = false
       self.load!  unless paused?
       remote.start! self
-      update_attribute(:status, :running)
+      update_state! :running
       log('started')
     end
   end
@@ -36,7 +38,7 @@ class Torrent
   end
 
   def finally_stop!
-    update_attribute(:status, :archived)
+    update_state! :archived
   end
 
 end

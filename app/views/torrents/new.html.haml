@@ -1,0 +1,9 @@
+- @torrent.fetch_automatically = true
+- @torrent.start_automatically = true
+= simple_form_for @torrent do |f|
+  - unless f.object.errors.empty?
+    %p.errors= f.object.errors.full_messages.to_sentence
+  = f.input :url, :as => :string
+  = f.hidden_field :fetch_automatically
+  = f.hidden_field :start_automatically
+  = f.submit ta(:add)

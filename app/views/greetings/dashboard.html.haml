@@ -1,5 +1,6 @@
 - for_header do
   %h1= ta :dashboard
+  = link_to :add, new_torrent_path
 
 = mobile_tag tag: 'ul', role: 'listview', class: 'filters' do
   - Torrent::Search::States.each do |state|

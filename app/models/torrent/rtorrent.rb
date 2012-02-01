@@ -6,6 +6,9 @@ require 'scgi/wrapped_socket'
 class Torrent
   class NotRunning < ActiveRecord::RecordInvalid; end
 
+  temporary_predicate :start_automatically
+  after_save :start!, :if => :start_automatically?
+
   def method_missing_with_xml_rpc(meth, *args, &blk)
     if remote.respond_to?(meth)
       remote.public_send meth, self, *args, &blk
