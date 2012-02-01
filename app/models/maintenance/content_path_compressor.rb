@@ -30,7 +30,7 @@ class Maintenance::ContentPathCompressor < Maintenance::Base
   private
   def missing!(torrent)
     logger.info "Torrent(#{torrent.id})#content_path '#{torrent.content_path}' does not exist, cannot compress"
-    torrent.status = 'missing'
+    torrent.status = :missing
     torrent.content_path = nil
     torrent.content_path_infix = nil
     torrent.save!

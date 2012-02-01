@@ -1,5 +1,15 @@
 class Torrent
-  STATES = [:running,:paused,:fetching,:new,:archived,:remote,:invalid,:moving]
+  STATES = [
+    :running,
+    :paused,
+    :fetching,
+    :new,
+    :archived,
+    :remote,
+    :invalid,
+    :moving,
+    :missing
+  ]
 
   def self.by_status(status)
     status = status.to_sym
