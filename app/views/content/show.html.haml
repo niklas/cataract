@@ -1,0 +1,4 @@
+- for_header do
+  = back_button_to torrent.title, torrent
+
+= button_to ta(:clear), torrent_content_path(torrent), :method => :delete, :remote => true, :form => { 'data-ajax' => false }

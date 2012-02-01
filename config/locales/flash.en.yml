@@ -1,0 +1,8 @@
+en:
+  flash:
+    content:
+      destroy:
+        notice: "Freed %{bytes}."
+    contents:
+      destroy:
+        notice: "Freed %{bytes}."

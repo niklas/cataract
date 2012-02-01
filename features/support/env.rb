@@ -24,7 +24,7 @@ Spork.prefork do
       # http://groups.google.com/group/webdriver/browse_thread/thread/e4e987eeedfdb586
       browser = driver.browser
       handles = browser.window_handles
-      browser.execute_script("window.open('about:blank','_blank','width=#{width},height=#{height}');")
+      browser.execute_script("window.open('chrome://version/?name=Webdriver','_blank','width=#{width},height=#{height}');")
       browser.close
       browser.switch_to.window((browser.window_handles - handles).pop)
       browser.execute_script("window.resizeTo(#{width}, #{height}); window.moveTo(1,1);")

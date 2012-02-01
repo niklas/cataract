@@ -25,10 +25,8 @@ class Torrent < ActiveRecord::Base
   include FileUtils
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
-  belongs_to :feed
-
-  validates_uniqueness_of :filename, :unless => :remote?
-  validates_length_of :filename, :in => 9..255, :unless => :remote?
+  belongs_to :feed # TODO remove when series assigned
+  belongs_to :series
   
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
@@ -45,6 +43,13 @@ class Torrent < ActiveRecord::Base
 
   def before_destroy
     stop! if running?
+  end
+
+  def self.temporary_predicate(name)
+    attr_accessor name
+    define_method :"#{name}?" do
+      send(name).present?
+    end
   end
 
   # TODO add tagging
@@ -96,13 +101,8 @@ class Torrent < ActiveRecord::Base
 
   # extended attributes
   def progress
-    (100.0 * content_bytes_on_disk / content_size).to_i
+    (100.0 * content.actual_size / content_size).to_i
   rescue FloatDomainError
-    0
-  end
-  def content_bytes_on_disk
-    `du --block-size=1 '#{content_path.escape_quotes}'`.to_i
-  rescue
     0
   end
   def bytes_left
@@ -214,7 +214,13 @@ class Torrent < ActiveRecord::Base
     Rails.logger.debug "disabled own logging"
   end
 
-  concerned_with :states, :file, :notifications, :remote, :content, :rtorrent, :syncing, :movie, :search, :transfer
+  concerned_with :states,
+                 :remote,
+                 :file,
+                 :rtorrent,
+                 :transfer,
+                 :content,
+                 :search
 
 end
 

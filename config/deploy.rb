@@ -16,9 +16,9 @@ set :use_sudo, false
 # application settings
 set :application, "cataract"
 set :scm, :git
-set :repository,  "git@github.com:niklas/cataract.git"
+set :repository,  "git://github.com/niklas/cataract.git"
 set :local_repository, "."
-set :branch, 'master'
+set :branch, ENV['BRANCH'] || 'master'
 set :git_enable_submodules, 1
 
 
@@ -30,9 +30,10 @@ role :app, single_target
 role :web, single_target
 role :download, single_target
 role :db,  single_target, :primary => true
-set :user, "niklas"
+set :user, "torrent"
 
 set :deploy_to, "/home/#{user}/www/#{application}"
+set :upstart_dir, "/home/#{user}/.init"
 
 namespace :deploy do
   desc "Restart App (Apache Passanger)"
@@ -54,10 +55,11 @@ namespace :deploy do
 
   before "deploy:assets:precompile", "deploy:symlink_shared"
 
-  task :group_permissions do
-    sudo "chgrp -R www-data #{current_release}"
-    sudo "chmod -R g+w #{current_release}"
+  task :foreman do
+    run "mkdir -p #{upstart_dir}"
+    run "cd #{current_release} && bundle exec foreman export upstart #{upstart_dir} --app=#{application} --user=#{user} --template=#{current_release}/config/foreman/templates/"
   end
-  after 'deploy:setup', 'deploy:group_permissions'
+
+  after "deploy:update_code", "deploy:foreman"
 
 end

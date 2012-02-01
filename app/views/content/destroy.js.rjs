@@ -1,0 +1,2 @@
+# TODO generalize flash messages for jquery mobile
+page.select('div[data-role=content]:last').append render('flash', flash: flash)

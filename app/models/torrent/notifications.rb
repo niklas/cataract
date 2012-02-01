@@ -17,6 +17,7 @@ class Torrent
 
   # notifies the users that have +notify_on_new_torrents+ set and adds it to their watchlist
   def notify_users_and_add_it
+    return # disabled for now
     return true if remote?
     User.find_all_by_notify_on_new_torrents(true).each do |user|
       Notifier.send_new(user,self) if user.notifiable_via_jabber?

@@ -24,44 +24,10 @@ class TorrentsController < InheritedResources::Base
   end
 
 
-  def new
-    @torrent = Torrent.new
-    respond_to do |want|
-      want.js
-    end
-  end
-
   def probe
     respond_to do |wants|
       wants.js do
         @torrent ||= Torrent.new(:url => params[:url].strip)
-      end
-    end
-  end
-
-  # create torrent
-  # TODO: other ways than fetching with url
-  def create
-    raise NotImplementedError, 'move to model'
-    @torrent = Torrent.create(params[:torrent])
-    if @torrent.save
-      if params[:commit] == "Fetch"
-        @torrent.fetch_and_start!
-        current_user.watch(@torrent)
-      end
-      respond_to do |wants|
-        wants.js  do
-          render_update do |page|
-            page[:torrent_search].reset
-          end
-          render :action => 'show'
-        end
-        wants.html  { render :action => 'show' }
-      end
-    else
-      respond_to do |wants|
-        wants.js  { render :action => 'new' }
-        wants.html  { render :action => 'new' }
       end
     end
   end

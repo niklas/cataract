@@ -1,4 +1,0 @@
-page.update_helm :title => 'New Torrent',
-                 :content => {:partial => '/torrents/new_form', :object => @torrent},
-                 :buttons => []
-                

@@ -30,6 +30,16 @@ describe "A blank Torrent" do
 end
 
 describe Torrent do
+
+  context "bound to file" do
+    let(:torrent) { build :torrent_with_picture_of_tails }
+    it "needs the file not to be empty" do
+      torrent.should be_valid
+      File.truncate torrent.path, 0
+      torrent.should_not be_valid
+    end
+    it "needs the file to be a valid .torrent"
+  end
   describe "status" do
     it "should default to 'new'" do
       pending
@@ -52,7 +62,7 @@ describe Torrent do
 
     it "should raise Torrent::FileNotFound when file does not exist" do
       torrent.stub!(:file_exists?).and_return(false)
-      expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
+      expect { torrent.metainfo }.to raise_error(Torrent::HasNoMetaInfo)
     end
 
     it "should raise Torrent::FileNotFound when RubyTorrent::Metainfo cannot find file" do
@@ -89,6 +99,10 @@ describe Torrent do
       # FIXME put this on the others in own torrent/content_spec
       it "content.path should point to file" do
         torrent.content.path.should == archive.path/'tails.png'
+      end
+
+      it "can be destroyed" do
+        expect { torrent.destroy }.to_not raise_error
       end
     end
 

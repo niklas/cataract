@@ -12,7 +12,12 @@ class Move < ActiveRecord::Base
 
   # FileUtils will use cp+rm between file system boundaries. consider using rsync for robustness and progress
   def work
-    FileUtils.mv torrent.content_path, target.path
+    FileUtils.mv torrent.content.path, target.path
+    if torrent.content.multiple?
+      FileUtils.rmdir File.dirname(torrent.content.files.first)
+    end
+    torrent.content_directory = target
+    torrent.save!
   end
 
 end

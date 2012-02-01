@@ -8,19 +8,15 @@ class Maintenance::Recognizer < Maintenance::Base
       directory.glob('*.torrent').each do |filepath|
         logger.info { "sync - found: #{filepath}" }
         filename = File.basename filepath
-        torrent = directory.torrents.build(:filename => filename, :status => 'new')
+        torrent = directory.torrents.build(:filename => filename, :status => 'new', :content_directory => directory)
         if torrent.save
-          #torrent.moveto(:archived)
-          #torrent.finally_stop!
           created << torrent 
-          #torrent.start!
         else
           logger.info "sync - could not create Torrent from #{filepath}: #{torrent.errors.full_messages.join(',')}"
         end
       end
     end
-    return created
-
+    created.each(&:start!)
   end
 
 end

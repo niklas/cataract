@@ -65,7 +65,24 @@ Given /^the file "([^"]*)" is deleted$/ do |file|
   end
 end
 
+Given /^#{capture_model}'s content exists on disk$/ do |m|
+  model!(m).content.files.each do |path|
+    step %Q~the file "#{path}" exists on disk~
+  end
+end
+
 Then /^the file "([^"]*)" should contain exactly:$/ do |file, content|
   file.should exist_as_file
   File.read(file).should == content
+end
+
+Then /^#{capture_model}'s content should not exist on disk$/ do |m|
+  step %Q~the file "#{model!(m).content.path}" should not exist on disk~
+end
+
+Given /^the URL "([^"]*)" points to "([^"]*)"$/ do |url, file|
+  response = mock 'Response', body: File.read( FileSystem.file_factory_path/file )
+  response.stub(:is_a?).with(Net::HTTPSuccess).and_return(true)
+  response.stub(:[]).with('content-disposition').and_return(nil)
+  Net::HTTP::stub(:get_response).with(URI.parse(url)).and_return(response)
 end
