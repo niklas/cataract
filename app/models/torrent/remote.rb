@@ -47,8 +47,12 @@ class Torrent
   end
 
   def fetch_from_url
-    if url && !file_exists?
-      download.go!
+    if url && !file_exists? && !downloaded?
+      event_from :remote do
+        if download.go!
+          self.status = :archived
+        end
+      end
     end
   rescue URI::InvalidURIError => e
     false

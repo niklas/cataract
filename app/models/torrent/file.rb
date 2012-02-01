@@ -18,7 +18,7 @@ class Torrent
     filename.present? && directory.present?
   end
 
-  def file_exists?(stat=current_state)
+  def file_exists?
     path? && File.exists?(path)
   end
 
