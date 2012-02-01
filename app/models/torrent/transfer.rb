@@ -18,6 +18,7 @@ class Torrent
 
   def start!
     event_from [:paused, :archived, :new] do 
+      ensure_content_directory
       self.start_automatically = false
       self.load!  unless paused?
       remote.start! self

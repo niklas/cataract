@@ -53,11 +53,6 @@ class Torrent
     remote.set_directory self, content_directory.path
   end
 
-  before_validation :ensure_content_directory, :unless => :content_directory
-  def ensure_content_directory
-    self.content_directory ||= Directory.watched.first || Directory.first
-  end
-
 
   # This Class represents the glue between 
   # the ActiveRecord Model Torrent and the 

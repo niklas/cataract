@@ -112,6 +112,10 @@ class Torrent
     d ? d.name : '-unknown-'
   end
 
+  def ensure_content_directory
+    self.content_directory ||= Directory.watched.first || Directory.first
+  end
+
 
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen
