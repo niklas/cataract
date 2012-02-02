@@ -81,7 +81,7 @@ class Torrent
 
   def write_file_from_download
     ensure_directory
-    File.open(path, 'w') { |f| f.write download.payload }
+    File.open(path, 'wb') { |f| f.write download.payload }
   end
 
   def fetchable?(please_reload=false)
