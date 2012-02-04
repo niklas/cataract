@@ -165,7 +165,7 @@ class Torrent
     readers :size_bytes, :completed_bytes
     readers :up_rate, :down_rate
     predicate :active?
-    readers :up_total, :down_total, :message
+    readers :up_total, :down_total, :message, :state
     predicate :open?
     bangs :start!, :stop!, :close!, :erase!
 
