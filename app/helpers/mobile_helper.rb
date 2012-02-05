@@ -8,4 +8,8 @@ module MobileHelper
   def footer(options={}, &block)
     mobile_tag options.reverse_merge(:role =>  'footer'), &block
   end
+
+  def content(options={}, &block)
+    mobile_tag options.reverse_merge(:role =>  'content'), &block
+  end
 end

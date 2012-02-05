@@ -41,6 +41,7 @@ module ApplicationHelper
     linked_list_of torrents, opts.reverse_merge(
       class: 'torrents',
       id:    torrent_list_id(search),
+      'data-filter' => true,
       'data-url' => url_for(controller: 'torrents', status: search.status),
       'data-num-pages' => torrents.num_pages) do |torrent|
         render 'torrents/item', torrent: torrent

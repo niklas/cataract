@@ -4,6 +4,7 @@ class Torrent
   end
 
   class Search < HashWithIndifferentAccess
+    extend ActiveModel::Naming
     States = %w(running archived remote)
     def results
       results = Torrent.scoped
@@ -25,6 +26,21 @@ class Torrent
 
     def per
       self[:per] ||= 20
+    end
+
+    def query
+      self[:query]
+    end
+
+    include ActiveModel::AttributeMethods
+    def attributes
+      self
+    end
+
+
+    include ActiveModel::Conversion
+    def persisted?
+      false
     end
   end
 end
