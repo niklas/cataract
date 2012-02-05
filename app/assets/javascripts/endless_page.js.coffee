@@ -6,6 +6,7 @@ $.fn.endlessPage = ->
 
   $(@).each ->
     $list    = $(@)
+    $page    = $list.closest('.ui-page')
     loading  = false
     numPages = $list.data('num-pages')
     url      = $list.data('url')
@@ -16,6 +17,7 @@ $.fn.endlessPage = ->
     $(window).scroll ->
       return if loading == true
       return if page >= numPages
+      return unless $page.is('.ui-page-active')
 
       if nearBottomOfPage()
         loading = true

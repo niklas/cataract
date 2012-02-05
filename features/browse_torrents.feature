@@ -208,3 +208,6 @@ Feature: Browse Torrents
        | Number 38 |
        | Number 39 |
        | Number 40 |
+       | Number 41 |
+       | Number 42 |
+       # the last two items are fetched because the short dashboard causes the scroll event
