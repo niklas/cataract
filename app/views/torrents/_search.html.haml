@@ -1,0 +1,7 @@
+- extra_page :id => search.status do
+  = header do
+    = link_to ta(:dashboard), dashboard_path
+    %h1= search.status
+
+  = content do
+    = torrent_list search

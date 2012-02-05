@@ -23,7 +23,7 @@ class Maintenance::ContentPathCompressor < Maintenance::Base
           t.save!
         end
 
-        Dir.rmdir tmp
+        Dir.rmdir tmp if tmp.directory?
 
         t.content_path = nil
         t.content_path_infix = nil

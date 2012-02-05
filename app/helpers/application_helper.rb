@@ -31,8 +31,8 @@ module ApplicationHelper
     string
   end
 
-  def torrent_list_id
-    "#{@search.status}_torrents"
+  def torrent_list_id(search=@search)
+    "#{search.status}_torrents"
   end
 
   # give a collection of torrents
@@ -40,10 +40,11 @@ module ApplicationHelper
     torrents = search.results
     linked_list_of torrents, opts.reverse_merge(
       class: 'torrents',
-      id:    torrent_list_id,
-      'data-url' => url_for(controller: 'torrents', status: search.status),
+      id:    torrent_list_id(search),
+      'data-filter' => true,
+      'data-url' => torrents_path(search),
       'data-num-pages' => torrents.num_pages) do |torrent|
-        render 'item', torrent: torrent
+        render 'torrents/item', torrent: torrent
       end
   end
 
@@ -58,11 +59,23 @@ module ApplicationHelper
       end
     end
 
-    def append_to_list(collections = {})
-      collections.each do |id, coll|
-        self[id].append(render(:partial => 'item', :collection => coll))
+    def append_to_list(searches = {})
+      searches.each do |id, search|
+        self[id].append(render(:partial => 'item', :collection => search.results))
         self[id].listview('refresh')
       end
+    end
+
+    def update_list(searches = {})
+      searches.each do |id, search|
+        self[id].data({
+          'url'       => torrents_path(search),
+          'page'      => search.page || 1,
+          'num-pages' => search.results.num_pages
+        })
+        self[id].html ''
+      end
+      append_to_list searches
     end
   end
 

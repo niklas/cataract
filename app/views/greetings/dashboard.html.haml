@@ -5,7 +5,8 @@
 = mobile_tag tag: 'ul', role: 'listview', class: 'filters' do
   - Torrent::Search::States.each do |state|
     %li
-      %a{href: url_for(controller: 'torrents', status: state)}
+      %a{href: "##{state}"}
         %h3.name= t_status state
 
-
+- Torrent::Search::States.each do |state|
+  = render 'torrents/search', search: Torrent::Search.new(status: state)

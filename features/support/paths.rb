@@ -15,7 +15,7 @@ module NavigationHelpers
       dashboard_path
 
     when /^the (running|archived|remote) list page$/
-      url_for controller: 'torrents', action: 'index', status: $1, only_path: true
+      dashboard_path # anchor: $1
 
     when /^the page (?:of|for) #{capture_model}$/
       case m = model!($1)
