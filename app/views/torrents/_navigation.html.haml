@@ -1,6 +1,0 @@
-= mobile_tag role: 'navbar' do
-  %ul.filters
-    - Torrent::Search::States.each do |state|
-      %li{class: state}
-        %a.name.ui-state-persist{href: url_for(controller: 'torrents', status: state), class: state == @search.status && 'ui-btn-active'}
-          = ta :"torrents.#{state}"
