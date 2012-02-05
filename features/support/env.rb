@@ -53,19 +53,6 @@ Spork.prefork do
   #
   ActionController::Base.allow_rescue = false
 
-  # Database
-  require 'database_cleaner'
-  DatabaseCleaner.strategy = :transaction
-  DatabaseCleaner.clean_with :truncation
-
-  Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-    DatabaseCleaner.strategy = :truncation, {:except => %w[widgets]}
-  end
-  
-  Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-    DatabaseCleaner.strategy = :transaction
-  end
-
   require 'cucumber/rspec/doubles'
   require 'kopflos/cucumber'
 end
