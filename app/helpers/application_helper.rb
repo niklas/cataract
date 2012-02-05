@@ -31,8 +31,8 @@ module ApplicationHelper
     string
   end
 
-  def torrent_list_id
-    "#{@search.status}_torrents"
+  def torrent_list_id(search=@search)
+    "#{search.status}_torrents"
   end
 
   # give a collection of torrents
@@ -40,10 +40,10 @@ module ApplicationHelper
     torrents = search.results
     linked_list_of torrents, opts.reverse_merge(
       class: 'torrents',
-      id:    torrent_list_id,
+      id:    torrent_list_id(search),
       'data-url' => url_for(controller: 'torrents', status: search.status),
       'data-num-pages' => torrents.num_pages) do |torrent|
-        render 'item', torrent: torrent
+        render 'torrents/item', torrent: torrent
       end
   end
 
