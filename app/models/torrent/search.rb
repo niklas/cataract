@@ -3,6 +3,11 @@ class Torrent
     Search.new(params)
   end
 
+  def self.with_terms(terms)
+    term = terms.strip.split.first
+    where('title ILIKE ?', "%#{term}%")
+  end
+
   class Search < HashWithIndifferentAccess
     extend ActiveModel::Naming
     States = %w(running archived remote)
@@ -13,7 +18,11 @@ class Torrent
         results = results.by_status( status )
       end
 
-      results.order("created_at DESC").page(page).per(per)
+      if has_key?(:terms) && terms.present?
+        results = results.with_terms( terms )
+      end
+
+      results.order("created_at DESC").page(page || 1).per(per)
     end
 
     def status
@@ -21,20 +30,24 @@ class Torrent
     end
 
     def page
-      self[:page] ||= 1
+      self[:page]
     end
 
     def per
       self[:per] ||= 20
     end
 
-    def query
-      self[:query]
+    def terms
+      self[:terms]
+    end
+
+    def page?
+      has_key?(:page)
     end
 
     include ActiveModel::AttributeMethods
     def attributes
-      self
+      self.slice(:status, :page, :per, :terms)
     end
 
 
