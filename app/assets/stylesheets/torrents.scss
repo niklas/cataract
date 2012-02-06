@@ -1,7 +1,18 @@
-@import "mixins/pies";
-
 .transfer_torrent {
   .progress {
+    position: relative;
+    svg {
+      position: absolute;
+      width: 76%;
+      margin: 10%;
+    }
+  }
+}
+
+li.torrent {
+  .progress {
+    width: 4.5em;
+    float: right;
     position: relative;
     svg {
       position: absolute;
