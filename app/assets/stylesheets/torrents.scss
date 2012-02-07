@@ -1,3 +1,12 @@
+@import "compass/css3/opacity";
+
+@mixin icon($icon) {
+  &:before {
+    content: $icon;
+    margin-right: 0.3em;
+  }
+}
+
 .transfer_torrent {
   .progress {
     .stretcher {
@@ -14,6 +23,18 @@
       margin: 1%;
       height: 98%;
     }
+  }
+  a.content {
+    @include icon("⛁");
+  }
+  .up {
+    @include icon("↥");
+  }
+  .down {
+    @include icon("↧");
+  }
+  .unavailable {
+    @include opacity(0.5);
   }
 }
 
