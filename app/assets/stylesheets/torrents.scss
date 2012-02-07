@@ -1,10 +1,18 @@
 .transfer_torrent {
   .progress {
+    .stretcher {
+      height: 0;
+      padding-bottom: 100%;
+      width: 100%;
+    }
     position: relative;
     svg {
       position: absolute;
-      width: 76%;
-      margin: 10%;
+      top: 0;
+      left: 0;
+      width: 98%;
+      margin: 1%;
+      height: 98%;
     }
   }
 }
@@ -12,10 +20,11 @@
 li.torrent {
   .progress {
     width: 4.5em;
+    height: 4.5em;
+    overflow: hidden;
     float: right;
     position: relative;
     svg {
-      position: absolute;
       width: 76%;
       margin: 10%;
     }

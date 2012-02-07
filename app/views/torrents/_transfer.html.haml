@@ -8,4 +8,6 @@
         %p.up= t.up_rate
         = render 'transfer/buttons', torrent: torrent
       .ui-block-b
-        .progress= t.progress
+        .progress
+          .stretcher
+          = t.progress

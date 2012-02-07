@@ -1,7 +1,7 @@
 - percent = percent.to_i
 - font_size ||= 55
 - rad = percent.to_f * Math::PI / 50
-%svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", viewBox: '0 0 200 200', preserveAspectRatio: "xMinYMin meet"}
+%svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", viewBox: '0 0 200 200', preserveAspectRatio: "xMidYMin meet", 'xmlns:xlink' => "http://www.w3.org/1999/xlink"}
   - x,y = Math::sin(rad) * 100, Math::cos(rad) * 100
   - if percent == 100
     %circle{fill: "rgb(100,153,255)", stroke: "rgb(221,255,100)",  'stroke-width' => "3", cx: 100, cy: 100, r: 100}
