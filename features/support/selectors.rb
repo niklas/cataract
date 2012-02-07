@@ -22,8 +22,8 @@ module HtmlSelectorsHelpers
     when /^flash (notice|alert)$/
       "#flash .#{$1}"
 
-    when 'the content size'
-      ".content_size"
+    when 'the content'
+      ".content"
     when 'the progress'
       ".progress"
     when /^the (up|down) rate$/

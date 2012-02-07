@@ -17,7 +17,7 @@ Feature: Transfer info
       And I am on the page for the torrent
      Then I should see "single" within the page title
      Then I should see the following attributes for the torrent:
-        | content size | <size>     |
+        | content      | <size>     |
         | progress     | <progress> |
         | up rate      | <up>       |
         | down rate    | <down>     |

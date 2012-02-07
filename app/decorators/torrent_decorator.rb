@@ -44,7 +44,9 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def link_to_content
-    h.link_to :content, h.torrent_content_path(torrent)# , 'data-rel' => 'dialog', 'data-transition' => 'slidedown'
+    h.link_to content_size, h.torrent_content_path(torrent),
+      class: 'content',
+      title: h.translate_action(:content)
   end
 
   def error(kind)
