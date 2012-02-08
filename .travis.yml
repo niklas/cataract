@@ -3,8 +3,6 @@ rvm:
   - 1.9.3-p0
 before_script:
 - "psql -c 'create database cataract_test;' -U postgres"
-postgres:
-  adapter: postgresql
-  database: cataract_test
-  username: postgres
-script: "bundle exec rake db:schema:load && bundle exec cucumber -r features -t ~@rtorrent && bundle exec rspec"
+- "sudo apt-get install rtorrent"
+- "cp config/database.yml{.travis,}"
+script: "bundle exec rake  && bundle exec rspec"
