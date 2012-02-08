@@ -21,10 +21,11 @@ group :development do
   gem "capistrano"
   gem 'rb-inotify'
   gem 'libnotify'
-  gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
+  gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
 end
 
 group :test do
+  gem 'rake'
   gem 'cucumber-rails', "~> 1.2.0"
   gem 'rspec-rails', "~> 2.7.0"
   gem "pickle"

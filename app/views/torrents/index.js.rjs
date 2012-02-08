@@ -1,1 +1,5 @@
-page.append_to_list torrent_list_id => @torrents
+if search.page?
+  page.append_to_list torrent_list_id(search) => search
+else
+  page.update_list torrent_list_id(search) => search
+end

@@ -6,24 +6,26 @@ $.fn.endlessPage = ->
 
   $(@).each ->
     $list    = $(@)
+    $page    = $list.closest('.ui-page')
     loading  = false
-    numPages = $list.data('num-pages')
-    url      = $list.data('url')
-    page     = $list.data('page') || 1
-
-    return if page > 1 or page >= numPages
 
     $(window).scroll ->
+      numPages = $list.data('num-pages')
+      page     = $list.data('page') || 1
+
       return if loading == true
       return if page >= numPages
+      return unless $page.hasClass('ui-page-active')
 
       if nearBottomOfPage()
         loading = true
         page++
         $list.data('page', page)
         $.ajax
-          url: "#{url}/page/#{page}"
+          url: $list.data('url')
           type: 'get'
+          data:
+            page: page
           dataType: 'script'
           success: ->
             $(window).sausage('draw')

@@ -26,14 +26,13 @@ Feature: Browse Torrents
       And I should see a list of the following torrents:
        | title   |
        | Current |
-      And the button "running" should be active within the footer
 
-      And I follow "archived" within the footer
+     When I follow "Dashboard"
+      And I follow "archived"
      Then I should be on the archived list page
       And I should see a list of the following torrents:
        | title |
        | Last  |
-      And the button "archived" should be active within the footer
 
      When I follow "Last"
      Then I should be on the page for the archived torrent
@@ -118,6 +117,7 @@ Feature: Browse Torrents
       But I should not see "Number 21"
 
      When I scroll to the bottom
+      And I wait for the spinner to stop
      Then I should see a list of the following torrents:
        | title     |
        | Number 01 |
@@ -163,10 +163,9 @@ Feature: Browse Torrents
       But I should not see "Number 41"
       And I should not see "Number 42"
 
-     # toggling should reload items
-     When I follow "running"
-     Then the button "running" should be active within the footer
-     When I follow "archived"
+     # toggling should not reload items
+     When I follow "Dashboard"
+      And I follow "archived"
      Then I should see a list of the following torrents:
        | title     |
        | Number 01 |
@@ -189,3 +188,26 @@ Feature: Browse Torrents
        | Number 18 |
        | Number 19 |
        | Number 20 |
+       | Number 21 |
+       | Number 22 |
+       | Number 23 |
+       | Number 24 |
+       | Number 25 |
+       | Number 26 |
+       | Number 27 |
+       | Number 28 |
+       | Number 29 |
+       | Number 30 |
+       | Number 31 |
+       | Number 32 |
+       | Number 33 |
+       | Number 34 |
+       | Number 35 |
+       | Number 36 |
+       | Number 37 |
+       | Number 38 |
+       | Number 39 |
+       | Number 40 |
+       | Number 41 |
+       | Number 42 |
+       # the last two items are fetched because the short dashboard causes the scroll event

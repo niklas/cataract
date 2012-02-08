@@ -8,31 +8,29 @@ Feature: Transfer info
     Given a existing directory exists with path: "incoming"
       And a torrent_with_picture_of_tails exists with directory: the directory, content_directory: the directory
       And I am signed in
+      And the file for the torrent exists
+      And the torrent was refreshed
 
   @rtorrent
   Scenario Outline: rtorrent connection failing in different ways
-    Given the file for the torrent exists
-      And the torrent was refreshed
-      And <scenario>
+    Given <scenario>
       And I am on the page for the torrent
      Then I should see "single" within the page title
      Then I should see the following attributes for the torrent:
-        | content size | <size>     |
+        | content      | <size>     |
         | progress     | <progress> |
         | up rate      | <up>       |
         | down rate    | <down>     |
 
     Examples:
-      | scenario                | size    | up          | down        | progress |
-      | the torrent was started | 71.7 KB | 0 B/s       | 0 B/s       | 0%       |
-      | nothing                 | 71.7 KB | not running | not running | 0%       |
-      | rtorrent shuts down     | 71.7 KB | unavailable | unavailable | 0%       |
+      | scenario                | size    | up          | down        | progress    |
+      | the torrent was started | 71.7 KB | 0 B/s       | 0 B/s       | 0%          |
+      | nothing                 | 71.7 KB | not running | not running | not running |
+      | rtorrent shuts down     | 71.7 KB | unavailable | unavailable | unavailable |
 
 
   Scenario: properly format values
-    Given the file for the torrent exists
-      And the torrent was refreshed
-      And rtorrent list contains the following:
+    Given rtorrent list contains the following:
         | up_rate | down_rate | hash        |
         | 10      | 23000     | the torrent |
      When I go to the page for the torrent
@@ -41,9 +39,7 @@ Feature: Transfer info
         | down rate | 22.5 KB/s |
 
   Scenario: cache of catch-all will be cleared
-    Given the file for the torrent exists
-      And the torrent was refreshed
-      And rtorrent list contains the following:
+    Given rtorrent list contains the following:
         | up_rate | hash        |
         | 5       | the torrent |
      When I go to the page for the torrent
@@ -56,3 +52,16 @@ Feature: Transfer info
      When I go to the page for the torrent
      Then I should see the following attributes for the torrent:
         | up rate   | 23 B/s    |
+
+  @javascript
+  Scenario: clicking the progress pie refreshes the status
+    Given I am on the page for the torrent
+      And rtorrent list contains the following:
+        | down_rate | up_rate | size_bytes | completed_bytes | hash        |
+        | 23        | 42      | 2000       | 300             | the torrent |
+     When I click on the progress pie within the transfer of the torrent
+      And I wait for the spinner to stop
+     Then I should see the following attributes for the torrent:
+        | up rate   | 42 B/s |
+        | down rate | 23 B/s |
+        | progress  | 15%    |

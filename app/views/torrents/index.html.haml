@@ -2,7 +2,4 @@
   = link_to ta(:dashboard), dashboard_path
   %h1= search.status
 
-- for_footer do
-  = render 'navigation'
-
-= render 'list', search: @search
+= render 'list', search: search

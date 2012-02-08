@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - 1.9.3-p0
+before_script:
+- "psql -c 'create database cataract_test;' -U postgres"
+- "sudo apt-get install rtorrent"
+- "cp config/database.yml{.travis,}"
+script: "bundle exec rake  && bundle exec rspec"

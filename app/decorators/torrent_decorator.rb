@@ -4,7 +4,9 @@ class TorrentDecorator < ApplicationDecorator
   allows :running?
 
   def progress
-    h.render 'pie', percent: torrent.progress
+    handle_remote do
+      h.render 'pie', percent: torrent.progress
+    end
   end
 
   def content_size
@@ -44,11 +46,13 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def link_to_content
-    h.link_to :content, h.torrent_content_path(torrent)# , 'data-rel' => 'dialog', 'data-transition' => 'slidedown'
+    h.link_to content_size, h.torrent_content_path(torrent),
+      class: 'content',
+      title: h.translate_action(:content)
   end
 
   def error(kind)
-    h.content_tag :span, kind, class: kind
+    h.content_tag :span, kind, class: "#{kind} error"
   end
 
   # Accessing Helpers

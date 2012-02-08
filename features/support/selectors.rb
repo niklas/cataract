@@ -22,9 +22,9 @@ module HtmlSelectorsHelpers
     when /^flash (notice|alert)$/
       "#flash .#{$1}"
 
-    when 'the content size'
-      ".content_size"
-    when 'the progress'
+    when 'the content'
+      ".content"
+    when /the progress( pie)?/
       ".progress"
     when /^the (up|down) rate$/
       ".#{$1}"
