@@ -1,7 +1,8 @@
 - torrent ||= item
-%li.torrent{class: torrent.status}
-  %a{href: torrent_path(torrent)}
-    - if torrent.running?
-      .progress= render 'pie', percent: torrent.progress
-    %h3.title= torrent.title
-    %p.filename.ui-li-desc= torrent.filename
+= decorate torrent do |td|
+  %li.torrent{class: torrent.status}
+    %a{href: torrent_path(torrent)}
+      - if torrent.running?
+        .progress= td.progress
+      %h3.title= torrent.title
+      %p.filename.ui-li-desc= torrent.filename
