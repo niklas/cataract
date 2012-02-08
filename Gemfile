@@ -25,6 +25,7 @@ group :development do
 end
 
 group :test do
+  gem 'rake'
   gem 'cucumber-rails', "~> 1.2.0"
   gem 'rspec-rails', "~> 2.7.0"
   gem "pickle"
