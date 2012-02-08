@@ -21,7 +21,7 @@ group :development do
   gem "capistrano"
   gem 'rb-inotify'
   gem 'libnotify'
-  gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
+  gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
 end
 
 group :test do

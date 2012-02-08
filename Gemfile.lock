@@ -13,14 +13,6 @@ GIT
       open4
 
 GIT
-  remote: git://github.com/niklas/notes.git
-  revision: 1ee7dbdeea242305aeca5cdfbf08468c7134d8a4
-  specs:
-    notes (0.0.3)
-      rainbow (>= 1.1)
-      rak (= 1.0)
-
-GIT
   remote: git://github.com/niklas/rubytorrent-allspice.git
   revision: d7122d404659a7558af2f6e60f87f65f74c53d9e
   specs:
@@ -32,6 +24,13 @@ GIT
   specs:
     versatile_rjs (0.1.2)
       rails (>= 3.1.0)
+
+GIT
+  remote: git://github.com/v0n/notes.git
+  revision: 18d11d5ade4983c01e46d9a316c550be0939d28a
+  specs:
+    notes (0.0.3)
+      paint (>= 0.8.4)
 
 GEM
   remote: http://rubygems.org/
@@ -205,6 +204,7 @@ GEM
     onfire (0.2.0)
     open4 (1.3.0)
     orm_adapter (0.0.5)
+    paint (0.8.4)
     pg (0.11.0)
     pickle (0.4.10)
       cucumber (>= 0.8)
@@ -239,8 +239,6 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.6)
-    rainbow (1.1.3)
-    rak (1.0)
     rake (0.9.2.2)
     rb-inotify (0.8.8)
       ffi (>= 0.5.0)
