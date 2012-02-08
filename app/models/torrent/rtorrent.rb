@@ -60,6 +60,7 @@ class Torrent
 
   class RTorrent < XMLRPC::ClientS
     class Offline < ::RuntimeError; end
+    class Unreachable < Offline; end
     class CouldNotFindInfoHash < ::ArgumentError; end
 
     class << self

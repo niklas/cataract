@@ -4,7 +4,9 @@ class TorrentDecorator < ApplicationDecorator
   allows :running?
 
   def progress
-    h.render 'pie', percent: torrent.progress
+    handle_remote do
+      h.render 'pie', percent: torrent.progress
+    end
   end
 
   def content_size
@@ -50,7 +52,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def error(kind)
-    h.content_tag :span, kind, class: kind
+    h.content_tag :span, kind, class: "#{kind} error"
   end
 
   # Accessing Helpers

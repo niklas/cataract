@@ -15,6 +15,12 @@
       width: 100%;
     }
     position: relative;
+    .error {
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      font-size: 200%;
+    }
     svg {
       position: absolute;
       top: 0;
@@ -33,7 +39,7 @@
   .down {
     @include icon("↧");
   }
-  .unavailable {
+  .error {
     @include opacity(0.5);
   }
 }

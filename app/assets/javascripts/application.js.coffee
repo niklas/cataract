@@ -14,3 +14,9 @@ $( 'body' ).live 'pageinit', (event) ->
       dataType: 'script'
       data:
         terms: @value
+
+  $('.transfer_torrent .progress').bind 'click', ->
+    $.ajax
+      url: $(this).closest('.page').data('url')
+      type: 'get'
+      dataType: 'script'

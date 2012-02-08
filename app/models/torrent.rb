@@ -100,16 +100,9 @@ class Torrent < ActiveRecord::Base
 
 
   # extended attributes
-  def progress
-    (100.0 * content.actual_size / content_size).to_i
-  rescue FloatDomainError
-    0
-  end
-  def bytes_left
-    content_size - completed_bytes
-  end
-  def eta
-    bytes_left.to_f / down_rate.to_f
+
+  def seconds_left
+    left_bytes.to_f / down_rate.to_f
   end
 
   def download_status
