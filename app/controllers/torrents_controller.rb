@@ -9,7 +9,7 @@ class TorrentsController < InheritedResources::Base
   end
 
   def search
-    @search ||= Torrent.search(params)
+    @search ||= Torrent.new_search(params)
   end
   helper_method :search
 

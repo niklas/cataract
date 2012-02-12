@@ -1,16 +1,14 @@
 class Torrent
-  def self.search(params={})
-    Search.new(params)
-  end
 
-  def self.with_terms(terms)
-    term = terms.strip.split.first
-    where('title ILIKE ?', "%#{term}%")
+  def self.new_search(params={})
+    Search.new(params)
   end
 
   class Search < HashWithIndifferentAccess
     extend ActiveModel::Naming
     States = %w(running archived remote)
+    FullTextFields = %w(title filename)
+
     def results
       results = Torrent.scoped
 
@@ -19,7 +17,7 @@ class Torrent
       end
 
       if has_key?(:terms) && terms.present?
-        results = results.with_terms( terms )
+        results = results.where terms_like_statement, like_terms
       end
 
       results.order("created_at DESC").page(page || 1).per(per)
@@ -44,6 +42,27 @@ class Torrent
     def page?
       has_key?(:page)
     end
+
+    private
+
+    def stripped_terms
+      terms.split.map(&:strip).reject(&:blank?)
+    end
+
+    def like_terms
+      '%' + stripped_terms.join('%') + '%'
+    end
+
+    def terms_fields
+      FullTextFields.map do |field|
+        "COALESCE(#{field}, '')"
+      end.join('||')
+    end
+
+    def terms_like_statement
+      "(#{terms_fields}) ILIKE ?"
+    end
+
 
     include ActiveModel::AttributeMethods
     def attributes

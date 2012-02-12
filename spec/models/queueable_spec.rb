@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe Queueable do
+  class Model < ActiveRecord::Base
+    set_table_name 'modls'
+  end
   it "should be a module" do
     described_class.should be_a(Module)
   end
 
   context "included in model" do
     let(:model) {
-      Class.new(ActiveRecord::Base).tap do |model|
-        model.set_table_name 'modls'
-      end
+      Model
     }
     let(:connection) { model.connection } 
     before do
