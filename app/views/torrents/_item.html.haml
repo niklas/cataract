@@ -1,6 +1,6 @@
 - torrent ||= item
 = decorate torrent do |td|
-  %li.torrent{class: torrent.status}
+  %li.torrent{class: torrent.status, id: td.item_id}
     %a{href: torrent_path(torrent)}
       - if torrent.running?
         .progress= td.progress
