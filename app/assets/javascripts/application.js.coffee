@@ -16,7 +16,20 @@ $( 'body' ).live 'pageinit', (event) ->
         terms: @value
 
   $('.transfer_torrent .progress').bind 'click', ->
+
+jQuery ->
+  $('body').bind 'tick', ->
+    active = $('.transfer_torrent').attr('id')
+    if active?
+      active = active.replace(/^\D+/, '')
     $.ajax
-      url: $(this).closest('.page').data('url')
+      url: '/torrents/progress'
+      data:
+        active: active
       type: 'get'
       dataType: 'script'
+    true
+
+  setInterval ->
+    $('body').trigger 'tick'
+  , 23 * 1000

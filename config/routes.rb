@@ -6,6 +6,7 @@ Cataract::Application.routes.draw do
       get 'status/:status/page/:page', action: :index
       get 'page/:page',                action: :index
       get 'status/:status',            action: :index
+      get 'progress',                  action: :progress
     end
     resource :move,     controller: :move, only: [:new, :create, :show]
     resource :content,  controller: :content, only: [:show, :destroy]

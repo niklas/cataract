@@ -5,7 +5,8 @@ class TorrentDecorator < ApplicationDecorator
 
   def progress
     handle_remote do
-      h.render 'pie', percent: torrent.progress
+      h.tag(:div, class: 'stretcher') +
+      h.render('pie', percent: torrent.progress)
     end
   end
 
@@ -33,6 +34,14 @@ class TorrentDecorator < ApplicationDecorator
   def human_bytes_rate(bytes)
     return if bytes.blank?
     human_bytes(bytes) + '/s'
+  end
+
+  def item_id
+    "torrent_item_#{torrent.id}"
+  end
+
+  def transfer_id
+    "transfer_torrent_#{torrent.id}"
   end
 
   def handle_remote

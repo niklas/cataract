@@ -3,6 +3,11 @@ class TorrentsController < InheritedResources::Base
 
   respond_to :js, :html
 
+  def progress
+    @active = params[:active].present? && Torrent.find(params[:active])
+    @torrents = Torrent.by_status('running')
+  end
+
   private
   def collection
     @torrents ||= search.results
