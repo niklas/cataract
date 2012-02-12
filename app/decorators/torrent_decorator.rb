@@ -6,7 +6,7 @@ class TorrentDecorator < ApplicationDecorator
   def progress
     handle_remote do
       h.content_tag(:div, '', class: 'stretcher') +
-      h.render('pie', percent: 42)
+      h.render('pie', percent: torrent.progress)
     end
   end
 
