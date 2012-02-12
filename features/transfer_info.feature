@@ -54,13 +54,13 @@ Feature: Transfer info
         | up rate   | 23 B/s    |
 
   @javascript
-  Scenario: clicking the progress pie refreshes the status
-    Given I am on the page for the torrent
+  Scenario: progress pie updates itself
+    Given the torrent is running
+      And I am on the page for the torrent
       And rtorrent list contains the following:
         | down_rate | up_rate | size_bytes | completed_bytes | hash        |
         | 23        | 42      | 2000       | 300             | the torrent |
-     When I click on the progress pie within the transfer of the torrent
-      And I wait for the spinner to stop
+     When the tick interval is reached
      Then I should see the following attributes for the torrent:
         | up rate   | 42 B/s |
         | down rate | 23 B/s |

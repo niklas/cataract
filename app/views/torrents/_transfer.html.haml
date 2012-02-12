@@ -1,5 +1,5 @@
 = decorate torrent do |td|
-  = content_tag_for :div, torrent, 'transfer' do
+  %div.transfer_torrent{id: td.transfer_id}
     .ui-grid-a
       .ui-block-a
         = td.link_to_content
@@ -7,6 +7,4 @@
         %p.up= td.up_rate
         = render 'transfer/buttons', torrent: torrent
       .ui-block-b
-        .progress
-          .stretcher
-          = td.progress
+        .progress= td.progress

@@ -1,0 +1,8 @@
+@torrents.each do |torrent|
+  decorate torrent do |td|
+    page.select("##{td.item_id} .progress").html td.progress
+    if torrent == @active
+      page.replace_partial 'transfer', torrent: torrent
+    end
+  end
+end
