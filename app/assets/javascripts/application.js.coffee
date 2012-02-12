@@ -17,6 +17,6 @@ $( 'body' ).live 'pageinit', (event) ->
 
   $('.transfer_torrent .progress').bind 'click', ->
     $.ajax
-      url: $(this).closest('.page').data('url')
+      url: $(this).closest('.ui-page').data('url')
       type: 'get'
       dataType: 'script'
