@@ -1,23 +1,25 @@
-# =require endless_page
-# =require spinner
+#= require jquery
+#= require jquery_ui
+#= require jquery_ujs
+#= require bootstrap
+#= require jquery.sausage
+#= require endless_page
+#= require spinner
 
-$ = jQuery
-
-$( 'body' ).live 'pageinit', (event) ->
+jQuery ->
   $('ul.torrents').endlessPage()
 
-  $('.ui-input-search input.ui-input-text').bind 'keyup change', ->
-    $list = $(@).closest('form').find('+ul.ui-listview')
+  $('#torrent_search_terms').bind 'keyup change', ->
+    # TODO url to js
     $.ajax
-      url: "#{$list.data('url')}"
+      url: "/torrents"
       type: 'get'
       dataType: 'script'
-      data:
-        terms: @value
+      data: $(@).closest('form').serialize()
+
 
   $('.transfer_torrent .progress').bind 'click', ->
 
-jQuery ->
   $('body').bind 'tick', ->
     active = $('.transfer_torrent').attr('id')
     if active?

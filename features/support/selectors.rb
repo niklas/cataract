@@ -32,7 +32,7 @@ module HtmlSelectorsHelpers
       "#transfer_torrent_#{model!($1).id}"
 
     when 'the page title'
-      "h1.title:last"
+      "h1#title"
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

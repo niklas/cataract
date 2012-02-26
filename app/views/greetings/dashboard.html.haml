@@ -4,9 +4,4 @@
 
 %ul.filters
   - Torrent::Search::States.each do |state|
-    %li
-      %a{href: "##{state}"}
-        %h3.name= t_status state
-
-- Torrent::Search::States.each do |state|
-  = render 'torrents/search', search: Torrent::Search.new(status: state)
+    %li= link_to state, torrents_path(status: state)

@@ -1,6 +1,6 @@
 = content_tag_for :div, torrent, 'transfer_buttons' do
-  = mobile_tag role: 'controlgroup', type: 'horizontal' do
+  .btn-group
     - if torrent.running?
-      = link_to :stop, torrent_transfer_path(torrent), :remote => true, 'data-role' => 'button', 'data-ajax' => false, :method => :delete
+      = link_to :stop, torrent_transfer_path(torrent), remote: true, class: 'btn', method: :delete
     - else
-      = link_to :start, torrent_transfer_path(torrent), :remote => true, 'data-role' => 'button', 'data-ajax' => false, :method => :post
+      = link_to :start, torrent_transfer_path(torrent), remote: true, class: 'btn', method: :post
