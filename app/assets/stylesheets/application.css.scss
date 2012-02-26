@@ -1,7 +1,14 @@
-/* =require jquery_mobile */
-/* =require pies */
-/* =require torrents */
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+/* get all of Bootstrap's styles, mixins and variables! Don't use Sproket's
+ * `require` directives for SASS files, because they're horrible and will kill
+ * your cat. */
 
+/* overwrite boostrap variables heer */
+
+@import "bootstrap";
 .ui-loader.mini {
   width: auto;
   position: fixed;
@@ -11,3 +18,6 @@
   right: 0;
   top: 0;
 }
+
+
+@import "torrents";

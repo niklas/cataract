@@ -5,6 +5,5 @@
     = f.input :remember_me, :as => :boolean, :wrap => false
   = f.button :submit, translate_action('.signin')
 
-- for_header do
-  = render :partial => "devise/shared/links"
+= render :partial => "devise/links"
 
