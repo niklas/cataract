@@ -10,6 +10,17 @@ Spork.prefork do
   require 'capybara/rails'
   require 'cucumber/rails'
 
+  require 'email_spec'
+  require 'email_spec/cucumber'
+
+  require 'cucumber/rspec/doubles'
+
+  require 'factory_girl'
+
+  require 'kopflos/cucumber'
+
+  World(RSpec::Matchers)
+
   # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
   # order to ease the transition to Capybara we set the default here. If you'd
   # prefer to use XPath just remove this line and adjust any selectors in your
@@ -52,9 +63,6 @@ Spork.prefork do
   # recommended as it will mask a lot of errors for you!
   #
   ActionController::Base.allow_rescue = false
-
-  require 'cucumber/rspec/doubles'
-  require 'kopflos/cucumber'
 end
 
 Spork.each_run do
