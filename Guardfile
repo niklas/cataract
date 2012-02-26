@@ -47,15 +47,13 @@ group :test, :halt_on_fail => true do
     watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
 
     watch(%r{^app/decorators/torrent})        { %w(transfer_info).map { |f| "features/#{f}.feature"} }
+
+    callback(:run_all_end) do
+      # update todo file
+      system 'script/todo'
+    end
   end
 
-end
-
-# what to watch? what indicates a bored developer?
-guard 'shell' do
-  watch('.git/HEAD') do |m|
-    `bundle exec notes --colour app lib spec features bin config | tee tmp/TODO`
-  end
 end
 
 guard 'bundler' do
