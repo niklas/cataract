@@ -46,5 +46,6 @@ Spork.each_run do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
   FactoryGirl.reload
+  I18n.reload!
   load Rails.root/'config'/'routes.rb'
 end
