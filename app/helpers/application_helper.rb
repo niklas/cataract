@@ -49,7 +49,6 @@ module ApplicationHelper
     def append_to_list(searches = {})
       searches.each do |id, search|
         self[id].append(render(:partial => 'item', :collection => search.results))
-        self[id].listview('refresh')
       end
     end
 

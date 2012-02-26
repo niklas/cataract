@@ -1,4 +1,4 @@
-= simple_form_for search, url: torrents_path do |f|
+= simple_form_for search, url: torrents_path, remote: true, method: :get do |f|
   = f.input :terms
   = f.hidden_field :status
 

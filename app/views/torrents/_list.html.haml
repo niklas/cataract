@@ -1,3 +1,3 @@
-%ul.torrents{id: torrent_list_id(search), data: { url: torrents_path(search), 'num-pages' => search.results.count }}
+%ul#torrents.torrents{data: { url: torrents_path(search), 'num-pages' => search.results.count }}
   - search.results.each do |torrent|
     = render 'torrents/item', torrent: torrent

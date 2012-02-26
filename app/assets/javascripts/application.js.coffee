@@ -1,5 +1,5 @@
 #= require jquery
-#= require jquery_ui
+#= require jquery.ui.widget
 #= require jquery_ujs
 #= require bootstrap
 #= require jquery.sausage
@@ -10,12 +10,7 @@ jQuery ->
   $('ul.torrents').endlessPage()
 
   $('#torrent_search_terms').bind 'keyup change', ->
-    # TODO url to js
-    $.ajax
-      url: "/torrents"
-      type: 'get'
-      dataType: 'script'
-      data: $(@).closest('form').serialize()
+    $(@).closest('form').submit()
 
 
   $('.transfer_torrent .progress').bind 'click', ->

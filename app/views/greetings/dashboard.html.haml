@@ -4,4 +4,4 @@
 
 %ul.filters
   - Torrent::Search::States.each do |state|
-    %li= link_to state, torrents_path(status: state)
+    %li= link_to state, torrents_path(torrent_search: {status: state})

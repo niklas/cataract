@@ -11,6 +11,7 @@ group :assets do
   gem 'uglifier', '>= 1.2.3'
   gem 'jquery-rails'
   gem 'bootstrap-sass', '~> 2.0.0'
+  gem 'jquery-ui-rails'
 end
 
 
