@@ -28,4 +28,5 @@ Feature: Torrent content
      When I follow "Content"
       And I press "Clear"
      Then I should see flash notice "Freed 71.7 KB"
+      And I should be on the page for the torrent
      Then the torrent's content should not exist on disk

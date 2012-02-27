@@ -7,13 +7,13 @@
 #= require spinner
 
 jQuery ->
-  $('ul.torrents').endlessPage()
+  $('ul#torrents').endlessPage()
 
   $('#torrent_search_terms').bind 'keyup change', ->
     $(@).closest('form').submit()
 
 
-  $('.transfer_torrent .progress').bind 'click', ->
+  $('.transfer_torrent .progress').bind 'click', -> $('body').trigger 'tick'
 
   $('body').bind 'tick', ->
     active = $('.transfer_torrent').attr('id')

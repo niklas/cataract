@@ -23,7 +23,8 @@ $.fn.endlessPage = ->
           url: $list.data('url')
           type: 'get'
           data:
-            page: page
+            torrent_search:
+              page: page
           dataType: 'script'
           success: ->
             $(window).sausage('draw')

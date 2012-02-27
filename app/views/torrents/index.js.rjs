@@ -1,5 +1,5 @@
 if search.page?
-  page.append_to_list '#torrents' => search
+  page.append_to_list 'torrents' => search
 else
   page.update_list 'torrents' => search
 end
