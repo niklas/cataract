@@ -3,7 +3,6 @@ Feature: Signing in
   As a registered user
   I want to sign in
 
-  @javascript
   Scenario: Signing in
     Given a registered user exists with email: "me@cataract.local"
       And I am on the home page
