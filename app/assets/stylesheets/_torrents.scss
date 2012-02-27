@@ -1,9 +1,11 @@
 @import "compass/css3/opacity";
 
 @mixin icon($icon) {
+  margin-left: 1.3em;
   &:before {
     content: $icon;
     margin-right: 0.3em;
+    margin-left: -1.3em;
   }
 }
 

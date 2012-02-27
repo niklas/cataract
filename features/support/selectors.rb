@@ -14,8 +14,10 @@ module HtmlSelectorsHelpers
       "#session .name"
 
     when "the header"
-      "div[data-role='header']"
+      "div.navbar"
+
     when "the footer"
+      raise "no footer"
       "div[data-role='footer']"
 
     # TODO move to jquery_mobile

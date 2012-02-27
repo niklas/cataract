@@ -37,9 +37,6 @@ Feature: Browse Torrents
      When I follow "Last"
      Then I should be on the page for the archived torrent
 
-     When I follow "archived" within the header
-     Then I should be on the archived list page
-
      When I follow "Dashboard"
      Then I should see "Dashboard" within the header
       And I should be on the dashboard page
