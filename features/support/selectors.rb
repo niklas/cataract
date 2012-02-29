@@ -14,13 +14,15 @@ module HtmlSelectorsHelpers
       "#session .name"
 
     when "the header"
-      "div[data-role='header']"
+      "div.navbar"
+
     when "the footer"
+      raise "no footer"
       "div[data-role='footer']"
 
     # TODO move to jquery_mobile
     when /^flash (notice|alert)$/
-      "#flash .#{$1}"
+      "#flash .alert-#{$1}"
 
     when 'the content'
       ".content"
@@ -32,7 +34,7 @@ module HtmlSelectorsHelpers
       "#transfer_torrent_#{model!($1).id}"
 
     when 'the page title'
-      "h1.title:last"
+      "h1#title"
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

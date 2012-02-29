@@ -5,6 +5,10 @@ class ContentController < InheritedResources::Base
 
   before_filter :get_actual_size, :only => [:destroy]
 
+  def destroy
+    destroy! { parent_url }
+  end
+
   private
   def torrent
     parent

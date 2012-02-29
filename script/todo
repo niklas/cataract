@@ -1,0 +1,9 @@
+#!/bin/bash
+
+find . | 
+  sort | 
+  egrep '^./(app|lib|spec|features|config)' | 
+  egrep '(rb|coffee)$' | 
+  xargs bundle exec notes | 
+  tee TODO | 
+  cut -d: -f3,4-

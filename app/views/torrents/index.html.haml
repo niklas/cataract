@@ -1,5 +1,5 @@
-- for_header do
-  = link_to ta(:dashboard), dashboard_path
-  %h1= search.status
+= simple_form_for search, url: torrents_path, remote: true, method: :get do |f|
+  = f.input :terms
+  = f.hidden_field :status
 
 = render 'list', search: search

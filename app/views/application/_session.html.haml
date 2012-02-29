@@ -1,10 +1,12 @@
-#session
+%ul#session.nav.pull-right
   - if user_signed_in?
-    = link_to '.dashboard', torrents_path
-    = link_to '.profile', edit_user_registration_path
-    %span.name= current_user.email
-    = link_to '.logout', destroy_user_session_path
+    - if can? :edit, current_user
+      %li= link_to '.profile', edit_user_registration_path
+    %li
+      %span.name= current_user.email
+    %li= link_to '.signout', destroy_user_session_path, :method => :delete
   - else
-    = link_to '.signup', new_user_registration_path
-    = link_to '.login', new_user_session_path
+    %li= link_to '.signup', new_user_registration_path
+    %li= link_to '.signin', new_user_session_path
+
 

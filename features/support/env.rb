@@ -2,13 +2,24 @@ require 'rubygems'
 require 'spork'
 
 Spork.prefork do
-  require 'simplecov'
-  # keep devise from preloading User model, see https://gist.github.com/1344547
-  require 'rails/application'
-  Spork.trap_method(Rails::Application, :reload_routes!)
-  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+  require File.dirname(__FILE__) + "/../../config/spork_prefork"
 
+  require 'rspec'
+  require 'fileutils'
+
+  require 'capybara/rails'
   require 'cucumber/rails'
+
+  require 'email_spec'
+  require 'email_spec/cucumber'
+
+  require 'cucumber/rspec/doubles'
+
+  require 'factory_girl'
+
+  require 'kopflos/cucumber'
+
+  World(RSpec::Matchers)
 
   # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
   # order to ease the transition to Capybara we set the default here. If you'd
@@ -52,13 +63,10 @@ Spork.prefork do
   # recommended as it will mask a lot of errors for you!
   #
   ActionController::Base.allow_rescue = false
-
-  require 'cucumber/rspec/doubles'
-  require 'kopflos/cucumber'
 end
 
 Spork.each_run do
-  I18n.reload!
+  I18n.backend.reload!
   FactoryGirl.reload
   load Rails.root/'config'/'routes.rb'
 end

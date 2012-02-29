@@ -5,12 +5,21 @@
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
     %meta{"name"=>"viewport", :content=>"width=device-width, initial-scale=1"}/
     = stylesheet_link_tag 'application'
-    = javascript_include_tag 'lib'
     = javascript_include_tag 'application'
     = csrf_meta_tag
     = yield(:head)
   %body
-    - page_options.merge! 'data-add-back-btn' => true
-    - header_options.merge! :fixed => true
-    - footer_options.merge! :fixed => true
-    = mobile_page
+
+    .container-fluid
+      .navbar
+        .navbar-inner
+          .container-fluid
+            = link_to 'Cataract', root_path, class: 'brand'
+            = render 'navigation'
+            = render 'session'
+      - if show_title?
+        .page-header
+          %h1#title= yield(:title)
+      = render 'flash'
+
+      = yield

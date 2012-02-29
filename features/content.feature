@@ -15,7 +15,7 @@ Feature: Torrent content
      Then a move should exist
       And the torrent should be the move's torrent
       And the directory should be the move's target
-      And I should see "moving Ubuntu to Public"
+      And I should see flash notice "moving Ubuntu to Public"
 
   @javascript
   @rootfs
@@ -28,4 +28,5 @@ Feature: Torrent content
      When I follow "Content"
       And I press "Clear"
      Then I should see flash notice "Freed 71.7 KB"
+      And I should be on the page for the torrent
      Then the torrent's content should not exist on disk

@@ -1,4 +1,6 @@
-- if flash.present?
+- unless controller.flash.blank?
   #flash
-    - flash.each do |name, msg|
-      = content_tag :div, msg, :id => "flash_#{name}", :class => name
+    - controller.flash.each do |name, msg|
+      .flash.alert{class: "alert-#{name}"}
+        %a.close{'data-dismiss' => 'alert'} ×
+        = msg

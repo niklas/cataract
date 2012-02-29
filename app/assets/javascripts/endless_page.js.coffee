@@ -6,7 +6,6 @@ $.fn.endlessPage = ->
 
   $(@).each ->
     $list    = $(@)
-    $page    = $list.closest('.ui-page')
     loading  = false
 
     $(window).scroll ->
@@ -15,7 +14,6 @@ $.fn.endlessPage = ->
 
       return if loading == true
       return if page >= numPages
-      return unless $page.hasClass('ui-page-active')
 
       if nearBottomOfPage()
         loading = true
@@ -25,7 +23,8 @@ $.fn.endlessPage = ->
           url: $list.data('url')
           type: 'get'
           data:
-            page: page
+            torrent_search:
+              page: page
           dataType: 'script'
           success: ->
             $(window).sausage('draw')

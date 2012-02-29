@@ -8,7 +8,7 @@ Given /^I am signed in as #{capture_model}$/ do |user|
   end
   user = model!(user)
   step %{I am on the home page}
-  step %{I follow "Login"}
+  step %{I follow "Sign in"}
   step %{I fill in "Email" with "#{user.email}"}
   step %{I fill in "Password" with "#{FactoryGirl::Password}"}
   step %{I press "Sign in"}
