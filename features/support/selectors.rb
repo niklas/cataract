@@ -22,7 +22,7 @@ module HtmlSelectorsHelpers
 
     # TODO move to jquery_mobile
     when /^flash (notice|alert)$/
-      "#flash .#{$1}"
+      "#flash .alert-#{$1}"
 
     when 'the content'
       ".content"

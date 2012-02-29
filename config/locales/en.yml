@@ -8,6 +8,3 @@ en:
         running: running
         archived: archived
         remote: remote
-  move:
-    show:
-      sentence: "moving %{torrent} to %{target}"

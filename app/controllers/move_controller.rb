@@ -4,4 +4,10 @@ class MoveController < InheritedResources::Base
   def create
     create! { parent_url }
   end
+
+  private
+
+  def interpolation_options
+    { torrent: parent.title, target: resource.target.name }
+  end
 end

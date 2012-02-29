@@ -15,7 +15,7 @@ Feature: Torrent content
      Then a move should exist
       And the torrent should be the move's torrent
       And the directory should be the move's target
-      And I should see "moving Ubuntu to Public"
+      And I should see flash notice "moving Ubuntu to Public"
 
   @javascript
   @rootfs
