@@ -33,7 +33,7 @@ group :test do
   gem "guard-spork", "~> 0.5.2"
   gem "guard-bundler", "~> 0.1.3"
   gem "libnotify", :require => false
-  gem "fakefs", :require => "fakefs/safe"
+  gem "fakefs", :require => false
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
 
   gem 'simplecov', :require => false

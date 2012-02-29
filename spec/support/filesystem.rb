@@ -1,3 +1,4 @@
+require 'fakefs/safe'
 module FileSystem
   extend self
   def file_factory_path
