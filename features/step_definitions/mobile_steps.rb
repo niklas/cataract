@@ -1,5 +1,6 @@
 When /^I filter the list with "([^"]+)"$/ do |terms|
   first('#torrent_search_terms').set(terms)
+  step %q~I wait for the spinner to start~
   step %q~I wait for the spinner to stop~
 end
 

@@ -5,8 +5,12 @@ When /^I scroll to the bottom$/ do
   step %Q~I wait for the spinner to stop~
 end
 
+When /^I wait for the spinner to start/ do
+  page.should have_css('#spinner', visible: true)
+end
+
 When /^I wait for the spinner to stop$/ do
-  page.should have_no_css('span.ui-icon-loading', visible: true)
+  page.should have_no_css('#spinner', visible: true)
 end
 
 When /^the tick interval is reached$/ do
