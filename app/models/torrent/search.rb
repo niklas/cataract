@@ -14,13 +14,18 @@ class Torrent
     attribute :page
     attribute :per, default: 20
 
-    States = %w(running archived remote)
+    States = %w(all running archived remote)
     FullTextFields = %w(title filename)
+
+    def initialize(*a)
+      super
+      self.status ||= States.first
+    end
 
     def results
       results = Torrent.scoped
 
-      if status?
+      if status? && status != 'all'
         results = results.by_status( status )
       end
 

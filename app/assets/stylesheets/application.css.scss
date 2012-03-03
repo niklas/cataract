@@ -22,3 +22,10 @@
 
 
 @import "torrents";
+@import "radio_buttons";
+
+form#new_torrent_search {
+  label[for=torrent_search_terms] {
+    display: none;
+  }
+}

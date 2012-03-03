@@ -5,11 +5,12 @@
 #= require jquery.sausage
 #= require endless_page
 #= require spinner
+#= require radio_buttons
 
 jQuery ->
   $('ul#torrents').endlessPage()
 
-  $('#torrent_search_terms').bind 'keyup change', ->
+  $('form#new_torrent_search :input').bind 'keyup change', ->
     $(@).closest('form').submit()
 
 
@@ -19,12 +20,12 @@ jQuery ->
     active = $('.transfer_torrent').attr('id')
     if active?
       active = active.replace(/^\D+/, '')
-    $.ajax
-      url: '/torrents/progress'
-      data:
-        active: active
-      type: 'get'
-      dataType: 'script'
+      $.ajax
+        url: '/torrents/progress'
+        data:
+          active: active
+        type: 'get'
+        dataType: 'script'
     true
 
   setInterval ->
