@@ -1,7 +1,7 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?
+  allows :running?, :content
 
   def progress
     handle_remote do
@@ -44,6 +44,44 @@ class TorrentDecorator < ApplicationDecorator
     "transfer_torrent_#{torrent.id}"
   end
 
+  def filename
+    val :filename do
+      model.filename
+    end
+  end
+
+  def directory
+    val :directory, class: 'directory' do
+      render_directory model.directory
+    end
+  end
+
+  def content_directory
+    val :content_directory, class: 'directory' do
+      render_directory torrent.content_directory
+    end
+  end
+
+  def series
+    val :series do
+      torrent.series.title
+    end
+  end
+
+
+  def val(name, options = {}, &value)
+    if model.send(name).present?
+      val!(name, options, &value)
+    end
+  end
+
+  def val!(name, options = {}, &value)
+    h.content_tag(:di, options) do
+      h.content_tag(:dt, Torrent.human_attribute_name(name) ) +
+      h.content_tag(:dd, block_given?? value.call : model.send(name) )
+    end
+  end
+
   def handle_remote
     yield
   rescue Torrent::RTorrent::CouldNotFindInfoHash => e
@@ -62,6 +100,11 @@ class TorrentDecorator < ApplicationDecorator
 
   def error(kind)
     h.content_tag :span, kind, class: "#{kind} error"
+  end
+
+  def render_directory(dir)
+    h.content_tag(:span, dir.name, class: 'name') +
+    h.content_tag(:span, dir.path, class: 'path')
   end
 
   # Accessing Helpers

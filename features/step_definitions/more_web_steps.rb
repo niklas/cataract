@@ -1,6 +1,10 @@
 When /^I filter the list with "([^"]+)"$/ do |terms|
   first('#torrent_search_terms').set(terms)
-  step %q~I wait for the spinner to start~
+  begin
+    step %q~I wait for the spinner to start~
+  rescue Capybara::TimeoutError
+    # we may have been too slow / the browser to fast
+  end
   step %q~I wait for the spinner to stop~
 end
 

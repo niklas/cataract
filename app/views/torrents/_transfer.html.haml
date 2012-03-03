@@ -1,10 +1,6 @@
-= decorate torrent do |td|
-  %div.transfer_torrent{id: td.transfer_id}
-    .ui-grid-a
-      .ui-block-a
-        = td.link_to_content
-        %p.down= td.down_rate
-        %p.up= td.up_rate
-        = render 'transfer/buttons', torrent: torrent
-      .ui-block-b
-        .progress= td.progress
+.transfer_torrent.well{id: torrent.transfer_id}
+  .progress-pie= torrent.progress
+  = torrent.link_to_content
+  %span.down= torrent.down_rate
+  %span.up= torrent.up_rate
+  = render 'transfer/buttons', torrent: torrent

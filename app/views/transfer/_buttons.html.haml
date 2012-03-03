@@ -1,6 +1,8 @@
 = content_tag_for :div, torrent, 'transfer_buttons' do
   .btn-group
     - if torrent.running?
-      = link_to :stop, torrent_transfer_path(torrent), remote: true, class: 'btn', method: :delete
+      = link_to ti(:stop), torrent_transfer_path(torrent), remote: true, class: 'btn btn-danger btn-large', method: :delete
     - else
-      = link_to :start, torrent_transfer_path(torrent), remote: true, class: 'btn', method: :post
+      = link_to ti(:start), torrent_transfer_path(torrent), remote: true, class: 'btn btn-success btn-large', method: :post
+    - if torrent.content.exists?
+      = link_to ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-large'

@@ -50,6 +50,10 @@ class Torrent
       !single?
     end
 
+    def exists?
+      base_path.present? && info.name.present? && File.exists?(path)
+    end
+
     def files
       if single?
         [ path ]
@@ -97,9 +101,7 @@ class Torrent
     @content ||= Content.new(self)
   end
 
-  def content_exists?
-    @content_exists ||= !content_path.blank? && File.exists?(content_path)
-  end
+  # TODO remove column 'content_path'
 
   def download_path
     content_path.sub(%r(/[^/]*$),'')
