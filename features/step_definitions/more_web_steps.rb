@@ -13,7 +13,5 @@ Given /^"([^"]*)" state should be chosen$/ do |state|
 end
 
 When /^I choose state "([^"]*)"$/ do |state|
-  step %Q~I choose "#{state}"~
-  step %q~I wait for the spinner to start~
-  step %q~I wait for the spinner to stop~
+  first('label', text: state).click
 end
