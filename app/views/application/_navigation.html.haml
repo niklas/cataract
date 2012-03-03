@@ -1,4 +1,10 @@
-%ul.nav
-  = li_link :dashboard, dashboard_path, can: [:dashboard, current_user]
-  = li_link :torrents, torrents_path, can: [:index, Torrent]
+%a.btn.btn-navbar{href: '#', 'data-toggle' => "collapse", 'data-target' => ".nav-collapse"}
+  %span.icon-bar
+  %span.icon-bar
+  %span.icon-bar
+.nav-collapse
+  %ul.nav
+    = li_link :dashboard, dashboard_path, can: [:dashboard, current_user]
+    = li_link :torrents, torrents_path, can: [:index, Torrent]
+  = render 'session'
 
