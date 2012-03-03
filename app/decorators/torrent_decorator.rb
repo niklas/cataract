@@ -51,13 +51,13 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def directory
-    val :directory do
+    val :directory, class: 'directory' do
       render_directory model.directory
     end
   end
 
   def content_directory
-    val :content_directory do
+    val :content_directory, class: 'directory' do
       render_directory torrent.content_directory
     end
   end
@@ -69,14 +69,14 @@ class TorrentDecorator < ApplicationDecorator
   end
 
 
-  def val(name, &value)
+  def val(name, options = {}, &value)
     if model.send(name).present?
-      val!(name, &value)
+      val!(name, options, &value)
     end
   end
 
-  def val!(name, &value)
-    h.content_tag(:di) do
+  def val!(name, options = {}, &value)
+    h.content_tag(:di, options) do
       h.content_tag(:dt, Torrent.human_attribute_name(name) ) +
       h.content_tag(:dd, block_given?? value.call : model.send(name) )
     end
