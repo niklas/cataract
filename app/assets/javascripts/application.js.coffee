@@ -6,12 +6,17 @@
 #= require endless_page
 #= require spinner
 #= require radio_buttons
+#= require bindWithDelay
 
 jQuery ->
   $('ul#torrents').endlessPage()
 
-  $('form#new_torrent_search :input').bind 'keyup change', ->
+  $('form#new_torrent_search :radio').bind 'change', ->
     $(@).closest('form').submit()
+
+  $('form#new_torrent_search :text').bindWithDelay 'keyup change', ->
+    $(@).closest('form').submit()
+  ,333
 
 
   $('.transfer_torrent .progress').bind 'click', -> $('body').trigger 'tick'
