@@ -6,5 +6,6 @@
   %ul.nav
     = li_link :dashboard, dashboard_path, can: [:dashboard, current_user]
     = li_link :torrents, torrents_path, can: [:index, Torrent]
+    = li_link :add, new_torrent_path, can: [:create, Torrent]
   = render 'session'
 

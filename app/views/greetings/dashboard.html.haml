@@ -1,7 +1,5 @@
 - title :dashboard
 
-= link_to :add, new_torrent_path
-
-%ul.filters
+%div.filters.btn-group{'data-toggle' => 'buttons-radio'}
   - Torrent::Search::States.each do |state|
-    %li= link_to state, torrents_path(torrent_search: {status: state}), class: 'name'
+    = link_to state, torrents_path(torrent_search: {status: state}), class: 'btn btn-primary'

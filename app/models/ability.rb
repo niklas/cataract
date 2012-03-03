@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     if user
       can :dashboard, User
-      can :index, Torrent
+      can :manage, Torrent
     end
   end
 end
