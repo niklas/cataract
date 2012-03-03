@@ -11,15 +11,13 @@ Feature: Details of a torrent
       And I follow "Ubuntu"
      Then I should be on the page of the torrent
 
-  Scenario: static attributes
-    Given a running torrent exists with title: "Ubuntu"
-      And I am signed in
-     When I go to the page of the torrent
-     Then I should see "Ubuntu" within the page title
-
-  Scenario: series title
+  Scenario: attributes
     Given a series exists with title: "Tatort"
-      And a torrent exists with series: the series
+      And a directory exists with name: "Angestaubt", path: "/an/ge/staubt"
+      And a torrent exists with series: the series, title: "Unspannend 23"
       And I am signed in
      When I go to the page of the torrent
-     Then I should see "Tatort"
+     Then I should see "Unspanned 23" within the page title
+      And I should see "Tatort"
+      And I should see "Angestaubt"
+      And I should see "/an/ge/staubt"

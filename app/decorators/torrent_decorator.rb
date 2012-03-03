@@ -1,7 +1,7 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?
+  allows :running?, :content_exists?
 
   def progress
     handle_remote do
@@ -42,6 +42,44 @@ class TorrentDecorator < ApplicationDecorator
 
   def transfer_id
     "transfer_torrent_#{torrent.id}"
+  end
+
+  def directory
+    val :directory do
+      model.directory.name
+    end
+  end
+
+  def filename
+    val :filename do
+      model.filename
+    end
+  end
+
+  def content_directory
+    val :content_directory do
+      torrent.content_directory.name
+    end
+  end
+
+  def series
+    val :series do
+      torrent.series.title
+    end
+  end
+
+
+  def val(name, &value)
+    if model.send(name).present?
+      val!(name, &value)
+    end
+  end
+
+  def val!(name, &value)
+    h.content_tag(:di) do
+      h.content_tag(:dt, Torrent.human_attribute_name(name) ) +
+      h.content_tag(:dd, block_given?? value.call : model.send(name) )
+    end
   end
 
   def handle_remote

@@ -10,7 +10,11 @@
 }
 
 .transfer_torrent {
-  .progress {
+  .progress-pie {
+    margin: 0.3em;
+    float: right;
+    width: 23%;
+    height: auto;
     .stretcher {
       height: 0;
       padding-bottom: 100%;
@@ -18,9 +22,6 @@
     }
     position: relative;
     .error {
-      position: absolute;
-      top: 50%;
-      left: 40%;
       font-size: 200%;
     }
     svg {
@@ -57,7 +58,7 @@ ul.torrents {
       text-overflow: ellipsis;
       overflow-x: hidden;
     }
-    .progress {
+    .progress-pie {
       width: 3.2em;
       height: 3.2em;
       overflow: hidden;
