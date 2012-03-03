@@ -1,7 +1,7 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?, :content_exists?
+  allows :running?, :content
 
   def progress
     handle_remote do
