@@ -20,12 +20,12 @@ jQuery ->
     active = $('.transfer_torrent').attr('id')
     if active?
       active = active.replace(/^\D+/, '')
-    $.ajax
-      url: '/torrents/progress'
-      data:
-        active: active
-      type: 'get'
-      dataType: 'script'
+      $.ajax
+        url: '/torrents/progress'
+        data:
+          active: active
+        type: 'get'
+        dataType: 'script'
     true
 
   setInterval ->
