@@ -15,3 +15,7 @@ end
 When /^I choose state "([^"]*)"$/ do |state|
   first('label', text: state).click
 end
+
+When /^I toggle the (?:menu|navigation)$/ do
+  page.execute_script %Q~$('a.btn-navbar').click()~
+end

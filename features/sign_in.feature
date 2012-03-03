@@ -3,10 +3,13 @@ Feature: Signing in
   As a registered user
   I want to sign in
 
+  @javascript
   Scenario: Signing in
     Given a registered user exists with email: "me@cataract.local"
       And I am on the home page
-     When I follow "Sign in"
+     When I toggle the menu
+      And I follow "Sign in"
+     Then I should be on the signin page
      When I fill in "Email" with "me@cataract.local"
       And I fill in "Password" with "secret"
       And I press "Sign in"

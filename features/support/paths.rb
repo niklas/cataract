@@ -11,6 +11,9 @@ module NavigationHelpers
     when /^the home\s?page$/
       '/'
 
+    when /^the sign ?in page$/
+      new_user_session_path
+
     when /^the dashboard(?:\s?page)?$/
       dashboard_path
 
