@@ -44,21 +44,21 @@ class TorrentDecorator < ApplicationDecorator
     "transfer_torrent_#{torrent.id}"
   end
 
-  def directory
-    val :directory do
-      model.directory.name
-    end
-  end
-
   def filename
     val :filename do
       model.filename
     end
   end
 
+  def directory
+    val :directory do
+      render_directory model.directory
+    end
+  end
+
   def content_directory
     val :content_directory do
-      torrent.content_directory.name
+      render_directory torrent.content_directory
     end
   end
 
@@ -100,6 +100,11 @@ class TorrentDecorator < ApplicationDecorator
 
   def error(kind)
     h.content_tag :span, kind, class: "#{kind} error"
+  end
+
+  def render_directory(dir)
+    h.content_tag(:span, dir.name, class: 'name') +
+    h.content_tag(:span, dir.path, class: 'path')
   end
 
   # Accessing Helpers

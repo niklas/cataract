@@ -1,6 +1,6 @@
-.transfer_torrent{id: torrent.transfer_id}
+.transfer_torrent.well{id: torrent.transfer_id}
   .progress-pie= torrent.progress
   = torrent.link_to_content
-  %p.down= torrent.down_rate
-  %p.up= torrent.up_rate
+  %span.down= torrent.down_rate
+  %span.up= torrent.up_rate
   = render 'transfer/buttons', torrent: torrent

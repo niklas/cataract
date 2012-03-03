@@ -1,2 +1,4 @@
-page.replace_partial 'torrents/transfer', torrent: @torrent
+decorate @torrent do |torrent|
+  page.replace_partial 'torrents/transfer', torrent: torrent
+end
 
