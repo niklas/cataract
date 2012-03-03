@@ -1,5 +1,11 @@
-= simple_form_for search, url: torrents_path, remote: true, method: :get do |f|
-  = f.input :terms
-  = f.hidden_field :status
+= simple_form_for search, url: torrents_path, remote: true, method: :get, html: { class: 'form-search' } do |f|
+  .row
+    .span3
+      = f.input :terms
+    .span4
+      .btn-group{'data-toggle' => 'buttons-radio'}
+        = f.collection_radio_buttons :status, search.class::States, :to_s, :to_s, checked: search.status,
+          item_wrapper_tag: false, collection_wrapper_tag: false do |b|
+          - b.label(class: 'btn btn-primary btn-toggle') { b.radio_button + b.text }
 
 = render 'list', search: search

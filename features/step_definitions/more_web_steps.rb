@@ -7,3 +7,13 @@ end
 When /^I click (?:on )?(the progress pie)$/ do |name|
   page.execute_script "$('#{selector_for(name)}').trigger('click')"
 end
+
+Given /^"([^"]*)" state should be chosen$/ do |state|
+  step %Q~the "#{state}" checkbox should be checked~
+end
+
+When /^I choose state "([^"]*)"$/ do |state|
+  step %Q~I choose "#{state}"~
+  step %q~I wait for the spinner to start~
+  step %q~I wait for the spinner to stop~
+end

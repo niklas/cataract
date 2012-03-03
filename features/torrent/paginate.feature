@@ -1,45 +1,8 @@
 @javascript
-Feature: Browse Torrents
-  In order to find and control my downloads
+Feature: Paginate Torrents
+  In order to find even very old torrents
   As a logged in user
-  I want to browse torrents
-
-  # TODO must select status
-  @wip
-  Scenario: displays filename and title
-    Given the following torrents exist:
-      | filename              | title  |
-      | Ubuntu-ozelot.torrent | Ozelot |
-      And I am signed in
-     Then I should see a list of the following torrents:
-       | filename              | title  |
-       | Ubuntu-ozelot.torrent | Ozelot |
-
-  Scenario: Filter by status
-    Given a remote torrent exists with title: "Next"
-      And a running torrent exists with title: "Current"
-      And an archived torrent exists with title: "Last"
-      And I am signed in
-
-     When I follow "running"
-     Then I should be on the running list page
-      And I should see a list of the following torrents:
-       | title   |
-       | Current |
-
-     When I follow "Dashboard"
-      And I follow "archived"
-     Then I should be on the archived list page
-      And I should see a list of the following torrents:
-       | title |
-       | Last  |
-
-     When I follow "Last"
-     Then I should be on the page for the archived torrent
-
-     When I follow "Dashboard"
-     Then I should see "Dashboard" within the header
-      And I should be on the dashboard page
+  I want to page through all torrents
 
   Scenario: Paginate by endless page
     Given the following archived torrents exist:
@@ -87,8 +50,8 @@ Feature: Browse Torrents
        | Number 02 |
        | Number 01 |
       And I am signed in
+      And I follow "Torrents"
 
-     When I follow "archived"
      Then I should see a list of the following torrents:
        | title     |
        | Number 01 |
@@ -159,29 +122,3 @@ Feature: Browse Torrents
        | Number 40 |
       But I should not see "Number 41"
       And I should not see "Number 42"
-
-     # toggling should reload items
-     When I follow "Dashboard"
-      And I follow "archived"
-     Then I should see a list of the following torrents:
-       | title     |
-       | Number 01 |
-       | Number 02 |
-       | Number 03 |
-       | Number 04 |
-       | Number 05 |
-       | Number 06 |
-       | Number 07 |
-       | Number 08 |
-       | Number 09 |
-       | Number 10 |
-       | Number 11 |
-       | Number 12 |
-       | Number 13 |
-       | Number 14 |
-       | Number 15 |
-       | Number 16 |
-       | Number 17 |
-       | Number 18 |
-       | Number 19 |
-       | Number 20 |

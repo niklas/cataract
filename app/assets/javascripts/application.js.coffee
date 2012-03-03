@@ -5,11 +5,12 @@
 #= require jquery.sausage
 #= require endless_page
 #= require spinner
+#= require radio_buttons
 
 jQuery ->
   $('ul#torrents').endlessPage()
 
-  $('#torrent_search_terms').bind 'keyup change', ->
+  $('form#new_torrent_search :input').bind 'keyup change', ->
     $(@).closest('form').submit()
 
 
