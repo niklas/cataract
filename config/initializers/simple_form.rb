@@ -87,12 +87,6 @@ SimpleForm.setup do |config|
     b.use :error, :tag => 'span', :class => 'help-inline'
   end
 
-  config.wrappers :radio_group, :tag => 'div', :class => 'btn-group', 'data-toggle' => 'buttons-radio' do |b|
-    b.optional :placeholder
-    b.optional :label, :class => 'btn'
-    b.use :input, :class => 'btn'
-  end
-
   # Wrappers for forms and inputs using the Twitter Bootstrap toolkit.
   # Check the Bootstrap docs (http://twitter.github.com/bootstrap)
   # to learn about the different styles for forms and inputs,
