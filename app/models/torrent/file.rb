@@ -1,6 +1,6 @@
 class Torrent
   belongs_to :directory, :inverse_of => :torrents
-  validates_presence_of :directory, :if => :filename?
+  validates_presence_of :directory, :if => :filename?, :unless => :remote?
 
   validates_uniqueness_of :filename, :unless => :remote?
   validates_length_of :filename, :in => 9..255, :unless => :remote?

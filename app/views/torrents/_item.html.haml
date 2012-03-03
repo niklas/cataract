@@ -2,6 +2,6 @@
 = decorate torrent do |td|
   %li.torrent{class: torrent.status, id: td.item_id}
     %h3.title= link_to torrent.title, torrent
-    %p.filename= torrent.title
+    %p.filename= torrent.filename
     - if torrent.running?
       .progress= td.progress

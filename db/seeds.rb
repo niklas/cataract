@@ -14,11 +14,10 @@ ActionMailer::Base.delivery_method = :test
 user = User.find_by_email('cataract@localhost.local') || Factory(:user, :email => 'cataract@localhost.local')
 
 Torrent.transaction do
-  Torrent.destroy_all
-
   if system('fortune')
     60.times do |i|
-      Factory :remote_torrent, title: `fortune -s`.split.join(' '), url: "http://localhost.local/#{i}.torrent"
+      quote = `fortune -s`.split.join(' ')
+      Factory :remote_torrent, title: quote, filename: quote, url: "http://localhost.local/#{i}.torrent"
     end
   else
     STDERR.puts "please install fortune to get some nice torrents"
