@@ -1,6 +1,5 @@
 require 'drb'
 class Torrent
-  extend ActiveSupport::Memoizable
   class TorrentContentError < Exception; end
 
   # TODO WTF is this for?
@@ -99,9 +98,8 @@ class Torrent
   end
 
   def content_exists?
-    !content_path.blank? && File.exists?(content_path)
+    @content_exists ||= !content_path.blank? && File.exists?(content_path)
   end
-  memoize :content_exists?
 
   def download_path
     content_path.sub(%r(/[^/]*$),'')
