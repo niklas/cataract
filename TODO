@@ -11,7 +11,8 @@
 [35m./app/models/queueable.rb[0m[36m:[0m[32m132[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m5[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO WTF is this for?
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m24[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME respect #directory
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m121[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m104[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO remove column 'content_path'
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m123[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
 [35m./app/models/torrent.rb[0m[36m:[0m[32m28[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
 [35m./app/models/torrent.rb[0m[36m:[0m[32m33[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
 [35m./app/models/torrent.rb[0m[36m:[0m[32m37[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
