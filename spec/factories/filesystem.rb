@@ -11,7 +11,7 @@ FactoryGirl.define do
     end
 
     after_build do |directory|
-      if directory.path.relative?
+      if directory.path.relative? && defined?(FileSystem)
         directory.path = FileSystem.rootfs/directory.path
       end
     end
