@@ -3,5 +3,12 @@
 #
 # Examples:
 #
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'factory_girl'
+FactoryGirl.reload
+
+ActionMailer::Base.delivery_method = :test
+
+user = User.find_by_email('cataract@localhost.local') || Factory(:user, :email => 'cataract@localhost.local')
