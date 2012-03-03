@@ -2,6 +2,7 @@ require 'rubygems'
 require 'spork'
 
 Spork.prefork do
+  ENV["RAILS_ENV"] ||= 'test'
   require File.dirname(__FILE__) + "/../../config/spork_prefork"
 
   require 'rspec'
