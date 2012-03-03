@@ -6,11 +6,11 @@ When /^I scroll to the bottom$/ do
 end
 
 When /^I wait for the spinner to start/ do
-  page.should have_css('#spinner', visible: true)
+  wait_until { page.has_css('#spinner', visible: true) }
 end
 
 When /^I wait for the spinner to stop$/ do
-  page.should have_no_css('#spinner', visible: true)
+  wait_until(10) { page.has_no_css('#spinner', visible: true) }
 end
 
 When /^the tick interval is reached$/ do
