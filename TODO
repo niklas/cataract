@@ -1,6 +1,7 @@
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO cells ore similar
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO rescue from errors
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m8[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME use responders
+[35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
 [35m./app/models/feed.rb[0m[36m:[0m[32m45[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO tagging
 [35m./app/models/maintenance/content_directory_assigner.rb[0m[36m:[0m[32m46[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME this ignores path delimiters
 [35m./app/models/notifier.rb[0m[36m:[0m[32m1[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m# FIXME enable jabber notifications
