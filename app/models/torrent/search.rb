@@ -36,6 +36,10 @@ class Torrent
       results.order("created_at DESC").page(page || 1).per(per)
     end
 
+    def to_params
+      attributes.slice(*%w[status terms page]).reject {|k,v| v.blank? }.merge(only_path: true)
+    end
+
     private
 
     def stripped_terms

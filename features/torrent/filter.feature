@@ -41,6 +41,13 @@ Feature: filter torrents
       | title |
       | Two   |
 
+    # history management
+    When I follow "Two"
+     And I go back
+    Then I should see a list of the following torrents:
+      | title |
+      | Two   |
+
   Scenario: filter by selecting state
    Given "all" state should be chosen
      

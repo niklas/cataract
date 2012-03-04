@@ -2,4 +2,4 @@
 
 %div.filters.btn-group{'data-toggle' => 'buttons-radio'}
   - Torrent::Search::States.each do |state|
-    = link_to state, torrents_path(torrent_search: {status: state}), class: 'btn btn-primary'
+    = link_to state, { controller: 'torrents', status: state }, class: 'btn btn-primary'

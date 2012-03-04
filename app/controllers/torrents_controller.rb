@@ -14,9 +14,13 @@ class TorrentsController < InheritedResources::Base
   end
 
   def search
-    @search ||= Torrent.new_search(params[:torrent_search])
+    @search ||= Torrent.new_search(search_params)
   end
   helper_method :search
+
+  def search_params
+    params.slice(:status, :terms, :page).merge( params[:torrent_search] || {})
+  end
 
   def check_all
     errors = ''
