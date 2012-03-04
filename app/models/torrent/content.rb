@@ -97,7 +97,7 @@ class Torrent
     # returns the directory all the contents are in
     def locate
       if single?
-        Directory.of *Mlocate.file(info.name)
+        Directory.with_minimal_infix Mlocate.file(info.name).first
       end
     end
   end
@@ -126,8 +126,10 @@ class Torrent
   on_refresh :find_missing_content, :if => :metainfo?
   def find_missing_content
     unless content.exists?
-      if dir = content.locate
+      dir, infix = content.locate
+      if dir
         self.content_directory = dir
+        self.content_path_infix = infix.to_s
       end
     end
   end

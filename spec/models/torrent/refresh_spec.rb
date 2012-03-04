@@ -55,13 +55,18 @@ describe Torrent do
       let(:torrent) { Factory :torrent_with_picture_of_tails }
 
       it "is found directly in existing directory" do
-        FileSystem.create_file 'pics/cats/tails.png'
         Mlocate.stub(:file).with('tails.png').and_return([dir.path/'tails.png'])
         torrent.refresh!
         torrent.content_directory.should == dir
       end
 
-      it "is found nested in existing directory"
+      it "is found nested in existing directory" do
+        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'deeply'/'nested'/'tails.png'])
+        torrent.refresh!
+        torrent.content_directory.should == dir
+        torrent.content_path_infix.should == 'deeply/nested'
+      end
+
       it "is found as a whole when multiple files"
     end
   end

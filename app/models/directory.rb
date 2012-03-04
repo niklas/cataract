@@ -37,13 +37,26 @@ class Directory < ActiveRecord::Base
     d
   end
 
-  def self.of(*paths)
-    paths.each do |found|
-      if dir = find_by_path( File.dirname(found) )
-        return dir
-      end
+  # finds the directory of the path, no infixes allowed
+  def self.of(path)
+    dir, infix = with_minimal_infix(path)
+
+    if dir && infix.to_path == '.'
+      dir
+    else
+      nil
     end
-    return nil
+  end
+
+  def self.with_minimal_infix(path)
+    return nil if path.nil?
+    path = ::Pathname.new( path )
+    all.map { |dir| [dir,
+                     path.dirname.relative_path_from(dir.path)
+                   ] rescue nil }
+       .compact
+       .sort_by { |dir, infix| infix.to_s.length }
+       .first
   end
 
   def label

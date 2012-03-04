@@ -26,14 +26,7 @@ class Maintenance::ContentDirectoryAssigner < Maintenance::Base
 
   private
   def directory_with_minimal_infix(torrent)
-    directories
-      .map { |dir| [dir, 
-                    Pathname.new( torrent.read_attribute(:content_path) )
-                            .relative_path_from(dir.path)
-                   ] rescue nil }
-      .compact
-      .sort_by { |dir, infix| infix.to_s.length }
-      .first
+    Directory.with_minimal_infix torrent.read_attribute(:content_path)
   end
 
   def directories
