@@ -14,12 +14,12 @@
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m104[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO remove column 'content_path'
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m123[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
 [35m./app/models/torrent.rb[0m[36m:[0m[32m28[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
-[35m./app/models/torrent.rb[0m[36m:[0m[32m33[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
-[35m./app/models/torrent.rb[0m[36m:[0m[32m37[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
-[35m./app/models/torrent.rb[0m[36m:[0m[32m55[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO add tagging
-[35m./app/models/torrent.rb[0m[36m:[0m[32m67[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO use psql tsearch
-[35m./app/models/torrent.rb[0m[36m:[0m[32m205[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO audit changes
-[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m178[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
+[35m./app/models/torrent.rb[0m[36m:[0m[32m35[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
+[35m./app/models/torrent.rb[0m[36m:[0m[32m39[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
+[35m./app/models/torrent.rb[0m[36m:[0m[32m57[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO add tagging
+[35m./app/models/torrent.rb[0m[36m:[0m[32m69[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO use psql tsearch
+[35m./app/models/torrent.rb[0m[36m:[0m[32m192[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO audit changes
+[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m188[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
 [35m./app/models/torrent/states.rb[0m[36m:[0m[32m85[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
 [35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME athentication
 [35m./app/models/user.rb[0m[36m:[0m[32m18[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf

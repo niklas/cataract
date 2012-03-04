@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115035452) do
+ActiveRecord::Schema.define(:version => 20120304233742) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(:version => 20120115035452) do
     t.datetime "synched_at"
     t.text     "content_filenames"
     t.string   "info_hash",            :limit => 40
-    t.string   "content_path",         :limit => 2048
     t.integer  "created_by"
     t.integer  "updated_by"
     t.integer  "content_directory_id"

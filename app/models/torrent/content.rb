@@ -58,8 +58,8 @@ class Torrent
       if single?
         [ path ]
       else
-        relative_files.map do |file|
-          path/file
+        info.files.map do |file|
+          path/file.path.first
         end
       end
     end
@@ -68,7 +68,9 @@ class Torrent
       if single?
         [ info.name ]
       else
-        info.files.map(&:path).flatten.sort
+        info.files.map do |file|
+          "#{info.name}/#{file.path.first}"
+        end.sort
       end
     end
 
@@ -93,6 +95,29 @@ class Torrent
         torrent.errors.add :content, :blank
       end
     end
+
+    # returns the directory all the contents are in
+    def locate
+      if single?
+        Directory.with_minimal_infix Mlocate.file(info.name).first
+      else
+        chosen = relative_files.last
+        dir, infix = Directory.with_minimal_infix Mlocate.postfix(chosen).first
+        if dir
+          chosen = ::Pathname.new(chosen).dirname
+          index  = ::Pathname.new(infix)
+          while chosen.basename == index.basename
+            index  = index.dirname
+            chosen = chosen.dirname
+          end
+          if index.to_s == '.'
+            return dir, ''
+          else
+            return dir, index.to_s
+          end
+        end
+      end
+    end
   end
 
   belongs_to :content_directory, :class_name => 'Directory'
@@ -101,19 +126,19 @@ class Torrent
     @content ||= Content.new(self)
   end
 
-  # TODO remove column 'content_path'
-
-  def download_path
-    content_path.sub(%r(/[^/]*$),'')
-  end
-
-  def content_dir_name
-    d = Directory.base_of content_path
-    d ? d.name : '-unknown-'
-  end
-
   def ensure_content_directory
     self.content_directory ||= Directory.watched.first || Directory.first
+  end
+
+  on_refresh :find_missing_content, :if => :metainfo?
+  def find_missing_content
+    unless content.exists?
+      dir, infix = content.locate
+      if dir
+        self.content_directory = dir
+        self.content_path_infix = infix.to_s
+      end
+    end
   end
 
 
@@ -138,34 +163,6 @@ class Torrent
   on_refresh :cache_content_filenames, :if => :metainfo?
   def cache_content_filenames
     self.content_filenames = content.relative_files
-  end
-
-
-  def move_content_to target_dir
-    begin
-      unless File.exists?(content_path)
-        update_attribute(:content_path, nil)
-        raise TorrentContentError, "Content not found: #{content_path}"
-      end
-      unless File.directory?(target_dir)
-        raise TorrentContentError, "Target directory does not exist: #{target_dir}"
-      end
-      new_path = File.join(target_dir,metainfo.name)
-      if File.exists?(new_path)
-        raise TorrentContentError, "Target already exists: #{new_path}"
-      end
-      stop! if running?
-      finally_stop!
-      if Directory.new(:path => new_path).is_on_same_drive?(content_path)
-        FileUtils.move content_path, new_path
-        update_attribute(:content_path, new_path)
-      else
-        job_manager.create_job(:torrent_mover,mover_job_key,self.id,new_path)
-        self.status = :moving
-      end
-#    rescue Exception => e
-#      errors.add :filename, "^error on moving content: #{e.to_s}"
-    end
   end
 
   def mover_job_key

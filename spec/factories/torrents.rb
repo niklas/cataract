@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :remote_torrent, :class => Torrent do
+  factory :remote_torrent, :class => 'Torrent' do
     status 'remote'
     sequence(:url) { |i| "http://cataract.local/#{i}.torrent" }
   end
@@ -43,15 +43,6 @@ FactoryGirl.define do
       # btmakemetafile content http://127.0.0.1:6969/announce --target multiple.torrent
       factory :torrent_with_picture_of_tails_and_a_poem do
         filename 'multiple.torrent'
-      end
-    end
-
-    after_build do |torrent|
-      unless torrent.content_path.blank?
-        path = Pathname.new(torrent.content_path)
-        if path.relative?
-          torrent.content_path = (FileSystem.rootfs/path).to_s
-        end
       end
     end
 

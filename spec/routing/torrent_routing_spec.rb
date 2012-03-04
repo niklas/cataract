@@ -16,6 +16,15 @@ describe "routing for torrents" do
   end
 
   it do
+    torrent = Factory :torrent
+    { :get => torrent_path(torrent) }.should route_to(
+      controller: 'torrents',
+      action:     'show',
+      id:         torrent.to_param
+    )
+  end
+
+  it do
     { :get => '/torrents/status/running' }.should route_to(
       controller: 'torrents',
       action:     'index',

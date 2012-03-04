@@ -23,3 +23,7 @@ end
 When /^I toggle the (?:menu|navigation)$/ do
   page.execute_script %Q~$('a.btn-navbar').click()~
 end
+
+When(/^I go back$/) do
+  page.execute_script %Q~window.history.back()~
+end

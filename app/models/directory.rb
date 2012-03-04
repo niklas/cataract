@@ -37,6 +37,28 @@ class Directory < ActiveRecord::Base
     d
   end
 
+  # finds the directory of the path, no infixes allowed
+  def self.of(path)
+    dir, infix = with_minimal_infix(path)
+
+    if dir && infix.to_path == '.'
+      dir
+    else
+      nil
+    end
+  end
+
+  def self.with_minimal_infix(path)
+    return nil if path.nil?
+    path = ::Pathname.new( path )
+    all.map { |dir| [dir,
+                     path.dirname.relative_path_from(dir.path)
+                   ] rescue nil }
+       .compact
+       .sort_by { |dir, infix| infix.to_s.length }
+       .first
+  end
+
   def label
     [name,path.to_s].join(' - ')
   end
@@ -161,7 +183,7 @@ class Directory < ActiveRecord::Base
   end
 
   def contains_torrent?(torrent)
-    torrent.content_path.starts_with? path
+    torrent.path.to_s.starts_with? path
   end
 
   def self.subdirs_by_id

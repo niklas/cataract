@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Directory do
-  include FakeFS::SpecHelpers
   let(:path) { "/nyan/NYan/nyAN" }
   let(:pathname) { Pathname.new(path) }
 
@@ -25,8 +24,8 @@ describe Directory do
     end
 
     it "cannot already exist in db" do
-      create :directory, path: '/there/can/be/only/one'
-      dir = build(:directory, path: '/there/can/be/only/one')
+      create :directory, path: path
+      dir = build(:directory, path: path)
       dir.should_not be_valid
     end
 
@@ -34,9 +33,16 @@ describe Directory do
       dir = build(:directory, path: '/just/the/last/matters to me', name: nil)
       dir.name.should == 'Matters to me'
     end
+
+    it "should be found prefixing" do
+      directory = create :directory, :path => pathname
+      found  = Directory.of pathname/'some.file'
+      found.should == directory
+    end
   end
 
   context "autocreation" do
+    include FakeFS::SpecHelpers
     it "should create on filesystem if asked for" do
       directory = Factory :directory, :path => path, :auto_create => true
       File.directory?(path).should be_true
