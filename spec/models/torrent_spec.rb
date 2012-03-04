@@ -116,6 +116,12 @@ describe Torrent do
       it "knows the path of its torrent file" do
         torrent.path.should == storage.path/'multiple.torrent'
       end
+      it "knows the relative paths of its content files" do
+        torrent.content.relative_files.should == [
+          'content/banane.poem',
+          'content/tails.png'
+        ]
+      end
       it "knows the names of its content files" do
         torrent.content.files.should == [
           archive.path/'content'/'banane.poem',

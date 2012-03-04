@@ -67,7 +67,13 @@ describe Torrent do
         torrent.content_path_infix.should == 'deeply/nested'
       end
 
-      it "is found as a whole when multiple files"
+      it "is found as a whole containing multiple files" do
+        torrent = Factory :torrent_with_picture_of_tails_and_a_poem
+        Mlocate.should_receive(:postfix).with('content/tails.png').and_return([dir.path/'deeply'/'nested'/'content'/'tails.png'])
+        torrent.refresh!
+        torrent.content_directory.should == dir
+        torrent.content_path_infix.should == 'deeply/nested'
+      end
     end
   end
 end

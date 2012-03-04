@@ -13,6 +13,10 @@ class Mlocate
       run '--basename', "\\#{name}"
     end
 
+    def postfix(pf)
+      run(pf).select { |f| f.ends_with?(pf) }
+    end
+
     private
 
     def run(*args)

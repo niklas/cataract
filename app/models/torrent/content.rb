@@ -58,8 +58,8 @@ class Torrent
       if single?
         [ path ]
       else
-        relative_files.map do |file|
-          path/file
+        info.files.map do |file|
+          path/file.path.first
         end
       end
     end
@@ -68,7 +68,9 @@ class Torrent
       if single?
         [ info.name ]
       else
-        info.files.map(&:path).flatten.sort
+        info.files.map do |file|
+          "#{info.name}/#{file.path.first}"
+        end.sort
       end
     end
 
@@ -98,6 +100,22 @@ class Torrent
     def locate
       if single?
         Directory.with_minimal_infix Mlocate.file(info.name).first
+      else
+        chosen = relative_files.last
+        dir, infix = Directory.with_minimal_infix Mlocate.postfix(chosen).first
+        if dir
+          chosen = ::Pathname.new(chosen).dirname
+          index  = ::Pathname.new(infix)
+          while chosen.basename == index.basename
+            index  = index.dirname
+            chosen = chosen.dirname
+          end
+          if index.to_s == '.'
+            return dir, ''
+          else
+            return dir, index.to_s
+          end
+        end
       end
     end
   end
