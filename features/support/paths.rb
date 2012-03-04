@@ -11,11 +11,14 @@ module NavigationHelpers
     when /^the home\s?page$/
       '/'
 
+    when /^the sign ?in page$/
+      new_user_session_path
+
     when /^the dashboard(?:\s?page)?$/
       dashboard_path
 
     when /^the (running|archived|remote) list page$/
-      dashboard_path # anchor: $1
+      torrents_path # anchor: $1
 
     when /^the page (?:of|for) #{capture_model}$/
       case m = model!($1)

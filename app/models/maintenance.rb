@@ -1,6 +1,6 @@
 module Maintenance
   class Base < ActiveRecord::Base
-    set_table_name 'maintenances'
+    self.table_name = 'maintenances'
     include Queueable
 
 

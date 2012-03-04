@@ -35,19 +35,6 @@ module ApplicationHelper
     "#{search.status}_torrents"
   end
 
-  # give a collection of torrents
-  def torrent_list(search, opts={})
-    torrents = search.results
-    linked_list_of torrents, opts.reverse_merge(
-      class: 'torrents',
-      id:    torrent_list_id(search),
-      'data-filter' => true,
-      'data-url' => torrents_path(search),
-      'data-num-pages' => torrents.num_pages) do |torrent|
-        render 'torrents/item', torrent: torrent
-      end
-  end
-
   module PartialHelper
     def replace_partial(partial, options = {})
       html = render(partial, options)
@@ -62,7 +49,6 @@ module ApplicationHelper
     def append_to_list(searches = {})
       searches.each do |id, search|
         self[id].append(render(:partial => 'item', :collection => search.results))
-        self[id].listview('refresh')
       end
     end
 

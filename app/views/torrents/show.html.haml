@@ -1,10 +1,5 @@
-- for_header do
-  = back_button_to t_status(@torrent.current_state), action: 'index', status: @torrent.current_state
-  %h1.title= @torrent.title
-  = link_to :move, new_torrent_move_path(@torrent)
-
-= render 'transfer', torrent: @torrent
-= render 'series', torrent: @torrent
-
-= debug @torrent
+- title @torrent.title
+= decorate @torrent do |torrent|
+  = render 'transfer', torrent: torrent
+  = render 'content', torrent: torrent
 

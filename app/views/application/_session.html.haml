@@ -1,10 +1,12 @@
-#session
+%ul#session.nav.pull-right
   - if user_signed_in?
-    = link_to '.dashboard', torrents_path
-    = link_to '.profile', edit_user_registration_path
-    %span.name= current_user.email
-    = link_to '.logout', destroy_user_session_path
+    %li.dropdown
+      %a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
+        %span.name= current_user.email
+        %b.caret
+      %ul.dropdown-menu
+        %li= link_to :profile, edit_user_registration_path
+        %li= link_to '.signout', destroy_user_session_path, :method => :delete
   - else
-    = link_to '.signup', new_user_registration_path
-    = link_to '.login', new_user_session_path
-
+    %li= link_to '.signup', new_user_registration_path
+    %li= link_to '.signin', new_user_session_path

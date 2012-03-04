@@ -3,4 +3,8 @@ en:
     attributes:
       torrent:
         url: "URL"
+  flash:
+    move:
+      create:
+        notice: "moving %{torrent} to %{target}"
       

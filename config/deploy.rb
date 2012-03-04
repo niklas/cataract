@@ -33,7 +33,7 @@ role :db,  single_target, :primary => true
 set :user, "torrent"
 
 set :deploy_to, "/home/#{user}/www/#{application}"
-set :upstart_dir, "/home/#{user}/.init"
+set :upstart_dir, "/home/#{user}/.init-disabled"
 
 namespace :deploy do
   desc "Restart App (Apache Passanger)"
@@ -57,7 +57,7 @@ namespace :deploy do
 
   task :foreman do
     run "mkdir -p #{upstart_dir}"
-    run "cd #{current_release} && bundle exec foreman export upstart #{upstart_dir} --app=#{application} --user=#{user} --template=#{current_release}/config/foreman/templates/"
+    run "cd #{current_release} && bundle exec foreman export upstart #{upstart_dir} --app=#{application} --user=#{user}"
   end
 
   after "deploy:update_code", "deploy:foreman"

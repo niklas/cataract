@@ -3,5 +3,23 @@
 #
 # Examples:
 #
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'factory_girl'
+FactoryGirl.reload
+
+ActionMailer::Base.delivery_method = :test
+
+user = User.find_by_email('cataract@localhost.local') || Factory(:user, :email => 'cataract@localhost.local')
+
+Torrent.transaction do
+  if system('fortune')
+    60.times do |i|
+      quote = `fortune -s`.split.join(' ')
+      Factory :remote_torrent, title: quote, filename: quote, url: "http://localhost.local/#{i}.torrent"
+    end
+  else
+    STDERR.puts "please install fortune to get some nice torrents"
+  end
+end

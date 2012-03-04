@@ -7,15 +7,12 @@ Feature: Signing in
   Scenario: Signing in
     Given a registered user exists with email: "me@cataract.local"
       And I am on the home page
-     When I follow "Login"
+     When I toggle the menu
+      And I follow "Sign in"
+     Then I should be on the signin page
      When I fill in "Email" with "me@cataract.local"
       And I fill in "Password" with "secret"
       And I press "Sign in"
      Then I should see "Signed in successfully"
      # And I should see "me@cataract.local" within current user
       And I should be on the dashboard page
-      And I should see a list of the following filters:
-        | name     |
-        | running  |
-        | archived |
-        | remote   |

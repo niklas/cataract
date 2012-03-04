@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Queueable do
   class Model < ActiveRecord::Base
-    set_table_name 'modls'
+    self.table_name = 'modls'
   end
   it "should be a module" do
     described_class.should be_a(Module)
@@ -60,7 +60,7 @@ describe Queueable do
         connection.create_table table_name do |t|
           t.timestamp :locked_at
         end
-        model.set_table_name table_name
+        model.table_name = table_name
       end
 
       it "notifies on create" do
