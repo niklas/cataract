@@ -32,3 +32,8 @@ jQuery ->
   setInterval ->
     $('body').trigger 'tick'
   , 23 * 1000
+
+  $('body').on 'click', 'ul.torrents li.torrent', (event) ->
+    url = $(event.currentTarget).find('a:first').attr('href')
+    if url?
+      window.location = url

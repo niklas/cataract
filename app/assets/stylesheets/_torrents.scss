@@ -61,12 +61,26 @@ ul.torrents {
   margin: 0;
   li.torrent {
     padding: 0.5em;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8em;
+    cursor: pointer;
+    @include border-radius(4px);
+    @include box-shadow($grayLight 1px 1px 6px);
+    position: relative;
+
+    &:hover {
+      @include box-shadow($gray 2px 2px 6px);
+      @include translate(-1px, -1px);
+    }
+
     .title, .filename {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow-x: hidden;
-      margin-right: $pie_size * 1.3;
+    }
+    &.running {
+      .title, .filename {
+        margin-right: $pie_size * 1.3;
+      }
     }
     .progress-pie {
       width: $pie_size;
