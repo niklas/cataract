@@ -36,7 +36,20 @@ class Torrent
       results.order("created_at DESC").page(page || 1).per(per)
     end
 
+    def to_params
+      attributes.slice(*%w[status terms page]).reject {|k,v| v.blank? }.merge(only_path: true)
+    end
+
+    def title
+      key = terms?? :status_and_terms : :status
+      I18n.translate "search_title.#{key}", status: status, terms: terms, scope: i18n_scope
+    end
+
     private
+
+    def i18n_scope
+      "#{Torrent.i18n_scope}.attributes.torrent"
+    end
 
     def stripped_terms
       terms.split.map(&:strip).reject(&:blank?)
