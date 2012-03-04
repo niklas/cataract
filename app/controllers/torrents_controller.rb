@@ -3,8 +3,9 @@ class TorrentsController < InheritedResources::Base
 
   respond_to :js, :html
 
+  before_filter :refresh!, only: :show
+
   def progress
-    @active = params[:active].present? && Torrent.find(params[:active])
     @torrents = Torrent.by_status('running')
   end
 
@@ -59,5 +60,12 @@ class TorrentsController < InheritedResources::Base
       page["torrent_tag_list_#{@torrent.id}_in_place_editor"].replace_html @torrent.tag_list.to_s
       page[:tag_cloud].replace_html render(:partial => 'tag_cloud')
     end
+  end
+
+  def refresh!
+    if request.xhr?
+      resource.refresh!
+    end
+    true
   end
 end

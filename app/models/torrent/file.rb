@@ -70,6 +70,8 @@ class Torrent
 
   def metainfo?
     metainfo.present?
+  rescue Torrent::HasNoMetaInfo => e
+    return false
   end
 
 

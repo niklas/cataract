@@ -40,6 +40,16 @@ class Torrent
     Rails.root/'tmp'/'sockets'/'rtorrent'
   end
 
+  # currently downloaded by rtorrent
+  def open?
+    rtorrent_attributes.try(:[], :active?)
+  end
+
+  # attributes of running rtorrent
+  def rtorrent_attributes
+    remote.torrents_by_info_hash[info_hash]
+  end
+
   # rTorrent deletes the torrent file if removing a tied torrent, so we will
   # only add a copy of our torrent to rtorrent. For this we will use
   # #session_path

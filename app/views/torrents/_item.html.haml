@@ -1,7 +1,7 @@
 - torrent ||= item
 = decorate torrent do |td|
   %li.torrent{class: torrent.status, id: td.item_id}
-    %h3.title= link_to torrent.title, torrent
-    %p.filename= torrent.filename
     - if torrent.running?
       .progress-pie= td.progress
+    %h3.title= link_to torrent.title, torrent
+    %div.filename= torrent.filename
