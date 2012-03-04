@@ -92,6 +92,16 @@ class Torrent
     end
   end
 
+  on_refresh :refresh_status
+  def refresh_status
+    case status
+    when 'running'
+      unless open?
+        self.status = :archived
+      end
+    end
+  end
+
  private
 
   # Will try to get status from rtorrent and stop the torrent

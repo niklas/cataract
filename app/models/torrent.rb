@@ -30,6 +30,8 @@ class Torrent < ActiveRecord::Base
   
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
+  concerned_with :refresh # callbacks required, so more at end of file
+
   # FIXME remove this insane stati code
   # before_save :sync
   # before_validation :fix_filename
@@ -83,21 +85,6 @@ class Torrent < ActiveRecord::Base
   def self.last_update
     Torrent.maximum('updated_at', :conditions => "status = 'running'") || 23.days.ago
   end
-
-  define_callbacks :refresh
-
-  def self.on_refresh(*a, &block)
-    set_callback :refresh, :after, *a, &block
-  end
-
-  def refresh
-    run_callbacks :refresh
-  end
-
-  def refresh!
-    refresh && save!
-  end
-
 
   # extended attributes
 
