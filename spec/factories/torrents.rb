@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :remote_torrent, :class => Torrent do
+  factory :remote_torrent, :class => 'Torrent' do
     status 'remote'
     sequence(:url) { |i| "http://cataract.local/#{i}.torrent" }
   end
