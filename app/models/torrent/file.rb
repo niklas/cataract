@@ -1,3 +1,5 @@
+require 'mlocate'
+
 class Torrent
   belongs_to :directory, :inverse_of => :torrents
   validates_presence_of :directory, :if => :filename?, :unless => :remote?
@@ -16,6 +18,17 @@ class Torrent
 
   def path?
     filename.present? && directory.present?
+  end
+
+  on_refresh :refresh_file
+  def refresh_file
+    if path? && !file_exists?
+      Mlocate.locate(file: filename).each do |found|
+        if dir = Directory.find_by_path( File.dirname(found) )
+          self.directory = dir
+        end
+      end
+    end
   end
 
   def file_exists?
