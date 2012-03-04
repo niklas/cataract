@@ -34,6 +34,7 @@ Feature: filter torrents
       | title |
       | Two   |
       | One   |
+     And I should see "all torrents containing 'one'" within the window title
 
     # match on substrings
     When I filter the list with "w"
@@ -55,6 +56,7 @@ Feature: filter torrents
     Then I should see a list of the following torrents:
       | title |
       | One   |
+     And I should see "running torrents" within the window title
      
     When I choose state "archived"
     Then I should see a list of the following torrents:
@@ -65,5 +67,8 @@ Feature: filter torrents
     Then I should see a list of the following torrents:
       | title |
       | Three   |
+     And I should see "remote torrents" within the window title
 
+    When I filter the list with "ee"
+    Then I should see "remote torrents containing 'ee'" within the window title
 

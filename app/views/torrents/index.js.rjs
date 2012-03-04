@@ -2,5 +2,6 @@ if search.page?
   page.append_to_list 'torrents' => search
 else
   page.update_list 'torrents' => search
-  page << %Q~window.history.replaceState({}, 'Search', "#{j url_for(search.to_params)}")~
+  page << %Q~window.history.replaceState({}, "#{j search.title}", "#{j url_for(search.to_params)}")~
+  page.select('title').text search.title
 end
