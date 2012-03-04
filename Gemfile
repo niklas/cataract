@@ -51,6 +51,9 @@ group :development do
   gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
 end
 
+group :production do
+  gem 'therubyracer' # to compile our coffeescript
+end
 gem "pg"
 gem 'acts_as_list'
 
