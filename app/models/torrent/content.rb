@@ -93,6 +93,13 @@ class Torrent
         torrent.errors.add :content, :blank
       end
     end
+
+    # returns the directory all the contents are in
+    def locate
+      if single?
+        Directory.of *Mlocate.file(info.name)
+      end
+    end
   end
 
   belongs_to :content_directory, :class_name => 'Directory'
@@ -114,6 +121,15 @@ class Torrent
 
   def ensure_content_directory
     self.content_directory ||= Directory.watched.first || Directory.first
+  end
+
+  on_refresh :find_missing_content, :if => :metainfo?
+  def find_missing_content
+    unless content.exists?
+      if dir = content.locate
+        self.content_directory = dir
+      end
+    end
   end
 
 

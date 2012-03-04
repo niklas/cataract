@@ -37,6 +37,15 @@ class Directory < ActiveRecord::Base
     d
   end
 
+  def self.of(*paths)
+    paths.each do |found|
+      if dir = find_by_path( File.dirname(found) )
+        return dir
+      end
+    end
+    return nil
+  end
+
   def label
     [name,path.to_s].join(' - ')
   end

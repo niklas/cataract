@@ -37,21 +37,32 @@ describe Torrent do
       let(:torrent) { Factory :torrent, filename: 'lost.torrent' }
       it "is found directly in directory" do
         torrent.should_not be_file_exists
-        Mlocate.stub(:locate).with(:file => 'lost.torrent').and_return([dir.path/'lost.torrent'])
+        Mlocate.stub(:file).with('lost.torrent').and_return([dir.path/'lost.torrent'])
         torrent.refresh!
         torrent.directory.should == dir
       end
 
       it "is not assigned in subdirectory" do
         torrent.should_not be_file_exists
-        Mlocate.stub(:locate).with(:file => 'lost.torrent').and_return([dir.path/'deeply'/'nested'/'lost.torrent'])
+        Mlocate.stub(:file).with('lost.torrent').and_return([dir.path/'deeply'/'nested'/'lost.torrent'])
         torrent.refresh!
         torrent.directory.should_not == dir
       end
     end
 
     describe 'a torrent with lost content' do
-      it "is found using mlocate"
+      let(:dir)     { Factory :existing_directory, path: 'pics/cats' }
+      let(:torrent) { Factory :torrent_with_picture_of_tails }
+
+      it "is found directly in existing directory" do
+        FileSystem.create_file 'pics/cats/tails.png'
+        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'tails.png'])
+        torrent.refresh!
+        torrent.content_directory.should == dir
+      end
+
+      it "is found nested in existing directory"
+      it "is found as a whole when multiple files"
     end
   end
 end
