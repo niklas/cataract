@@ -18,7 +18,6 @@
 #  synched_at        :datetime      
 #  content_filenames :text          
 #  info_hash         :string(40)    
-#  content_path      :string(2048)  
 #
 
 class Torrent < ActiveRecord::Base

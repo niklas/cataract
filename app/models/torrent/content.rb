@@ -126,17 +126,6 @@ class Torrent
     @content ||= Content.new(self)
   end
 
-  # TODO remove column 'content_path'
-
-  def download_path
-    content_path.sub(%r(/[^/]*$),'')
-  end
-
-  def content_dir_name
-    d = Directory.base_of content_path
-    d ? d.name : '-unknown-'
-  end
-
   def ensure_content_directory
     self.content_directory ||= Directory.watched.first || Directory.first
   end
@@ -174,34 +163,6 @@ class Torrent
   on_refresh :cache_content_filenames, :if => :metainfo?
   def cache_content_filenames
     self.content_filenames = content.relative_files
-  end
-
-
-  def move_content_to target_dir
-    begin
-      unless File.exists?(content_path)
-        update_attribute(:content_path, nil)
-        raise TorrentContentError, "Content not found: #{content_path}"
-      end
-      unless File.directory?(target_dir)
-        raise TorrentContentError, "Target directory does not exist: #{target_dir}"
-      end
-      new_path = File.join(target_dir,metainfo.name)
-      if File.exists?(new_path)
-        raise TorrentContentError, "Target already exists: #{new_path}"
-      end
-      stop! if running?
-      finally_stop!
-      if Directory.new(:path => new_path).is_on_same_drive?(content_path)
-        FileUtils.move content_path, new_path
-        update_attribute(:content_path, new_path)
-      else
-        job_manager.create_job(:torrent_mover,mover_job_key,self.id,new_path)
-        self.status = :moving
-      end
-#    rescue Exception => e
-#      errors.add :filename, "^error on moving content: #{e.to_s}"
-    end
   end
 
   def mover_job_key

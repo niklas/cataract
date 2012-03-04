@@ -183,7 +183,7 @@ class Directory < ActiveRecord::Base
   end
 
   def contains_torrent?(torrent)
-    torrent.content_path.starts_with? path
+    torrent.path.to_s.starts_with? path
   end
 
   def self.subdirs_by_id
