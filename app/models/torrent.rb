@@ -46,6 +46,10 @@ class Torrent < ActiveRecord::Base
     stop! if running?
   end
 
+  def to_s
+    "#{self.class} (#{id}) '#{title}' [#{filename}]"
+  end
+
   def self.temporary_predicate(name)
     attr_accessor name
     define_method :"#{name}?" do
