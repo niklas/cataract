@@ -10,11 +10,11 @@ Feature: Transfer info
       And I am signed in
       And the file for the torrent exists
       And the torrent's content exists on disk
-      And the torrent was refreshed
 
   @rtorrent
   Scenario Outline: rtorrent connection failing in different ways
     Given <scenario>
+      And the torrent is marked as running
      When I go to the page for the torrent
      Then I should see "single" within the page title
       And I should see the following attributes for the torrent:
@@ -34,13 +34,15 @@ Feature: Transfer info
     Given rtorrent list contains the following:
         | up_rate | down_rate | hash        |
         | 10      | 23000     | the torrent |
+      And the torrent is running
      When I go to the page for the torrent
      Then I should see the following attributes for the torrent:
         | up rate   | 10 B/s    |
         | down rate | 22.5 KB/s |
 
   Scenario: cache of catch-all will be cleared
-    Given rtorrent list contains the following:
+    Given the torrent is running
+      And rtorrent list contains the following:
         | up_rate | hash        |
         | 5       | the torrent |
      When I go to the page for the torrent
@@ -59,10 +61,13 @@ Feature: Transfer info
     Given the torrent is running
       And I am on the page for the torrent
       And rtorrent list contains the following:
-        | down_rate | up_rate | size_bytes | completed_bytes | hash        |
-        | 23        | 42      | 2000       | 300             | the torrent |
+        | down_rate | up_rate | size_bytes | completed_bytes | hash        | active? |
+        | 23        | 42      | 2000       | 300             | the torrent | true    |
      When the tick interval is reached
      Then I should see the following attributes for the torrent:
         | up rate   | 42 B/s |
         | down rate | 23 B/s |
         | progress  | 15%    |
+
+  @todo
+  Scenario: transfer info disappears if torrent is stopped or rtorrent breaks (background update)
