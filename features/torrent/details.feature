@@ -17,9 +17,10 @@ Feature: Details of a torrent
       And I follow "Torrents"
       And I follow "Tails"
      Then I should be on the page of the torrent
-     Then I should see "Tails" within the page title
-      And I should see "Lolcats"
-      And I should see "Cat Pictures"
-      And I should see "pictures/cats"
-      And I should see "Incoming"
-      And I should see "slowhd/incoming"
+      And I should see "Tails" within the page title
+      And I should see the following attributes for the torrent:
+        | series            | Lolcats         |
+        | content_directory | Cat Pictures    |
+        | content_directory | pictures/cats   |
+        | directory         | Incoming        |
+        | directory         | slowhd/incoming |
