@@ -49,6 +49,11 @@ $pie_size: 3.2em;
   }
 }
 
+.transfer_torrent, .content_torrent {
+  @include clearfix();
+  overflow-x: auto;
+}
+
 .directory {
   .path {
     font-family: fixed;

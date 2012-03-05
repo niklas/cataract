@@ -80,7 +80,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def val!(name, options = {}, &value)
-    h.content_tag(:di, options) do
+    h.content_tag(:di, options.merge(class: "#{name} #{options[:class]}")) do
       h.content_tag(:dt, Torrent.human_attribute_name(name) ) +
       h.content_tag(:dd, block_given?? value.call : model.send(name) )
     end

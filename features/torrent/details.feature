@@ -11,6 +11,7 @@ Feature: Details of a torrent
       And a directory "A" exists with name: "Cat Pictures", path: "pictures/cats"
       And a torrent_with_picture_of_tails exists with series: the series, title: "Tails", directory: directory "I", content_directory: directory "A"
       And the file for the torrent exists
+      And the torrent's content exists on disk
       And I am signed in
      When I toggle the navigation
       And I follow "Torrents"

@@ -9,14 +9,15 @@ Feature: Transfer info
       And a torrent_with_picture_of_tails exists with directory: the directory, content_directory: the directory
       And I am signed in
       And the file for the torrent exists
+      And the torrent's content exists on disk
       And the torrent was refreshed
 
   @rtorrent
   Scenario Outline: rtorrent connection failing in different ways
     Given <scenario>
-      And I am on the page for the torrent
+     When I go to the page for the torrent
      Then I should see "single" within the page title
-     Then I should see the following attributes for the torrent:
+      And I should see the following attributes for the torrent:
         | content      | <size>     |
         | progress     | <progress> |
         | up rate      | <up>       |
