@@ -1,8 +1,8 @@
 .transfer_torrent.well{id: torrent.transfer_id}
-  .progress-pie= torrent.progress
-  %span.down= torrent.down_rate
-  %span.up= torrent.up_rate
   - if torrent.running?
+    .progress-pie= torrent.progress
+    %span.down= torrent.down_rate
+    %span.up= torrent.up_rate
     = link_to ti(:stop), torrent_transfer_path(torrent), remote: true, class: 'btn btn-danger btn-large', method: :delete
   - else
     = link_to ti(:start), torrent_transfer_path(torrent), remote: true, class: 'btn btn-success btn-large', method: :post
