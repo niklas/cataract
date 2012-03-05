@@ -98,7 +98,7 @@ class TorrentDecorator < ApplicationDecorator
 
   def link_to_content
     h.link_to_modal content_size, h.torrent_content_path(torrent),
-      class: 'content',
+      class: 'content size',
       title: h.translate_action(:content),
       remote: true
   end
