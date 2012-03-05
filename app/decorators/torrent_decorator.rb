@@ -44,6 +44,10 @@ class TorrentDecorator < ApplicationDecorator
     "transfer_torrent_#{torrent.id}"
   end
 
+  def content_id
+    "content_torrent_#{torrent.id}"
+  end
+
   def filename
     val :filename do
       model.filename
@@ -93,9 +97,10 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def link_to_content
-    h.link_to content_size, h.torrent_content_path(torrent),
+    h.link_to_modal content_size, h.torrent_content_path(torrent),
       class: 'content',
-      title: h.translate_action(:content)
+      title: h.translate_action(:content),
+      remote: true
   end
 
   def error(kind)

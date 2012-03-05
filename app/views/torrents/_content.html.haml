@@ -1,9 +1,8 @@
-%dl
-  = torrent.directory
-  = torrent.filename
-  = torrent.content_directory
-  = torrent.series
-  = torrent.val :description
-  = torrent.val :url
-  = torrent.val :info_hash
-  = torrent.val :command
+.content_torrent.well{id: torrent.content_id}
+  %dl
+    = torrent.series
+    - if torrent.content.exists?
+      = torrent.content_directory
+  = torrent.link_to_content
+  - if torrent.content.exists?
+    = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-large'

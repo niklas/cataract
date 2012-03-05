@@ -1,3 +1,1 @@
-= simple_form_for @move, :url => torrent_move_path(@torrent)  do |f|
-  = f.association :target
-  = f.submit
+= render 'form', move: @move, torrent: @torrent

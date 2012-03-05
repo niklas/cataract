@@ -20,6 +20,12 @@ module HtmlSelectorsHelpers
       raise "no footer"
       "div[data-role='footer']"
 
+    when 'the spinner'
+      '#spinner'
+
+    when 'the modal box'
+      'div.modal'
+
     # TODO move to jquery_mobile
     when /^flash (notice|alert)$/
       "#flash .alert-#{$1}"

@@ -1,6 +1,8 @@
 class MoveController < InheritedResources::Base
   belongs_to :torrent, :singleton => true
 
+  respond_to :html, :js
+
   def create
     create! { parent_url }
   end

@@ -1,0 +1,3 @@
+decorate @torrent do |torrent|
+  page.select('#modal .modal-body').html(render('content/details', torrent: torrent))
+end

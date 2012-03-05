@@ -35,6 +35,10 @@ module ApplicationHelper
     "#{search.status}_torrents"
   end
 
+  def link_to_modal(link, url, opts={})
+    link_to link, url, opts.merge(data: {toggle: 'modal', target: '#modal'}, remote: true)
+  end
+
   module PartialHelper
     def replace_partial(partial, options = {})
       html = render(partial, options)

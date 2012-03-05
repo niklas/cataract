@@ -1,3 +1,1 @@
-= link_to :cancel, torrent
-
-= button_to ta(:clear), torrent_content_path(torrent), :method => :delete
+= render 'content/details', torrent: @torrent
