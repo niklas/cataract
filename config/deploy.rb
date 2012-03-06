@@ -5,7 +5,7 @@ set :rvm_ruby_string, '1.9.3-p0-xmlrpc64bit@cataract'
 
 # bundler bootstrap
 require 'bundler/capistrano'
-load 'deploy/assets'
+#load 'deploy/assets'
 
 # server details
 default_run_options[:pty] = true
@@ -53,7 +53,7 @@ namespace :deploy do
     run "chmod a+rXw #{deploy_to}/#{shared_dir}/tmp/sockets"
   end
 
-  before "deploy:assets:precompile", "deploy:symlink_shared"
+  #before "deploy:assets:precompile", "deploy:symlink_shared"
 
   task :foreman do
     run "mkdir -p #{upstart_dir}"
