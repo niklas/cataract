@@ -44,6 +44,10 @@ class TorrentDecorator < ApplicationDecorator
     "transfer_torrent_#{torrent.id}"
   end
 
+  def content_id
+    "content_torrent_#{torrent.id}"
+  end
+
   def filename
     val :filename do
       model.filename
@@ -51,13 +55,13 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def directory
-    val :directory, class: 'directory' do
+    val :directory, class: 'dir' do
       render_directory model.directory
     end
   end
 
   def content_directory
-    val :content_directory, class: 'directory' do
+    val :content_directory, class: 'dir' do
       render_directory torrent.content_directory
     end
   end
@@ -76,7 +80,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def val!(name, options = {}, &value)
-    h.content_tag(:di, options) do
+    h.content_tag(:di, options.merge(class: "#{name} #{options[:class]}")) do
       h.content_tag(:dt, Torrent.human_attribute_name(name) ) +
       h.content_tag(:dd, block_given?? value.call : model.send(name) )
     end
@@ -93,9 +97,10 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def link_to_content
-    h.link_to content_size, h.torrent_content_path(torrent),
-      class: 'content',
-      title: h.translate_action(:content)
+    h.link_to_modal content_size, h.torrent_content_path(torrent),
+      class: 'content size',
+      title: h.translate_action(:content),
+      remote: true
   end
 
   def error(kind)

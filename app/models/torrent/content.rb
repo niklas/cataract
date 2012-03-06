@@ -191,7 +191,7 @@ class Torrent
   end
 
   def content_size
-    self[:content_size].to_i
+    read_attribute(:content_size) || content.size
   end
 
   def has_files?

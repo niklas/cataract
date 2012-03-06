@@ -2,4 +2,11 @@
 = decorate @torrent do |torrent|
   = render 'transfer', torrent: torrent
   = render 'content', torrent: torrent
+  %dl
+    = torrent.directory
+    = torrent.filename
+    = torrent.val :description
+    = torrent.val :url
+    = torrent.val :info_hash
+    = torrent.val :command
 

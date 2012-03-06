@@ -97,9 +97,12 @@ class Torrent
     case status
     when 'running'
       unless open?
+        Rails.logger.debug "#{self} was running, but not open anymore. archiving"
         self.status = :archived
       end
     end
+  rescue Torrent::RTorrent::Offline
+    # ignore
   end
 
  private
