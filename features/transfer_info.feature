@@ -69,5 +69,13 @@ Feature: Transfer info
         | down rate | 23 B/s |
         | progress  | 15%    |
 
-  @todo
-  Scenario: transfer info disappears if torrent is stopped or rtorrent breaks (background update)
+  @javascript
+  Scenario: stopped manually is detected
+    Given the torrent is running
+      And I am on the page for the torrent
+      And rtorrent list contains the following:
+        | hash |
+      And I should see "Stop"
+     When the tick interval is reached
+     Then I should not see "Stop"
+      But I should see "Start"
