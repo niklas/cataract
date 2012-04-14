@@ -5,8 +5,9 @@
         %span.name= current_user.email
         %b.caret
       %ul.dropdown-menu
-        %li= link_to :profile, edit_user_registration_path
-        %li= link_to '.signout', destroy_user_session_path, :method => :delete
+        - if can? :edit, current_user
+          %li= link_to :profile, edit_user_registration_path
+        %li= link_to :signout, destroy_user_session_path, :method => :delete
   - else
-    %li= link_to '.signup', new_user_registration_path
-    %li= link_to '.signin', new_user_session_path
+    %li= link_to :signup, new_user_registration_path
+    %li= link_to :signin, new_user_session_path
