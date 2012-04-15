@@ -29,7 +29,7 @@ When(/^I go back$/) do
 end
 
 Then /^the selected "([^"]*)" should be "([^"]*)"$/ do |field, value|
-  field_labeled(field).native.xpath(".//option[@selected = 'selected']").inner_html.should =~ /#{value}/
+  field_labeled(field).all('option').find(&:selected?).text.should =~ /#{value}/
 end
 
 When /^I wait for (.+) to (?:appear|start)$/ do |name|

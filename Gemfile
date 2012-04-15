@@ -79,3 +79,5 @@ gem 'versatile_rjs', :git => 'git://github.com/condor/versatile_rjs.git'
 
 gem 'foreman'
 gem 'kaminari'
+
+gem 'levenshtein'
