@@ -86,4 +86,15 @@ describe Move do
   it "should rsync, rm content between different partitions"
   it "should log errors to somewhere"
 
+  describe 'auto targeting' do
+    before :each do
+      @red   = create :directory, name: 'Red'
+      @green = create :directory, name: 'Green'
+      @blue  = create :directory, path: '/directory/with/blue'
+    end
+
+    it { @red.should be_auto_targeted_by(title: "Hunt for red October") }
+    it { @blue.should be_auto_targeted_by(title: "Blueberry Nights") }
+    it { @blue.should be_auto_targeted_by(filename: 'the blues brothers.torrent') }
+  end
 end

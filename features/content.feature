@@ -13,14 +13,19 @@ Feature: Torrent content
       And I am on the page for the torrent
 
   Scenario: Move torrent
-    Given a directory exists with path: "/some/where/very/public", name: nil
+    Given the following directories exist:
+       | directory | name  | path                    |
+       | Public    |       | /some/where/very/public |
+       | Tails     | Tails | /pics/of/tails          |
+       | Else      | Else  | /some/where/else        |
      When I follow "Move"
       And I wait for the modal box to appear
+     Then the selected "Target" should be "Tails"
       And I select "Public" from "Target"
       And I press "Move"
      Then a move should exist
       And the torrent should be the move's torrent
-      And the directory should be the move's target
+      And the directory "Public" should be the move's target
       And I should see flash notice "moving Tails to Public"
       And I should be on the page for the torrent
 
