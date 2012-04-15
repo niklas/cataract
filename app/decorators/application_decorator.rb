@@ -31,6 +31,12 @@ class ApplicationDecorator < Draper::Base
     select(*a).remove()
   end
 
+  def update_flash
+    page['flash'].remove()
+    page.select('.navbar:first').after h.render('application/flash')
+  end
+
+
   # Lazy Helpers
   #   PRO: Call Rails helpers without the h. proxy
   #        ex: number_to_currency(model.price)

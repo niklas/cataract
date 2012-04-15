@@ -3,10 +3,6 @@ class MoveController < InheritedResources::Base
 
   respond_to :html, :js
 
-  def create
-    create! { parent_url }
-  end
-
   private
 
   def interpolation_options

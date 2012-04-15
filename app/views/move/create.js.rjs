@@ -1,0 +1,4 @@
+page.decorate @torrent do |torrent|
+  torrent.close_modal
+  torrent.update_flash
+end
