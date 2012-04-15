@@ -32,6 +32,9 @@ module HtmlSelectorsHelpers
 
     when 'the content'
       ".content"
+
+    when /^the (\w+) section$/
+      "section.#{$1}"
     when /the progress( pie)?/
       ".progress-pie"
     when /^the (up|down) rate$/

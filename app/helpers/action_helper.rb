@@ -23,6 +23,7 @@ module ActionHelper
   Icons = {
     stop:  'stop',
     start: 'play',
+    clear: 'trash',
     move:  'share'
   }
 end

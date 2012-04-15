@@ -25,10 +25,8 @@ Feature: Torrent content
       And I should be on the page for the torrent
 
   Scenario: clear a torrent's content
-     When I follow "Content"
-      And I wait for the modal box to appear
-      And I press "Clear"
+     When I follow "Clear" within the content section
+      And I confirm popup
      Then I should see flash notice "Freed 71.7 KB"
       And I should be on the page for the torrent
       And the torrent's content should not exist on disk
-      And I should be on the page for the torrent

@@ -22,7 +22,7 @@ jQuery ->
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   $('body').bind 'tick', ->
-    active = $('.transfer_torrent').attr('id')
+    active = $('section.transfer').attr('id')
     if active?
       $.getScript '/torrents/' + active.replace(/^\D+/, '')
     else

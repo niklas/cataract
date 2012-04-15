@@ -11,3 +11,7 @@ When /^the tick interval is reached$/ do
   EOJS
   step %Q~I wait for the spinner to stop~
 end
+
+When /^I confirm popup$/ do
+  page.driver.browser.switch_to.alert.accept
+end

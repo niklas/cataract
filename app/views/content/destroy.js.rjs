@@ -1,0 +1,4 @@
+page.decorate @torrent do |torrent|
+  torrent.select(:content).replace_with render('content', torrent: torrent)
+end
+

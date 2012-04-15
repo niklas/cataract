@@ -1,5 +1,5 @@
 @torrents.each do |torrent|
-  decorate torrent do |td|
-    page.select("##{td.item_id} .progress").html td.progress
+  page.decorate torrent do |td|
+    td.select(:progress).html td.progress
   end
 end

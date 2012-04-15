@@ -1,8 +1,13 @@
-.content_torrent.well{id: torrent.content_id}
-  %dl
-    = torrent.series
-    - if torrent.content.exists?
-      = torrent.content_directory
-  = torrent.link_to_content
+%section.row.content.well{id: torrent.content_id}
   - if torrent.content.exists?
-    = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-large'
+    .span4
+      = torrent.series
+      = torrent.content_directory
+    .span4
+      = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info'
+    .span4
+      .size= torrent.content_size
+      = torrent.link_to_clear
+  - else
+    .span12
+      = torrent.series

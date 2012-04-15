@@ -96,11 +96,8 @@ class TorrentDecorator < ApplicationDecorator
     return error 'unavailable'
   end
 
-  def link_to_content
-    h.link_to_modal content_size, h.torrent_content_path(torrent),
-      class: 'content size',
-      title: h.translate_action(:content),
-      remote: true
+  def link_to_clear
+    h.link_to h.ti(:clear), h.torrent_content_path(torrent), :method => :delete, class: 'clear btn btn-danger', confirm: "really?"
   end
 
   def error(kind)
@@ -110,6 +107,15 @@ class TorrentDecorator < ApplicationDecorator
   def render_directory(dir)
     h.content_tag(:span, dir.name, class: 'name') +
     h.content_tag(:span, dir.path, class: 'path')
+  end
+
+  def selector_for(name, resource=nil, *more)
+    case name
+    when :progress
+      "##{item_id} .progress"
+    else
+      super
+    end
   end
 
   # Accessing Helpers
