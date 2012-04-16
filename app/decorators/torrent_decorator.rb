@@ -97,7 +97,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def link_to_clear
-    h.link_to h.ti(:clear), h.torrent_content_path(torrent), :method => :delete, class: 'clear btn btn-danger', confirm: "really?"
+    h.link_to h.ti(:clear), h.torrent_content_path(torrent), :method => :delete, class: 'clear btn btn-danger', confirm: "really?", remote: true
   end
 
   def error(kind)
