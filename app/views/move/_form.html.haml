@@ -1,5 +1,5 @@
 - move.auto_target!
-= simple_form_for move, :url => torrent_move_path(torrent)  do |f|
+= simple_form_for move, :url => torrent_move_path(torrent), remote: true  do |f|
   = f.association :target
   %button.btn.btn-warning{type: 'submit'}= ta :move
 

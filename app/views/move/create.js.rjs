@@ -1,4 +1,4 @@
-page.decorate @torrent do |torrent|
-  torrent.close_modal
-  torrent.update_flash
+page.decorate @move.torrent do |td|
+  td.close_modal
+  td.update_flash
 end

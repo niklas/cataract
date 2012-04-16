@@ -23,6 +23,8 @@ Feature: Torrent content
      Then the selected "Target" should be "Tails"
       And I select "Public" from "Target"
       And I press "Move"
+      And I wait for the modal box to disappear
+      And I wait for a flash notice to appear
      Then a move should exist
       And the torrent should be the move's torrent
       And the directory "Public" should be the move's target
@@ -32,6 +34,7 @@ Feature: Torrent content
   Scenario: clear a torrent's content
      When I follow "Clear" within the content section
       And I confirm popup
+      And I wait for a flash notice to appear
      Then I should see flash notice "Freed 71.7 KB"
       And I should be on the page for the torrent
       And the torrent's content should not exist on disk

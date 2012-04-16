@@ -21,7 +21,6 @@
 #
 
 class Torrent < ActiveRecord::Base
-  include FileUtils
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
   belongs_to :feed # TODO remove when series assigned
@@ -153,24 +152,6 @@ class Torrent < ActiveRecord::Base
 
   def available?
     peers >= 1 or distributed_copies >= 1
-  end
-
-
-  def moveto(target,opts={})
-    source = fullpath
-    target = fullpath(target) if target.is_a?(Symbol)
-    return if source.blank?
-    return if target.blank?
-    return unless File.exists? source
-    begin
-      if opts[:copy]
-        copy(source,target)
-      else
-        move(source,target)
-      end
-    #rescue Exception => e
-    #  errors.add :filename, "^error while moving torrent: #{e.to_s}"
-    end
   end
 
 

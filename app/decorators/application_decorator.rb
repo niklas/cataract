@@ -1,6 +1,6 @@
 class ApplicationDecorator < Draper::Base
   def close_modal
-    page.select('#modal .modal-body').modal('close')
+    page.select('#modal').modal('hide')
   end
 
   def selector_for(name, resource=nil, *more)
