@@ -39,7 +39,7 @@ class Torrent
 
   def stop
     stop!
-  rescue InvalidSourceState
+  rescue InvalidSourceState, FileError
   end
 
   def finally_stop!
