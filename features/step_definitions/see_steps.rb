@@ -1,6 +1,6 @@
-Then /^I should see a list of the following (\w+):$/ do |plural, expected|
-  fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
-  found = page.find("ul.#{plural}").all("li").select(&:visible?).map do |item|
+Then /^I should see a table of the following (\w+):$/ do |plural, expected|
+  fields = expected.column_names.map(&:underscore).map {|f| "td.#{f}" }
+  found = page.find("table.#{plural} tbody").all("tr").select(&:visible?).map do |item|
     fields.map {|f| item.find(f).text.strip }
   end
   expected.diff! found.unshift(expected.column_names)

@@ -1,3 +1,8 @@
-%ul#torrents.torrents{data: { url: torrents_path(search), 'num-pages' => search.results.count }}
-  - search.results.each do |torrent|
-    = render 'torrents/item', torrent: torrent
+%table#torrents.torrents.table.table-striped{data: { url: torrents_path(search), 'num-pages' => search.results.count }}
+  %thead
+    %tr
+      %th.title= Torrent.human_attribute_name :title
+      %th.status= Torrent.human_attribute_name :status
+  %tbody
+    - search.results.each do |torrent|
+      = render 'torrents/item', torrent: torrent

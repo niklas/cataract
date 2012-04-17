@@ -53,9 +53,9 @@ Feature: Paginate Torrents
       And I am signed in
       And I toggle the navigation
       And I follow "Torrents"
-      And I filter the list with "Number"
+      And I filter with "Number"
 
-     Then I should see a list of the following torrents:
+     Then I should see a table of the following torrents:
        | title     |
        | Number 01 |
        | Number 02 |
@@ -81,7 +81,7 @@ Feature: Paginate Torrents
 
      When I scroll to the bottom
       And I wait for the spinner to stop
-     Then I should see a list of the following torrents:
+     Then I should see a table of the following torrents:
        | title     |
        | Number 01 |
        | Number 02 |

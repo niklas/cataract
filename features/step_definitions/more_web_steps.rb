@@ -1,4 +1,4 @@
-When /^I filter the list with "([^"]+)"$/ do |terms|
+When /^I filter with "([^"]+)"$/ do |terms|
   first('#torrent_search_terms').set(terms)
   begin
     step %q~I wait for the spinner to start~

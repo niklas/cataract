@@ -7,7 +7,7 @@ $.fn.endlessSearch = ->
   $(@).each ->
     $wrapper = $(@)
     $form    = $wrapper.find('form:first')
-    $list    = $wrapper.find('ul:first')
+    $list    = $wrapper.find('ul:table')
     $field   = $form.find('input.page')
     loading  = false
 
