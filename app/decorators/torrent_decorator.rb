@@ -113,6 +113,8 @@ class TorrentDecorator < ApplicationDecorator
     case name
     when :progress
       "##{item_id} .progress"
+    when :content
+      'section.content'
     else
       super
     end
