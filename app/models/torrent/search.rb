@@ -12,7 +12,7 @@ class Torrent
     attribute :status
     attribute :terms
     attribute :page
-    attribute :per, default: 20
+    attribute :per, default: 50
 
     States = %w(all running archived remote)
     FullTextFields = %w(title filename)

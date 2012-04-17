@@ -7,6 +7,23 @@ Feature: Paginate Torrents
   Scenario: Paginate by endless page
     Given the following archived torrents exist:
        | title     |
+       | Number 59 |
+       | Number 58 |
+       | Number 57 |
+       | Number 56 |
+       | Number 55 |
+       | Number 54 |
+       | Number 53 |
+       | Number 52 |
+       | Number 51 |
+       | Number 50 |
+       | Number 49 |
+       | Number 48 |
+       | Number 47 |
+       | Number 46 |
+       | Number 45 |
+       | Number 44 |
+       | Number 43 |
        | Number 42 |
        | Number 41 |
        | Number 40 |
@@ -75,7 +92,37 @@ Feature: Paginate Torrents
        | Number 18 |
        | Number 19 |
        | Number 20 |
-      But I should not see "Number 21"
+       | Number 21 |
+       | Number 22 |
+       | Number 23 |
+       | Number 24 |
+       | Number 25 |
+       | Number 26 |
+       | Number 27 |
+       | Number 28 |
+       | Number 29 |
+       | Number 30 |
+       | Number 31 |
+       | Number 32 |
+       | Number 33 |
+       | Number 34 |
+       | Number 35 |
+       | Number 36 |
+       | Number 37 |
+       | Number 38 |
+       | Number 39 |
+       | Number 40 |
+       | Number 41 |
+       | Number 42 |
+       | Number 43 |
+       | Number 44 |
+       | Number 45 |
+       | Number 46 |
+       | Number 47 |
+       | Number 48 |
+       | Number 49 |
+       | Number 50 |
+      But I should not see "Number 51"
 
      When I scroll to the bottom
       And I wait for the spinner to stop
@@ -121,5 +168,22 @@ Feature: Paginate Torrents
        | Number 38 |
        | Number 39 |
        | Number 40 |
-      But I should not see "Number 41"
-      And I should not see "Number 42"
+       | Number 41 |
+       | Number 42 |
+       | Number 43 |
+       | Number 44 |
+       | Number 45 |
+       | Number 46 |
+       | Number 47 |
+       | Number 48 |
+       | Number 49 |
+       | Number 50 |
+       | Number 51 |
+       | Number 52 |
+       | Number 53 |
+       | Number 54 |
+       | Number 55 |
+       | Number 56 |
+       | Number 57 |
+       | Number 58 |
+       | Number 59 |
