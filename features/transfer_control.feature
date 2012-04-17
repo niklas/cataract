@@ -30,5 +30,5 @@ Feature: Transferring torrents
       And I am on the page for the torrent
      When I follow "Stop"
      Then I should be on the page for the torrent
-      And the rtorrent main view should not contain the torrent
       And I should see no link "Stop"
+      And the rtorrent main view should not contain the torrent
