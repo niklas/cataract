@@ -54,6 +54,8 @@ class Torrent
       base_path.present? && info.name.present? && File.exists?(path)
     end
 
+    alias exist? exists?
+
     def files
       if single?
         [ path ]
