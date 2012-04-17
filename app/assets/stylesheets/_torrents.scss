@@ -64,6 +64,9 @@ section {
 }
 
 table.torrents {
+  .status {
+    width: $pie_size * 1.2;
+  }
   .progress-pie {
     width: $pie_size;
     height: $pie_size;
