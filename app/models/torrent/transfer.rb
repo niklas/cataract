@@ -37,6 +37,11 @@ class Torrent
     end
   end
 
+  def stop
+    stop!
+  rescue InvalidSourceState
+  end
+
   def finally_stop!
     update_state! :archived
   end

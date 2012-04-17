@@ -136,5 +136,14 @@ describe Torrent do
 
   end
 
+
+  describe 'running' do
+    let(:torrent) { build :torrent_with_picture_of_tails }
+    it "should be stopped when clearing" do
+      torrent.should_receive(:stop)
+      torrent.content.destroy
+    end
+  end
+
 end
 

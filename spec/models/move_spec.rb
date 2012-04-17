@@ -78,6 +78,11 @@ describe Move do
         multiple.changes.should be_empty
       end
 
+      it "should stop running torrent" do
+        multiple.should_receive(:stop)
+        move.work!
+      end
+
     end
 
   end

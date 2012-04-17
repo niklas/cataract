@@ -89,7 +89,8 @@ class Torrent
     end
 
     def destroy
-      if path.exist?
+      torrent.stop
+      if exists?
         FileUtils.rm_rf path
       else
         torrent.errors.add :content, :blank
