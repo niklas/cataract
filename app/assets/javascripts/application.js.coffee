@@ -9,7 +9,7 @@
 #= require bindWithDelay
 
 jQuery ->
-  $('ul#torrents').endlessPage()
+  $('#torrent_search').endlessSearch()
 
   $('form#new_torrent_search :radio').bind 'change', ->
     $(@).closest('form').submit()

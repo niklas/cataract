@@ -1,11 +1,14 @@
 $ = jQuery
 
-$.fn.endlessPage = ->
+$.fn.endlessSearch = ->
   nearBottomOfPage = ->
     $(window).scrollTop() > $(document).height() - $(window).height() - 200
 
   $(@).each ->
-    $list    = $(@)
+    $wrapper = $(@)
+    $form    = $wrapper.find('form:first')
+    $list    = $wrapper.find('ul:first')
+    $field   = $form.find('input.page')
     loading  = false
 
     $(window).scroll ->
@@ -19,12 +22,11 @@ $.fn.endlessPage = ->
         loading = true
         page++
         $list.data('page', page)
+        $field.val(page)
         $.ajax
           url: $list.data('url')
           type: 'get'
-          data:
-            torrent_search:
-              page: page
+          data: $form.serialize()
           dataType: 'script'
           success: ->
             $(window).sausage('draw')

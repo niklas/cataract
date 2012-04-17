@@ -44,6 +44,7 @@ Feature: Paginate Torrents
        | Number 08 |
        | Number 07 |
        | Number 06 |
+       | Unwanted  |
        | Number 05 |
        | Number 04 |
        | Number 03 |
@@ -52,6 +53,7 @@ Feature: Paginate Torrents
       And I am signed in
       And I toggle the navigation
       And I follow "Torrents"
+      And I filter the list with "Number"
 
      Then I should see a list of the following torrents:
        | title     |
