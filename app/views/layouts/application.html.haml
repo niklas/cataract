@@ -11,11 +11,13 @@
   %body
 
     .container-fluid
-      .navbar
-        .navbar-inner
-          .container-fluid
-            = link_to 'Cataract', dashboard_path, class: 'brand'
-            = render 'navigation'
+      %header
+        .navbar
+          .navbar-inner
+            .container-fluid
+              = link_to 'Cataract', user_signed_in?? torrents_path : root_path, class: 'brand'
+              = render 'navigation'
+              = render 'session'
       - if show_title?
         .page-header
           %h1#title= yield(:title)

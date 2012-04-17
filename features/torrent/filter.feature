@@ -11,8 +11,6 @@ Feature: filter torrents
       | Two   | with_one_file.torrent | archived |                      |
       | Three | doesntmatter2.torrent | remote   | http://local.torrent |
      And I am signed in
-     And I toggle the navigation
-     And I follow "Torrents"
 
   Scenario: show recent first
     Then I should see a table of the following torrents:

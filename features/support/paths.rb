@@ -14,8 +14,8 @@ module NavigationHelpers
     when /^the sign ?in page$/
       new_user_session_path
 
-    when /^the dashboard(?:\s?page)?$/
-      dashboard_path
+    when /^the list page$/
+      torrents_path
 
     when /^the (running|archived|remote) list page$/
       torrents_path # anchor: $1

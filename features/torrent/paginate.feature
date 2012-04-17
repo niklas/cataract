@@ -51,8 +51,6 @@ Feature: Paginate Torrents
        | Number 02 |
        | Number 01 |
       And I am signed in
-      And I toggle the navigation
-      And I follow "Torrents"
       And I filter with "Number"
 
      Then I should see a table of the following torrents:

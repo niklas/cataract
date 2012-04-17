@@ -13,9 +13,7 @@ Feature: Details of a torrent
       And the file for the torrent exists
       And the torrent's content exists on disk
       And I am signed in
-     When I toggle the navigation
-      And I follow "Torrents"
-      And I follow "Tails"
+     When I follow "Tails"
      Then I should be on the page of the torrent
       And I should see "Tails" within the page title
       And I should see the following attributes for the torrent:

@@ -13,8 +13,7 @@ Cataract::Application.routes.draw do
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
 
-  get "dashboard" => 'greetings#dashboard', :as => 'dashboard'
-  get "dashboard" => 'greetings#dashboard', :as => 'user_root' # after login
+  get "torrents" => 'torrents#index', :as => 'user_root' # after login
 
   devise_for :users
 
