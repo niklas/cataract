@@ -3,6 +3,6 @@
     .progress-pie= torrent.progress
     %span.down= torrent.down_rate
     %span.up= torrent.up_rate
-    = link_to ti(:stop), torrent_transfer_path(torrent), remote: true, class: 'btn btn-danger btn-large', method: :delete
+    = link_to ti(:stop), torrent_transfer_path(torrent), remote: true, class: 'btn btn-danger', method: :delete
   - else
-    = link_to ti(:start), torrent_transfer_path(torrent), remote: true, class: 'btn btn-success btn-large', method: :post
+    = link_to ti(:start), torrent_transfer_path(torrent), remote: true, class: 'btn btn-success', method: :post
