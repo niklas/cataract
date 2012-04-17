@@ -98,6 +98,10 @@ class Torrent
 
   has_one :move
 
+  def moving?
+    ! move.nil?
+  end
+
 end
 
 

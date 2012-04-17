@@ -12,14 +12,21 @@ Feature: Transferring torrents
       And the file for the torrent exists
       And I am signed in
 
-  Scenario: Start the transfer
+  Scenario: Start the transfer form the list
+     When I click on the start link
+     Then I should be on the list page
+      And the rtorrent main view should contain the torrent
+      And I should see a stop link
+      But I should not see a start link
+
+  Scenario: Start the transfer from the page of the torrent
     Given I am on the page for the torrent
      When I follow "Start"
      Then I should be on the page for the torrent
      #And I should see notice "started Tails"
+      And I should see no link "Start"
       And the rtorrent main view should contain the torrent
       And rtorrent should download the torrent
-      And I should see no link "Start"
 
   @todo
   @wip

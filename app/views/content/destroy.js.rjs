@@ -1,5 +1,5 @@
 page.decorate @torrent do |torrent|
   torrent.select(:content).replace_with render('torrents/content', torrent: torrent)
   torrent.update_flash
+  torrent.update_in_list
 end
-

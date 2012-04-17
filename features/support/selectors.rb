@@ -26,6 +26,9 @@ module HtmlSelectorsHelpers
     when 'the modal box'
       'div.modal'
 
+    when /^(\w+) link$/
+      "a.#{$1}"
+
     # TODO move to jquery_mobile
     when /^(?:a )?flash (notice|alert)$/
       "#flash .alert-#{$1}"

@@ -3,6 +3,7 @@
     %tr
       %th.status
       %th.title= Torrent.human_attribute_name :title
+      %th.actions
   %tbody#torrents
     - search.results.each do |torrent|
       = render 'torrents/item', torrent: torrent

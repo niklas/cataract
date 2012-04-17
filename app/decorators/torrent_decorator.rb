@@ -1,7 +1,7 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?, :content
+  allows :running?, :content, :moving?
 
   def progress
     handle_remote do
@@ -118,6 +118,10 @@ class TorrentDecorator < ApplicationDecorator
     else
       super
     end
+  end
+
+  def update_in_list
+    page.replace_partial 'torrents/item', torrent: model
   end
 
   # Accessing Helpers
