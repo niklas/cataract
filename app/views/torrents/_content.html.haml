@@ -4,7 +4,10 @@
       = torrent.series
       = torrent.content_directory
     .span4
-      = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info'
+      - unless torrent.move
+        = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info'
+      - else
+        %span.btn.btn-info.disabled= ti(:move)
     .span4
       .size= torrent.content_size
       = torrent.link_to_clear
