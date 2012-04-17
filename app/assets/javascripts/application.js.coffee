@@ -11,12 +11,13 @@
 jQuery ->
   $('#torrent_search').endlessSearch()
 
-  $('form#new_torrent_search :radio').bind 'change', ->
-    $(@).closest('form').submit()
+  search = ->
+    $(@).closest('form')
+      .find('input.page').val(1).end()
+      .submit()
 
-  $('form#new_torrent_search :text').bindWithDelay 'keyup change', ->
-    $(@).closest('form').submit()
-  ,333
+  $('form#new_torrent_search :radio').bind 'change', search
+  $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
 
   $('#title').bind 'click', -> $('body').trigger 'tick'

@@ -45,6 +45,10 @@ class Torrent
       I18n.translate "search_title.#{key}", status: status, terms: terms, scope: i18n_scope
     end
 
+    def paginating?
+      page? && page.to_i > 1
+    end
+
     private
 
     def i18n_scope

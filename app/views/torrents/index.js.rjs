@@ -1,4 +1,4 @@
-if search.page?
+if search.paginating?
   page.append_to_list 'torrents' => search
 else
   page.update_list 'torrents' => search

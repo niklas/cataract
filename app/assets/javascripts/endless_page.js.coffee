@@ -7,13 +7,13 @@ $.fn.endlessSearch = ->
   $(@).each ->
     $wrapper = $(@)
     $form    = $wrapper.find('form:first')
-    $list    = $wrapper.find('ul:table')
+    $list    = $wrapper.find('table:first')
     $field   = $form.find('input.page')
     loading  = false
 
     $(window).scroll ->
       numPages = $list.data('num-pages')
-      page     = $list.data('page') || 1
+      page     = $field.val() || 1
 
       return if loading == true
       return if page >= numPages
@@ -21,7 +21,6 @@ $.fn.endlessSearch = ->
       if nearBottomOfPage()
         loading = true
         page++
-        $list.data('page', page)
         $field.val(page)
         $.ajax
           url: $list.data('url')
