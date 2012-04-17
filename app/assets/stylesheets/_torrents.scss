@@ -63,6 +63,20 @@ section {
   }
 }
 
+table.torrents {
+  .progress-pie {
+    width: $pie_size;
+    height: $pie_size;
+    overflow: hidden;
+    float: right;
+    position: relative;
+    svg {
+      width: 76%;
+      margin: 10%;
+    }
+  }
+}
+
 ul.torrents {
   list-style: none;
   margin: 0;
@@ -79,27 +93,6 @@ ul.torrents {
       @include translate(-1px, -1px);
     }
 
-    .title, .filename {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow-x: hidden;
-    }
-    &.running {
-      .title, .filename {
-        margin-right: $pie_size * 1.3;
-      }
-    }
-    .progress-pie {
-      width: $pie_size;
-      height: $pie_size;
-      overflow: hidden;
-      float: right;
-      position: relative;
-      svg {
-        width: 76%;
-        margin: 10%;
-      }
-    }
     &:nth-child(even) {
       background-color: $grayLighter;
     }
