@@ -11,6 +11,12 @@
 
 @import "bootstrap";
 
+/* push content down, the fixed navbar covers it */
+body {
+  padding-top: 50px;
+}
+@import "bootstrap-responsive";
+
 @import "compass/css3";
 @import "torrents";
 @import "radio_buttons";
