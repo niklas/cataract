@@ -68,7 +68,7 @@ table.torrents {
     width: $pie_size * 1.2;
   }
   .actions {
-    a {
+    a,span {
       float: right;
       margin-left: 0.5em;
     }

@@ -7,7 +7,7 @@
       - unless torrent.moving?
         = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info'
       - else
-        %span.btn.btn-info.disabled= ti(:move)
+        %span.btn.btn-info.btn-mini.disabled= ti(:move)
     .span4
       .size= torrent.content_size
       = link_to ti(:clear), torrent_content_path(torrent), :method => :delete, class: 'clear btn btn-danger', confirm: "really?", remote: true
