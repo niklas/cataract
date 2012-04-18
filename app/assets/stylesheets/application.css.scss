@@ -26,3 +26,8 @@ form#new_torrent_search {
     display: none;
   }
 }
+
+#spinner {
+  position: fixed;
+  top: 50%; left: 50%;
+}
