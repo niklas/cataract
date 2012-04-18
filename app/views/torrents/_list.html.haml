@@ -3,6 +3,7 @@
     %tr
       %th.status
       %th.title= Torrent.human_attribute_name :title
+      %th.location= Torrent.human_attribute_name :location
       %th.actions
   %tbody#torrents
     - search.results.each do |torrent|

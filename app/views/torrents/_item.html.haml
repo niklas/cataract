@@ -9,6 +9,9 @@
         %strong= link_to torrent.title, torrent
       - else
         = link_to torrent.title, torrent
+    %td.location
+      - if torrent.content.exists?
+        = torrent.content_directory.name
     %td.actions
       - if torrent.running?
         = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete
