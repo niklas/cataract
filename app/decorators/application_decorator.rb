@@ -1,13 +1,8 @@
 class ApplicationDecorator < Draper::Base
-  def close_modal
-    page.select('#modal').modal('hide')
-    select(:modal).html('')
-  end
+  include ModalDecoratorHelper
 
   def selector_for(name, resource=nil, *more)
     case name
-    when :modal
-      '#modal .modal-body'
     when :errors_for
       %Q~#{selector_for(:form_for, resource)} .errors~
     when :form_for
