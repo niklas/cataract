@@ -1,8 +1,8 @@
 %table.torrents.table.table-striped{data: { url: torrents_path(search), 'num-pages' => search.results.num_pages }}
   %thead
     %tr
-      %th.status
       %th.title= Torrent.human_attribute_name :title
+      %th.status
       %th.location= Torrent.human_attribute_name :location
       %th.actions
   %tbody#torrents
