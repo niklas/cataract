@@ -112,7 +112,7 @@ class TorrentDecorator < ApplicationDecorator
   def selector_for(name, resource=nil, *more)
     case name
     when :progress
-      "##{item_id} .progress"
+      "##{item_id} .progress-pie"
     when :content
       'section.content'
     else
