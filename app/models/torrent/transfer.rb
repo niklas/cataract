@@ -37,9 +37,14 @@ class Torrent
     end
   end
 
+  # same as #stop!, but does not raise any exceptions
   def stop
-    stop!
-  rescue InvalidSourceState, FileError
+    remote.stop! self
+    remote.close! self
+    remote.erase! self # WARNING! will delete the torrent file
+    finally_stop!
+    log('was stopped')
+  rescue StandardError
   end
 
   def finally_stop!
