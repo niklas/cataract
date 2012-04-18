@@ -15,9 +15,9 @@ Feature: Transferring torrents
   Scenario: Start the transfer form the list
      When I click on the start link
      Then I should be on the list page
-      And the rtorrent main view should contain the torrent
       And I should see a stop link
       But I should not see a start link
+      And the rtorrent main view should contain the torrent
 
   Scenario: Start the transfer from the page of the torrent
     Given I am on the page for the torrent
