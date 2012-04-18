@@ -2,6 +2,7 @@
 class TorrentComponentController < InheritedResources::Base
   belongs_to :torrent, :singleton => true
   respond_to :js, :html
+  before_filter :refresh_torrent
 
   private
   def torrent
@@ -13,5 +14,9 @@ class TorrentComponentController < InheritedResources::Base
   end
 
   helper_method :torrent
+
+  def refresh_torrent
+    torrent.refresh!
+  end
 
 end
