@@ -125,7 +125,10 @@ class Torrent < ActiveRecord::Base
   end
 
   def clean_filename
-    filename.
+    tags = [].tap do |tags|
+      tags << '720p' if filename =~ /720p/i
+    end
+    [filename.
       gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
       gsub(/\[.*?\]/,'').
       gsub(/\(.*?\)/,'').
@@ -133,7 +136,7 @@ class Torrent < ActiveRecord::Base
       sub(/\.?torrent$/i,'').
       gsub(/[._-]+/,' ').
       gsub(/\s{2,}/,' ').
-      rstrip.lstrip
+      rstrip.lstrip, *tags].join(" ")
   end
 
 

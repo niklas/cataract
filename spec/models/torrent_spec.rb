@@ -145,5 +145,35 @@ describe Torrent do
     end
   end
 
+  describe 'clean filenames' do
+    let(:filename) { 'Fame of Bones 5x12 [720P - HDTV - OMMARZE].torrent' }
+    let(:torrent)  { build(:torrent, filename: filename) }
+    let(:cleaned)  { torrent.clean_filename }
+    it "should keep the name" do
+      cleaned.should include("Fame of Bones")
+    end
+
+    it "should keep season and episode" do
+      cleaned.should include("5x12")
+    end
+
+    it "should keep 720P info" do
+      cleaned.should include("720")
+    end
+
+    it "should remove brackets" do
+      cleaned.should_not include("[")
+      cleaned.should_not include("]")
+    end
+
+    it "should remove extension" do
+      cleaned.should_not include(".torrent")
+    end
+
+    it "should remove release group" do
+      cleaned.should_not include("OMMARZE")
+    end
+  end
+
 end
 
