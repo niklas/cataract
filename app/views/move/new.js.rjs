@@ -1,4 +1,4 @@
 decorate @torrent do |torrent|
-  page.select('#modal .modal-body').html(render('form', torrent: torrent, move: @move))
+  torrent.select(:modal).html(render('form', torrent: torrent, move: @move))
 end
 
