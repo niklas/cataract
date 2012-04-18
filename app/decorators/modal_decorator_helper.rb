@@ -12,7 +12,7 @@ module ModalDecoratorHelper
     else
       content = content_body
     end
-    h.content_tag :div, content, options.merge(class: "modal container-fluid hide fade in #{classes}")
+    h.content_tag :div, content, options.merge(class: "modal container-fluid #{classes}")
   end
 
   # removes all modal boxes first, appends a new one to the body and opens it
