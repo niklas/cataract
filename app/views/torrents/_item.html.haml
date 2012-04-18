@@ -22,5 +22,5 @@
         - unless torrent.moving?
           = link_to_modal i(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-mini'
         - else
-          %span.btn.btn-info.disabled= i(:move)
+          %span.btn.btn-info.btn-mini.disabled= i(:move)
         = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really?"
