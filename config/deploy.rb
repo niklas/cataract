@@ -53,7 +53,7 @@ namespace :deploy do
     run "chmod a+rXw #{deploy_to}/#{shared_dir}/tmp/sockets"
   end
 
-  after "deploy:symlink", "deploy:symlink_shared"
+  after "deploy:create_symlink", "deploy:symlink_shared"
 
   task :foreman do
     run "mkdir -p #{upstart_dir}"
