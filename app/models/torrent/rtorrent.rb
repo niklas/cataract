@@ -37,7 +37,7 @@ class Torrent
   end
 
   def self.rtorrent_socket_path
-    Rails.root/'tmp'/'sockets'/'rtorrent'
+    Rails.root/'tmp'/'rtorrent.socket'
   end
 
   # currently downloaded by rtorrent
