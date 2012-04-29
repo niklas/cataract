@@ -1,6 +1,7 @@
 en:
   helpers:
     actions:
+      landing: "Ohai"
       signin: "Sign in"
       move: "Move"
       start: "Start"
