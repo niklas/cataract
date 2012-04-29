@@ -21,4 +21,9 @@ FactoryGirl.define do
     torrent
     target
   end
+
+  factory :disk do
+    sequence(:name) { |i| "Disk ##{i}" }
+    sequence(:path) { |i| "/tmp/disk#{i}" }
+  end
 end

@@ -23,6 +23,8 @@ class Directory < ActiveRecord::Base
     FileUtils.mkdir_p path
   end
 
+  belongs_to :disk
+
   has_many :torrents
 
   def self.all_paths(opts={})
@@ -63,8 +65,12 @@ class Directory < ActiveRecord::Base
     [name,path.to_s].join(' - ')
   end
 
+  def basename
+    path.present? && path.basename.to_s
+  end
+
   def name
-    super.presence || path.basename.to_s.capitalize
+    super.presence || basename
   end
 
   def sub_directories
@@ -104,7 +110,11 @@ class Directory < ActiveRecord::Base
     end
   end
   def path
-    read_attribute(:path)
+    read_attribute(:path) || path_from_disk
+  end
+
+  def path_from_disk
+    disk.present? && disk.path/(name || '????????')
   end
 
   validates_each :path do |record, attr, value|

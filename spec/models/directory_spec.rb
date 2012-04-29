@@ -31,7 +31,7 @@ describe Directory do
 
     it "should be used for name if none present" do
       dir = build(:directory, path: '/just/the/last/matters to me', name: nil)
-      dir.name.should == 'Matters to me'
+      dir.name.should == 'matters to me'
     end
 
     it "should be found prefixing" do

@@ -21,7 +21,7 @@ Feature: Torrent content
      When I follow "Move"
       And I wait for the modal box to appear
      Then the selected "Target" should be "Tails"
-      And I select "Public" from "Target"
+      And I select "public" from "Target"
       And I press "Move"
       And I wait for the modal box to disappear
       And I wait for a flash notice to appear

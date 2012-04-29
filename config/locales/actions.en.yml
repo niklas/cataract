@@ -12,3 +12,6 @@ en:
       add: "Add"
       dashboard: "Dashboard"
       torrents: "Torrents"
+      directories: "Library"
+      all_directories: "All Directories"
+      create_directory: "Create Directory"

@@ -1,0 +1,11 @@
+%table.table.table-striped.directories
+  %thead
+    %tr
+      %th= Directory.human_attribute_name :name
+      %th= Directory.human_attribute_name :path
+  %tbody
+    - directories.each do |dir|
+      %tr
+        %td= dir.name
+        %td= dir.path
+

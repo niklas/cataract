@@ -6,3 +6,6 @@ en:
     contents:
       destroy:
         notice: "Freed %{bytes}."
+    directories:
+      create:
+        notice: "Directory '%{name}' created"

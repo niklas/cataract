@@ -15,6 +15,8 @@ Cataract::Application.routes.draw do
 
   get "torrents" => 'torrents#index', :as => 'user_root' # after login
 
+  resources :directories
+
   devise_for :users
 
   root :to => 'greetings#landing'
