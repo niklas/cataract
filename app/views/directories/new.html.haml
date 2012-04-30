@@ -1,4 +1,1 @@
-= simple_form_for resource do |form|
-  = form.input :name
-  = form.input :disk_id, collection: Disk.order(:name), include_blank: false
-  %button.btn.btn-primary{type: 'submit'}= ta :create_directory
+= render 'new_form', directory: @directory

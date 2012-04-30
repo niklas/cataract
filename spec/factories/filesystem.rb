@@ -4,6 +4,8 @@ FactoryGirl.define do
     sequence(:path) { |i| "directory_#{i}" }
     watched false
 
+    disk
+
     factory :target # to move
 
     factory :existing_directory do
@@ -25,5 +27,11 @@ FactoryGirl.define do
   factory :disk do
     sequence(:name) { |i| "Disk ##{i}" }
     sequence(:path) { |i| "/tmp/disk#{i}" }
+
+    after_build do |disk|
+      if disk.path.relative? && defined?(FileSystem)
+        disk.path = FileSystem.rootfs/disk.path
+      end
+    end
   end
 end

@@ -28,7 +28,7 @@ Feature: Torrent content
      Then a move should exist
       And the torrent should be the move's torrent
       And the directory "Public" should be the move's target
-      And I should see flash notice "moving Tails to Public"
+      And I should see flash notice "moving Tails to public"
       And I should be on the page for the torrent
 
   Scenario: clear a torrent's content

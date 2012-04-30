@@ -1,0 +1,9 @@
+%tr
+  %td.disk= directory.disk.name
+  %td.name
+    - if directory.new_record?
+      = link_to ta(:import_directory, name: directory.name), new_disk_directory_path(directory.disk, directory: { path: directory.path, name: directory.name}), remote: true, class: 'btn btn-warning'
+    - else
+      = directory.name
+  %td.dir= directory.path
+

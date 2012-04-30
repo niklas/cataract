@@ -14,4 +14,6 @@ en:
       torrents: "Torrents"
       directories: "Library"
       all_directories: "All Directories"
+      detected_directories: "Detected Directories"
       create_directory: "Create Directory"
+      import_directory: "Import %{name}"

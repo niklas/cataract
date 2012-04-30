@@ -8,4 +8,5 @@
         = li_link dir.name, directory_path(dir), can: [:show, dir], class: 'name'
       %li.devider
       = li_link :all_directories, directories_path, can: [:index, Directory]
-      = li_link :create_directory, new_directory_path, can: [:create, Directory]
+      - if first_disk = Disk.first
+        = li_link :create_directory, new_disk_directory_path(first_disk), can: [:create, Directory], remote: true

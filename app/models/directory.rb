@@ -13,6 +13,9 @@
 
 class Directory < ActiveRecord::Base
   has_ancestry
+  # the ancestry gem defines a path method to
+  alias_method :ancestry_path, :path
+  include Filesystem
 
   after_save :create_on_filesystem, :on => :create, :if => :auto_create?
   attr_accessor :auto_create
@@ -23,7 +26,9 @@ class Directory < ActiveRecord::Base
     FileUtils.mkdir_p path
   end
 
+  # TODO validate path is on disk
   belongs_to :disk
+  validates_presence_of :disk
 
   has_many :torrents
 
@@ -65,62 +70,16 @@ class Directory < ActiveRecord::Base
     [name,path.to_s].join(' - ')
   end
 
-  def basename
-    path.present? && path.basename.to_s
-  end
-
-  def name
-    super.presence || basename
-  end
-
-  def sub_directories
-    glob('*')
-      .select { |dir| File.directory? dir }
-      .sort
-      .map    { |dir| ::Pathname.new(dir) }
-  end
-
   def subdir_names
     subdirs
-  end
-
-  def glob(pattern)
-    Dir[ path/pattern ]
-  end
-
-  class Pathname
-    def load(text)
-      return unless text
-      ::Pathname.new(text)
-    end
-
-    def dump(pathname)
-      pathname.to_s
-    end
-  end
-
-  # the ancestry gem defines a path method to
-  alias_method :ancestry_path, :path
-  serialize :path, Pathname.new
-  def path=(new_path)
-    if new_path.is_a?(::Pathname)
-      super new_path
-    else
-      super ::Pathname.new(new_path.to_s)
-    end
   end
   def path
     read_attribute(:path) || path_from_disk
   end
 
   def path_from_disk
-    disk.present? && disk.path/(name || '????????')
+    disk.present? && name? && disk.path/name
   end
-
-  validates_each :path do |record, attr, value|
-    record.errors.add attr, "is not absolute" unless value.absolute?
-  end
-  validates :path, :uniqueness => true
 
 
   def self.for_series
@@ -208,3 +167,5 @@ class Directory < ActiveRecord::Base
     File.read('/etc/mtab').collect {|l| l.split[1] }.sort {|b,a| a.length <=> b.length }
   end
 end
+
+DirectoryDecorator

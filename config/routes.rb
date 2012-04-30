@@ -15,7 +15,10 @@ Cataract::Application.routes.draw do
 
   get "torrents" => 'torrents#index', :as => 'user_root' # after login
 
-  resources :directories
+  resources :disks, shallow: true do
+    resources :directories
+  end
+  get 'directories' => 'directories#index', as: 'directories'
 
   devise_for :users
 
