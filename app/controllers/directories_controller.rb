@@ -5,7 +5,13 @@ class DirectoriesController < InheritedResources::Base
   load_and_authorize_resource
 
   def create
-    create! { directories_path }
+    create! do
+      if resource.is_root?
+        directories_path
+      else
+        directory_path(resource.parent)
+      end
+    end
   end
 
   private

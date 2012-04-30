@@ -40,6 +40,16 @@ class Directory < ActiveRecord::Base
     end
   end
 
+  # Directories not already in database
+  def detected_directories
+    sub_directories.reject do |on_disk|
+      children.any? { |in_db| in_db.path == on_disk }
+    end.map do |path|
+      children.new(path: path, disk: disk)
+    end
+  end
+
+
   def self.all_paths(opts={})
     find(:all, opts).select {|dir| File.directory? dir.path }
   end

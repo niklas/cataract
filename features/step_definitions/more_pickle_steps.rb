@@ -6,3 +6,10 @@ Given /^#{capture_model} is (?:marked as )?(running)$/ do |ref, status|
   model = model!(ref)
   model.update_attribute :status, status
 end
+
+Then(/^#{capture_model}'s (\w+) (should(?: not)?) end with #{capture_value}$/) do |name, attribute, expectation, expected|
+  actual_value  = model(name).send(attribute)
+  expectation   = expectation.gsub(' ', '_')
+
+  actual_value.to_s.send(expectation, be_ends_with(eval(expected)))
+end

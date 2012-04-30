@@ -7,6 +7,7 @@ module Filesystem
     read_attribute(:name) || basename || ''
   end
 
+  # Pathnames of subdirectories
   def sub_directories
     glob('*')
       .select { |dir| File.directory? dir }

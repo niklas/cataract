@@ -1,0 +1,9 @@
+- title @directory.name
+
+%tt= @directory.path
+
+= render 'list', directories: @directory.children, extra_class: 'existing'
+
+%h1= ta :detected_directories
+= render 'list', directories: @directory.detected_directories, extra_class: 'new'
+

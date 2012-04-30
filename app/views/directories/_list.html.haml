@@ -1,10 +1,11 @@
-%table.table.table-striped.directories{class: defined?(extra_class) && extra_class}
-  %thead
-    %tr
-      %th= Directory.human_attribute_name :disk
-      %th= Directory.human_attribute_name :name
-      %th= Directory.human_attribute_name :path
-  %tbody
-    - directories.each do |dir|
-      = render 'directories/item', directory: dir
+- unless directories.empty?
+  %table.table.table-striped.directories{class: defined?(extra_class) && extra_class}
+    %thead
+      %tr
+        %th= Directory.human_attribute_name :disk
+        %th= Directory.human_attribute_name :name
+        %th= Directory.human_attribute_name :path
+    %tbody
+      - directories.each do |dir|
+        = render 'directories/item', directory: dir
 

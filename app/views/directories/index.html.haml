@@ -1,4 +1,4 @@
-%h1= ta :all_directories
+- title :all_directories
 = render 'list', directories: Directory.roots.order(:name), extra_class: 'existing'
 
 %h1= ta :detected_directories

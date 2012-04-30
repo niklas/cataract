@@ -6,6 +6,7 @@ class Disk < ActiveRecord::Base
     includes(:directories).all.map(&:detected_directories).flatten
   end
 
+  # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|
       directories.any? { |in_db| in_db.path == on_disk }
@@ -13,4 +14,5 @@ class Disk < ActiveRecord::Base
       directories.new(path: path)
     end
   end
+
 end
