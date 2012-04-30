@@ -18,7 +18,7 @@ Feature: Manage Library
        | Series |
 
   Scenario: can create directories
-    Given a disk exists with name: "aDisk"
+    Given a disk exists with name: "aDisk", path: "media/adisk"
       And I am signed in
      When I toggle the menu
       And I follow "Library"
@@ -45,11 +45,10 @@ Feature: Manage Library
        | Name          |
        | Import Movies |
        | Import Series |
-     When I follow "import Series"
+     When I follow "Import Series"
       And I wait for the modal box to appear
      Then the "Name" field should contain "Series"
      When I press "Create Directory"
-      And I wait for the modal box to disappear
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And I should see a table of the following directories:

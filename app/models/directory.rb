@@ -16,6 +16,7 @@ class Directory < ActiveRecord::Base
   # the ancestry gem defines a path method to
   alias_method :ancestry_path, :path
   include Filesystem
+  before_validation :set_path_from_disk_and_name
 
   after_save :create_on_filesystem, :on => :create, :if => :auto_create?
   attr_accessor :auto_create
@@ -31,6 +32,13 @@ class Directory < ActiveRecord::Base
   validates_presence_of :disk
 
   has_many :torrents
+
+
+  def set_path_from_disk_and_name
+    unless path_before_type_cast.present?
+      self.path = disk.path / name
+    end
+  end
 
   def self.all_paths(opts={})
     find(:all, opts).select {|dir| File.directory? dir.path }

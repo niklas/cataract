@@ -59,4 +59,12 @@ describe Directory do
       directory.path.should == rootfs/'foo'/'bar'
     end
   end
+
+  context "assigning name on creation" do
+    it "should create path from the disk's path an the name" do
+      disk = create :disk, path: "/media/Zeug"
+      directory = build :directory, disk: disk, name: "krams", path: nil
+      directory.path.to_s.should == "/media/Zeug/krams"
+    end
+  end
 end

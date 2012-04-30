@@ -29,6 +29,10 @@ module Filesystem
     end
   end
 
+  def path?
+    read_attribute(:path).present?
+  end
+
   def self.included(base)
     base.class_eval do
       serialize :path, Pathname.new
@@ -41,11 +45,13 @@ module Filesystem
     end
   end
 
-  # FIXME does not .serialiaze handles this?
+  # FIXME does not .serialize handles this?
   #       maybe conflict with ancestry
   def path=(new_path)
     if new_path.is_a?(::Pathname)
       super new_path
+    elsif new_path.blank?
+      super(nil)
     else
       super ::Pathname.new(new_path.to_s)
     end

@@ -13,7 +13,7 @@ FactoryGirl.define do
     end
 
     after_build do |directory|
-      if directory.path.relative? && defined?(FileSystem)
+      if directory.path? && directory.path.relative? && defined?(FileSystem)
         directory.path = FileSystem.rootfs/directory.path
       end
     end
@@ -29,7 +29,7 @@ FactoryGirl.define do
     sequence(:path) { |i| "/tmp/disk#{i}" }
 
     after_build do |disk|
-      if disk.path.relative? && defined?(FileSystem)
+      if disk.path? && disk.path.relative? && defined?(FileSystem)
         disk.path = FileSystem.rootfs/disk.path
       end
     end
