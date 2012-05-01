@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+Maintenance::Recognizer.new.work!
