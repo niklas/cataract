@@ -62,7 +62,7 @@ namespace :deploy do
 
   task :warmup, :roles => :app do
     STDERR.puts "Warming up application"
-    run "sleep 2; wget -q -O - http://cataract | grep -vi exception > /dev/null"
+    run "sleep 2; wget -q -O - http://#{single_target} | grep -vi exception > /dev/null"
   end
   after 'deploy:restart', 'deploy:warmup'
 end
