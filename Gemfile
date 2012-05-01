@@ -47,6 +47,7 @@ end
 
 group :development do
   gem "capistrano"
+  gem "rvm-capistrano"
   gem 'rb-inotify'
   gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
 end
