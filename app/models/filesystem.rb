@@ -34,6 +34,10 @@ module Filesystem
     read_attribute(:path).present?
   end
 
+  def exist?
+    path.present? && path.exist?
+  end
+
   def self.included(base)
     base.class_eval do
       serialize :path, Pathname.new

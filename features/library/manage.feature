@@ -17,6 +17,7 @@ Feature: Manage Library
        | Movies |
        | Series |
 
+  @rootfs
   Scenario: can create directories
     Given a disk exists with name: "aDisk", path: "media/adisk"
       And I am signed in
@@ -26,9 +27,11 @@ Feature: Manage Library
       And I wait for the modal box to appear
       And I select "aDisk" from "Disk"
       And I fill in "Name" with "Series"
+      And I check "create on disk"
       And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
+      And the directory "media/adisk/Series" should exist on disk
 
   @rootfs
   Scenario: autodetect directories on disk

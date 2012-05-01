@@ -1,7 +1,14 @@
 = simple_form_for [directory.disk, directory] do |form|
-  = form.input :name
-  = form.input :disk_id, collection: Disk.order(:name), include_blank: false
-  = form.input :path, as: :string
-  = form.hidden_field :parent_id
-  %button.btn.btn-primary{type: 'submit'}= ta :create_directory
+  .modal-header
+    %h3= ta :create_directory
+  .modal-body
+    = form.input :name
+    = form.input :disk_id, collection: Disk.order(:name), include_blank: false
+    = form.input :path, as: :string
+    - unless directory.exist?
+      - directory.auto_create = true
+      = form.input :auto_create, as: :boolean
+    = form.hidden_field :parent_id
+  .modal-footer
+    %button.btn.btn-primary{type: 'submit'}= ta :create_directory
 

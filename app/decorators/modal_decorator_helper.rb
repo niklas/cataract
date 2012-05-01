@@ -2,17 +2,22 @@ module ModalDecoratorHelper
 
   # wraps the given block in modal divs. Must give at least :body
   def modal(options = {})
-    body    = options.delete(:body) || raise(ArgumentError, 'no :body given for modal')
-    header  = options.delete(:header)
-    classes = options.delete(:class)
-    content_body = h.content_tag :div, body, class: 'modal-body'
-    if header
-      content = h.content_tag(:div, header, class: 'modal-header')
-      content += content_body
+    if options.is_a? String
+      content = options
+      options = {}
     else
-      content = content_body
+      body    = options.delete(:body) || raise(ArgumentError, 'no :body given for modal')
+      header  = options.delete(:header)
+      classes = options.delete(:class)
+      content_body = h.content_tag :div, body, class: 'modal-body'
+      if header
+        content = h.content_tag(:div, header, class: 'modal-header')
+        content += content_body
+      else
+        content = content_body
+      end
     end
-    h.content_tag :div, content, options.merge(class: "modal container-fluid #{classes}")
+    h.content_tag :div, content, options.merge(class: "modal #{classes}")
   end
 
   # removes all modal boxes first, appends a new one to the body and opens it
