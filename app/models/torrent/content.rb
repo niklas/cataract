@@ -52,6 +52,8 @@ class Torrent
 
     def exists?
       base_path.present? && info.name.present? && File.exists?(path)
+    rescue HasNoMetaInfo => e
+      false
     end
 
     alias exist? exists?
@@ -64,6 +66,8 @@ class Torrent
           path/file.path.first
         end
       end
+    rescue HasNoMetaInfo => e
+      []
     end
 
     def relative_files
@@ -74,6 +78,8 @@ class Torrent
           "#{info.name}/#{file.path.first}"
         end.sort
       end
+    rescue HasNoMetaInfo => e
+      []
     end
 
     def size
@@ -82,6 +88,8 @@ class Torrent
       else
         info.files.map(&:length).reduce(:+)
       end
+    rescue HasNoMetaInfo => e
+      -1
     end
 
     def actual_size
