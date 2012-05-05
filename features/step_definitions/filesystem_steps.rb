@@ -86,3 +86,9 @@ Given /^the URL "([^"]*)" points to "([^"]*)"$/ do |url, file|
   response.stub(:[]).with('content-disposition').and_return(nil)
   Net::HTTP::stub(:get_response).with(URI.parse(url)).and_return(response)
 end
+
+Given /^the following disks are mounted:$/ do |table|
+  table.hashes.each do |row|
+    FileSyste.create_directory Pathname.new(path)
+  end
+end

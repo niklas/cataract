@@ -1,5 +1,14 @@
 - title :all_directories
-= render 'list', directories: Directory.roots.order(:name), extra_class: 'existing'
 
-%h1= ta :detected_directories
-= render 'list', directories: Disk.detected_directories, extra_class: 'new'
+.row
+  .span-4
+    %ul.nav.nav-list.well.disks
+      %li.nav-header= Disk.model_name.plural
+      - Disk.order(:name).each do |disk|
+        %li
+          = link_to disk.name, disk_directories_path(disk), class: "name #{dom_id disk} #{@disk == disk ? 'active' : ''}", remote: true
+  .span-8
+    = render 'list', directories: Directory.roots.order(:name), extra_class: 'existing'
+
+    %h1= ta :detected_directories
+    = render 'list', directories: Disk.detected_directories, extra_class: 'new'
