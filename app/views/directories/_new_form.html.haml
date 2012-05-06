@@ -4,7 +4,7 @@
   .modal-body
     = form.input :name
     = form.input :disk_id, collection: Disk.order(:name), include_blank: false
-    = form.input :path, as: :string
+    = form.input :relative_path, as: :string
     - unless directory.exist?
       - directory.auto_create = true
       = form.input :auto_create, as: :boolean

@@ -1,10 +1,6 @@
 module Filesystem
   def basename
-    path.present? && path.basename.to_s
-  end
-
-  def name
-    read_attribute(:name) || basename || ''
+    path? && path.basename.to_s
   end
 
   # Pathnames of subdirectories
@@ -34,21 +30,25 @@ module Filesystem
     path_before_type_cast.present?
   end
 
-  def exist?
-    path.present? && path.exist?
+  def relative_path?
+    relative_path_before_type_cast.present?
   end
 
   def self.included(base)
     base.class_eval do
-      serialize :path, Pathname.new
 
-      validates_each :path do |record, attr, value|
-        if value.respond_to?(:absolute?)
-          record.errors.add attr, "is not absolute" unless value.absolute?
-        end
+      if column_names.include?('relative_path')
+        serialize :relative_path, Pathname.new
       end
-      validates :path, uniqueness: true, presence: true
+
+      if column_names.include?('path')
+        serialize :path, Pathname.new
+        validates :path, uniqueness: true, presence: true
+      end
+
       validates :name, presence: true
+
+      extend SingletonMethods
     end
   end
 
@@ -62,5 +62,27 @@ module Filesystem
     else
       super ::Pathname.new(new_path.to_s)
     end
+  end
+
+  def relative_path=(new_path)
+    if new_path.is_a?(::Pathname)
+      super new_path
+    elsif new_path.blank?
+      super(nil)
+    else
+      super ::Pathname.new(new_path.to_s)
+    end
+  end
+
+  module SingletonMethods
+    def validates_predicate attribute, meth
+      word = meth.to_s.sub(/\?$/,'')
+      validates_each attribute do |record, attr, value|
+        if value.respond_to?(meth)
+          record.errors.add attr, "is not #{word}" unless value.send(meth)
+        end
+      end
+    end
+
   end
 end

@@ -6,18 +6,19 @@ Feature: Torrent content
   I want to manage torrent content
 
   Background:
-    Given a directory exists with path: "media/pics"
+    Given a directory exists with relative_path: "pics"
       And a torrent with picture of tails exists with content_directory: the directory, title: "Tails"
       And the torrent's content exists on disk
       And I am signed in
       And I am on the page for the torrent
 
   Scenario: Move torrent
-    Given the following directories exist:
-       | directory | name  | path                    |
-       | Public    |       | /some/where/very/public |
-       | Tails     | Tails | /pics/of/tails          |
-       | Else      | Else  | /some/where/else        |
+    Given a disk exists
+      And the following directories exist:
+       | directory | name  | relative_path          | disk     |
+       | Public    |       | some/where/very/public | the disk |
+       | Tails     | Tails | pics/of/tails          | the disk |
+       | Else      | Else  | some/where/else        | the disk |
      When I follow "Move"
       And I wait for the modal box to appear
      Then the selected "Target" should be "Tails"

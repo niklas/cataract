@@ -168,7 +168,7 @@ describe Torrent::RTorrent do
       before do
         described_class.online!
         incoming = create :existing_directory,
-          path: "incoming"
+          relative_path: "incoming"
         create_file incoming.path/'tails.png'
         @first   = create :torrent_with_picture_of_tails,
           directory: incoming, content_directory: incoming

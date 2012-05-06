@@ -16,4 +16,15 @@ describe Disk do
   it "needs a path" do
     build(:disk, path: nil).should be_invalid
   end
+
+  it "needs the path to be absolute" do
+    Disk.new( Factory.attributes_for(:disk, path: 'foo/var') ).should be_invalid
+  end
+
+  context "Factory" do
+    it "should put relative paths into rootfs" do
+      disk = build :disk, path: 'foo/bar'
+      disk.path.should == rootfs/'foo'/'bar'
+    end
+  end
 end

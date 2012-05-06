@@ -10,10 +10,11 @@ Feature: Assigning directories
        | type | path                                      |
        | file | /media/more/torrents/Lost_7x01.torrent    |
        | file | /media/more/torrents/archive/tkkg.torrent |
+     And a disk exists with path: "/media/more"
      And the following directories exist:
-       | directory | path                         |
-       | torrents  | /media/more/torrents         |
-       | archive   | /media/more/torrents/archive |
+       | directory | disk     | relative_path    |
+       | torrents  | the disk | torrents         |
+       | archive   | the disk | torrents/archive |
      And the following dirless torrents exist:
        | dirless torrent | filename          |
        | Lost            | Lost_7x01.torrent |

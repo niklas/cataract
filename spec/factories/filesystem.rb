@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :directory do
     sequence(:name) { |i| "Directory ##{i}" }
-    sequence(:path) { |i| "directory_#{i}" }
+    sequence(:relative_path) { |i| "directory_#{i}" }
     watched false
 
     disk
@@ -10,12 +10,6 @@ FactoryGirl.define do
 
     factory :existing_directory do
       auto_create true
-    end
-
-    after_build do |directory|
-      if directory.path? && directory.path.relative? && defined?(FileSystem)
-        directory.path = FileSystem.rootfs/directory.path
-      end
     end
   end
 
@@ -26,7 +20,7 @@ FactoryGirl.define do
 
   factory :disk do
     sequence(:name) { |i| "Disk ##{i}" }
-    sequence(:path) { |i| "/tmp/disk#{i}" }
+    sequence(:path) { |i| "disk#{i}" }
 
     after_build do |disk|
       if disk.path? && disk.path.relative? && defined?(FileSystem)

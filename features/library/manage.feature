@@ -69,7 +69,7 @@ Feature: Manage Library
         | type      | path                          |
         | directory | media/adisk/Series/Tatort     |
         | directory | media/adisk/Series/Tagesschau |
-      And a directory "Series" exists with name: "Series", disk: the disk, path: "media/adisk/Series"
+      And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series"
       And I am signed in
      When I toggle the menu
       And I follow "Library"

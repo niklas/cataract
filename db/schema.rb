@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120429223056) do
+ActiveRecord::Schema.define(:version => 20120506210153) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120429223056) do
 
   create_table "directories", :force => true do |t|
     t.string   "name"
-    t.string   "path",          :limit => 2048
+    t.string   "relative_path", :limit => 2048
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "show_sub_dirs",                 :default => false

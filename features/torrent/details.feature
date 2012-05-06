@@ -7,8 +7,8 @@ Feature: Details of a torrent
 
   Scenario: attributes
     Given a series exists with title: "Lolcats"
-      And a directory "I" exists with name: "Incoming", path: "slowhd/incoming"
-      And a directory "A" exists with name: "Cat Pictures", path: "pictures/cats"
+      And a directory "I" exists with name: "Incoming", relative_path: "slowhd/incoming"
+      And a directory "A" exists with name: "Cat Pictures", relative_path: "pictures/cats"
       And a torrent_with_picture_of_tails exists with series: the series, title: "Tails", directory: directory "I", content_directory: directory "A"
       And the file for the torrent exists
       And the torrent's content exists on disk

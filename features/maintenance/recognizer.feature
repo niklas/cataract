@@ -6,10 +6,11 @@ Feature: recognize torrents
   I want downloads recognized automatically
 
   Scenario: recognize torrents only in watched directories
-    Given the following directories exist:
-        | directory | path           | watched |
-        | torrents  | media/torrents | true    |
-        | else      | media/else     | false   |
+    Given a disk exists with path: "media"
+      And the following directories exist:
+        | directory | relative_path | watched | disk     |
+        | torrents  | torrents      | true    | the disk |
+        | else      | else          | false   | the disk |
       And the following filesystem structure exists on disk:
         | type | path                           |
         | file | media/torrents/oneiric.torrent |
@@ -22,9 +23,10 @@ Feature: recognize torrents
       But 0 torrents should exist with filename: "natty.torrent"
 
   Scenario: recognize torrents are downloaded
-    Given the following directories exist:
-        | directory | path           | watched |
-        | torrents  | media/torrents | true    |
+    Given a disk exists with path: "media"
+      And the following directories exist:
+        | directory | relative_path | watched | disk     |
+        | torrents  | torrents      | true    | the disk |
       And the following filesystem structure exists on disk:
         | type | path                           |
         | file | media/torrents/oneiric.torrent |

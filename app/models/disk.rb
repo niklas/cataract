@@ -3,6 +3,8 @@ class Disk < ActiveRecord::Base
   has_many :directories
   before_validation :set_name_from_path
 
+  validates_predicate :path, :absolute?
+
   def self.detected_directories
     includes(:directories).all.map(&:detected_directories).flatten
   end
@@ -28,8 +30,8 @@ class Disk < ActiveRecord::Base
   def detected_directories
     sub_directories.reject do |on_disk|
       directories.any? { |in_db| in_db.path == on_disk }
-    end.map do |path|
-      directories.new(path: path)
+    end.map do |found|
+      directories.new(relative_path: found.relative_path_from(path), name: found.basename.to_s)
     end
   end
 
@@ -45,6 +47,10 @@ class Disk < ActiveRecord::Base
 
   def name
     super.presence || name_from_path
+  end
+
+  def exist?
+    path? && path.exist?
   end
 
 end

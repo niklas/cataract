@@ -33,7 +33,7 @@ describe Torrent do
     end
 
     describe 'a torrent with a lost file' do
-      let(:dir)     { Factory :existing_directory, path: 'media/incoming' }
+      let(:dir)     { Factory :existing_directory, relative_path: 'media/incoming' }
       let(:torrent) { Factory :torrent, filename: 'lost.torrent' }
       it "is found directly in directory" do
         torrent.should_not be_file_exists
@@ -51,7 +51,7 @@ describe Torrent do
     end
 
     describe 'a torrent with lost content' do
-      let(:dir)     { Factory :existing_directory, path: 'pics/cats' }
+      let(:dir)     { Factory :existing_directory, relative_path: 'pics/cats' }
       let(:torrent) { Factory :torrent_with_picture_of_tails }
 
       it "is found directly in existing directory" do

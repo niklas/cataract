@@ -2,7 +2,7 @@
   %td.disk= directory.disk.name if directory.disk.present?
   %td.name
     - if directory.new_record?
-      = link_to ta(:import_directory, name: directory.name), new_disk_directory_path(directory.disk, directory: { path: directory.path, name: directory.name, parent_id: directory.parent_id }), remote: true, class: 'btn btn-warning'
+      = link_to ta(:import_directory, name: directory.name), new_disk_directory_path(directory.disk, directory: directory.attributes.slice(*%w~relative_path name~).merge(parent_id: directory.parent_id)), remote: true, class: 'btn btn-warning'
     - else
       = directory.name
   %td.dir= directory.path

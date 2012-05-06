@@ -1,42 +1,51 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Directory do
-  let(:path) { "/nyan/NYan/nyAN" }
+  let(:path) { "nyan/NYan/nyAN" }
   let(:pathname) { Pathname.new(path) }
 
-  context "path" do
+  context "relative_path" do
     it "should accept path as string and convert it to Pathname" do
-      directory = create :directory, :path => path
+      directory = create :directory, :relative_path => path
       directory.reload
-      directory.path.should be_a(Pathname)
-      directory.path.should == pathname
-    end
-    it "serializes Pathname" do
-      directory = create :directory, :path => pathname
-      directory.path.should be_a(Pathname)
-      directory.path.should == pathname
+      directory.relative_path.should be_a(Pathname)
+      directory.relative_path.should == pathname
     end
 
-    it "must be absolute" do
+    it "serializes Pathname" do
+      directory = create :directory, :relative_path => pathname
+      directory.relative_path.should be_a(Pathname)
+      directory.relative_path.should == pathname
+    end
+
+    it "must be relative" do
       directory = build :directory
-      directory.path = 'tmp/lol'
+      directory.relative_path = '/tmp/lol'
       directory.should_not be_valid
     end
 
-    it "cannot already exist in db" do
-      create :directory, path: path
-      dir = build(:directory, path: path)
+    it "uses disk to create absolute path" do
+      directory = create :directory, :relative_path => path
+      directory.reload
+      directory.path.should be_a(Pathname)
+      directory.path.should == directory.disk.path+pathname
+    end
+
+    it "cannot already exist in db on same disk" do
+      disk = create :disk
+      create :directory, relative_path: path, disk: disk
+      dir = build(:directory, relative_path: path, disk: disk)
       dir.should_not be_valid
     end
 
     it "should be used for name if none present" do
-      dir = build(:directory, path: '/just/the/last/matters to me', name: nil)
+      dir = build(:directory, relative_path: 'just/the/last/matters to me', name: nil)
       dir.name.should == 'matters to me'
     end
 
     it "should be found prefixing" do
-      directory = create :directory, :path => pathname
-      found  = Directory.of pathname/'some.file'
+      directory = create :directory, :relative_path => pathname
+      found  = Directory.of directory.path/'some.file'
       found.should == directory
     end
   end
@@ -44,26 +53,19 @@ describe Directory do
   context "autocreation" do
     include FakeFS::SpecHelpers
     it "should create on filesystem if asked for" do
-      directory = Factory :directory, :path => path, :auto_create => true
-      File.directory?(path).should be_true
+      directory = Factory :directory, :relative_path => path, :auto_create => true
+      File.directory?(directory.path).should be_true
     end
     it "should create on filesystem only if asked for" do
-      directory = Factory :directory, :path => path
-      File.directory?(path).should_not be_true
-    end
-  end
-
-  context "Factory" do
-    it "should put relative paths into rootfs" do
-      directory = build :directory, path: 'foo/bar'
-      directory.path.should == rootfs/'foo'/'bar'
+      directory = Factory :directory, :relative_path => path
+      File.directory?(directory.path).should_not be_true
     end
   end
 
   context "assigning name on creation" do
     it "should create path from the disk's path an the name" do
       disk = create :disk, path: "/media/Zeug"
-      directory = build :directory, disk: disk, name: "krams", path: nil
+      directory = build :directory, disk: disk, name: "krams", relative_path: nil
       directory.path.to_s.should == "/media/Zeug/krams"
     end
   end

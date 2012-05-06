@@ -73,8 +73,8 @@ describe Torrent do
   end
 
   context "in filesystem" do
-    let(:storage) { create :existing_directory, path: rootfs/'storage' }
-    let(:archive) { create :existing_directory, path: rootfs/'archive' }
+    let(:storage) { create :existing_directory, relative_path: 'storage' }
+    let(:archive) { create :existing_directory, relative_path: 'archive' }
 
     describe "with single file" do
       let(:torrent) do

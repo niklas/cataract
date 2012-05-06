@@ -16,7 +16,13 @@ class Directory < ActiveRecord::Base
   # the ancestry gem defines a path method to
   alias_method :ancestry_path, :path
   include Filesystem
-  before_validation :set_path_from_disk_and_name
+  before_validation :set_relative_path_from_name
+
+  validates_presence_of :name
+  validates_uniqueness_of :relative_path, scope: :disk_id
+
+  validates_predicate :relative_path, :relative?
+  validates_predicate :path, :absolute?
 
   after_save :create_on_filesystem, :on => :create, :if => :auto_create?
   attr_accessor :auto_create
@@ -31,12 +37,27 @@ class Directory < ActiveRecord::Base
   belongs_to :disk
   validates_presence_of :disk
 
+  def path
+    disk.path + (relative_path || name)
+  rescue NoMethodError => e
+    nil
+  end
+
+  def exist?
+    relative_path? && disk.present? && path.exist?
+  end
+
+  def name
+    super.presence || (relative_path? && relative_path.basename.to_s)
+  end
+
+
   has_many :torrents
 
 
-  def set_path_from_disk_and_name
-    unless path?
-      self.path = disk.path / name
+  def set_relative_path_from_name
+    unless relative_path?
+      self.relative_path = name
     end
   end
 
@@ -44,8 +65,8 @@ class Directory < ActiveRecord::Base
   def detected_directories
     sub_directories.reject do |on_disk|
       children.any? { |in_db| in_db.path == on_disk }
-    end.map do |path|
-      children.new(path: path, disk: disk)
+    end.map do |found|
+      children.new(relative_path: found.relative_path_from(disk.path), disk: disk, name: found.basename.to_s)
     end
   end
 
@@ -91,14 +112,6 @@ class Directory < ActiveRecord::Base
   def subdir_names
     subdirs
   end
-  def path
-    read_attribute(:path) || path_from_disk
-  end
-
-  def path_from_disk
-    disk.present? && name? && disk.path/name
-  end
-
 
   def self.for_series
     find_by_name('Serien')
@@ -135,15 +148,10 @@ class Directory < ActiveRecord::Base
     end
   end
 
-  def self.physical_uniq
-    all.group_by(&:mountpoint).keys.compact.map {|path| Directory.new(:path => path, :name => File.basename(path))}
-  end
-
   def self.disksfree
     %w(torrent_dir).
       inject({}) { |hsh,dir| hsh.merge({ dir => Torrent.diskfree(Settings[dir]) }) }
   end
-
 
   def path_with_optional_subdir(subdir)
     if !subdir.blank? && subdirs.include?(subdir)

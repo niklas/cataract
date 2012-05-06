@@ -5,7 +5,7 @@ Feature: Transfer info
   I want to see transfer rates and progress
 
   Background:
-    Given a existing directory exists with path: "incoming"
+    Given a existing directory exists with relative_path: "incoming"
       And a torrent_with_picture_of_tails exists with directory: the directory, content_directory: the directory
       And I am signed in
       And the file for the torrent exists
