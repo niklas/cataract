@@ -86,3 +86,14 @@ Given /^the URL "([^"]*)" points to "([^"]*)"$/ do |url, file|
   response.stub(:[]).with('content-disposition').and_return(nil)
   Net::HTTP::stub(:get_response).with(URI.parse(url)).and_return(response)
 end
+
+Given /^the following disks are mounted:$/ do |table|
+  paths = table.hashes.map {|row| row['path']}
+  if paths.empty?
+    raise ArgumentError, 'please provide a table with row headed "path"'
+  end
+  created = paths.map do |path|
+    FileSystem.create_directory Pathname.new(path)
+  end
+  Disk.stub(:detected_paths).and_return created.map(&:to_s)
+end

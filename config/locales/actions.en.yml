@@ -17,3 +17,6 @@ en:
       detected_directories: "Detected Directories"
       create_directory: "Create Directory"
       import_directory: "Import %{name}"
+    submit:
+      disk:
+        create: "Create Disk"

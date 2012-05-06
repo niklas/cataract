@@ -20,6 +20,9 @@ module NavigationHelpers
     when /^the (running|archived|remote) list page$/
       torrents_path # anchor: $1
 
+    when /^the (\w+) page (?:of|for) #{capture_model}$/
+      polymorphic_path [model!($2), $1]
+
     when /^the page (?:of|for) #{capture_model}$/
       case m = model!($1)
       when Torrent

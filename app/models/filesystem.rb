@@ -31,7 +31,7 @@ module Filesystem
   end
 
   def path?
-    read_attribute(:path).present?
+    path_before_type_cast.present?
   end
 
   def exist?
@@ -43,7 +43,9 @@ module Filesystem
       serialize :path, Pathname.new
 
       validates_each :path do |record, attr, value|
-        record.errors.add attr, "is not absolute" unless value.absolute?
+        if value.respond_to?(:absolute?)
+          record.errors.add attr, "is not absolute" unless value.absolute?
+        end
       end
       validates :path, uniqueness: true, presence: true
       validates :name, presence: true
