@@ -1,12 +1,19 @@
 - title :all_directories
 
 .row
-  .span-4
-    %ul.nav.nav-list.well.disks
+  .span-4.well
+    %ul.nav.nav-list.disks
       %li.nav-header= Disk.model_name.plural
       - Disk.order(:name).each do |disk|
         %li
           = link_to disk.name, disk_directories_path(disk), class: "name #{dom_id disk} #{@disk == disk ? 'active' : ''}", remote: true
+
+    - unless (detected = Disk.detected).empty?
+      %ul.nav.nav-list.new.disks
+        %li.nav-header auto
+        - Disk.detected.each do |disk|
+          %li
+            = link_to disk.name, new_disk_path(disk: disk.attributes.slice('name', 'path')), class: 'name', remote: true
   .span-8
     = render 'list', directories: Directory.roots.order(:name), extra_class: 'existing'
 

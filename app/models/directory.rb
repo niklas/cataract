@@ -35,7 +35,7 @@ class Directory < ActiveRecord::Base
 
 
   def set_path_from_disk_and_name
-    unless path_before_type_cast.present?
+    unless path?
       self.path = disk.path / name
     end
   end

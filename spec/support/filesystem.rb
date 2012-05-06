@@ -31,6 +31,7 @@ module FileSystem
     with_optional_fakefs do
       FileUtils.mkdir_p path
     end
+    path
   end
 
   def rootfs
