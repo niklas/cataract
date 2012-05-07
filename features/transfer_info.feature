@@ -14,6 +14,7 @@ Feature: Transfer info
   @rtorrent
   Scenario Outline: rtorrent connection failing in different ways
     Given <scenario>
+      And I wait 1 second
       And the torrent is marked as running
      When I go to the page for the torrent
      Then I should see "single" within the page title
