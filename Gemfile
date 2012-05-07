@@ -17,7 +17,7 @@ end
 
 group :test do
   gem 'rake'
-  gem 'cucumber-rails', "~> 1.2.1"
+  gem 'cucumber-rails', "~> 1.2.1", :require => false
   gem 'rspec-rails', "~> 2.8.1"
   gem "pickle"
   gem "timecop"
