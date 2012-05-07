@@ -5,9 +5,10 @@ branches:
   only:
     - development
     - master
+before_install:
+- "sudo apt-get install rtorrent"
 before_script:
 - "psql -c 'create database cataract_test;' -U postgres"
-- "sudo apt-get install rtorrent"
 - "cp config/database.yml{.travis,}"
 - "bundle exec rake db:migrate"
 script: 
