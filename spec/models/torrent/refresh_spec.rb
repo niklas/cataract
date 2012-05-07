@@ -55,13 +55,13 @@ describe Torrent do
       let(:torrent) { Factory :torrent_with_picture_of_tails }
 
       it "is found directly in existing directory" do
-        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'tails.png'])
+        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'tails.png'].map(&:to_s))
         torrent.refresh!
         torrent.content_directory.should == dir
       end
 
       it "is found nested in existing directory" do
-        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'deeply'/'nested'/'tails.png'])
+        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'deeply'/'nested'/'tails.png'].map(&:to_s))
         torrent.refresh!
         torrent.content_directory.should == dir
         torrent.content_path_infix.should == 'deeply/nested'
@@ -69,7 +69,7 @@ describe Torrent do
 
       it "is found as a whole containing multiple files" do
         torrent = Factory :torrent_with_picture_of_tails_and_a_poem
-        Mlocate.should_receive(:postfix).with('content/tails.png').and_return([dir.path/'deeply'/'nested'/'content'/'tails.png'])
+        Mlocate.should_receive(:postfix).with('content/tails.png').and_return([dir.path/'deeply'/'nested'/'content'/'tails.png'].map(&:to_s))
         torrent.refresh!
         torrent.content_directory.should == dir
         torrent.content_path_infix.should == 'deeply/nested'
