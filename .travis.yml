@@ -12,6 +12,4 @@ before_script:
 - "cp config/database.yml{.travis,}"
 - "mkdir -p tmp/sockets"
 - "bundle exec rake db:migrate"
-script: 
-- "bundle exec rake cucumber:ok"
-- "bundle exec rspec"
+script: "bundle exec rspec && bundle exec rake cucumber:ok"
