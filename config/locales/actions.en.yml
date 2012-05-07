@@ -20,3 +20,6 @@ en:
     submit:
       disk:
         create: "Create Disk"
+      setting:
+        create: "Save"
+        update: "Save"

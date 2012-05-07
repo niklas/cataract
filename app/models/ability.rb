@@ -6,6 +6,7 @@ class Ability
       can :manage, Torrent
       can :manage, Disk
       can :manage, Directory
+      can :manage, Setting
     end
   end
 end

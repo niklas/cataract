@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506210153) do
+ActiveRecord::Schema.define(:version => 20120511203059) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -96,13 +96,10 @@ ActiveRecord::Schema.define(:version => 20120506210153) do
   end
 
   create_table "settings", :force => true do |t|
-    t.string   "var",        :null => false
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "incoming_directory_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
-
-  add_index "settings", ["var"], :name => "index_settings_on_var"
 
   create_table "taggings", :force => true do |t|
     t.integer "tag_id"

@@ -1,6 +1,7 @@
 Cataract::Application.routes.draw do
   get "greetings/dashboard"
 
+  resource :settings
   resources :torrents do
     collection do
       get 'status/:status/page/:page', action: :index

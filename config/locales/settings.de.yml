@@ -1,0 +1,12 @@
+en:
+  activerecord:
+    attributes:
+      setting:
+        incoming_directory_id: "Default download directory"
+  flash:
+    settings:
+      create:
+        notice: "Settings saved"
+      update:
+        notice: "Settings saved"
+
