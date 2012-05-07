@@ -41,7 +41,7 @@ Spork.prefork do
       browser.switch_to.window((browser.window_handles - handles).pop)
       browser.execute_script("window.resizeTo(#{width}, #{height}); window.moveTo(1,1);")
     end
-  end
+  end unless ENV['TRAVIS']
 
   Capybara.server do |app, port|
     require 'rack/handler/webrick'
