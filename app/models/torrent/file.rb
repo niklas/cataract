@@ -22,7 +22,7 @@ class Torrent
 
   on_refresh :refresh_file
   def refresh_file
-    if path? && !file_exists?
+    if !path? || !file_exists?
       if dir = Directory.of(Mlocate.file(filename).first)
         self.directory = dir
       end
