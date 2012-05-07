@@ -117,7 +117,7 @@ class Torrent
         if dir
           chosen = ::Pathname.new(chosen).dirname
           index  = ::Pathname.new(infix)
-          while chosen.basename == index.basename && index.to_s == '.'
+          while chosen.basename == index.basename && index.to_s != '.'
             index  = index.dirname
             chosen = chosen.dirname
           end
