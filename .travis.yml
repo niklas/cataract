@@ -6,7 +6,7 @@ branches:
     - development
     - master
 before_install:
-- "sudo apt-get install rtorrent"
+- "sudo apt-get install rtorrent screen"
 before_script:
 - "psql -c 'create database cataract_test;' -U postgres"
 - "cp config/database.yml{.travis,}"
