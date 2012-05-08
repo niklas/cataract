@@ -176,7 +176,7 @@ describe Torrent::RTorrent do
         @second  = create :torrent_with_picture_of_tails_and_a_poem,
           directory: incoming, content_directory: incoming
         @second.load!
-        sleep 1 # rtorrent needs a moment
+        sleep 10 # rtorrent needs a moment
       end
 
       context "mass fetching" do
