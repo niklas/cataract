@@ -5,3 +5,7 @@ module DevelopmentSpecHelper
     pending "would fail on a ruby without 64bit support for XMLRPC" if ENV['TRAVIS']
   end
 end
+
+RSpec.configure do |config|
+  config.include DevelopmentSpecHelper
+end
