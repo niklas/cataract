@@ -12,6 +12,7 @@ Feature: Transfer info
       And the torrent's content exists on disk
 
   @rtorrent
+  @64bit
   Scenario Outline: rtorrent connection failing in different ways
     Given <scenario>
       And I wait 1 second
