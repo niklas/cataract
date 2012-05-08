@@ -200,6 +200,7 @@ describe Torrent::RTorrent do
         let(:second) { list.second }
 
         it "should have attrs set" do
+          STDERR.puts `ps fax`
           first.should be_a(Hash)
           first.should be_matching({hash: @first.info_hash, completed_bytes: 73451}, :ignore_additional=>true)
 
