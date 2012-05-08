@@ -201,11 +201,10 @@ describe Torrent::RTorrent do
 
         it "should have attrs set" do
           first.should be_a(Hash)
-          first[:hash].should == @first.info_hash
-          first[:completed_bytes].should == 73451
+          first.should be_matching({hash: @first.info_hash, completed_bytes: 73451}, :ignore_additional=>true)
 
           second.should be_a(Hash)
-          second[:hash].should == @second.info_hash
+          second.should be_matching({hash: @second.info_hash}, :ignore_additional=>true)
         end
       end
     end

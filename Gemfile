@@ -39,6 +39,8 @@ group :test do
   gem 'simplecov', :require => false
   gem 'pry-nav'
   gem 'pry-stack_explorer'
+
+  gem 'diff_matcher'
 end
 
 group :development, :test do
