@@ -138,7 +138,7 @@ class Torrent
   end
 
   def ensure_content_directory
-    self.content_directory ||= Directory.watched.first || Directory.first
+    self.content_directory ||= Setting.singleton.incoming_directory || Directory.watched.first || Directory.first
   end
 
   on_refresh :find_missing_content, :if => :metainfo?
