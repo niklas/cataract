@@ -134,6 +134,17 @@ describe Torrent do
       end
     end
 
+    describe "settings" do
+      before { create :setting, incoming_directory: storage, torrent_directory: archive }
+      it "should define content directory" do
+        create(:torrent, content_directory: nil).content_directory.should == storage
+      end
+
+      it "should define directory for file" do
+        create(:torrent, directory: nil).directory.should == archive
+      end
+    end
+
   end
 
 

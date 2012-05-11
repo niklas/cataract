@@ -3,6 +3,7 @@ require 'mlocate'
 class Torrent
   belongs_to :directory, :inverse_of => :torrents
   validates_presence_of :directory, :if => :filename?, :unless => :remote?
+  before_validation :ensure_directory
 
   validates_uniqueness_of :filename, :unless => :remote?
   validates_length_of :filename, :in => 9..255, :unless => :remote?
@@ -41,9 +42,8 @@ class Torrent
     true
   end
 
-  before_validation :ensure_directory, :unless => :directory
   def ensure_directory
-    self.directory ||= Directory.watched.first || Directory.first
+    self.directory ||= Setting.singleton.torrent_directory || Directory.watched.first || Directory.first
   end
 
   validates_each :path, :if => :path? do |record, attr, value|

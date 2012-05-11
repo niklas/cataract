@@ -1,5 +1,9 @@
 require 'drb'
 class Torrent
+
+  belongs_to :content_directory, :class_name => 'Directory'
+  before_validation :ensure_content_directory
+
   class TorrentContentError < Exception; end
 
   # TODO WTF is this for?
@@ -130,8 +134,6 @@ class Torrent
       end
     end
   end
-
-  belongs_to :content_directory, :class_name => 'Directory'
 
   def content
     @content ||= Content.new(self)
