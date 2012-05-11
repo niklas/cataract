@@ -87,6 +87,8 @@ Then(/^#{capture_model}'s (\w+) (should(?: not)?) be #{capture_value}$/) do |nam
   case expected
   when 'nil', 'true', 'false'
     actual_value.send(expectation, send("be_#{expected}"))
+  when /^[+-]?[0-9_]+$/
+    actual_value.send(expectation, eql(expected.to_i))
   when /^[+-]?[0-9_]+(\.\d+)?$/
     actual_value.send(expectation, eql(expected.to_f))
   else

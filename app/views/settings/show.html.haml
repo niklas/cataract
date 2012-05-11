@@ -1,0 +1,3 @@
+= simple_form_for @setting, url: settings_path do |f|
+  = f.input :incoming_directory_id, collection: Directory.all
+  = f.button :submit

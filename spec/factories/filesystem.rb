@@ -7,6 +7,10 @@ FactoryGirl.define do
     disk
 
     factory :target # to move
+    factory :incoming_directory do
+      sequence(:name) { |i| "Incoming ##{i}" }
+      sequence(:relative_path) { |i| "incoming_#{i}" }
+    end
 
     factory :existing_directory do
       auto_create true

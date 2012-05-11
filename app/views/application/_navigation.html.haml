@@ -1,2 +1,3 @@
 %ul.nav
   = li_link :add, new_torrent_path, can: [:create, Torrent], remote: true
+  = li_link :settings, settings_path, can: [:manage, Setting]
