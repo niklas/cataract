@@ -2,17 +2,17 @@
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO rescue from errors
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m8[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME use responders
 [35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
-[35m./app/models/directory.rb[0m[36m:[0m[32m30[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO validate path is on disk
+[35m./app/models/directory.rb[0m[36m:[0m[32m36[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO validate path is on disk
 [35m./app/models/feed.rb[0m[36m:[0m[32m45[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO tagging
-[35m./app/models/filesystem.rb[0m[36m:[0m[32m53[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME does not .serialize handles this?
+[35m./app/models/filesystem.rb[0m[36m:[0m[32m55[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME does not .serialize handles this?
 [35m./app/models/notifier.rb[0m[36m:[0m[32m1[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m# FIXME enable jabber notifications
 [35m./app/models/queueable.rb[0m[36m:[0m[32m31[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    # FIXME: must reload the record because #locked_at is set to late in the psql query process,by the function in WHERE.
 [35m./app/models/queueable.rb[0m[36m:[0m[32m49[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO move away
 [35m./app/models/queueable.rb[0m[36m:[0m[32m69[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m# TODO extract and test
 [35m./app/models/queueable.rb[0m[36m:[0m[32m132[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m5[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO WTF is this for?
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m24[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME respect #directory
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m159[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m9[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO WTF is this for?
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m28[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME respect #directory
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m161[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
 [35m./app/models/torrent.rb[0m[36m:[0m[32m26[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
 [35m./app/models/torrent.rb[0m[36m:[0m[32m33[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
 [35m./app/models/torrent.rb[0m[36m:[0m[32m37[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
