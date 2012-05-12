@@ -36,6 +36,7 @@ describe Torrent do
       let(:dir)     { Factory :existing_directory, relative_path: 'media/incoming' }
       let(:torrent) { Factory :torrent, filename: 'lost.torrent' }
       it "is found directly in directory" do
+        pending
         torrent.should_not be_file_exists
         Mlocate.stub(:file).with('lost.torrent').and_return([dir.path/'lost.torrent'])
         torrent.refresh!
@@ -43,6 +44,8 @@ describe Torrent do
       end
 
       it "is not assigned in subdirectory" do
+        pending
+        torrent.should_not be_file_exists
         torrent.should_not be_file_exists
         Mlocate.stub(:file).with('lost.torrent').and_return([dir.path/'deeply'/'nested'/'lost.torrent'])
         torrent.refresh!

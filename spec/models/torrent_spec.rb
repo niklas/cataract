@@ -67,6 +67,7 @@ describe Torrent do
 
     it "should raise Torrent::FileNotFound when RubyTorrent::Metainfo cannot find file" do
       torrent.stub!(:file_exists?).and_return(true)
+      torrent.stub!(:path).and_return('path')
       RubyTorrent::MetaInfo.stub!(:from_bstream).and_raise(Errno::ENOENT)
       expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
     end
@@ -78,13 +79,14 @@ describe Torrent do
 
     describe "with single file" do
       let(:torrent) do
-        create :torrent_with_picture_of_tails, directory: storage, content_directory: archive do |torrent|
+        create :torrent_with_picture_of_tails, content_directory: archive do |torrent|
           create_file storage.path/torrent.filename
           torrent
         end
       end
       it "knows the path of its torrent file" do
-        torrent.path.should == storage.path/'single.torrent'
+        torrent.path.should_not be_blank
+        torrent.path.to_s.should be_ends_with('single.torrent')
       end
       it "knows the full path of its content file" do
         torrent.content.files.should == [
@@ -108,13 +110,14 @@ describe Torrent do
 
     describe "with multiple files" do
       let(:torrent) do
-        create :torrent_with_picture_of_tails_and_a_poem, directory: storage, content_directory: archive do |torrent|
+        create :torrent_with_picture_of_tails_and_a_poem, content_directory: archive do |torrent|
           create_file storage.path/torrent.filename
           torrent
         end
       end
       it "knows the path of its torrent file" do
-        torrent.path.should == storage.path/'multiple.torrent'
+        torrent.path.should_not be_blank
+        torrent.path.to_s.should be_ends_with('multiple.torrent')
       end
       it "knows the relative paths of its content files" do
         torrent.content.relative_files.should == [
@@ -135,13 +138,9 @@ describe Torrent do
     end
 
     describe "settings" do
-      before { create :setting, incoming_directory: storage, torrent_directory: archive }
+      before { create :setting, incoming_directory: storage }
       it "should define content directory" do
         create(:torrent, content_directory: nil).content_directory.should == storage
-      end
-
-      it "should define directory for file" do
-        create(:torrent, directory: nil).directory.should == archive
       end
     end
 

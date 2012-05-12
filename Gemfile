@@ -84,3 +84,5 @@ gem 'foreman'
 gem 'kaminari'
 
 gem 'levenshtein'
+
+gem 'carrierwave'

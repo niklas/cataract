@@ -1,12 +1,11 @@
 require 'mlocate'
 
 class Torrent
-  belongs_to :directory, :inverse_of => :torrents
-  validates_presence_of :directory, :if => :filename?, :unless => :remote?
-  before_validation :ensure_directory
-
   validates_uniqueness_of :filename, :unless => :remote?
   validates_length_of :filename, :in => 9..255, :unless => :remote?
+
+  mount_uploader :file, TorrentUploader
+  validates_length_of :file, minimum: 10.bytes, if: :path?
 
   class FileError < ActiveRecord::ActiveRecordError; end
   class FileNotFound < FileError; end
@@ -14,15 +13,16 @@ class Torrent
   class HasNoInfoHash < HasNoMetaInfo; end
 
   def path
-    directory.path/filename
+    path? && Pathname.new(file.current_path)
   end
 
   def path?
-    filename.present? && directory.present?
+    file.present? && file.current_path.present?
   end
 
   on_refresh :refresh_file
   def refresh_file
+    ActiveSupport::Deprecation.warn 'Torrent#refresh_file should use carrierwave'
     if !path? || !file_exists?
       if dir = Directory.of(Mlocate.file(filename).first)
         self.directory = dir
@@ -31,7 +31,7 @@ class Torrent
   end
 
   def file_exists?
-    path? && File.exists?(path)
+    path? && ( File.exists?(path) || file.present? )
   end
 
   after_destroy :remove_file
@@ -42,18 +42,6 @@ class Torrent
     true
   end
 
-  def ensure_directory
-    self.directory ||= Setting.singleton.torrent_directory || Directory.watched.first || Directory.first
-  end
-
-  validates_each :path, :if => :path? do |record, attr, value|
-    begin
-      record.errors.add attr, :empty if File.size(value.to_path) < 10
-    rescue Errno::ENOENT => e
-    end
-  end
-
-  before_validation :set_info_hash_from_metainfo, :unless => :info_hash?
   validates_format_of :info_hash, :with => /[0-9A-F]{40}/, :unless => :remote?
 
   # we must open the BStream manually because FakeFS and open-uri in MetaInfo.from_location collide
@@ -83,17 +71,6 @@ class Torrent
     metainfo.present?
   rescue Torrent::HasNoMetaInfo => e
     return false
-  end
-
-
-  def set_info_hash_from_metainfo
-    write_attribute :info_hash, info_hash_from_metainfo
-  rescue FileError => e
-    logger.debug { "could not set info hash from metainfo: #{e.message}" }
-  end
-
-  def info_hash_from_metainfo
-    metainfo.sha1.unpack('H*').first.upcase
   end
 
   has_one :move

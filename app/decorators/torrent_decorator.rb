@@ -54,12 +54,6 @@ class TorrentDecorator < ApplicationDecorator
     end
   end
 
-  def directory
-    val :directory, class: 'dir' do
-      render_directory model.directory
-    end
-  end
-
   def content_directory
     val :content_directory, class: 'dir' do
       render_directory torrent.content_directory

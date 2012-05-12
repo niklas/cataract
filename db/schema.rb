@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511213849) do
+ActiveRecord::Schema.define(:version => 20120512162508) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -134,13 +134,12 @@ ActiveRecord::Schema.define(:version => 20120511213849) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.integer  "content_directory_id"
-    t.integer  "directory_id"
     t.string   "content_path_infix"
     t.integer  "series_id"
+    t.string   "file"
   end
 
   add_index "torrents", ["content_directory_id"], :name => "index_torrents_on_content_directory_id"
-  add_index "torrents", ["directory_id"], :name => "index_torrents_on_directory_id"
   add_index "torrents", ["filename"], :name => "index_torrents_on_filename"
   add_index "torrents", ["status"], :name => "index_torrents_on_status"
 

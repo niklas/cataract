@@ -17,12 +17,11 @@ Feature: recognize torrents
         | file | media/else/natty.torrent       |
      When the Recognizer runs
      Then a torrent should exist with filename: "oneiric.torrent"
-      And directory "torrents" should be the torrent's directory
       And directory "torrents" should be the torrent's content_directory
       And the torrent's info_hash should not be blank
       But 0 torrents should exist with filename: "natty.torrent"
 
-  Scenario: recognize torrents are downloaded
+  Scenario: recognize torrents are downloaded automatically
     Given a disk exists with path: "media"
       And the following directories exist:
         | directory | relative_path | watched | disk     |
