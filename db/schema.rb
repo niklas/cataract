@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512162508) do
+ActiveRecord::Schema.define(:version => 20120512223147) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120512162508) do
     t.datetime "created_at",            :null => false
     t.datetime "updated_at",            :null => false
     t.integer  "torrent_directory_id"
+    t.boolean  "disable_signup"
   end
 
   create_table "taggings", :force => true do |t|

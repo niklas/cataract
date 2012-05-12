@@ -24,7 +24,7 @@ Cataract::Application.routes.draw do
   end
   get 'directories' => 'directories#index', as: 'directories'
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "user::registrations" }
 
   root :to => 'greetings#landing'
 

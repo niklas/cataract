@@ -24,15 +24,6 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-  def access_denied(user_model=nil)
-    respond_to do |wants|
-      wants.html { redirect_to login_path }
-      wants.js do
-        render :template => '/sessions/new'
-      end
-    end
-  end
-
   def render_details_for(torrent)
     # same as app/views/torrents/show.rjs
     raise "dont use that anymore, please"

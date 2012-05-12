@@ -8,5 +8,14 @@ class Ability
       can :manage, Directory
       can :manage, Setting
     end
+
+    unless settings.disable_signup?
+      can :create, User
+    end
+  end
+
+  private
+  def settings
+    @settings ||= Setting.singleton
   end
 end
