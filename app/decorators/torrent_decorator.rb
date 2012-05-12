@@ -26,6 +26,12 @@ class TorrentDecorator < ApplicationDecorator
     end
   end
 
+  def message
+    handle_remote do
+      torrent.message
+    end
+  end
+
   def human_bytes(bytes)
     return if bytes.blank?
     h.number_to_human_size(bytes).sub(/ytes$/,'')
