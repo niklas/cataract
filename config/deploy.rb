@@ -58,7 +58,7 @@ namespace :deploy do
 
   task :foreman do
     run "mkdir -p #{upstart_dir}"
-    run "cd #{current_release} && bundle exec foreman export upstart #{upstart_dir} --app=#{application} --user=#{user}"
+    run "cd #{current_release} && bundle exec foreman export upstart #{upstart_dir} --app=#{application} --user=#{user} --template ./config/foreman/templates --log #{current_release}/log/"
   end
 
   after "deploy:update_code", "deploy:foreman"
