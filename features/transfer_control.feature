@@ -8,7 +8,7 @@ Feature: Transferring torrents
 
   Background:
     Given a existing directory exists with relative_path: "incoming"
-      And a torrent_with_picture_of_tails exists with title: "Tails", directory: the directory, content_directory: the directory
+      And a torrent_with_picture_of_tails exists with title: "Tails", content_directory: the directory
       And the file for the torrent exists
       And I am signed in
 

@@ -7,8 +7,7 @@ class Maintenance::Recognizer < Maintenance::Base
       logger.info { "sync - in #{directory.path}" }
       directory.glob('*.torrent').each do |filepath|
         logger.info { "sync - found: #{filepath}" }
-        filename = File.basename filepath
-        torrent = directory.torrents.build(:filename => filename, :status => 'new', :content_directory => directory)
+        torrent = Torrent.new(status: 'new', file: File.open(filepath))
         if torrent.save
           created << torrent 
         else

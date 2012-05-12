@@ -1,13 +1,14 @@
 #torrent_search
-  = simple_form_for search, url: torrents_path, remote: true, method: :get, html: { class: 'form-search' } do |f|
-    .row
-      .span4
+  .row
+    .span4
+      = simple_form_for search, url: torrents_path, remote: true, method: :get, html: { class: 'form-search' } do |f|
         = f.input :terms, input_html: { class: 'search-query' }
         = f.hidden_field :page, class: 'page'
-      .span8
         .btn-group{'data-toggle' => 'buttons-radio'}
           = f.collection_radio_buttons :status, search.class::States, :to_s, :to_s, checked: search.status,
             item_wrapper_tag: false, collection_wrapper_tag: false do |b|
             - b.label(class: 'btn btn-primary btn-toggle') { b.radio_button + b.text }
-
-  = render 'torrents/list', search: search
+      - if can? :create, Torrent
+        #dropzone{data: { url: torrents_path(format: 'json') }}= ta :dropzone
+    .span8
+      = render 'torrents/list', search: search

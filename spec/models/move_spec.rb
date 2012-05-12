@@ -22,7 +22,7 @@ describe Move do
     end
 
     let(:single) do
-      build :torrent_with_picture_of_tails, content_directory: source, directory: source do |torrent|
+      build :torrent_with_picture_of_tails, content_directory: source do |torrent|
         create_file source.path/'tails.png'
         torrent
       end
@@ -42,7 +42,7 @@ describe Move do
     let(:content_dir) { source.path/'content' } # directory name from torrent itself
 
     let(:multiple) do
-      build :torrent_with_picture_of_tails_and_a_poem, content_directory: source, directory: source do |torrent|
+      build :torrent_with_picture_of_tails_and_a_poem, content_directory: source do |torrent|
         create_directory content_dir
         create_file content_dir/'tails.png'
         create_file content_dir/'banane.poem'

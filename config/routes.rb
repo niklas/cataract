@@ -3,6 +3,9 @@ Cataract::Application.routes.draw do
 
   resource :settings
   resources :torrents do
+    member do
+      get 'prepend'
+    end
     collection do
       get 'status/:status/page/:page', action: :index
       get 'page/:page',                action: :index

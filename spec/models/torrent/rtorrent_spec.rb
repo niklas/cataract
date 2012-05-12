@@ -170,11 +170,9 @@ describe Torrent::RTorrent do
         incoming = create :existing_directory,
           relative_path: "incoming"
         create_file incoming.path/'tails.png'
-        @first   = create :torrent_with_picture_of_tails,
-          directory: incoming, content_directory: incoming
+        @first   = create :torrent_with_picture_of_tails, content_directory: incoming
         @first.start!
-        @second  = create :torrent_with_picture_of_tails_and_a_poem,
-          directory: incoming, content_directory: incoming
+        @second  = create :torrent_with_picture_of_tails_and_a_poem, content_directory: incoming
         @second.load!
         sleep 10 # rtorrent needs a moment
       end

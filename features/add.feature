@@ -27,5 +27,17 @@ Feature: Adding a torrent
       And the directory "Incoming" should be the torrent's content_directory
       And rtorrent should download the torrent
 
-  @todo
-  Scenario: Adding by Upload
+  Scenario: Upload with traditional multipart form
+    Given a directory "Incoming" exists with name: "Incoming"
+     When I follow "Add"
+      And I attach the file "spec/factories/files/single.torrent" to "File"
+      And I select "Incoming" from "Content directory"
+      And I press "Add"
+     Then I should see "Torrent was successfully created."
+      And a torrent should exist
+      And the directory "Incoming" should be the torrent's content_directory
+      And rtorrent should download the torrent
+      And I should see a table of the following torrents:
+       | title  |
+       | single |
+

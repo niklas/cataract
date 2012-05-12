@@ -3,16 +3,7 @@ require 'spec_helper'
 describe Torrent do
   
   context "with a valid URL" do
-    before do
-      @dir = Factory :directory
-    end
     let(:torrent) { build :remote_torrent, url: "http://localhost:1337/files/single.torrent" }
-
-    it "should have a directory assigned" do
-      torrent.valid?
-      torrent.directory.should be_present
-      torrent.directory.should == @dir
-    end
 
     context "marked for fetch automatically" do
       before do

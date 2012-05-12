@@ -9,3 +9,4 @@ public/stylesheets/*.css
 chromedriver.log
 rerun.txt
 coverage/
+public/uploads/

@@ -41,6 +41,7 @@ group :test do
   gem 'pry-stack_explorer'
 
   gem 'diff_matcher'
+  gem 'launchy'
 end
 
 group :development, :test do
@@ -84,3 +85,6 @@ gem 'foreman'
 gem 'kaminari'
 
 gem 'levenshtein'
+
+gem 'carrierwave'
+gem 'jbuilder'
