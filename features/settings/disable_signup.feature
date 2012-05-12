@@ -22,4 +22,4 @@ Feature: disable signup
      When I go to the home page
      Then I should not see "Signup"
      When I go to the signup page
-     Then I should see "Access Denied"
+     Then I should see "You may no access this page. Sorry."

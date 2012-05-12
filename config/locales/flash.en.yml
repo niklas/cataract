@@ -9,3 +9,5 @@ en:
     directories:
       create:
         notice: "Directory '%{name}' created"
+  message:
+    access_denied: "You may no access this page. Sorry."

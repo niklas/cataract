@@ -3,7 +3,13 @@ class ApplicationController < ActionController::Base
   # TODO cells ore similar
   helper :all
 
-  # TODO rescue from errors
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:alert] = translate('message.access_denied')
+    respond_to do |denied|
+      denied.html { redirect_to root_url }
+      denied.js   { render 'denied' }
+    end
+  end
 
   # FIXME use responders
   #after_update_page :prepare_flash_messages
