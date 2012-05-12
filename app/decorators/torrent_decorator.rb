@@ -107,12 +107,20 @@ class TorrentDecorator < ApplicationDecorator
     case name
     when :progress
       "##{item_id} .progress-pie"
+    when :row_cells
+      "##{item_id} td"
     when :content
       'section.content'
     else
       super
     end
   end
+
+  def prepend_to_list
+    page['torrents'].prepend h.render('torrents/item', torrent: model)
+    select(:row_cells, model).effect('highlight', {}, 1000)
+  end
+
 
   def update_in_list
     page.replace_partial 'torrents/item', torrent: model

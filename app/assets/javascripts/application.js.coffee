@@ -1,10 +1,11 @@
 #= require jquery
-#= require jquery.ui.widget
+#= require jquery-ui
 #= require jquery_ujs
 #= require bootstrap
 #= require jquery.sausage
 #= require endless_page
 #= require spinner
+#= require jquery-filedrop/jquery.filedrop
 #= require radio_buttons
 #= require bindWithDelay
 
@@ -33,3 +34,27 @@ jQuery ->
   setInterval ->
     $('body').trigger 'tick'
   , 23 * 1000
+
+  supportAjaxUploadProgressEvents = ->
+    xhr = new XMLHttpRequest()
+    !! (xhr? && ('upload' of xhr) && ('onprogress' of xhr.upload))
+
+  $('#dropzone').each ->
+    if supportAjaxUploadProgressEvents()
+      $dropzone = $(this).show()
+      $dropzone.filedrop
+        url: $dropzone.data('url')
+        paramname: 'torrent[file]'
+        maxfiles: 25
+        maxfilesize: 5 # MB
+        docEnter: -> $dropzone.addClass('invite') unless $dropzone.hasClass('invite')
+        docLeave: -> $dropzone.removeClass('invite') if $dropzone.hasClass('invite')
+        dragEnter: -> $dropzone.addClass('hover') unless $dropzone.hasClass('hover')
+        dragLeave: -> $dropzone.removeClass('hover') if $dropzone.hasClass('hover')
+        drop: -> $dropzone.effect('highlight', {}, 1000)
+        uploadFinished: (i, file, response, time) ->
+          $.getScript(response.prepend_url)
+        error: (err,file) ->
+          switch err
+            when 'BrowserNotSupported' then alert('browser does not support html5 drag and drop')
+            when 'FileTooLarge' then alert("file #{file.name} is too large, max 5MiB")
