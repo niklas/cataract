@@ -36,7 +36,7 @@ role :db,  single_target, :primary => true
 set :user, "torrent"
 
 set :deploy_to, "/home/#{user}/www/#{application}"
-set :upstart_dir, "/home/#{user}/.init-disabled"
+set :upstart_dir, "/home/#{user}/.init"
 
 namespace :deploy do
   desc "Restart App (Apache Passanger)"
