@@ -52,6 +52,8 @@ namespace :deploy do
     run "#{make_link}/config/database.yml"
     run "#{make_link}/config/messenger.yml"
     run "#{make_link}/tmp/rtorrent.socket"
+    run "mkdir -o #{deploy_to}/#{shared_dir}/public/uploads"
+    run "#{make_link}/public/uploads"
   end
 
   after "deploy:create_symlink", "deploy:symlink_shared"
