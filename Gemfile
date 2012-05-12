@@ -88,3 +88,4 @@ gem 'levenshtein'
 
 gem 'carrierwave'
 gem 'jbuilder'
+gem 'whenever', :require => false
