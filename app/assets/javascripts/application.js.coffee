@@ -51,7 +51,6 @@ jQuery ->
         docLeave: -> $dropzone.removeClass('invite') if $dropzone.hasClass('invite')
         dragEnter: -> $dropzone.addClass('hover') unless $dropzone.hasClass('hover')
         dragLeave: -> $dropzone.removeClass('hover') if $dropzone.hasClass('hover')
-        drop: -> $dropzone.effect('highlight', {}, 1000)
         uploadFinished: (i, file, response, time) ->
           $.getScript(response.prepend_url)
         error: (err,file) ->
