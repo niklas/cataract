@@ -62,6 +62,7 @@ namespace :deploy do
   end
 
   after "deploy:update_code", "deploy:foreman"
+  after "deploy:foreman", "services:restart"
 
   task :warmup, :roles => :app do
     STDERR.puts "Warming up application"
@@ -76,4 +77,11 @@ namespace :rake do
   task :invoke do  
     run("cd #{deploy_to}/current; /usr/bin/env rake --trace #{ENV['task']} RAILS_ENV=#{rails_env}")  
   end  
+end
+
+namespace :services do
+  desc "Restart all services"
+  task :restart do
+    run "restart cataract"
+  end
 end
