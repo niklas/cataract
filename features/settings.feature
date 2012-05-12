@@ -11,14 +11,14 @@ Feature: Settings
     Given I am signed in
      When I follow "Settings"
      Then I should be on the settings page
-     When I select "Archive" from "Default download directory"
+     When I select "Archive" from "Download directory"
       And I press "Save"
      Then I should see notice "Settings saved"
       And I should be on the settings page
       And a setting should exist
       And the setting's incoming_directory_id should be 4321
 
-     When I select "Incoming" from "Default download directory"
+     When I select "Incoming" from "Download directory"
       And I press "Save"
      Then I should see notice "Settings saved"
       And I should be on the settings page
