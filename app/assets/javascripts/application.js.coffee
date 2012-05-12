@@ -39,8 +39,11 @@ jQuery ->
     xhr = new XMLHttpRequest()
     !! (xhr? && ('upload' of xhr) && ('onprogress' of xhr.upload))
 
+  isTouchDevice = ->
+    !!('ontouchstart' of window)
+
   $('#dropzone').each ->
-    if supportAjaxUploadProgressEvents()
+    if supportAjaxUploadProgressEvents() and not isTouchDevice()
       $dropzone = $(this).show()
       $dropzone.filedrop
         url: $dropzone.data('url')
