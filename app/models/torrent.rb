@@ -129,7 +129,8 @@ class Torrent < ActiveRecord::Base
       tags << '720p' if filename =~ /720p/i
     end
     [filename.
-      gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
+      gsub(/(?:dvd|xvid|divx|hdtv|cam|fqm|eztv\b)/i,'').
+      sub(/^_kat\.ph_/,'').
       gsub(/\[.*?\]/,'').
       gsub(/\(.*?\)/,'').
       sub(/\d{5,}.TPB/,'').

@@ -156,32 +156,60 @@ describe Torrent do
   end
 
   describe 'clean filenames' do
-    let(:filename) { 'Fame of Bones 5x12 [720P - HDTV - OMMARZE].torrent' }
     let(:torrent)  { build(:torrent, filename: filename) }
     let(:cleaned)  { torrent.clean_filename }
-    it "should keep the name" do
-      cleaned.should include("Fame of Bones")
+
+    describe "pirate-bay style" do
+      let(:filename) { 'Fame of Bones 5x12 [720P - HDTV - OMMARZE].torrent' }
+      it "should keep the name" do
+        cleaned.should include("Fame of Bones")
+      end
+
+      it "should keep season and episode" do
+        cleaned.should include("5x12")
+      end
+
+      it "should keep 720P info" do
+        cleaned.should include("720")
+      end
+
+      it "should remove brackets" do
+        cleaned.should_not include("[")
+        cleaned.should_not include("]")
+      end
+
+      it "should remove extension" do
+        cleaned.should_not include(".torrent")
+      end
+
+      it "should remove release group" do
+        cleaned.should_not include("OMMARZE")
+      end
     end
 
-    it "should keep season and episode" do
-      cleaned.should include("5x12")
-    end
+    describe "Kickass-torrents style" do
+      let(:filename) { "_kat.ph_the.peanut.penguins.s01e03.friday.night.fnords.hdtv.xvid.fqm.eztv.torrent" }
+      it "should remove kat prefix" do
+        cleaned.should_not include("_kat.ph_")
+        cleaned.should_not include("kat")
+        cleaned.should_not include("ph")
+      end
 
-    it "should keep 720P info" do
-      cleaned.should include("720")
-    end
+      it "should keep season and episode" do
+        cleaned.should include('s01e03')
+      end
 
-    it "should remove brackets" do
-      cleaned.should_not include("[")
-      cleaned.should_not include("]")
-    end
+      it "should not include format" do
+        cleaned.should_not include('xvid')
+      end
 
-    it "should remove extension" do
-      cleaned.should_not include(".torrent")
-    end
+      it "should not include release group" do
+        cleaned.should_not include('fqm')
+      end
 
-    it "should remove release group" do
-      cleaned.should_not include("OMMARZE")
+      it "should not include eztv" do
+        cleaned.should_not include('eztv')
+      end
     end
   end
 
