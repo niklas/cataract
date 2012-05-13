@@ -84,6 +84,6 @@ end
 namespace :services do
   desc "Restart all services"
   task :restart do
-    run "restart cataract"
+    run "restart cataract || start cataract"
   end
 end
