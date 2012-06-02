@@ -18,6 +18,11 @@ describe Directory do
       directory.relative_path.should == pathname
     end
 
+    it "is findable by pathname" do
+      directory = create :directory, :relative_path => pathname
+      Directory.by_relative_path(pathname).first.should == directory
+    end
+
     it "must be relative" do
       directory = build :directory
       directory.relative_path = '/tmp/lol'
