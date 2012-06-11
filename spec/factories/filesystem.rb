@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     disk
 
-    factory :target # to move
+    factory :target_directory # to move
     factory :incoming_directory do
       sequence(:name) { |i| "Incoming ##{i}" }
       sequence(:relative_path) { |i| "incoming_#{i}" }
@@ -19,7 +19,7 @@ FactoryGirl.define do
 
   factory :move do
     torrent
-    target
+    target_directory
   end
 
   factory :disk do

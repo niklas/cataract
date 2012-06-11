@@ -29,6 +29,7 @@ Spork.prefork do
   Capybara.default_selector = :css
 
   Capybara.register_driver :selenium do |app|
+    Selenium::WebDriver::Chrome.path = `which chromium-browser`.chomp
     Capybara::Selenium::Driver.new(app, :browser => :chrome).tap do |driver|
       width, height = 480 + 8, 800 + 57
 

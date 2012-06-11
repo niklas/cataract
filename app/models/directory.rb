@@ -188,6 +188,22 @@ class Directory < ActiveRecord::Base
       inject(&:merge)
   end
 
+  def self.find_or_create_by_directory_and_disk(directory, disk)
+    if directory.disk == disk
+      directory
+    else
+      if existing = by_relative_path(directory.relative_path).where(disk_id: disk.id).first
+        existing
+      else
+        directory.clone.tap do |copy|
+          copy.disk = disk
+          copy.auto_create = true
+          copy.save!
+        end
+      end
+    end
+  end
+
   private
   def self.mountpoints
     File.read('/etc/mtab').collect {|l| l.split[1] }.sort {|b,a| a.length <=> b.length }
