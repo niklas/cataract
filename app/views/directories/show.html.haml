@@ -1,9 +1,24 @@
 - title @directory.name
 
-%tt= @directory.path
+- @directory.default!
 
-= render 'list', directories: @directory.children, extra_class: 'existing'
+= simple_form_for @directory, html: { class: 'form-horizontal' } do |form|
+  .inputs
+    = form.input :path, disabled: true, as: 'string'
+    = form.input :subscribed
+    = form.input :filter
+  .form-actions
+    = form.button :submit
 
-%h1= ta :detected_directories
-= render 'list', directories: @directory.detected_directories, extra_class: 'new'
+- unless @directory.copies.empty?
+  %h1= ta :directory_copies
+  = render 'list', directories: @directory.copies, extra_class: 'copies'
+
+- if @directory.has_children?
+  %h1= ta :sub_directories
+  = render 'list', directories: @directory.children, extra_class: 'existing'
+
+- unless @directory.detected_directories.empty?
+  %h1= ta :detected_directories
+  = render 'list', directories: @directory.detected_directories, extra_class: 'new'
 

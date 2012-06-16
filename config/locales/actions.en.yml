@@ -18,9 +18,16 @@ en:
       create_directory: "Create Directory"
       import_directory: "Import %{name}"
       dropzone: "Drop torrent file here to upload"
+      directory_copies: "Copies on other disks"
+      sub_directories: "Subdirectories"
+    boolean:
+      'true': "yes"
+      'false': "no"
     submit:
       disk:
         create: "Create Disk"
+      directory:
+        update: "Save"
       setting:
         create: "Save"
         update: "Save"

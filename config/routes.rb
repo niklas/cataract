@@ -20,7 +20,7 @@ Cataract::Application.routes.draw do
   get "torrents" => 'torrents#index', :as => 'user_root' # after login
 
   resources :disks, shallow: true do
-    resources :directories
+    resources :directories, except: [:edit]
   end
   get 'directories' => 'directories#index', as: 'directories'
 

@@ -12,6 +12,8 @@ en:
         target_disk: "Disk"
       directory:
         auto_create: "create on disk"
+        subscribed: "subscribed"
+        filter: "Filter"
   flash:
     move:
       create:

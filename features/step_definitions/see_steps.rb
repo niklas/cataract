@@ -2,7 +2,7 @@ Then /^I should see a list of the following ([\w ]+):$/ do |plural, expected|
   plural = plural.split
   fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
   found = page.find("ul.#{plural.join('.')}").all("li").select(&:visible?).map do |item|
-    fields.map {|f| item.first(f).text.strip } rescue nil
+    fields.map {|f| item.first(f).text.strip rescue nil }
   end.compact
   expected.diff! found.unshift(expected.column_names)
 end
@@ -11,7 +11,7 @@ Then /^I should see a table of the following ([\w ]+):$/ do |plural, expected|
   plural = plural.split
   fields = expected.column_names.map(&:underscore).map {|f| "td.#{f}" }
   found = page.find("table.#{plural.join('.')} tbody").all("tr").select(&:visible?).map do |item|
-    fields.map {|f| item.find(f).text.strip } rescue nil
+    fields.map {|f| item.find(f).text.strip rescue nil }
   end
   expected.diff! found.unshift(expected.column_names)
 end

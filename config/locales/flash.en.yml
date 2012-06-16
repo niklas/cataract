@@ -8,6 +8,8 @@ en:
         notice: "Freed %{bytes}."
     directories:
       create:
-        notice: "Directory '%{name}' created"
+        notice: "Directory '%{name}' created."
+      update:
+        notice: "Directory '%{name}' saved."
   message:
     access_denied: "You may no access this page. Sorry."
