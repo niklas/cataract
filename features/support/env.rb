@@ -69,6 +69,9 @@ Spork.prefork do
   # recommended as it will mask a lot of errors for you!
   #
   ActionController::Base.allow_rescue = false
+
+  require 'webmock/cucumber'
+  WebMock.disable_net_connect!(:allow_localhost => true)
 end
 
 Spork.each_run do

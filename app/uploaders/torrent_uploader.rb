@@ -42,7 +42,7 @@ class TorrentUploader < CarrierWave::Uploader::Base
   def set_info_hash
     model.info_hash = model.metainfo.sha1.unpack('H*').first.upcase
   rescue Torrent::FileError => e
-    logger.debug { "could not set info hash from metainfo: #{e.message}" }
+    Rails.logger.debug { "could not set info hash from metainfo: #{e.message}" }
   end
 
 end

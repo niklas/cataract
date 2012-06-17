@@ -43,6 +43,8 @@ group :test do
   gem 'diff_matcher'
   gem 'launchy'
   gem 'chromedriver-helper'
+
+  gem 'webmock'
 end
 
 group :development, :test do
