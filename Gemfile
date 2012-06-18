@@ -92,3 +92,5 @@ gem 'levenshtein'
 gem 'carrierwave'
 gem 'jbuilder'
 gem 'whenever', :require => false
+
+gem 'feed-abstract'

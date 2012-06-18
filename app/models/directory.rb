@@ -56,6 +56,11 @@ class Directory < ActiveRecord::Base
     self.class.where(relative_path: relative_path.to_s).where('id != ?', id)
   end
 
+  validates_presence_of :filter, if: :subscribed?
+  def regexp
+    Regexp.new filter, true
+  end
+
 
   has_many :torrents
 
@@ -137,6 +142,10 @@ class Directory < ActiveRecord::Base
 
   def self.watched
     where(:watched => true)
+  end
+
+  def self.subscribed
+    where(:subscribed => true)
   end
 
   # side info

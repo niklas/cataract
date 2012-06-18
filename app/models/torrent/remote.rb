@@ -67,6 +67,8 @@ class Torrent
     false
   end
 
+  alias_method :fetch!, :fetch_from_url
+
   def parsed_url
     URI.parse escaped_url
   end
