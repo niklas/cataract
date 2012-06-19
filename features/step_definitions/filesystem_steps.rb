@@ -80,11 +80,13 @@ Then /^#{capture_model}'s content should not exist on disk$/ do |m|
   step %Q~the file "#{model!(m).content.path}" should not exist on disk~
 end
 
-Given /^the URL "([^"]*)" points to "([^"]*)"$/ do |url, file|
-  response = mock 'Response', body: File.read( FileSystem.file_factory_path/file )
-  response.stub(:is_a?).with(Net::HTTPSuccess).and_return(true)
-  response.stub(:[]).with('content-disposition').and_return(nil)
-  Net::HTTP::stub(:get_response).with(URI.parse(url)).and_return(response)
+Given /^the URL "([^"]*)" points to file "([^"]*)"$/ do |url, file|
+  content = File.read( FileSystem.file_factory_path/file )
+  stub_request(:get, url).to_return(status: 200, body: content)
+end
+
+Given /^the URL "([^"]*)" points to the following content:$/ do |url, content|
+  stub_request(:get, url).to_return(status: 200, body: content)
 end
 
 Given /^the following disks are mounted:$/ do |table|

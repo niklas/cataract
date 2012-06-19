@@ -20,6 +20,9 @@ module NavigationHelpers
     when /^the list page$/
       torrents_path
 
+    when /^the library page$/
+      directories_path
+
     when /^the (running|archived|remote) list page$/
       torrents_path # anchor: $1
 

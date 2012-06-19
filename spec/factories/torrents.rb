@@ -44,4 +44,8 @@ FactoryGirl.define do
     end
 
   end
+
+  factory :feed do
+    sequence(:url) { |i| "http://cataract.local/#{i}.rss" }
+  end
 end

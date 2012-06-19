@@ -4,7 +4,7 @@ Feature: Adding a torrent
 
   Background:
     Given an existing directory exists with name: "Existing"
-      And the URL "http://hashcache.net/files/single.torrent" points to "single.torrent"
+      And the URL "http://hashcache.net/files/single.torrent" points to file "single.torrent"
       And I am signed in
 
   Scenario: Adding by URL

@@ -38,4 +38,9 @@ module ActionHelper
     opts[:class] = "#{opts[:class]} #{icon_name} btn btn-mini"
     link_to i(icon_name), url, opts
   end
+
+  def boolean_tag(record, predicate)
+    val = record.send(predicate)
+    content_tag :span, I18n.t(val.to_s, scope: 'helpers.boolean'), class: "#{val}"
+  end
 end

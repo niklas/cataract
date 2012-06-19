@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531191728) do
+ActiveRecord::Schema.define(:version => 20120618200527) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20120531191728) do
     t.boolean  "watched"
     t.string   "ancestry"
     t.integer  "disk_id"
+    t.boolean  "subscribed"
+    t.string   "filter"
   end
 
   add_index "directories", ["ancestry"], :name => "index_directories_on_ancestry"
@@ -55,13 +57,6 @@ ActiveRecord::Schema.define(:version => 20120531191728) do
   end
 
   add_index "feeds", ["user_id"], :name => "index_feeds_on_user_id"
-
-  create_table "filters", :force => true do |t|
-    t.string  "expression"
-    t.integer "feed_id"
-    t.boolean "negated"
-    t.integer "position"
-  end
 
   create_table "log_entries", :force => true do |t|
     t.string   "action"

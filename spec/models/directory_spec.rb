@@ -75,3 +75,10 @@ describe Directory do
     end
   end
 end
+
+describe Directory, 'filter' do
+  let(:directory) { build :directory, filter: "insensitive" }
+  it "ignores case" do
+    "inSenSitiVe".should match(directory.regexp)
+  end
+end

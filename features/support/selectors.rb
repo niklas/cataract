@@ -13,8 +13,11 @@ module HtmlSelectorsHelpers
     when "current user"
       "#session .name"
 
-    when "the header"
+    when /^the (menu|header)$/
       "div.navbar"
+
+    when /^the director(y|ies) list$/
+      "table.directories"
 
     when "the footer"
       raise "no footer"

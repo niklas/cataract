@@ -34,6 +34,7 @@ class Directory < ActiveRecord::Base
   end
 
   # TODO validate path is on disk
+  # FIXME assign directories to disks through rake task
   belongs_to :disk
   validates_presence_of :disk
 
@@ -49,6 +50,15 @@ class Directory < ActiveRecord::Base
 
   def name
     super.presence || (relative_path? && relative_path.basename.to_s)
+  end
+
+  def copies
+    self.class.where(relative_path: relative_path.to_s).where('id != ?', id)
+  end
+
+  validates_presence_of :filter, if: :subscribed?
+  def regexp
+    Regexp.new filter, true
   end
 
 
@@ -70,6 +80,11 @@ class Directory < ActiveRecord::Base
     end
   end
 
+  def default!
+    if filter.blank?
+      self.filter = name
+    end
+  end
 
   def self.all_paths(opts={})
     find(:all, opts).select {|dir| File.directory? dir.path }
@@ -127,6 +142,10 @@ class Directory < ActiveRecord::Base
 
   def self.watched
     where(:watched => true)
+  end
+
+  def self.subscribed
+    where(:subscribed => true)
   end
 
   # side info

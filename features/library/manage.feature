@@ -12,7 +12,7 @@ Feature: Manage Library
     Given I am signed in
      When I toggle the menu
       And I follow "Library"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the menu:
        | name   |
        | Movies |
        | Series |
