@@ -17,6 +17,13 @@ Then /^I should see a table of the following (\w+\s?\w+)(?!within.*):$/ do |plur
   expected.diff! found.unshift(expected.column_names)
 end
 
+Then /^I should see the following breadcrumbs:$/ do |expected|
+  found = page.all('ul.breadcrumb li').map(&:text).map(&:strip).reject(&:blank?).map {|a| [a] }
+  found.should_not be_empty
+  expected.diff! found
+end
+
+
 Then /^the button "([^"]*)" should be active$/ do |label|
   item = page.find("a.ui-btn", :text => label)
   item['class'].split.should include('ui-btn-active')

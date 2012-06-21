@@ -53,4 +53,9 @@ class ApplicationController < ActionController::Base
     Torrent.remote.clear_caches!
   end
 
+  def directory_path(directory)
+    disk_directory_path(directory.disk, directory)
+  end
+  helper_method :directory_path
+
 end

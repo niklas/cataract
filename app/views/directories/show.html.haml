@@ -1,15 +1,5 @@
 - title @directory.name
 
-- @directory.default!
-
-= simple_form_for @directory, html: { class: 'form-horizontal' } do |form|
-  .inputs
-    = form.input :path, disabled: true, as: 'string'
-    = form.input :subscribed
-    = form.input :filter
-  .form-actions
-    = form.button :submit
-
 - unless @directory.copies.empty?
   %h1= ta :directory_copies
   = render 'list', directories: @directory.copies, extra_class: 'copies'
@@ -21,4 +11,3 @@
 - unless @directory.detected_directories.empty?
   %h1= ta :detected_directories
   = render 'list', directories: @directory.detected_directories, extra_class: 'new'
-

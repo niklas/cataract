@@ -11,6 +11,7 @@ Feature: Transferring torrents
       And a torrent_with_picture_of_tails exists with title: "Tails", content_directory: the directory
       And the file for the torrent exists
       And I am signed in
+      And I am on the home page
 
   Scenario: Start the transfer form the list
      When I click on the start link

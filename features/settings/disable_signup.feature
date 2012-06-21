@@ -10,6 +10,7 @@ Feature: disable signup
 
   Scenario: setting it
     Given I am signed in
+      And I am on the home page
      When I follow "Settings"
      Then the "Disable signup" checkbox should not be checked
      When I check "Disable signup"

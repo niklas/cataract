@@ -1,0 +1,14 @@
+.modal-header
+  %h3= directory.name
+
+- @directory.default!
+
+.modal-body
+  = simple_form_for [directory.disk, directory], html: { class: 'form-horizontal' } do |form|
+    .inputs
+      = form.input :path, disabled: true, as: 'string'
+      = form.input :subscribed
+      = form.input :filter
+    .form-actions
+      = form.button :submit
+

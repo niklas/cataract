@@ -3,6 +3,7 @@ class DirectoriesController < InheritedResources::Base
   respond_to :js, :html
 
   load_and_authorize_resource
+  layout 'library'
 
   def create
     create! { redirect_path }
@@ -19,7 +20,7 @@ class DirectoriesController < InheritedResources::Base
 
   def redirect_path
     if resource.is_root?
-      directories_path
+      disk_path resource.disk
     else
       directory_path(resource.parent)
     end

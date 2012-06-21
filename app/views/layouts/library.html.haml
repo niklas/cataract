@@ -1,0 +1,39 @@
+!!!5
+%html
+  = render 'layouts/head'
+  %body
+    .container
+      = render 'layouts/header'
+      .row
+        .span-4.well
+          %ul.nav.nav-list.disks
+            %li.nav-header= Disk.model_name.plural
+            - Disk.order(:name).each do |disk|
+              %li
+                = link_to disk.name, disk_path(disk), class: "name #{dom_id disk} #{@disk == disk ? 'active' : ''}"
+
+          - unless (detected = Disk.detected).empty?
+            %ul.nav.nav-list.new.disks
+              %li.nav-header auto
+              - Disk.detected.each do |disk|
+                %li
+                  = link_to disk.name, new_disk_path(disk: disk.attributes.slice('name', 'path')), class: 'name', remote: true
+        .span-8
+          - if controller.action_name == 'show'
+            %ul.breadcrumb
+              - case resource
+              - when Disk
+                %li= link_to resource.name, resource
+              - when Directory
+                %li
+                  = link_to resource.disk.name, resource.disk
+                  = path_divider
+                - resource.ancestors.each do |crumb|
+                  %li
+                    = link_to crumb.name, crumb
+                    = path_divider
+                %li= link_to resource.name, resource
+                - if can? :edit, resource
+                  %li.pull-right= link_to_icon :edit, edit_disk_directory_path(resource.disk, resource), link_only: true, icon: { :'non-white' => true }, remote: true
+          = yield
+

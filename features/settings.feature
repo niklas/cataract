@@ -9,6 +9,7 @@ Feature: Settings
       | Incoming  | Incoming | 1234 |
       | Archive   | Archive  | 4321 |
     Given I am signed in
+      And I am on the home page
      When I follow "Settings"
      Then I should be on the settings page
      When I select "Archive" from "Download directory"

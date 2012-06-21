@@ -19,14 +19,19 @@ Cataract::Application.routes.draw do
 
   get "torrents" => 'torrents#index', :as => 'user_root' # after login
 
-  resources :disks, shallow: true do
-    resources :directories, except: [:edit]
+  resources :disks do
+    resources :directories
   end
-  get 'directories' => 'directories#index', as: 'directories'
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 
   root :to => 'greetings#landing'
+
+  if Rails.env.test?
+    scope 'test' do
+      get 'sign_in' => 'test_acceleration#sign_in', as: 'fast_sign_in'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

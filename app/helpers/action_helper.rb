@@ -14,12 +14,16 @@ module ActionHelper
     super translate_action(text), *args, &block
   end
 
-  def translate_icon(key, opts={})
-    icon_tag(key) + ' ' + translate_action(key, opts)
+  def button_to(text, *args, &block)
+    super translate_action(text), *args, &block
   end
 
-  def icon_tag(key)
-    content_tag(:i, '', class: "icon-#{Icons[key] || 'glass'} icon-white")
+  def translate_icon(key, opts={})
+    icon_tag(key, opts) + ' ' + translate_action(key, opts)
+  end
+
+  def icon_tag(key, opts={})
+    content_tag(:i, '', class: "icon-#{Icons[key] || 'glass'} #{'icon-white' unless opts[:'non-white']}") + ' '
   end
 
   alias ti translate_icon
@@ -30,13 +34,16 @@ module ActionHelper
     stop:  'stop',
     start: 'play',
     clear: 'trash',
-    move:  'share'
+    move:  'share',
+    edit: 'pencil'
   }
 
   def link_to_icon icon_name, url, opts={}
-    opts = opts.merge(remote: true)
-    opts[:class] = "#{opts[:class]} #{icon_name} btn btn-mini"
-    link_to i(icon_name), url, opts
+    opts[:class] = "#{opts[:class]} #{icon_name}"
+    unless opts.delete(:link_only)
+      opts[:class] += " btn btn-mini"
+    end
+    link_to ti(icon_name, opts.delete(:icon) || {}), url, opts
   end
 
   def boolean_tag(record, predicate)

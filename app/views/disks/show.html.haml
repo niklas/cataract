@@ -1,0 +1,4 @@
+= render 'directories/list', directories: @disk.directories.roots.order(:name), extra_class: 'existing'
+
+%h1= ta :detected_directories
+= render 'directories/list', directories: @disk.detected_directories, extra_class: 'new'
