@@ -16,6 +16,9 @@ module HtmlSelectorsHelpers
     when /^the (menu|header)$/
       "div.navbar"
 
+    when /^the disks? list$/
+      "ul.disks"
+
     when /^the director(y|ies) list$/
       "table.directories"
 

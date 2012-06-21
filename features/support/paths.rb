@@ -21,7 +21,7 @@ module NavigationHelpers
       torrents_path
 
     when /^the library page$/
-      directories_path
+      disks_path
 
     when /^the (running|archived|remote) list page$/
       torrents_path # anchor: $1
@@ -33,6 +33,10 @@ module NavigationHelpers
       case m = model!($1)
       when Torrent
         torrent_path(m)
+      when Directory
+        directory_path(m)
+      when Disk
+        disk_path(m)
       else
         flunk "Can't find mapping for page of #{$1}" +
           "Now, go and add a mapping in #{__FILE__}"
