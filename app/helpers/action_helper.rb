@@ -14,8 +14,12 @@ module ActionHelper
     super translate_action(text), *args, &block
   end
 
+  def button_to(text, *args, &block)
+    super translate_action(text), *args, &block
+  end
+
   def translate_icon(key, opts={})
-    icon_tag(key) + ' ' + translate_action(key, opts)
+    icon_tag(key, opts) + ' ' + translate_action(key, opts)
   end
 
   def icon_tag(key, opts={})
@@ -35,8 +39,11 @@ module ActionHelper
   }
 
   def link_to_icon icon_name, url, opts={}
-    opts[:class] = "#{opts[:class]} #{icon_name} btn btn-mini"
-    link_to i(icon_name, (opts.delete(:icon) || {})), url, opts
+    opts[:class] = "#{opts[:class]} #{icon_name}"
+    unless opts.delete(:link_only)
+      opts[:class] += " btn btn-mini"
+    end
+    link_to ti(icon_name, opts.delete(:icon) || {}), url, opts
   end
 
   def boolean_tag(record, predicate)

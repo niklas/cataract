@@ -68,6 +68,7 @@ Feature: Paginate Torrents
        | Number 02 |
        | Number 01 |
       And I am signed in
+      And I am on the home page
       And I filter with "Number"
 
      Then I should see a table of the following torrents:

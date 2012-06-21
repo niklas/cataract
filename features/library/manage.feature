@@ -8,6 +8,7 @@ Feature: Manage Library
   Scenario: can create directories
     Given a disk exists with name: "aDisk", path: "media/adisk"
       And I am signed in
+      And I am on the library page
      When I toggle the menu
       And I follow "Library"
       And I follow "Create Directory"

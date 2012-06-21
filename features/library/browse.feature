@@ -70,9 +70,11 @@ Feature: Browsing the library
       And I should see the following breadcrumbs:
       | More / |
       | Series |
+      | Edit   |
      When I follow "Shame of Frowns" within the directories list
      Then I should be on the page for the directory "Frowns"
       And I should see the following breadcrumbs:
       | More /          |
       | Series /        |
       | Shame of Frowns |
+      | Edit            |

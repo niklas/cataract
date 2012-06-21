@@ -6,6 +6,7 @@ Feature: Adding a torrent
     Given an existing directory exists with name: "Existing"
       And the URL "http://hashcache.net/files/single.torrent" points to file "single.torrent"
       And I am signed in
+      And I am on the home page
 
   Scenario: Adding by URL
      When I follow "Add"

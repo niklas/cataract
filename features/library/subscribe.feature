@@ -10,6 +10,8 @@ Feature: Subscribe Directory
       And am on the library page
 
      When I follow "Shame of Frowns" within the directories list
+      And I follow "Edit"
+      And I wait for the modal box to appear
       And I check "subscribed"
      Then the "Filter" field should contain "Shame of Frowns"
      When I fill in "Filter" with "frowns"
@@ -22,6 +24,8 @@ Feature: Subscribe Directory
       And the directory's filter should be "frowns"
 
      When I follow "Shame of Frowns" within the directories list
+      And I follow "Edit"
+      And I wait for the modal box to appear
      Then the "subscribed" checkbox should be checked
      When I uncheck "subscribed"
       And I press "Save"

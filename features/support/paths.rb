@@ -34,7 +34,7 @@ module NavigationHelpers
       when Torrent
         torrent_path(m)
       when Directory
-        directory_path(m)
+        disk_directory_path(m.disk, m)
       when Disk
         disk_path(m)
       else
