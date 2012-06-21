@@ -6,10 +6,10 @@ branches:
     - development
     - master
 before_install:
-- "sudo apt-get install rtorrent screen"
+  - sudo aptitude -y install rtorrent screen chromium-browser
+  - createdb cataract_test
 before_script:
-- "psql -c 'create database cataract_test;' -U postgres"
-- "cp config/database.yml{.travis,}"
-- "mkdir -p tmp/sockets"
-- "bundle exec rake db:migrate"
+  - "cp config/database.yml{.travis,}"
+  - "mkdir -p tmp/sockets"
+  - "bundle exec rake db:migrate"
 script: "bundle exec rspec && bundle exec rake cucumber:ok"
