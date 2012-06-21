@@ -10,6 +10,7 @@ en:
       content: "Content"
       clear: "Clear"
       add: "Add"
+      edit: "Edit"
       dashboard: "Dashboard"
       torrents: "Torrents"
       library: "Library"

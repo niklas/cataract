@@ -18,5 +18,19 @@
               - Disk.detected.each do |disk|
                 %li
                   = link_to disk.name, new_disk_path(disk: disk.attributes.slice('name', 'path')), class: 'name', remote: true
-        .span-8= yield
+        .span-8
+          %ul.breadcrumb
+            - if @disk
+              %li= link_to @disk.name, @disk
+            - elsif @directory
+              %li
+                = link_to @directory.disk.name, @directory.disk
+                = path_divider
+              - @directory.ancestors.each do |crumb|
+                %li
+                  = link_to crumb.name, crumb
+                  = path_divider
+              %li= link_to @directory.name, @directory
+              %li.pull-right= link_to icon_tag(:edit, :'non-white' => true), '#edit', class: 'edit'
+          = yield
 
