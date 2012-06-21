@@ -11,9 +11,7 @@ Feature: Disks in Library
       | Stuff |
       | More  |
       And I am signed in
-     When I toggle the menu
-      And I follow "Library"
-      And I follow "All Directories"
+     When I go to the library page
      Then I should see a list of the following disks:
       | name  |
       | More  |
@@ -26,9 +24,7 @@ Feature: Disks in Library
       | media/Stuff |
       | media/More  |
       And I am signed in
-     When I toggle the menu
-      And I follow "Library"
-      And I follow "All Directories"
+     When I go to the library page
      Then I should see "auto"
       And I should see a list of the following new disks:
       | name  |

@@ -10,8 +10,7 @@ Feature: Manage Library
       | Series |
       | Movies |
     Given I am signed in
-     When I toggle the menu
-      And I follow "Library"
+     When I go to the library page
      Then I should see a list of the following directories within the menu:
        | name   |
        | Movies |
@@ -41,9 +40,7 @@ Feature: Manage Library
         | directory | media/adisk/Series |
         | directory | media/adisk/Movies |
       And I am signed in
-     When I toggle the menu
-      And I follow "Library"
-      And I follow "All Directories"
+     When I go to the library page
      Then I should see a table of the following new directories:
        | Name          |
        | Import Movies |
@@ -71,9 +68,8 @@ Feature: Manage Library
         | directory | media/adisk/Series/Tagesschau |
       And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series"
       And I am signed in
-     When I toggle the menu
-      And I follow "Library"
-      And I follow "Series"
+    Given I am on the library page
+     When I follow "Series" within the directories list
      Then I should see a table of the following new directories:
        | Name              |
        | Import Tagesschau |
