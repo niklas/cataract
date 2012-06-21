@@ -28,6 +28,12 @@ Cataract::Application.routes.draw do
 
   root :to => 'greetings#landing'
 
+  if Rails.env.test?
+    scope 'test' do
+      get 'sign_in' => 'test_acceleration#sign_in', as: 'fast_sign_in'
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

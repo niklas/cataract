@@ -71,6 +71,13 @@ namespace :deploy do
     run "sleep 2; wget -q -O - http://#{single_target} | grep -vi exception > /dev/null"
   end
   after 'deploy:restart', 'deploy:warmup'
+
+  desc "Delete the code we use to accelerate testing"
+  task :delete_test_code do
+    run "rm -f #{current_release}/app/controllers/test_acceleration_controller.rb"
+  end
+
+  before "deploy:assets:precompile", "deploy:delete_test_code
 end
 
 namespace :rake do  
