@@ -77,7 +77,7 @@ namespace :deploy do
     run "rm -f #{current_release}/app/controllers/test_acceleration_controller.rb"
   end
 
-  before "deploy:assets:precompile", "deploy:delete_test_code
+  before "deploy:assets:precompile", "deploy:delete_test_code"
 end
 
 namespace :rake do  
