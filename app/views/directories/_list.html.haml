@@ -5,7 +5,6 @@
         %th= Directory.human_attribute_name :disk
         %th= Directory.human_attribute_name :name
         %th= Directory.human_attribute_name :subscribed
-        %th= Directory.human_attribute_name :path
     %tbody
       - directories.each do |dir|
         = render 'directories/item', directory: dir

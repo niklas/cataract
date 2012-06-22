@@ -1,5 +1,7 @@
 - title @directory.name
 
+%tt= @directory.path
+
 - unless @directory.copies.empty?
   %h1= ta :directory_copies
   = render 'list', directories: @directory.copies, extra_class: 'copies'
