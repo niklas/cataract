@@ -3,8 +3,9 @@
 %tt= @directory.path
 
 - unless @directory.copies.empty?
-  %h1= ta :directory_copies
-  = render 'list', directories: @directory.copies, extra_class: 'copies'
+  .btn-group
+    - (@directory.copies + [@directory]).sort_by(&:name).each do |copy|
+      = link_to copy.name, copy, class: "btn btn-inverse #{copy == @directory ? 'active' : ''}"
 
 - if @directory.has_children?
   %h1= ta :sub_directories
