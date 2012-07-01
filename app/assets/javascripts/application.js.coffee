@@ -46,16 +46,16 @@ jQuery ->
   isTouchDevice = ->
     !!('ontouchstart' of window)
 
-  $('#dropzone').each ->
+  $('#dropzone').hide().each ->
     if supportAjaxUploadProgressEvents() and not isTouchDevice()
-      $dropzone = $(this).show()
+      $dropzone = $(this)
       $dropzone.filedrop
         url: $dropzone.data('url')
         paramname: 'torrent[file]'
         maxfiles: 25
         maxfilesize: 5 # MB
-        docEnter: -> $dropzone.addClass('invite') unless $dropzone.hasClass('invite')
-        docLeave: -> $dropzone.removeClass('invite') if $dropzone.hasClass('invite')
+        docEnter: -> $dropzone.not(":visible").show()
+        docLeave: -> $dropzone.filter(":visible").hide()
         dragEnter: -> $dropzone.addClass('hover') unless $dropzone.hasClass('hover')
         dragLeave: -> $dropzone.removeClass('hover') if $dropzone.hasClass('hover')
         uploadFinished: (i, file, response, time) ->
