@@ -22,6 +22,7 @@ en:
       dropzone: "Drop torrent file here to upload"
       directory_copies: "Copies on other disks"
       sub_directories: "Subdirectories"
+      queue: "Queue"
     boolean:
       'true': "yes"
       'false': "no"

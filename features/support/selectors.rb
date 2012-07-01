@@ -32,6 +32,9 @@ module HtmlSelectorsHelpers
     when 'the modal box'
       'div.modal'
 
+    when 'the queue'
+      '#queue'
+
     when /^(\w+) link$/
       "a.#{$1}"
 

@@ -14,6 +14,10 @@ class Move < ActiveRecord::Base
   validates_numericality_of :torrent_id
   validates_numericality_of :target_directory_id
 
+  def self.recent
+    order('created_at DESC')
+  end
+
   # FileUtils will use cp+rm between file system boundaries. consider using rsync for robustness and progress
   def work
     torrent.stop
@@ -41,6 +45,10 @@ class Move < ActiveRecord::Base
 
   def final_directory
     @final_directory ||= find_final_directory
+  end
+
+  def title
+    I18n.translate('flash.move.create.notice', torrent: torrent.title, target: target_name)
   end
 
   private

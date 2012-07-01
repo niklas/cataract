@@ -34,6 +34,10 @@ class ApplicationDecorator < Draper::Base
     page.select('.navbar:first').after h.render('application/flash')
   end
 
+  def update_queue
+    page['queue'].replace_with h.render('queue')
+  end
+
 
   # Lazy Helpers
   #   PRO: Call Rails helpers without the h. proxy
