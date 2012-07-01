@@ -5,9 +5,16 @@ class TorrentDecorator < ApplicationDecorator
 
   def progress
     handle_remote do
-      h.content_tag(:div, '', class: 'stretcher') +
+      h.content_tag(:div, eta, class: 'stretcher eta') +
       h.render('pie', percent: torrent.progress)
     end
+  end
+
+  def eta
+    now = Time.now
+    h.distance_of_time_in_words(now, now + torrent.left_seconds)
+  rescue
+    ''
   end
 
   def content_size

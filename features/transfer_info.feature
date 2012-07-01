@@ -67,9 +67,10 @@ Feature: Transfer info
         | 23        | 42      | 2000       | 300             | the torrent | true    |
      When the tick interval is reached
      Then I should see the following attributes for the torrent:
-        | up rate   | 42 B/s |
-        | down rate | 23 B/s |
-        | progress  | 15%    |
+        | up rate   | 42 B/s   |
+        | down rate | 23 B/s   |
+        | progress  | 15%      |
+        | eta       | 1 minute |
 
   @javascript
   Scenario: stopped manually is detected

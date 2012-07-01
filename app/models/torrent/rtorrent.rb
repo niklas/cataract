@@ -4,6 +4,14 @@ require 'socket'
 require 'scgi/wrapped_socket'
 
 class Torrent
+  def left_seconds
+    left_bytes.to_f / down_rate.to_f
+  end
+
+  def left_bytes
+    size_bytes.to_i - completed_bytes.to_i
+  end
+
   class NotRunning < ActiveRecord::RecordInvalid; end
 
   temporary_predicate :start_automatically

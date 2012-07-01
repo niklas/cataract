@@ -90,10 +90,6 @@ class Torrent < ActiveRecord::Base
 
   # extended attributes
 
-  def seconds_left
-    left_bytes.to_f / down_rate.to_f
-  end
-
   def download_status
     if !errormsg.blank?
       "#{statusmsg} - #{errormsg}"
