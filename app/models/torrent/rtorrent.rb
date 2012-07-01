@@ -196,7 +196,7 @@ class Torrent
     end
 
     def torrents
-      multicall(torrents_mapping)
+      Rails.cache.fetch('rtorrent-torrents', expires_in: 1.minute) { multicall(torrents_mapping) }
     end
 
     def torrents_by_info_hash

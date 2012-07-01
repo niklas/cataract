@@ -94,3 +94,5 @@ gem 'jbuilder'
 gem 'whenever', :require => false
 
 gem 'feed-abstract'
+
+gem 'dalli'
