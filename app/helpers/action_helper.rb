@@ -43,7 +43,12 @@ module ActionHelper
     unless opts.delete(:link_only)
       opts[:class] += " btn btn-mini"
     end
-    link_to ti(icon_name, opts.delete(:icon) || {}), url, opts
+    if opts.delete(:icon_only)
+      icon = icon_tag(icon_name, opts.delete(:icon) || {})
+    else
+      icon = ti(icon_name, opts.delete(:icon) || {})
+    end
+    link_to icon, url, opts
   end
 
   def boolean_tag(record, predicate)

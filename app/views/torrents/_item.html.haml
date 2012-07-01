@@ -14,13 +14,13 @@
         = torrent.content_directory.name
     %td.actions
       - if torrent.running?
-        = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true
+        = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true, icon_only: true
       - else
-        = link_to_icon :start, torrent_transfer_path(torrent), class: 'btn-success', method: :post, remote: true
+        = link_to_icon :start, torrent_transfer_path(torrent), class: 'btn-success', method: :post, remote: true, icon_only: true
 
       - if torrent.content.exists?
         - unless torrent.moving?
           = link_to_modal i(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-mini'
         - else
           %span.btn.btn-info.btn-mini.disabled= i(:move)
-        = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really?", remote: true
+        = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really?", remote: true, icon_only: true
