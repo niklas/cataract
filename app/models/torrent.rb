@@ -110,25 +110,23 @@ class Torrent < ActiveRecord::Base
     content_size * percent / 100
   end
 
-  # nice title 
-  # 1) uses defined title or
-  # 2) takes filename and
+  def title
+    super.presence ||
+      debrand(filename) ||
+      (url.present? && debrand(File.basename(url)) )   ||
+      (persisted?? "Torrent ##{id}" : "new Torrent")
+  end
+
   # * removes some 1337 comments about format/group in the filename
   # * cuts the .torrent extention
   # * tranforms interpunctuations into spaces
   # * kills renaming spaces 
-  # or
-  # 3) takes a Title with the torrent's id
-  def title
-    super.presence ||
-      (filename.blank? ? "Torrent ##{id}" : clean_filename)
-  end
-
-  def clean_filename
+  def debrand(name)
+    return unless name.present?
     tags = [].tap do |tags|
-      tags << '720p' if filename =~ /720p/i
+      tags << '720p' if name =~ /720p/i
     end
-    [filename.
+    [name.
       gsub(/(?:dvd|xvid|divx|hdtv|cam|fqm|eztv\b)/i,'').
       sub(/^_kat\.ph_/,'').
       gsub(/\[.*?\]/,'').
@@ -138,6 +136,10 @@ class Torrent < ActiveRecord::Base
       gsub(/[._-]+/,' ').
       gsub(/\s{2,}/,' ').
       rstrip.lstrip, *tags].join(" ")
+  end
+
+  def clean_filename
+    debrand(filename)
   end
 
 
