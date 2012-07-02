@@ -1,6 +1,8 @@
 @torrents.each do |torrent|
-  td.update_queue
   page.decorate torrent do |td|
     td.select(:progress).html td.progress
   end
+end
+page.decorate @torrents.first do |td|
+  td.update_queue
 end
