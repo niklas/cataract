@@ -17,6 +17,7 @@ class Torrent
   end
 
   def start!
+    fetch!
     event_from [:paused, :archived, :new] do 
       ensure_content_directory
       self.start_automatically = false

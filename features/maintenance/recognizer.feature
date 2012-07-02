@@ -38,7 +38,7 @@ Feature: recognize torrents
   Scenario: notify users by jabber
 
   @todo
-  Scenario: recognize torrents somewhere (with mlocate)
+  Scenario: recognize torrent's contents somewhere (with mlocate)
 
   Scenario: auto-fetch torrents for tv-shows in subscribed directories
     Given a disk exists with path: "media"
@@ -88,4 +88,4 @@ Feature: recognize torrents
 
 
   @todo
-  Scenario: recognize torrents added manually to rtorrent
+  Scenario: recognize torrents that were added manually to rtorrent
