@@ -35,6 +35,7 @@ Then /^rtorrent should download #{capture_model}$/ do |m|
 end
 
 Given /^rtorrent list contains the following:$/ do |table|
+  Torrent.remote.clear_caches!
   table.map_column!('hash') do |hash|
     if hash =~ /^#{capture_model}$/
       model!(hash).info_hash

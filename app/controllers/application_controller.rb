@@ -48,11 +48,6 @@ class ApplicationController < ActionController::Base
     CGI.escapeHTML(stringy)
   end
 
-  before_filter :clear_caches
-  def clear_caches
-    Torrent.remote.clear_caches!
-  end
-
   def directory_path(directory)
     disk_directory_path(directory.disk, directory)
   end

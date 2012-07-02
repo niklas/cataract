@@ -214,6 +214,7 @@ class Torrent
     end
 
     def clear_caches!
+      Rails.cache.delete 'rtorrent-torrents'
       @torrents_by_info_hash = nil
     end
 
