@@ -4,14 +4,6 @@ require 'socket'
 require 'scgi/wrapped_socket'
 
 class Torrent
-  def left_seconds
-    left_bytes.to_f / down_rate.to_f
-  end
-
-  def left_bytes
-    size_bytes.to_i - completed_bytes.to_i
-  end
-
   class NotRunning < ActiveRecord::RecordInvalid; end
 
   temporary_predicate :start_automatically
@@ -55,7 +47,7 @@ class Torrent
 
   # attributes of running rtorrent
   def rtorrent_attributes
-    remote.torrents_by_info_hash[info_hash]
+    remote.for_info_hash(info_hash)
   end
 
   # rTorrent deletes the torrent file if removing a tied torrent, so we will
@@ -152,7 +144,7 @@ class Torrent
       mapped = map_method_name(name)
       Attributes << [name, mapped]
       define_method name do |torrent|
-        if cached = torrents_by_info_hash[hash_for(torrent)]
+        if cached = for_info_hash(hash_for(torrent))
           cached[name]
         else
           block.call call_with_torrent(mapped, torrent)
@@ -207,15 +199,12 @@ class Torrent
       Rails.cache.fetch('rtorrent-torrents', expires_in: 1.minute) { multicall(torrents_mapping) }
     end
 
-    def torrents_by_info_hash
-      @torrents_by_info_hash ||= torrents.each.with_object({}) do |t,h|
-        h[ t[:hash] ] = t
-      end
+    def for_info_hash(info_hash)
+      torrents.find { |h| h[:hash] == info_hash }
     end
 
     def clear_caches!
       Rails.cache.delete 'rtorrent-torrents'
-      @torrents_by_info_hash = nil
     end
 
     def torrents_mapping

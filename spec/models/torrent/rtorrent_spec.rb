@@ -184,18 +184,8 @@ describe Torrent::RTorrent do
           list.should have(2).records
         end
 
-        let(:map) { rtorrent.torrents_by_info_hash }
-        it "by info_hash" do
-          map.should be_a(Hash)
-          map.should have(2).records
-        end
-
-        it "should index by info_hash" do
-          map.keys.sort.should == list.map { |v| v[:hash] }.sort
-        end
-
-        let(:first) { list.first }
-        let(:second) { list.second }
+        let(:first) { rtorrent.for_info_hash(@first.info_hash) }
+        let(:second) { rtorrent.for_info_hash(@second.info_hash) }
 
         it "should have attrs set" do
           needs_64_bit_xmlrpc_patch

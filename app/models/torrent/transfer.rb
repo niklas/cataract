@@ -58,4 +58,12 @@ class Torrent
     0
   end
 
+  def left_seconds
+    left_bytes.to_f / down_rate.to_f
+  end
+
+  def left_bytes
+    size_bytes.to_i - completed_bytes.to_i
+  end
+
 end
