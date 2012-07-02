@@ -32,7 +32,6 @@ Feature: recognize torrents
      When the Recognizer runs
      Then a torrent should exist with filename: "oneiric.torrent"
       And the torrent's current_state should be "running"
-      And I wait 5 seconds
       And rtorrent should download the torrent
 
   @todo
