@@ -6,7 +6,4 @@
 - if @directory.contains_torrents_with_content?
   = render 'torrents/list', search: @directory.torrent_search, extra_class: 'fixed_location'
 
-
-- unless @directory.detected_directories.empty?
-  %h1= ta :detected_directories
-  = render 'directories/list', directories: @directory.detected_directories, extra_class: 'new fixed_disk'
+= render 'directories/detected', directories: @directory.detected_directories, extra_class: 'fixed_disk'

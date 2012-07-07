@@ -23,7 +23,7 @@
 [35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME athentication
 [35m./app/models/user.rb[0m[36m:[0m[32m18[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf
 [35m./features/step_definitions/web_steps.rb[0m[36m:[0m[32m76[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO: Add support for checkbox, select or option
-[35m./features/support/selectors.rb[0m[36m:[0m[32m44[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO move to jquery_mobile
+[35m./features/support/selectors.rb[0m[36m:[0m[32m50[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO move to jquery_mobile
 [35m./features/support/todo.rb[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      out << intense_yellow("TODO scenarios\n\n")
 [35m./features/support/todo.rb[0m[36m:[0m[32m30[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    File.open( Rails.root.join('log/TODO'), 'w' ) do |file|
 [35m./lib/action_messenger/base.rb[0m[36m:[0m[32m48[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      # TODO: Templates, ActionMailer-style.
