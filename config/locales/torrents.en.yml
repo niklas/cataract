@@ -4,8 +4,11 @@ en:
       torrent:
         url: "URL"
         search_title:
-          status: "%{status} torrents"
-          status_and_terms: "%{status} torrents containing '%{terms}'"
+          # order of hash is persisted
+          status: "%{value} torrents"
+          terms: "containing '%{value}'"
+          directory: 'in "%{value}"'
+          page: '(page %{value})'
         content_directory: "Content directory"
       move:
         target_directory: "Directory"

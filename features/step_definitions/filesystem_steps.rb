@@ -90,9 +90,15 @@ Given /^the URL "([^"]*)" points to the following content:$/ do |url, content|
 end
 
 Given /^the following disks are mounted:$/ do |table|
-  paths = table.hashes.map {|row| row['path']}
+  paths = table.hashes.map do |row| 
+    if r = row['path']
+      r
+    elsif r = row['disk']
+      model!(r).path.to_s
+    end
+  end
   if paths.empty?
-    raise ArgumentError, 'please provide a table with row headed "path"'
+    raise ArgumentError, 'please provide a table with row headed "path" or "disk"'
   end
   created = paths.map do |path|
     FileSystem.create_directory Pathname.new(path)

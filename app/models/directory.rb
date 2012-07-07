@@ -38,6 +38,11 @@ class Directory < ActiveRecord::Base
   belongs_to :disk
   validates_presence_of :disk
 
+  # end of scope to show all directies by name, leaving out duplicate copies in different disks
+  def self.ignoring_copies
+    all.group_by(&:name).map { |name, directories| directories.sort_by(&:disk_id).first }
+  end
+
   def path
     disk.path + (relative_path || name)
   rescue NoMethodError => e
@@ -64,6 +69,13 @@ class Directory < ActiveRecord::Base
 
   has_many :torrents
 
+  def contains_torrents_with_content?
+    !torrent_search.results.empty?
+  end
+
+  def torrent_search
+    @torrent_search ||= Torrent.new_search(directory_id: id)
+  end
 
   def set_relative_path_from_name
     unless relative_path?

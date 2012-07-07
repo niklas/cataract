@@ -10,8 +10,8 @@
       - if torrent.running?
         .progress-pie= td.progress
     %td.location
-      - if torrent.content.exists?
-        = torrent.content_directory.name
+      - if torrent.content.exists? && d = torrent.content_directory
+        = link_to d.name, [d.disk, d]
     %td.actions
       - if torrent.running?
         = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true, icon_only: true

@@ -1,4 +1,4 @@
-%table.torrents.table.table-striped{data: { url: torrents_path(search), 'num-pages' => search.results.num_pages }}
+%table.torrents.table.table-striped{data: { url: torrents_path(search), 'num-pages' => search.results.num_pages }, class: defined?(extra_class) && extra_class}
   %thead
     %tr
       %th.title= Torrent.human_attribute_name :title

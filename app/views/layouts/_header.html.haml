@@ -1,9 +1,9 @@
 %header
   .navbar.navbar-fixed-top
     .navbar-inner
-      .container
+      .container-fluid
         = render 'collapse', target: '.nav-collapse'
-        = link_to 'Cataract', user_signed_in?? torrents_path : root_path, class: 'brand'
+        = link_to 'Cataract', root_path, class: 'brand'
         .nav-collapse
           = render 'session'
           = render 'queue'

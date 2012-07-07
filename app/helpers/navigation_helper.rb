@@ -10,7 +10,7 @@ module NavigationHelper
     can = options.delete(:can)
     if !can || can?(*can)
       active = request.path.starts_with?( path )
-      content_tag :li, class: (active ? 'active' : '') do
+      content_tag :li, class: "#{active ? 'active' : ''} #{options.delete(:item)}" do
         link_to name, path, options
       end
     end

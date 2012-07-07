@@ -8,7 +8,7 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /^the home\s?page$/
+    when /^the (?:home|list) page$/
       '/'
 
     when /^the sign ?up page$/
@@ -16,9 +16,6 @@ module NavigationHelpers
 
     when /^the sign ?in page$/
       new_user_session_path
-
-    when /^the list page$/
-      torrents_path
 
     when /^the library page$/
       disks_path

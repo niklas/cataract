@@ -6,18 +6,21 @@ Cataract::Application.routes.draw do
     member do
       get 'prepend'
     end
-    collection do
-      get 'status/:status/page/:page', action: :index
-      get 'page/:page',                action: :index
-      get 'status/:status',            action: :index
-      get 'progress',                  action: :progress
-    end
     resource :move,     controller: :move, only: [:new, :create, :show]
     resource :content,  controller: :content, only: [:show, :destroy]
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
 
-  get "torrents" => 'torrents#index', :as => 'user_root' # after login
+  controller :torrents do
+    get 'status/:status/page/:page', action: :index
+    get 'page/:page',                action: :index
+    get 'status/:status',            action: :index
+    get 'progress',                  action: :progress
+
+    get 'status/running',            action: :index, as: :running_torrents
+  end
+
+  get "recent" => 'torrents#index', :as => 'user_root' # after login
 
   resources :disks do
     resources :directories
@@ -25,7 +28,7 @@ Cataract::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 
-  root :to => 'greetings#landing'
+  root :to => 'torrents#index'
 
   if Rails.env.test?
     scope 'test' do

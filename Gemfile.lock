@@ -66,7 +66,9 @@ GEM
     bcrypt-ruby (3.0.1)
     binding_of_caller (0.6.2)
     blankslate (2.1.2.4)
-    bootstrap-sass (2.0.2)
+    bootstrap-sass (2.0.4.0)
+    bootswatch-rails (0.0.12)
+      railties (>= 3.1)
     builder (3.0.0)
     cancan (1.6.7)
     capistrano (2.11.2)
@@ -329,7 +331,8 @@ DEPENDENCIES
   active_attr (~> 0.5.0.alpha2)
   acts_as_list
   ancestry
-  bootstrap-sass (~> 2.0.2)
+  bootstrap-sass (~> 2.0.4)
+  bootswatch-rails
   cancan
   capistrano
   carrierwave

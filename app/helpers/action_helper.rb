@@ -23,7 +23,7 @@ module ActionHelper
   end
 
   def icon_tag(key, opts={})
-    content_tag(:i, '', class: "icon-#{Icons[key] || 'glass'} #{'icon-white' unless opts[:'non-white']}") + ' '
+    content_tag(:i, '', class: "icon-#{Icons[key] || key} #{'icon-white' if opts[:white]}") + ' '
   end
 
   alias ti translate_icon
@@ -43,10 +43,11 @@ module ActionHelper
     unless opts.delete(:link_only)
       opts[:class] += " btn btn-mini"
     end
+    icon_opts = (opts.delete(:icon) || {}).reverse_merge(white: true)
     if opts.delete(:icon_only)
-      icon = icon_tag(icon_name, opts.delete(:icon) || {})
+      icon = icon_tag(icon_name, icon_opts)
     else
-      icon = ti(icon_name, opts.delete(:icon) || {})
+      icon = ti(icon_name, icon_opts)
     end
     link_to icon, url, opts
   end

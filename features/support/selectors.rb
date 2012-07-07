@@ -16,8 +16,11 @@ module HtmlSelectorsHelpers
     when /^the (menu|header)$/
       "div.navbar"
 
-    when /^the disks? list$/
-      "ul.disks"
+    when /^the sidebar disks? list$/
+      "#sidebar ul.disks"
+
+    when /^the sidebar director(?:ies|y) list$/
+      "#sidebar ul.directories"
 
     when /^the director(y|ies) list$/
       "table.directories"
@@ -34,6 +37,12 @@ module HtmlSelectorsHelpers
 
     when 'the queue'
       '#queue'
+
+    when 'the breadcrumbs'
+      'ul.breadcrumb'
+
+    when 'the sidebar'
+      '#sidebar'
 
     when /^(\w+) link$/
       "a.#{$1}"
