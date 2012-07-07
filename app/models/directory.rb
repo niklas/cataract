@@ -69,6 +69,13 @@ class Directory < ActiveRecord::Base
 
   has_many :torrents
 
+  def contains_torrents_with_content?
+    !torrent_search.results.empty?
+  end
+
+  def torrent_search
+    @torrent_search ||= Torrent.new_search(directory_id: id)
+  end
 
   def set_relative_path_from_name
     unless relative_path?

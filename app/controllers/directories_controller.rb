@@ -25,4 +25,8 @@ class DirectoriesController < InheritedResources::Base
       directory_path(resource.parent)
     end
   end
+
+  def search
+    @search ||= resource.torrent_search
+  end
 end

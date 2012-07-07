@@ -77,3 +77,35 @@ Feature: Browsing the library
       | Series /        |
       | Shame of Frowns |
       | Edit            |
+
+   Scenario: torrents shown for directory ordered by name
+    Given the following torrents exist:
+       | title             | content_directory  |
+       | Short Season      | directory "Frowns" |
+       | Long Season       | directory "Frowns" |
+       | Short Blockbuster | directory "Movies" |
+
+     When I go to the page for the directory "Series"
+     Then I should not see "Season"
+      And I should not see "Blockbuster"
+
+     When I go to the page for the directory "Movies"
+     Then I should see a table of the following torrents:
+      | title             |
+      | Short Blockbuster |
+
+     When I go to the page for the directory "Frowns"
+     Then I should see a table of the following torrents:
+      | title        |
+      | Long Season  |
+      | Short Season |
+      But I should not see "Blockbuster"
+
+     # filter searches only in directory
+     When I filter with "Short"
+     Then I should see a table of the following torrents:
+      | title             |
+      | Short Season      |
+      But I should not see "Long"
+      And I should not see "Blockbuster"
+

@@ -13,6 +13,7 @@ class Torrent
     attribute :terms
     attribute :page
     attribute :per, default: 50
+    attribute :directory_id
 
     States = %w(all running archived remote)
     FullTextFields = %w(title filename)
@@ -33,16 +34,35 @@ class Torrent
         results = results.where terms_like_statement, like_terms
       end
 
-      results.order("created_at DESC").page(page || 1).per(per)
+      if directory_id?
+        results = results.where(content_directory_id: directory_id).order('title, filename')
+      else
+        results = results.order("created_at DESC")
+      end
+
+      results.page(page || 1).per(per)
     end
 
     def to_params
-      attributes.slice(*%w[status terms page]).reject {|k,v| v.blank? }.merge(only_path: true)
+      present_attributes.merge(only_path: true)
+    end
+
+    def present_attributes
+      attributes.slice(*%w[status terms page directory_id]).reject {|k,v| v.blank? }
+    end
+
+    def translated_criteria
+      present_attributes.map do |attr, value|
+        if attr == 'directory_id'
+          { 'directory' => t("search_title.directory", value: directory.name) }
+        else
+          { attr => t("search_title.#{attr}", value: value) }
+        end   # VV slice sorts the hash for us. Shows only translated attributes, no fallback!
+      end.inject(&:merge)
     end
 
     def title
-      key = terms?? :status_and_terms : :status
-      I18n.translate "search_title.#{key}", status: status, terms: terms, scope: i18n_scope
+      translated_criteria.slice(*t("search_title").keys.map(&:to_s)).values.join(' ')
     end
 
     def paginating?
@@ -53,6 +73,10 @@ class Torrent
 
     def i18n_scope
       "#{Torrent.i18n_scope}.attributes.torrent"
+    end
+
+    def t(key, opts={})
+      I18n.translate(key, opts.merge(scope: i18n_scope))
     end
 
     def stripped_terms
@@ -71,6 +95,10 @@ class Torrent
 
     def terms_like_statement
       "(#{terms_fields}) ILIKE ?"
+    end
+
+    def directory
+      Directory.find(directory_id)
     end
   end
 end
