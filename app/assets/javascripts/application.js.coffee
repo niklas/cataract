@@ -28,7 +28,7 @@ jQuery ->
     if active?
       $.getScript '/torrents/' + active.replace(/^\D+/, '')
     else
-      $.getScript '/torrents/progress'
+      $.getScript '/progress'
     true
 
   $('form#edit').hide().each ->

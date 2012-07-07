@@ -17,7 +17,7 @@ Feature: Browsing the library
       | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |
 
   Scenario: directories directly accessible through the sidebar
-    Given I am on the homepage
+    Given I am on the home page
      When I toggle the menu
       And I follow "Library"
      Then I should be on the library page

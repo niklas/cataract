@@ -23,4 +23,4 @@ Feature: disable signup
      When I go to the home page
      Then I should not see "Signup"
      When I go to the signup page
-     Then I should see "You may no access this page. Sorry."
+     Then I should be on the sign in page
