@@ -16,12 +16,12 @@ Feature: Browsing the library
       | Movies    | disk "Stuff" | Movies          |                    |
       | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |
 
-  Scenario: accessible through the menu
+  Scenario: directories directly accessible through the sidebar
     Given I am on the homepage
      When I toggle the menu
       And I follow "Library"
      Then I should be on the library page
-      And I should see a list of the following directories within the menu:
+      And I should see a list of the following directories within the sidebar:
       | name   |
       | Movies |
       | Series |

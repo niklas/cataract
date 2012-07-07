@@ -5,8 +5,9 @@
     .container
       = render 'layouts/header'
       .row-fluid
-        .span2
+        #sidebar.span2
           = render 'application/disks'
+          = render 'application/directories'
           = render 'application/dropzone'
         .span10
           - if controller.action_name == 'show'

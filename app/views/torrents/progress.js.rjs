@@ -3,6 +3,6 @@
     td.select(:progress).html td.progress
   end
 end
-page.decorate @torrents.first do |td|
+page.decorate Torrent.new do |td|
   td.update_queue
 end

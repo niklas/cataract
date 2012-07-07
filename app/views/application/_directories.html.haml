@@ -1,0 +1,4 @@
+%ul.nav.nav-list.directories.well
+  %li.nav-header= Directory.model_name.plural
+  - Directory.roots.order(:name).ignoring_copies.each do |dir|
+    = li_link dir.name, directory_path(dir), class: 'name'

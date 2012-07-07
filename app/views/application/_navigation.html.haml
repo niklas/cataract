@@ -3,8 +3,9 @@
   = li_link :running, running_torrents_path
   = li_link :library, disks_path, can: [:index, Directory]
 %ul.nav.pull-right
-  - if false && first_disk = Disk.first
+  - if controller.controller_name == 'torrents'
+    = li_link :add, new_torrent_path, can: [:create, Torrent], remote: true
+  - elsif first_disk = Disk.first
     = li_link :create_directory, new_disk_directory_path(first_disk), can: [:create, Directory], remote: true
-  = li_link :add, new_torrent_path, can: [:create, Torrent], remote: true
   = li_link :settings, settings_path, can: [:manage, Setting]
 = render 'filter'

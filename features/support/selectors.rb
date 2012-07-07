@@ -35,6 +35,9 @@ module HtmlSelectorsHelpers
     when 'the queue'
       '#queue'
 
+    when 'the sidebar'
+      '#sidebar'
+
     when /^(\w+) link$/
       "a.#{$1}"
 

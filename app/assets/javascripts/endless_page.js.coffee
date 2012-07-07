@@ -1,13 +1,13 @@
 $ = jQuery
 
-$.fn.endlessSearch = ->
+$.fn.endlessSearch = (options) ->
   nearBottomOfPage = ->
     $(window).scrollTop() > $(document).height() - $(window).height() - 200
 
   $(@).each ->
     $wrapper = $(@)
-    $form    = $wrapper.find('form:first')
-    $list    = $wrapper.find('table:first')
+    $form    = $wrapper.find(options.form || 'form:first')
+    $list    = $wrapper.find(options.list || 'table:first')
     $field   = $form.find('input.page')
     loading  = false
 
