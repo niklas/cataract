@@ -10,7 +10,6 @@ Feature: Manage Library
       And I am signed in
       And I am on the library page
      When I toggle the menu
-      And I follow "Library"
       And I follow "Create Directory"
       And I wait for the modal box to appear
       And I select "aDisk" from "Disk"

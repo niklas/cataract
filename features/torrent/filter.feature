@@ -13,13 +13,6 @@ Feature: filter torrents
      And I am signed in
      And I am on the home page
 
-  Scenario: show recent first
-    Then I should see a table of the following torrents:
-      | title |
-      | Three |
-      | Two   |
-      | One   |
-
   Scenario: filter by entering text
     # match on title
     When I filter with "two"
@@ -47,27 +40,3 @@ Feature: filter torrents
     Then I should see a table of the following torrents:
       | title |
       | Two   |
-
-  Scenario: filter by selecting state
-   Given "all" state should be chosen
-     
-    When I choose state "running"
-    Then I should see a table of the following torrents:
-      | title |
-      | One   |
-     And I should see "running torrents" within the window title
-     
-    When I choose state "archived"
-    Then I should see a table of the following torrents:
-      | title |
-      | Two   |
-     
-    When I choose state "remote"
-    Then I should see a table of the following torrents:
-      | title |
-      | Three   |
-     And I should see "remote torrents" within the window title
-
-    When I filter with "ee"
-    Then I should see "remote torrents containing 'ee'" within the window title
-

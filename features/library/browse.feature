@@ -20,7 +20,6 @@ Feature: Browsing the library
     Given I am on the homepage
      When I toggle the menu
       And I follow "Library"
-      And I follow "Full Library"
      Then I should be on the library page
       And I should see a list of the following directories within the menu:
       | name   |

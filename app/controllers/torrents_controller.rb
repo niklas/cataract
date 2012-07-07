@@ -7,6 +7,8 @@ class TorrentsController < InheritedResources::Base
   before_filter :refresh!, only: :show
   custom_actions :resource => :prepend
 
+  layout 'library'
+
   def progress
     @torrents = Torrent.by_status('running')
   end
@@ -18,15 +20,6 @@ class TorrentsController < InheritedResources::Base
   private
   def collection
     @torrents ||= search.results
-  end
-
-  def search
-    @search ||= Torrent.new_search(search_params)
-  end
-  helper_method :search
-
-  def search_params
-    params.slice(:status, :terms, :page).merge( params[:torrent_search] || {})
   end
 
   def check_all

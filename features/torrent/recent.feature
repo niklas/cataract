@@ -1,10 +1,9 @@
 @javascript
-Feature: Paginate Torrents
-  In order to find even very old torrents
-  As a logged in user
-  I want to page through all torrents
+Feature: Recent torrents
+  In order to find something to watch next
+  I want to see a list of new torrents
 
-  Scenario: Paginate by endless page
+  Scenario: Scrolling through by endless page
     Given the following archived torrents exist:
        | title     |
        | Number 59 |
@@ -69,7 +68,9 @@ Feature: Paginate Torrents
        | Number 01 |
       And I am signed in
       And I am on the home page
-      And I filter with "Number"
+
+     # And "Recent" should be active
+     When I filter with "Number"
 
      Then I should see a table of the following torrents:
        | title     |

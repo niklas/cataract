@@ -1,0 +1,11 @@
+%ul.nav.nav-list.disks.well
+  %li.nav-header= Disk.model_name.plural
+  - Disk.order(:name).each do |disk|
+    = li_link disk.name, disk_path(disk), class: "name"
+
+- unless (detected = Disk.detected).empty?
+  %ul.nav.nav-list.new.disks
+    %li.nav-header auto
+    - Disk.detected.each do |disk|
+      %li
+        = link_to disk.name, new_disk_path(disk: disk.attributes.slice('name', 'path')), class: 'name', remote: true
