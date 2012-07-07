@@ -42,3 +42,8 @@ form#new_torrent_search {
 table.directories {
   @include hide_fixed_column('disk');
 }
+
+.breadcrumb .caret {
+  border-top-color: $grayLighter; // make the caret visible, was black on black before
+  opacity: 0.6;
+}
