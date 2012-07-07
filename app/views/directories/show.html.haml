@@ -1,10 +1,5 @@
 - title @directory.torrent_search.title, false
 
-- unless @directory.copies.empty?
-  .btn-group
-    - (@directory.copies + [@directory]).sort_by {|d| d.disk.name }.each do |copy|
-      = link_to copy.disk.name, copy, class: "btn btn-inverse #{copy == @directory ? 'active' : ''}"
-
 - if @directory.has_children?
   = render 'directories/list', directories: @directory.children, extra_class: 'existing fixed_disk'
 

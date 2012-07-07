@@ -17,10 +17,10 @@ Feature: Browsing the library
       | disk "Stuff" |
       | disk "More"  |
       And the following directories exist:
-      | directory | disk         | name            | parent             | auto_create |
-      | Series    | disk "More"  | Series          |                    |             |
-      | Movies    | disk "Stuff" | Movies          |                    | true        |
-      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |             |
+      | directory | disk         | name            | parent             | auto_create | relative_path |
+      | Series    | disk "More"  | Series          |                    |             | Serien        |
+      | Movies    | disk "Stuff" | Movies          |                    | true        |               |
+      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |             |               |
 
   Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page
@@ -84,6 +84,24 @@ Feature: Browsing the library
       | Series /        |
       | Shame of Frowns |
       | Edit            |
+
+   Scenario: alternate between copies of directories based on common relative_path
+     Given a disk "Incoming" exists with name: "Incoming"
+       And a directory "Incoming Series" exists with name: "Series", disk: disk "Incoming", relative_path: "Serien"
+      When I go to the page for the directory "Series"
+      Then I should see the following breadcrumbs:
+        | More / |
+        | Series |
+        | Edit   |
+      When I follow "More" within the breadcrumbs
+       And I follow "Incoming" within the breadcrumbs
+      Then I should be on the page for the directory "Incoming Series"
+      Then I should see the following breadcrumbs:
+        | Incoming / |
+        | Series     |
+        | Edit       |
+
+
 
    Scenario: torrents shown for directory ordered by name
     Given the following torrents exist:

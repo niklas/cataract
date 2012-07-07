@@ -11,21 +11,6 @@
             = render 'application/directories'
             = render 'application/dropzone'
         .span9
-          - if controller.action_name == 'show'
-            %ul.breadcrumb
-              - case resource
-              - when Disk
-                %li= link_to resource.name, resource
-              - when Directory
-                %li
-                  = link_to resource.disk.name, resource.disk
-                  = path_divider
-                - resource.ancestors.each do |crumb|
-                  %li
-                    = link_to crumb.name, crumb
-                    = path_divider
-                %li= link_to resource.name, resource
-                - if can? :edit, resource
-                  %li.pull-right= link_to_icon :edit, edit_disk_directory_path(resource.disk, resource), link_only: true, icon: { white: false }, remote: true
+          = render 'breadcrumbs'
           = yield
 

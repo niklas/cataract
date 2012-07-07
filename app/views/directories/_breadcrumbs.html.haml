@@ -1,0 +1,21 @@
+%ul.breadcrumb
+  - if resource.copies.empty?
+    %li
+      = link_to resource.disk.name, resource.disk
+      = path_divider
+  - else
+    %li.dropdown
+      = link_to h(resource.disk.name) + caret_tag, '#', class: 'dropdown-toggle', data: { toggle: 'dropdown'}
+      %ul.dropdown-menu
+        - resource.copies.sort_by {|d| d.disk.name }.each do |copy|
+          %li= link_to copy.disk.name, copy
+      = path_divider
+
+  - resource.ancestors.each do |crumb|
+    %li
+      = link_to crumb.name, crumb
+      = path_divider
+  %li= link_to resource.name, resource
+  - if can? :edit, resource
+    %li.pull-right= link_to_icon :edit, edit_disk_directory_path(resource.disk, resource), link_only: true, icon: { white: false }, remote: true
+

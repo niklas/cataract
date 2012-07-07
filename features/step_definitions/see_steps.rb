@@ -30,7 +30,7 @@ Then /^I should see a table of the following (\w+\s?\w+)(?!within.*):$/ do |plur
 end
 
 Then /^I should see the following breadcrumbs:$/ do |expected|
-  found = page.all('ul.breadcrumb li').map(&:text).map(&:strip).reject(&:blank?).map {|a| [a] }
+  found = page.all('ul.breadcrumb li').map(&:text).map(&:strip).map {|t| t.gsub(/\s+/, ' ') }.reject(&:blank?).map {|a| [a] }
   found.should_not be_empty
   expected.diff! found
 end

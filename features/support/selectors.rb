@@ -38,6 +38,9 @@ module HtmlSelectorsHelpers
     when 'the queue'
       '#queue'
 
+    when 'the breadcrumbs'
+      'ul.breadcrumb'
+
     when 'the sidebar'
       '#sidebar'
 
