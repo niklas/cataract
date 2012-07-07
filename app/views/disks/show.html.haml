@@ -1,4 +1,5 @@
-= render 'directories/list', directories: @disk.directories.roots.order(:name), extra_class: 'existing'
+= render 'directories/list', directories: @disk.directories.roots.order(:name), extra_class: 'existing fixed_disk'
 
-%h1= ta :detected_directories
-= render 'directories/list', directories: @disk.detected_directories, extra_class: 'new'
+- unless @disk.detected_directories.empty?
+  %h1= ta :detected_directories
+  = render 'directories/list', directories: @disk.detected_directories, extra_class: 'new fixed_disk'

@@ -1,0 +1,9 @@
+@mixin hide_fixed_column($column) {
+  &.fixed_#{$column} {
+    td,th {
+      &.#{$column}{
+        display: none;
+      }
+    }
+  }
+}

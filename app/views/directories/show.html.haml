@@ -6,7 +6,7 @@
       = link_to copy.disk.name, copy, class: "btn btn-inverse #{copy == @directory ? 'active' : ''}"
 
 - if @directory.has_children?
-  = render 'directories/list', directories: @directory.children, extra_class: 'existing'
+  = render 'directories/list', directories: @directory.children, extra_class: 'existing fixed_disk'
 
 - if @directory.contains_torrents_with_content?
   = render 'torrents/list', search: @directory.torrent_search, extra_class: 'fixed_location'
@@ -14,4 +14,4 @@
 
 - unless @directory.detected_directories.empty?
   %h1= ta :detected_directories
-  = render 'directories/list', directories: @directory.detected_directories, extra_class: 'new'
+  = render 'directories/list', directories: @directory.detected_directories, extra_class: 'new fixed_disk'

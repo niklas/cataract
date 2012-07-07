@@ -18,6 +18,7 @@ body {
 @import "bootstrap-responsive";
 
 @import "compass/css3";
+@import "hide_fixed_column";
 @import "torrents";
 @import "dropzone";
 @import "radio_buttons";
@@ -35,4 +36,8 @@ form#new_torrent_search {
 
 .modal > form {
   margin: 0;
+}
+
+table.directories {
+  @include hide_fixed_column('disk');
 }

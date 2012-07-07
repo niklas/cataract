@@ -65,11 +65,7 @@ section {
 
 table.torrents {
   table-layout: fixed;
-  &.fixed_location {
-    td.location,th.location {
-      display: none;
-    }
-  }
+  @include hide_fixed_column('location');
   td,th {
     word-wrap: break-word;
     &.location {
