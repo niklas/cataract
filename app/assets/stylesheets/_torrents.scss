@@ -65,6 +65,11 @@ section {
 
 table.torrents {
   table-layout: fixed;
+  &.fixed_location {
+    td.location,th.location {
+      display: none;
+    }
+  }
   td,th {
     word-wrap: break-word;
     &.location {

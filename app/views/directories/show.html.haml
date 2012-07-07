@@ -9,7 +9,7 @@
   = render 'directories/list', directories: @directory.children, extra_class: 'existing'
 
 - if @directory.contains_torrents_with_content?
-  = render 'torrents/list', search: @directory.torrent_search
+  = render 'torrents/list', search: @directory.torrent_search, extra_class: 'fixed_location'
 
 
 - unless @directory.detected_directories.empty?
