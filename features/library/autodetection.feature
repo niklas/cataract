@@ -16,8 +16,8 @@ Feature: Disks in Library
       | media/Stuff |
       | media/More  |
      When I go to the library page
-     Then I should see "auto"
-      And I should see a list of the following new disks:
+     Then I should see "Detected" within the sidebar
+      And I should see the following new disks in the sidebar disks list:
       | name  |
       | More  |
       | Stuff |

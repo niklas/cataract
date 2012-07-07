@@ -10,7 +10,7 @@
 #= require bindWithDelay
 
 jQuery ->
-  $('body > .container').endlessSearch list: 'table.torrents', form: 'form#new_torrent_search'
+  $('body:has(table.torrents):has(form#new_torrent_search)').endlessSearch list: 'table.torrents', form: 'form#new_torrent_search'
 
   search = ->
     $(@).closest('form')

@@ -53,6 +53,10 @@ class Disk < ActiveRecord::Base
     path? && path.exist?
   end
 
+  def mounted?
+    self.class.detected_paths.include?(path.to_s)
+  end
+
 end
 
 DiskDecorator

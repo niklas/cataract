@@ -8,6 +8,18 @@ Then /^I should see a list of the following (\w+\s?\w+)(?!within.*):$/ do |plura
   expected.diff! found.unshift(expected.column_names)
 end
 
+Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |items, container, expected|
+  items = items.split.map(&:underscore).map(&:singularize).map {|f| ".#{f}" }.join
+  fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
+  with_scope container do
+    found = page.all(items).select(&:visible?).map do |item|
+      next if item[:class].include?('devider')
+      fields.map {|f| item.first(f).text.strip rescue nil }
+    end
+    expected.diff! found.unshift(expected.column_names)
+  end
+end
+
 Then /^I should see a table of the following (\w+\s?\w+)(?!within.*):$/ do |plural, expected|
   plural = plural.split
   fields = expected.column_names.map(&:underscore).map {|f| "td.#{f}" }

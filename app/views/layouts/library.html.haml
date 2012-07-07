@@ -2,14 +2,15 @@
 %html
   = render 'layouts/head'
   %body
-    .container
+    .container-fluid
       = render 'layouts/header'
       .row-fluid
-        #sidebar.span2
-          = render 'application/disks'
-          = render 'application/directories'
-          = render 'application/dropzone'
-        .span10
+        .span3
+          #sidebar.well
+            = render 'application/disks'
+            = render 'application/directories'
+            = render 'application/dropzone'
+        .span9
           - if controller.action_name == 'show'
             %ul.breadcrumb
               - case resource
@@ -25,6 +26,6 @@
                     = path_divider
                 %li= link_to resource.name, resource
                 - if can? :edit, resource
-                  %li.pull-right= link_to_icon :edit, edit_disk_directory_path(resource.disk, resource), link_only: true, icon: { :'non-white' => true }, remote: true
+                  %li.pull-right= link_to_icon :edit, edit_disk_directory_path(resource.disk, resource), link_only: true, icon: { white: false }, remote: true
           = yield
 

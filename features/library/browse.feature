@@ -1,4 +1,5 @@
 @javascript
+@rootfs
 Feature: Browsing the library
   In order to always know what I can watch, install or delete
   As a user
@@ -7,40 +8,46 @@ Feature: Browsing the library
   Background:
     Given I am signed in
       And the following disks exist:
-      | disk  | name  |
-      | Stuff | Stuff |
-      | More  | More  |
+      | disk      | name      | path            |
+      | Stuff     | Stuff     | media/Stuff     |
+      | More      | More      | media/More      |
+      | Removable | Removable | media/Removable |
+      And the following disks are mounted:
+      | disk         |
+      | disk "Stuff" |
+      | disk "More"  |
       And the following directories exist:
-      | directory | disk         | name            | parent             |
-      | Series    | disk "More"  | Series          |                    |
-      | Movies    | disk "Stuff" | Movies          |                    |
-      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |
+      | directory | disk         | name            | parent             | auto_create |
+      | Series    | disk "More"  | Series          |                    |             |
+      | Movies    | disk "Stuff" | Movies          |                    | true        |
+      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |             |
 
-  Scenario: directories directly accessible through the sidebar
+  Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page
      When I toggle the menu
       And I follow "Library"
      Then I should be on the library page
-      And I should see a list of the following directories within the sidebar:
-      | name   |
-      | Movies |
-      | Series |
-      And I should see a list of the following disks:
+      And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
-      And I should see a table of the following directories:
+      And I should see the following unmounted disks in the sidebar disk list:
+      | name      |
+      | Removable |
+      And I should see the following existing directories in the sidebar directory list:
       | Name   |
       | Movies |
+      And I should see the following missing directories in the sidebar directory list:
+      | Name   |
       | Series |
 
   Scenario: Browse to root directories on disks
     Given I am on the library page
-     When I follow "More" within the disk list
+     When I follow "More" within the sidebar disk list
      Then I should be on the page for disk "More"
       And I should see the following breadcrumbs:
       | More |
-      And I should see a list of the following disks:
+      And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
@@ -49,11 +56,11 @@ Feature: Browsing the library
       | Series |
       But I should not see "Movies" within the directories list
 
-     When I follow "Stuff" within the disk list
+     When I follow "Stuff" within the sidebar disk list
      Then I should be on the page for disk "Stuff"
       And I should see the following breadcrumbs:
       | Stuff |
-      And I should see a list of the following disks:
+      And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |

@@ -17,6 +17,7 @@ en:
       recent: "Recent"
       running: "Running"
       library: "Library"
+      detected: "Detected"
       detected_directories: "Detected Directories"
       create_directory: "Create Directory"
       import_directory: "Import %{name}"
