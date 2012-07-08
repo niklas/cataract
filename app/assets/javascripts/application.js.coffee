@@ -20,7 +20,7 @@ jQuery ->
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
-  $('ul#torrents .torrent').on 'click', -> $(this).toggleClass('full')
+  $('#torrents').on 'click', '.torrent', (event)-> $(this).toggleClass('full') if $(event.target).is('div')
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
