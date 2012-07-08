@@ -87,18 +87,6 @@ class Directory < ActiveRecord::Base
     end
   end
 
-  def self.all_paths(opts={})
-    find(:all, opts).select {|dir| File.directory? dir.path }
-  end
-
-  def self.base_of(path)
-    d = nil
-    while path != '/' && !(d = find_by_path(path))
-      path = File.dirname(path)
-    end
-    d
-  end
-
   # finds the directory of the path, no infixes allowed
   def self.of(path)
     dir, infix = with_minimal_infix(path)
@@ -121,26 +109,6 @@ class Directory < ActiveRecord::Base
        .first
   end
 
-  def label
-    [name,path.to_s].join(' - ')
-  end
-
-  def subdir_names
-    subdirs
-  end
-
-  def self.for_series
-    find_by_name('Serien')
-  end
-
-  def self.for_movies
-    find_by_name('Filme')
-  end
-
-  def self.for_music
-    find_by_name('Musik')
-  end
-
   def self.watched
     where(:watched => true)
   end
@@ -149,64 +117,6 @@ class Directory < ActiveRecord::Base
     where(:subscribed => true)
   end
 
-  # side info
-  def df
-    cmd = '/bin/df'
-    if File.exists?(path) and File.exists?(cmd)
-      `#{cmd} '#{path}'`.split[10].to_i
-    else
-      0
-    end
-  end
-
-  def usage_percent
-    cmd = '/bin/df'
-    if File.exists?(path) and File.exists?(cmd)
-      `#{cmd} '#{path}'`.split[11].to_i
-    else
-      0
-    end
-  end
-
-  def self.disksfree
-    %w(torrent_dir).
-      inject({}) { |hsh,dir| hsh.merge({ dir => Torrent.diskfree(Settings[dir]) }) }
-  end
-
-  def path_with_optional_subdir(subdir)
-    if !subdir.blank? && subdirs.include?(subdir)
-      if File.directory?(rpath = File.join(path, subdir))
-        rpath
-      else
-        path
-      end
-    else
-      path
-    end
-  end
-
-  def is_on_same_drive?(otherdir)
-    otherdir = self.class.new(:path => otherdir) if otherdir.is_a? String
-    self.mountpoint == otherdir.mountpoint
-  end
-
-  def mountpoint
-    self.class.mountpoints.find do |mountpoint|
-      escaped = Regexp.quote(mountpoint+'/')
-      (self.path + '/') =~ /^#{escaped}/
-    end
-  end
-
-  def contains_torrent?(torrent)
-    torrent.path.to_s.starts_with? path
-  end
-
-  def self.subdirs_by_id
-    all(:conditions => {:show_sub_dirs => true}).
-      map {|d| !d.subdirs.empty? ? { d.id => d.subdirs } : nil }.
-      compact.
-      inject(&:merge)
-  end
 
   def self.find_or_create_by_directory_and_disk(directory, disk)
     if directory.disk == disk
@@ -225,11 +135,6 @@ class Directory < ActiveRecord::Base
         end
       end
     end
-  end
-
-  private
-  def self.mountpoints
-    File.read('/etc/mtab').collect {|l| l.split[1] }.sort {|b,a| a.length <=> b.length }
   end
 end
 

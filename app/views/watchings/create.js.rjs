@@ -1,6 +1,0 @@
-card = render(:partial => 'torrents/card', :object => @torrent )
-page.select("div.torrents .#{dom_id @torrent}").replace_with card
-page.select("div.torrents.watchlist:not(:has(.#{dom_id @torrent}))").append card
-page.update_helm :title => @torrent.short_title, 
-                 :content => { :partial => '/torrents/details', :object => @torrent },
-                 :buttons => actions_for_torrent(@torrent)

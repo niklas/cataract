@@ -1,3 +1,0 @@
-page.update_helm :title => @torrent.short_title, 
-                 :content => { :partial => 'move', :object => @torrent },
-                 :buttons => actions_for_torrent(@torrent)

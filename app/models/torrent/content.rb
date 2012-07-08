@@ -23,14 +23,6 @@ class Torrent
     hier
   end
 
-
-  # Here lies the content while it is being downloaded (default)
-  # FIXME respect #directory
-  def working_path
-    return '' unless metainfo
-    File.join(Settings.torrent_dir,metainfo.name)
-  end
-
   class Content < Struct.new(:torrent)
     extend ActiveModel::Naming
 
@@ -155,6 +147,7 @@ class Torrent
   end
 
 
+  # TODO direct links to content
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen
   def content_url(usr)

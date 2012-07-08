@@ -32,7 +32,7 @@ class Torrent < ActiveRecord::Base
 
   # FIXME remove this insane stati code
   # before_save :sync
-  # before_validation :fix_filename
+  before_validation :fix_filename
   # before_validation :sync_status!
   # FIXME wtf is this?
   #stampable
@@ -71,36 +71,11 @@ class Torrent < ActiveRecord::Base
   # TODO use psql tsearch
   # has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 
-  # aggregates
-  def self.upload_rate
-    rtorrent.upload_rate
-  end
-  def self.download_rate
-    rtorrent.download_rate
-  end
-  def self.transferred_up
-    -23
-  end
-  def self.transferred_down
-    -42
-  end
   def self.last_update
     Torrent.maximum('updated_at', :conditions => "status = 'running'") || 23.days.ago
   end
 
   # extended attributes
-
-  def download_status
-    if !errormsg.blank?
-      "#{statusmsg} - #{errormsg}"
-    elsif statusmsg =~ /[\d:]+/
-      "#{statusmsg} remaining"
-    elsif statusmsg.blank?
-      "[unknown status]"
-    else
-      statusmsg
-    end
-  end
 
   def actual_size
     content_size * percent / 100
