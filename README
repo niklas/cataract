@@ -19,4 +19,6 @@ This version is not ready for production yet.
 
  * uses ruby 1.9, preferrably 1.9.3
  * must apply patch to support 64 bit integers in XMLRPC (i8)
-    rvm install 1.9.3-p0 config/deploy/patches/xmlrpclib-i8-support.patch
+    rvm install -n xmlrpc64bit  ruby-1.9.3-p194 --patch config/deploy/patches/xmlrpclib-i8-support.patch
+
+    this patch is planned for 2.0.0 http://bugs.ruby-lang.org/issues/3090

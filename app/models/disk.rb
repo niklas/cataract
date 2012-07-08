@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Disk < ActiveRecord::Base
   include Filesystem
   has_many :directories

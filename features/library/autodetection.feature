@@ -1,3 +1,4 @@
+# encoding: utf-8
 @javascript
 @rootfs
 Feature: Disks in Library
@@ -34,10 +35,12 @@ Feature: Disks in Library
         | type      | path               |
         | directory | media/adisk/Series |
         | directory | media/adisk/Movies |
+        | directory | media/adisk/Röbels |
      When I go to the library page
      Then I should see a table of the following new directories:
        | Name          |
        | Import Movies |
+       | Import Röbels |
        | Import Series |
      When I follow "Import Series"
       And I wait for the modal box to appear
@@ -53,6 +56,7 @@ Feature: Disks in Library
       And I should see a table of the following new directories:
        | Name          |
        | Import Movies |
+       | Import Röbels |
 
    Scenario: autodetect subdirectories 
     Given a disk exists with name: "aDisk", path: "media/adisk"

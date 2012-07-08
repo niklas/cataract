@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Filesystem
   def basename
     path? && path.basename.to_s
