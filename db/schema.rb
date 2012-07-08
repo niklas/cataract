@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618200527) do
+ActiveRecord::Schema.define(:version => 20120708004048) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20120618200527) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "target_disk_id"
+    t.text     "message"
   end
 
   create_table "series", :force => true do |t|

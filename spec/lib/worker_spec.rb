@@ -116,10 +116,10 @@ describe Worker do
     end
 
     context "failure handling" do
-      it "defaults to spit the error out" do
+      it "defaults to spit the error out and delegeate to job" do
         STDERR.should_receive(:puts).at_least(5).times
         expect { 
-          subject.send(:handle_failure, "a job", "error to ignore") 
+          subject.send(:handle_failure, job, "error to ignore") 
         }.not_to raise_error
       end
     end

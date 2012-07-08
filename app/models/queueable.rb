@@ -51,10 +51,13 @@ module Queueable
     logger.debug { "#{self.class} working..." }
     work
     logger.debug { "#{self.class} finished" }
-  #rescue RuntimeError => e
-  #  STDERR.puts("#{self.class} went wrong: #{e.message}. #{e.backtrace}")
-  #ensure
-  #  STDERR.puts("done")
+  rescue Exception => e
+    handle_failure(e)
+    raise e
+  end
+
+  def handle_failure(exception)
+    update_attributes! locked_at: nil, message: exception.inspect
   end
 
 
