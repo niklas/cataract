@@ -14,7 +14,7 @@ Feature: Running torrents
 
     When I toggle the menu
      And I follow "Running"
-    Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title |
       | One   |
      And I should see "running torrents" within the window title

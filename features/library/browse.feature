@@ -115,12 +115,12 @@ Feature: Browsing the library
       And I should not see "Blockbuster"
 
      When I go to the page for the directory "Movies"
-     Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title             |
       | Short Blockbuster |
 
      When I go to the page for the directory "Frowns"
-     Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title        |
       | Long Season  |
       | Short Season |
@@ -128,7 +128,7 @@ Feature: Browsing the library
 
      # filter searches only in directory
      When I filter with "Short"
-     Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title             |
       | Short Season      |
       But I should not see "Long"

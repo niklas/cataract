@@ -72,7 +72,7 @@ Feature: Recent torrents
      # And "Recent" should be active
      When I filter with "Number"
 
-     Then I should see a table of the following torrents:
+     Then I should see the following torrents in the torrent list:
        | title     |
        | Number 01 |
        | Number 02 |
@@ -128,7 +128,7 @@ Feature: Recent torrents
 
      When I scroll to the bottom
       And I wait for the spinner to stop
-     Then I should see a table of the following torrents:
+     Then I should see the following torrents in the torrent list:
        | title     |
        | Number 01 |
        | Number 02 |

@@ -11,66 +11,48 @@ Feature: Transfer info
       And the file for the torrent exists
       And the torrent's content exists on disk
 
-  @rtorrent
-  @64bit
-  Scenario Outline: rtorrent connection failing in different ways
-    Given <scenario>
-      And I wait 1 second
-      And the torrent is marked as running
-     When I go to the page for the torrent
-     Then I should see "single" within the page title
-      And I should see the following attributes for the torrent:
-        | content      | <size>     |
-        | progress     | <progress> |
-        | up rate      | <up>       |
-        | down rate    | <down>     |
-
-    Examples:
-      | scenario                | size    | up          | down        | progress    |
-      | the torrent was started | 71.7 KB | 0 B/s       | 0 B/s       | 0%          |
-      | nothing                 | 71.7 KB | not running | not running | not running |
-      | rtorrent shuts down     | 71.7 KB | unavailable | unavailable | unavailable |
-
 
   Scenario: properly format values
     Given rtorrent list contains the following:
         | up_rate | down_rate | hash        |
         | 10      | 23000     | the torrent |
       And the torrent is running
-     When I go to the page for the torrent
-     Then I should see the following attributes for the torrent:
-        | up rate   | 10 B/s    |
-        | down rate | 22.5 KB/s |
+     When I go to the home page
+     Then I should see the following torrents in the torrent list:
+       | up        | down      |
+       | 10 B/s    | 22.5 KB/s |
 
   Scenario: cache of catch-all will be cleared
     Given the torrent is running
       And rtorrent list contains the following:
         | up_rate | hash        |
         | 5       | the torrent |
-     When I go to the page for the torrent
-     Then I should see the following attributes for the torrent:
-        | up rate   | 5 B/s    |
+     When I go to the home page
+     Then I should see the following torrents in the torrent list:
+        | up      |
+        | 5 B/s   |
 
     Given rtorrent list contains the following:
         | up_rate | hash        |
         | 23      | the torrent |
-     When I go to the page for the torrent
-     Then I should see the following attributes for the torrent:
-        | up rate   | 23 B/s    |
+     When I go to the home page
+     Then I should see the following torrents in the torrent list:
+        | up      |
+        | 23 B/s  |
 
   @javascript
-  Scenario: progress pie updates itself
+  Scenario: progress pies updates themselfes
     Given the torrent is running
-      And I am on the page for the torrent
+      And I am on the home page
       And rtorrent list contains the following:
         | down_rate | up_rate | size_bytes | completed_bytes | hash        | active? |
         | 23        | 42      | 2000       | 300             | the torrent | true    |
      When the tick interval is reached
-     Then I should see the following attributes for the torrent:
-        | up rate   | 42 B/s   |
-        | down rate | 23 B/s   |
-        | progress  | 15%      |
-        | eta       | 1 minute |
+     # size is taken from metadata
+     Then I should see the following torrents in the torrent list:
+        | up     | down   | percent | eta      | size    |
+        | 42 B/s | 23 B/s | 15%     | 1 minute | 71.7 KB |
+
 
   @javascript
   Scenario: stopped manually is detected
@@ -78,7 +60,10 @@ Feature: Transfer info
       And I am on the page for the torrent
       And rtorrent list contains the following:
         | hash |
-      And I should see "Stop"
+      And I should see a stop link
      When the tick interval is reached
-     Then I should not see "Stop"
-      But I should see "Start"
+     Then I should see the following torrents in the torrent list:
+        | title  |
+        | single |
+     Then I should see a start link
+      But I should not see a stop link

@@ -11,5 +11,11 @@ en:
         notice: "Directory '%{name}' created."
       update:
         notice: "Directory '%{name}' saved."
+    transfer:
+      create:
+        notice: "started %{name}"
+      destroy:
+        notice: "stopped %{name}"
   message:
     access_denied: "You may no access this page. Sorry."
+    

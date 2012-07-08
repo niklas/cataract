@@ -1,5 +1,16 @@
 class Torrent
 
+  def self.running_or_listed(ids)
+    if ids.respond_to?(:split)
+      ids = ids.split(',')
+    end
+    if ids.empty?
+      by_status('running')
+    else
+      where('status = ? OR id in (?)', 'running', ids)
+    end
+  end
+
   def startable?
     archived? or paused?
   end

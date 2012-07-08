@@ -11,51 +11,6 @@ $pie_size: 3.2em;
   }
 }
 
-section.transfer {
-  .progress-pie {
-    margin: 0.3em;
-    float: right;
-    width: 23%;
-    height: auto;
-    .stretcher {
-      height: 0;
-      padding-bottom: 100%;
-      width: 100%;
-    }
-    position: relative;
-    .error {
-      font-size: 200%;
-    }
-    svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 98%;
-      margin: 1%;
-      height: 98%;
-    }
-  }
-  a.content {
-    @include icon("⛁");
-  }
-  .up {
-    @include icon("↥");
-  }
-  .down {
-    @include icon("↧");
-  }
-  .error {
-    @include opacity(0.5);
-  }
-}
-
-section {
-  &.transfer, &.content {
-    @include clearfix();
-    overflow-x: auto;
-  }
-}
-
 .dir {
   .path {
     font-family: fixed;
@@ -63,39 +18,8 @@ section {
   }
 }
 
-table.torrents {
-  table-layout: fixed;
-  @include hide_fixed_column('location');
-  td,th {
-    word-wrap: break-word;
-    &.location {
-      width: 6em;
-      @media (max-width: 767px) {
-        display:none;
-      }
-    }
-    &.status {
-      width: $pie_size * 1.2;
-    }
-    &.actions {
-      width: 4em;
-      a,span {
-        float: right;
-        margin-left: 0.5em;
-      }
-    }
-  }
-  .progress-pie {
-    width: $pie_size;
-    height: $pie_size;
-    overflow: hidden;
-    float: right;
-    position: relative;
-    svg {
-      width: 76%;
-      margin: 10%;
-    }
-  }
+.error {
+  @include opacity(0.5);
 }
 
 ul.torrents {
@@ -106,16 +30,46 @@ ul.torrents {
     margin-bottom: 0.8em;
     cursor: pointer;
     @include border-radius(4px);
-    @include box-shadow($grayLight 1px 1px 6px);
+    @include box-shadow(lighten($bodyBackground, 15) 1px 1px 3px);
     position: relative;
 
     &:hover {
-      @include box-shadow($gray 2px 2px 6px);
+      @include box-shadow(lighten($bodyBackground, 25) 2px 2px 3px);
       @include translate(-1px, -1px);
     }
 
-    &:nth-child(even) {
-      background-color: $grayLighter;
+    @include background-image(linear-gradient(lighten($bodyBackground, 15), lighten($bodyBackground, 5) )); 
+
+    .title {
+      overflow: hidden;
+      margin-bottom: $baseFontSize * 0.8;
+    }
+
+    .actions a.btn {
+      float: right;
+      margin: 5px;
+    }
+
+    .progress {
+      position: relative;
+      .bar div {
+        position: absolute;
+        &.percent {
+          left: 10%;
+        }
+        &.eta {
+          right: 10%;
+        }
+      }
+    }
+    .row-fluid {
+      display: none;
+      &:first-of-type {
+        display: block;
+      }
+    }
+    &.full .row-fluid {
+      display: block;
     }
   }
 }

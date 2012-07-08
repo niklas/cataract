@@ -1,5 +1,5 @@
 page.decorate @torrent do |torrent|
-  page.replace_partial 'torrents/transfer', torrent: torrent
+  torrent.update_flash
   torrent.update_in_list
 end
 

@@ -1,18 +1,34 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?, :content, :moving?
+  allows :running?, :content, :moving?, :status, :title, :content, :active?, :previous_changes
 
   def progress
+    h.render('bar', percent: percent, eta: eta)
+  end
+
+  def rates
+    h.render('rates', up: up_rate, down: down_rate)
+  end
+
+  def update_progress
+    select(:progress).width(percent) # is html if offline *shrug*
+    select(:progress, '.percent').html(percent)
+    select(:progress, '.eta').html(eta)
+    select(:rates).html(rates)
+  end
+
+  def percent
     handle_remote do
-      h.content_tag(:div, eta, class: 'stretcher eta') +
-      h.render('pie', percent: torrent.progress)
+      "#{torrent.progress}%"
     end
   end
 
   def eta
-    now = Time.now
-    h.distance_of_time_in_words(now, now + torrent.left_seconds)
+    handle_remote do
+      now = Time.now
+      h.distance_of_time_in_words(now, now + torrent.left_seconds)
+    end
   rescue
     ''
   end
@@ -101,6 +117,8 @@ class TorrentDecorator < ApplicationDecorator
     return error 'offline'
   rescue Errno::ECONNREFUSED => e
     return error 'unavailable'
+  rescue Errno::ENOENT => e
+    return error 'unavailable'
   end
 
   def link_to_clear
@@ -112,16 +130,18 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def render_directory(dir)
-    h.content_tag(:span, dir.name, class: 'name') +
+    h.content_tag(:span, h.link_to(dir.name, [dir.disk, dir]), class: 'name') +
     h.content_tag(:span, dir.path, class: 'path')
   end
 
   def selector_for(name, resource=nil, *more)
     case name
     when :progress
-      "##{item_id} .progress-pie"
-    when :row_cells
-      "##{item_id} td"
+      "##{item_id} .progress .bar #{resource}"
+    when :rates
+      "##{item_id} .rates"
+    when :item
+      "##{item_id}"
     when :content
       'section.content'
     else
@@ -131,12 +151,12 @@ class TorrentDecorator < ApplicationDecorator
 
   def prepend_to_list
     page['torrents'].prepend h.render('torrents/item', torrent: model)
-    select(:row_cells, model).effect('highlight', {}, 1000)
+    select(:item, model).effect('highlight', {}, 1000)
   end
 
 
   def update_in_list
-    page.replace_partial 'torrents/item', torrent: model
+    select(:item, model).replace_with h.render('torrents/item', torrent: model)
   end
 
   # Accessing Helpers

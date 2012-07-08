@@ -16,13 +16,13 @@ Feature: filter torrents
   Scenario: filter by entering text
     # match on title
     When I filter with "two"
-    Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title |
       | Two   |
 
     # match on title or filename
     When I filter with "one"
-    Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title |
       | Two   |
       | One   |
@@ -30,13 +30,14 @@ Feature: filter torrents
 
     # match on substrings
     When I filter with "w"
-    Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title |
       | Two   |
 
     # history management
-    When I follow "Two"
+    When I toggle the menu
+     And I follow "Library"
      And I go back
-    Then I should see a table of the following torrents:
+    Then I should see the following torrents in the torrent list:
       | title |
       | Two   |

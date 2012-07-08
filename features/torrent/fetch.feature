@@ -11,9 +11,9 @@ Feature: Fetch torrent
       And a directory exists
       And the URL "http://ubuntu.com/latest.iso.torrent" points to file "single.torrent"
       And I am signed in
-      And I am on the page for the torrent
-     When I follow "Start"
-     Then I should see no link "Start"
+      And I am on the home page
+     When I click on the start link
+     Then I should not see a start link
       And the torrent's info_hash should not be blank
       And the directory should be the torrent's content_directory
       And rtorrent should download the torrent

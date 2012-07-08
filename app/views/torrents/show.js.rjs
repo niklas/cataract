@@ -1,3 +1,0 @@
-decorate @torrent do |torrent|
-  page.replace_partial 'transfer', torrent: torrent
-end

@@ -1,11 +1,2 @@
-- title @torrent.title
-= decorate @torrent do |torrent|
-  = render 'transfer', torrent: torrent
-  = render 'content', torrent: torrent
-  %dl
-    = torrent.filename
-    = torrent.val :description
-    = torrent.val :url
-    = torrent.val :info_hash
-    = torrent.val :command
-
+%ul#torrents.torrents
+  = render 'item', torrent: @torrent, extra_class: 'full'

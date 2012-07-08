@@ -10,7 +10,7 @@
 #= require bindWithDelay
 
 jQuery ->
-  $('body:has(table.torrents):has(form#new_torrent_search)').endlessSearch list: 'table.torrents', form: 'form#new_torrent_search'
+  $('body:has(ul#torrents):has(form#new_torrent_search)').endlessSearch list: 'ul#torrents', form: 'form#new_torrent_search'
 
   search = ->
     $(@).closest('form')
@@ -20,15 +20,13 @@ jQuery ->
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
+  $('ul#torrents .torrent').on 'click', -> $(this).toggleClass('full')
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   $('body').bind 'tick', ->
-    active = $('section.transfer').attr('id')
-    if active?
-      $.getScript '/torrents/' + active.replace(/^\D+/, '')
-    else
-      $.getScript '/progress'
+    running = $('#torrents .torrent.running').map -> $(this).attr('id').replace(/^\D+/, '')
+    $.getScript "/progress?running=#{running.get().join(',')}"
     true
 
   $('form#edit').hide().each ->

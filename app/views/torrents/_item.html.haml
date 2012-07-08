@@ -1,26 +1,43 @@
-- torrent ||= item
-= decorate torrent do |td|
-  %tr.torrent{class: torrent.status, id: td.item_id}
-    %td.title
-      - if torrent.content.exist?
-        %strong= link_to torrent.title, torrent
-      - else
-        = link_to torrent.title, torrent
-    %td.status
+- item ||= torrent
+= decorate item do |torrent|
+  %li.torrent{class: "#{torrent.status} #{defined?(extra_class) && extra_class}", id: torrent.item_id}
+    %h4.title= torrent.title
+    .row-fluid
       - if torrent.running?
-        .progress-pie= td.progress
-    %td.location
-      - if torrent.content.exists? && d = torrent.content_directory
-        = link_to d.name, [d.disk, d]
-    %td.actions
-      - if torrent.running?
-        = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true, icon_only: true
+        .span5
+          .progress.progress-striped.progress-success.active= torrent.progress
+        .span3.rates= torrent.rates
       - else
-        = link_to_icon :start, torrent_transfer_path(torrent), class: 'btn-success', method: :post, remote: true, icon_only: true
-
-      - if torrent.content.exists?
-        - unless torrent.moving?
-          = link_to_modal i(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-mini'
+        .span8
+      .span2
+        - if torrent.content.exists?
+          .size= torrent.content_size
+      .span2.actions
+        - if torrent.running?
+          = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true, icon_only: true
         - else
-          %span.btn.btn-info.btn-mini.disabled= i(:move)
-        = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really?", remote: true, icon_only: true
+          = link_to_icon :start, torrent_transfer_path(torrent), class: 'btn-success', method: :post, remote: true, icon_only: true
+
+        - if torrent.content.exists?
+          - unless torrent.moving?
+            = link_to_modal i(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-mini'
+          - else
+            %span.btn.btn-info.btn-mini.disabled= i(:move)
+          = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really?", remote: true, icon_only: true
+    .row-fluid
+      - if torrent.running?
+        .span6.message= torrent.message
+    - if torrent.content.exists?
+      .row-fluid
+        .span12
+          %dl.dl-horizontal
+            = torrent.filename
+            = torrent.content_directory
+            = torrent.val :description
+            = torrent.val :url
+            = torrent.val :info_hash
+            = torrent.val :command
+          - unless torrent.moving?
+            = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info'
+          - else
+            %span.btn.btn-info.btn-mini.disabled= ti(:move)
