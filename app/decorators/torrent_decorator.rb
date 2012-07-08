@@ -8,7 +8,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def rates
-    h.render('rates', torrent: self)
+    h.render('rates', up: up_rate, down: down_rate)
   end
 
   def update_progress
