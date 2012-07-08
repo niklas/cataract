@@ -3,13 +3,14 @@
   %li.torrent{class: "#{torrent.status} #{defined?(extra_class) && extra_class}", id: torrent.item_id}
     %h4.title= torrent.title
     .row-fluid
-      - if torrent.running?
-        .span5
+      .span6
+        - if torrent.running?
           .progress.progress-striped.progress-success.active= torrent.progress
-        .span3.rates= torrent.rates
-      - else
-        .span8
-      .span2
+          - if torrent.message.present?
+            .message= torrent.message
+      .span3
+        - if torrent.running?
+          .rates= torrent.rates
         - if torrent.content.exists?
           .size= torrent.content_size
       .span2.actions
@@ -24,12 +25,9 @@
           - else
             %span.btn.btn-info.btn-mini.disabled= i(:move)
           = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really?", remote: true, icon_only: true
-    .row-fluid
-      - if torrent.running?
-        .span6.message= torrent.message
     - if torrent.content.exists?
       .row-fluid
-        .span12
+        .span9
           %dl.dl-horizontal
             = torrent.filename
             = torrent.content_directory
@@ -37,7 +35,14 @@
             = torrent.val :url
             = torrent.val :info_hash
             = torrent.val :command
+        .span3.actions
           - unless torrent.moving?
             = link_to_modal ti(:move), new_torrent_move_path(torrent), class: 'btn btn-info'
           - else
             %span.btn.btn-info.btn-mini.disabled= ti(:move)
+      .row-fluid
+        .span12
+          %ul.files
+            - torrent.content.relative_files.each do |file|
+              %li= file
+

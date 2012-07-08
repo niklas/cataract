@@ -47,6 +47,12 @@ module HtmlSelectorsHelpers
     when 'the sidebar'
       '#sidebar'
 
+    when 'a row'
+      '.row-fluid'
+
+    when /^(?:the )?item of #{capture_model}$/
+      "##{ model!($1).decorate.item_id }"
+
     when /^(\w+) link$/
       "a.#{$1}"
 

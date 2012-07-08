@@ -49,6 +49,10 @@ Then /^I should see no link "([^"]*)"$/ do |label|
   page.should have_no_css('a', :text => label)
 end
 
+Then /^I (should not|should) see "([^"]*)" in (\w+\s?\w+)(?!within.*)$/ do |should_or_not, text, container|
+  page.send should_or_not.sub(/\s/,'_'), have_css(selector_for(container), text: text)
+end
+
 Then /^I should see the following attributes for the torrent:$/ do |table|
   table.rows_hash.each do |attr, value|
     selector = selector_for("the #{attr}") rescue ".#{attr}"
