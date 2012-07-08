@@ -1,15 +1,15 @@
 - item ||= torrent
 = decorate item do |torrent|
-  %li.torrent{class: torrent.status, id: torrent.item_id}
+  %li.torrent{class: "#{torrent.status} #{defined?(extra_class) && extra_class}", id: torrent.item_id}
     %h4.title= torrent.title
     .row-fluid
       - if torrent.running?
         .span5
           .progress.progress-striped.progress-success.active= torrent.progress
-        .span2.rates= torrent.rates
+        .span3.rates= torrent.rates
       - else
-        .span7
-      .span3
+        .span8
+      .span2
         - if torrent.content.exists?
           .size= torrent.content_size
       .span2.actions

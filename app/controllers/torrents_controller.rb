@@ -10,7 +10,8 @@ class TorrentsController < InheritedResources::Base
   layout 'library'
 
   def progress
-    @torrents = Torrent.by_status('running')
+    @torrents = Torrent.running_or_listed(params[:running])
+    @torrents.each(&:refresh)
   end
 
   def create

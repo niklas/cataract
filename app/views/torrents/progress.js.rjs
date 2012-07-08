@@ -1,8 +1,12 @@
-@torrents.each do |torrent|
-  page.decorate torrent do |td|
-    td.update_progress
+@torrents.each do |tr|
+  page.decorate tr do |torrent|
+    if torrent.running?
+      torrent.update_progress
+    elsif torrent.previous_changes.empty?
+      torrent.update_in_list
+    end
   end
 end
-page.decorate Torrent.new do |td|
-  td.update_queue
+page.decorate Torrent.new do |torrent|
+  torrent.update_queue
 end

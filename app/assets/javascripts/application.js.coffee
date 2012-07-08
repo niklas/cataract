@@ -20,11 +20,13 @@ jQuery ->
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
+  $('ul#torrents .torrent').on 'click', -> $(this).toggleClass('full')
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   $('body').bind 'tick', ->
-    $.getScript '/progress'
+    running = $('#torrents .torrent.running').map -> $(this).attr('id').replace(/^\D+/, '')
+    $.getScript "/progress?running=#{running.get().join(',')}"
     true
 
   $('form#edit').hide().each ->

@@ -1,7 +1,7 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?, :content, :moving?, :status, :title, :content
+  allows :running?, :content, :moving?, :status, :title, :content, :active?, :previous_changes
 
   def progress
     h.render('bar', percent: percent, eta: eta)

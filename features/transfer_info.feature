@@ -54,9 +54,7 @@ Feature: Transfer info
         | 42 B/s | 23 B/s | 15%     | 1 minute | 71.7 KB |
 
 
-  # TODO figure out how to sync the shown torrents to current data in list
   @javascript
-  @wip
   Scenario: stopped manually is detected
     Given the torrent is running
       And I am on the page for the torrent
@@ -64,5 +62,8 @@ Feature: Transfer info
         | hash |
       And I should see a stop link
      When the tick interval is reached
-     Then I should not see a stop link
-      But I should see a stop link
+     Then I should see the following torrents in the torrent list:
+        | title  |
+        | single |
+     Then I should see a start link
+      But I should not see a stop link

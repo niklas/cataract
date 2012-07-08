@@ -11,51 +11,6 @@ $pie_size: 3.2em;
   }
 }
 
-section.transfer {
-  .progress-pie {
-    margin: 0.3em;
-    float: right;
-    width: 23%;
-    height: auto;
-    .stretcher {
-      height: 0;
-      padding-bottom: 100%;
-      width: 100%;
-    }
-    position: relative;
-    .error {
-      font-size: 200%;
-    }
-    svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 98%;
-      margin: 1%;
-      height: 98%;
-    }
-  }
-  a.content {
-    @include icon("⛁");
-  }
-  .up {
-    @include icon("↥");
-  }
-  .down {
-    @include icon("↧");
-  }
-  .error {
-    @include opacity(0.5);
-  }
-}
-
-section {
-  &.transfer, &.content {
-    @include clearfix();
-    overflow-x: auto;
-  }
-}
-
 .dir {
   .path {
     font-family: fixed;
@@ -63,39 +18,17 @@ section {
   }
 }
 
-table.torrents {
-  table-layout: fixed;
-  @include hide_fixed_column('location');
-  td,th {
-    word-wrap: break-word;
-    &.location {
-      width: 6em;
-      @media (max-width: 767px) {
-        display:none;
-      }
-    }
-    &.status {
-      width: $pie_size * 1.2;
-    }
-    &.actions {
-      width: 4em;
-      a,span {
-        float: right;
-        margin-left: 0.5em;
-      }
-    }
-  }
-  .progress-pie {
-    width: $pie_size;
-    height: $pie_size;
-    overflow: hidden;
-    float: right;
-    position: relative;
-    svg {
-      width: 76%;
-      margin: 10%;
-    }
-  }
+a.content {
+  @include icon("⛁");
+}
+.up {
+  @include icon("↥");
+}
+.down {
+  @include icon("↧");
+}
+.error {
+  @include opacity(0.5);
 }
 
 ul.torrents {
@@ -137,6 +70,15 @@ ul.torrents {
           right: 10%;
         }
       }
+    }
+    .row-fluid {
+      display: none;
+      &:first-of-type {
+        display: block;
+      }
+    }
+    &.full .row-fluid {
+      display: block;
     }
   }
 }
