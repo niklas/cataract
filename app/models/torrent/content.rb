@@ -78,6 +78,14 @@ class Torrent
       []
     end
 
+    def count
+      if single?
+        1
+      else
+        info.files.count
+      end
+    end
+
     def size
       if single?
         info.length

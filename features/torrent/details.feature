@@ -16,6 +16,7 @@ Feature: Details of a torrent
      Then I should see the following attributes for the torrent:
         | content_directory | Cat Pictures    |
         | content_directory | pictures/cats   |
+      And I should see "1 file"
       But I should not see "tails.png" in a row within the item of the torrent
      When I click on the item of the torrent
      Then I should see "tails.png" in a row within the item of the torrent

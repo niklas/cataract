@@ -13,7 +13,8 @@
           .rates= torrent.rates
         - if torrent.content.exists?
           .size= torrent.content_size
-      .span2.actions
+          .count= t('.files', count: torrent.content.count)
+      .span3.actions
         - if torrent.running?
           = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true, icon_only: true
         - else

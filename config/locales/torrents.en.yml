@@ -21,4 +21,9 @@ en:
     move:
       create:
         notice: "moving %{torrent} to %{target}"
+  torrents:
+    item:
+      files:
+        one: "1 file"
+        other: "%{count} files"
       
