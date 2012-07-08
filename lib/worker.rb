@@ -24,6 +24,7 @@ class Worker
 
   def start
     @running = true
+    job_class.cleanup
     handle_signals
     while running?
       begin

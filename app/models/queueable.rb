@@ -35,6 +35,18 @@ module Queueable
       end
     end
 
+    # tries to clean up old jobs lying around by clearing the lock attribute.
+    # Must set Timeout to finish even if rows are locked
+    def cleanup
+      transaction do
+        connection.execute <<-EOSQL
+          SET statement_timeout TO '200ms';
+          UPDATE #{table_name} SET locked_at=NULL;
+          SET statement_timeout TO DEFAULT;
+        EOSQL
+      end
+    end
+
     private
     def notify
       connection.notify queue_name
