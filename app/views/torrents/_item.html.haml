@@ -1,18 +1,14 @@
 - torrent ||= item
 = decorate torrent do |td|
-  %tr.torrent{class: torrent.status, id: td.item_id}
-    %td.title
-      - if torrent.content.exist?
-        %strong= link_to torrent.title, torrent
-      - else
-        = link_to torrent.title, torrent
-    %td.status
-      - if torrent.running?
-        .progress-pie= td.progress
-    %td.location
+  %li.torrent{class: torrent.status, id: td.item_id}
+    %h3.title
+      = link_to torrent.title, torrent
+    - if torrent.running?
+      .progress-pie= td.progress
+    .location
       - if torrent.content.exists? && d = torrent.content_directory
         = link_to d.name, [d.disk, d]
-    %td.actions
+    .actions
       - if torrent.running?
         = link_to_icon :stop, torrent_transfer_path(torrent), class: 'btn-danger', method: :delete, remote: true, icon_only: true
       - else

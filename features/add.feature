@@ -38,7 +38,7 @@ Feature: Adding a torrent
       And a torrent should exist
       And the directory "Incoming" should be the torrent's content_directory
       And rtorrent should download the torrent
-      And I should see a table of the following torrents:
+     Then I should see the following torrents in the torrent list:
        | title  |
        | single |
 

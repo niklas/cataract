@@ -106,17 +106,15 @@ ul.torrents {
     margin-bottom: 0.8em;
     cursor: pointer;
     @include border-radius(4px);
-    @include box-shadow($grayLight 1px 1px 6px);
+    @include box-shadow(lighten($bodyBackground, 15) 1px 1px 3px);
     position: relative;
 
     &:hover {
-      @include box-shadow($gray 2px 2px 6px);
+      @include box-shadow(lighten($bodyBackground, 25) 2px 2px 3px);
       @include translate(-1px, -1px);
     }
 
-    &:nth-child(even) {
-      background-color: $grayLighter;
-    }
+    @include background-image(linear-gradient(lighten($bodyBackground, 5), lighten($bodyBackground, 1) )); 
   }
 }
 

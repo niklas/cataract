@@ -22,6 +22,9 @@ module HtmlSelectorsHelpers
     when /^the sidebar director(?:ies|y) list$/
       "#sidebar ul.directories"
 
+    when /^the torrents? list$/
+      "ul#torrents"
+
     when /^the director(y|ies) list$/
       "table.directories"
 
