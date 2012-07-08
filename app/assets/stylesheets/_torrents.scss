@@ -114,7 +114,30 @@ ul.torrents {
       @include translate(-1px, -1px);
     }
 
-    @include background-image(linear-gradient(lighten($bodyBackground, 5), lighten($bodyBackground, 1) )); 
+    @include background-image(linear-gradient(lighten($bodyBackground, 15), lighten($bodyBackground, 5) )); 
+
+    .title {
+      overflow: hidden;
+      margin-bottom: $baseFontSize * 0.8;
+    }
+
+    .actions a.btn {
+      float: right;
+      margin: 5px;
+    }
+
+    .progress {
+      position: relative;
+      .bar div {
+        position: absolute;
+        &.percent {
+          left: 10%;
+        }
+        &.eta {
+          right: 10%;
+        }
+      }
+    }
   }
 }
 

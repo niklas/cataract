@@ -13,18 +13,20 @@ Feature: Transferring torrents
       And I am signed in
       And I am on the home page
 
-  Scenario: Start the transfer form the list
+  Scenario: Start the transfer from the list
      When I click on the start link
      Then I should see a stop link
       But I should not see a start link
       And the rtorrent main view should contain the torrent
 
+  @wip
   Scenario: Start the transfer from the page of the torrent
     Given I am on the page for the torrent
-     When I follow "Start"
+     When I click on the start link
      Then I should be on the page for the torrent
-     #And I should see notice "started Tails"
-      And I should see no link "Start"
+      And I should see notice "started Tails"
+      And I should not see a start link
+      But I should see a stop link
       And rtorrent should download the torrent
       And the rtorrent main view should contain the torrent
 
@@ -32,11 +34,12 @@ Feature: Transferring torrents
   @wip
   Scenario: Pause the transfer
 
-  Scenario: Stop the transfer
+  Scenario: Stop the transfer from the list
     Given the torrent was started
       And rtorrent should download the torrent
-      And I am on the page for the torrent
-     When I follow "Stop"
-     Then I should be on the page for the torrent
-      And I should see no link "Stop"
+      And I am on the home page
+     When I click on the stop link
+     Then I should see notice "stopped Tails"
+      And I should be on the home page
+      And I should not see a stop link
       And the rtorrent main view should not contain the torrent

@@ -24,11 +24,7 @@ jQuery ->
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   $('body').bind 'tick', ->
-    active = $('section.transfer').attr('id')
-    if active?
-      $.getScript '/torrents/' + active.replace(/^\D+/, '')
-    else
-      $.getScript '/progress'
+    $.getScript '/progress'
     true
 
   $('form#edit').hide().each ->

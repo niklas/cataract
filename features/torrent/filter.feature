@@ -35,7 +35,8 @@ Feature: filter torrents
       | Two   |
 
     # history management
-    When I follow "Two"
+    When I toggle the menu
+     And I follow "Library"
      And I go back
     Then I should see the following torrents in the torrent list:
       | title |
