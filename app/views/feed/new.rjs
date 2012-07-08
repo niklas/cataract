@@ -1,1 +1,0 @@
-page.insert_html :top, :feed_list, render(:partial => 'form')

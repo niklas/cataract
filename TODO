@@ -1,5 +1,4 @@
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO cells ore similar
-[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m14[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME use responders
 [35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
 [35m./app/models/directory.rb[0m[36m:[0m[32m25[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO validate path is on disk
 [35m./app/models/directory.rb[0m[36m:[0m[32m26[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME assign directories to disks through rake task
@@ -10,16 +9,17 @@
 [35m./app/models/queueable.rb[0m[36m:[0m[32m84[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract and test
 [35m./app/models/queueable.rb[0m[36m:[0m[32m147[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m9[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO WTF is this for?
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m28[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME respect #directory
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m161[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m150[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO direct links to content
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m154[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
 [35m./app/models/torrent.rb[0m[36m:[0m[32m26[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
 [35m./app/models/torrent.rb[0m[36m:[0m[32m33[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
 [35m./app/models/torrent.rb[0m[36m:[0m[32m37[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
 [35m./app/models/torrent.rb[0m[36m:[0m[32m59[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO add tagging
 [35m./app/models/torrent.rb[0m[36m:[0m[32m71[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO use psql tsearch
-[35m./app/models/torrent.rb[0m[36m:[0m[32m178[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO audit changes
+[35m./app/models/torrent.rb[0m[36m:[0m[32m153[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO audit changes
 [35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m188[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
-[35m./app/models/torrent/states.rb[0m[36m:[0m[32m85[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
+[35m./app/models/torrent/states.rb[0m[36m:[0m[32m63[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
+[35m./app/models/torrent/states.rb[0m[36m:[0m[32m88[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO call this during refresh
 [35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME athentication
 [35m./app/models/user.rb[0m[36m:[0m[32m18[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf
 [35m./features/step_definitions/web_steps.rb[0m[36m:[0m[32m76[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO: Add support for checkbox, select or option

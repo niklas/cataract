@@ -52,31 +52,9 @@ class Torrent
     (remote.state ==  1 ? 'running' : 'paused')
   end
 
-  def old_fetch!
-    event_from [:remote] do
-      update_attribute(:status, :fetching)
-      fetch_by_url
-      moveto( :archived )
-      update_attribute(:status, :archived)
-      log('was fetched')
-    end
-  end
-
-  def fetch_and_start!
-    fetch! && start!
-  end
-
-
   def update_state!(new_state)
     self.status = new_state
     save!
-  end
-
-  def self.fetch_and_start_by_url(new_url)
-    if t = create(:url => new_url, :status => 'remote')
-      t.fetch! && t.start!
-    end
-    t
   end
 
   # returns the guessed status by attributes
@@ -107,6 +85,7 @@ class Torrent
 
  private
 
+  # TODO call this during refresh
   # Will try to get status from rtorrent and stop the torrent
   # if it's not open/active (in case) of and rtorrent restart etc.
   def check_if_status_is_up_to_date
