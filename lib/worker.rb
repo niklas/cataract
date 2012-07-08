@@ -35,17 +35,19 @@ class Worker
   end
 
   def work
-    if job = lock_job
-      log("locked #{job}")
-      begin
-        job.work!
-        log("finished #{job}")
-      rescue Exception => e
-        log("failed #{job}:\n   #{e.inspect}")
-        handle_failure(job, e)
-      ensure
-        job.destroy
-        log("destroyed #{job}")
+    job_class.transaction do
+      if job = lock_job
+        log("locked #{job}")
+        begin
+          job.work!
+          log("finished #{job}")
+        rescue Exception => e
+          log("failed #{job}:\n   #{e.inspect}")
+          handle_failure(job, e)
+        ensure
+          job.destroy
+          log("destroyed #{job}")
+        end
       end
     end
   end
