@@ -22,6 +22,7 @@ end
 
 When /^I toggle the (?:menu|navigation)$/ do
   page.execute_script %Q~$('a.btn-navbar').click()~
+  sleep 0.5
 end
 
 When(/^I go back$/) do
