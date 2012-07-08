@@ -6,11 +6,12 @@ describe Move do
   end
 
   context "in filesystem" do
+    let(:disk)     { create :disk }
     let(:incoming) { Pathname.new 'incoming' }
     let(:archive)  { Pathname.new 'archive' }
 
-    let(:source)   { Factory :existing_directory, relative_path: incoming }
-    let(:target_directory)   { Factory :existing_directory, relative_path: archive }
+    let(:source)   { Factory :existing_directory, relative_path: incoming, disk: disk }
+    let(:target_directory)   { Factory :existing_directory, relative_path: archive, disk: disk }
 
     it "has directoy structure to work on" do
       source.should be_persisted
@@ -161,31 +162,50 @@ describe Move, 'target' do
   end
 
   describe "NESTED directory given, has copies on other disks" do
-    let(:disk1) { create :disk }
-    let(:disk2) { create :disk }
+    let(:disk1) { create :disk, name: "Disk 1" }
+    let(:disk2) { create :disk, name: "Disk 2" }
     let(:series1) { create :directory, disk: disk1, relative_path: 'Serien' }
     let(:series2) { create :directory, disk: disk2, relative_path: 'Serien' }
-
-    it "copies are detected" do
-      series2
-      series1.copies.should include(series2)
-    end
-
     let(:existing) { create :directory, parent: series2, disk: disk2 }
+
     let(:source) {   create :directory, disk: disk1 }
     let(:torrent) {  create :torrent, content_directory: source }
     let(:move) { build :move, target_disk: disk1, target_directory: existing, torrent: torrent }
 
     let(:final) { move.final_directory }
 
-    it "should create complete new directory with parents" do
-      final.disk.should == disk1
+    context "creating copy" do
+      before { final }
+
+      it "does not touch disk of existing directory" do
+        existing.disk.should == disk2
+      end
     end
 
-    it "should reconstruate nesting" do
-      final.parent.should_not be_nil
-      final.parent.disk.should == disk1
+    context "created copy" do
+      it "reconstructs relative paths" do
+        final.relative_path.should == existing.relative_path
+      end
+
+      it "does not use existing path" do
+        final.path.should_not == existing.path
+      end
+
+      it "reconstructs nesting" do
+        final.parent.should_not be_nil
+        final.parent.disk.should == disk1
+      end
+
+      it "is on specified disk" do
+        final.disk.should == disk1
+      end
+
+      it "should not use existing disk" do
+        final.disk.should_not == existing.disk
+      end
     end
+
+
   end
 
 end

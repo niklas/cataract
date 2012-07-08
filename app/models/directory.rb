@@ -226,10 +226,10 @@ class Directory < ActiveRecord::Base
       if existing = by_relative_path(directory.relative_path).where(disk_id: disk.id).first
         existing
       else
-        directory.clone.tap do |copy|
+        directory.dup.tap do |copy|
           copy.disk = disk
           copy.auto_create = true
-          unless directory.parent.nil?
+          unless directory.is_root?
             copy.parent = find_or_create_by_directory_and_disk(directory.parent, disk)
           end
           copy.save!
