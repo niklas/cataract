@@ -8,6 +8,9 @@
         - if can? :edit, current_user
           %li= link_to :profile, edit_user_registration_path
         = li_link :settings, settings_path, can: [:manage, Setting]
+        = li_link :changes, github_changes_url
+        = li_link :updates, github_updates_url
+        = li_link :problems, github_issues_url
         %li.divider
         %li= link_to :signout, destroy_user_session_path, :method => :delete
   - else
