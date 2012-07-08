@@ -2,7 +2,7 @@ Then /^I should see a list of the following (\w+\s?\w+)(?!within.*):$/ do |plura
   plural = plural.split
   fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
   found = page.find("ul.#{plural.join('.')}").all("li").select(&:visible?).map do |item|
-    next if item[:class].include?('devider')
+    next if item[:class].include?('divider')
     fields.map {|f| item.first(f).text.strip rescue nil }
   end.reject {|l| l.all?(&:nil?)}
   expected.diff! found.unshift(expected.column_names)
@@ -13,7 +13,7 @@ Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |items, container, e
   fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
   with_scope container do
     found = page.all(items).select(&:visible?).map do |item|
-      next if item[:class].include?('devider')
+      next if item[:class].include?('divider')
       fields.map {|f| item.first(f).text.strip rescue nil }
     end
     expected.diff! found.unshift(expected.column_names)

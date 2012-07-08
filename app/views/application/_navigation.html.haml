@@ -7,5 +7,4 @@
     = li_link :add, new_torrent_path, can: [:create, Torrent], remote: true
   - elsif first_disk = Disk.first
     = li_link :create_directory, new_disk_directory_path(first_disk), can: [:create, Directory], remote: true
-  = li_link :settings, settings_path, can: [:manage, Setting]
 = render 'filter'

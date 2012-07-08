@@ -7,6 +7,8 @@
       %ul.dropdown-menu
         - if can? :edit, current_user
           %li= link_to :profile, edit_user_registration_path
+        = li_link :settings, settings_path, can: [:manage, Setting]
+        %li.divider
         %li= link_to :signout, destroy_user_session_path, :method => :delete
   - else
     = li_link :signup, new_user_registration_path, can: [:create, User]

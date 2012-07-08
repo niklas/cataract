@@ -1,8 +1,7 @@
-%ul#queue.nav.pull-left
+%ul#queue.nav.pull-right
   - if Move.count > 0
     %li.dropdown
       %a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-        %span.name= ta :queue
         %span.badge.badge-info= Move.count
       %ul.dropdown-menu
         - Move.recent.each do |move|

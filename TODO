@@ -7,8 +7,8 @@
 [35m./app/models/notifier.rb[0m[36m:[0m[32m1[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m# FIXME enable jabber notifications
 [35m./app/models/queueable.rb[0m[36m:[0m[32m31[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME: must reload the record because #locked_at is set to late in the psql query process,by the function in WHERE.
 [35m./app/models/queueable.rb[0m[36m:[0m[32m49[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move away
-[35m./app/models/queueable.rb[0m[36m:[0m[32m69[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract and test
-[35m./app/models/queueable.rb[0m[36m:[0m[32m132[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
+[35m./app/models/queueable.rb[0m[36m:[0m[32m72[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract and test
+[35m./app/models/queueable.rb[0m[36m:[0m[32m135[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m9[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO WTF is this for?
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m28[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME respect #directory
 [35m./app/models/torrent/content.rb[0m[36m:[0m[32m161[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
