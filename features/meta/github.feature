@@ -1,8 +1,7 @@
 @javascript
-Feature: Changes
-  In order to try out ALL the features
-  As a user
-  I want to see the recent changes
+Feature: Github integration
+  In order to encourage people to participate
+  I want to see the recent changes and create issues
 
   Background:
     Given a user exists with email: "leecher@localhost.local"
@@ -20,4 +19,9 @@ Feature: Changes
      When I follow "Updates"
      Then I should see "© 2012 GitHub Inc. All rights reserved."
       And I should see "Compare View"
+
+  Scenario: Issues
+     When I follow "Problems"
+     Then I should see "© 2012 GitHub Inc. All rights reserved."
+      And I should see "Browse Issues"
 
