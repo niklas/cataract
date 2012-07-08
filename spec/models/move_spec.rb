@@ -160,4 +160,32 @@ describe Move, 'target' do
     end
   end
 
+  describe "NESTED directory given, has copies on other disks" do
+    let(:disk1) { create :disk }
+    let(:disk2) { create :disk }
+    let(:series1) { create :directory, disk: disk1, relative_path: 'Serien' }
+    let(:series2) { create :directory, disk: disk2, relative_path: 'Serien' }
+
+    it "copies are detected" do
+      series2
+      series1.copies.should include(series2)
+    end
+
+    let(:existing) { create :directory, parent: series2, disk: disk2 }
+    let(:source) {   create :directory, disk: disk1 }
+    let(:torrent) {  create :torrent, content_directory: source }
+    let(:move) { build :move, target_disk: disk1, target_directory: existing, torrent: torrent }
+
+    let(:final) { move.final_directory }
+
+    it "should create complete new directory with parents" do
+      final.disk.should == disk1
+    end
+
+    it "should reconstruate nesting" do
+      final.parent.should_not be_nil
+      final.parent.disk.should == disk1
+    end
+  end
+
 end

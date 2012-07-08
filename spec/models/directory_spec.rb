@@ -74,6 +74,19 @@ describe Directory do
       directory.path.to_s.should == "/media/Zeug/krams"
     end
   end
+
+  context "copies" do
+    it "should be found through relative path" do
+      series1 = create :directory, relative_path: 'Serien'
+      series2 = create :directory, relative_path: 'Serien'
+
+      series1.copies.should include(series2)
+      series2.copies.should include(series1)
+
+      series1.copies.should_not include(series1)
+      series2.copies.should_not include(series2)
+    end
+  end
 end
 
 describe Directory, 'filter' do
