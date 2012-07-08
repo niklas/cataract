@@ -5,8 +5,16 @@ class TorrentDecorator < ApplicationDecorator
 
   def progress
     handle_remote do
-      h.content_tag(:div, eta, class: 'stretcher eta') +
-      h.render('pie', percent: torrent.progress)
+      h.render('bar', percent: "#{torrent.progress}%", eta: eta)
+    end
+  end
+
+  def update_progress
+    handle_remote do
+      percent = "#{torrent.progress}%"
+      select(:progress).width(percent)
+      select(:progress, '.percent').html(percent)
+      select(:progress, '.eta').html(eta)
     end
   end
 
@@ -119,9 +127,9 @@ class TorrentDecorator < ApplicationDecorator
   def selector_for(name, resource=nil, *more)
     case name
     when :progress
-      "##{item_id} .progress-pie"
+      "##{item_id} .progress .bar #{resource}"
     when :row_cells
-      "##{item_id} td"
+      "##{item_id}"
     when :content
       'section.content'
     else

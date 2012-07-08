@@ -4,7 +4,7 @@
     %h3.title
       = link_to torrent.title, torrent
     - if torrent.running?
-      .progress-pie= td.progress
+      .progress.progress-striped.progress-success.active= td.progress
     .location
       - if torrent.content.exists? && d = torrent.content_directory
         = link_to d.name, [d.disk, d]
