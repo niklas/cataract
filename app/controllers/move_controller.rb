@@ -1,8 +1,4 @@
-class MoveController < InheritedResources::Base
-  belongs_to :torrent, :singleton => true
-
-  respond_to :js, :html
-
+class MoveController < TorrentComponentController
   private
 
   def interpolation_options

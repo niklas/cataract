@@ -76,8 +76,8 @@ Then /^the file "([^"]*)" should contain exactly:$/ do |file, content|
   File.read(file).should == content
 end
 
-Then /^#{capture_model}'s content should not exist on disk$/ do |m|
-  step %Q~the file "#{model!(m).content.path}" should not exist on disk~
+Then /^#{capture_model}'s content (should not|should) exist on disk$/ do |m, should_or_not|
+  step %Q~the file "#{model!(m).content.path}" #{should_or_not} exist on disk~
 end
 
 Given /^the URL "([^"]*)" points to file "([^"]*)"$/ do |url, file|
