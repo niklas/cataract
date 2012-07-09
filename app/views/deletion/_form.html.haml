@@ -1,4 +1,7 @@
 = simple_form_for deletion, :url => torrent_deletion_path(torrent), remote: true  do |f|
-  = f.input :delete_content, as: :boolean
+  = deletion.torrent.decorate do |torrent|
+    - if torrent.content.exist?
+      = f.input :delete_content, as: :boolean
+      .size= torrent.content_size
   %button.btn.btn-warning{type: 'submit'}= ta :delete
 
