@@ -1,4 +1,4 @@
-When /^I filter the list with "([^"]+)"$/ do |terms|
+When /^I filter with "([^"]+)"$/ do |terms|
   first('#torrent_search_terms').set(terms)
   begin
     step %q~I wait for the spinner to start~
@@ -22,8 +22,53 @@ end
 
 When /^I toggle the (?:menu|navigation)$/ do
   page.execute_script %Q~$('a.btn-navbar').click()~
+  sleep 0.5
 end
 
 When(/^I go back$/) do
   page.execute_script %Q~window.history.back()~
+end
+
+Then /^the selected "([^"]*)" should be "([^"]*)"$/ do |field, value|
+  field_labeled(field).all('option').find(&:selected?).text.should =~ /#{value}/
+end
+
+When /^I wait for (.+) to (?:appear|start)$/ do |name|
+  selector = selector_for name
+  begin
+    wait_until { page.has_css?(selector, :visible => true) }
+  rescue Capybara::TimeoutError => timeout
+    STDERR.puts "saved page: #{save_page}"
+    raise timeout
+  end
+end
+
+When /^I wait for (.+) to (?:disappear|stop)$/ do |name|
+  selector = selector_for name
+  begin
+    wait_until(10) { page.has_no_css?(selector, :visible => true) }
+  rescue Capybara::TimeoutError => timeout
+    STDERR.puts "saved page: #{save_page}"
+    raise timeout
+  end
+end
+
+Then /^(.+) should be visible/ do |name|
+  step %Q~I wait for #{name} to appear~
+end
+
+Then /^(.+) should disappear$/ do |name|
+  step %Q~I wait for #{name} to disappear~
+end
+
+When /^I click on the (.+)$/ do |target|
+  page.first( selector_for(target) ).click
+end
+
+Then /^I should see a (.+link)/ do |target|
+  page.should have_css( selector_for(target) )
+end
+
+Then /^I should not see a (.+link)/ do |target|
+  page.should have_no_css( selector_for(target) )
 end

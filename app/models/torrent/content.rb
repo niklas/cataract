@@ -1,5 +1,9 @@
 require 'drb'
 class Torrent
+
+  belongs_to :content_directory, :class_name => 'Directory'
+  before_validation :ensure_content_directory
+
   class TorrentContentError < Exception; end
 
   # TODO WTF is this for?
@@ -17,14 +21,6 @@ class Torrent
       end
     end
     hier
-  end
-
-
-  # Here lies the content while it is being downloaded (default)
-  # FIXME respect #directory
-  def working_path
-    return '' unless metainfo
-    File.join(Settings.torrent_dir,metainfo.name)
   end
 
   class Content < Struct.new(:torrent)
@@ -52,7 +48,11 @@ class Torrent
 
     def exists?
       base_path.present? && info.name.present? && File.exists?(path)
+    rescue HasNoMetaInfo => e
+      false
     end
+
+    alias exist? exists?
 
     def files
       if single?
@@ -62,6 +62,8 @@ class Torrent
           path/file.path.first
         end
       end
+    rescue HasNoMetaInfo => e
+      []
     end
 
     def relative_files
@@ -72,6 +74,16 @@ class Torrent
           "#{info.name}/#{file.path.first}"
         end.sort
       end
+    rescue HasNoMetaInfo => e
+      []
+    end
+
+    def count
+      if single?
+        1
+      else
+        info.files.count
+      end
     end
 
     def size
@@ -80,6 +92,8 @@ class Torrent
       else
         info.files.map(&:length).reduce(:+)
       end
+    rescue HasNoMetaInfo => e
+      -1
     end
 
     def actual_size
@@ -89,7 +103,8 @@ class Torrent
     end
 
     def destroy
-      if path.exist?
+      torrent.stop
+      if exists?
         FileUtils.rm_rf path
       else
         torrent.errors.add :content, :blank
@@ -106,7 +121,7 @@ class Torrent
         if dir
           chosen = ::Pathname.new(chosen).dirname
           index  = ::Pathname.new(infix)
-          while chosen.basename == index.basename
+          while chosen.basename == index.basename && index.to_s != '.'
             index  = index.dirname
             chosen = chosen.dirname
           end
@@ -120,14 +135,12 @@ class Torrent
     end
   end
 
-  belongs_to :content_directory, :class_name => 'Directory'
-
   def content
     @content ||= Content.new(self)
   end
 
   def ensure_content_directory
-    self.content_directory ||= Directory.watched.first || Directory.first
+    self.content_directory ||= Setting.singleton.incoming_directory || Directory.watched.first || Directory.first
   end
 
   on_refresh :find_missing_content, :if => :metainfo?
@@ -142,6 +155,7 @@ class Torrent
   end
 
 
+  # TODO direct links to content
   # returns the current url to the content for the user
   # the user has to specify his moutpoints for that to happen
   def content_url(usr)
@@ -191,7 +205,7 @@ class Torrent
   end
 
   def content_size
-    self[:content_size].to_i
+    read_attribute(:content_size) || content.size
   end
 
   def has_files?

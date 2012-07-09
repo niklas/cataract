@@ -1,0 +1,18 @@
+en:
+  activerecord:
+    attributes:
+      setting:
+        incoming_directory_id: "Download directory"
+        disable_signup: "Disable signup"
+  simple_form:
+    hints:
+      setting:
+        incoming_directory_id: "Dropped Torrents will be downloaded here"
+        disable_signup: "Protect your downloads from unwanted guests"
+  flash:
+    settings:
+      create:
+        notice: "Settings saved"
+      update:
+        notice: "Settings saved"
+

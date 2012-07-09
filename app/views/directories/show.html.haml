@@ -1,0 +1,9 @@
+- title @directory.torrent_search.title, false
+
+- if @directory.has_children?
+  = render 'directories/list', directories: @directory.children, extra_class: 'existing fixed_disk'
+
+- if @directory.contains_torrents_with_content?
+  = render 'torrents/list', search: @directory.torrent_search, extra_class: 'fixed_location'
+
+= render 'directories/detected', directories: @directory.detected_directories, extra_class: 'fixed_disk'

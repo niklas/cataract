@@ -21,7 +21,6 @@
 #
 
 class Torrent < ActiveRecord::Base
-  include FileUtils
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
   belongs_to :feed # TODO remove when series assigned
@@ -33,7 +32,7 @@ class Torrent < ActiveRecord::Base
 
   # FIXME remove this insane stati code
   # before_save :sync
-  # before_validation :fix_filename
+  before_validation :fix_filename
   # before_validation :sync_status!
   # FIXME wtf is this?
   #stampable
@@ -44,6 +43,10 @@ class Torrent < ActiveRecord::Base
 
   def before_destroy
     stop! if running?
+  end
+
+  def to_s
+    "#{self.class} (#{id}) '#{title}' [#{filename}]"
   end
 
   def self.temporary_predicate(name)
@@ -68,69 +71,46 @@ class Torrent < ActiveRecord::Base
   # TODO use psql tsearch
   # has_fulltext_search :title, :description, :filename, :url, 'tags.name'
 
-  # aggregates
-  def self.upload_rate
-    rtorrent.upload_rate
-  end
-  def self.download_rate
-    rtorrent.download_rate
-  end
-  def self.transferred_up
-    -23
-  end
-  def self.transferred_down
-    -42
-  end
   def self.last_update
     Torrent.maximum('updated_at', :conditions => "status = 'running'") || 23.days.ago
   end
 
   # extended attributes
 
-  def seconds_left
-    left_bytes.to_f / down_rate.to_f
-  end
-
-  def download_status
-    if !errormsg.blank?
-      "#{statusmsg} - #{errormsg}"
-    elsif statusmsg =~ /[\d:]+/
-      "#{statusmsg} remaining"
-    elsif statusmsg.blank?
-      "[unknown status]"
-    else
-      statusmsg
-    end
-  end
-
   def actual_size
     content_size * percent / 100
   end
 
-  # nice title 
-  # 1) uses defined title or
-  # 2) takes filename and
+  def title
+    super.presence ||
+      debrand(filename) ||
+      (url.present? && debrand(File.basename(url)) )   ||
+      (persisted?? "Torrent ##{id}" : "new Torrent")
+  end
+
   # * removes some 1337 comments about format/group in the filename
   # * cuts the .torrent extention
   # * tranforms interpunctuations into spaces
   # * kills renaming spaces 
-  # or
-  # 3) takes a Title with the torrent's id
-  def title
-    super.presence ||
-      (filename.blank? ? "Torrent ##{id}" : clean_filename)
-  end
-
-  def clean_filename
-    filename.
-      gsub(/(?:dvd|xvid|divx|hdtv|cam\b)/i,'').
+  def debrand(name)
+    return unless name.present?
+    tags = [].tap do |tags|
+      tags << '720p' if name =~ /720p/i
+    end
+    [name.
+      gsub(/(?:dvd|xvid|divx|hdtv|cam|fqm|eztv\b)/i,'').
+      sub(/^_kat\.ph_/,'').
       gsub(/\[.*?\]/,'').
       gsub(/\(.*?\)/,'').
       sub(/\d{5,}.TPB/,'').
       sub(/\.?torrent$/i,'').
       gsub(/[._-]+/,' ').
       gsub(/\s{2,}/,' ').
-      rstrip.lstrip
+      rstrip.lstrip, *tags].join(" ")
+  end
+
+  def clean_filename
+    debrand(filename)
   end
 
 
@@ -149,24 +129,6 @@ class Torrent < ActiveRecord::Base
 
   def available?
     peers >= 1 or distributed_copies >= 1
-  end
-
-
-  def moveto(target,opts={})
-    source = fullpath
-    target = fullpath(target) if target.is_a?(Symbol)
-    return if source.blank?
-    return if target.blank?
-    return unless File.exists? source
-    begin
-      if opts[:copy]
-        copy(source,target)
-      else
-        move(source,target)
-      end
-    #rescue Exception => e
-    #  errors.add :filename, "^error while moving torrent: #{e.to_s}"
-    end
   end
 
 

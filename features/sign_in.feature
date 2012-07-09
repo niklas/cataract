@@ -15,4 +15,4 @@ Feature: Signing in
       And I press "Sign in"
      Then I should see "Signed in successfully"
      # And I should see "me@cataract.local" within current user
-      And I should be on the dashboard page
+      And I should be on the list page

@@ -5,7 +5,7 @@ class Maintenance::SubDirectoryCreator < Maintenance::Base
       db = dir.children.map(&:path)
       dir.sub_directories.each do |sub|
         unless db.include?(sub)
-          dir.children.create! :path => sub
+          dir.children.create! :relative_path => sub.relative_path_from(dir.disk.path), :disk => dir.disk
         end
       end
     end

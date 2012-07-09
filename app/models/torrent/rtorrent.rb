@@ -37,7 +37,7 @@ class Torrent
   end
 
   def self.rtorrent_socket_path
-    Rails.root/'tmp'/'sockets'/'rtorrent'
+    Rails.root/'tmp'/'rtorrent.socket'
   end
 
   # currently downloaded by rtorrent
@@ -47,7 +47,7 @@ class Torrent
 
   # attributes of running rtorrent
   def rtorrent_attributes
-    remote.torrents_by_info_hash[info_hash]
+    remote.for_info_hash(info_hash)
   end
 
   # rTorrent deletes the torrent file if removing a tied torrent, so we will
@@ -144,7 +144,7 @@ class Torrent
       mapped = map_method_name(name)
       Attributes << [name, mapped]
       define_method name do |torrent|
-        if cached = torrents_by_info_hash[hash_for(torrent)]
+        if cached = for_info_hash(hash_for(torrent))
           cached[name]
         else
           block.call call_with_torrent(mapped, torrent)
@@ -196,17 +196,15 @@ class Torrent
     end
 
     def torrents
-      multicall(torrents_mapping)
+      Rails.cache.fetch('rtorrent-torrents', expires_in: 1.minute) { multicall(torrents_mapping) }
     end
 
-    def torrents_by_info_hash
-      @torrents_by_info_hash ||= torrents.each.with_object({}) do |t,h|
-        h[ t[:hash] ] = t
-      end
+    def for_info_hash(info_hash)
+      torrents.find { |h| h[:hash] == info_hash }
     end
 
     def clear_caches!
-      @torrents_by_info_hash = nil
+      Rails.cache.delete 'rtorrent-torrents'
     end
 
     def torrents_mapping

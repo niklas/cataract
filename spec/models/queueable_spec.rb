@@ -59,6 +59,7 @@ describe Queueable do
       before do
         connection.create_table table_name do |t|
           t.timestamp :locked_at
+          t.text :message
         end
         model.table_name = table_name
       end
@@ -98,7 +99,20 @@ describe Queueable do
       end
 
       context "#work!" do
-        it "should provide saveguard from exceptions"
+        it "should provide saveguard from exceptions" do
+          exception = RuntimeError.new
+          job = model.new
+          job.stub(:work).and_raise(exception)
+          job.should_receive(:handle_failure)
+          expect { job.work! }.to raise_error(exception)
+        end
+
+        it "saves exception text when failing" do
+          job = model.new
+          exception = mock "exception", inspect: "useful info"
+          job.handle_failure(exception)
+          job.message.should include('useful info')
+        end
       end
     end
 

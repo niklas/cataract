@@ -5,6 +5,3 @@ Feature: TODO
 
   @todo
   Scenario: User can watch/unwatch torrents
-
-  @todo
-  Scenario: User can fetch remote Torrent's file

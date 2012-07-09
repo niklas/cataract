@@ -35,6 +35,18 @@ module Queueable
       end
     end
 
+    # tries to clean up old jobs lying around by clearing the lock attribute.
+    # Must set Timeout to finish even if rows are locked
+    def cleanup
+      transaction do
+        connection.execute <<-EOSQL
+          SET statement_timeout TO '200ms';
+          UPDATE #{table_name} SET locked_at=NULL;
+          SET statement_timeout TO DEFAULT;
+        EOSQL
+      end
+    end
+
     private
     def notify
       connection.notify queue_name
@@ -51,10 +63,13 @@ module Queueable
     logger.debug { "#{self.class} working..." }
     work
     logger.debug { "#{self.class} finished" }
-  #rescue RuntimeError => e
-  #  STDERR.puts("#{self.class} went wrong: #{e.message}. #{e.backtrace}")
-  #ensure
-  #  STDERR.puts("done")
+  rescue Exception => e
+    handle_failure(e)
+    raise e
+  end
+
+  def handle_failure(exception)
+    update_attributes! locked_at: nil, message: exception.inspect
   end
 
 

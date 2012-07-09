@@ -1,0 +1,9 @@
+%ul.nav.nav-list.disks
+  %li.nav-header= Disk.model_name.plural
+  - Disk.order(:name).each do |disk|
+    = li_link icon_tag(disk.mounted?? :hdd : 'warning-sign') + disk.name, disk_path(disk), class: "name", item: "disk #{disk.mounted?? 'mounted' : 'unmounted'}"
+
+  - unless (detected = Disk.detected).empty?
+    %li.nav-header= t :detected
+    - Disk.detected.each do |disk|
+      = li_link icon_tag(:hdd) + disk.name, new_disk_path(disk: disk.attributes.slice('name', 'path')), class: 'name', remote: true, item: "disk new"

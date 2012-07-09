@@ -1,6 +1,7 @@
 en:
   helpers:
     actions:
+      landing: "Ohai"
       signin: "Sign in"
       move: "Move"
       start: "Start"
@@ -9,5 +10,30 @@ en:
       content: "Content"
       clear: "Clear"
       add: "Add"
+      edit: "Edit"
       dashboard: "Dashboard"
       torrents: "Torrents"
+      library: "Library"
+      recent: "Recent"
+      running: "Running"
+      library: "Library"
+      detected: "Detected"
+      changes: "Changes"
+      detected_directories: "Detected Directories"
+      create_directory: "Create Directory"
+      import_directory: "Import %{name}"
+      dropzone: "Drop torrent file here to upload"
+      directory_copies: "Copies on other disks"
+      sub_directories: "Subdirectories"
+      queue: "Queue"
+    boolean:
+      'true': "yes"
+      'false': "no"
+    submit:
+      disk:
+        create: "Create Disk"
+      directory:
+        update: "Save"
+      setting:
+        create: "Save"
+        update: "Save"

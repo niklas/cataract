@@ -8,22 +8,32 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /^the home\s?page$/
+    when /^the (?:home|list) page$/
       '/'
+
+    when /^the sign ?up page$/
+      new_user_registration_path
 
     when /^the sign ?in page$/
       new_user_session_path
 
-    when /^the dashboard(?:\s?page)?$/
-      dashboard_path
+    when /^the library page$/
+      disks_path
 
     when /^the (running|archived|remote) list page$/
       torrents_path # anchor: $1
+
+    when /^the (\w+) page (?:of|for) #{capture_model}$/
+      polymorphic_path [model!($2), $1]
 
     when /^the page (?:of|for) #{capture_model}$/
       case m = model!($1)
       when Torrent
         torrent_path(m)
+      when Directory
+        disk_directory_path(m.disk, m)
+      when Disk
+        disk_path(m)
       else
         flunk "Can't find mapping for page of #{$1}" +
           "Now, go and add a mapping in #{__FILE__}"

@@ -1,0 +1,3 @@
+page.decorate @disk do |disk|
+  disk.append_modal body: render('form', disk: disk)
+end

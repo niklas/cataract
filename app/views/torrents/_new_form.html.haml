@@ -1,0 +1,13 @@
+- torrent.fetch_automatically = true
+- torrent.start_automatically = true
+- torrent.content_directory ||= settings.incoming_directory
+= simple_form_for torrent, html: { multipart: true } do |f|
+  - unless f.object.errors.empty?
+    %p.errors= f.object.errors.full_messages.to_sentence
+  = f.input :url, :as => :string
+  = f.input :file, as: :file
+  = f.hidden_field :fetch_automatically
+  = f.hidden_field :start_automatically
+  = f.association :content_directory, collection: Directory.all
+  = f.button :submit, ta(:add), class: 'btn-primary'
+

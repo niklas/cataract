@@ -1,5 +1,16 @@
 class Torrent
 
+  def self.running_or_listed(ids)
+    if ids.respond_to?(:split)
+      ids = ids.split(',')
+    end
+    if ids.empty?
+      by_status('running')
+    else
+      where('status = ? OR id in (?)', 'running', ids)
+    end
+  end
+
   def startable?
     archived? or paused?
   end
@@ -17,6 +28,7 @@ class Torrent
   end
 
   def start!
+    fetch!
     event_from [:paused, :archived, :new] do 
       ensure_content_directory
       self.start_automatically = false
@@ -37,6 +49,16 @@ class Torrent
     end
   end
 
+  # same as #stop!, but does not raise any exceptions
+  def stop
+    remote.stop! self
+    remote.close! self
+    remote.erase! self # WARNING! will delete the torrent file
+    finally_stop!
+    log('was stopped')
+  rescue StandardError
+  end
+
   def finally_stop!
     update_state! :archived
   end
@@ -45,6 +67,14 @@ class Torrent
     (100.0 * completed_bytes.to_f / size_bytes.to_f).to_i
   rescue FloatDomainError
     0
+  end
+
+  def left_seconds
+    left_bytes.to_f / down_rate.to_f
+  end
+
+  def left_bytes
+    size_bytes.to_i - completed_bytes.to_i
   end
 
 end

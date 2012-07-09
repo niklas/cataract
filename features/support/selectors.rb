@@ -13,19 +13,58 @@ module HtmlSelectorsHelpers
     when "current user"
       "#session .name"
 
-    when "the header"
+    when /^the (menu|header)$/
       "div.navbar"
+
+    when /^the sidebar disks? list$/
+      "#sidebar ul.disks"
+
+    when /^the sidebar director(?:ies|y) list$/
+      "#sidebar ul.directories"
+
+    when /^the torrents? list$/
+      "ul#torrents"
+
+    when /^the director(y|ies) list$/
+      "table.directories"
 
     when "the footer"
       raise "no footer"
       "div[data-role='footer']"
 
+    when 'the spinner'
+      '#spinner'
+
+    when 'the modal box'
+      'div.modal'
+
+    when 'the queue'
+      '#queue'
+
+    when 'the breadcrumbs'
+      'ul.breadcrumb'
+
+    when 'the sidebar'
+      '#sidebar'
+
+    when 'a row'
+      '.row-fluid'
+
+    when /^(?:the )?item of #{capture_model}$/
+      "##{ model!($1).decorate.item_id }"
+
+    when /^(\w+) link$/
+      "a.#{$1}"
+
     # TODO move to jquery_mobile
-    when /^flash (notice|alert)$/
+    when /^(?:a )?flash (notice|alert)$/
       "#flash .alert-#{$1}"
 
     when 'the content'
       ".content"
+
+    when /^the (\w+) section$/
+      "section.#{$1}"
     when /the progress( pie)?/
       ".progress-pie"
     when /^the (up|down) rate$/

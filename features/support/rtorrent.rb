@@ -28,12 +28,12 @@ Then /^rtorrent should download #{capture_model}$/ do |m|
   Torrent.remote.clear_caches!
   torrent = model!(m)
   torrent.info_hash.should_not be_blank
-  remote = Torrent.remote.torrents_by_info_hash[torrent.info_hash]
-  remote.should_not be_blank
-  remote[:active?].should be_true
+  wait_until(10) { Torrent.remote.for_info_hash(torrent.info_hash).present? }
+  Torrent.remote.for_info_hash(torrent.info_hash)[:active?].should be_true
 end
 
 Given /^rtorrent list contains the following:$/ do |table|
+  Torrent.remote.clear_caches!
   table.map_column!('hash') do |hash|
     if hash =~ /^#{capture_model}$/
       model!(hash).info_hash

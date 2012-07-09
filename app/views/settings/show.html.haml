@@ -1,0 +1,5 @@
+= simple_form_for @setting, url: settings_path, html: { class: 'form-horizontal' } do |f|
+  = f.input :incoming_directory_id, collection: Directory.all
+  = f.input :disable_signup
+  .form-actions
+    = f.button :submit, class: 'btn-primary'

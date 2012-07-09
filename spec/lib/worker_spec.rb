@@ -26,7 +26,7 @@ describe Worker do
   }
 
   context "listening" do
-    subject   { Worker.new('fnords') }
+    subject   { Worker.new('Fnord') }
     let(:connection) { mock('ConnectionAdapter') }
     before do
       job_class.stub(:connection).and_return(connection)
@@ -46,7 +46,7 @@ describe Worker do
   end
 
   context "waiting" do
-    subject   { Worker.new('fnords') }
+    subject   { Worker.new('Fnord') }
     context "and being able to listen" do
       before do
         subject.stub(:listen?).and_return(true)
@@ -70,8 +70,11 @@ describe Worker do
 
   context "working" do
     subject   {
-      Worker.new('fnords').tap do |worker|
+      Worker.new('Fnord').tap do |worker|
         worker.stub(:wait).and_return(true)
+        job_class = mock('Fnord')
+        job_class.stub(:transaction).and_yield
+        worker.stub(:job_class).and_return(job_class)
       end
     }
     let(:job) { 
@@ -81,7 +84,6 @@ describe Worker do
     }
 
     it "should lock the job" do
-      job_class.should be_present
       subject.should_receive(:lock_job).and_return(nil)
       subject.work
     end
@@ -116,10 +118,10 @@ describe Worker do
     end
 
     context "failure handling" do
-      it "defaults to spit the error out" do
+      it "defaults to spit the error out and delegeate to job" do
         STDERR.should_receive(:puts).at_least(5).times
         expect { 
-          subject.send(:handle_failure, "a job", "error to ignore") 
+          subject.send(:handle_failure, job, "error to ignore") 
         }.not_to raise_error
       end
     end

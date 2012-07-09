@@ -1,0 +1,3 @@
+page.decorate @torrent do |torrent|
+  torrent.append_modal body: render('new_form', torrent: @torrent)
+end

@@ -5,9 +5,10 @@ Feature: create subdirectories
   I want the subdirectories to be found an created
 
   Scenario: auto-create sub-directories from fs to db
-    Given the following directories exist:
-       | path          | show_sub_dirs |
-       | /media/Serien | true          |
+    Given a disk exists with path: "/media"
+      And the following directories exist:
+       | relative_path | show_sub_dirs | disk     |
+       | Serien        | true          | the disk |
       And the following filesystem structure exists on disk:
        | type      | path                 |
        | directory | /media/Serien/Show 1 |
@@ -17,9 +18,9 @@ Feature: create subdirectories
      When the SubDirectoryCreator runs
      Then 4 directories should exist
       And the following directories should exist:
-       | path                 | show_sub_dirs |
-       | /media/Serien        | true          |
-       | /media/Serien/Show 1 | false         |
-       | /media/Serien/Show 2 | false         |
-       | /media/Serien/Show 3 | false         |
+       | relative_path | show_sub_dirs |
+       | Serien        | true          |
+       | Serien/Show 1 | false         |
+       | Serien/Show 2 | false         |
+       | Serien/Show 3 | false         |
 

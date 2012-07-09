@@ -3,10 +3,17 @@
     %li.dropdown
       %a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
         %span.name= current_user.email
-        %b.caret
+        = caret_tag
       %ul.dropdown-menu
-        %li= link_to :profile, edit_user_registration_path
-        %li= link_to '.signout', destroy_user_session_path, :method => :delete
+        - if can? :edit, current_user
+          %li= link_to :profile, edit_user_registration_path
+        = li_link :settings, settings_path, can: [:manage, Setting]
+        %li.divider
+        = li_link :changes, github_changes_url
+        = li_link :updates, github_updates_url
+        = li_link :problems, github_issues_url
+        %li.divider
+        %li= link_to :signout, destroy_user_session_path, :method => :delete
   - else
-    %li= link_to '.signup', new_user_registration_path
-    %li= link_to '.signin', new_user_session_path
+    = li_link :signup, new_user_registration_path, can: [:create, User]
+    %li= link_to :signin, new_user_session_path

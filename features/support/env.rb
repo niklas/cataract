@@ -29,7 +29,10 @@ Spork.prefork do
   Capybara.default_selector = :css
 
   Capybara.register_driver :selenium do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome).tap do |driver|
+    if chrome = [`which chromium-browser`, `which google-chrome`].map(&:chomp).reject(&:blank?).first
+      Selenium::WebDriver::Chrome.path = chrome
+    end
+    Capybara::Selenium::Driver.new(app, :browser => :chrome, :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]).tap do |driver|
       width, height = 480 + 8, 800 + 57
 
       # Resize window. In Firefox and Chrome, must create a new window to do this.
@@ -64,6 +67,9 @@ Spork.prefork do
   # recommended as it will mask a lot of errors for you!
   #
   ActionController::Base.allow_rescue = false
+
+  require 'webmock/cucumber'
+  WebMock.disable_net_connect!(:allow_localhost => true)
 end
 
 Spork.each_run do

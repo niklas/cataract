@@ -1,0 +1,11 @@
+- unless directories.empty?
+  %table.table.table-striped.directories{class: defined?(extra_class) && extra_class}
+    %thead
+      %tr
+        %th.disk= Directory.human_attribute_name :disk
+        %th.name= Directory.human_attribute_name :name
+        %th.subscribed= Directory.human_attribute_name :subscribed
+    %tbody
+      - directories.each do |dir|
+        = render 'directories/item', directory: dir
+

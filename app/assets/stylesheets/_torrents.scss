@@ -11,49 +11,15 @@ $pie_size: 3.2em;
   }
 }
 
-.transfer_torrent {
-  .progress-pie {
-    margin: 0.3em;
-    float: right;
-    width: 23%;
-    height: auto;
-    .stretcher {
-      height: 0;
-      padding-bottom: 100%;
-      width: 100%;
-    }
-    position: relative;
-    .error {
-      font-size: 200%;
-    }
-    svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 98%;
-      margin: 1%;
-      height: 98%;
-    }
-  }
-  a.content {
-    @include icon("⛁");
-  }
-  .up {
-    @include icon("↥");
-  }
-  .down {
-    @include icon("↧");
-  }
-  .error {
-    @include opacity(0.5);
-  }
-}
-
-.directory {
+.dir {
   .path {
     font-family: fixed;
     margin: 0 0.5em;
   }
+}
+
+.error {
+  @include opacity(0.5);
 }
 
 ul.torrents {
@@ -62,39 +28,54 @@ ul.torrents {
   li.torrent {
     padding: 0.5em;
     margin-bottom: 0.8em;
-    cursor: pointer;
     @include border-radius(4px);
-    @include box-shadow($grayLight 1px 1px 6px);
+    @include box-shadow(lighten($bodyBackground, 15) 1px 1px 3px);
     position: relative;
 
     &:hover {
-      @include box-shadow($gray 2px 2px 6px);
+      @include box-shadow(lighten($bodyBackground, 25) 2px 2px 3px);
       @include translate(-1px, -1px);
     }
 
-    .title, .filename {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow-x: hidden;
-    }
-    &.running {
-      .title, .filename {
-        margin-right: $pie_size * 1.3;
-      }
-    }
-    .progress-pie {
-      width: $pie_size;
-      height: $pie_size;
+    @include background-image(linear-gradient(lighten($bodyBackground, 15), lighten($bodyBackground, 5) )); 
+
+    .title {
       overflow: hidden;
+      margin-bottom: $baseFontSize * 0.8;
+    }
+
+    .actions a.btn {
       float: right;
+      margin: 5px;
+    }
+    .rates, .rates > div, .size, .count {
+      float: left;
+      margin: 5px;
+    }
+
+    .progress {
       position: relative;
-      svg {
-        width: 76%;
-        margin: 10%;
+      .bar div {
+        position: absolute;
+        &.percent {
+          left: 10%;
+        }
+        &.eta {
+          right: 10%;
+        }
       }
     }
-    &:nth-child(even) {
-      background-color: $grayLighter;
+    &.more {
+      cursor: pointer;
+    }
+    .row-fluid {
+      display: none;
+      &:first-of-type {
+        display: block;
+      }
+    }
+    &.full .row-fluid {
+      display: block;
     }
   }
 }

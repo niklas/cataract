@@ -1,11 +1,15 @@
 language: ruby
 rvm:
-  - 1.9.3-p0
+  - 1.9.3
+branches:
+  only:
+    - development
+    - master
+before_install:
+  - sudo aptitude -y install rtorrent screen chromium-browser
+  - createdb cataract_test
 before_script:
-- "psql -c 'create database cataract_test;' -U postgres"
-- "sudo apt-get install rtorrent"
-- "cp config/database.yml{.travis,}"
-- "bundle exec rake db:migrate"
-script: 
-- "bundle exec rake cucumber:ok"
-- "bundle exec rspec"
+  - "cp config/database.yml{.travis,}"
+  - "mkdir -p tmp/sockets"
+  - "bundle exec rake db:migrate"
+script: "bundle exec rspec && bundle exec rake cucumber:ok"

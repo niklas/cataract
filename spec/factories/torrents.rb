@@ -8,8 +8,6 @@ FactoryGirl.define do
     sequence(:info_hash) { |i| "%0.40d" % i }
     sequence(:filename) { |i| "#{i}.torrent" }
 
-    directory
-
     # this is just for migration
     factory :dirless_torrent do
       after_create do |torrent|
@@ -30,21 +28,24 @@ FactoryGirl.define do
 
     factory :torrent_with_file do
       info_hash nil
-      filename 'please-use-a-sub-factory.torrent'
       status 'archived'
       after_build do |torrent|
         FileSystem.create_file torrent.path
       end
       # btmakemetafile tails.png http://127.0.0.1:6969/announce --target single.torrent
       factory :torrent_with_picture_of_tails do
-        filename 'single.torrent'
+        file { File.open FileSystem.file_factory_path/'single.torrent' }
       end
 
       # btmakemetafile content http://127.0.0.1:6969/announce --target multiple.torrent
       factory :torrent_with_picture_of_tails_and_a_poem do
-        filename 'multiple.torrent'
+        file { File.open FileSystem.file_factory_path/'multiple.torrent' }
       end
     end
 
+  end
+
+  factory :feed do
+    sequence(:url) { |i| "http://cataract.local/#{i}.rss" }
   end
 end

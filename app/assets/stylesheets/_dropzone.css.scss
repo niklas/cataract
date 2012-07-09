@@ -1,0 +1,19 @@
+#dropzone {
+  display: none;
+  padding: 3em 1em;
+  font-size: 130%;
+  text-align: center;
+  @include border-radius(5px);
+  @include box-shadow($grayLight 1px 1px 4px 1px inset);
+
+  color: $gray;
+  background: $grayLighter;
+  &.invite {
+    color: $infoText;
+    background: $infoBackground;
+  }
+  &.hover {
+    color: $successText;
+    background: $successBackground;
+  }
+}

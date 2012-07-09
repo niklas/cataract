@@ -1,16 +1,19 @@
 $ = jQuery
 
-$.fn.endlessPage = ->
+$.fn.endlessSearch = (options) ->
   nearBottomOfPage = ->
     $(window).scrollTop() > $(document).height() - $(window).height() - 200
 
   $(@).each ->
-    $list    = $(@)
+    $wrapper = $(@)
+    $form    = $wrapper.find(options.form || 'form:first')
+    $list    = $wrapper.find(options.list || 'table:first')
+    $field   = $form.find('input.page')
     loading  = false
 
     $(window).scroll ->
       numPages = $list.data('num-pages')
-      page     = $list.data('page') || 1
+      page     = $field.val() || 1
 
       return if loading == true
       return if page >= numPages
@@ -18,13 +21,11 @@ $.fn.endlessPage = ->
       if nearBottomOfPage()
         loading = true
         page++
-        $list.data('page', page)
+        $field.val(page)
         $.ajax
           url: $list.data('url')
           type: 'get'
-          data:
-            torrent_search:
-              page: page
+          data: $form.serialize()
           dataType: 'script'
           success: ->
             $(window).sausage('draw')

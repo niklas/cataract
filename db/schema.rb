@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120304233742) do
+ActiveRecord::Schema.define(:version => 20120708004048) do
 
   create_table "comments", :force => true do |t|
     t.integer  "torrent_id"
@@ -25,15 +25,26 @@ ActiveRecord::Schema.define(:version => 20120304233742) do
 
   create_table "directories", :force => true do |t|
     t.string   "name"
-    t.string   "path",          :limit => 2048
+    t.string   "relative_path", :limit => 2048
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "show_sub_dirs",                 :default => false
     t.boolean  "watched"
     t.string   "ancestry"
+    t.integer  "disk_id"
+    t.boolean  "subscribed"
+    t.string   "filter"
   end
 
   add_index "directories", ["ancestry"], :name => "index_directories_on_ancestry"
+  add_index "directories", ["disk_id"], :name => "index_directories_on_disk_id"
+
+  create_table "disks", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "path"
+  end
 
   create_table "feeds", :force => true do |t|
     t.string   "url",        :limit => 2048
@@ -46,13 +57,6 @@ ActiveRecord::Schema.define(:version => 20120304233742) do
   end
 
   add_index "feeds", ["user_id"], :name => "index_feeds_on_user_id"
-
-  create_table "filters", :force => true do |t|
-    t.string  "expression"
-    t.integer "feed_id"
-    t.boolean "negated"
-    t.integer "position"
-  end
 
   create_table "log_entries", :force => true do |t|
     t.string   "action"
@@ -75,9 +79,11 @@ ActiveRecord::Schema.define(:version => 20120304233742) do
   create_table "moves", :force => true do |t|
     t.integer  "torrent_id"
     t.datetime "locked_at"
-    t.integer  "target_id"
+    t.integer  "target_directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "target_disk_id"
+    t.text     "message"
   end
 
   create_table "series", :force => true do |t|
@@ -87,13 +93,12 @@ ActiveRecord::Schema.define(:version => 20120304233742) do
   end
 
   create_table "settings", :force => true do |t|
-    t.string   "var",        :null => false
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "incoming_directory_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.integer  "torrent_directory_id"
+    t.boolean  "disable_signup"
   end
-
-  add_index "settings", ["var"], :name => "index_settings_on_var"
 
   create_table "taggings", :force => true do |t|
     t.integer "tag_id"
@@ -127,13 +132,12 @@ ActiveRecord::Schema.define(:version => 20120304233742) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.integer  "content_directory_id"
-    t.integer  "directory_id"
     t.string   "content_path_infix"
     t.integer  "series_id"
+    t.string   "file"
   end
 
   add_index "torrents", ["content_directory_id"], :name => "index_torrents_on_content_directory_id"
-  add_index "torrents", ["directory_id"], :name => "index_torrents_on_directory_id"
   add_index "torrents", ["filename"], :name => "index_torrents_on_filename"
   add_index "torrents", ["status"], :name => "index_torrents_on_status"
 

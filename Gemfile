@@ -10,14 +10,15 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.4'
   gem 'uglifier', '>= 1.2.3'
   gem 'jquery-rails'
-  gem 'bootstrap-sass', '~> 2.0.0'
+  gem 'bootstrap-sass', '~> 2.0.4'
   gem 'jquery-ui-rails'
+  gem 'bootswatch-rails'
 end
 
 
 group :test do
   gem 'rake'
-  gem 'cucumber-rails', "~> 1.2.1"
+  gem 'cucumber-rails', "~> 1.2.1", :require => false
   gem 'rspec-rails', "~> 2.8.1"
   gem "pickle"
   gem "timecop"
@@ -25,7 +26,7 @@ group :test do
   gem "email_spec"
   gem 'factory_girl_rails'
   # TODO for latest chrome-webdriver remove when capybara > 1.1.2 depends on it
-  gem 'selenium-webdriver', '~> 2.19.0'
+  gem 'selenium-webdriver', '~> 2.21.2'
 
   gem "spork", "1.0.0rc2"
   gem "guard-rspec", "~> 0.6.0"
@@ -39,6 +40,12 @@ group :test do
   gem 'simplecov', :require => false
   gem 'pry-nav'
   gem 'pry-stack_explorer'
+
+  gem 'diff_matcher'
+  gem 'launchy'
+  gem 'chromedriver-helper'
+
+  gem 'webmock'
 end
 
 group :development, :test do
@@ -47,6 +54,7 @@ end
 
 group :development do
   gem "capistrano"
+  gem "rvm-capistrano"
   gem 'rb-inotify'
   gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
 end
@@ -79,3 +87,13 @@ gem 'versatile_rjs', :git => 'git://github.com/condor/versatile_rjs.git'
 
 gem 'foreman'
 gem 'kaminari'
+
+gem 'levenshtein'
+
+gem 'carrierwave'
+gem 'jbuilder'
+gem 'whenever', :require => false
+
+gem 'feed-abstract'
+
+gem 'dalli'

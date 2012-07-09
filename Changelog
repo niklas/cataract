@@ -1,0 +1,1560 @@
+ 
+
+
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show url for remote torrent
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	no pointy cursor on torrent without more info
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	don't toggle content rows when clicking on buttons
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show count of files
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	expect to see files when clicking on torrent
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	deploy to new ruby version
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	restore migration to create filters, are feeds later
+
+2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	cleanup old controllers, helpers and unused methods
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	cleanup views, remove erbs and misplaces stylesheets
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use bootstrap icons for up/down rates
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait a bit for menu to toggle
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update progress and rates for single running torrent, too
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not force the user onto page for torrent, stay in list instead
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use bootstrap progress bar for download and eta
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	overwrite current github commit in tests, else unpushed branches causes
+	test failures
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show torrents as ul
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	can browse github issues from the menu
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	links to changes and updates
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	upgrade ruby to 1.9.3-p194 to get rid of encoding issues with Dir.glob
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	cleanup Moves on start of worker
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	must setup transaction around Job.lock and #work
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	move queue indicator to the right
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	save failure mesage of move in model
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	reconstruct deep directory structures when moving to unexistant
+	directories
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	reconstruct full directory structure when moving into non-existant
+	directory
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	make caret for copy switching more visible
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	10 more pixels space
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use cyborg theme from bootswatch
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	common partial for detected directories
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	switch between copies of directories by dropdown in breadcrumbs
+
+2012-07-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	hide "disk" column when listing directories on same disk
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do now show location of torrent if it is unique anyway
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	indicate per icon and class when a disk is mounted and a directory
+	exists
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	shorter routes
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	generate page title more awesomely
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	restore list of directories
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	restore page titles
+
+2012-07-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use navbar as main navigation
+
+2012-07-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-07-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not manually map torrents by info hash
+
+2012-07-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update queue with own decorator
+
+2012-07-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	starting a torrent automatically fetches it
+
+2012-07-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	must clear caches in tests
+
+2012-07-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	always wait before checking rtorrent's list
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait a bit for rtorrent
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show ETA under the progress pie (fixes #1)
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	hide location column on mobile devices
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fixed table rendering
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show dropzone only when dnd-hovering document
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show only icons on buttons in list
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	cache rtorrent torrent list for faster response times
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show pending moves in navigation
+
+2012-07-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use url for name generation
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use the disk name for copy buttons
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show copies of directory on other disk as button group
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show directory path only on its own page, but not its list
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	typo
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use chromium on travis
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	mark directory as active in sidebar
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	edit directory in modal box
+
+2012-06-22 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	browse to subdirectories
+
+2012-06-21 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	provide a quick method to sign in during tests
+
+2012-06-21 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	looking at a disk gives it directories
+
+2012-06-21 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update kopflos to get rid of LOG messages
+
+2012-06-21 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	refactor the library features to minimize page requests
+
+2012-06-19 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Recognizer downloads torrents into subscribed directories
+
+2012-06-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use webmock to stub HTTP requests
+
+2012-06-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	make the table and list steps more robust
+
+2012-06-16 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	User can subscribe a directory
+
+2012-06-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	try chromium before chrome
+
+2012-06-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	User can move torrent to another disk
+
+2012-05-31 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	make chrome-driver work with latest chromium
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	clean filenames from kickass torrents
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	start service if not already started
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	tyPO
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	hide dropzone on touch devices
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	proper access denied message
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	keep empty controller spec directory to make rspec happy
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	hints for settings
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show rtorrent message only if Torrent is running
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	create and symlink directory for uploaded torrents on deploy
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	move settings to the right, library to the left
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Can disable signup
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not highlight dropzone on drop, confuses the bg color
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	start services on startup
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	restart services on deploy
+
+2012-05-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	make sure the services run in production environment
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	generate proper upstart jobs
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	re-enable user upstart jobs
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use whenever to recognize torrents every 2 hours
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show message from rtorrent
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	in chrome and firefox, user can drop torrent into zone
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	User can upload a torrent file directly
+	
+	* handle file with carrierwave
+	* save .torrent files in upload directory
+	* no need for Torrent#directory anymore
+	* fetching still with own code
+
+2012-05-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-05-11 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	User can configure directory where torrent files are stored
+
+2012-05-11 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	can specify content directory when adding torrent
+
+2012-05-11 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(cucumber) do not show source of steps
+
+2012-05-11 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	generate coverage for views and step definitions
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	save Settings in a singleton record
+
+2012-05-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	NOT
+
+2012-05-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: own cucumber profile, ignores the @64bit features
+
+2012-05-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	include the 64bit hook into specs
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	mark specs needing 64bit patch for ruby and don't run them on travis
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: show processes to make sure rtorrent is running
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: wait longer for rtorrent to add torrent
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	specs: match the returned mass attributes more lax
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(doh) remove infinite loop
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	specs: wait a bit for rtorrent to check the torrent
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait a bit for rtorrent to check the torrent
+
+2012-05-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: run rspec && cucumber
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: make sure the socket directory exists
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: do not use chrome driver
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: install screen
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not require cucumber-rails in Gemfile
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis: put rtorrent install into before_install hook
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis should only build development and master
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	travis-ci does not deal with ruby patchlevels (anymore)
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	locate torrent file if it has NO path
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	no infinite loop on locating content
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	actually test mlocate with string paths
+
+2012-05-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	path must be present to make directories relative
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Disk paths must be absolute, Directories relative from there
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	cap rake:invoke task=??
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	rake task to relativate directories
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show disk name of directory only if present
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	list autodetected directories under existing ones, two clicks to import
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	list torrents in navigation list
+
+2012-05-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-05-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use the single target name for warming up the aplication
+
+2012-05-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use rvm-capistrano for deployment
+
+2012-05-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	rescue from HasNoMetaInfo
+
+2012-05-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	be explicit about the patchlevel of the ruby
+
+2012-05-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	must load environment for recognizer script
+
+2012-05-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	script to recognize torrents in watched directories
+
+2012-05-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove deprecated scripts
+
+2012-05-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	checkbox to create directory on disk
+
+2012-05-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-04-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	can autodetect subdirectories
+
+2012-04-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	assign Directory#name to directory before validation
+
+2012-04-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	autodetect directories on disk and create with two clicks
+
+2012-04-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	User can list and create directories on disk
+
+2012-04-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	human title for landing page
+
+2012-04-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use socket address according to puppet config
+
+2012-04-19 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	hook `deploy:create_symlink` instead of `deploy:symlink`
+
+2012-04-19 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	indeed update progress pie
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	refresh torrent before accessing its components
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	unify controllers for components
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	mini version for disabled move button
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Torrent#stop should stop
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	keep 720p info in clean filename
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	imply waiting through step order
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	append modal for move
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show status after title
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove old dryml files
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	supply endless page with number of pages
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fix position of spinner
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	make page reponsive again (for modals), collapsing and fixed navbar
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	a very simple logo
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	upgrade bootstrap-sass
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	add new torrent from modal
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	whoops
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show content location in table
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	clear modal on close
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	proper disabled button
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not double-decorate
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	spacing between mini buttons
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	mini links in list view
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	smaller transder buttons
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	disable move button when moving
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	rescue from fileerrors on lazy stop
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	increase page size to 50
+
+2012-04-18 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	new search causes re-pagination (doh)
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	limit width of status
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show status before title
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fix pies
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	emphasize torrents with content
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	append to tbody
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	imply a bit of waiting for stopping
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	we do not need a dashboard, just looking at torrents anyway
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	list of torrents is actually a table
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do net well section
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	re-apply style to progress-pie
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	stop torrent before destroying or moving content
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	acually update content
+
+2012-04-17 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	keep search criteria on endless search
+
+2012-04-16 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	delete content totally ajaxilylylyly
+
+2012-04-16 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	actually use draper & rjs for Move creation
+
+2012-04-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not add another entry in history when moving
+
+2012-04-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show torrent search on dashboard
+
+2012-04-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	more beautiful move button
+
+2012-04-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	suggest mmove target
+
+2012-04-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	clearing content just needs a small confirmation
+
+2012-04-14 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use symbols for actions
+
+2012-03-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	warmup application after restart
+
+2012-03-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	symlink config files
+
+2012-03-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not pre-compile assets - it is a rake process bomb
+
+2012-03-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	test if pie can disappear when torrent is stopped in background
+
+2012-03-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show page may show old data at first, but it is fast
+
+2012-03-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Torrent#to_s
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show progress and rates only if actually running
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	bigger fonted size
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	test for exact attributes in details
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show content size only if it exists
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	open content move/clear in modal window
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove Torrent#content_path
+
+2012-03-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	find content files in nested directory
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	find content deeply nested in a known directory
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	auto-refresh content location
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	locate Torrent file with mlocate
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	click on bubble-boxes to open torrent
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fix position of progress pies in list
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	when showing a torrent, sync it in background
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	set page title from search
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	change history to be able to go back
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use only class NAME in factory to help spork
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	reinstall therubyracer to support JS in production
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	properly show directory and content directory
+
+2012-03-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use the rerun file for cucumber
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	need existing content to move
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait for spinner more robustly
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	always use decorator for display of torrent
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	define selector for progress pie
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use Content to check for existance
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	move "add" button to navigation
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	more beautiful details
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait longer for spinner to stop
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	actually show filename, seed again
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait 1/3 of a second before live searching
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	style torrent list with alternating colors from bootstrap
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	must toggle menu in mobile mode
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	generate torrents from fortune
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove css for jquery-mobile spinner
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	search field style
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	make navigation responsive to device width
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	mark active navigation point
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	dropdown-styled session
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(depr) setup bootstrap in simple_form without deprecation warnings
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update TODO
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(depr) move mini-plugins to lib/
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(depr) do not use ActiveSupport::Memoizable
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove button_group wrapper for simple_form - does not work
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(depr) set table name for Maintenance
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	run features in test environment
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	click label directly when choosing state
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	don't expect filters after signing in
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show dashboard and torretns links only if signed in
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update progress only if active torrent exists
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	seed User
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update rails
+
+2012-03-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Search torrents on one page
+
+2012-02-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	require fakefs explicitly
+
+2012-02-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use spin.js for spinner
+	
+	http://fgnass.github.com/spin.js/
+	https://gist.github.com/1290439
+
+2012-02-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	pagination restarts when switching pages
+
+2012-02-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	merge search feature into one scenario
+
+2012-02-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	redirect back to torrent after moving it
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fix pagination, content deletion
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fix move
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fix signin
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	embed spinner, not visible yet
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	automatic TODOs n end of all_cucumber
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	only one search form, autoupdate on typing
+
+2012-02-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	must loadmore libraries at spork cucumber startup
+
+2012-02-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	bootstrap fixes
+
+2012-02-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	reload i18n in every spork run in specs
+
+2012-02-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update ALL the gems, switching from jquery-mobile to bootstrap, sem
+	gemfile ordering as in shiftplan
+
+2012-02-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	ubuntu does not support upstart user jobs yet
+
+2012-02-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show the real progress (doh)
+
+2012-02-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	pies in the list should not collapse
+
+2012-02-13 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	progress pie updates itself every 23s
+
+2012-02-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use ui-page class to find url to update torrent progress
+
+2012-02-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	search on title and filename
+
+2012-02-12 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	must create Model class and assign it to constant to give it a name,
+	else kaminare causes a bad sql query
+	PGError: ERROR: relation "" does not exist
+	LINE 4: WHERE a.attrelid = '""'::regclass
+	^
+	: SELECT a.attname, format_type(a.atttypid, a.atttypmod), d.adsrc,
+	a.attnotnull
+	FROM pg_attribute a LEFT JOIN pg_attrdef d
+	ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	WHERE a.attrelid = '""'::regclass
+	AND a.attnum > 0 AND NOT a.attisdropped
+	ORDER BY a.attnum
+	
+	from lib/kaminari/models/active_record_extension.rb
+	kls.send(:include, Kaminari::ActiveRecordModelExtension) if
+	kls.superclass == ActiveRecord::Base
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	migrate the database in travis before_script
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	database config for travis
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use upstream version of notes
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	ohai travis!
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	list of torrents should not break when torrent is offline
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	add rake to Gemfile for travis
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	rspec in buunt
+
+2012-02-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	click on progress pie to refresh torrent
+
+2012-02-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	wait for spinner when filtering to get only ajax results
+
+2012-02-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show content size on link to content
+
+2012-02-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	icons for show
+
+2012-02-07 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use stretcher div to help scaling pie svgs
+
+2012-02-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show progress in listview
+
+2012-02-06 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show transfer progress as inline svg
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	livesearch including pagination (not covered with tests yet)
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	global spinner in own file
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	short dashboard page should not cause page.next too early
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	drop navbar
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	filter torrents without querying the server
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	translate Dashboard
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove tmp directory only if it exists
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	m-m-m multipane dashboard
+
+2012-02-05 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	cucumber-rails cleans the database for us
+
+2012-02-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	get the torrent's state in rtorrent
+
+2012-02-02 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	write torrent file in binary mode to circumvent encoding issues (try
+	001)
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	ensure content directory directly before starting
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	missing is a valid state
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	handle state on download
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	adding by url automatically starts the torrent
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	macro for temporary_predicate
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	chrome opens window titled /Webdriver/ for wmii to match it for floating
+
+2012-02-01 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Torrent is fetched if asked to on creation
+
+2012-01-16 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	run features only when specs successful
+
+2012-01-16 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	User can add torrent by URL (almost)
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(m) remove old code
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Move should not use Torrent#content_path
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	source rvm in every foreman-upstart job
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	foreman must not use `su` because we use the user's .init dir
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	setup workers at upstart jobs in ~/.init
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not set group permissions
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	deploy as user "torrent"
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	Torrents can belong to Series
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove pure sql schema
+
+2012-01-15 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	does not matter on which partition the moved content is located
+
+2012-01-09 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	logged in User can delete content of a torrent
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	catch errors on metainfo formats
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	obviously not fit yet
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fork rubytorrent-allspice to monkeypatch is bettererer
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	doh!
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	allow generic URIs in announce field, too
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	empty file renders Torrent invalid
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	disable notifications harder
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	(m) reformat
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	disable notifications
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	monkeypatch rubytorrent to accept UDP announce list
+
+2012-01-08 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	start torrents after recognized
+
+2012-01-04 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	detect multi-torrent as missing
+
+2012-01-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove movie/tvshow detection
+
+2012-01-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	can specify BRANCH to deploy as env var
+
+2012-01-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	repair torrent whose single file is the infix now
+
+2012-01-03 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	repair torrent whose single file is the infix now
+
+2011-12-31 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	properly redirect after signing
+
+2011-12-31 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	back button behaviour
+
+2011-12-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	introducting dashboard
+
+2011-12-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	torrents list partial
+
+2011-12-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	reload items when toggling torrent state
+
+2011-12-30 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	set current page on list
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	can append to list with one helper
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show a spinner on every ajax request in the right corner of header
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	endless pagination with kaminare and jquery sausage
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	typo in hotfix
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use Directory#path#basename as stand-in #name
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	undo content_path_infices starting with ".."
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	content_path is needed for assignment
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	limit dir search to directories containing torrents
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	run worker through foreman
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	find directories for Torrent
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	stableness
+
+2011-12-29 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	rename DirectoryAssigner as it assigns CONTENT directories
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	refactor human_bytes and _rate
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	report correct runtime for specs
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	clear rtorrent cache on every request
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	footer and header are fixed
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	nokogiri required for partial hack
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	need patched ruby
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	nexus s has 480x800
+
+2011-12-28 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	fetch data for all torrents at once
+
+2011-12-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	determine Torrent#title from filename if non set
+
+2011-12-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	precompile lib.js in production
+
+2011-12-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	present Torrent with the help of a decorator, catching errors to
+	rtorrent
+
+2011-12-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	show pie and transfer data
+
+2011-12-27 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	configure sass, but only when loaded
+	
+	This reverts commit b048492df88566e356a7c6c89561724434f67a16.
+
+2011-12-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not calculate coverage for widgets, they are all gone
+
+2011-12-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove legacy codeheaps
+
+2011-12-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	update transfer "widget" on change
+
+2011-12-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	use zenity for pausing in cucumber
+
+2011-12-26 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove most of the widgets, they seem crappy
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do hide links (squash)
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	set browser window to WVGA
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	share socket for rtorrent
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	hide links (TODO)
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	do not configure sass, should be done through sprockets
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	deploy works!
+
+2011-12-24 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	let's deploy
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	remove old spec
+
+2011-12-25 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	look for notes only in our directories
+
+2011-12-24 Niklas Hofer <niklas+dev@lanpartei.de>
+
+	let's deploy
+

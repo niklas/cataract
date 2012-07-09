@@ -5,7 +5,10 @@ class Torrent
 
   class Download < Struct.new(:torrent)
     attr_reader :payload
+    attr_reader :file
     attr_reader :response
+
+    delegate :read, to: :file
 
     def go!
       @response = nil
@@ -14,12 +17,17 @@ class Torrent
           torrent.filename = filename_from_response
         end
         @payload = response.body
+        @file = StringIO.new @payload
         true
       end
     end
 
     def has_payload?
       @payload && !@payload.empty?
+    end
+
+    def original_filename
+      filename_from_response
     end
 
     private
@@ -47,9 +55,10 @@ class Torrent
   end
 
   def fetch_from_url
-    if url && !file_exists? && !downloaded?
+    if url.present? && !file_exists? && !downloaded?
       event_from :remote do
         if download.go!
+          self.file = download
           self.status = :archived
         end
       end
@@ -57,6 +66,8 @@ class Torrent
   rescue URI::InvalidURIError => e
     false
   end
+
+  alias_method :fetch!, :fetch_from_url
 
   def parsed_url
     URI.parse escaped_url
@@ -75,39 +86,6 @@ class Torrent
 
   def downloaded?
     download.has_payload?
-  end
-
-  after_save :write_file_from_download, :if => :downloaded?
-
-  def write_file_from_download
-    ensure_directory
-    File.open(path, 'wb') { |f| f.write download.payload }
-  end
-
-  def fetchable?(please_reload=false)
-    return if url.blank?
-    unless @fetchable.nil? || please_reload
-      return @fetchable
-    end
-    @fetchable =
-      begin
-        Net::HTTP.start(uri.host, uri.port) do |http|
-          resp = http.head(uri.path)
-          if resp.is_a?(Net::HTTPSuccess) and (resp['content-type'] =~ /application\/x-bittorrent/i)
-            self.filename ||= filename_from_http_response(resp)
-            resp
-          else
-            errors.add :url, "HTTP Error: #{resp.inspect}, Content-type: #{resp['content-type']}"
-            false
-          end
-        end
-      rescue URI::InvalidURIError
-        errors.add :url, "is not valid (#{url.to_s})"
-        false
-      rescue SocketError, NoMethodError => e
-        errors.add :url, "unfetchable (#{e.to_s})"
-        false
-      end
   end
 
 end

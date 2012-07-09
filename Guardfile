@@ -35,7 +35,7 @@ group :test, :halt_on_fail => true do
   end
 
 #                                                         V --no-drb skip spork to run simplecov 
-  guard 'cucumber', :cli => "--no-profile --drb --color --strict --format pretty --format rerun --out rerun.txt", :run_all => { :cli => "--format progress" }, :all_on_start => false do 
+  guard 'cucumber', :cli => "--no-profile --drb  --no-source --strict --format pretty --format rerun --out rerun.txt", :run_all => { :cli => "--format progress" }, :all_on_start => false do
     watch(%r{^features/.+\.feature$})
     watch(%r{^app/(controllers|widgets)})     { "features" }
     watch(%r{^app/models/maintenance/(.+)\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }

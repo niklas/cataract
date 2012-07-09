@@ -1,0 +1,16 @@
+!!!5
+%html
+  = render 'layouts/head'
+  %body
+    .container-fluid
+      = render 'layouts/header'
+      .row-fluid
+        .span3
+          #sidebar.well
+            = render 'application/disks'
+            = render 'application/directories'
+            = render 'application/dropzone'
+        .span9
+          = render 'breadcrumbs'
+          = yield
+

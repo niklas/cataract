@@ -7,17 +7,43 @@
  * `require` directives for SASS files, because they're horrible and will kill
  * your cat. */
 
-/* overwrite boostrap variables heer */
-
+/* overwrite boostrap variables here */
+@import "bootswatch/cyborg/variables";
 @import "bootstrap";
+
+/* push content down, the fixed navbar covers it */
+body {
+  padding-top: 60px;
+}
 @import "bootstrap-responsive";
+@import "bootswatch/cyborg/bootswatch";
 
 @import "compass/css3";
+@import "hide_fixed_column";
 @import "torrents";
+@import "dropzone";
 @import "radio_buttons";
 
 form#new_torrent_search {
   label[for=torrent_search_terms] {
     display: none;
   }
+}
+
+#spinner {
+  position: fixed;
+  top: 50%; left: 50%;
+}
+
+.modal > form {
+  margin: 0;
+}
+
+table.directories {
+  @include hide_fixed_column('disk');
+}
+
+.breadcrumb .caret {
+  border-top-color: $grayLighter; // make the caret visible, was black on black before
+  opacity: 0.6;
 }

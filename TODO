@@ -1,40 +1,39 @@
-[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO cells ore similar
-[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO rescue from errors
-[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m8[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME use responders
-[35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
-[35m./app/models/feed.rb[0m[36m:[0m[32m45[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO tagging
-[35m./app/models/maintenance/content_directory_assigner.rb[0m[36m:[0m[32m46[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME this ignores path delimiters
-[35m./app/models/notifier.rb[0m[36m:[0m[32m1[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m# FIXME enable jabber notifications
-[35m./app/models/queueable.rb[0m[36m:[0m[32m31[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    # FIXME: must reload the record because #locked_at is set to late in the psql query process,by the function in WHERE.
-[35m./app/models/queueable.rb[0m[36m:[0m[32m49[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO move away
-[35m./app/models/queueable.rb[0m[36m:[0m[32m69[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m# TODO extract and test
-[35m./app/models/queueable.rb[0m[36m:[0m[32m132[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m5[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO WTF is this for?
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m24[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME respect #directory
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m104[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO remove column 'content_path'
-[35m./app/models/torrent/content.rb[0m[36m:[0m[32m123[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
-[35m./app/models/torrent.rb[0m[36m:[0m[32m28[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
-[35m./app/models/torrent.rb[0m[36m:[0m[32m35[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
-[35m./app/models/torrent.rb[0m[36m:[0m[32m39[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
-[35m./app/models/torrent.rb[0m[36m:[0m[32m57[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO add tagging
-[35m./app/models/torrent.rb[0m[36m:[0m[32m69[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO use psql tsearch
-[35m./app/models/torrent.rb[0m[36m:[0m[32m192[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO audit changes
-[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m188[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
-[35m./app/models/torrent/states.rb[0m[36m:[0m[32m85[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
-[35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME athentication
-[35m./app/models/user.rb[0m[36m:[0m[32m18[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m  # FIXME wtf
-[35m./features/step_definitions/web_steps.rb[0m[36m:[0m[32m78[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m# TODO: Add support for checkbox, select or option
-[35m./features/support/selectors.rb[0m[36m:[0m[32m23[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m    # TODO move to jquery_mobile
-[35m./features/support/todo.rb[0m[36m:[0m[32m6[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m      out << intense_yellow("TODO scenarios\n\n")
-[35m./features/support/todo.rb[0m[36m:[0m[32m30[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m    File.open( Rails.root.join('log/TODO'), 'w' ) do |file|
-[35m./lib/action_messenger/base.rb[0m[36m:[0m[32m48[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m      # TODO: Templates, ActionMailer-style.
-[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m18[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m        # TODO: Different strategies for staying online (come online only to send messages.)
-[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m19[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m        # TODO: Reconnection strategy.
-[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m20[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m        # TODO: Multiple mechanisms for sending messages, for Jabber backend swap-out,
-[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m66[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m      # TODO: See if there is a way to have this called on exit, for a more friendly shutdown.
-[35m./lib/jobs/scheduler_job.rb[0m[36m:[0m[32m7[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m    # TODO simulate cronjob here
-[35m./lib/worker.rb[0m[36m:[0m[32m96[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO this should be decoupled. Must give class_name instead of channel to worker
-[35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m108[0m[36m:[0m[38;5;46;1mTODO[0m[36m:[0m  # TODO complete list
-[35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m112[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m    # FIXME WTF what does the torrent do here?
-[35m./spec/models/torrent_spec.rb[0m[36m:[0m[32m99[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m      # FIXME put this on the others in own torrent/content_spec
-[35m./spec/models/torrent_spec.rb[0m[36m:[0m[32m125[0m[36m:[0m[38;5;226;1mFIXME[0m[36m:[0m      # FIXME put this on the others in own torrent/content_spec
+[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO cells ore similar
+[35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
+[35m./app/models/directory.rb[0m[36m:[0m[32m25[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO validate path is on disk
+[35m./app/models/directory.rb[0m[36m:[0m[32m26[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME assign directories to disks through rake task
+[35m./app/models/filesystem.rb[0m[36m:[0m[32m58[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME does not .serialize handles this?
+[35m./app/models/notifier.rb[0m[36m:[0m[32m1[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m# FIXME enable jabber notifications
+[35m./app/models/queueable.rb[0m[36m:[0m[32m31[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME: must reload the record because #locked_at is set to late in the psql query process,by the function in WHERE.
+[35m./app/models/queueable.rb[0m[36m:[0m[32m61[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move away
+[35m./app/models/queueable.rb[0m[36m:[0m[32m84[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract and test
+[35m./app/models/queueable.rb[0m[36m:[0m[32m147[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m9[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO WTF is this for?
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m150[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO direct links to content
+[35m./app/models/torrent/content.rb[0m[36m:[0m[32m154[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
+[35m./app/models/torrent.rb[0m[36m:[0m[32m26[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
+[35m./app/models/torrent.rb[0m[36m:[0m[32m33[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
+[35m./app/models/torrent.rb[0m[36m:[0m[32m37[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
+[35m./app/models/torrent.rb[0m[36m:[0m[32m59[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO add tagging
+[35m./app/models/torrent.rb[0m[36m:[0m[32m71[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO use psql tsearch
+[35m./app/models/torrent.rb[0m[36m:[0m[32m153[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO audit changes
+[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m188[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
+[35m./app/models/torrent/states.rb[0m[36m:[0m[32m63[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
+[35m./app/models/torrent/states.rb[0m[36m:[0m[32m88[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO call this during refresh
+[35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME athentication
+[35m./app/models/user.rb[0m[36m:[0m[32m18[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf
+[35m./features/step_definitions/web_steps.rb[0m[36m:[0m[32m76[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO: Add support for checkbox, select or option
+[35m./features/support/selectors.rb[0m[36m:[0m[32m53[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO move to jquery_mobile
+[35m./features/support/todo.rb[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      out << intense_yellow("TODO scenarios\n\n")
+[35m./features/support/todo.rb[0m[36m:[0m[32m30[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    File.open( Rails.root.join('log/TODO'), 'w' ) do |file|
+[35m./lib/action_messenger/base.rb[0m[36m:[0m[32m48[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      # TODO: Templates, ActionMailer-style.
+[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m18[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m        # TODO: Different strategies for staying online (come online only to send messages.)
+[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m19[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m        # TODO: Reconnection strategy.
+[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m20[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m        # TODO: Multiple mechanisms for sending messages, for Jabber backend swap-out,
+[35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m66[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      # TODO: See if there is a way to have this called on exit, for a more friendly shutdown.
+[35m./lib/jobs/scheduler_job.rb[0m[36m:[0m[32m7[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO simulate cronjob here
+[35m./lib/worker.rb[0m[36m:[0m[32m99[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO this should be decoupled. Must give class_name instead of channel to worker
+[35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m108[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO complete list
+[35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m112[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME WTF what does the torrent do here?
+[35m./spec/models/torrent_spec.rb[0m[36m:[0m[32m101[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m      # FIXME put this on the others in own torrent/content_spec
+[35m./spec/models/torrent_spec.rb[0m[36m:[0m[32m134[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m      # FIXME put this on the others in own torrent/content_spec

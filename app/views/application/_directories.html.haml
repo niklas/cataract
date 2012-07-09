@@ -1,0 +1,4 @@
+%ul.nav.nav-list.directories
+  %li.nav-header= Directory.model_name.plural
+  - Directory.roots.order(:name).ignoring_copies.each do |dir|
+    = li_link icon_tag(dir.exist?? 'folder-open' : 'warning-sign') + dir.name, directory_path(dir), class: "name", item: "directory #{dir.exist?? 'existing' : 'missing'}"

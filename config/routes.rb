@@ -1,24 +1,40 @@
 Cataract::Application.routes.draw do
   get "greetings/dashboard"
 
+  resource :settings
   resources :torrents do
-    collection do
-      get 'status/:status/page/:page', action: :index
-      get 'page/:page',                action: :index
-      get 'status/:status',            action: :index
-      get 'progress',                  action: :progress
+    member do
+      get 'prepend'
     end
     resource :move,     controller: :move, only: [:new, :create, :show]
     resource :content,  controller: :content, only: [:show, :destroy]
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
 
-  get "dashboard" => 'greetings#dashboard', :as => 'dashboard'
-  get "dashboard" => 'greetings#dashboard', :as => 'user_root' # after login
+  controller :torrents do
+    get 'status/:status/page/:page', action: :index
+    get 'page/:page',                action: :index
+    get 'status/:status',            action: :index
+    get 'progress',                  action: :progress
 
-  devise_for :users
+    get 'status/running',            action: :index, as: :running_torrents
+  end
 
-  root :to => 'greetings#landing'
+  get "recent" => 'torrents#index', :as => 'user_root' # after login
+
+  resources :disks do
+    resources :directories
+  end
+
+  devise_for :users, :controllers => { :registrations => "user::registrations" }
+
+  root :to => 'torrents#index'
+
+  if Rails.env.test?
+    scope 'test' do
+      get 'sign_in' => 'test_acceleration#sign_in', as: 'fast_sign_in'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

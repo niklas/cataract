@@ -1,11 +1,10 @@
-%a.btn.btn-navbar{href: '#', 'data-toggle' => "collapse", 'data-target' => ".nav-collapse"}
-  %span.icon-bar
-  %span.icon-bar
-  %span.icon-bar
-.nav-collapse
-  %ul.nav
-    = li_link :dashboard, dashboard_path, can: [:dashboard, current_user]
-    = li_link :torrents, torrents_path, can: [:index, Torrent]
-    = li_link :add, new_torrent_path, can: [:create, Torrent]
-  = render 'session'
-
+%ul.nav
+  = li_link :recent, torrents_path
+  = li_link :running, running_torrents_path
+  = li_link :library, disks_path, can: [:index, Directory]
+%ul.nav.pull-right
+  - if controller.controller_name == 'torrents'
+    = li_link :add, new_torrent_path, can: [:create, Torrent], remote: true
+  - elsif first_disk = Disk.first
+    = li_link :create_directory, new_disk_directory_path(first_disk), can: [:create, Directory], remote: true
+= render 'filter'

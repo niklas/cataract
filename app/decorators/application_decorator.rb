@@ -1,4 +1,44 @@
 class ApplicationDecorator < Draper::Base
+  include ModalDecoratorHelper
+
+  def selector_for(name, resource=nil, *more)
+    case name
+    when :errors_for
+      %Q~#{selector_for(:form_for, resource)} .errors~
+    when :form_for
+      if resource.to_key
+        %Q~form##{h.dom_id resource, :edit}~
+      else
+        %Q~form##{h.dom_id resource}~
+      end
+    else
+      begin
+        super
+      rescue NoMethodError => no_method
+        raise ArgumentError, "cannot find selector for #{name}"
+      end
+    end
+  end
+
+  # select a specific element on the page. You may implement #selector_for in your subclass
+  def select(*a)
+    page.select selector_for(*a)
+  end
+
+  def remove(*a)
+    select(*a).remove()
+  end
+
+  def update_flash
+    page['flash'].remove()
+    page.select('.navbar:first').after h.render('application/flash')
+  end
+
+  def update_queue
+    page['queue'].replace_with h.render('queue')
+  end
+
+
   # Lazy Helpers
   #   PRO: Call Rails helpers without the h. proxy
   #        ex: number_to_currency(model.price)

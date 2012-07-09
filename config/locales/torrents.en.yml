@@ -4,10 +4,26 @@ en:
       torrent:
         url: "URL"
         search_title:
-          status: "%{status} torrents"
-          status_and_terms: "%{status} torrents containing '%{terms}'"
+          # order of hash is persisted
+          status: "%{value} torrents"
+          terms: "containing '%{value}'"
+          directory: 'in "%{value}"'
+          page: '(page %{value})'
+        content_directory: "Content directory"
+      move:
+        target_directory: "Directory"
+        target_disk: "Disk"
+      directory:
+        auto_create: "create on disk"
+        subscribed: "subscribed"
+        filter: "Filter"
   flash:
     move:
       create:
         notice: "moving %{torrent} to %{target}"
+  torrents:
+    item:
+      files:
+        one: "1 file"
+        other: "%{count} files"
       

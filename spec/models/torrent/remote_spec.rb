@@ -3,16 +3,8 @@ require 'spec_helper'
 describe Torrent do
   
   context "with a valid URL" do
-    before do
-      @dir = Factory :directory
-    end
-    let(:torrent) { build :remote_torrent, url: "http://localhost:1337/files/single.torrent" }
-
-    it "should have a directory assigned" do
-      torrent.valid?
-      torrent.directory.should be_present
-      torrent.directory.should == @dir
-    end
+    let(:url)     { "http://localhost:1337/files/single.torrent" }
+    let(:torrent) { build :remote_torrent, url: url}
 
     context "marked for fetch automatically" do
       before do
@@ -27,8 +19,8 @@ describe Torrent do
     end
 
     it "should be downloadable" do
-      response = mock('HTTP response', body: "torrent-data")
-      Net::HTTP.stub(:get_response).and_return(response)
+      payload = File.read FileSystem.file_factory_path/'single.torrent'
+      stub_request(:get, url).to_return(status: 200, body: payload)
       expect { torrent.fetch_from_url }.to_not raise_error
       torrent.should have(:no).errors
       torrent.save!

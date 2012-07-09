@@ -25,7 +25,7 @@ describe "routing for torrents" do
   end
 
   it do
-    { :get => '/torrents/status/running' }.should route_to(
+    { :get => 'status/running' }.should route_to(
       controller: 'torrents',
       action:     'index',
       status:     'running'
@@ -33,7 +33,7 @@ describe "routing for torrents" do
   end
 
   it do
-    { :get => '/torrents/page/23' }.should route_to(
+    { :get => 'page/23' }.should route_to(
       controller: 'torrents',
       action:     'index',
       page:       '23'
@@ -41,7 +41,7 @@ describe "routing for torrents" do
   end
 
   it do
-    { :get => '/torrents/status/running/page/23' }.should route_to(
+    { :get => 'status/running/page/23' }.should route_to(
       controller: 'torrents',
       status:     'running',
       action:     'index',

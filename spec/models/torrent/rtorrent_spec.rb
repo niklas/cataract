@@ -168,14 +168,13 @@ describe Torrent::RTorrent do
       before do
         described_class.online!
         incoming = create :existing_directory,
-          path: "incoming"
+          relative_path: "incoming"
         create_file incoming.path/'tails.png'
-        @first   = create :torrent_with_picture_of_tails,
-          directory: incoming, content_directory: incoming
+        @first   = create :torrent_with_picture_of_tails, content_directory: incoming
         @first.start!
-        @second  = create :torrent_with_picture_of_tails_and_a_poem,
-          directory: incoming, content_directory: incoming
+        @second  = create :torrent_with_picture_of_tails_and_a_poem, content_directory: incoming
         @second.load!
+        sleep 10 # rtorrent needs a moment
       end
 
       context "mass fetching" do
@@ -185,26 +184,16 @@ describe Torrent::RTorrent do
           list.should have(2).records
         end
 
-        let(:map) { rtorrent.torrents_by_info_hash }
-        it "by info_hash" do
-          map.should be_a(Hash)
-          map.should have(2).records
-        end
-
-        it "should index by info_hash" do
-          map.keys.sort.should == list.map { |v| v[:hash] }.sort
-        end
-
-        let(:first) { list.first }
-        let(:second) { list.second }
+        let(:first) { rtorrent.for_info_hash(@first.info_hash) }
+        let(:second) { rtorrent.for_info_hash(@second.info_hash) }
 
         it "should have attrs set" do
+          needs_64_bit_xmlrpc_patch
           first.should be_a(Hash)
-          first[:hash].should == @first.info_hash
-          first[:completed_bytes].should == 73451
+          first.should be_matching({hash: @first.info_hash, completed_bytes: 73451}, :ignore_additional=>true)
 
           second.should be_a(Hash)
-          second[:hash].should == @second.info_hash
+          second.should be_matching({hash: @second.info_hash}, :ignore_additional=>true)
         end
       end
     end

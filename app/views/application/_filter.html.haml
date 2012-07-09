@@ -1,0 +1,5 @@
+= simple_form_for search, url: torrents_path, remote: true, method: :get, html: { class: 'navbar-search pull-left' } do |f|
+  = f.input :terms, input_html: { class: 'search-query' }
+  = f.hidden_field :page, class: 'page'
+  = f.hidden_field :status
+  = f.hidden_field :directory_id

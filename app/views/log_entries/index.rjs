@@ -1,2 +1,0 @@
-page.insert_html :bottom, :log, :partial => @log_entries
-page.insert_html :bottom, :log, content_tag(:li, 'End of Transmission', :class => 'end') if @log_entries.size < LogEntry.page_size

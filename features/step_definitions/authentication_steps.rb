@@ -7,10 +7,6 @@ Given /^I am signed in as #{capture_model}$/ do |user|
     step %{#{user} exists}
   end
   user = model!(user)
-  step %{I am on the sign in page}
-  step %{I fill in "Email" with "#{user.email}"}
-  step %{I fill in "Password" with "#{FactoryGirl::Password}"}
-  step %{I press "Sign in"}
-  # step %{I should see "Signed in successfully"}
-   # And %{I should see "#{user.email}" within current user}
+  visit fast_sign_in_path(email: user.email)
+  page.should have_content('success')
 end

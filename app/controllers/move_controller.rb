@@ -1,13 +1,11 @@
 class MoveController < InheritedResources::Base
   belongs_to :torrent, :singleton => true
 
-  def create
-    create! { parent_url }
-  end
+  respond_to :js, :html
 
   private
 
   def interpolation_options
-    { torrent: parent.title, target: resource.target.name }
+    { torrent: parent.title, target: resource.target_name }
   end
 end

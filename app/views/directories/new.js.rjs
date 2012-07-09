@@ -1,0 +1,4 @@
+page.decorate @directory do |directory|
+  directory.append_modal render('new_form', directory: @directory)
+  directory.update_flash
+end
