@@ -1,5 +1,8 @@
 class Torrent
 
+  validates_uniqueness_of :url, on: :create
+  before_validation :set_filename_from_url, on: :create, if: :remote?
+
   temporary_predicate :fetch_automatically
   before_validation :fetch_from_url, :if => :fetch_automatically?
 
@@ -86,6 +89,13 @@ class Torrent
 
   def downloaded?
     download.has_payload?
+  end
+
+  def set_filename_from_url
+    if filename.blank? && url.present?
+      self.filename = File.basename url
+    end
+  rescue Exception => e
   end
 
 end

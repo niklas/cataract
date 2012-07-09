@@ -80,6 +80,10 @@ Then /^#{capture_model}'s content (should not|should) exist on disk$/ do |m, sho
   step %Q~the file "#{model!(m).content.path}" #{should_or_not} exist on disk~
 end
 
+Then /^#{capture_model}'s file (should not|should) exist on disk$/ do |m, should_or_not|
+  step %Q~the file "#{model!(m).path}" #{should_or_not} exist on disk~
+end
+
 Given /^the URL "([^"]*)" points to file "([^"]*)"$/ do |url, file|
   content = File.read( FileSystem.file_factory_path/file )
   stub_request(:get, url).to_return(status: 200, body: content)

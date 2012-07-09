@@ -1,8 +1,8 @@
 require 'mlocate'
 
 class Torrent
-  validates_uniqueness_of :filename, :unless => :remote?
-  validates_length_of :filename, :in => 9..255, :unless => :remote?
+  validates_uniqueness_of :filename
+  validates_length_of :filename, :in => 9..255
 
   mount_uploader :file, TorrentUploader
   validates_length_of :file, minimum: 10.bytes, if: :path?
