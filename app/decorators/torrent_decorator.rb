@@ -160,7 +160,7 @@ class TorrentDecorator < ApplicationDecorator
   end
 
   def remove_from_list
-    select(:item, model).remove()
+    select(:item, model).animatedRemove(800)
   end
 
   # Accessing Helpers

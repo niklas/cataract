@@ -62,3 +62,8 @@ jQuery ->
           switch err
             when 'BrowserNotSupported' then alert('browser does not support html5 drag and drop')
             when 'FileTooLarge' then alert("file #{file.name} is too large, max 5MiB")
+
+  $.fn.animatedRemove = (duration=300)->
+    $(this).each ->
+      $e = $(this)
+      $e.fadeOut duration, -> $e.remove()
