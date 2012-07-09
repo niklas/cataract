@@ -1,6 +1,6 @@
 - item ||= torrent
 = decorate item do |torrent|
-  %li.torrent{class: "#{torrent.status} #{defined?(extra_class) && extra_class}", id: torrent.item_id}
+  %li.torrent{class: "#{torrent.status} #{defined?(extra_class) && extra_class} #{torrent.content.exist? && 'more'}", id: torrent.item_id}
     %h4.title= torrent.title
     .row-fluid
       .span6

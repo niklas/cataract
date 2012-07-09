@@ -28,7 +28,6 @@ ul.torrents {
   li.torrent {
     padding: 0.5em;
     margin-bottom: 0.8em;
-    cursor: pointer;
     @include border-radius(4px);
     @include box-shadow(lighten($bodyBackground, 15) 1px 1px 3px);
     position: relative;
@@ -61,6 +60,9 @@ ul.torrents {
           right: 10%;
         }
       }
+    }
+    &.more {
+      cursor: pointer;
     }
     .row-fluid {
       display: none;
