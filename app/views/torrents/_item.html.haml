@@ -8,6 +8,8 @@
           .progress.progress-striped.progress-success.active= torrent.progress
           - if torrent.message.present?
             .message= torrent.message
+        - if torrent.remote?
+          .url= torrent.url
       .span3
         - if torrent.running?
           .rates= torrent.rates

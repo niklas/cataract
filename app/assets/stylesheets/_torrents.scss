@@ -48,6 +48,10 @@ ul.torrents {
       float: right;
       margin: 5px;
     }
+    .rates, .rates > div, .size, .count {
+      float: left;
+      margin: 5px;
+    }
 
     .progress {
       position: relative;
