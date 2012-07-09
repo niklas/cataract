@@ -135,6 +135,26 @@ class Torrent
     end
   end
 
+  class Deletion < HashWithIndifferentAccess
+    include ActiveAttr::Model
+    include ActiveAttr::AttributeDefaults
+
+    attribute :delete_content
+    attribute :torrent
+
+    def save
+      if delete_content?
+        torrent.content.destroy
+      end
+      torrent.stop if torrent.stoppable?
+      torrent.destroy
+    end
+  end
+
+  def build_deletion(params={})
+    @deletion ||= Deletion.new(params.merge(torrent: self))
+  end
+
   def content
     @content ||= Content.new(self)
   end

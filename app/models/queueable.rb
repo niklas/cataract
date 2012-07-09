@@ -69,7 +69,9 @@ module Queueable
   end
 
   def handle_failure(exception)
-    update_attributes! locked_at: nil, message: exception.inspect
+    if persisted?
+      update_attributes! locked_at: nil, message: exception.inspect
+    end
   end
 
 

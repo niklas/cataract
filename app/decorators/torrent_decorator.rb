@@ -159,6 +159,10 @@ class TorrentDecorator < ApplicationDecorator
     select(:item, model).replace_with h.render('torrents/item', torrent: model)
   end
 
+  def remove_from_list
+    select(:item, model).remove()
+  end
+
   # Accessing Helpers
   #   You can access any helper via a proxy
   #

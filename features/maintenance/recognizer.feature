@@ -42,6 +42,7 @@ Feature: recognize torrents
 
   Scenario: auto-fetch torrents for tv-shows in subscribed directories
     Given a disk exists with path: "media"
+      And a torrent exists with filename: "fefebestfrowns.torrent"
       And the following directories exist:
         | directory | relative_path | subscribed | filter | disk     |
         | torrents  | torrents      | true       | frowns | the disk |
@@ -74,17 +75,32 @@ Feature: recognize torrents
                 <infoHash>7070707070707070707070707070707070707070</infoHash>
               </torrent>
             </item>
+            <item>
+              <title><![CDATA[Fefe Best Of Frowns]]></title>
+              <link>http://torrent.zoink.it/fefebestfrowns.torrent</link>
+              <description><![CDATA[Fefe Best of Frowns]]></description>
+              <enclosure url="http://torrent.zoink.it/fefebestfrowns.torrent" length="23456" type="application/x-bittorrent" />
+              <torrent xmlns="http://xmlns.ezrss.it/0.1/">
+                <fileName><![CDATA[http://torrent.zoink.it/fefebestfrowns.torrent]]></fileName>
+                <contentLength>12345</contentLength>
+                <infoHash>FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE</infoHash>
+              </torrent>
+            </item>
           </channel>
         </rss>
       """
       And the URL "http://torrent.zoink.it/Shame of Frowns s07e24.torrent" points to file "single.torrent"
      When the Recognizer runs
-     Then a torrent "frowns" should exist with filename: "Shame_of_Frowns_s07e24.torrent"
+     Then a torrent "frowns" should exist with filename: "Shame_of_Frowns_s07e24.torrent", url: "http://torrent.zoink.it/Shame of Frowns s07e24.torrent"
       And directory "torrents" should be the torrent's content_directory
+      And the torrent's file should exist on disk
       And the torrent's info_hash should not be blank
       And the torrent should be running
 
-      But a torrent should not exist with filename: "love and the village.torrent"
+      # did not match filter
+      But a torrent should not exist with url: "http://torrent.zoink.it/love and the village.torrent"
+      # already exists ( by filename )
+      And a torrent should not exist with url: "http://torrent.zoink.it/fefebestfrowns.torrent"
 
 
   @todo

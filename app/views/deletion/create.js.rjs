@@ -1,0 +1,7 @@
+page.decorate @deletion.torrent do |td|
+  td.close_modal
+  td.update_flash
+  td.update_queue
+  td.remove_from_list
+end
+
