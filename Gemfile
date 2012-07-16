@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.6'
 gem 'pg'
 
 
@@ -20,17 +20,17 @@ group :test do
   gem 'rake'
   gem 'cucumber-rails', "~> 1.2.1", :require => false
   gem 'rspec-rails', "~> 2.8.1"
-  gem "pickle"
-  gem "timecop"
+  gem 'pickle'
+  gem 'timecop'
   gem 'database_cleaner'
-  gem "email_spec"
+  gem 'email_spec'
   gem 'factory_girl_rails'
   # TODO for latest chrome-webdriver remove when capybara > 1.1.2 depends on it
   gem 'selenium-webdriver', '~> 2.21.2'
 
   gem "spork", "1.0.0rc2"
   gem "guard-rspec", "~> 0.6.0"
-  gem "guard-cucumber", "~> 0.7.5"
+  gem "guard-cucumber", "~> 0.8.0"
   gem "guard-spork", "~> 0.5.2"
   gem "guard-bundler", "~> 0.1.3"
   gem "libnotify", :require => false
@@ -53,8 +53,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "capistrano"
-  gem "rvm-capistrano"
+  gem 'capistrano'
+  gem 'rvm-capistrano'
   gem 'rb-inotify'
   gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
 end
@@ -75,7 +75,7 @@ gem 'ancestry'
 
 gem 'coffee-rails', '~> 3.2.2'
 gem 'compass-rails'
-gem 'devise'
+gem 'devise', '~> 2.0.4'
 gem 'cancan'
 gem 'simple_form', '~> 2.0.0'
 gem 'haml-rails'

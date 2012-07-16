@@ -10,8 +10,8 @@ describe Move do
     let(:incoming) { Pathname.new 'incoming' }
     let(:archive)  { Pathname.new 'archive' }
 
-    let(:source)   { Factory :existing_directory, relative_path: incoming, disk: disk }
-    let(:target_directory)   { Factory :existing_directory, relative_path: archive, disk: disk }
+    let(:source)   { create :existing_directory, relative_path: incoming, disk: disk }
+    let(:target_directory)   { create :existing_directory, relative_path: archive, disk: disk }
 
     it "has directoy structure to work on" do
       source.should be_persisted

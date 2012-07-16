@@ -10,7 +10,7 @@ FactoryGirl.define do
 
     # this is just for migration
     factory :dirless_torrent do
-      after_create do |torrent|
+      after :create do |torrent|
         Directory.delete_all id: torrent.directory_id
         Torrent.update_all({ directory_id: nil}, { id: torrent.id })
       end
@@ -29,7 +29,7 @@ FactoryGirl.define do
     factory :torrent_with_file do
       info_hash nil
       status 'archived'
-      after_build do |torrent|
+      after :build do |torrent|
         FileSystem.create_file torrent.path
       end
       # btmakemetafile tails.png http://127.0.0.1:6969/announce --target single.torrent

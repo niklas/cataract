@@ -18,7 +18,7 @@ describe Disk do
   end
 
   it "needs the path to be absolute" do
-    Disk.new( Factory.attributes_for(:disk, path: 'foo/var') ).should be_invalid
+    Disk.new( FactoryGirl.attributes_for(:disk, path: 'foo/var') ).should be_invalid
   end
 
   context "Factory" do

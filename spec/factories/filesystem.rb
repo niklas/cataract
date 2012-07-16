@@ -26,7 +26,7 @@ FactoryGirl.define do
     sequence(:name) { |i| "Disk ##{i}" }
     sequence(:path) { |i| "disk#{i}" }
 
-    after_build do |disk|
+    after :build do |disk|
       if disk.path? && disk.path.relative? && defined?(FileSystem)
         disk.path = FileSystem.rootfs/disk.path
       end
