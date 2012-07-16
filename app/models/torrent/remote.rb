@@ -1,6 +1,6 @@
 class Torrent
 
-  validates_uniqueness_of :url, on: :create
+  validates_uniqueness_of :url, on: :create, allow_blank: true
   before_validation :set_filename_from_url, on: :create, if: :remote?
 
   temporary_predicate :fetch_automatically
