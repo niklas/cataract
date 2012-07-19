@@ -46,6 +46,7 @@ group :test do
   gem 'chromedriver-helper'
 
   gem 'webmock'
+  gem 'term-ansicolor' # for ScenarioTodo
 end
 
 group :development, :test do
@@ -83,8 +84,7 @@ gem 'inherited_resources'
 gem 'draper'
 
 gem 'active_attr', '~> 0.5.0.alpha2' # SchedulingFilter, need AttributeDefaults
-gem 'versatile_rjs', :git => 'git://github.com/condor/versatile_rjs.git'
-
+gem 'versatile_rjs', :git => 'git://github.com/condor/versatile_rjs.git', branch: '51f35329d9a370280e896444ee4e11c5d166ffcf'
 gem 'foreman'
 gem 'kaminari'
 
