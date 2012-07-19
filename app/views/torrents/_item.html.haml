@@ -27,7 +27,7 @@
             = link_to_modal i(:move), new_torrent_move_path(torrent), class: 'btn btn-info btn-mini'
           - else
             %span.btn.btn-info.btn-mini.disabled= i(:move)
-          = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', confirm: "really clear?", remote: true, icon_only: true
+          = link_to_icon :clear, torrent_content_path(torrent), :method => :delete, class: 'clear btn-danger', data: { confirm: "really clear?" }, remote: true, icon_only: true
         = link_to_icon :remove, new_torrent_deletion_path(torrent), class: 'destroy btn-danger', remote: true, icon_only: true
     - if torrent.content.exists?
       .row-fluid
