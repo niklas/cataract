@@ -26,8 +26,12 @@ class Torrent
   class Content < Struct.new(:torrent)
     extend ActiveModel::Naming
 
+    def name
+      @name ||= utf8(info.name)
+    end
+
     def path
-      base_path.path/info.name
+      @path ||= base_path.path/name
     end
 
     def base_path
@@ -35,7 +39,7 @@ class Torrent
     end
 
     def info
-      torrent.metainfo
+      @info ||= torrent.metainfo
     end
 
     def single?
@@ -47,7 +51,7 @@ class Torrent
     end
 
     def exists?
-      base_path.present? && info.name.present? && File.exists?(path)
+      base_path.present? && name.present? && File.exists?(path)
     rescue HasNoMetaInfo => e
       false
     end
@@ -59,7 +63,7 @@ class Torrent
         [ path ]
       else
         info.files.map do |file|
-          path/file.path.first
+          path/utf8(file.path.first)
         end
       end
     rescue HasNoMetaInfo => e
@@ -68,10 +72,10 @@ class Torrent
 
     def relative_files
       if single?
-        [ info.name ]
+        [ name ]
       else
         info.files.map do |file|
-          "#{info.name}/#{file.path.first}"
+          "#{name}/#{utf8 file.path.first}"
         end.sort
       end
     rescue HasNoMetaInfo => e
@@ -114,7 +118,7 @@ class Torrent
     # returns the directory all the contents are in
     def locate
       if single?
-        Directory.with_minimal_infix Mlocate.file(info.name).first
+        Directory.with_minimal_infix Mlocate.file(name).first
       else
         chosen = relative_files.last
         dir, infix = Directory.with_minimal_infix Mlocate.postfix(chosen).first
@@ -132,6 +136,13 @@ class Torrent
           end
         end
       end
+    end
+
+    private
+    def utf8(string)
+      string.encode('UTF-8')
+    rescue
+      string.force_encoding('UTF-8')
     end
   end
 
