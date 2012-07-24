@@ -7,6 +7,7 @@ Cataract::Application.routes.draw do
       get 'prepend'
     end
     resource :move,     controller: :move, only: [:new, :create, :show]
+    resource :deletion, controller: :deletion, only: [:new, :create, :show]
     resource :content,  controller: :content, only: [:show, :destroy]
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end

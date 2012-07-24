@@ -43,12 +43,12 @@ describe Torrent do
   describe "status" do
     it "should default to 'new'" do
       pending
-      Factory(:torrent).status.should == 'new'
+      create(:torrent).status.should == 'new'
     end
 
     it "should be specifiable" do
       pending
-      Factory(:torrent, :status => 'running').status.should == 'running'
+      create(:torrent, :status => 'running').status.should == 'running'
     end
   end
   describe "remote" do
@@ -58,7 +58,7 @@ describe Torrent do
   end
 
   context "metainfo" do
-    let(:torrent) { Factory :torrent }
+    let(:torrent) { create :torrent }
 
     it "should raise Torrent::FileNotFound when file does not exist" do
       torrent.stub!(:file_exists?).and_return(false)

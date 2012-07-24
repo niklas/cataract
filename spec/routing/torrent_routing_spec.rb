@@ -16,7 +16,7 @@ describe "routing for torrents" do
   end
 
   it do
-    torrent = Factory :torrent
+    torrent = create :torrent
     { :get => torrent_path(torrent) }.should route_to(
       controller: 'torrents',
       action:     'show',

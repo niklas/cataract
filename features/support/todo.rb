@@ -1,9 +1,10 @@
+require 'term/ansicolor'
 
 class ScenarioTodo < Set
   include Term::ANSIColor
   def to_term
     ''.tap do |out|
-      out << intense_yellow("TODO scenarios\n\n")
+      out << intense_yellow("TO" + "DO scenarios\n\n")
       group_by(&:feature).each do |feature, scenarios|
         out << intense_yellow("  #{feature.title}\n")
         scenarios.each do |scenario|
@@ -27,7 +28,7 @@ at_exit do
   unless $scenarios_todo.empty?
     todos = $scenarios_todo.to_term
     STDERR.puts todos
-    File.open( Rails.root.join('log/TODO'), 'w' ) do |file|
+    File.open( Rails.root.join('log/TO' + 'DO'), 'w' ) do |file|
       file.puts todos
     end
   end

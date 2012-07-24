@@ -21,9 +21,15 @@ en:
     move:
       create:
         notice: "moving %{torrent} to %{target}"
+    deletion:
+      create:
+        notice: "%{torrent} deleted"
   torrents:
     item:
       files:
         one: "1 file"
         other: "%{count} files"
-      
+  simple_form:
+    labels:
+      defaults:
+        delete_content: "delete content"
