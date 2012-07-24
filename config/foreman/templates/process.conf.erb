@@ -1,5 +1,5 @@
-start on starting <%= app %>-<%= process.name %>
-stop on stopping <%= app %>-<%= process.name %>
+start on starting <%= app %>-<%= name %>
+stop on stopping <%= app %>-<%= name %>
 respawn
 
-exec bash -c 'source /usr/local/rvm/scripts/rvm && cd <%= engine.directory %>; export RAILS_ENV=production; export PORT=<%= port %>;<% engine.environment.each_pair do |var,env| %> export <%= var.upcase %>=<%= env %>; <% end %> <%= process.command %> >> <%= log_root %>/<%=process.name%>-<%=num%>.log 2>&1'
+exec bash -c 'source /usr/local/rvm/scripts/rvm && cd <%= engine.directory %>; export RAILS_ENV=production; export PORT=<%= port %>;<% engine.environment.each_pair do |var,env| %> export <%= var.upcase %>=<%= env %>; <% end %> <%= process.command %> >> <%= log %>/<%=name%>-<%=num%>.log 2>&1'
