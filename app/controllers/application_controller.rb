@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   helper_method :search
 
   def search_params
-    params.slice(:status, :terms, :page).merge( params[:torrent_search] || {})
+    params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {})
   end
 
 end
