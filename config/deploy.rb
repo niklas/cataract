@@ -70,7 +70,6 @@ namespace :deploy do
     STDERR.puts "Warming up application"
     run "sleep 2; wget -q -O - http://#{single_target} | grep -vi exception > /dev/null"
   end
-  after 'deploy:restart', 'deploy:warmup'
 
   desc "Delete the code we use to accelerate testing"
   task :delete_test_code do
