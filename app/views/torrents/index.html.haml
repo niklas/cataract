@@ -3,5 +3,10 @@
 - content_for :head do
   %script{ type: "text/x-handlebars", data: { 'template-name' => "say-hello"}}
     Hello, <b>{{name}}</b>
+  %script{ type: "text/x-handlebars", data: { 'template-name' => "torrents-list"}}
+    %ul.torrents
+      {{#each torrents}}
+      %li {{title}}
+      {{/each}}
 
 #container
