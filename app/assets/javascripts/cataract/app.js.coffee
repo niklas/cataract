@@ -15,6 +15,8 @@ jQuery ->
     ]
 
   Cataract.TorrentsList = Ember.View.create
+    tagName: 'ul'
+    classNames: ['torrents']
     templateName: 'torrents-list'
     torrentsBinding: 'Cataract.Torrents.torrents'
 
