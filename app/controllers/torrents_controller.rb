@@ -2,7 +2,7 @@ class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
   respond_to :js, :html
-  respond_to :json, only: :create # jquery.filedrop
+  respond_to :json, only: [:index, :create] # ember, jquery.filedrop
 
   before_filter :refresh!, only: :show
   custom_actions :resource => :prepend

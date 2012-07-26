@@ -1,11 +1,9 @@
 - title search.title, false
 
 - content_for :head do
-  %script{ type: "text/x-handlebars", data: { 'template-name' => "say-hello"}}
-    Hello, <b>{{name}}</b>
-  %script{ type: "text/x-handlebars", data: { 'template-name' => "torrents-list"}}
-    {{#each torrents}}
-    %li {{title}}
-    {{/each}}
+  %script{ type: "text/x-handlebars", data: { 'template-name' => "torrent-item"}}
+    {{#with content}}
+    %h3 {{title}}
+    {{/with}}
 
 #container

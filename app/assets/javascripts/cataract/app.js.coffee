@@ -2,22 +2,30 @@ jQuery ->
   window.Cataract = Ember.Application.create
     rootElement: '#container'
 
-  Cataract.Hello = Ember.View.create
-    templateName: 'say-hello'
-    name: "Spaghettimonster"
+  Cataract.Torrent = Ember.Object.extend
+    title: null
 
-  Cataract.Hello.appendTo('#container')
+  Cataract.Torrents = Ember.ArrayController.create
+    content: [ ]
+    createTorrent: (attrs) ->
+      torrent = Cataract.Torrent.create attrs
+      @pushObject torrent
+    refresh: ->
+      $.getJSON "torrents.json", (data) ->
+        for item in data
+          Cataract.Torrents.createTorrent item
 
-  Cataract.Torrents = Ember.Object.create
-    torrents: [
-      { title: "One" },
-      { title: "Two" }
-    ]
 
-  Cataract.TorrentsList = Ember.View.create
+  Cataract.TorrentItem = Ember.View.extend
+    templateName: 'torrent-item'
+    mouseDown: (evt) ->
+      console.log "you clicked #{@get('content')}"
+
+  Cataract.TorrentsList = Ember.CollectionView.create
     tagName: 'ul'
     classNames: ['torrents']
-    templateName: 'torrents-list'
-    torrentsBinding: 'Cataract.Torrents.torrents'
+    itemViewClass: Cataract.TorrentItem
+    contentBinding: "Cataract.Torrents"
 
   Cataract.TorrentsList.appendTo('#container')
+  Cataract.Torrents.refresh()
