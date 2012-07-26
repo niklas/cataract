@@ -3,7 +3,24 @@
 - content_for :head do
   %script{ type: "text/x-handlebars", data: { 'template-name' => "torrent-item"}}
     {{#with content}}
-    %h3 {{title}}
+    %h4.title {{title}}
+    .row-fluid
+      .span6
+        {{#if isRunning}}
+        .progress.progress-striped.progress-success.active
+          .bar{ '{{bindAttr style="percentStyle"}}' => true }
+            .percent {{percent}}%
+            .eta {{eta}}
+        {{#if message}}
+        .message {{message}}
+        {{/if}}
+        {{/if}}
+      .span3
+      .span3.actions
     {{/with}}
+
+  %script{ type: "text/x-handlebars", data: { 'template-name' => "torrent-progress"}}
+    .percent {{percent}}
+    .eta {{eta}}
 
 #container

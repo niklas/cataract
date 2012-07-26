@@ -4,6 +4,13 @@ jQuery ->
 
   Cataract.Torrent = Ember.Object.extend
     title: null
+    percent: 0
+    isRunning: (->
+      @get('status') == 'running'
+    ).property('status')
+    percentStyle: (->
+      "width: #{@get('percent')}%"
+    ).property('percent')
 
   Cataract.Torrents = Ember.ArrayController.create
     content: [ ]
@@ -15,9 +22,9 @@ jQuery ->
         for item in data
           Cataract.Torrents.createTorrent item
 
-
   Cataract.TorrentItem = Ember.View.extend
     templateName: 'torrent-item'
+    classNames: ['torrent']
     mouseDown: (evt) ->
       console.log "you clicked #{@get('content')}"
 
