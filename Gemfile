@@ -13,6 +13,7 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.0.4'
   gem 'jquery-ui-rails'
   gem 'bootswatch-rails'
+  gem 'emberjs-rails'
 end
 
 

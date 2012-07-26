@@ -1,3 +1,7 @@
 - title search.title, false
 
-= render 'torrents/list', search: search
+- content_for :head do
+  %script{ type: "text/x-handlebars", data: { 'template-name' => "say-hello"}}
+    Hello, <b>{{name}}</b>
+
+#container
