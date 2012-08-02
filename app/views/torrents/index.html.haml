@@ -15,7 +15,18 @@
         .message {{message}}
         {{/if}}
         {{/if}}
+        {{#if isRemote}}
+        .url= {{url}}
+        {{/if}}
       .span3
+        {{#if isRunning}}
+        %span.badge.down
+          = i 'arrow-down'
+          {{down}}
+        %span.badge.up
+          = i 'arrow-up'
+          {{up}}
+        {{/if}}
       .span3.actions
     {{/with}}
 
