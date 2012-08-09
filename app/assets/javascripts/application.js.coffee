@@ -8,9 +8,15 @@
 #= require jquery-filedrop/jquery.filedrop
 #= require radio_buttons
 #= require bindWithDelay
-#= require ember.js
+#= require ember
 #
+#= require_tree ./lib
 #= require cataract/app
+#= require_tree ./cataract/models
+#= require_tree ./cataract/controllers
+#= require_tree ./cataract/views
+#= require_tree ./cataract/helpers
+#= require_tree ./cataract/templates
 
 jQuery ->
   $('body:has(ul#torrents):has(form#new_torrent_search)').endlessSearch list: 'ul#torrents', form: 'form#new_torrent_search'
