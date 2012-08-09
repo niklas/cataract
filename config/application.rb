@@ -59,7 +59,7 @@ module Cataract
     end
 
     config.ember.variant = :development
-    config.handlebars.templates_root = 'cataract'
-    config.handlebars.templates_path_separator = '/'
+    config.handlebars.templates_root = 'templates'
+    config.handlebars.templates_path_separator = '_'
   end
 end

@@ -5,6 +5,7 @@ Cataract.torrentsController = Ember.ArrayController.create
     @pushObject torrent
   refresh: ->
     $.getJSON "torrents.json", (data) ->
+      console.debug data
       for item in data
         Cataract.torrentsController.createTorrent item
 

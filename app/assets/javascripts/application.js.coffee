@@ -9,14 +9,15 @@
 #= require radio_buttons
 #= require bindWithDelay
 #= require ember
+#= require ember
 #
 #= require_tree ./lib
-#= require cataract/app
-#= require_tree ./cataract/models
-#= require_tree ./cataract/controllers
-#= require_tree ./cataract/views
-#= require_tree ./cataract/helpers
-#= require_tree ./cataract/templates
+#= require ./app
+#= require_tree ./models
+#= require_tree ./controllers
+#= require_tree ./views
+#= require_tree ./helpers
+#= require_tree ./templates
 
 jQuery ->
   $('body:has(ul#torrents):has(form#new_torrent_search)').endlessSearch list: 'ul#torrents', form: 'form#new_torrent_search'
