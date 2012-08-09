@@ -22,10 +22,9 @@ class Torrent
 
   on_refresh :refresh_file
   def refresh_file
-    ActiveSupport::Deprecation.warn 'Torrent#refresh_file should use carrierwave'
     if !path? || !file_exists?
-      if dir = Directory.of(Mlocate.file(filename).first)
-        self.directory = dir
+      if found = Mlocate.file(filename).first
+        self.file = File.open(found)
       end
     end
   end
