@@ -8,8 +8,9 @@
 #= require jquery-filedrop/jquery.filedrop
 #= require radio_buttons
 #= require bindWithDelay
+#= require handlebars
 #= require ember
-#= require ember
+#= require ember-data
 #
 #= require_tree ./lib
 #= require ./app

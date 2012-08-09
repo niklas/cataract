@@ -1,6 +1,6 @@
 Cataract.ListTorrentsView = Ember.View.extend
-  templateName: 'templates/torrents/list'
-  torrentsBinding: "Cataract.torrentsController"
+  templateName: 'torrents_list'
+  torrentsBinding: 'Cataract.torrents'
   xxclassNames: ['torrents']
   xxitemViewClass: Cataract.ItemTorrentView
 

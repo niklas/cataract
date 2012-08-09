@@ -38,4 +38,4 @@
   %script{type: "text/x-handlebars"}
     {{ view Cataract.ListTorrentsView }}
   %script{type: "text/javascript"}
-    $(function() { Cataract.torrentsController.refresh() });
+    $(function() { Cataract.torrents = Cataract.store.find(Cataract.Torrent); });

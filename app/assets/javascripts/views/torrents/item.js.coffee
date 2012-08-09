@@ -1,5 +1,5 @@
 Cataract.ItemTorrentView = Ember.View.extend
-  templateName: 'templates/torrents/item'
+  templateName: 'torrents_item'
   classNames: ['torrent']
   tagName: 'li'
   mouseDown: (evt) ->
