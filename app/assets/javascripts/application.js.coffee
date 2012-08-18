@@ -44,9 +44,9 @@ jQuery ->
     $form = $(this)
     $('a.edit').click -> $form.toggle('slow')
 
-  setInterval ->
-    $('body').trigger 'tick'
-  , 23 * 1000
+  #setInterval ->
+  #  $('body').trigger 'tick'
+  #, 23 * 1000
 
   supportAjaxUploadProgressEvents = ->
     xhr = new XMLHttpRequest()
