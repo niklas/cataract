@@ -1,6 +1,6 @@
 class DirectoriesController < InheritedResources::Base
   belongs_to :disk, optional: true
-  respond_to :js, :html
+  respond_to :json, :js, :html
 
   load_and_authorize_resource
   layout 'library'

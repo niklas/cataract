@@ -5,7 +5,7 @@ Feature: Details of a torrent
   As a logged in user
   I want to view details of a torrent
 
-  Scenario: attributes
+  Background:
     Given a series exists with title: "Lolcats"
       And a directory "A" exists with name: "Cat Pictures", relative_path: "pictures/cats"
       And a torrent_with_picture_of_tails exists with series: the series, title: "Tails", content_directory: directory "A"
@@ -13,10 +13,16 @@ Feature: Details of a torrent
       And the torrent's content exists on disk
       And I am signed in
      When I go to the home page
+
+  Scenario: attributes
      Then I should see the following attributes for the torrent:
         | content_directory | Cat Pictures    |
         | content_directory | pictures/cats   |
       And I should see "1 file"
-      But I should not see "tails.png" in a row within the item of the torrent
+
+  @todo
+  @wip
+  Scenario: toggle filenames
+    Given I should not see "tails.png"
      When I click on the item of the torrent
-     Then I should see "tails.png" in a row within the item of the torrent
+     Then I should see "tails.png"

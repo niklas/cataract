@@ -27,6 +27,8 @@ Cataract::Application.routes.draw do
     resources :directories
   end
 
+  resources :directories
+
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 
   root :to => 'torrents#index'

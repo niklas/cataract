@@ -1,39 +1,5 @@
 - title search.title, false
 
--#- content_for :head do
--#  %script{ type: "text/x-handlebars", data: { 'template-name' => "torrent-item"}}
--#    {{#with content}}
--#    %h4.title {{title}}
--#    .row-fluid
--#      .span6
--#        {{#if isRunning}}
--#        .progress.progress-striped.progress-success.active
--#          .bar{ '{{bindAttr style="percentStyle"}}' => true }
--#            .percent {{percent}}%
--#            .eta {{eta}}
--#        {{#if message}}
--#        .message {{message}}
--#        {{/if}}
--#        {{/if}}
--#        {{#if isRemote}}
--#        .url= {{url}}
--#        {{/if}}
--#      .span3
--#        {{#if isRunning}}
--#        %span.badge.down
--#          = i 'arrow-down'
--#          {{down}}
--#        %span.badge.up
--#          = i 'arrow-up'
--#          {{up}}
--#        {{/if}}
--#      .span3.actions
--#    {{/with}}
--#
--#  %script{ type: "text/x-handlebars", data: { 'template-name' => "torrent-progress"}}
--#    .percent {{percent}}
--#    .eta {{eta}}
-
 #container
   %script{type: "text/x-handlebars"}
     {{ view Cataract.ListTorrentsView }}
