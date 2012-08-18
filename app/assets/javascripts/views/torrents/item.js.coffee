@@ -2,7 +2,7 @@ Cataract.ItemTorrentView = Ember.View.extend
   templateName: 'torrents_item'
   classNames: ['torrent']
   tagName: 'li'
-  toggleShowing: ->
-    console.debug @get('isShowing')
-    @set( 'isShowing', ! @get('isShowing'))
+  toggleShowing: (event) ->
+    torrent = @get('context')
+    torrent.set( 'isShowing', ! torrent.get('isShowing'))
 

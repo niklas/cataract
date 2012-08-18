@@ -31,7 +31,7 @@
   <div class="content">
     <div class="size">{{humanContentSize}}</div>
     <div class="count">
-      <a href="#" {{action toggleShowing}}> {{contentFilesCount}}</a>
+      <a href="#" {{action toggleShowing target="parentView"}}> {{contentFilesCount}}</a>
     </div>
     {{#if isShowing}}
       <ul class="files">

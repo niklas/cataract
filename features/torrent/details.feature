@@ -22,5 +22,5 @@ Feature: Details of a torrent
 
   Scenario: toggle filenames
     Given I should not see "tails.png"
-     When I click on the item of the torrent
+     When I follow "1 file"
      Then I should see "tails.png"
