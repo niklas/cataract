@@ -12,6 +12,7 @@ class TorrentUploader < CarrierWave::Uploader::Base
 
   process :set_filename_on_model
   process :set_info_hash
+  process :set_content_meta_info
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -43,6 +44,11 @@ class TorrentUploader < CarrierWave::Uploader::Base
     model.info_hash = model.metainfo.sha1.unpack('H*').first.upcase
   rescue Torrent::FileError => e
     Rails.logger.debug { "could not set info hash from metainfo: #{e.message}" }
+  end
+
+  def set_content_meta_info
+    model.cache_content_size
+    model.cache_content_filenames
   end
 
 end
