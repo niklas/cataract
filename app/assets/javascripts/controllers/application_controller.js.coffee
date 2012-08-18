@@ -1,1 +1,1 @@
-#Cataract.ApplicationController = Ember.Controller.extend()
+Cataract.ApplicationController = Ember.Controller.extend()

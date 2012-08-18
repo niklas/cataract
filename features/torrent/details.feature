@@ -20,8 +20,6 @@ Feature: Details of a torrent
         | content_directory | pictures/cats   |
       And I should see "1 file"
 
-  @todo
-  @wip
   Scenario: toggle filenames
     Given I should not see "tails.png"
      When I click on the item of the torrent

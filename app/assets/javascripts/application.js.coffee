@@ -13,12 +13,7 @@
 #= require ember-data
 #
 #= require_tree ./lib
-#= require ./app
-#= require_tree ./models
-#= require_tree ./controllers
-#= require_tree ./views
-#= require_tree ./helpers
-#= require_tree ./templates
+#= require ./cataract
 
 jQuery ->
   $('body:has(ul#torrents):has(form#new_torrent_search)').endlessSearch list: 'ul#torrents', form: 'form#new_torrent_search'
@@ -30,8 +25,6 @@ jQuery ->
 
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
-
-  $('#torrents').on 'click', '.torrent', (event)-> $(this).toggleClass('full') if $(event.target).is('div')
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
