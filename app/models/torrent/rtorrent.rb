@@ -211,18 +211,6 @@ class Torrent
       call_with_torrent 'd.set_directory', torrent, path.to_s
     end
 
-    def torrents
-      Rails.cache.fetch('rtorrent-torrents', expires_in: 15.minutes) do
-        multicall(:size_bytes, :completed_bytes, :up_rate, :down_rate, :active?, :up_total, :down_total, :message, :state, :open?)
-      end
-    end
-
-    def progress
-      Rails.cache.fetch('rtorrent-progress', expires_in: 23.seconds) do
-        multicall_a(:up_rate, :down_rate)
-      end
-    end
-
     def apply(torrents, fields)
       by_hash = torrents.group_by(&:info_hash)
 
@@ -244,7 +232,9 @@ class Torrent
     end
 
     def all(*fields)
-      multicall(*fields)
+      Rails.cache.fetch( (['rtorrent'] + fields).join('-'), expires_in: 23.seconds ) do
+        multicall(*fields)
+      end
     end
 
 
