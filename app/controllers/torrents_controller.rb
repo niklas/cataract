@@ -11,7 +11,7 @@ class TorrentsController < InheritedResources::Base
 
   def progress
     @torrents = Torrent.running_or_listed(params[:running])
-    Torrent.remote.apply_progress @torrents
+    Torrent.remote.apply @torrents, [:up_rate, :down_rate]
     render json: @torrents, each_serializer: TorrentProgressSerializer
   end
 

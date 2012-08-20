@@ -37,32 +37,10 @@ class TorrentDecorator < ApplicationDecorator
     human_bytes torrent.content_size
   end
 
-  def up_rate
-    handle_remote do
-      human_bytes_rate torrent.up_rate
-    end
-  end
-
-  def down_rate
-    handle_remote do
-      human_bytes_rate torrent.down_rate
-    end
-  end
-
   def message
     handle_remote do
       torrent.message
     end
-  end
-
-  def human_bytes(bytes)
-    return if bytes.blank?
-    h.number_to_human_size(bytes).sub(/ytes$/,'')
-  end
-
-  def human_bytes_rate(bytes)
-    return if bytes.blank?
-    human_bytes(bytes) + '/s'
   end
 
   def item_id
