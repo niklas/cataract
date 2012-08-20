@@ -18,21 +18,6 @@ class TorrentDecorator < ApplicationDecorator
     select(:rates).html(rates)
   end
 
-  def percent
-    handle_remote do
-      "#{torrent.progress}%"
-    end
-  end
-
-  def eta
-    handle_remote do
-      now = Time.now
-      h.distance_of_time_in_words(now, now + torrent.left_seconds)
-    end
-  rescue
-    ''
-  end
-
   def content_size
     human_bytes torrent.content_size
   end

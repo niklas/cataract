@@ -32,6 +32,10 @@ class Torrent
     @remote = nil
   end
 
+  def transfer
+    @transfer ||= Transfer.new self
+  end
+
   def remote
     self.class.remote
   end
@@ -61,6 +65,11 @@ class Torrent
     FileUtils.cp path, session_path
     remote.load! session_path
     remote.set_directory self, content_directory.path
+  end
+
+  # collects the values considering the transfer of a torrent
+  class Transfer < Struct.new(:torrent)
+
   end
 
 
@@ -145,16 +154,26 @@ class Torrent
           block.call call_with_torrent(mapped, torrent)
         end
       end
+      Torrent.delegate name, to: :transfer
     end
 
     def self.reader(name)
-      Torrent.send :attr_accessor, name
+      Torrent::Transfer.class_eval do
+        attr_accessor name
+      end
       define_attribute name do |value|
         value
       end
     end
 
     def self.predicate(name)
+      internal_name = name.to_s.sub(/\?$/,'')
+      Torrent::Transfer.class_eval do
+        attr_accessor internal_name
+        define_method name do
+          send(internal_name)
+        end
+      end
       define_attribute name do |value|
         value.to_i > 0
       end
@@ -165,6 +184,7 @@ class Torrent
       define_method name do |torrent|
         call_with_torrent(mapped, torrent)
       end
+      Torrent.delegate name, to: :transfer
     end
 
 
@@ -209,7 +229,7 @@ class Torrent
       all(*fields).each do |remote|
         if torrent = torrents.find { |t| t.info_hash == remote[:hash] }
           remote.except(:hash).each do |attr, value|
-            torrent.send("#{attr}=", value)
+            torrent.transfer.send("#{attr.to_s.sub(/\?$/,'')}=", value)
           end
         end
       end

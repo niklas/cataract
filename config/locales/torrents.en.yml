@@ -24,12 +24,10 @@ en:
     deletion:
       create:
         notice: "%{torrent} deleted"
-  torrents:
-    item:
-      files:
-        one: "1 file"
-        other: "%{count} files"
   simple_form:
     labels:
       defaults:
         delete_content: "delete content"
+  helper:
+    eta:
+      never: 'when pigs can fly'

@@ -1,6 +1,6 @@
 Cataract.Torrent = DS.Model.extend
   title: DS.attr 'string'
-  percent: DS.attr 'number'
+  progress: DS.attr 'number'
   info_hash: DS.attr 'string'
   status: DS.attr 'string'
   up_rate: DS.attr 'string'
@@ -26,9 +26,9 @@ Cataract.Torrent = DS.Model.extend
       "1 file"
   ).property('contentFilenames')
 
-  percentStyle: (->
-    "width: #{@get('percent')}%"
-  ).property('percent')
+  progressStyle: (->
+    "width: #{@get('progress')}%"
+  ).property('progress')
 
 Cataract.Torrent.reopenClass
   url: 'torrent'

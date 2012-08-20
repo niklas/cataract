@@ -10,4 +10,11 @@ module TorrentsHelper
     human_bytes(bytes) + '/s'
   end
 
+  def time_left_in_words(seconds)
+    now = Time.now
+    distance_of_time_in_words(now, now + seconds)
+  rescue FloatDomainError => e
+    I18n.translate('helper.eta.never')
+  end
+
 end

@@ -30,6 +30,7 @@ Feature: Transfer info
         | up_rate | hash        |
         | 5       | the torrent |
      When I go to the home page
+      And the tick interval is reached
      Then I should see the following torrents in the torrent list:
         | up      |
         | 5 B/s   |
@@ -37,7 +38,7 @@ Feature: Transfer info
     Given rtorrent list contains the following:
         | up_rate | hash        |
         | 23      | the torrent |
-     When I go to the home page
+     When the tick interval is reached
      Then I should see the following torrents in the torrent list:
         | up      |
         | 23 B/s  |

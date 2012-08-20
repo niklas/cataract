@@ -133,6 +133,7 @@ describe Torrent::RTorrent do
   end
 
   describe "apply" do
+    let(:archived) { create :torrent  }
     let(:torrent) { create :torrent_with_picture_of_tails, content_directory: incoming }
     before :each do
       rtorrent.stub!(:all).and_return(progress_array)
@@ -140,24 +141,32 @@ describe Torrent::RTorrent do
     end
 
     context "for started torrent" do
-      let(:torrents) { [torrent] }
+      let(:torrents) { [torrent, archived] }
       let(:progress_array) { [{
         hash: torrent.info_hash,
         up_rate: 23,
-        down_rate: 42
+        down_rate: 42,
+        :"active?" => '1'
       }] }
 
-      it "should set rates" do
+      it "should set up rate" do
         torrent.up_rate.should_not be_nil
-        torrent.down_rate.should_not be_nil
-
         torrent.up_rate.should == 23
+      end
+
+      it "should set down rate" do
+        torrent.down_rate.should_not be_nil
         torrent.down_rate.should == 42
       end
+
+      it "should active state" do
+        torrent.should be_active
+        archived.should_not be_active
+      end
+
     end
 
     context "for archived torrent" do
-      let(:archived) { create :torrent  }
       let(:torrents) { [ archived ] }
       let(:progress_array) { [] }
 
