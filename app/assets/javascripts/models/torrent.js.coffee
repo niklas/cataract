@@ -32,11 +32,14 @@ Cataract.Torrent = DS.Model.extend
 
 Cataract.Torrent.reopenClass
   url: 'torrent'
+  refreshFromHashes: (hash) ->
+    for attr in hash
+      record = Cataract.store.find(Cataract.Torrent, attr.id)
+      record.setProperties attr if record?
+    true
+
   refreshProgress: ->
     running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('isRunning')
-    ids = running.mapProperty 'id'
-    $.getJSON "/progress?running=#{ids.join(',')}", (data, textStatus, xhr) ->
-      for attr in data.torrents
-        torrent = Cataract.store.find(Cataract.Torrent, attr.id)
-        torrent.setProperties attr if torrent?
+    $.getJSON "/progress?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
+      Cataract.Torrent.refreshFromHashes data.torrents
       true
