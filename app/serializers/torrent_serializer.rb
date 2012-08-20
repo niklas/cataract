@@ -1,5 +1,5 @@
 class TorrentSerializer < BaseSerializer
-  attributes :id, :title, :info_hash, :status, :content_directory_id, :content_filenames, :content_size
+  attributes :id, :title, :info_hash, :status, :content_directory_id, :content_filenames, :content_size, :status
 
   def attributes
     super.tap do |hash|

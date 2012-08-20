@@ -22,7 +22,7 @@ class Torrent
     finally_stop!
     return
   end
-  alias_method_chain :method_missing, :xml_rpc
+  #alias_method_chain :method_missing, :xml_rpc
 
   def self.remote
     @remote ||= RTorrent.new rtorrent_socket_path
@@ -136,13 +136,8 @@ class Torrent
       all.each { |e| bang e }
     end
 
-    Attributes = Set.new
-
-    Attributes << [:hash, map_method_name(:hash)]
-
     def self.define_attribute(name, &block)
       mapped = map_method_name(name)
-      Attributes << [name, mapped]
       define_method name do |torrent|
         if cached = for_info_hash(hash_for(torrent))
           cached[name]
@@ -153,6 +148,7 @@ class Torrent
     end
 
     def self.reader(name)
+      Torrent.send :attr_accessor, name
       define_attribute name do |value|
         value
       end
@@ -196,7 +192,27 @@ class Torrent
     end
 
     def torrents
-      Rails.cache.fetch('rtorrent-torrents', expires_in: 1.minute) { multicall(torrents_mapping) }
+      Rails.cache.fetch('rtorrent-torrents', expires_in: 15.minutes) do
+        multicall(:size_bytes, :completed_bytes, :up_rate, :down_rate, :active?, :up_total, :down_total, :message, :state, :open?)
+      end
+    end
+
+    def progress
+      Rails.cache.fetch('rtorrent-progress', expires_in: 23.seconds) do
+        multicall_a(:up_rate, :down_rate)
+      end
+    end
+
+    def apply(torrents, fields)
+      by_hash = torrents.group_by(&:info_hash)
+
+      all(*fields).each do |remote|
+        if torrent = torrents.find { |t| t.info_hash == remote[:hash] }
+          remote.except(:hash).each do |attr, value|
+            torrent.send("#{attr}=", value)
+          end
+        end
+      end
     end
 
     def for_info_hash(info_hash)
@@ -207,12 +223,8 @@ class Torrent
       Rails.cache.delete 'rtorrent-torrents'
     end
 
-    def torrents_mapping
-      Attributes.each.with_object({}) do |(acc, int), h|
-        unless acc.to_s.ends_with?('!')
-          h[acc] = "#{int}="
-        end
-      end
+    def all(*fields)
+      multicall(*fields)
     end
 
 
@@ -233,12 +245,22 @@ class Torrent
       hash
     end
 
-    def multicall(mapping)
+    def multicall(*remote_fields)
+      mapping = build_multicall_mapping *remote_fields
       call('d.multicall', '', *mapping.values).map do |it|
         {}.tap do |h|
           mapping.keys.each_with_index do |meth,i|
             h[meth] = it[i]
           end
+        end
+      end
+    end
+    # give a list of rubiesque fields, get back hash, mapping them to multicall
+    # string. Always includes the torrrent's hash
+    def build_multicall_mapping(*fields)
+      (fields << :hash).each_with_object({}) do |field, mapping|
+        unless field.to_s.ends_with?('!')
+          mapping[field] = "#{self.class.map_method_name(field)}="
         end
       end
     end

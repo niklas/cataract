@@ -29,8 +29,7 @@ jQuery ->
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   $('body').bind 'tick', ->
-    running = $('#torrents .torrent.running').map -> $(this).attr('id').replace(/^\D+/, '')
-    $.getScript "/progress?running=#{running.get().join(',')}"
+    Cataract.Torrent.refreshProgress()
     true
 
   $('form#edit').hide().each ->

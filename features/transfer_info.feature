@@ -1,4 +1,5 @@
 @rootfs
+@javascript
 Feature: Transfer info
   In order to see how the transfer is proceeding
   As a logged in user
@@ -18,6 +19,7 @@ Feature: Transfer info
         | 10      | 23000     | the torrent |
       And the torrent is running
      When I go to the home page
+      And the tick interval is reached
      Then I should see the following torrents in the torrent list:
        | up        | down      |
        | 10 B/s    | 22.5 KB/s |
@@ -40,7 +42,6 @@ Feature: Transfer info
         | up      |
         | 23 B/s  |
 
-  @javascript
   Scenario: progress pies updates themselfes
     Given the torrent is running
       And I am on the home page
@@ -54,7 +55,6 @@ Feature: Transfer info
         | 42 B/s | 23 B/s | 15%     | 1 minute | 71.7 KB |
 
 
-  @javascript
   Scenario: stopped manually is detected
     Given the torrent is running
       And I am on the page for the torrent

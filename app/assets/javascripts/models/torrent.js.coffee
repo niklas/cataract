@@ -2,6 +2,7 @@ Cataract.Torrent = DS.Model.extend
   title: DS.attr 'string'
   percent: DS.attr 'number'
   info_hash: DS.attr 'string'
+  status: DS.attr 'string'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
   contentDirectory: DS.belongsTo('Cataract.Directory')
@@ -29,3 +30,8 @@ Cataract.Torrent = DS.Model.extend
 
 Cataract.Torrent.reopenClass
   url: 'torrent'
+  refreshProgress: ->
+    running = Cataract.store.filter Cataract.Torrent, (torrent) -> ( torrent.get('isRunning') || true )
+    ids = running.mapProperty 'id'
+    $.getJSON "/progress?running=#{ids.join(',')}", (data, textStatus, xhr) ->
+      console.debug "updating progress for", data

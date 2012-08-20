@@ -31,14 +31,13 @@ describe Torrent do
       torrent.remote.should == Torrent.remote
     end
 
-    it "should have attributes defined" do
-      Torrent::RTorrent::Attributes.should_not be_empty
-    end
+    it "should have attributes defined"
   end
 
 end
 
 describe Torrent::RTorrent do
+  let(:incoming) { incoming = create :existing_directory, relative_path: "incoming" }
   it "has an offline mode" do
     described_class.offline!
     described_class.should be_offline
@@ -70,33 +69,6 @@ describe Torrent::RTorrent do
 
     it "should have a list of methods available" do
       rtorrent.remote_methods.should_not be_empty
-    end
-  end
-
-  context "mass fetching" do
-    let(:mapping) { rtorrent.torrents_mapping }
-    it "should be a hash" do
-      mapping.should be_a(Hash)
-    end
-
-    it "should have attributes set up" do
-      mapping.should include({
-        :hash             => "d.get_hash=",
-        :name             => "d.get_name=",
-        :size_bytes       => "d.get_size_bytes=",
-        :completed_bytes  => "d.get_completed_bytes=",
-        :up_rate          => "d.get_up_rate=",
-        :down_rate        => "d.get_down_rate=",
-        :active?           => "d.is_active=",
-        #:size_files       => "d.get_size_files=",
-        #:tracker_size     => "d.get_tracker_size=",
-        #:chunk_size       => "d.get_chunk_size=",
-        #:size_chunks      => "d.get_size_chunks=",
-        #:completed_chunks => "d.get_completed_chunks=",
-        #:ratio            => "d.get_ratio=",
-        #:complete         => "d.get_complete=",
-        #:priority         => "d.get_priority=",
-      })
     end
   end
 
@@ -160,6 +132,44 @@ describe Torrent::RTorrent do
 
   end
 
+  describe "apply" do
+    let(:torrent) { create :torrent_with_picture_of_tails, content_directory: incoming }
+    before :each do
+      rtorrent.stub!(:all).and_return(progress_array)
+      rtorrent.apply torrents, [:up_rate, :down_rate]
+    end
+
+    context "for started torrent" do
+      let(:torrents) { [torrent] }
+      let(:progress_array) { [{
+        hash: torrent.info_hash,
+        up_rate: 23,
+        down_rate: 42
+      }] }
+
+      it "should set rates" do
+        torrent.up_rate.should_not be_nil
+        torrent.down_rate.should_not be_nil
+
+        torrent.up_rate.should == 23
+        torrent.down_rate.should == 42
+      end
+    end
+
+    context "for archived torrent" do
+      let(:archived) { create :torrent  }
+      let(:torrents) { [ archived ] }
+      let(:progress_array) { [] }
+
+      it "should not set rates" do
+        archived.up_rate.should be_nil
+        archived.down_rate.should be_nil
+      end
+
+    end
+
+  end
+
   context "running" do
     before { start_rtorrent }
     after  { stop_rtorrent }
@@ -167,8 +177,6 @@ describe Torrent::RTorrent do
     context "with two loaded torrents" do
       before do
         described_class.online!
-        incoming = create :existing_directory,
-          relative_path: "incoming"
         create_file incoming.path/'tails.png'
         @first   = create :torrent_with_picture_of_tails, content_directory: incoming
         @first.start!
@@ -177,25 +185,30 @@ describe Torrent::RTorrent do
         sleep 10 # rtorrent needs a moment
       end
 
-      context "mass fetching" do
-        let(:list) { rtorrent.torrents }
-        it "array" do
-          list.should be_a(Array)
-          list.should have(2).records
+      let(:results) { rtorrent.all(:up_rate, :down_rate, :completed_bytes) }
+      let(:first_result) { results.find { |r| r[:hash] == @first.info_hash } }
+      let(:second_result) { results.find { |r| r[:hash] == @second.info_hash } }
+
+      # put it all in one block to reduce test suite runtime
+      it "should be multicallable" do
+        needs_64_bit_xmlrpc_patch
+
+        results.should be_a(Array)
+        results.should have(2).records
+
+        results.each do |result|
+          result.should be_a(Hash)      # associative Array
+          result.should have_key(:hash) # info_hash
         end
 
-        let(:first) { rtorrent.for_info_hash(@first.info_hash) }
-        let(:second) { rtorrent.for_info_hash(@second.info_hash) }
+        first_result.should be_present
+        first_result.should be_matching({hash: @first.info_hash, completed_bytes: 73451}, :ignore_additional=>true)
 
-        it "should have attrs set" do
-          needs_64_bit_xmlrpc_patch
-          first.should be_a(Hash)
-          first.should be_matching({hash: @first.info_hash, completed_bytes: 73451}, :ignore_additional=>true)
-
-          second.should be_a(Hash)
-          second.should be_matching({hash: @second.info_hash}, :ignore_additional=>true)
-        end
+        second_result.should be_present
+        second_result.should be_matching({hash: @second.info_hash}, :ignore_additional=>true)
       end
+
+
     end
 
   end

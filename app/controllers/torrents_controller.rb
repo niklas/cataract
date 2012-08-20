@@ -2,7 +2,7 @@ class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
   respond_to :js, :html
-  respond_to :json, only: [:index, :create] # ember, jquery.filedrop
+  respond_to :json, only: [:index, :create, :progress] # ember, jquery.filedrop
 
   before_filter :refresh!, only: :show
   custom_actions :resource => :prepend
@@ -11,7 +11,8 @@ class TorrentsController < InheritedResources::Base
 
   def progress
     @torrents = Torrent.running_or_listed(params[:running])
-    @torrents.each(&:refresh)
+    Torrent.remote.apply_progress @torrents
+    render json: @torrents, each_serializer: TorrentProgressSerializer
   end
 
   def create
