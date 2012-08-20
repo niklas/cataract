@@ -7,6 +7,14 @@
   </div>
 {{/if}}
 
+<div class="actions">
+  {{#if isRunning}}
+    <a class="stop btn btn-mini btn-danger" {{action stop target="parentView"}}><i class="icon-stop"></i></a>
+  {{else}}
+    <a class="start btn btn-mini btn-success" {{action start target="parentView"}}><i class="icon-play"></i></a>
+  {{/if}}
+</div>
+
 <p>{{info_hash}}
 
 {{#if isRunning}}

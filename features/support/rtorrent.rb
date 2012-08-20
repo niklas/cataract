@@ -25,11 +25,11 @@ Then /^the rtorrent (\w+) view (should|should not) contain #{capture_model}$/ do
 end
 
 Then /^rtorrent should download #{capture_model}$/ do |m|
-  Torrent.remote.clear_caches!
   torrent = model!(m)
   torrent.info_hash.should_not be_blank
-  wait_until(10) { Torrent.remote.for_info_hash(torrent.info_hash).present? }
-  Torrent.remote.for_info_hash(torrent.info_hash)[:active?].should be_true
+  remote = nil
+  wait_until(10) { (remote = Torrent.remote.all(:active?).select {|r| r[:hash] ==  torrent.info_hash} ).present? }
+  remote[:active?].should be_true
 end
 
 Given /^rtorrent list contains the following:$/ do |table|

@@ -5,6 +5,7 @@ Cataract.Torrent = DS.Model.extend
   status: DS.attr 'string'
   up_rate: DS.attr 'string'
   down_rate: DS.attr 'string'
+  eta: DS.attr 'string'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
   contentDirectory: DS.belongsTo('Cataract.Directory')
@@ -29,6 +30,8 @@ Cataract.Torrent = DS.Model.extend
   progressStyle: (->
     "width: #{@get('progress')}%"
   ).property('progress')
+
+  transferURL: (-> "/torrents/#{@get('id')}/transfer" ).property('id')
 
 Cataract.Torrent.reopenClass
   url: 'torrent'
