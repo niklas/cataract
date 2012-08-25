@@ -1,5 +1,5 @@
 <div id="header">
-  <div class="navbar navbar-fixed-top">
+  <div class="navbar navbar-fixed-top navbar-search">
     <div class="navbar-inner">
       <div class="container-fluid">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -16,6 +16,7 @@
             <li><a href="#torrents/recent">Recent</a></li>
             <li><a href="#torrents/running">Running</a></li>
           </ul>
+          {{view Ember.TextField valueBinding="terms" classNames="search-query" elementId="torrent_search_terms"}}
         </div>
 
       </div>
