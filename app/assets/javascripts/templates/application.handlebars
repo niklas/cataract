@@ -34,8 +34,6 @@
   </div>
   <div class="span9">
     <div>breadcrumbs</div>
-    {{#collection contentBinding="Cataract.torrentsController" tagName="ul" elementId="torrents" classNames="torrents"}}
-      {{view Cataract.ItemTorrentView}}
-    {{/collection}}
+    {{outlet}}
   </div>
 </div>

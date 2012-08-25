@@ -8,7 +8,9 @@ Cataract.Router = Ember.Router.extend
     list: Ember.Route.extend
       route: '/torrents/:status'
       connectOutlets: (router, params) ->
-        console.debug "listing", params.status
-        # router.get('torrentsController').set('status', params.status)
+        torrents = router.get('torrentsController')
+        unless torrents.get('listOutlet')?
+          router.get('applicationController').connectOutlet 'torrents'
+        torrents.set('status', params.status)
 
 
