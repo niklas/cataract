@@ -9,6 +9,6 @@ Cataract.Router = Ember.Router.extend
       route: '/torrents/:status'
       connectOutlets: (router, params) ->
         console.debug "listing", params.status
-        router.get('applicationController').connectOutlet 'torrents', Cataract.store.find(Cataract.Torrent, status: params.status, per: 900)
+        # router.get('torrentsController').set('status', params.status)
 
 
