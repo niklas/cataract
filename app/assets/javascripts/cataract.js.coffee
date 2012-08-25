@@ -5,6 +5,7 @@
 #= require_tree ./helpers
 #= require_tree ./templates
 #= require_tree ./routes
+Ember.LOG_BINDINGS = true
 
 Cataract = Ember.Application.create
   rootElement: '#container'
