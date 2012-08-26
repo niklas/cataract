@@ -6,6 +6,7 @@ Cataract.Torrent = DS.Model.extend
   up_rate: DS.attr 'string'
   down_rate: DS.attr 'string'
   eta: DS.attr 'string'
+  filename: DS.attr 'string'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
   contentDirectory: DS.belongsTo('Cataract.Directory')

@@ -5,7 +5,8 @@
 #= require_tree ./helpers
 #= require_tree ./templates
 #= require_tree ./routes
-Ember.LOG_BINDINGS = true
+
+#Ember.LOG_BINDINGS = true
 
 Cataract = Ember.Application.create
   rootElement: '#container'
@@ -20,4 +21,6 @@ Cataract.store = DS.Store.create
 
 window.Cataract = Cataract
 
-jQuery -> Cataract.initialize()
+jQuery ->
+  Cataract.initialize()
+  Cataract.Torrent.find()
