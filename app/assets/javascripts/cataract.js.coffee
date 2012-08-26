@@ -22,5 +22,8 @@ Cataract.store = DS.Store.create
 window.Cataract = Cataract
 
 jQuery ->
+  Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
+  Cataract.set('siteTitle', 'loading')
   Cataract.initialize()
   Cataract.Torrent.find()
+

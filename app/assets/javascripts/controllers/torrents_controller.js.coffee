@@ -1,6 +1,15 @@
 Cataract.TorrentsController = Ember.ArrayController.extend
   terms: ''
-  status: 'recent'
+  status: ''
+  setSiteTitle: (->
+    title = "#{@get('status')} torrents"
+    if @get('terms').length > 0
+      title += " containing '#{@get('terms')}'"
+    if @get('directory')
+      title += " in \"#{@get('directory').get('name')}\""
+    Cataract.set 'siteTitle', title
+  ).observes('filterFunction')
+
   filterFunction: (->
     terms  = Ember.A( Ember.String.w(@get('terms')) ).map (x) -> x.toLowerCase()
     status = @get('status')
