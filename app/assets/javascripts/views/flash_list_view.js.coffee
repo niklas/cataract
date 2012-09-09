@@ -1,3 +1,5 @@
+Ember.LOG_BINDINGS = true
+
 Ember.Rails ?= Ember.Namespace.create()
 
 Ember.Rails.FlashMessage = Ember.Object.extend
@@ -14,15 +16,20 @@ Ember.Rails.FlashListController = Ember.ArrayController.extend
         message = Ember.Rails.FlashMessage.create severity: m[1].underscore(), message: request.getResponseHeader("X-Flash-#{m[1]}")
         @get('content').pushObject(message)
 
-Ember.Rails.FlashListView = Ember.View.extend
+Ember.Rails.FlashItemView = Ember.View.extend
   basicClassName: 'flash'
   template: Ember.Handlebars.compile """
-    {{#each flash in controller}}
-    <div {{bindAttr class="view.basicClassName flash.severity"}}>{{flash.message}}</div>
-    {{/each}}
+  {{#with view.content}}
+    <div {{bindAttr class="view.basicClassName severity"}}>{{message}}</div>
+  {{/with}}
   """
+
+Ember.Rails.FlashListView = Ember.CollectionView.extend
+  tagName: 'div'
+  itemViewClass: Ember.Rails.FlashItemView
   didInsertElement: ->
     @$().ajaxComplete (event, request, settings) =>
       @get('controller').extractFlashFromHeaders request
 
   controller: Ember.Rails.FlashListController.create()
+  contentBinding: 'controller'
