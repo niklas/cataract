@@ -1,5 +1,5 @@
 Cataract.ItemTorrentView = Ember.View.extend
-  templateName: 'torrents_item'
+  templateName: 'torrents/item'
   classNames: ['torrent']
   tagName: 'li'
   toggleShowing: (event) ->
