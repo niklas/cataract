@@ -6,16 +6,6 @@ Ember.Rails.FlashMessage = Ember.Object.extend
   severity: null
   message: ''
 
-Ember.Rails.FlashListController = Ember.ArrayController.extend
-  content: []
-
-  extractFlashFromHeaders: (request)->
-    headers = request.getAllResponseHeaders()
-    for header in headers.split(/\n/)
-      if m = header.match /^X-Flash-([^:]+)/
-        message = Ember.Rails.FlashMessage.create severity: m[1].underscore(), message: request.getResponseHeader("X-Flash-#{m[1]}")
-        @get('content').pushObject(message)
-
 Ember.Rails.FlashItemView = Ember.View.extend
   basicClassName: 'flash'
   template: Ember.Handlebars.compile """
@@ -28,8 +18,17 @@ Ember.Rails.FlashListView = Ember.CollectionView.extend
   tagName: 'div'
   itemViewClass: Ember.Rails.FlashItemView
   didInsertElement: ->
-    @$().ajaxComplete (event, request, settings) =>
-      @get('controller').extractFlashFromHeaders request
+    @$().ajaxComplete (event, request, settings) => @extractFlashFromHeaders request
 
-  controller: Ember.Rails.FlashListController.create()
-  contentBinding: 'controller'
+  content: []
+
+  extractFlashFromHeaders: (request)->
+    headers = request.getAllResponseHeaders()
+    for header in headers.split(/\n/)
+      if m = header.match /^X-Flash-([^:]+)/
+        @createMessage severity: m[1].underscore(), message: request.getResponseHeader("X-Flash-#{m[1]}")
+
+  createMessage: (args) ->
+    message = Ember.Rails.FlashMessage.create args
+    @get('content').pushObject(message)
+
