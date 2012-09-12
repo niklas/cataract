@@ -1,3 +1,4 @@
+# inspired by http://blog.project-sierra.de/archives/1808
 module FlashInHeader
   def self.included(controller)
     raise(ArgumentError, "#{self} must be included in a controller") unless controller.respond_to?(:after_filter)
