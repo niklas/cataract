@@ -98,3 +98,4 @@ gem 'whenever', :require => false
 gem 'feed-abstract'
 
 gem 'dalli'
+gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'

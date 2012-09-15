@@ -14,6 +14,13 @@ GIT
       activemodel (~> 3.0)
 
 GIT
+  remote: git://github.com/niklas/ember-rails-flash.git
+  revision: a0ac10290289b6d446e1900c62be76af8821f7b9
+  specs:
+    ember-rails-flash (0.0.1)
+      rails (~> 3.2.0)
+
+GIT
   remote: git://github.com/niklas/kopflos.git
   revision: 81edd0fb01be9855f3062331b595d572ef8dd0cd
   specs:
@@ -363,6 +370,7 @@ DEPENDENCIES
   draper
   email_spec
   ember-rails
+  ember-rails-flash!
   factory_girl_rails
   fakefs
   feed-abstract

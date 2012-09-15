@@ -1,10 +1,9 @@
-require 'flash_in_header'
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   # TODO cells ore similar
   helper :all
 
-  include FlashInHeader
+  include EmberRailsFlash::FlashInHeader
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = translate('message.access_denied')
