@@ -1,7 +1,7 @@
 # inherit from this to save some typing
 class TorrentComponentController < InheritedResources::Base
   respond_to :json
-  before_filter :refresh_torrent
+  before_filter :refresh_torrent, except: [:index]
 
   private
   def torrent

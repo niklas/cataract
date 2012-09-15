@@ -12,9 +12,15 @@ Cataract = Ember.Application.create
   rootElement: '#container'
   transferLoaded: false
   refreshTransfers: ->
-    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('isRunning')
-    $.getJSON "/progress?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
-      Cataract.store.loadMany Cataract.Transfer, data.transfers
+    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('record.isRunning')
+    $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
+      for transfer in data.transfers
+        if transfer.up_rate is null and transfer.down_rate is null # torrent stopped from somewhere else
+          torrent = Cataract.Torrent.find(transfer.torrent_id)
+          torrent.set('transfer', null)
+          torrent.set('status', 'archived')
+        else
+          Cataract.store.load Cataract.Transfer, transfer
       Cataract.set 'transferLoaded', true
       true
 

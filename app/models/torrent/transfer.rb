@@ -4,7 +4,7 @@ class Torrent
     if ids.respond_to?(:split)
       ids = ids.split(',')
     end
-    if ids.empty?
+    if ids.blank?
       by_status('running')
     else
       where('status = ? OR id in (?)', 'running', ids)

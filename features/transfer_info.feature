@@ -58,9 +58,10 @@ Feature: Transfer info
 
   Scenario: stopped manually is detected
     Given the torrent is running
-      And I am on the page for the torrent
+      And I am on the home page
       And rtorrent list contains the following:
         | hash |
+      And I click on the first torrent
       And I should see a stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
