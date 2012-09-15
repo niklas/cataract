@@ -1,19 +1,26 @@
 {{#with view.content}}
-  {{#if directory }}
-    <div class="content_directory">
+
+  <div class="row-fluid">
+    <div class="span6 content_directory">
       {{ directory.name }}
       {{ directory.path }}
     </div>
-  {{/if}}
-  <div class="size">{{humanSize}}</div>
-  <div class="count">
-    <a href="#" {{action toggleShowing target="view"}}> {{filesCount}}</a>
+    <div class="span6">
+      <div class="size">{{humanSize}}</div>
+      <a href="#" class="count" {{action toggleFiles target="view"}}>{{filesCount}}</a>
+    </div>
   </div>
-  {{#if isShowing}}
-    <ul class="files">
-      {{#each filenames}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ul>
+
+  {{#if view.isShowingFiles}}
+    <div class="row-fluid">
+      <div class="span12">
+        <ul class="files">
+          {{#each filenames}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
   {{/if}}
+
 {{/with}}

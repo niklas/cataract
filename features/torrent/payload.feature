@@ -28,4 +28,6 @@ Feature: Payload of a torrent
      When I click on the first torrent
       And I follow "1 file"
      Then I should see "tails.png"
+     # does not toggle whole torrent
+      And I should see "Cat Pictures"
 
