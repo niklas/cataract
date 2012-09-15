@@ -19,13 +19,6 @@ class TorrentsController < InheritedResources::Base
     create! { torrents_path }
   end
 
-  before_filter :play_with_flash, only: :index
-
-  def play_with_flash
-    flash[:lol] = 'trolololol'
-    flash['rofl'] = 'Go go locats!'
-  end
-
   private
   def collection
     @torrents ||= search.results
