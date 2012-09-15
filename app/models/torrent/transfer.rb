@@ -63,18 +63,4 @@ class Torrent
     update_state! :archived
   end
 
-  def progress
-    (100.0 * completed_bytes.to_f / size_bytes.to_f).to_i
-  rescue FloatDomainError
-    0
-  end
-
-  def left_seconds
-    left_bytes.to_f / down_rate.to_f
-  end
-
-  def left_bytes
-    size_bytes.to_i - completed_bytes.to_i
-  end
-
 end

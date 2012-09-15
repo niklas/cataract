@@ -59,6 +59,38 @@ class Torrent
 
   # collects the values considering the transfer of a torrent
   class Transfer < Struct.new(:torrent)
+    @@serializable_attributes = []
+
+    def self.serializable_attr_accessor(attr)
+      @@serializable_attributes << attr
+      attr_accessor attr
+    end
+
+    def torrent_id
+      torrent.id
+    end
+
+    def progress
+      (100.0 * completed_bytes.to_f / size_bytes.to_f).to_i
+    rescue FloatDomainError
+      0
+    end
+
+    def left_seconds
+      left_bytes.to_f / down_rate.to_f
+    end
+
+    def left_bytes
+      size_bytes.to_i - completed_bytes.to_i
+    end
+
+    def read_attribute_for_serialization(attr)
+      unless attr.in?( @@serializable_attributes + [:torrent_id, :progress])
+        raise ArgumentError, "cannot serialize #{attr}"
+      else
+        send(attr)
+      end
+    end
 
   end
 
@@ -149,7 +181,7 @@ class Torrent
 
     def self.reader(name)
       Torrent::Transfer.class_eval do
-        attr_accessor name
+        serializable_attr_accessor name
       end
       define_attribute name do |value|
         value
@@ -201,6 +233,7 @@ class Torrent
       call_with_torrent 'd.set_directory', torrent, path.to_s
     end
 
+    # sets the specified fields on the given torrents' transfer(s)
     def apply(torrents, fields)
       by_hash = torrents.group_by(&:info_hash)
 
