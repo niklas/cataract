@@ -21,5 +21,6 @@ Cataract.ItemTorrentView = Ember.View.extend
     @toggleExpand(event)
     torrent = @get('context')
     torrent.store.find Cataract.Payload, torrent.get('id')
+    false
 
 
