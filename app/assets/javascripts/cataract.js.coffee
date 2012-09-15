@@ -10,6 +10,13 @@
 
 Cataract = Ember.Application.create
   rootElement: '#container'
+  transferLoaded: false
+  refreshTransfers: ->
+    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('isRunning')
+    $.getJSON "/progress?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
+      Cataract.store.loadMany Cataract.Transfer, data.transfers
+      Cataract.set 'transferLoaded', true
+      true
 
 Cataract.store = DS.Store.create
   revision: 4
@@ -25,5 +32,6 @@ jQuery ->
   Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
   Cataract.set('siteTitle', 'loading')
   Cataract.initialize()
+  $('body').bind 'tick', -> Cataract.refreshTransfers(); true
   Cataract.Torrent.find()
 

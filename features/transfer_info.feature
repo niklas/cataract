@@ -52,8 +52,8 @@ Feature: Transfer info
      When the tick interval is reached
      # size is taken from metadata
      Then I should see the following torrents in the torrent list:
-        | up     | down   | percent | eta      | size    |
-        | 42 B/s | 23 B/s | 15%     | 1 minute | 71.7 KB |
+        | up     | down   | percent | eta      |
+        | 42 B/s | 23 B/s | 15%     | 1 minute |
 
 
   Scenario: stopped manually is detected

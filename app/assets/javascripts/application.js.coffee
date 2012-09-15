@@ -29,10 +29,6 @@ jQuery ->
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
-  $('body').bind 'tick', ->
-    Cataract.Torrent.refreshProgress()
-    true
-
   $('form#edit').hide().each ->
     $form = $(this)
     $('a.edit').click -> $form.toggle('slow')

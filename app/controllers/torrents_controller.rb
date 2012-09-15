@@ -15,7 +15,7 @@ class TorrentsController < InheritedResources::Base
   def progress
     @torrents = Torrent.running_or_listed(params[:running])
     Torrent.remote.apply @torrents, [:up_rate, :down_rate, :size_bytes, :completed_bytes]
-    render json: @torrents.map(&:transfer), each_serializer: TransferSerializer
+    render json: @torrents.map(&:transfer), each_serializer: TransferSerializer, root: 'transfers'
   end
 
   def create

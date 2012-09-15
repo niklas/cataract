@@ -4,6 +4,7 @@ class TorrentSerializer < BaseSerializer
   def attributes
     super.tap do |hash|
       hash['payload_id'] = object.payload.exist?? object.id : nil
+      hash['transfer_id'] = object.running?? object.id : nil
     end
   end
 

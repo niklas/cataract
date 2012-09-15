@@ -3,10 +3,11 @@ class TransferSerializer < BaseSerializer
   attributes :torrent_id, :progress
 
   def attributes
-    super.tap do |a|
-      a['up_rate'] = human_bytes_rate object.up_rate
-      a['down_rate'] = human_bytes_rate object.down_rate
-      a['eta'] = time_left_in_words object.left_seconds
+    super.tap do |hash|
+      hash['up_rate'] = human_bytes_rate object.up_rate
+      hash['down_rate'] = human_bytes_rate object.down_rate
+      hash['eta'] = time_left_in_words object.left_seconds
+      hash['id'] = object.torrent_id # trick ember
     end
   end
 end

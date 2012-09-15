@@ -21,9 +21,3 @@ Cataract.Torrent.reopenClass
       record = Cataract.store.find(Cataract.Torrent, attr.id)
       record.setProperties attr if record?
     true
-
-  refreshProgress: ->
-    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('isRunning')
-    $.getJSON "/progress?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
-      Cataract.Torrent.refreshFromHashes data.torrents
-      true

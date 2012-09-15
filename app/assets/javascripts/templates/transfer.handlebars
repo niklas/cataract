@@ -1,12 +1,19 @@
-<div class="progress progress-striped progress-success active">
-  <div class="bar" {{bindAttr style="percentStyle"}}>
-    <div class="percent">{{progress}}%</div>
-    <div class="eta">{{eta}}</div>
+{{#with view.content}}
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="progress progress-striped progress-success active">
+        <div class="bar" {{bindAttr style="percentStyle"}}>
+          <div class="percent">{{progress}}%</div>
+          <div class="eta">{{eta}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="span6">
+      <span class="down badge"><i class="icon-arrow-down"></i>{{down_rate}}</span>
+      <span class="up badge"  ><i class="icon-arrow-up"  ></i>{{up_rate}}</span>
+      {{#if message}}
+        <div class="message">{{message}}</div>
+      {{/if}}
+    </div>
   </div>
-</div>
-<span class="down badge"><i class="icon-arrow-down" />{{down_rate}}</span>
-<span class="up badge"  ><i class="icon-arrow-up"   />{{up_rate}}</span>
-{{#if message}}
-  <div class="message">{{message}}</div>
-{{/if}}
-
+{{/with}}

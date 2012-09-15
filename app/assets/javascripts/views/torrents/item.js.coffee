@@ -10,11 +10,11 @@ Cataract.ItemTorrentView = Ember.View.extend
   #       we could Torrent has_one/belongs_to Transfer, can hold transfer values in there, too
   start: (event) ->
     torrent = @get('context')
-    torrent.store.adapter.ajax torrent.get('transferURL'), 'POST', success: (json) -> torrent.setProperties(json.torrent)
+    transfer = torrent.store.createRecord Cataract.Transfer, torrent_id: torrent.get('id')
     true
   stop: (event) ->
-    torrent = @get('context')
-    torrent.store.adapter.ajax torrent.get('transferURL'), 'DELETE', success: (json) -> torrent.setProperties(json.torrent)
+    if transfer = @get('context.transfer')
+      transfer.deleteRecord()
     true
 
   click: (event) ->
