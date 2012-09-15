@@ -8,9 +8,9 @@ Cataract::Application.routes.draw do
     end
     resource :move,     controller: :move, only: [:new, :create, :show]
     resource :deletion, controller: :deletion, only: [:new, :create, :show]
-    resource :content,  controller: :content, only: [:show, :destroy]
     resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
+  resources :payloads, only: [:show, :destroy], controller: :payload
 
   controller :torrents do
     get 'status/:status/page/:page', action: :index

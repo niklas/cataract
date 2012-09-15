@@ -8,8 +8,12 @@
   {{/if}}
 {{/if}}
 
-{{#if payload}}
-  {{view Cataract.PayloadView contentBinding="payload"}}
+{{#if payloadExists}}
+  {{#if isExpanded}}
+    {{view Cataract.PayloadView contentBinding="payload"}}
+  {{else}}
+    has content, click to see
+  {{/if}}
 {{/if}}
 
 

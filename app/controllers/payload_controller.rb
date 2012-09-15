@@ -1,5 +1,11 @@
-class ContentController < TorrentComponentController
+class PayloadController < TorrentComponentController
+  respond_to :json
+
   before_filter :get_actual_size, :only => [:destroy]
+
+  def show
+    render json: resource, serializer: PayloadSerializer
+  end
 
   private
   def get_actual_size

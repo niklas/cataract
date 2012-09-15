@@ -25,6 +25,7 @@ class Torrent
 
   class Payload < Struct.new(:torrent)
     extend ActiveModel::Naming
+    include ActiveModel::SerializerSupport
 
     def name
       @name ||= utf8(info.name)
@@ -82,6 +83,8 @@ class Torrent
       []
     end
 
+    alias :filenames :relative_files
+
     def count
       if single?
         1
@@ -106,12 +109,8 @@ class Torrent
       0
     end
 
-    def serializable_hash(options=nil)
-      {
-        torrent_id: torrent.id,
-        size: size,
-        filenames: relative_files
-      }
+    def torrent_id
+      torrent.id
     end
 
     def destroy

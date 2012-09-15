@@ -1,7 +1,6 @@
 Cataract.Torrent = DS.Model.extend
   title: DS.attr 'string'
   transfer: DS.belongsTo 'Cataract.Transfer'
-  payload: DS.belongsTo 'Cataract.Payload'
   info_hash: DS.attr 'string'
   status: DS.attr 'string'
   filename: DS.attr 'string'
@@ -9,6 +8,11 @@ Cataract.Torrent = DS.Model.extend
   isRemote: (-> @get('status') == 'remote').property('status')
 
   transferURL: (-> "/torrents/#{@get('id')}/transfer" ).property('id')
+  payloadURL: (-> "/torrents/#{@get('id')}/payload" ).property('id')
+
+  payloadId: DS.attr 'number'
+  payloadExists: (-> @get('payloadId')? ).property('payloadId')
+  payload: DS.belongsTo 'Cataract.Payload'
 
 Cataract.Torrent.reopenClass
   url: 'torrent'

@@ -61,8 +61,10 @@ Then /^(.+) should disappear$/ do |name|
   step %Q~I wait for #{name} to disappear~
 end
 
-When /^I click on the (.+)$/ do |target|
-  page.first( selector_for(target) ).click
+When /^I click on (the .+)$/ do |target|
+  selector = selector_for(target)
+  page.should have_css(selector)
+  page.first(selector).click
 end
 
 Then /^I should see a (.+link)/ do |target|
