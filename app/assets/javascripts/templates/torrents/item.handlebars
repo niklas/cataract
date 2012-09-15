@@ -1,53 +1,31 @@
 <h4 class="title">{{title}}</h4>
 
-{{#if contentDirectory }}
-  <div class="content_directory">
-    {{ contentDirectory.name }}
-    {{ contentDirectory.path }}
-  </div>
-{{/if}}
-
-<div class="actions">
-  {{#if isRunning}}
-    <a class="stop btn btn-mini btn-danger" {{action stop target="parentView"}}><i class="icon-stop"></i></a>
-  {{else}}
-    <a class="start btn btn-mini btn-success" {{action start target="parentView"}}><i class="icon-play"></i></a>
-  {{/if}}
-</div>
-
-<p>{{info_hash}}
-
 {{#if isRunning}}
-  <div class="progress progress-striped progress-success active">
-    <div class="bar" {{bindAttr style="percentStyle"}}>
-      <div class="percent">{{progress}}%</div>
-      <div class="eta">{{eta}}</div>
-    </div>
-  </div>
-  <span class="down badge"><i class="icon-arrow-down" />{{down_rate}}</span>
-  <span class="up badge"  ><i class="icon-arrow-up"   />{{up_rate}}</span>
-  {{#if message}}
-    <div class="message">{{message}}</div>
+  {{#if transfer}}
+    {{view Cataract.TransferView contentBinding="transfer"}}
+  {{else}}
+    Loading..
   {{/if}}
 {{/if}}
+
+{{#if payload}}
+  {{view Cataract.PayloadView contentBinding="payload"}}
+{{/if}}
+
+
+{{#if isExpanded}}
+  <div class="actions">
+    {{#if isRunning}}
+      <a class="stop btn btn-mini btn-danger" {{action stop target="parentView"}}><i class="icon-stop"></i></a>
+    {{else}}
+      <a class="start btn btn-mini btn-success" {{action start target="parentView"}}><i class="icon-play"></i></a>
+    {{/if}}
+  </div>
+  <p>{{info_hash}}</p>
+{{/if}}
+
 
 {{#if isRemote}}
 <div class="url">{{url}}</div>
-{{/if}}
-
-{{#if hasContent}}
-  <div class="content">
-    <div class="size">{{humanContentSize}}</div>
-    <div class="count">
-      <a href="#" {{action toggleShowing target="parentView"}}> {{contentFilesCount}}</a>
-    </div>
-    {{#if isShowing}}
-      <ul class="files">
-        {{#each contentFilenames}}
-          <li>{{this}}</li>
-        {{/each}}
-      </ul>
-    {{/if}}
-  </div>
 {{/if}}
 

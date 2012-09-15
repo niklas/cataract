@@ -1,0 +1,20 @@
+<div class="content">
+  {{#if contentDirectory }}
+    <div class="content_directory">
+      {{ contentDirectory.name }}
+      {{ contentDirectory.path }}
+    </div>
+  {{/if}}
+  <div class="size">{{humanContentSize}}</div>
+  <div class="count">
+    <a href="#" {{action toggleShowing target="view"}}> {{contentFilesCount}}</a>
+  </div>
+  {{#if isShowing}}
+    <ul class="files">
+      {{#each contentFilenames}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>
+
