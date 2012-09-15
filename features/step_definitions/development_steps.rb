@@ -5,6 +5,10 @@ When /^I pause$/ do
   end
 end
 
+When /^I debug the page$/ do
+  page.driver.debug
+end
+
 When /^nothing$/ do
   # for scenario outlines
 end

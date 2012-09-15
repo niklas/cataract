@@ -48,6 +48,9 @@ group :test do
 
   gem 'webmock'
   gem 'term-ansicolor' # for ScenarioTodo
+
+  # FIXME PR accepted? https://github.com/jonleighton/poltergeist/issues/89
+  gem 'poltergeist', git: '/home/niklas/src/poltergeist', ref: 'better-inspector-detection' # headless webkit with debugging
 end
 
 group :development, :test do
