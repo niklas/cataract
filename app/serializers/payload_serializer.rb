@@ -1,4 +1,12 @@
 class PayloadSerializer < BaseSerializer
-  attributes :torrent_id, :content_directory_id, :content_filenames, :content_size
+  include TorrentsHelper
+  attributes :torrent_id, :filenames, :size
+
+  def attributes
+    super.tap do |hash|
+      hash['directory_id'] = object.torrent.content_directory_id
+      hash['human_size'] = number_to_human_size(object.size).sub(/ytes$/,'')
+    end
+  end
 end
 

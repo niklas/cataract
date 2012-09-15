@@ -106,8 +106,8 @@ describe Move, 'auto targeting' do
 end
 
 describe Move, 'target' do
-  it "moves the torrent's content to the final directory" do
-    torrent = double('Torrent', content: stub('content', multiple?: false, path: 'content_dir'), 
+  it "moves the torrent's payload to the final directory" do
+    torrent = double('Torrent', payload: stub('payload', multiple?: false, path: 'content_dir'),
                                 stop: true, save!: true, 'content_directory=' => true )
 
     move = Move.new

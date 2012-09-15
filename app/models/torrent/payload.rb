@@ -23,7 +23,7 @@ class Torrent
     hier
   end
 
-  class Content < Struct.new(:torrent)
+  class Payload < Struct.new(:torrent)
     extend ActiveModel::Naming
 
     def name
@@ -106,12 +106,20 @@ class Torrent
       0
     end
 
+    def serializable_hash(options=nil)
+      {
+        torrent_id: torrent.id,
+        size: size,
+        filenames: relative_files
+      }
+    end
+
     def destroy
       torrent.stop
       if exists?
         FileUtils.rm_rf path
       else
-        torrent.errors.add :content, :blank
+        torrent.errors.add :payload, :blank
       end
     end
 
@@ -155,7 +163,7 @@ class Torrent
 
     def save
       if delete_content?
-        torrent.content.destroy
+        torrent.payload.destroy
       end
       torrent.stop if torrent.stoppable?
       torrent.destroy
@@ -166,8 +174,8 @@ class Torrent
     @deletion ||= Deletion.new(params.merge(torrent: self))
   end
 
-  def content
-    @content ||= Content.new(self)
+  def payload
+    @payload ||= Payload.new(self)
   end
 
   def ensure_content_directory
@@ -176,8 +184,8 @@ class Torrent
 
   on_refresh :find_missing_content, :if => :metainfo?
   def find_missing_content
-    unless content.exists?
-      dir, infix = content.locate
+    unless payload.exists?
+      dir, infix = payload.locate
       if dir
         self.content_directory = dir
         self.content_path_infix = infix.to_s
@@ -202,12 +210,12 @@ class Torrent
 
   on_refresh :cache_content_size, :if => :metainfo?
   def cache_content_size
-    self.content_size = content.size
+    self.content_size = payload.size
   end
 
   on_refresh :cache_content_filenames, :if => :metainfo?
   def cache_content_filenames
-    self.content_filenames = content.relative_files
+    self.content_filenames = payload.relative_files
   end
 
   def mover_job_key
@@ -236,7 +244,7 @@ class Torrent
   end
 
   def content_size
-    read_attribute(:content_size) || content.size
+    read_attribute(:content_size) || payload.size
   end
 
   def has_files?

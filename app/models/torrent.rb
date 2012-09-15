@@ -160,7 +160,7 @@ class Torrent < ActiveRecord::Base
                  :file,
                  :rtorrent,
                  :transfer,
-                 :content,
+                 :payload,
                  :search
 
 end

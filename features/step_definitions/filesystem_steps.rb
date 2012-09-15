@@ -65,8 +65,8 @@ Given /^the file "([^"]*)" is deleted$/ do |file|
   end
 end
 
-Given /^#{capture_model}'s content exists on disk$/ do |m|
-  model!(m).content.files.each do |path|
+Given /^#{capture_model}'s (?:content|payload) exists on disk$/ do |m|
+  model!(m).payload.files.each do |path|
     step %Q~the file "#{path}" exists on disk~
   end
 end
