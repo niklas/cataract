@@ -40,8 +40,7 @@ group :test, :halt_on_fail => true do
     :keep_failed => false,
     :run_all => { :cli => "--format progress --tags ~@wip" },
     :all_on_start => false,
-    :all_after_pass => false
-    do
+    :all_after_pass => false do
     watch(%r{^features/.+\.feature$})
     watch(%r{^app/(controllers|widgets)})     { "features" }
     watch(%r{^app/models/maintenance/(.+)\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
