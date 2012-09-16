@@ -9,7 +9,7 @@
 #Ember.LOG_BINDINGS = true
 
 Cataract = Ember.Application.create
-  rootElement: '#container'
+  rootElement: 'body'
   transferLoaded: false
   online: true
   offlineReason: null
