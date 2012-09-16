@@ -20,7 +20,7 @@ Feature: Transfer info failure
      When the tick interval is reached
       And I wait for the spinner to disappear
       And I click on the first torrent
-     Then I should see a start link
+     Then I should see the start link
 
   Scenario: rtorrent is not started
      When the tick interval is reached
