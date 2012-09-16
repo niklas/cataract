@@ -8,7 +8,7 @@ describe Torrent do
 
     describe 'a running torrent that was stopped manually' do
       before do
-        Torrent.remote.stub(:torrents).once.and_return([])
+        Torrent.remote.stub(:all).once.and_return([])
       end
       let(:torrent) { create :running_torrent }
 
@@ -20,7 +20,7 @@ describe Torrent do
 
     describe 'a running torrent that was stopped manually' do
       before do
-        Torrent.remote.stub(:torrents).once.and_return([
+        Torrent.remote.stub(:all).once.and_return([
           { hash: torrent.info_hash, active?: false }
         ])
       end
