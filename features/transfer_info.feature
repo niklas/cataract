@@ -62,10 +62,10 @@ Feature: Transfer info
       And rtorrent list contains the following:
         | hash |
       And I click on the first torrent
-      And I should see a stop link
+      And I should see the stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
         | title  |
         | single |
-     Then I should see a start link
-      But I should not see a stop link
+     Then I should see the start link
+      But I should not see the stop link
