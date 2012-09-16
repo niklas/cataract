@@ -4,7 +4,11 @@
   {{#if Cataract.transferLoaded}}
     {{view Cataract.TransferView contentBinding="transfer"}}
   {{else}}
-    Loading..
+    {{#if Cataract.online}}
+      Loading..
+    {{else}}
+      {{Cataract.offlineReason}}
+    {{/if}}
   {{/if}}
 {{/if}}
 

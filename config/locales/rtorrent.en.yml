@@ -1,0 +1,4 @@
+en:
+  rtorrent:
+    exceptions:
+      offline: "Connection to rtorrent refused"

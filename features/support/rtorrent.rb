@@ -6,12 +6,14 @@ require Rails.root/'spec/support/rtorrent_spec_helper'
 World(RTorrentSpecHelper)
 
 Before '@rtorrent' do
+  Torrent.remote.clear_caches!
   Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
   start_rtorrent
 end
 
 After '@rtorrent' do
   stop_rtorrent
+  Torrent.remote.clear_caches!
 end
 
 When /^rtorrent shuts down$/ do

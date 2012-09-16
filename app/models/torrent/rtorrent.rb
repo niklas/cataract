@@ -144,6 +144,10 @@ class Torrent
       else
         raise Offline, "cannot call RTorrent because it was switched offline"
       end
+    rescue Errno::ECONNREFUSED => e
+      raise Unreachable, e.message
+    rescue Errno::ENOENT => e
+      raise Unreachable, e.message
     end
 
     def self.map_method_name(meth)
@@ -251,7 +255,7 @@ class Torrent
     end
 
     def clear_caches!
-      Rails.cache.delete 'rtorrent-torrents'
+      Rails.cache.delete_matched 'rtorrent*'
     end
 
     def all(*fields)
