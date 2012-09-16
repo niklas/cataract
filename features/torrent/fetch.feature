@@ -12,7 +12,7 @@ Feature: Fetch torrent
       And the URL "http://ubuntu.com/latest.iso.torrent" points to file "single.torrent"
       And I am signed in
       And I am on the home page
-     When I click on the first torrent
+     When I expand the first torrent
       And I click on the start link
       And I wait for the spinner to disappear
      Then I should not see the start link

@@ -4,6 +4,9 @@ Cataract.ItemTorrentView = Ember.View.extend
   tagName: 'li'
   isExpanded: false
   toggleExpand: (event) ->
+    unless @get('isExpanded')
+      torrent = @get('context')
+      torrent.store.find Cataract.Payload, torrent.get('id')
     @set( 'isExpanded', ! @get('isExpanded'))
     false
 
@@ -17,12 +20,6 @@ Cataract.ItemTorrentView = Ember.View.extend
     if transfer = @get('context.transfer')
       transfer.deleteRecord()
       transfer.store.commit()
-    false
-
-  click: (event) ->
-    @toggleExpand(event)
-    torrent = @get('context')
-    torrent.store.find Cataract.Payload, torrent.get('id')
     false
 
 

@@ -61,7 +61,7 @@ Feature: Transfer info
       And I am on the home page
       And rtorrent list contains the following:
         | hash |
-      And I click on the first torrent
+      And I expand the first torrent
       And I should see the stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:

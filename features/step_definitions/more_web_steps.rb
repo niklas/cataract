@@ -67,6 +67,12 @@ When /^I click on (the .+)$/ do |target|
   page.first(selector).click
 end
 
+When /^I expand (the .+)$/ do |target|
+  selector = selector_for(target)
+  page.should have_css(selector)
+  page.first(selector).first('.title').click
+end
+
 Then /^I should see (.+link)/ do |target|
   page.should have_css( selector_for(target) )
 end

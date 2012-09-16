@@ -30,10 +30,6 @@ jQuery ->
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
-  $('form#edit').hide().each ->
-    $form = $(this)
-    $('a.edit').click -> $form.toggle('slow')
-
   #setInterval ->
   #  $('body').trigger 'tick'
   #, 23 * 1000

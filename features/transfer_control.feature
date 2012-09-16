@@ -15,7 +15,7 @@ Feature: Transferring torrents
   Scenario: Start the transfer from the list
     Given I am on the home page
       And the tick interval is reached
-     When I click on the first torrent
+     When I expand the first torrent
       And I click on the start link
       And I wait for the spinner to disappear
      Then I should see the stop link
@@ -32,7 +32,7 @@ Feature: Transferring torrents
       And the torrent was started
       And rtorrent should download the torrent
       And the tick interval is reached
-     When I click on the first torrent
+     When I expand the first torrent
      Then I should see the stop link
 
   Scenario: Stop the transfer from the list
@@ -40,7 +40,7 @@ Feature: Transferring torrents
       And rtorrent should download the torrent
       And I am on the home page
       And the tick interval is reached
-     When I click on the first torrent
+     When I expand the first torrent
       And I click on the stop link
       And I wait for the spinner to disappear
      Then I should see notice "stopped Tails"
