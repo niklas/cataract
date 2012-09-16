@@ -15,6 +15,7 @@ Cataract.TorrentsController = Ember.ArrayController.extend
     status = @get('status')
     (torrent) ->
       want = true
+      torrent = torrent.record if torrent.record? # materialized or not?!
       text = "#{torrent.get('title')} #{torrent.get('filename')}".toLowerCase()
       want = want and terms.every (term) -> text.indexOf(term) >= 0
 
