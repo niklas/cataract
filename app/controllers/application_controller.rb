@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   helper_method :search
 
   def search_params
-    params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {})
+    params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {}).merge(per: 1000) # TODO paginate properly
   end
 
   def clear_transfer_cache
