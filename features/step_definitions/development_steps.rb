@@ -6,7 +6,16 @@ When /^I pause$/ do
 end
 
 When /^I debug the page$/ do
-  page.driver.debug
+  if @debugging_page
+    page.driver.pause
+  else
+    @debugging_page = true
+    page.driver.debug
+  end
+end
+
+After do
+  @debugging_page = false
 end
 
 When /^nothing$/ do

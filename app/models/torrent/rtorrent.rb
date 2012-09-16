@@ -92,6 +92,17 @@ class Torrent
       end
     end
 
+    # FIXME spaghetti
+    def fetch!(fields=[])
+      Torrent.remote.apply [torrent], fields
+    end
+
+    def update(attrs={})
+      attrs.except(:hash).each do |attr, value|
+        send("#{attr.to_s.sub(/\?$/,'')}=", value)
+      end
+    end
+
   end
 
 
@@ -196,9 +207,7 @@ class Torrent
       internal_name = name.to_s.sub(/\?$/,'')
       Torrent::Transfer.class_eval do
         attr_accessor internal_name
-        define_method name do
-          send(internal_name)
-        end
+        alias_method name, internal_name
       end
       define_attribute name do |value|
         value.to_i > 0
@@ -243,9 +252,7 @@ class Torrent
 
       all(*fields).each do |remote|
         if torrent = torrents.find { |t| t.info_hash == remote[:hash] }
-          remote.except(:hash).each do |attr, value|
-            torrent.transfer.send("#{attr.to_s.sub(/\?$/,'')}=", value)
-          end
+          torrent.transfer.update( remote )
         end
       end
     end

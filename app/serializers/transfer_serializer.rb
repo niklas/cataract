@@ -1,6 +1,7 @@
 class TransferSerializer < BaseSerializer
   include TorrentsHelper
   attributes :torrent_id, :progress
+  has_one :torrent
 
   def attributes
     super.tap do |hash|

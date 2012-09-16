@@ -39,6 +39,8 @@ Cataract.store = DS.Store.create
     bulkCommit: false
     plurals:
       directory: 'directories'
+    mappings:
+      torrents: 'Cataract.Torrent'
 
 
 window.Cataract = Cataract

@@ -13,7 +13,7 @@
 {{/if}}
 
 {{#if payloadExists}}
-  {{#if isExpanded}}
+  {{#if view.isExpanded}}
     {{view Cataract.PayloadView contentBinding="payload"}}
   {{else}}
     has content, click to see
@@ -21,12 +21,12 @@
 {{/if}}
 
 
-{{#if isExpanded}}
+{{#if view.isExpanded}}
   <div class="actions">
     {{#if isRunning}}
-      <a class="stop btn btn-mini btn-danger" {{action stop target="parentView"}}><i class="icon-stop"></i></a>
+      <a class="stop btn btn-mini btn-danger" {{action stop target="view"}}><i class="icon-stop"></i></a>
     {{else}}
-      <a class="start btn btn-mini btn-success" {{action start target="parentView"}}><i class="icon-play"></i></a>
+      <a class="start btn btn-mini btn-success" {{action start target="view"}}><i class="icon-play"></i></a>
     {{/if}}
   </div>
   <p>{{info_hash}}</p>

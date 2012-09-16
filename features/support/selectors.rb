@@ -66,7 +66,7 @@ module HtmlSelectorsHelpers
     when /^(?:the )?item of #{capture_model}$/
       "##{ model!($1).decorate.item_id }"
 
-    when /^(\w+) link$/
+    when /^the (\w+) link$/
       "a.#{$1}"
 
     # TODO move to jquery_mobile

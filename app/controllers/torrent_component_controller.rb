@@ -3,9 +3,12 @@ class TorrentComponentController < InheritedResources::Base
   respond_to :json
   before_filter :refresh_torrent, except: [:index]
 
+  # FIXME: ember-data does not support nested resources yet, so we have to jump
+  # through hoops finding the torrent
+
   private
   def torrent
-    @torrent ||= Torrent.find params[:id]
+    @torrent ||= Torrent.find( params[:id] || resource_params.first[:id] )
   end
 
   helper_method :torrent

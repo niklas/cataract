@@ -67,10 +67,10 @@ When /^I click on (the .+)$/ do |target|
   page.first(selector).click
 end
 
-Then /^I should see a (.+link)/ do |target|
+Then /^I should see (.+link)/ do |target|
   page.should have_css( selector_for(target) )
 end
 
-Then /^I should not see a (.+link)/ do |target|
+Then /^I should not see (.+link)/ do |target|
   page.should have_no_css( selector_for(target) )
 end

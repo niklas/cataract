@@ -1,13 +1,17 @@
 class TransferController < TorrentComponentController
   respond_to :json
 
+  Fields = [:up_rate, :down_rate, :size_bytes, :completed_bytes]
+
   rescue_from Torrent::RTorrent::Offline do |exception|
     render status: 502, text: I18n.t('rtorrent.exceptions.offline')
   end
 
+  before_filter :clear_transfer_cache
+
   def index
     torrents = Torrent.running_or_listed(params[:running])
-    Torrent.remote.apply torrents, [:up_rate, :down_rate, :size_bytes, :completed_bytes]
+    Torrent.remote.apply torrents, Fields
     render json: torrents.map(&:transfer), each_serializer: TransferSerializer, root: 'transfers'
   end
 
@@ -29,6 +33,7 @@ class TransferController < TorrentComponentController
 
   private
   def render_json
+    resource.fetch! Fields
     render json: resource, serializer: TransferSerializer
   end
 end
