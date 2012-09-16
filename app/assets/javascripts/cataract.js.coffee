@@ -29,6 +29,8 @@ Cataract = Ember.Application.create
           torrent.set('status', 'archived')
         else
           Cataract.store.load Cataract.Transfer, transfer
+      if data.torrents
+        Cataract.store.loadMany Cataract.Torrent, data.torrents
       Cataract.set 'transferLoaded', true
       Cataract.set 'online', true
       true

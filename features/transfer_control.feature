@@ -26,14 +26,14 @@ Feature: Transferring torrents
   @wip
   Scenario: Pause the transfer
 
-  @todo
-  @wip
   Scenario: detect torrent was started in the background
-    Given the torrent was started
+    Given I am on the home page
+      And the tick interval is reached
+      And the torrent was started
       And rtorrent should download the torrent
       And the tick interval is reached
      When I click on the first torrent
-     Then I should see the stop button
+     Then I should see the stop link
 
   Scenario: Stop the transfer from the list
     Given the torrent was started
