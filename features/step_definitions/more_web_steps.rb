@@ -46,7 +46,7 @@ end
 When /^I wait for (.+) to (?:disappear|stop)$/ do |name|
   selector = selector_for name
   begin
-    wait_until(10) { page.has_no_css?(selector, :visible => true) }
+    wait_until(10) { page.has_no_css?(selector) }
   rescue Capybara::TimeoutError => timeout
     STDERR.puts "saved page: #{save_page}"
     raise timeout

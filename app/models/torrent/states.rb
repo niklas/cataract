@@ -74,6 +74,7 @@ class Torrent
   def refresh_status
     case status
     when 'running'
+      transfer.fetch! [:open?]
       unless open?
         Rails.logger.debug "#{self} was running, but not open anymore. archiving"
         self.status = :archived

@@ -11,10 +11,10 @@ Feature: Transferring torrents
       And a torrent_with_picture_of_tails exists with title: "Tails", content_directory: the directory
       And the file for the torrent exists
       And I am signed in
-      And I am on the home page
-      And the tick interval is reached
 
   Scenario: Start the transfer from the list
+    Given I am on the home page
+      And the tick interval is reached
      When I click on the first torrent
       And I click on the start link
       And I wait for the spinner to disappear
@@ -26,7 +26,15 @@ Feature: Transferring torrents
   @wip
   Scenario: Pause the transfer
 
+  @todo
   @wip
+  Scenario: detect torrent was started in the background
+    Given the torrent was started
+      And rtorrent should download the torrent
+      And the tick interval is reached
+     When I click on the first torrent
+     Then I should see the stop button
+
   Scenario: Stop the transfer from the list
     Given the torrent was started
       And rtorrent should download the torrent

@@ -40,6 +40,8 @@ Cataract.store = DS.Store.create
     plurals:
       directory: 'directories'
     mappings:
+      transfer: 'Cataract.Transfer'
+      torrent: 'Cataract.Torrent'
       torrents: 'Cataract.Torrent'
 
 

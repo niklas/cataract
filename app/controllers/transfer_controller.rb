@@ -28,7 +28,7 @@ class TransferController < TorrentComponentController
   def destroy
     torrent.stop!
     flash[:notice] = I18n.t('flash.transfer.destroy.notice', name: torrent.title)
-    render_json
+    render json: torrent
   end
 
   private
