@@ -147,7 +147,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
   find: (store, type, id) ->
     root = type.singularBaseName()
-    @ajax @buildURL(root, id), "GET",
+    @ajax @urlFor(type, id), "GET",
       success: (json) ->
         @sideload store, type, json, root
         store.load type, json[root]

@@ -53,6 +53,14 @@ describe 'IhrfRESTnur', ->
         it "should accept suffix for URL", ->
           expect( adapter.urlFor(comment, "lulz") ).toEqual('/posts/23/comments/42/lulz')
 
+      describe 'for finding', ->
+        it "can generate URL for toplevel record", ->
+          expect( adapter.urlFor(I.Post, 55) ).toEqual('/posts/55')
+
+        it "can generate URL for nested record", ->
+          # FIXME we have no access to the parent record from the adapter. should we?
+          expect( adapter.urlFor(I.Comment, 66) ).toEqual('/posts/23/comments/66')
+
 
     describe 'with namespace', ->
       namespace = 'a/nested/namespace'
@@ -78,6 +86,11 @@ describe 'IhrfRESTnur', ->
       adapter.createRecord(store, I.Post, newPost)
       expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
       expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
+
+    it "should GET to assumed record url when finding", ->
+      adapter.find(store, I.Post, 66)
+      expect(adapter.urlFor).toHaveBeenCalledWith(I.Post, 66)
+      expect(adapter.ajax).toHaveBeenCalledWith(url, 'GET', jasmine.any(Object))
 
     it "should PUT to record URL for the record to update it", ->
       adapter.updateRecord(store, I.Post, post)
