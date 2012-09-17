@@ -3,6 +3,7 @@
 describe 'IhrfRESTnur', ->
 
   I = Ember.Namespace.create() # namespace for our models and stuff
+  window.I = I
 
   I.Post = IhrfRESTnur.Model.extend
     title: DS.attr 'string'
@@ -10,6 +11,8 @@ describe 'IhrfRESTnur', ->
   I.Comment = IhrfRESTnur.Model.extend
     body: DS.attr 'string'
     post: DS.belongsTo 'I.Post'
+
+  I.Comment.nestedUnder = 'post'
 
   post = I.Post.createRecord(id: 23)
   comment = I.Comment.createRecord(id: 42, post: post)
@@ -42,3 +45,5 @@ describe 'IhrfRESTnur', ->
 
       it "should build URL for existing nested record [show]", ->
         expect( adapter.buildURL(comment) ).toEqual('/a/nested/namespace/posts/23/comments/42')
+
+  xit "should accept custom pluralizations"

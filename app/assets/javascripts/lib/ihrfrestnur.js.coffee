@@ -8,22 +8,30 @@ IhrfRESTnur = Ember.Namespace.create()
 
 IhrfRESTnur.Model = DS.Model.extend
   urlComponents: ->
-    pre = @constructor.urlComponents()
+    pre = @constructor.urlComponents(this)
     pre.push this
     pre
 
-  toParam: (->
-    @get('id')
-  ).property('id')
+  toParam: -> @get('id')
 
 # TODO extract this to something similar to ActiveModel::Name
 IhrfRESTnur.Model.reopenClass
-  urlComponents: ->
-    [ this ]
-  toParam: (->
+  urlComponents: (record) ->
+    if @nestedUnder
+      property = @metaForProperty(@nestedUnder)
+      Ember.assert "expected #{@nestedUnder} to be a property of #{@toString()}, but was #{property}", !!property
+      Ember.assert "expected #{@nestedUnder} to be a belongsTo association of #{@toString()}", property.isAssociation and property.kind is 'belongsTo'
+      if record? and nested = record.get(property.key)
+        pre = nested.urlComponents()
+        pre.push this
+        pre
+      else
+        [ property.type, this ] # should never happen (TM)
+    else
+      [ this ]
+  toParam: ->
     return @url if @url
     @pluralBaseName()
-  ).property()
 
   singularBaseName: (adapter) ->
     parts = @toString().split(".")
@@ -240,10 +248,14 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     url.push @namespace if @namespace?
 
     # get, flatten and parameterize record/type relevant components of url
-    urlComponents = Array.prototype.concat.apply([], record.urlComponents()).mapProperty('toParam')
+    urlComponents = Array.prototype.concat.apply([], record.urlComponents())
     for component in urlComponents
-      Ember.assert "Record URL component (#{component}) must not start with slash", component.toString().charAt(0) isnt "/"
-      url.pushObject component
+      Ember.assert "Record URL component must be present", !!component
+      param = component.toParam()
+      Ember.assert "Record URL param for #{component} must be present", !!param
+      Ember.assert "Record URL param for #{component} must not start with slash", param.toString().charAt(0) isnt "/"
+      url.pushObject param
+
     url.push suffix if suffix?
     url.join "/"
 )
