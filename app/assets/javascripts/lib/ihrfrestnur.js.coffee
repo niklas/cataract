@@ -2,31 +2,18 @@
 #
 # A more RESTful store adapter for ember-data.
 #
-# Converted original DS.RESTAdapter (0b246b9780) to CoffeeScript.
+# Converted original DS.RESTAdapter (master dad611cd7e0b) to CoffeeScript.
 
 IhrfRESTnur = Ember.Namespace.create()
 
 get = Ember.get
 set = Ember.set
-serializer = DS.Serializer.create(
-  keyForBelongsTo: (type, name) ->
-    @keyForAttributeName(type, name) + "_id"
-
-  keyForAttributeName: (type, name) ->
-    Ember.String.decamelize name
-)
 IhrfRESTnur.Adapter = DS.Adapter.extend(
   bulkCommit: false
-  serializer: serializer
-  shouldCommit: (record) ->
-    true  if record.isCommittingBecause("attribute") or record.isCommittingBecause("belongsTo")
-
   createRecord: (store, type, record) ->
     root = @rootForType(type)
     data = {}
-    data[root] = @toJSON(record,
-      includeId: true
-    )
+    data[root] = record.toJSON()
     @ajax @buildURL(root), "POST",
       data: data
       context: this
@@ -37,19 +24,16 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   didCreateRecord: (store, type, record, json) ->
     root = @rootForType(type)
     @sideload store, type, json, root
-    store.didSaveRecord record, json[root]
+    store.didCreateRecord record, json[root]
 
   createRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
     root = @rootForType(type)
     plural = @pluralize(root)
     data = {}
-    data[plural] = []
-    records.forEach ((record) ->
-      data[plural].push @toJSON(record,
-        includeId: true
-      )
-    ), this
+    data[plural] = records.map((record) ->
+      record.toJSON()
+    )
     @ajax @buildURL(root), "POST",
       data: data
       context: this
@@ -60,13 +44,13 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   didCreateRecords: (store, type, records, json) ->
     root = @pluralize(@rootForType(type))
     @sideload store, type, json, root
-    store.didSaveRecords records, json[root]
+    store.didCreateRecords type, records, json[root]
 
   updateRecord: (store, type, record) ->
     id = get(record, "id")
     root = @rootForType(type)
     data = {}
-    data[root] = @toJSON(record)
+    data[root] = record.toJSON()
     @ajax @buildURL(root, id), "PUT",
       data: data
       context: this
@@ -77,17 +61,16 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   didUpdateRecord: (store, type, record, json) ->
     root = @rootForType(type)
     @sideload store, type, json, root
-    store.didSaveRecord record, json and json[root]
+    store.didUpdateRecord record, json and json[root]
 
   updateRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
     root = @rootForType(type)
     plural = @pluralize(root)
     data = {}
-    data[plural] = []
-    records.forEach ((record) ->
-      data[plural].push record.toJSON()
-    ), this
+    data[plural] = records.map((record) ->
+      record.toJSON()
+    )
     @ajax @buildURL(root, "bulk"), "PUT",
       data: data
       context: this
@@ -98,7 +81,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   didUpdateRecords: (store, type, records, json) ->
     root = @pluralize(@rootForType(type))
     @sideload store, type, json, root
-    store.didSaveRecords records, json[root]
+    store.didUpdateRecords records, json[root]
 
   deleteRecord: (store, type, record) ->
     id = get(record, "id")
@@ -111,17 +94,16 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
   didDeleteRecord: (store, type, record, json) ->
     @sideload store, type, json  if json
-    store.didSaveRecord record
+    store.didDeleteRecord record
 
   deleteRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
     root = @rootForType(type)
     plural = @pluralize(root)
     data = {}
-    data[plural] = []
-    records.forEach (record) ->
-      data[plural].push get(record, "id")
-
+    data[plural] = records.map((record) ->
+      get record, "id"
+    )
     @ajax @buildURL(root, "bulk"), "DELETE",
       data: data
       context: this
@@ -131,7 +113,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
   didDeleteRecords: (store, type, records, json) ->
     @sideload store, type, json  if json
-    store.didSaveRecords records
+    store.didDeleteRecords records
 
   find: (store, type, id) ->
     root = @rootForType(type)
@@ -240,6 +222,5 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     url.push suffix  if suffix isnt `undefined`
     url.join "/"
 )
-
 
 window.IhrfRESTnur = IhrfRESTnur
