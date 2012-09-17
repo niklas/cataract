@@ -1,7 +1,9 @@
 # inherit from this to save some typing
 class TorrentComponentController < InheritedResources::Base
+  belongs_to :torrent
   respond_to :json
   before_filter :refresh_torrent, except: [:index]
+  load_and_authorize_resource
 
   # FIXME: ember-data does not support nested resources yet, so we have to jump
   # through hoops finding the torrent
