@@ -9,7 +9,7 @@ IhrfRESTnur = Ember.Namespace.create()
 IhrfRESTnur.Model = DS.Model.extend
   urlComponents: ->
     pre = @constructor.urlComponents(this)
-    pre.push this
+    pre.push this unless Ember.none(@get('id')) # persisted?
     pre
 
   toParam: -> @get('id')
@@ -50,12 +50,11 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   createRecord: (store, type, record) ->
     data = {}
     data[type.singularBaseName()] = record.toJSON()
-    @ajax @urlFor(type), "POST",
+    @ajax @urlFor(record), "POST",
       data: data
       context: this
       success: (json) ->
         @didCreateRecord store, type, record, json
-
 
   didCreateRecord: (store, type, record, json) ->
     root = @rootForType(type)
