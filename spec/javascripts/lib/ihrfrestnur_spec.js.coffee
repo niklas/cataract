@@ -2,12 +2,12 @@
 
 describe 'IhrfRESTnur', ->
 
-  I = {} # namespace for our models and stuff
+  I = Ember.Namespace.create() # namespace for our models and stuff
 
-  I.Post = DS.Model.extend
+  I.Post = IhrfRESTnur.Model.extend
     title: DS.attr 'string'
 
-  I.Comment = DS.Model.extend
+  I.Comment = IhrfRESTnur.Model.extend
     body: DS.attr 'string'
     post: DS.belongsTo 'I.Post'
 

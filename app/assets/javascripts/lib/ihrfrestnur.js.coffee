@@ -6,6 +6,32 @@
 
 IhrfRESTnur = Ember.Namespace.create()
 
+IhrfRESTnur.Model = DS.Model.extend
+  urlComponents: (->
+    [ @constructor, this]
+  ).property()
+
+  toParam: (->
+    @get('id')
+  ).property('id')
+
+# TODO extract this to something similar to ActiveModel::Name
+IhrfRESTnur.Model.reopenClass
+  toParam: (->
+    return @url if @url
+    @pluralBaseName()
+  ).property()
+
+  singularBaseName: (adapter) ->
+    parts = @toString().split(".")
+    name = parts[parts.length - 1]
+    name.replace(/([A-Z])/g, "_$1").toLowerCase().slice 1
+
+  pluralBaseName: (adapter) ->
+    singular = @singularBaseName()
+    adapter?.pluralize[singular] or singular + 's'
+
+
 get = Ember.get
 set = Ember.set
 IhrfRESTnur.Adapter = DS.Adapter.extend(
@@ -163,14 +189,6 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   pluralize: (name) ->
     @plurals[name] or name + "s"
 
-  rootForType: (type) ->
-    return type.url  if type.url
-    
-    # use the last part of the name as the URL
-    parts = type.toString().split(".")
-    name = parts[parts.length - 1]
-    name.replace(/([A-Z])/g, "_$1").toLowerCase().slice 1
-
   ajax: (url, type, hash) ->
     hash.url = url
     hash.type = type
@@ -217,9 +235,9 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     Ember.assert "Namespace URL (" + @namespace + ") must not start with slash", not @namespace or @namespace.toString().charAt(0) isnt "/"
     Ember.assert "Record URL (" + record + ") must not start with slash", not record or record.toString().charAt(0) isnt "/"
     Ember.assert "URL suffix (" + suffix + ") must not start with slash", not suffix or suffix.toString().charAt(0) isnt "/"
-    url.push @namespace  if @namespace isnt `undefined`
-    url.push @pluralize(record)
-    url.push suffix  if suffix isnt `undefined`
+    url.push @namespace if @namespace?
+    url.pushObjects record.get('urlComponents').mapProperty('toParam')
+    url.push suffix if suffix?
     url.join "/"
 )
 
