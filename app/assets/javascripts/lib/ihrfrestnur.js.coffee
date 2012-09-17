@@ -69,7 +69,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     data[plural] = records.map((record) ->
       record.toJSON()
     )
-    @ajax @buildURL(root), "POST",
+    @ajax @urlFor(records[0]), "POST",
       data: data
       context: this
       success: (json) ->
@@ -104,7 +104,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     data[plural] = records.map((record) ->
       record.toJSON()
     )
-    @ajax @buildURL(root, "bulk"), "PUT",
+    @ajax @urlFor(records[0], "bulk"), "PUT",
       data: data
       context: this
       success: (json) ->

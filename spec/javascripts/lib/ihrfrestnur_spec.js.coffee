@@ -44,11 +44,14 @@ describe 'IhrfRESTnur', ->
           expect( adapter.urlFor(newComment) ).toEqual('/posts/23/comments')
 
       describe 'for saved record (having id)', ->
-        it "should build URL for existing toplevel record [show]", ->
+        it "should build URL for existing toplevel record", ->
           expect( adapter.urlFor(post) ).toEqual('/posts/23')
 
-        it "should build URL for existing nested record [show]", ->
+        it "should build URL for existing nested record", ->
           expect( adapter.urlFor(comment) ).toEqual('/posts/23/comments/42')
+
+        it "should accept suffix for URL", ->
+          expect( adapter.urlFor(comment, "lulz") ).toEqual('/posts/23/comments/42/lulz')
 
 
     describe 'with namespace', ->
@@ -57,10 +60,10 @@ describe 'IhrfRESTnur', ->
       beforeEach ->
         adapter.set 'namespace', namespace
 
-      it "should build URL for existing toplevel record [show]", ->
+      it "should build URL for existing toplevel record", ->
         expect( adapter.urlFor(post) ).toEqual('/a/nested/namespace/posts/23')
 
-      it "should build URL for existing nested record [show]", ->
+      it "should build URL for existing nested record", ->
         expect( adapter.urlFor(comment) ).toEqual('/a/nested/namespace/posts/23/comments/42')
 
   xit "should accept custom pluralizations"
@@ -76,17 +79,24 @@ describe 'IhrfRESTnur', ->
       expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
       expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
 
-    it "should POST to collection URL of first record to bulk create new records", ->
-      anotherPost = store.createRecord I.Post
-      yetAnotherPost = store.createRecord I.Post
-      adapter.createRecords(store, I.Post, [newPost, anotherPost, yetAnotherPost])
-      expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
-      expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
-
-
     it "should PUT to record URL for the record to update it", ->
       adapter.updateRecord(store, I.Post, post)
       expect(adapter.urlFor).toHaveBeenCalledWith(post)
       expect(adapter.ajax).toHaveBeenCalledWith(url, 'PUT', jasmine.any(Object))
 
+    describe 'in bulk', ->
+      anotherPost = yetAnotherPost = null
+      beforeEach ->
+        adapter.set 'bulkCommit', true
+        anotherPost = store.createRecord I.Post
+        yetAnotherPost = store.createRecord I.Post
 
+      it "creating should POST to collection URL of first record", ->
+        adapter.createRecords(store, I.Post, [newPost, anotherPost, yetAnotherPost])
+        expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
+        expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
+
+      it "updating should PUT to collection URL of first record", ->
+        adapter.updateRecords(store, I.Post, [post, anotherPost, yetAnotherPost])
+        expect(adapter.urlFor).toHaveBeenCalledWith(post, "bulk")
+        expect(adapter.ajax).toHaveBeenCalledWith(url, 'PUT', jasmine.any(Object))
