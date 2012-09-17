@@ -84,6 +84,11 @@ describe 'IhrfRESTnur', ->
       expect(adapter.urlFor).toHaveBeenCalledWith(post)
       expect(adapter.ajax).toHaveBeenCalledWith(url, 'PUT', jasmine.any(Object))
 
+    it "should DELETE to record URL for the record to delete it", ->
+      adapter.deleteRecord(store, I.Post, post)
+      expect(adapter.urlFor).toHaveBeenCalledWith(post)
+      expect(adapter.ajax).toHaveBeenCalledWith(url, 'DELETE', jasmine.any(Object))
+
     describe 'in bulk', ->
       anotherPost = yetAnotherPost = null
       beforeEach ->
@@ -96,7 +101,12 @@ describe 'IhrfRESTnur', ->
         expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
         expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
 
-      it "updating should PUT to collection URL of first record", ->
+      it "updating should PUT to collection bulk URL of first record", ->
         adapter.updateRecords(store, I.Post, [post, anotherPost, yetAnotherPost])
         expect(adapter.urlFor).toHaveBeenCalledWith(post, "bulk")
         expect(adapter.ajax).toHaveBeenCalledWith(url, 'PUT', jasmine.any(Object))
+
+      it "updating should DELETE to collection bulk URL of first record", ->
+        adapter.deleteRecords(store, I.Post, [post, anotherPost, yetAnotherPost])
+        expect(adapter.urlFor).toHaveBeenCalledWith(post, "bulk")
+        expect(adapter.ajax).toHaveBeenCalledWith(url, 'DELETE', jasmine.any(Object))

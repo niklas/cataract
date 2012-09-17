@@ -117,9 +117,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     store.didUpdateRecords records, json[root]
 
   deleteRecord: (store, type, record) ->
-    id = get(record, "id")
-    root = type.singularBaseName()
-    @ajax @buildURL(root, id), "DELETE",
+    @ajax @urlFor(record), "DELETE",
       context: this
       success: (json) ->
         @didDeleteRecord store, type, record, json
@@ -131,13 +129,12 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
   deleteRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
-    root = type.singularBaseName()
     plural = type.pluralBaseName()
     data = {}
     data[plural] = records.map((record) ->
       get record, "id"
     )
-    @ajax @buildURL(root, "bulk"), "DELETE",
+    @ajax @urlFor(records[0], "bulk"), "DELETE",
       data: data
       context: this
       success: (json) ->
