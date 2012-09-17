@@ -26,6 +26,9 @@ describe 'IhrfRESTnur', ->
       beforeEach ->
         adapter.set 'namespace', null
 
+      it "should build URL for class/collection", ->
+        expect( adapter.urlFor(I.Post) ).toEqual('/posts')
+
       it "should build URL for existing toplevel record [show]", ->
         expect( adapter.urlFor(post) ).toEqual('/posts/23')
 
@@ -57,6 +60,10 @@ describe 'IhrfRESTnur', ->
       spyOn(adapter, 'urlFor').andReturn(url)
       spyOn(adapter, 'ajax')
 
+    it "should use collection URL to create the record", ->
+      adapter.createRecord(store, I.Post, post)
+      expect(adapter.urlFor).toHaveBeenCalledWith(I.Post)
+      expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
 
     it "should use URL for the record to update it", ->
       adapter.updateRecord(store, I.Post, post)

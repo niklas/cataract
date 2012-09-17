@@ -48,10 +48,9 @@ set = Ember.set
 IhrfRESTnur.Adapter = DS.Adapter.extend(
   bulkCommit: false
   createRecord: (store, type, record) ->
-    root = @rootForType(type)
     data = {}
-    data[root] = record.toJSON()
-    @ajax @buildURL(root), "POST",
+    data[type.singularBaseName()] = record.toJSON()
+    @ajax @urlFor(type), "POST",
       data: data
       context: this
       success: (json) ->
