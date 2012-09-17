@@ -76,6 +76,13 @@ describe 'IhrfRESTnur', ->
       expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
       expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
 
+    it "should POST to collection URL of first record to bulk create new records", ->
+      anotherPost = store.createRecord I.Post
+      yetAnotherPost = store.createRecord I.Post
+      adapter.createRecords(store, I.Post, [newPost, anotherPost, yetAnotherPost])
+      expect(adapter.urlFor).toHaveBeenCalledWith(newPost)
+      expect(adapter.ajax).toHaveBeenCalledWith(url, 'POST', jasmine.any(Object))
+
 
     it "should PUT to record URL for the record to update it", ->
       adapter.updateRecord(store, I.Post, post)

@@ -57,14 +57,14 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
         @didCreateRecord store, type, record, json
 
   didCreateRecord: (store, type, record, json) ->
-    root = @rootForType(type)
+    root = type.singularBaseName()
     @sideload store, type, json, root
     store.didCreateRecord record, json[root]
 
   createRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
-    root = @rootForType(type)
-    plural = @pluralize(root)
+    root = type.singularBaseName()
+    plural = type.pluralBaseName()
     data = {}
     data[plural] = records.map((record) ->
       record.toJSON()
@@ -77,7 +77,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
 
   didCreateRecords: (store, type, records, json) ->
-    root = @pluralize(@rootForType(type))
+    root = type.pluralBaseName()
     @sideload store, type, json, root
     store.didCreateRecords type, records, json[root]
 
@@ -92,14 +92,14 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
 
   didUpdateRecord: (store, type, record, json) ->
-    root = @rootForType(type)
+    root = type.singularBaseName()
     @sideload store, type, json, root
     store.didUpdateRecord record, json and json[root]
 
   updateRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
-    root = @rootForType(type)
-    plural = @pluralize(root)
+    root = type.singularBaseName()
+    plural = type.pluralBaseName()
     data = {}
     data[plural] = records.map((record) ->
       record.toJSON()
@@ -112,13 +112,13 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
 
   didUpdateRecords: (store, type, records, json) ->
-    root = @pluralize(@rootForType(type))
+    root = type.pluralBaseName()
     @sideload store, type, json, root
     store.didUpdateRecords records, json[root]
 
   deleteRecord: (store, type, record) ->
     id = get(record, "id")
-    root = @rootForType(type)
+    root = type.singularBaseName()
     @ajax @buildURL(root, id), "DELETE",
       context: this
       success: (json) ->
@@ -131,8 +131,8 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
   deleteRecords: (store, type, records) ->
     return @_super(store, type, records)  if get(this, "bulkCommit") is false
-    root = @rootForType(type)
-    plural = @pluralize(root)
+    root = type.singularBaseName()
+    plural = type.pluralBaseName()
     data = {}
     data[plural] = records.map((record) ->
       get record, "id"
@@ -149,7 +149,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     store.didDeleteRecords records
 
   find: (store, type, id) ->
-    root = @rootForType(type)
+    root = type.singularBaseName()
     @ajax @buildURL(root, id), "GET",
       success: (json) ->
         @sideload store, type, json, root
@@ -157,8 +157,8 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
 
   findMany: (store, type, ids) ->
-    root = @rootForType(type)
-    plural = @pluralize(root)
+    root = type.singularBaseName()
+    plural = type.pluralBaseName()
     @ajax @buildURL(root), "GET",
       data:
         ids: ids
@@ -169,8 +169,8 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
 
   findAll: (store, type) ->
-    root = @rootForType(type)
-    plural = @pluralize(root)
+    root = type.singularBaseName()
+    plural = type.pluralBaseName()
     @ajax @buildURL(root), "GET",
       success: (json) ->
         @sideload store, type, json, plural
@@ -178,8 +178,8 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
 
 
   findQuery: (store, type, query, recordArray) ->
-    root = @rootForType(type)
-    plural = @pluralize(root)
+    root = type.singularBaseName()
+    plural = type.pluralBaseName()
     @ajax @buildURL(root), "GET",
       data: query
       success: (json) ->
