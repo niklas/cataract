@@ -4,7 +4,7 @@
 #
 # Converted original DS.RESTAdapter (0b246b9780) to CoffeeScript.
 
-IhrfRESTnur ?= Ember.Namespace.create()
+IhrfRESTnur = Ember.Namespace.create()
 
 get = Ember.get
 set = Ember.set
@@ -241,3 +241,5 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     url.join "/"
 )
 
+
+window.IhrfRESTnur = IhrfRESTnur

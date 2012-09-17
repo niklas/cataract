@@ -9,7 +9,7 @@
 #Ember.LOG_BINDINGS = true
 
 Cataract = Ember.Application.create
-  rootElement: 'body'
+  rootElement: 'body#ember'
   transferLoaded: false
   online: true
   offlineReason: null
@@ -46,9 +46,10 @@ Cataract.store = DS.Store.create
 window.Cataract = Cataract
 
 jQuery ->
-  Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
-  Cataract.set('siteTitle', 'loading')
-  Cataract.initialize()
-  $('body').bind 'tick', -> Cataract.refreshTransfers(); true
-  Cataract.Torrent.find()
+  if jQuery( Cataract.get('rootElement') ).length > 0
+    Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
+    Cataract.set('siteTitle', 'loading')
+    Cataract.initialize()
+    $('body').bind 'tick', -> Cataract.refreshTransfers(); true
+    Cataract.Torrent.find()
 

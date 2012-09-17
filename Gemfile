@@ -55,6 +55,8 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'jasminerice'
+  gem 'guard-jasmine'
 end
 
 group :development do
