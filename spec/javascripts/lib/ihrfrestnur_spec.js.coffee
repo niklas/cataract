@@ -19,7 +19,6 @@ describe 'IhrfRESTnur', ->
     
 
   describe 'URL generation', ->
-
     adapter = IhrfRESTnur.Adapter.create()
 
     describe 'without namespace', ->
@@ -28,10 +27,10 @@ describe 'IhrfRESTnur', ->
         adapter.set 'namespace', null
 
       it "should build URL for existing toplevel record [show]", ->
-        expect( adapter.buildURL(post) ).toEqual('/posts/23')
+        expect( adapter.urlFor(post) ).toEqual('/posts/23')
 
       it "should build URL for existing nested record [show]", ->
-        expect( adapter.buildURL(comment) ).toEqual('/posts/23/comments/42')
+        expect( adapter.urlFor(comment) ).toEqual('/posts/23/comments/42')
 
 
     describe 'with namespace', ->
@@ -41,9 +40,9 @@ describe 'IhrfRESTnur', ->
         adapter.set 'namespace', namespace
 
       it "should build URL for existing toplevel record [show]", ->
-        expect( adapter.buildURL(post) ).toEqual('/a/nested/namespace/posts/23')
+        expect( adapter.urlFor(post) ).toEqual('/a/nested/namespace/posts/23')
 
       it "should build URL for existing nested record [show]", ->
-        expect( adapter.buildURL(comment) ).toEqual('/a/nested/namespace/posts/23/comments/42')
+        expect( adapter.urlFor(comment) ).toEqual('/a/nested/namespace/posts/23/comments/42')
 
   xit "should accept custom pluralizations"

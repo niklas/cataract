@@ -241,7 +241,7 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     else
       store.load type, value
 
-  buildURL: (record, suffix) ->
+  urlFor: (record, suffix) ->
     url = [""]
     Ember.assert "Namespace URL (" + @namespace + ") must not start with slash", not @namespace or @namespace.toString().charAt(0) isnt "/"
     Ember.assert "URL suffix (" + suffix + ") must not start with slash", not suffix or suffix.toString().charAt(0) isnt "/"
