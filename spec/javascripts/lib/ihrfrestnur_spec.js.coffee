@@ -24,10 +24,10 @@ describe 'IhrfRESTnur', ->
       beforeEach ->
         adapter.set 'namespace', null
 
-      it "should build URL for existing record [show]", ->
+      it "should build URL for existing toplevel record [show]", ->
         expect( adapter.buildURL(post) ).toEqual('/posts/23')
 
-      it "should build URL for existing record [show]", ->
+      it "should build URL for existing nested record [show]", ->
         expect( adapter.buildURL(comment) ).toEqual('/posts/23/comments/42')
 
 
@@ -37,8 +37,8 @@ describe 'IhrfRESTnur', ->
       beforeEach ->
         adapter.set 'namespace', namespace
 
-      it "should build URL for existing record [show]", ->
+      it "should build URL for existing toplevel record [show]", ->
         expect( adapter.buildURL(post) ).toEqual('/a/nested/namespace/posts/23')
 
-      it "should build URL for existing record [show]", ->
+      it "should build URL for existing nested record [show]", ->
         expect( adapter.buildURL(comment) ).toEqual('/a/nested/namespace/posts/23/comments/42')
