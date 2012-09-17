@@ -7,9 +7,10 @@
 IhrfRESTnur = Ember.Namespace.create()
 
 IhrfRESTnur.Model = DS.Model.extend
-  urlComponents: (->
-    [ @constructor, this]
-  ).property()
+  urlComponents: ->
+    pre = @constructor.urlComponents()
+    pre.push this
+    pre
 
   toParam: (->
     @get('id')
@@ -17,6 +18,8 @@ IhrfRESTnur.Model = DS.Model.extend
 
 # TODO extract this to something similar to ActiveModel::Name
 IhrfRESTnur.Model.reopenClass
+  urlComponents: ->
+    [ this ]
   toParam: (->
     return @url if @url
     @pluralBaseName()
@@ -233,10 +236,14 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
   buildURL: (record, suffix) ->
     url = [""]
     Ember.assert "Namespace URL (" + @namespace + ") must not start with slash", not @namespace or @namespace.toString().charAt(0) isnt "/"
-    Ember.assert "Record URL (" + record + ") must not start with slash", not record or record.toString().charAt(0) isnt "/"
     Ember.assert "URL suffix (" + suffix + ") must not start with slash", not suffix or suffix.toString().charAt(0) isnt "/"
     url.push @namespace if @namespace?
-    url.pushObjects record.get('urlComponents').mapProperty('toParam')
+
+    # get, flatten and parameterize record/type relevant components of url
+    urlComponents = Array.prototype.concat.apply([], record.urlComponents()).mapProperty('toParam')
+    for component in urlComponents
+      Ember.assert "Record URL component (#{component}) must not start with slash", component.toString().charAt(0) isnt "/"
+      url.pushObject component
     url.push suffix if suffix?
     url.join "/"
 )
