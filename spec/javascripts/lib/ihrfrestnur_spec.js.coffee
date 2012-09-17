@@ -46,3 +46,21 @@ describe 'IhrfRESTnur', ->
         expect( adapter.urlFor(comment) ).toEqual('/a/nested/namespace/posts/23/comments/42')
 
   xit "should accept custom pluralizations"
+
+  describe 'resourcing', ->
+    adapter = null
+    store = jasmine.createSpy("a store")
+    url   = jasmine.createSpy("the url")
+
+    beforeEach ->
+      adapter = IhrfRESTnur.Adapter.create()
+      spyOn(adapter, 'urlFor').andReturn(url)
+      spyOn(adapter, 'ajax')
+
+
+    it "should use URL for the record to update it", ->
+      adapter.updateRecord(store, I.Post, post)
+      expect(adapter.urlFor).toHaveBeenCalledWith(post)
+      expect(adapter.ajax).toHaveBeenCalledWith(url, 'PUT', jasmine.any(Object))
+
+

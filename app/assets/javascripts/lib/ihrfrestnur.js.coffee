@@ -84,11 +84,9 @@ IhrfRESTnur.Adapter = DS.Adapter.extend(
     store.didCreateRecords type, records, json[root]
 
   updateRecord: (store, type, record) ->
-    id = get(record, "id")
-    root = @rootForType(type)
     data = {}
-    data[root] = record.toJSON()
-    @ajax @buildURL(root, id), "PUT",
+    data[type.singularBaseName()] = record.toJSON()
+    @ajax @urlFor(record), "PUT",
       data: data
       context: this
       success: (json) ->
