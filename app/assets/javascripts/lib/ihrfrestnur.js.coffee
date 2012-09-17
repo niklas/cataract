@@ -18,7 +18,7 @@ IhrfRESTnur.Model = DS.Model.extend
 IhrfRESTnur.Model.reopenClass
   urlComponents: (record) ->
     if @nestedUnder
-      property = @metaForProperty(@nestedUnder)
+      property = @metaForProperty(@nestedUnder) # associationsByName did not work
       Ember.assert "expected #{@nestedUnder} to be a property of #{@toString()}, but was #{property}", !!property
       Ember.assert "expected #{@nestedUnder} to be a belongsTo association of #{@toString()}", property.isAssociation and property.kind is 'belongsTo'
       if record? and nested = record.get(property.key)
