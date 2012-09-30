@@ -26,7 +26,7 @@ module BrowserSupport
       Capybara.register_driver :poltergeist do |app|
         Capybara::Poltergeist::Driver.new(app, inspector: true)
       end
-      Capybara.javascript_driver = :selenium
+      Capybara.javascript_driver = :poltergeist
     end
 
     def setup_selenium(browser, opts={})
@@ -58,7 +58,7 @@ module BrowserSupport
   module Cucumber
     def switch_browser_size(size_name)
       if size = BrowserSupport::Sizes[size_name]
-        STDERR.puts "switching browser to #{size_name}"
+        Rails.logger.debug {  "switching browser to #{size_name}" }
         width, height = size[:width], size[:height]
         page.execute_script("window.resizeTo(#{width}, #{height});")
       else
