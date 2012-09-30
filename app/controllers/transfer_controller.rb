@@ -10,9 +10,7 @@ class TransferController < TorrentComponentController
   before_filter :clear_transfer_cache
 
   def index
-    torrents = Torrent.running_or_listed(params[:running])
-    Torrent.remote.apply torrents, Fields
-    render json: torrents.map(&:transfer), each_serializer: TransferSerializer, root: 'transfers'
+    render json: collection, each_serializer: TransferSerializer, root: 'transfers'
   end
 
   def show
@@ -35,5 +33,12 @@ class TransferController < TorrentComponentController
   def render_json
     resource.fetch! Fields
     render json: resource, serializer: TransferSerializer
+  end
+
+  def collection
+    @transfers ||= Torrent.running_or_listed(params[:running]).tap do |torrents|
+      authorize! :index, Torrent
+      Torrent.remote.apply torrents, Fields
+    end.map(&:transfer)
   end
 end

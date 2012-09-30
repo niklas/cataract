@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
     flash[:alert] = translate('message.access_denied')
     respond_to do |denied|
       denied.html { redirect_to root_url }
-      denied.js   { render 'denied' }
+      denied.json   { render json: {}, status: 403 }
+      denied.js   { render 'denied', status: 403 }
     end
   end
 
