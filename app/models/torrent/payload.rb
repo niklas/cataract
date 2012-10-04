@@ -4,6 +4,8 @@ class Torrent
   belongs_to :content_directory, :class_name => 'Directory'
   before_validation :ensure_content_directory
 
+  attr_accessor :payload_id # for ember-data
+
   class TorrentContentError < Exception; end
 
   # TODO WTF is this for?

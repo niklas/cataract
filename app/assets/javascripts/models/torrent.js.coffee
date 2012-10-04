@@ -4,12 +4,16 @@ Cataract.Torrent = DS.Model.extend
   info_hash: DS.attr 'string'
   status: DS.attr 'string'
   filename: DS.attr 'string'
+  url: DS.attr 'string'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
   payloadId: DS.attr 'number'
   payloadExists: (-> @get('payloadId')? ).property('payloadId')
   payload: DS.belongsTo 'Cataract.Payload'
+
+  fetchAutomatically: DS.attr 'boolean'
+  startAutomatically: DS.attr 'boolean'
 
 Cataract.Torrent.reopenClass
   url: 'torrent'

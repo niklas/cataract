@@ -12,6 +12,24 @@ Cataract.Router = Ember.Router.extend
         unless torrents.get('listOutlet')?
           router.get('applicationController').connectOutlet 'torrents'
         torrents.set('status', params.status)
+    add: (router, event) ->
+      torrent = Cataract.Torrent.createRecord
+        fetchAutomatically: true
+        startAutomatically: true
+      Bootstrap.ModalPane.popup
+        heading: "Add Torrent"
+        torrent: torrent
+        bodyViewClass: Cataract.AddTorrentView
+        primary: "Add"
+        secondary: "Cancel"
+        showBackdrop: true
+        callback: (opts) ->
+          if opts.primary
+            torrent.store.commit()
+          else
+            torrent.deleteRecord()
+          true
+
     delete: (router, event) ->
       torrent = event.view.get 'context'
       console?.debug "deleting", torrent
