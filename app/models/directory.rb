@@ -42,6 +42,14 @@ class Directory < ActiveRecord::Base
     relative_path? && disk.present? && path.exist?
   end
 
+  def inspect
+    %Q~<Directory "#{name}" #{path}>~
+  end
+
+  def to_s
+    inspect
+  end
+
   def name
     super.presence || (relative_path? && relative_path.basename.to_s)
   end

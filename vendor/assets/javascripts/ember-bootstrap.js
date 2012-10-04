@@ -111,7 +111,7 @@ Bootstrap.ModalPane.reopenClass({
 
 
 (function() {
-var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
+var get = Ember.get, set = Ember.set;
 var Bootstrap = window.Bootstrap;
 
 Bootstrap.TypeSupport = Ember.Mixin.create({
@@ -203,7 +203,7 @@ Bootstrap.ItemViewTitleSupport = Ember.Mixin.create({
 
 
 (function() {
-var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
+var get = Ember.get, set = Ember.set;
 var Bootstrap = window.Bootstrap;
 
 Bootstrap.ItemSelectionSupport = Ember.Mixin.create(Bootstrap.ItemViewValueSupport, Bootstrap.ItemViewTitleSupport, {
@@ -498,9 +498,11 @@ Bootstrap.Breadcrumb = Ember.CollectionView.extend(Bootstrap.FirstLastViewSuppor
 window.Bootstrap.Forms = Ember.Namespace.create({
 
   human: function(value) {
-    if (value === undefined)
+    if (value === undefined || value === false)
       return;
 
+    // Underscore string
+    value = Ember.String.decamelize(value);
     // Replace all _ with spaces
     value = value.replace(/_/g, " ");
     // Capitalize the first letter of every word
@@ -518,12 +520,30 @@ var Bootstrap = window.Bootstrap;
 Bootstrap.Forms.Field = Ember.View.extend({
   tagName: 'div',
   classNames: ['control-group'],
+  labelCache: undefined,
   template: Ember.Handlebars.compile([
-    '{{view view.labelView}}',
+    '{{view view.labelView viewName="labelView"}}',
     '<div class="controls">',
-    '  {{view view.inputField}}',
+    '  {{view view.inputField viewName="inputField"}}',
     '  {{view view.errorsView}}',
     '</div>'].join("\n")),
+
+  label: Ember.computed(function(key, value) {
+    if(arguments.length === 1){
+      if(this.get('labelCache') === undefined){
+        var path = this.get('valueBinding._from');
+        if (path) {
+          path = path.split(".");
+          return path[path.length - 1];
+        }
+      } else {
+        return this.get('labelCache');
+      }
+    } else {
+      this.set('labelCache', value);
+      return value;
+    }
+  }).property('valueBinding'),
 
   labelView: Ember.View.extend({
     tagName: 'label',
@@ -542,7 +562,8 @@ Bootstrap.Forms.Field = Ember.View.extend({
       return Bootstrap.Forms.human(value);
     }).property('parentView.label'),
 
-    forBinding: 'value',
+    inputElementId: 'for',
+    forBinding: 'inputElementId',
     attributeBindings: ['for']
   }),
 
@@ -579,7 +600,11 @@ Bootstrap.Forms.Field = Ember.View.extend({
         }
       }
     }, 'parentView.bindingContext.isValid', 'parentView.label')
-  })
+  }),
+
+  didInsertElement: function() {
+    this.set('labelView.inputElementId', this.get('inputField.elementId'));
+  }
 });
 
 })();
@@ -601,7 +626,7 @@ Bootstrap.Forms.Select = Bootstrap.Forms.Field.extend({
 
     selectionBinding:       'parentView.selection',
     promptBinding:          'parentView.prompt',
-    multipleBinding:        'parentView.multiple'
+    multipleBinding:        'parentView.multiple'  
   })
 });
 
@@ -610,7 +635,7 @@ Bootstrap.Forms.Select = Bootstrap.Forms.Field.extend({
 
 
 (function() {
-var getPath = Ember.getPath;
+var get = Ember.get;
 var Bootstrap = window.Bootstrap;
 
 Bootstrap.TextSupport = Ember.Mixin.create({
@@ -621,7 +646,7 @@ Bootstrap.TextSupport = Ember.Mixin.create({
   classNameBindings: 'parentView.inputClassNames',
   attributeBindings: ['name'],
   name: Ember.computed(function() {
-    return getPath(this, 'parentView.name') || getPath(this, 'parentView.label');
+    return get(this, 'parentView.name') || get(this, 'parentView.label');
   }).property('parentView.name', 'parentView.label').cacheable()
 });
 
@@ -635,7 +660,7 @@ Bootstrap.Forms.TextArea = Bootstrap.Forms.Field.extend({
 
   inputField: Ember.TextArea.extend(Bootstrap.TextSupport, {
     rowsBinding: 'parentView.rows',
-    colsBinding: 'parentView.cols'
+    colsBinding: 'parentView.cols' 
   })
 });
 

@@ -12,6 +12,8 @@ Cataract.Torrent = DS.Model.extend
   payloadExists: (-> @get('payloadId')? ).property('payloadId')
   payload: DS.belongsTo 'Cataract.Payload'
 
+  contentDirectory: DS.belongsTo 'Cataract.Directory'
+
   fetchAutomatically: DS.attr 'boolean'
   startAutomatically: DS.attr 'boolean'
 
