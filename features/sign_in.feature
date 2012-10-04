@@ -6,9 +6,7 @@ Feature: Signing in
   @javascript
   Scenario: Signing in
     Given a registered user exists with email: "me@cataract.local"
-      And I am on the home page
-     When I toggle the menu
-      And I follow "Sign in"
+     When I go to the home page
      Then I should be on the signin page
      When I fill in "Email" with "me@cataract.local"
       And I fill in "Password" with "secret"
