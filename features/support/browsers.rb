@@ -2,6 +2,7 @@ module BrowserSupport
 
   Sizes = {
     mobile: { width: 640 + 8, height: 800 + 57 },
+    small:  { width: 990 + 8, height: 800 + 57 },
     big:    { width: 1280 + 8, height: 800 + 57 }
   }
 
@@ -34,8 +35,8 @@ module BrowserSupport
         raise ArgumentError, "unsupported browser: #{browser}"
       end
       # arbitrary window decorations?
-      width = (opts.delete(:width) || 640) + 8
-      height = (opts.delete(:height) || 800) + 57
+      width = (opts.delete(:width) || Sizes[:big][:width] || 640) + 8
+      height = (opts.delete(:height) || Sizes[:big][:width] || 800) + 57
       startpage = opts.delete(:startpage)
 
       Capybara.register_driver :selenium do |app|
@@ -58,9 +59,12 @@ module BrowserSupport
   module Cucumber
     def switch_browser_size(size_name)
       if size = BrowserSupport::Sizes[size_name]
-        Rails.logger.debug {  "switching browser to #{size_name}" }
-        width, height = size[:width], size[:height]
-        page.execute_script("window.resizeTo(#{width}, #{height});")
+        if @browser_size != size
+          Rails.logger.debug "switching browser to #{size_name}"
+          width, height = size[:width], size[:height]
+          page.execute_script("window.resizeTo(#{width}, #{height});")
+          @browser_size = size
+        end
       else
         STDERR.puts "cannot switch browser to unknown size: #{size_name}"
       end
@@ -70,12 +74,15 @@ end
 
 World(BrowserSupport::Cucumber)
 
-Before '@javascript','@big_screen' do
-  switch_browser_size(:big)
+Before '@javascript','~@mobile_screen', '~@big_screen' do
+  switch_browser_size(:small)
 end
-Before '@javascript','~@big_screen' do
+Before '@javascript','@big_screen' do
   switch_browser_size(:big)
 end
 Before '@javascript','@mobile_screen' do
   switch_browser_size(:mobile)
+end
+Before '@javascript','@small_screen' do
+  switch_browser_size(:small)
 end
