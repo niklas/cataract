@@ -33,15 +33,8 @@ Feature: move content
 
       And I should see "moving Tails to Incoming / public" within the queue
 
-  @wip
-  @todo
-  Scenario: Suggest a target directory for move
-     Then the selected "Directory" should be "Tails"
-      And the selected "Disk" should be "Incoming"
-
   #Scenario: Move torrent to other disk into existing directory
 
-  @wip
   Scenario: Move torrent to other disk into non-existing directory
     Given a disk "archive" exists with name: "Archive"
       And I am on the home page
@@ -52,15 +45,13 @@ Feature: move content
      Then the selected "Directory" should be "Pics"
       And the selected "Disk" should be "Incoming"
      When I select "Archive" from "Disk"
-      And I press "Move"
-      And I wait for the modal box to disappear
+      And I follow "Move"
       And I wait for a flash notice to appear
      Then a move should exist
       And the torrent should be the move's torrent
       And the directory should be the move's target_directory
       And the disk "archive" should be the move's target_disk
       And I should see flash notice "moving Tails to Archive / Pics"
-      And I should be on the page for the torrent
 
       And I should see "moving Tails to Archive / Pics" within the queue
 

@@ -41,6 +41,9 @@ Cataract.store = DS.Store.create
       transfer: 'Cataract.Transfer'
       torrent: 'Cataract.Torrent'
       torrents: 'Cataract.Torrent'
+      move: 'Cataract.Move'
+      disk: 'Cataract.Disk'
+      directory: 'Cataract.Directory'
 
 
 window.Cataract = Cataract
@@ -51,6 +54,7 @@ jQuery ->
     Cataract.set('siteTitle', 'loading')
     Cataract.set 'directories', Cataract.Directory.find()
     Cataract.set 'disks', Cataract.Disk.find()
+    Cataract.set 'moves', Cataract.Move.find()
     Cataract.initialize()
     $('body').bind 'tick', -> Cataract.refreshTransfers(); true
     Cataract.Torrent.find()

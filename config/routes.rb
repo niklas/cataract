@@ -10,7 +10,7 @@ Cataract::Application.routes.draw do
   resources :payloads, only: [:show, :destroy], controller: :payload
   resources :transfers, only: [:index, :show, :create, :destroy], controller: :transfer
   resource :deletions, controller: :deletion, only: [:new, :create, :show]
-  resource :moves, controller: :move, only: [:new, :create, :show]
+  resources :moves, controller: :move, only: [:index, :create]
 
   controller :torrents do
     get 'status/:status/page/:page', action: :index

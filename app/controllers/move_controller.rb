@@ -1,4 +1,8 @@
 class MoveController < TorrentComponentController
+  def index
+    render json: collection, each_serializer: MoveSerializer, root: 'moves'
+  end
+
   private
 
   def interpolation_options
