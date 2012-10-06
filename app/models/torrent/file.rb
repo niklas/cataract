@@ -20,6 +20,26 @@ class Torrent
     file.present? && file.current_path.present?
   end
 
+  attr_reader :filedata
+  def filedata=(data)
+    @filedata = data.force_encoding("ASCII-8BIT") # "binary mode"
+  end
+
+  before_validation :set_file_from_raw_data, if: lambda { |t| t.filedata.present? && t.filename.present? }
+
+  # filename and filedata must be present!
+  def set_file_from_raw_data
+    self.file = ActionDispatch::Http::UploadedFile.new(filename: filename, tempfile: tempfile_for_filedata)
+  end
+
+  def tempfile_for_filedata
+    Tempfile.new('ajaxupload').tap do |tempfile|
+      tempfile.binmode
+      tempfile << filedata
+      tempfile.rewind
+    end
+  end
+
   on_refresh :refresh_file
   def refresh_file
     ActiveSupport::Deprecation.warn 'Torrent#refresh_file should use carrierwave'
