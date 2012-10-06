@@ -8,6 +8,7 @@ Cataract.Torrent = DS.Model.extend
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
+  filedata: DS.attr 'string' # TODO put into payload
   payloadId: DS.attr 'number'
   payloadExists: (-> @get('payloadId')? ).property('payloadId')
   payload: DS.belongsTo 'Cataract.Payload'

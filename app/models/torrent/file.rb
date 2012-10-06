@@ -22,7 +22,10 @@ class Torrent
 
   attr_reader :filedata
   def filedata=(data)
-    @filedata = data.force_encoding("ASCII-8BIT") # "binary mode"
+    if data.starts_with?('data:')
+      payload = data.split(',').last
+      @filedata = Base64.decode64(payload).force_encoding("ASCII-8BIT")
+    end
   end
 
   before_validation :set_file_from_raw_data, if: lambda { |t| t.filedata.present? && t.filename.present? }

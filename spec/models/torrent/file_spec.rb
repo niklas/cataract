@@ -20,7 +20,15 @@ describe Torrent do
   end
 
   describe "with json-uploaded file" do
-    let(:torrent) { Torrent.new(filedata: File.read(file_path), filename: "s.torrent" ) }
+    let(:binary)  { File.read(file_path) }
+    let(:torrent) { Torrent.new(filedata: base64, filename: "s.torrent" ) }
+
+    # this is what HTML5 FileReader.readAsDataURL returns
+    let(:base64) { "data:application/x-bittorrent;base64,ZDg6YW5ub3VuY2UzMDpodHRwOi8vMTI3LjAuMC4xOjY5NjkvYW5ub3VuY2UxMzpjcmVhdGlvbiBkYXRlaTEzMjM1NjQxNThlNDppbmZvZDY6bGVuZ3RoaTczNDUxZTQ6bmFtZTk6dGFpbHMucG5nMTI6cGllY2UgbGVuZ3RoaTI2MjE0NGU2OnBpZWNlczIwOr6kcgJtGGgwiVM9tKl37H+YOaALZWU=" }
+
+    it "should use correct base64 data" do
+      Base64.strict_encode64(torrent.filedata).should == Base64.strict_encode64(binary)
+    end
 
     it "should be valid" do
       torrent.should be_valid
