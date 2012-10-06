@@ -6,11 +6,11 @@ Cataract::Application.routes.draw do
     member do
       get 'prepend'
     end
-    resource :move,     controller: :move, only: [:new, :create, :show]
   end
   resources :payloads, only: [:show, :destroy], controller: :payload
   resources :transfers, only: [:index, :show, :create, :destroy], controller: :transfer
   resource :deletions, controller: :deletion, only: [:new, :create, :show]
+  resource :moves, controller: :move, only: [:new, :create, :show]
 
   controller :torrents do
     get 'status/:status/page/:page', action: :index

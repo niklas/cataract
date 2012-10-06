@@ -9,6 +9,7 @@ class Ability
       can :manage, Setting
       can :manage, Torrent::Transfer
       can :manage, Torrent::Payload
+      can :manage, Move
     end
 
     unless settings.disable_signup?

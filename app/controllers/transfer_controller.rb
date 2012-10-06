@@ -1,11 +1,5 @@
 class TransferController < TorrentComponentController
-  respond_to :json
-
   Fields = [:up_rate, :down_rate, :size_bytes, :completed_bytes]
-
-  rescue_from Torrent::RTorrent::Offline do |exception|
-    render status: 502, text: I18n.t('rtorrent.exceptions.offline')
-  end
 
   before_filter :clear_transfer_cache
 

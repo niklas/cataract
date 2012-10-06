@@ -5,6 +5,10 @@ class TorrentComponentController < InheritedResources::Base
   before_filter :refresh_torrent, except: [:index]
   load_and_authorize_resource except: [:index], class: false
 
+  rescue_from Torrent::RTorrent::Offline do |exception|
+    render status: 502, text: I18n.t('rtorrent.exceptions.offline')
+  end
+
   # FIXME: ember-data does not support nested resources yet, so we have to jump
   # through hoops finding the torrent
 

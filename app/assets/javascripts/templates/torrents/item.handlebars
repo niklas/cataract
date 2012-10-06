@@ -33,6 +33,9 @@
     {{/if}}
     {{#if payloadExists}}
       <a class="clear btn btn-mini btn-danger" {{action clear this}}><i class="icon-trash"></i></a>
+      {{#unless isMoving}}
+      <a class="move btn btn-mini btn-info" {{action move this}}><i class="icon-share"></i></a>
+      {{/unless}}
     {{/if}}
   </div>
   <p>{{info_hash}}</p>

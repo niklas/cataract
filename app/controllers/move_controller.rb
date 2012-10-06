@@ -2,6 +2,10 @@ class MoveController < TorrentComponentController
   private
 
   def interpolation_options
-    { torrent: parent.title, target: resource.target_name }
+    { torrent: torrent.title, target: resource.target_name }
+  end
+
+  def build_resource
+    @resource ||= torrent.build_move(resource_params.first.except(:id))
   end
 end

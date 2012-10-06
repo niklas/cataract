@@ -50,6 +50,7 @@ jQuery ->
     Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
     Cataract.set('siteTitle', 'loading')
     Cataract.set 'directories', Cataract.Directory.find()
+    Cataract.set 'disks', Cataract.Disk.find()
     Cataract.initialize()
     $('body').bind 'tick', -> Cataract.refreshTransfers(); true
     Cataract.Torrent.find()

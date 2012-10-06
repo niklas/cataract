@@ -12,6 +12,7 @@ Cataract.Router = Ember.Router.extend
         unless torrents.get('listOutlet')?
           router.get('applicationController').connectOutlet 'torrents'
         torrents.set('status', params.status)
+
     add: (router, event) ->
       torrent = Cataract.Torrent.createRecord
         fetchAutomatically: true
@@ -28,6 +29,27 @@ Cataract.Router = Ember.Router.extend
             torrent.store.commit()
           else
             torrent.deleteRecord()
+          true
+
+    move: (router, event) ->
+      torrent = event.view.get 'context'
+      move = torrent.store.createRecord Cataract.Move,
+        id: torrent.get('id')
+        disk: torrent.get('payload.directory.disk')
+        directory: torrent.get('payload.directory')
+      Bootstrap.ModalPane.popup
+        heading: "Move payload"
+        torrent: torrent
+        move: move
+        bodyViewClass: Cataract.MoveTorrentView
+        primary: "Move"
+        secondary: "Cancel"
+        showBackdrop: true
+        callback: (opts) ->
+          if opts.primary
+            move.store.commit()
+          else
+            move.deleteRecord()
           true
 
     clear: (router, event) ->
