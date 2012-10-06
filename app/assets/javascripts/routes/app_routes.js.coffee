@@ -83,7 +83,8 @@ Cataract.Router = Ember.Router.extend
         deletePayload: true
         callback: (opts) ->
           if opts.primary
-            torrent.store.createRecord Cataract.Deletion, id: torrent.get('id'), deleteContent: @get('deletePayload')
+            torrent.store.createRecord Cataract.Deletion, id: torrent.get('id'), deletePayload: @get('deletePayload')
+            torrent.get('stateManager').goToState('deleted.saved')
             torrent.store.commit()
           true
 

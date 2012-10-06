@@ -1,2 +1,2 @@
 Cataract.Deletion = DS.Model.extend
-  deleteContent: false
+  deletePayload: DS.attr('boolean')

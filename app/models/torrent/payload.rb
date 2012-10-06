@@ -159,14 +159,14 @@ class Torrent
     include ActiveAttr::Model
     include ActiveAttr::AttributeDefaults
 
-    attribute :delete_content
+    attribute :delete_payload
     attribute :torrent
 
     def save
-      if delete_content?
+      if delete_payload?
         torrent.payload.destroy
       end
-      torrent.stop if torrent.stoppable?
+      torrent.stop! if torrent.stoppable?
       torrent.destroy
     end
   end
