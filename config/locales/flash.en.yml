@@ -1,9 +1,9 @@
 en:
   flash:
-    content:
+    payload:
       destroy:
         notice: "Freed %{bytes}."
-    contents:
+    payloads:
       destroy:
         notice: "Freed %{bytes}."
     directories:

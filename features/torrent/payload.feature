@@ -31,3 +31,12 @@ Feature: Payload of a torrent
      # does not toggle whole torrent
       And I should see "Cat Pictures"
 
+  Scenario: clear a torrent's content
+     When I expand the first torrent
+      And I click on the clear link
+      And I follow "Clear"
+      And I wait for a flash notice to appear
+     Then I should see flash notice "Freed 71.7 KB"
+      And I should be on the home page
+      And the torrent's content should not exist on disk
+      And I should not see the clear link

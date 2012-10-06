@@ -77,7 +77,7 @@ Then /^the file "([^"]*)" should contain exactly:$/ do |file, content|
 end
 
 Then /^#{capture_model}'s content (should not|should) exist on disk$/ do |m, should_or_not|
-  step %Q~the file "#{model!(m).content.path}" #{should_or_not} exist on disk~
+  step %Q~the file "#{model!(m).payload.path}" #{should_or_not} exist on disk~
 end
 
 Then /^#{capture_model}'s file (should not|should) exist on disk$/ do |m, should_or_not|

@@ -13,7 +13,7 @@ class PayloadController < TorrentComponentController
   end
 
   def interpolation_options
-    { bytes: torrent_decorator.human_bytes(@actual_size) }
+    { bytes: PayloadSerializer.new(resource).human_bytes(@actual_size) }
   end
 
 end

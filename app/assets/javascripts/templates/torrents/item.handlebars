@@ -28,7 +28,12 @@
     {{else}}
       <a class="start btn btn-mini btn-success" {{action start target="view"}}><i class="icon-play"></i></a>
     {{/if}}
-    <a class="destroy btn btn-mini btn-danger" {{action delete this}}><i class="icon-remove"></i></a>
+    {{#if isSaved}}
+      <a class="destroy btn btn-mini btn-danger" {{action delete this}}><i class="icon-remove"></i></a>
+    {{/if}}
+    {{#if payloadExists}}
+      <a class="clear btn btn-mini btn-danger" {{action clear this}}><i class="icon-trash"></i></a>
+    {{/if}}
   </div>
   <p>{{info_hash}}</p>
 {{/if}}

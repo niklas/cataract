@@ -30,9 +30,27 @@ Cataract.Router = Ember.Router.extend
             torrent.deleteRecord()
           true
 
+    clear: (router, event) ->
+      torrent = event.view.get 'context'
+      Bootstrap.ModalPane.popup
+        heading: "Clear Torrent"
+        torrent: torrent
+        bodyViewClass: Cataract.TorrentConfirmClearanceView
+        primaryBinding: 'confirmButtonLabel'
+        confirmButtonLabel: (->
+         "Clear #{@get('torrent.payload.humanSize')}"
+        ).property('torrent.payload.humanSize')
+        secondary: "still need it"
+        showBackdrop: true
+        callback: (opts) ->
+          if opts.primary
+            if payload = torrent.get('payload')
+              payload.deleteRecord()
+              payload.store.commit()
+          true
+
     delete: (router, event) ->
       torrent = event.view.get 'context'
-      console?.debug "deleting", torrent
       Bootstrap.ModalPane.popup
         heading: "Delete Torrent"
         torrent: torrent
