@@ -31,6 +31,12 @@ Cataract = Ember.Application.create
       Cataract.set 'online', true
       true
 
+  rootDirectories: (->
+    Cataract.store.filter Cataract.Directory, (dir) ->
+      dir = dir.record if dir.record?
+      !dir.get('parentId')?
+  ).property('directories.@each.parentId')
+
 Cataract.store = DS.Store.create
   revision: 4
   adapter: DS.RESTAdapter.create

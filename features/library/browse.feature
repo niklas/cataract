@@ -24,6 +24,7 @@ Feature: Browsing the library
 
   Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page
+      And I wait for the spinner to disappear
      Then I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |

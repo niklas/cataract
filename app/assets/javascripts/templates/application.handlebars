@@ -45,8 +45,13 @@
     <div id="sidebar">
       <ul class="nav nav-list directories">
         <li class="nav-header">Directories</li>
-        {{#each Cataract.directories}}
-          <li><a>{{name}}</a></li>
+        {{#each Cataract.rootDirectories}}
+        <li {{bindAttr class="cssClass isExisting:existing:missing"}}>
+          <a class="name">
+            <i {{bindAttr class="isExisting:icon-folder-open:icon-warning-sign"}}></i>
+            {{name}}
+          </a>
+        </li>
         {{/each}}
       </ul>
 
