@@ -10,7 +10,9 @@
         <a href="/" class="brand">Cataract</a>
 
         <div class="nav-collapse">
-          <a>session</a>
+
+          {{view Cataract.SessionView}}
+
           <ul id="queue" class="nav pull-right">
             {{#if Cataract.moves.length}}
             <li class="dropdown">
@@ -21,11 +23,13 @@
             </li>
             {{/if}}
           </ul>
+
           <ul class="nav">
             <li><a href="#torrents/recent">Recent</a></li>
             <li><a href="#torrents/running">Running</a></li>
             <li><a href="#" {{action add}}>Add</a></li>
           </ul>
+
           {{view Ember.TextField valueBinding="Cataract.router.torrentsController.terms" classNames="search-query" elementId="torrent_search_terms"}}
         </div>
 

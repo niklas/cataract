@@ -1,6 +1,7 @@
 !!!5
 %html
   = render 'layouts/head'
+  %script{type: "text/x-handlebars", 'data-template-name' => 'session' }= render 'session'
   %body#ember
     = render 'flash'
     #container.container-fluid= yield
