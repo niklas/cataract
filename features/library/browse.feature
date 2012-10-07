@@ -39,33 +39,41 @@ Feature: Browsing the library
       | Name   |
       | Series |
 
-  Scenario: Browse to root directories on disks
-    Given I am on the library page
+  Scenario: Selecting a disk shows only *its* root directories in sidebar
+    Given I am on the home page
+      And I wait for the spinner to disappear
      When I follow "More" within the sidebar disk list
-     Then I should be on the page for disk "More"
-      And I should see the following breadcrumbs:
-      | More |
+      Then I should see the following active disks in the sidebar disk list:
+      | name  |
+      | More  |
       And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
-      And I should see a table of the following directories:
+      And I should see the following directories in the sidebar directory list:
       | Name   |
       | Series |
-      But I should not see "Movies" within the directories list
+      But I should not see "Movies" within the sidebar directory list
 
      When I follow "Stuff" within the sidebar disk list
-     Then I should be on the page for disk "Stuff"
-      And I should see the following breadcrumbs:
-      | Stuff |
+      Then I should see the following active disks in the sidebar disk list:
+      | name  |
+      | Stuff  |
       And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
-      And I should see a table of the following directories:
+      And I should see the following directories in the sidebar directory list:
       | Name   |
       | Movies |
-      But I should not see "Series" within the directories list
+      But I should not see "Series" within the sidebar directory list
+
+
+     When I follow "reset" within the sidebar disk list
+     Then I should see the following mounted disks in the sidebar disk list:
+      | name  |
+      | More  |
+      | Stuff |
 
    Scenario: Browse to subdirectories
     Given I am on the page for disk "More"

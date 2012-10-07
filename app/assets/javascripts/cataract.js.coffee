@@ -31,11 +31,18 @@ Cataract = Ember.Application.create
       Cataract.set 'online', true
       true
 
+  currentDisk: null
+  currentDirectory: null
+
   rootDirectories: (->
     Cataract.store.filter Cataract.Directory, (dir) ->
+      want = true
       dir = dir.record if dir.record?
-      !dir.get('parentId')?
-  ).property('directories.@each.parentId')
+      if currentDisk = Cataract.get('currentDisk')
+        want = want and dir.get('disk') is currentDisk
+      want = want and not dir.get('parentId')?
+      want
+  ).property('directories.@each.parentId', 'currentDisk')
 
 Cataract.store = DS.Store.create
   revision: 4

@@ -58,13 +58,17 @@
       <ul class="nav nav-list disks">
         <li class="nav-header">Disks</li>
         {{#each Cataract.disks}}
-        <li {{bindAttr class="cssClass isMounted:mounted:unmounted"}}>
-          <a class="name">
+        <li {{bindAttr class="cssClass active isMounted:mounted:unmounted"}}>
+        <a class="name" href="#" {{action setCurrentDisk this}}>
             <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
             {{name}}
           </a>
         </li>
         {{/each}}
+        {{#if Cataract.currentDisk}}
+          <li class="divider"></li>
+          <li><a href="#" {{action setCurrentDisk null}}>reset</a></li>
+        {{/if}}
       </ul>
     </div>
   </div>

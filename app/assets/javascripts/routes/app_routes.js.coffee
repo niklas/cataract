@@ -88,4 +88,7 @@ Cataract.Router = Ember.Router.extend
             torrent.store.commit()
           true
 
+    setCurrentDisk: (router, event) ->
+      Cataract.set 'currentDisk', event.context
+
 
