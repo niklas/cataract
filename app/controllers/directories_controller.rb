@@ -2,7 +2,7 @@ class DirectoriesController < InheritedResources::Base
   belongs_to :disk, optional: true
   respond_to :json, :js, :html
 
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:index]
   layout 'library'
 
   def create
@@ -13,7 +13,7 @@ class DirectoriesController < InheritedResources::Base
     update! { redirect_path }
   end
 
-  private
+  protected
   def interpolation_options
     { name: resource.name }
   end
@@ -28,5 +28,10 @@ class DirectoriesController < InheritedResources::Base
 
   def search
     @search ||= resource.torrent_search
+  end
+
+  def collection
+    authorize! :index, Directory
+    @directories ||= end_of_association_chain.order('name, disk_id').includes(:disk)
   end
 end

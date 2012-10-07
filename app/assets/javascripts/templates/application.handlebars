@@ -42,10 +42,25 @@
 
 <div class="row-fluid">
   <div class="span3">
-    <div id="#sidebar" class="well">
-      <div>disks</div>
-      <div>directories</div>
-      <div>dropzone?</div>
+    <div id="sidebar">
+      <ul class="nav nav-list directories">
+        <li class="nav-header">Directories</li>
+        {{#each Cataract.directories}}
+          <li><a>{{name}}</a></li>
+        {{/each}}
+      </ul>
+
+      <ul class="nav nav-list disks">
+        <li class="nav-header">Disks</li>
+        {{#each Cataract.disks}}
+        <li {{bindAttr class="cssClass isMounted:mounted:unmounted"}}>
+          <a class="name">
+            <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+            {{name}}
+          </a>
+        </li>
+        {{/each}}
+      </ul>
     </div>
   </div>
   <div class="span9">

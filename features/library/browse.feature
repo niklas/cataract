@@ -24,10 +24,7 @@ Feature: Browsing the library
 
   Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page
-     When I toggle the menu
-      And I follow "Library"
-     Then I should be on the library page
-      And I should see the following mounted disks in the sidebar disk list:
+     Then I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
