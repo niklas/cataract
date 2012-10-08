@@ -13,6 +13,11 @@ Cataract.Router = Ember.Router.extend
           router.get('applicationController').connectOutlet 'torrents'
         torrents.set('status', params.status)
 
+    directories: Ember.Route.extend
+      route: '/directories/:directory_id'
+      connectOutlets: (router, directory) ->
+        router.get('applicationController').connectOutlet 'directory', directory
+
     add: (router, event) ->
       torrent = Cataract.Torrent.createRecord
         fetchAutomatically: true
@@ -90,5 +95,13 @@ Cataract.Router = Ember.Router.extend
 
     setCurrentDisk: (router, event) ->
       Cataract.set 'currentDisk', event.context
+
+    setCurrentDirectory: (router, event) ->
+      if directory = event.context
+        if directory.get('showSubDirs')
+          router.transitionTo 'directories', directory
+        else
+          router.transitionTo 'index'
+      Cataract.set 'currentDirectory', directory
 
 

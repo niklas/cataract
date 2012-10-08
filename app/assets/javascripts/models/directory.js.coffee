@@ -7,6 +7,8 @@ Cataract.Directory = DS.Model.extend
   cssClass: 'directory'
   parentId: DS.attr 'number'
   parent: DS.belongsTo('Cataract.Directory')
+  active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
+  showSubDirs: DS.attr 'boolean'
 
 Cataract.Directory.reopenClass
   url: 'directory'

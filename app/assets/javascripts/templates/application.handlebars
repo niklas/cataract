@@ -46,13 +46,17 @@
       <ul class="nav nav-list directories">
         <li class="nav-header">Directories</li>
         {{#each Cataract.rootDirectories}}
-        <li {{bindAttr class="cssClass isExisting:existing:missing"}}>
-          <a class="name">
+        <li {{bindAttr class="cssClass active isExisting:existing:missing"}}>
+          <a class="name" href="#" {{action setCurrentDirectory this}}>
             <i {{bindAttr class="isExisting:icon-folder-open:icon-warning-sign"}}></i>
             {{name}}
           </a>
         </li>
         {{/each}}
+        {{#if Cataract.currentDirectory}}
+          <li class="divider"></li>
+          <li><a href="#" {{action setCurrentDirectory null}}>reset</a></li>
+        {{/if}}
       </ul>
 
       <ul class="nav nav-list disks">
