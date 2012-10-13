@@ -1,3 +1,5 @@
 Look ma, the directory {{content.name}}
 
+{{#if content.hasSubDirs}}
 {{view Cataract.DirectoriesTable contentBinding="content.children"}}
+{{/if}}
