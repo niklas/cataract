@@ -1,5 +1,5 @@
 class TransferController < TorrentComponentController
-  Fields = [:up_rate, :down_rate, :size_bytes, :completed_bytes]
+  Fields = [:up_rate, :down_rate, :size_bytes, :completed_bytes, :active?]
 
   before_filter :clear_transfer_cache
 
@@ -33,6 +33,7 @@ class TransferController < TorrentComponentController
     @transfers ||= Torrent.running_or_listed(params[:running]).tap do |torrents|
       authorize! :index, Torrent
       Torrent.remote.apply torrents, Fields
+      torrents.reject(&:active?).each(&:finally_stop!)
     end.map(&:transfer)
   end
 end

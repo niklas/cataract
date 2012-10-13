@@ -1,4 +1,5 @@
 class TransferSerializer < BaseSerializer
+  embed :ids, include: true
   include TorrentsHelper
   attributes :torrent_id, :progress
   has_one :torrent

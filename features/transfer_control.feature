@@ -32,6 +32,7 @@ Feature: Transferring torrents
       And the torrent was started
       And rtorrent should download the torrent
       And the tick interval is reached
+      And I wait for the spinner to disappear
      When I expand the first torrent
      Then I should see the stop link
 

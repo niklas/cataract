@@ -23,8 +23,7 @@ Cataract = Ember.Application.create
     running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('record.isRunning')
     $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
       for transfer in data.transfers
-        unless transfer.up_rate is null and transfer.down_rate is null # torrent stopped from somewhere else
-          Cataract.store.load Cataract.Transfer, transfer
+        Cataract.store.load Cataract.Transfer, transfer
       if data.torrents
         Cataract.store.loadMany Cataract.Torrent, data.torrents
       Cataract.set 'transferLoaded', true

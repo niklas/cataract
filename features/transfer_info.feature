@@ -56,7 +56,7 @@ Feature: Transfer info
         | 42 B/s | 23 B/s | 15%     | 1 minute |
 
 
-  Scenario: stopped manually is detected
+  Scenario: stopped by someone else is detected
     Given the torrent is running
       And I am on the home page
       And rtorrent list contains the following:

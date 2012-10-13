@@ -137,7 +137,7 @@ describe Torrent::RTorrent do
     let(:torrent) { create :torrent_with_picture_of_tails, content_directory: incoming }
     before :each do
       rtorrent.stub!(:all).and_return(progress_array)
-      rtorrent.apply torrents, [:up_rate, :down_rate]
+      rtorrent.apply torrents, [:up_rate, :down_rate, :active?]
     end
 
     context "for started torrent" do
@@ -159,7 +159,7 @@ describe Torrent::RTorrent do
         torrent.down_rate.should == 42
       end
 
-      it "should active state" do
+      it "should set active state" do # so the TransferController can mark them as stopped
         torrent.should be_active
         archived.should_not be_active
       end
