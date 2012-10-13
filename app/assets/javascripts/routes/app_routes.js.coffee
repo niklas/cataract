@@ -39,10 +39,11 @@ Cataract.Router = Ember.Router.extend
 
     move: (router, event) ->
       torrent = event.view.get 'context'
+      directory = torrent.get('payload.directory') || torrent.get('contentDirectory')
       move = torrent.store.createRecord Cataract.Move,
         id: torrent.get('id')
-        disk: torrent.get('payload.directory.disk')
-        directory: torrent.get('payload.directory')
+        targetDisk: directory.get('disk')
+        targetDirectory: directory
       Bootstrap.ModalPane.popup
         heading: "Move payload"
         torrent: torrent
