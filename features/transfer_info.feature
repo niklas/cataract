@@ -15,8 +15,8 @@ Feature: Transfer info
 
   Scenario: properly format values
     Given rtorrent list contains the following:
-        | up_rate | down_rate | hash        |
-        | 10      | 23000     | the torrent |
+        | up_rate | down_rate | hash        | active? |
+        | 10      | 23000     | the torrent | true    |
       And the torrent is running
      When I go to the home page
       And the tick interval is reached
@@ -27,8 +27,8 @@ Feature: Transfer info
   Scenario: cache of catch-all will be cleared
     Given the torrent is running
       And rtorrent list contains the following:
-        | up_rate | hash        |
-        | 5       | the torrent |
+        | up_rate | hash        | active? |
+        | 5       | the torrent | true    |
      When I go to the home page
       And the tick interval is reached
      Then I should see the following torrents in the torrent list:
@@ -36,8 +36,8 @@ Feature: Transfer info
         | 5 B/s   |
 
     Given rtorrent list contains the following:
-        | up_rate | hash        |
-        | 23      | the torrent |
+        | up_rate | hash        | active? |
+        | 23      | the torrent | true    |
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
         | up      |
