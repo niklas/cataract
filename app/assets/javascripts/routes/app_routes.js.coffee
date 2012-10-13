@@ -16,6 +16,7 @@ Cataract.Router = Ember.Router.extend
     directories: Ember.Route.extend
       route: '/directories/:directory_id'
       connectOutlets: (router, directory) ->
+        Cataract.set 'currentDirectory', directory
         router.get('applicationController').connectOutlet 'pre', 'directory', directory
 
     add: (router, event) ->
@@ -99,6 +100,5 @@ Cataract.Router = Ember.Router.extend
     setCurrentDirectory: (router, event) ->
       if directory = event.context
         router.transitionTo 'directories', directory
-      Cataract.set 'currentDirectory', directory
 
 
