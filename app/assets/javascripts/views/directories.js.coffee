@@ -1,3 +1,17 @@
+Cataract.PlainContentView = Ember.View.extend
+  template: Ember.Handlebars.compile '{{view.content}}'
+
+Cataract.TableCellView = Ember.ContainerView.extend
+  tagName: 'td'
+  childViews: ['child']
+  child: (->
+    content = @get('content')
+    if content.isView
+      content
+    else
+      Cataract.PlainContentView.create contentBinding: 'parentView.content'
+  ).property('content')
+
 Cataract.Table = Ember.ContainerView.extend
   tagName: 'table'
   childViews: ['thead', 'tbody']
@@ -23,18 +37,23 @@ Cataract.Table = Ember.ContainerView.extend
         columnsBinding: 'parentView.parentView.columns'
         values: (->
           content = @get('content')
-          @get('columns').map (column) -> content.get(column.property)
+          @get('columns').map (column) ->
+            if column.view?
+              column.view.create content: content.get(column.property)
+            else
+              content.get(column.property)
         ).property('content')
         cells: Ember.CollectionView.extend
           contentBinding: 'parentView.values'
-          itemViewClass: Ember.View.extend
-            tagName: 'td'
-            template: Ember.Handlebars.compile '{{view.content}}'
+          itemViewClass: Cataract.TableCellView
     @_super()
+
+Cataract.LinkToDirectory = Ember.View.extend
+  template: Ember.Handlebars.compile '<a href="#" {{action setCurrentDirectory content}}>{{content.name}}</a>'
 
 Cataract.DirectoriesTable = Cataract.Table.extend
   classNames: 'table table-striped directories'.w()
   columns: [
     { name: "Disk", property: 'disk.name' }
-    { name: "Name", property: 'name' }
+    { name: "Name", property: 'name', view: Cataract.LinkToDirectory }
   ]
