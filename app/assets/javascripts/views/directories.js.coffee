@@ -38,8 +38,8 @@ Cataract.Table = Ember.ContainerView.extend
         values: (->
           content = @get('content')
           @get('columns').map (column) ->
-            if column.view?
-              column.view.create content: content.get(column.property)
+            if column.viewClass
+              column.viewClass.create content: content
             else
               content.get(column.property)
         ).property('content')
@@ -49,11 +49,11 @@ Cataract.Table = Ember.ContainerView.extend
     @_super()
 
 Cataract.LinkToDirectory = Ember.View.extend
-  template: Ember.Handlebars.compile '<a href="#" {{action setCurrentDirectory content}}>{{content.name}}</a>'
+  template: Ember.Handlebars.compile '<a href="#" {{action setCurrentDirectory view.content}}>{{view.content.name}}</a>'
 
 Cataract.DirectoriesTable = Cataract.Table.extend
   classNames: 'table table-striped directories'.w()
   columns: [
-    { name: "Disk", property: 'disk.name' }
-    { name: "Name", property: 'name', view: Cataract.LinkToDirectory }
+    { name: "Disk", property: 'disk.name' },
+    { name: "Name", viewClass: Cataract.LinkToDirectory }
   ]
