@@ -22,7 +22,6 @@ Feature: Browsing the library
       | Movies    | disk "Stuff" | Movies          |                    | true        |               | false         |
       | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |             |               | false         |
 
-      @wip
   Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page
       And I wait for the spinner to disappear
@@ -40,7 +39,6 @@ Feature: Browsing the library
       | Name   |
       | Series |
 
-      @wip
   Scenario: Selecting a disk shows only *its* root directories in sidebar
     Given I am on the home page
       And I wait for the spinner to disappear
@@ -79,10 +77,10 @@ Feature: Browsing the library
 
    Scenario: Browse to subdirectories
     Given a torrent exists with content_directory: directory "Frowns", title: "First Shame"
+
       And I am on the home page
       And I wait for the spinner to disappear
      When I follow "Series" within the sidebar directory list
-      And I pause
      Then I should not see "First Shame"
      When I follow "Shame of Frowns" within the directories list
      Then I should see the following torrents in the torrent list:

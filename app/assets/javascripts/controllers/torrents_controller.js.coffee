@@ -22,8 +22,11 @@ Cataract.TorrentsController = Ember.ArrayController.extend
       if status.length > 0 and status == 'running'
         want = want and torrent.get('isRunning')
 
+      if directory = Cataract.get('currentDirectory')
+        want = want and directory is torrent.get('contentDirectory')
+
       want
-  ).property('terms', 'status')
+  ).property('terms', 'status', 'Cataract.currentDirectory')
 
   content: (->
     Cataract.store.filter(Cataract.Torrent, @get('filterFunction'))

@@ -1,5 +1,6 @@
 class TorrentSerializer < BaseSerializer
-  attributes :id, :title, :info_hash, :filename, :status
+  # FIXME where should we provide keys for associations to Ember? content_directory or .._id?
+  attributes :id, :title, :info_hash, :filename, :status, :content_directory_id
 
   def attributes
     super.tap do |hash|
