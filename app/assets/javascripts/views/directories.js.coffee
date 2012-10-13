@@ -20,7 +20,7 @@ Cataract.Table = Ember.ContainerView.extend
   columns: []
   init: ->
     @set 'thead', Ember.ContainerView.create
-      tagName: 'tr'
+      tagName: 'thead'
       childViews: ['header']
       header: Ember.CollectionView.create
         tagName: 'tr'
