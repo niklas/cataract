@@ -107,7 +107,6 @@ Feature: Browsing the library
 
 
 
-  @wip
    Scenario: torrents shown for directory ordered by name
     Given the following torrents exist:
        | title             | content_directory  |
@@ -116,16 +115,17 @@ Feature: Browsing the library
        | Short Blockbuster | directory "Movies" |
       And I am on the home page
 
-     When I follow "Series" within the directories list
+     When I follow "Series" within the sidebar directory list
      Then I should not see "Season"
       And I should not see "Blockbuster"
 
-     When I follow "Movies" within the directories list
+     When I follow "Movies" within the sidebar directory list
     Then I should see the following torrents in the torrent list:
       | title             |
       | Short Blockbuster |
 
-     When I follow "Frowns" within the directories list
+     When I follow "Series" within the sidebar directory list
+      And I follow "Frowns" within the directories list
     Then I should see the following torrents in the torrent list:
       | title        |
       | Long Season  |
