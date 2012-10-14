@@ -9,8 +9,8 @@
 #= require radio_buttons
 #= require bindWithDelay
 #= require handlebars
-#= require ember
-#= require ember-data
+#= require ember-latest
+#= require ember-data-latest
 #= require ember-bootstrap
 #= require ember-rails-flash
 #

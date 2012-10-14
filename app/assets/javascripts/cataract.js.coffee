@@ -13,6 +13,7 @@ Cataract = Ember.Application.create
   transferLoaded: false
   online: true
   offlineReason: null
+  autoinit: false
   init: ->
     @_super()
     jQuery(@get('rootElement')).ajaxError (e, jqxhr, settings, exception) ->
@@ -44,7 +45,7 @@ Cataract = Ember.Application.create
   ).property('directories.@each.parentId', 'currentDisk')
 
 Cataract.store = DS.Store.create
-  revision: 4
+  revision: 6
   adapter: DS.RESTAdapter.create
     bulkCommit: false
     plurals:
