@@ -6,13 +6,12 @@ Cataract.Torrent = DS.Model.extend
   status: DS.attr 'string'
   filename: DS.attr 'string'
   url: DS.attr 'string'
-  isRunning: (-> @get('transfer') and @get('status') == 'running').property('status', 'transfer')
+  isRunning: (-> @get('status') == 'running' and @get('transfer.isLoaded')).property('status', 'transfer.isLoaded')
   isRemote: (-> @get('status') == 'remote').property('status')
 
   filedata: DS.attr 'string' # TODO put into payload
-  payloads: DS.hasMany 'Cataract.Payload' # HACK
   payload: (-> Cataract.Payload.find(@get('id'))).property()
-  payloadExists: (-> @get('payload')? ).property('payloadId')
+  payloadExists: (-> @get('payload.isLoaded') ).property('payload.isLoaded')
 
   contentDirectory: DS.belongsTo('Cataract.Directory', key: 'content_directory_id')
 

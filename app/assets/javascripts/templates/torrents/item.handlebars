@@ -1,15 +1,11 @@
 <h4 class="title" {{action toggleExpand target="view"}}>{{title}}</h4>
 
 {{#if isRunning}}
-  {{#if Cataract.transferLoaded}}
+  {{#if Cataract.online}}
     {{view Cataract.TransferView contentBinding="transfer"}}
   {{else}}
-    {{#if Cataract.online}}
-      Loading..
-    {{else}}
-      {{Cataract.offlineReason}}
-    {{/if}}
-  {{/if}}
+    {{Cataract.offlineReason}}
+{{/if}}
 {{/if}}
 
 {{#if payloadExists}}

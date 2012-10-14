@@ -47,6 +47,6 @@ Given /^rtorrent list contains the following:$/ do |table|
       hash
     end
   end
-  Torrent.remote.stub(:all).once.and_return(table.hashes.map(&:symbolize_keys))
+  Torrent.remote.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
 end
 

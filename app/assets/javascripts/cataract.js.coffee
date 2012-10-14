@@ -10,7 +10,6 @@
 
 Cataract = Ember.Application.create
   rootElement: 'body#ember'
-  transferLoaded: false
   online: true
   offlineReason: null
   autoinit: false
@@ -21,13 +20,12 @@ Cataract = Ember.Application.create
       if jqxhr.status == 502
         Cataract.set 'offlineReason', jqxhr.responseText
   refreshTransfers: ->
-    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('record.isRunning')
+    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('isRunning')
     $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
       for transfer in data.transfers
         Cataract.store.load Cataract.Transfer, transfer
       if data.torrents
         Cataract.store.loadMany Cataract.Torrent, data.torrents
-      Cataract.set 'transferLoaded', true
       Cataract.set 'online', true
       true
 

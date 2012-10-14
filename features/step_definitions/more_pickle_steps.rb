@@ -2,7 +2,7 @@ Then /^#{capture_model}'s ([\w_]+) should not be ([\w_]+)$/ do |ref, method, pre
   model!(ref).send(method).should_not send("be_#{predicate}")
 end
 
-Given /^#{capture_model} is (?:marked as )?(running)$/ do |ref, status|
+Given /^#{capture_model} is (?:marked as )?(running|archived)$/ do |ref, status|
   model = model!(ref)
   model.update_attribute :status, status
   Torrent.remote.clear_caches!
