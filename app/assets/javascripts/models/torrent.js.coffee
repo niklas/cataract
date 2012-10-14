@@ -1,17 +1,18 @@
 Cataract.Torrent = DS.Model.extend
   title: DS.attr 'string'
-  transfer: DS.belongsTo 'Cataract.Transfer'
+  # must simulate belongsTo thx to https://github.com/emberjs/data/issues/380
+  transfer: (-> Cataract.Transfer.find(@get('id'))).property()
   info_hash: DS.attr 'string'
   status: DS.attr 'string'
   filename: DS.attr 'string'
   url: DS.attr 'string'
-  isRunning: (-> @get('status') == 'running').property('status')
+  isRunning: (-> @get('transfer') and @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
   filedata: DS.attr 'string' # TODO put into payload
-  payloadId: DS.attr 'number'
-  payloadExists: (-> @get('payloadId')? ).property('payloadId')
-  payload: DS.belongsTo 'Cataract.Payload'
+  payloads: DS.hasMany 'Cataract.Payload' # HACK
+  payload: (-> Cataract.Payload.find(@get('id'))).property()
+  payloadExists: (-> @get('payload')? ).property('payloadId')
 
   contentDirectory: DS.belongsTo('Cataract.Directory', key: 'content_directory_id')
 

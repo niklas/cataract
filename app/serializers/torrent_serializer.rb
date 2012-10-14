@@ -4,8 +4,10 @@ class TorrentSerializer < BaseSerializer
 
   def attributes
     super.tap do |hash|
-      hash['payload_id'] = object.payload.exist?? object.id : nil
-      hash['transfer_id'] = object.running?? object.id : nil
+      #hash['payload_id'] = object.payload.exist?? object.id : nil
+      #hash['transfer_id'] = object.running?? object.id : nil
+      # hash['transfers'] = [object.id] # ember-data cannot associate 1to1 currently, set always so it does not trigger an update
+      # hash['payload'] = [object.id]
     end
   end
 

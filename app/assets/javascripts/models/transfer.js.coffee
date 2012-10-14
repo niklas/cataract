@@ -6,5 +6,3 @@ Cataract.Transfer = DS.Model.extend
   progressStyle: (->
     "width: #{@get('progress')}%"
   ).property('progress')
-
-  torrent: DS.belongsTo 'Cataract.Torrent'
