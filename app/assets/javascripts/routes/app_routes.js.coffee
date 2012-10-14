@@ -1,8 +1,13 @@
 Cataract.Router = Ember.Router.extend
   enableLogging:  true
   location: 'hash'
-  setCurrentDirectory: Ember.Route.transitionTo('directories')
-  goToDirectory: Ember.Route.transitionTo('directories')
+  listTorrents: ->
+    torrents = @get('torrentsController')
+    unless torrents.get('listOutlet')?
+      @get('applicationController').connectOutlet 'torrents'
+
+  setCurrentDirectory: Ember.Route.transitionTo('directories.show')
+  goToDirectory: Ember.Route.transitionTo('directories.show')
   root: Ember.Route.extend
     index: Ember.Route.extend
       route: '/'
@@ -12,21 +17,23 @@ Cataract.Router = Ember.Router.extend
     list: Ember.Route.extend
       route: '/torrents/:status'
       connectOutlets: (router, params) ->
-        torrents = router.get('torrentsController')
-        unless torrents.get('listOutlet')?
-          router.get('applicationController').connectOutlet 'torrents'
+        router.listTorrents()
+        torrents = @get('torrentsController')
         torrents.set('status', params.status)
 
     directories: Ember.Route.extend
-      route: '/directories/:directory_id'
+      route: '/directories'
+      connectOutlets: (router) ->
+        router.listTorrents()
       editDirectory: Ember.Route.transitionTo('directories.edit')
-      connectOutlets: (router, directory) ->
-        Cataract.set 'currentDirectory', directory
-        router.get('applicationController').connectOutlet 'pre', 'directory', directory
-      edit: Ember.Route.extend
-        route: '/edit'
+      show: Ember.Route.extend
+        route: '/show/:directory_id'
         connectOutlets: (router, directory) ->
-          directory = Cataract.get 'currentDirectory'
+          Cataract.set 'currentDirectory', directory
+          router.get('applicationController').connectOutlet 'pre', 'directory', directory
+      edit: Ember.Route.extend
+        route: '/edit/:directory_id'
+        connectOutlets: (router, directory) ->
           transaction = Cataract.store.transaction()
           transaction.add directory
           @set 'transaction', transaction
@@ -34,12 +41,12 @@ Cataract.Router = Ember.Router.extend
         save: (router) ->
           @get('transaction').commit()
           directory = Cataract.get('currentDirectory')
-          router.transitionTo 'directories', directory
+          router.transitionTo 'directories.show', directory
 
         cancel: (router) ->
           @get('transaction').rollback()
           directory = Cataract.get('currentDirectory')
-          router.transitionTo 'directories', directory
+          router.transitionTo 'directories.show', directory
 
     add: (router, event) ->
       torrent = Cataract.Torrent.createRecord
