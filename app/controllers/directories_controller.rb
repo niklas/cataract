@@ -1,9 +1,8 @@
 class DirectoriesController < InheritedResources::Base
   belongs_to :disk, optional: true
-  respond_to :json, :js, :html
+  respond_to :json
 
   load_and_authorize_resource except: [:index]
-  layout 'library'
 
   def create
     create! { redirect_path }
@@ -34,4 +33,5 @@ class DirectoriesController < InheritedResources::Base
     authorize! :index, Directory
     @directories ||= end_of_association_chain.order('name, disk_id').includes(:disk)
   end
+
 end

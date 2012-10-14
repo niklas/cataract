@@ -38,9 +38,15 @@ class Directory < ActiveRecord::Base
     nil
   end
 
+  # TODO attribute writer, just for ember-data
+  attr_writer :path
+  attr_writer :exists
+
   def exist?
     relative_path? && disk.present? && path.exist?
   end
+
+  alias_method :exists?, :exist?
 
   def inspect
     %Q~<Directory "#{name}" #{path}>~
@@ -89,6 +95,7 @@ class Directory < ActiveRecord::Base
     end
   end
 
+  # OPTIMIZE duplicated in Ember model
   def default!
     if filter.blank?
       self.filter = name

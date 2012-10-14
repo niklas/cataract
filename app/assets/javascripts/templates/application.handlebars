@@ -47,7 +47,7 @@
         <li class="nav-header">Directories</li>
         {{#each Cataract.rootDirectories}}
         <li {{bindAttr class="cssClass active isExisting:existing:missing"}}>
-          <a class="name" href="#" {{action setCurrentDirectory this}}>
+          <a class="name" {{action goToDirectory this href=true}}>
             <i {{bindAttr class="isExisting:icon-folder-open:icon-warning-sign"}}></i>
             {{name}}
           </a>
@@ -55,7 +55,7 @@
         {{/each}}
         {{#if Cataract.currentDirectory}}
           <li class="divider"></li>
-          <li><a href="#" {{action setCurrentDirectory null}}>reset</a></li>
+          <li><a href="#" {{action goToDirectory null}}>reset</a></li>
         {{/if}}
       </ul>
 
@@ -76,7 +76,7 @@
       </ul>
     </div>
   </div>
-  <div class="span9">
+  <div class="span9" id="content">
     <div style="display: none;">breadcrumbs</div>
     {{outlet pre}}
     {{outlet}}

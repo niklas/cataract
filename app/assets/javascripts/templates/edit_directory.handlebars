@@ -1,0 +1,14 @@
+<h2>{{content.name}}</h2>
+
+<label for="directory_subscribed">
+  {{view Ember.Checkbox checkedBinding="content.subscribed" elementID="directory_subscribed"}}
+  subscribed
+</label>
+
+{{#if content.subscribed}}
+  {{view Bootstrap.Forms.TextField valueBinding="content.filter" label="Filter"}}
+{{/if}}
+
+<button class="btn" {{action cancel}}>Cancel</button>
+<button class="btn btn-primary" {{action save}}>Save</button>
+

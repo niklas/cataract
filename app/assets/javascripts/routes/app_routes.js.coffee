@@ -1,10 +1,14 @@
 Cataract.Router = Ember.Router.extend
+  enableLogging:  true
   location: 'hash'
+  setCurrentDirectory: Ember.Route.transitionTo('directories')
+  goToDirectory: Ember.Route.transitionTo('directories')
   root: Ember.Route.extend
     index: Ember.Route.extend
       route: '/'
       connectOutlets: (router) ->
         router.transitionTo 'list', status: 'recent'
+
     list: Ember.Route.extend
       route: '/torrents/:status'
       connectOutlets: (router, params) ->
@@ -15,9 +19,27 @@ Cataract.Router = Ember.Router.extend
 
     directories: Ember.Route.extend
       route: '/directories/:directory_id'
+      editDirectory: Ember.Route.transitionTo('directories.edit')
       connectOutlets: (router, directory) ->
         Cataract.set 'currentDirectory', directory
         router.get('applicationController').connectOutlet 'pre', 'directory', directory
+      edit: Ember.Route.extend
+        route: '/edit'
+        connectOutlets: (router, directory) ->
+          directory = Cataract.get 'currentDirectory'
+          transaction = Cataract.store.transaction()
+          transaction.add directory
+          @set 'transaction', transaction
+          router.get('applicationController').connectOutlet 'pre', 'editDirectory', directory
+        save: (router) ->
+          @get('transaction').commit()
+          directory = Cataract.get('currentDirectory')
+          router.transitionTo 'directories', directory
+
+        cancel: (router) ->
+          @get('transaction').rollback()
+          directory = Cataract.get('currentDirectory')
+          router.transitionTo 'directories', directory
 
     add: (router, event) ->
       torrent = Cataract.Torrent.createRecord
@@ -97,9 +119,5 @@ Cataract.Router = Ember.Router.extend
 
     setCurrentDisk: (router, event) ->
       Cataract.set 'currentDisk', event.context
-
-    setCurrentDirectory: (router, event) ->
-      if directory = event.context
-        router.transitionTo 'directories', directory
 
 

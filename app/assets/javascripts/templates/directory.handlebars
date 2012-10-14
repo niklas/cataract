@@ -1,4 +1,6 @@
-Look ma, the directory {{content.name}}
+<h2>{{content.name}}</h2>
+
+<a {{action editDirectory content href=true}}>edit</a>
 
 {{#if content.hasSubDirs}}
 {{view Cataract.DirectoriesTable contentBinding="content.children"}}
