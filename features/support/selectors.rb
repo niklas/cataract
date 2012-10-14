@@ -63,6 +63,9 @@ module HtmlSelectorsHelpers
     when 'a row'
       '.row-fluid'
 
+    when 'a label'
+      'span.label' # bootstrap
+
     when /^(?:the )?item of #{capture_model}$/
       "##{ model!($1).decorate.item_id }"
 

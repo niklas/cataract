@@ -1,6 +1,10 @@
 <h2>{{content.name}}</h2>
 
-<a {{action editDirectory content href=true}}>edit</a>
+<a class="edit" {{action editDirectory content href=true}}>edit</a>
+
+{{#if content.subscribed}}
+  <span class="subscribed label label-success">subscribed</span>
+{{/if}}
 
 {{#if content.hasSubDirs}}
 {{view Cataract.DirectoriesTable contentBinding="content.children"}}

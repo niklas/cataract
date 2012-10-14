@@ -8,20 +8,30 @@ Feature: Subscribe Directory
     Given a directory exists with name: "Shame of Frowns"
       And I am signed in as user
       And am on the home page
+      And I wait for the spinner to stop
 
      When I follow "Shame of Frowns" within the sidebar directories list
-      And I check "subscribed" within the content
+     Then I should see "Shame of Frowns" within the content
+     When I click on the edit link
+      And I check "subscribed"
      Then the "Filter" field should contain "Shame of Frowns"
      When I fill in "Filter" with "frowns"
-      And I press "Save"
+      And I click on the save link
      Then I should see flash notice "Directory 'Shame of Frowns' saved."
+      And I should see "subscribed" in a label within the content
       And the directory should be subscribed
       And the directory's filter should be "frowns"
 
-     When I follow "Shame of Frowns" within the sidebar directories list
+     When I click on the edit link
+      And I uncheck "subscribed"
+      And I click on the cancel link
+     Then I should see "subscribed" in a label within the content
+      And the directory should be subscribed
+
+     When I click on the edit link
      Then the "subscribed" checkbox should be checked
      When I uncheck "subscribed"
-      And I press "Save"
+      And I click on the save link
      Then I should see flash notice "Directory 'Shame of Frowns' saved."
-      And I pause
+      And I should not see "subscribed" in a label within the content
       And the directory should not be subscribed

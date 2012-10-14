@@ -18,7 +18,7 @@ Cataract.Router = Ember.Router.extend
       route: '/torrents/:status'
       connectOutlets: (router, params) ->
         router.listTorrents()
-        torrents = @get('torrentsController')
+        torrents = router.get('torrentsController')
         torrents.set('status', params.status)
 
     directories: Ember.Route.extend
