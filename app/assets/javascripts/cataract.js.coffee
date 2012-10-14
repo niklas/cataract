@@ -68,6 +68,7 @@ jQuery ->
     Cataract.set 'directories', Cataract.Directory.find()
     Cataract.set 'disks', Cataract.Disk.find()
     Cataract.set 'moves', Cataract.Move.find()
+    Cataract.set 'transfers', Cataract.Transfer.find()
     Cataract.initialize()
     $('body').bind 'tick', -> Cataract.refreshTransfers(); true
     Cataract.Torrent.find()
