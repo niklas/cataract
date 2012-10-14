@@ -25,5 +25,5 @@ Feature: Transfer info failure
   Scenario: rtorrent is not started
      When the tick interval is reached
       And I wait for the spinner to disappear
-     Then I should see "Connection to rtorrent refused" within the first torrent
+     Then I should see "Connection to rtorrent refused"
 

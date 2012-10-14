@@ -74,6 +74,10 @@
           <li><a href="#" {{action setCurrentDisk null}}>reset</a></li>
         {{/if}}
       </ul>
+
+      {{#unless Cataract.online}}
+      <div class="alert alert-error">{{Cataract.offlineReason}}</div>
+      {{/unless}}
     </div>
   </div>
   <div class="span9" id="content">
