@@ -111,7 +111,10 @@ Cataract.Router = Ember.Router.extend
         callback: (opts) ->
           if opts.primary
             if payload = torrent.get('payload')
-              payload.deleteRecord()
+              try
+                payload.deleteRecord()
+              catch error
+                console?.debug "error while clearing payload: #{error}, trying to continue"
               payload.store.commit()
           true
 
