@@ -5,21 +5,29 @@ Cataract.Router = Ember.Router.extend
     torrents = @get('torrentsController')
     unless torrents.get('listOutlet')?
       @get('applicationController').connectOutlet 'torrents'
+    torrents
 
   setCurrentDirectory: Ember.Route.transitionTo('directories.show')
   goToDirectory: Ember.Route.transitionTo('directories.show')
+  listRecent: Ember.Router.transitionTo('recent')
+  listRunning: Ember.Router.transitionTo('running')
   root: Ember.Route.extend
     index: Ember.Route.extend
       route: '/'
       connectOutlets: (router) ->
-        router.transitionTo 'list', status: 'recent'
+        router.transitionTo 'recent'
 
-    list: Ember.Route.extend
-      route: '/torrents/:status'
+    recent: Ember.Route.extend
+      route: '/torrents/recent'
       connectOutlets: (router, params) ->
-        router.listTorrents()
-        torrents = router.get('torrentsController')
-        torrents.set('status', params.status)
+        torrents = router.listTorrents()
+        torrents.set('mode', 'recent')
+
+    running: Ember.Route.extend
+      route: '/torrents/running'
+      connectOutlets: (router, params) ->
+        torrents = router.listTorrents()
+        torrents.set('mode', 'running')
 
     directories: Ember.Route.extend
       route: '/directories'
