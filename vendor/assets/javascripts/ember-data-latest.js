@@ -33,6 +33,7 @@ DS.RecordArray = Ember.ArrayProxy.extend(Ember.Evented, {
   content: null,
 
   isLoaded: false,
+  isUpdating: false,
 
   // The store that created this record array.
   store: null,
@@ -55,6 +56,15 @@ DS.RecordArray = Ember.ArrayProxy.extend(Ember.Evented, {
       return this.objectAt(index);
     }
   },
+
+  update: function() {
+    if (get(this, 'isUpdating')) { return; }
+
+    var store = get(this, 'store'),
+        type = get(this, 'type');
+
+    store.fetchAll(type, this);
+  }
 });
 
 })();
@@ -1333,7 +1343,7 @@ DS.Store = Ember.Object.extend({
     // let the adapter set the data, possibly async
     var adapter = get(this, '_adapter');
     if (adapter && adapter.find) { adapter.find(this, type, id); }
-    else { throw fmt("Adapter is either null or does not implement `find` method", this); }
+    else { throw "Adapter is either null or does not implement `find` method"; }
 
     return record;
   },
@@ -1446,7 +1456,7 @@ DS.Store = Ember.Object.extend({
 
     var adapter = get(this, '_adapter');
     if (adapter && adapter.findMany) { adapter.findMany(this, type, neededIds); }
-    else { throw fmt("Adapter is either null or does not implement `findMany` method", this); }
+    else { throw "Adapter is either null or does not implement `findMany` method"; }
   },
 
   /**
@@ -1532,45 +1542,79 @@ DS.Store = Ember.Object.extend({
 
     @param {Class} type
     @param {Object} query an opaque query to be used by the adapter
+    @return {DS.AdapterPopulatedRecordArray}
   */
   findQuery: function(type, query) {
-    var array = DS.AdapterPopulatedRecordArray.create({ type: type, content: Ember.A([]), store: this });
+    var array = DS.AdapterPopulatedRecordArray.create({ type: type, query: query, content: Ember.A([]), store: this });
     var adapter = get(this, '_adapter');
     if (adapter && adapter.findQuery) { adapter.findQuery(this, type, query, array); }
-    else { throw fmt("Adapter is either null or does not implement `findQuery` method", this); }
+    else { throw "Adapter is either null or does not implement `findQuery` method"; }
     return array;
   },
 
   /**
     @private
 
+    This method returns an array of all records adapter can find.
+    It triggers the adapter's `findAll` method to give it an opportunity to populate
+    the array with records of that type.
+
+    @param {Class} type
+    @return {DS.AdapterPopulatedRecordArray}
+  */
+  findAll: function(type) {
+    var array = this.all(type);
+    this.fetchAll(type, array);
+    return array;
+  },
+
+  /**
+    @private
+  */
+  fetchAll: function(type, array) {
+    var sinceToken = this.typeMapFor(type).sinceToken,
+        adapter = get(this, '_adapter');
+
+    set(array, 'isUpdating', true);
+
+    if (adapter && adapter.findAll) { adapter.findAll(this, type, sinceToken); }
+    else { throw "Adapter is either null or does not implement `findAll` method"; }
+  },
+
+  /**
+  */
+  sinceForType: function(type, sinceToken) {
+    this.typeMapFor(type).sinceToken = sinceToken;
+  },
+
+  /**
+  */
+  didUpdateAll: function(type) {
+    var findAllCache = this.typeMapFor(type).findAllCache;
+    set(findAllCache, 'isUpdating', false);
+  },
+
+  /**
     This method returns a filtered array that contains all of the known records
     for a given type.
 
-    It also triggers the adapter's `findAll` method to give it an opportunity
-    to populate records of that type.
-
-    Note that because it's just a filter, the array may have items in it before
-    the adapter's `findAll` method provides data. It will also have any locally
+    Note that because it's just a filter, it will have any locally
     created records of the type.
 
-    Also note that multiple calls to `findAll` for a given type will always
+    Also note that multiple calls to `all` for a given type will always
     return the same RecordArray.
 
     @param {Class} type
     @return {DS.RecordArray}
   */
-  findAll: function(type) {
+  all: function(type) {
     var typeMap = this.typeMapFor(type),
         findAllCache = typeMap.findAllCache;
 
     if (findAllCache) { return findAllCache; }
 
-    var array = DS.RecordArray.create({ type: type, content: Ember.A([]), store: this });
+    var array = DS.RecordArray.create({ type: type, content: Ember.A([]), store: this, isLoaded: true });
     this.registerRecordArray(array, type);
-
-    var adapter = get(this, '_adapter');
-    if (adapter && adapter.findAll) { adapter.findAll(this, type); }
 
     typeMap.findAllCache = array;
     return array;
@@ -3585,6 +3629,7 @@ var storeAlias = function(methodName) {
 DS.Model.reopenClass({
   isLoaded: storeAlias('recordIsLoaded'),
   find: storeAlias('find'),
+  all: storeAlias('all'),
   filter: storeAlias('filter'),
 
   _create: DS.Model.create,
@@ -5136,24 +5181,38 @@ DS.fixtureAdapter = DS.FixtureAdapter.create();
 
 
 (function() {
-/*global jQuery*/
+var get = Ember.get;
 
-var get = Ember.get, set = Ember.set;
-
-var serializer = DS.Serializer.create({
+DS.RESTSerializer = DS.Serializer.create({
   keyForBelongsTo: function(type, name) {
     return this.keyForAttributeName(type, name) + "_id";
   },
 
   keyForAttributeName: function(type, name) {
     return Ember.String.decamelize(name);
+  },
+
+  addBelongsTo: function(hash, record, key, relationship) {
+    var hashKey = this._keyForBelongsTo(record.constructor, key),
+        id = get(record, key+'.id');
+
+    if (!Ember.none(id)) { hash[hashKey] = id; }
   }
 });
 
+})();
+
+
+
+(function() {
+/*global jQuery*/
+
+var get = Ember.get, set = Ember.set;
+
 DS.RESTAdapter = DS.Adapter.extend({
   bulkCommit: false,
-	
-  serializer: serializer,
+
+  serializer: DS.RESTSerializer,
 
   shouldCommit: function(record) {
     if (record.isCommittingBecause('attribute') || record.isCommittingBecause('belongsTo')) {
@@ -5316,47 +5375,78 @@ DS.RESTAdapter = DS.Adapter.extend({
 
     this.ajax(this.buildURL(root, id), "GET", {
       success: function(json) {
-        this.sideload(store, type, json, root);
-        store.load(type, json[root]);
+        this.didFindRecord(store, type, json);
       }
     });
   },
 
-  findMany: function(store, type, ids) {
-    ids = this.get('serializer').serializeIds(ids);
+  didFindRecord: function(store, type, json) {
+    var root = this.rootForType(type);
 
-    var root = this.rootForType(type), plural = this.pluralize(root);
+    this.sideload(store, type, json, root);
+    store.load(type, json[root]);
+  },
+
+  findAll: function(store, type, since) {
+    var root = this.rootForType(type);
 
     this.ajax(this.buildURL(root), "GET", {
-      data: { ids: ids },
+      data: this.sinceQuery(since),
       success: function(json) {
-        this.sideload(store, type, json, plural);
-        store.loadMany(type, json[plural]);
+        this.didFindAll(store, type, json);
       }
     });
   },
 
-  findAll: function(store, type) {
-    var root = this.rootForType(type), plural = this.pluralize(root);
+  didFindAll: function(store, type, json) {
+    var root = this.pluralize(this.rootForType(type)),
+        since = this.extractSince(json);
 
-    this.ajax(this.buildURL(root), "GET", {
-      success: function(json) {
-        this.sideload(store, type, json, plural);
-        store.loadMany(type, json[plural]);
-      }
-    });
+    this.sideload(store, type, json, root);
+    store.loadMany(type, json[root]);
+
+    // this registers the id with the store, so it will be passed
+    // into the next call to `findAll`
+    if (since) { store.sinceForType(type, since); }
+
+    store.didUpdateAll(type);
   },
 
   findQuery: function(store, type, query, recordArray) {
-    var root = this.rootForType(type), plural = this.pluralize(root);
+    var root = this.rootForType(type);
 
     this.ajax(this.buildURL(root), "GET", {
       data: query,
       success: function(json) {
-        this.sideload(store, type, json, plural);
-        recordArray.load(json[plural]);
+        this.didFindQuery(store, type, json, recordArray);
       }
     });
+  },
+
+  didFindQuery: function(store, type, json, recordArray) {
+    var root = this.pluralize(this.rootForType(type));
+
+    this.sideload(store, type, json, root);
+    recordArray.load(json[root]);
+  },
+
+  findMany: function(store, type, ids) {
+    var root = this.rootForType(type);
+    ids = get(this, 'serializer').serializeIds(ids);
+
+    this.ajax(this.buildURL(root), "GET", {
+      data: {ids: ids},
+      success: function(json) {
+        this.didFindMany(store, type, json);
+      }
+    });
+  },
+
+  didFindMany: function(store, type, json) {
+    var root = this.pluralize(this.rootForType(type));
+
+    this.sideload(store, type, json, root);
+    store.loadMany(type, json[root]);
   },
 
   // HELPERS
@@ -5400,6 +5490,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     for (var prop in json) {
       if (!json.hasOwnProperty(prop)) { continue; }
       if (prop === root) { continue; }
+      if (prop === get(this, 'meta')) { continue; }
 
       sideloadedType = type.typeForAssociation(prop);
 
@@ -5461,6 +5552,24 @@ DS.RESTAdapter = DS.Adapter.extend({
     }
 
     return url.join("/");
+  },
+
+  meta: 'meta',
+  since: 'since',
+
+  sinceQuery: function(since) {
+    var query = {};
+    query[get(this, 'since')] = since;
+    return since ? query : null;
+  },
+
+  extractSince: function(json) {
+    var meta = this.extractMeta(json);
+    return meta[get(this, 'since')] || null;
+  },
+
+  extractMeta: function(json) {
+    return json[get(this, 'meta')] || {};
   }
 });
 
