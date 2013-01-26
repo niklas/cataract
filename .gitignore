@@ -10,3 +10,4 @@ chromedriver.log
 rerun.txt
 coverage/
 public/uploads/
+coverage
