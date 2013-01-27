@@ -1,5 +1,6 @@
 <h4 class="title" {{action toggleExpand target="view"}}>{{title}}</h4>
 
+{{#if hasImplementedSideLoading}}
 {{#if isRunning}}
   {{#if Cataract.online}}
     {{view Cataract.TransferView contentBinding="transfer"}}
@@ -14,6 +15,7 @@
   {{else}}
     has content, click to see
   {{/if}}
+{{/if}}
 {{/if}}
 
 
