@@ -2,6 +2,7 @@ Cataract.Router.map ->
   @route 'recent'
   @route 'running'
   @resource 'directories'
+  @route 'add'
 
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'recent'

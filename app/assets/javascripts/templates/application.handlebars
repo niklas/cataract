@@ -25,9 +25,9 @@
           </ul>
 
           <ul class="nav">
-            <li><a {{action listRecent href=true}}>Recent</a></li>
-            <li><a {{action listRunning href=true}}>Running</a></li>
-            <li><a href="#" {{action add}}>Add</a></li>
+                  <li>{{#linkTo recent}}Recent{{/linkTo}}</li>
+                  <li>{{#linkTo running}}Running{{/linkTo}}</li>
+                  <li>{{#linkTo add}}Add{{/linkTo}}</li>
           </ul>
 
           {{view Ember.TextField valueBinding="Cataract.router.torrentsController.terms" classNames="search-query" elementId="torrent_search_terms"}}
