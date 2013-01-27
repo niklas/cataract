@@ -1,10 +1,10 @@
 Cataract.TorrentsController = Ember.ArrayController.extend
   pureContent: []
   content: (->
-    @get('pureContent')
+    @get('pureContent').filter( @get('filterFunction') )
   ).property('filterFunction', 'pureContent.@each')
 
-  terms: ''
+  termsBinding: 'Cataract.terms'
   mode: ''
 
   filterFunction: (->

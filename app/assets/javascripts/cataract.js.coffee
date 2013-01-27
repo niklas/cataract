@@ -13,6 +13,7 @@ Cataract = Ember.Application.create
   online: true
   offlineReason: null
   autoinit: false
+  terms: ''
   olDinit: ->
     #@_super()
     # TODO put this into a view/controller combi
