@@ -1,7 +1,7 @@
 Cataract.ApplicationController = Ember.Controller.extend
   init: ->
-    Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
-    Cataract.set('siteTitle', 'loading')
+    @addObserver 'siteTitle', @, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
+    @set('siteTitle', 'loading')
     @_super()
     Cataract.set 'directories', Cataract.Directory.find()
     Cataract.set 'disks', Cataract.Disk.find()
