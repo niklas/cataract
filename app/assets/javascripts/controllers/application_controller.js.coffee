@@ -1,4 +1,14 @@
 Cataract.ApplicationController = Ember.Controller.extend
+  init: ->
+    Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
+    Cataract.set('siteTitle', 'loading')
+    @_super()
+    Cataract.set 'directories', Cataract.Directory.find()
+    Cataract.set 'disks', Cataract.Disk.find()
+    Cataract.set 'moves', Cataract.Move.find()
+    Cataract.set 'transfers', Cataract.Transfer.find()
+    Cataract.Torrent.find()
+    $('body').bind 'tick', -> Cataract.refreshTransfers(); true
   terms: ''
   mode: ''
   setSiteTitle: (->

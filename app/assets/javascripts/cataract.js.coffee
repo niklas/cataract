@@ -62,16 +62,3 @@ Cataract.store = DS.Store.create
 
 window.Cataract = Cataract
 
-jQuery ->
-  # TODO load on app initialization
-  if jQuery( Cataract.get('rootElement') ).length > 9000
-    Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
-    Cataract.set('siteTitle', 'loading')
-    Cataract.set 'directories', Cataract.Directory.find()
-    Cataract.set 'disks', Cataract.Disk.find()
-    Cataract.set 'moves', Cataract.Move.find()
-    Cataract.set 'transfers', Cataract.Transfer.find()
-    Cataract.initialize()
-    $('body').bind 'tick', -> Cataract.refreshTransfers(); true
-    Cataract.Torrent.find()
-
