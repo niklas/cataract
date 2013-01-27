@@ -13,20 +13,23 @@ Cataract.IndexRoute = Ember.Route.extend
 Cataract.TorrentsRoute = Ember.Route.extend
   model: -> Cataract.Torrent.find()
 
+  filterFunction: -> true
+
   setupController: (controller, model) ->
-    @controllerFor('application').set('siteTitle', @title())
-    @controllerFor('torrents').set('content', model)
+    torrents = @controllerFor('torrents')
+    torrents.set('mode', @mode())
+    torrents.set('pureContent', model)
+    @controllerFor('application').setSiteTitleByController(torrents)
 
   renderTemplate: ->
     @render 'torrents', controller: 'torrents'
-
-  title: -> 'torrents'
+  mode: -> 'all'
 
 Cataract.RecentRoute = Cataract.TorrentsRoute.extend
-  title: -> 'recent torrents'
+  mode: -> 'recent'
 Cataract.RunningRoute = Cataract.TorrentsRoute.extend
   model: -> Cataract.Torrent.find(status: 'running')
-  title: -> 'running torrents'
+  mode: -> 'running'
 
 Cataract.Routerle = Ember.Object.extend
   enableLogging:  true
