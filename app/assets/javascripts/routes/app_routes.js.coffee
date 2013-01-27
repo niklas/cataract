@@ -1,22 +1,39 @@
-Cataract.Router = Ember.Router.extend
+Cataract.Router.map ->
+  @route 'recent'
+  @route 'running'
+  @resource 'directories'
+
+Cataract.IndexRoute = Ember.Route.extend
+  redirect: -> @transitionTo 'recent'
+  setupController: (controller) ->
+    console.debug("index.setup")
+
+
+Cataract.RecentRoute = Ember.Route.extend
+  model: ->
+    @controllerFor('application').get('torrents')
+
+  setupController: (controller, model) ->
+    @controllerFor('torrents').set('content', model)
+
+  renderTemplate: ->
+    @render 'torrents', controller: 'torrents'
+
+Cataract.Routerle = Ember.Object.extend
   enableLogging:  true
   location: 'hash'
+  # as routes are not processed along its paths, we have to connect the outlet automagically
   listTorrents: ->
     torrents = @get('torrentsController')
     unless torrents.get('listOutlet')?
       @get('applicationController').connectOutlet 'torrents'
     torrents
 
-  setCurrentDirectory: Ember.Route.transitionTo('directories.show')
-  goToDirectory: Ember.Route.transitionTo('directories.show')
-  listRecent: Ember.Router.transitionTo('recent')
-  listRunning: Ember.Router.transitionTo('running')
+  #setCurrentDirectory: Ember.Route.transitionTo('directories.show')
+  #goToDirectory: Ember.Route.transitionTo('directories.show')
+  #listRecent: Ember.Router.transitionTo('recent')
+  #listRunning: Ember.Router.transitionTo('running')
   root: Ember.Route.extend
-    index: Ember.Route.extend
-      route: '/'
-      connectOutlets: (router) ->
-        router.transitionTo 'recent'
-
     recent: Ember.Route.extend
       route: '/torrents/recent'
       connectOutlets: (router, params) ->
@@ -33,7 +50,7 @@ Cataract.Router = Ember.Router.extend
       route: '/directories'
       connectOutlets: (router) ->
         router.listTorrents()
-      editDirectory: Ember.Route.transitionTo('directories.edit')
+      #editDirectory: Ember.Route.transitionTo('directories.edit')
       show: Ember.Route.extend
         route: '/show/:directory_id'
         connectOutlets: (router, directory) ->

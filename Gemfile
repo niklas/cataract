@@ -97,7 +97,7 @@ gem 'kaminari'
 gem 'levenshtein'
 
 gem 'carrierwave'
-gem "active_model_serializers", :git => "git://github.com/josevalim/active_model_serializers.git"
+gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
 gem 'whenever', :require => false
 
 gem 'feed-abstract'

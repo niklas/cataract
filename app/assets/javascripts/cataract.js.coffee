@@ -13,13 +13,15 @@ Cataract = Ember.Application.create
   online: true
   offlineReason: null
   autoinit: false
-  init: ->
-    @_super()
+  olDinit: ->
+    #@_super()
+    # TODO put this into a view/controller combi
     jQuery(@get('rootElement')).ajaxError (e, jqxhr, settings, exception) ->
       Cataract.set 'online', false
       if jqxhr.status == 502
         Cataract.set 'offlineReason', jqxhr.responseText
   refreshTransfers: ->
+    # FIXME load differently, see BREAKING_CHANGES
     running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('status') == 'running'
     $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
       for transfer in data.transfers
@@ -32,18 +34,19 @@ Cataract = Ember.Application.create
   currentDisk: null
   currentDirectory: null
 
-  rootDirectories: (->
-    Cataract.store.filter Cataract.Directory, (dir) ->
-      want = true
-      dir = dir.record if dir.record?
-      if currentDisk = Cataract.get('currentDisk')
-        want = want and dir.get('disk') is currentDisk
-      want = want and not dir.get('parentId')?
-      want
-  ).property('directories.@each.parentId', 'currentDisk')
+  # TODO move into DirectoriesController
+  # rootDirectories: (->
+  #   Cataract.store.filter Cataract.Directory, (dir) ->
+  #     want = true
+  #     dir = dir.record if dir.record?
+  #     if currentDisk = Cataract.get('currentDisk')
+  #       want = want and dir.get('disk') is currentDisk
+  #     want = want and not dir.get('parentId')?
+  #     want
+  # ).property('directories.@each.parentId', 'currentDisk')
 
 Cataract.store = DS.Store.create
-  revision: 6
+  revision: 11
   adapter: DS.RESTAdapter.create
     bulkCommit: false
     plurals:
@@ -60,7 +63,8 @@ Cataract.store = DS.Store.create
 window.Cataract = Cataract
 
 jQuery ->
-  if jQuery( Cataract.get('rootElement') ).length > 0
+  # TODO load on app initialization
+  if jQuery( Cataract.get('rootElement') ).length > 9000
     Cataract.addObserver 'siteTitle', Cataract, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
     Cataract.set('siteTitle', 'loading')
     Cataract.set 'directories', Cataract.Directory.find()

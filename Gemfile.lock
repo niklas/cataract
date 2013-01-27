@@ -19,13 +19,6 @@ GIT
       rails (>= 3.1.0)
 
 GIT
-  remote: git://github.com/josevalim/active_model_serializers.git
-  revision: 001c1d06347832c0445c0daa22d4b6bf0dd8e0f9
-  specs:
-    active_model_serializers (0.5.0)
-      activemodel (~> 3.0)
-
-GIT
   remote: git://github.com/niklas/ember-rails-flash.git
   revision: a0ac10290289b6d446e1900c62be76af8821f7b9
   specs:
@@ -44,6 +37,13 @@ GIT
   revision: d7122d404659a7558af2f6e60f87f65f74c53d9e
   specs:
     rubytorrent-allspice (0.3.6)
+
+GIT
+  remote: git://github.com/rails-api/active_model_serializers.git
+  revision: cef10cf01dfe18f72060bda279d5246c156ae737
+  specs:
+    active_model_serializers (0.5.2)
+      activemodel (>= 3.0)
 
 GIT
   remote: git://github.com/v0n/notes.git
