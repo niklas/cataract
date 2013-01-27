@@ -34,4 +34,4 @@ Cataract.TorrentsController = Ember.ArrayController.extend
     if @get('directory')
       title += " in \"#{@get('directory').get('name')}\""
     title
-  ).property('content')
+  ).property('terms', 'mode', 'directory')

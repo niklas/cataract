@@ -19,7 +19,9 @@ Cataract.TorrentsRoute = Ember.Route.extend
     torrents = @controllerFor('torrents')
     torrents.set('mode', @mode())
     torrents.set('pureContent', model)
-    @controllerFor('application').setSiteTitleByController(torrents)
+    # FIXME can we assign Bindings, only once (we reuse the controller)
+    torrents.addObserver 'siteTitle', torrents, (controller, title) ->
+      @controllerFor('application').setSiteTitleByController(torrents)
 
   renderTemplate: ->
     @render 'torrents', controller: 'torrents'
