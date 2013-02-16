@@ -50,8 +50,6 @@ Cataract.store = DS.Store.create
   revision: 11
   adapter: DS.RESTAdapter.create
     bulkCommit: false
-    plurals:
-      directory: 'directories'
     mappings:
       transfer: 'Cataract.Transfer'
       torrent: 'Cataract.Torrent'
@@ -60,6 +58,8 @@ Cataract.store = DS.Store.create
       disk: 'Cataract.Disk'
       directory: 'Cataract.Directory'
 
+DS.RESTAdapter.configure "plurals",
+  directory: 'directories'
 
 window.Cataract = Cataract
 
