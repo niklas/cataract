@@ -4,6 +4,14 @@ Cataract.Router.map ->
   @resource 'directories'
   @route 'add'
 
+Cataract.ApplicationRoute = Ember.Route.extend
+  setupController: ->
+    @controllerFor('torrents').set    'model', Cataract.Torrent.find()
+    @controllerFor('transfers').set   'model', Cataract.Transfer.find()
+    @controllerFor('directories').set 'model', Cataract.Directory.find()
+    @controllerFor('disks').set       'model', Cataract.Disk.find()
+    @controllerFor('moves').set       'model', Cataract.Move.find()
+
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'recent'
   setupController: (controller) ->

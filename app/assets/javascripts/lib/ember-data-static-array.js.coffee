@@ -1,4 +1,4 @@
 DS.RESTAdapter.registerTransform 'staticArray',
-  fromJSON: (serialized) -> serialized
-  toJSON: (deserialized) -> deserialized
+  deserialize: (serialized) -> serialized
+  serialize: (deserialized) -> deserialized
 

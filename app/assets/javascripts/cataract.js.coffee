@@ -49,18 +49,12 @@ Cataract = Ember.Application.create
 DS.RESTAdapter.configure "plurals",
   directory: 'directories'
 
+DS.RESTAdapter.configure 'Cataract.Torrent', sideloadAs: 'torrents'
 
 Cataract.store = DS.Store.create
   revision: 11
   adapter: DS.RESTAdapter.create
     bulkCommit: false
-    mappings:
-      transfer: 'Cataract.Transfer'
-      torrent: 'Cataract.Torrent'
-      torrents: 'Cataract.Torrent'
-      move: 'Cataract.Move'
-      disk: 'Cataract.Disk'
-      directory: 'Cataract.Directory'
 
 window.Cataract = Cataract
 

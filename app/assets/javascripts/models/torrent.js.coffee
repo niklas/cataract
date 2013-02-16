@@ -6,7 +6,7 @@ Cataract.Torrent = DS.Model.extend
   status: DS.attr 'string'
   filename: DS.attr 'string'
   url: DS.attr 'string'
-  isRunning: (-> @get('status') == 'running' and @get('transfer.isLoaded')).property('status', 'transfer.isLoaded')
+  isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
   filedata: DS.attr 'string' # TODO put into payload
