@@ -15,16 +15,16 @@ Feature: Github integration
 
   Scenario: Changes until our version
      When I follow "Changes"
-     Then I should see "GitHub Inc. All rights reserved."
+     Then I should be under page "https://github.com/niklas/cataract/commits"
       And I should see "Commit History"
 
   Scenario: What's new against official release
      When I follow "Updates"
-     Then I should see "GitHub Inc. All rights reserved."
+     Then I should be under page "https://github.com/niklas/cataract/compare"
       And I should see "Compare View"
 
   Scenario: Issues
      When I follow "Problems"
-     Then I should see "GitHub Inc. All rights reserved."
+     Then I should be under page "https://github.com/niklas/cataract/issues"
       And I should see "Browse Issues"
 

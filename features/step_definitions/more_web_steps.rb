@@ -80,3 +80,7 @@ end
 Then /^I should not see (.+link)/ do |target|
   page.should have_no_css( selector_for(target) )
 end
+
+Then /^I should be under page "(.*?)"$/ do |url_prefix|
+  current_url.should be_starts_with(url_prefix)
+end
