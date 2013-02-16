@@ -1,7 +1,7 @@
 Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
-  alertClass: ( ->
+  alertClass: Ember.computed ->
     "alert-#{@get('content.severity')}"
-  ).property('content.severity')
+  .property('content.severity')
   template: Ember.Handlebars.compile """
   {{#with view.content}}
     <div {{bindAttr class="view.basicClassName severity view.alertClass"}}>{{message}}</div>
