@@ -1,6 +1,6 @@
 Cataract.Router.map ->
-  @route 'recent'
-  @route 'running'
+  @resource 'torrents', ->
+    @resource 'filter', path: 'filter/:mode'
   @resource 'directories'
   @route 'add'
 
@@ -13,33 +13,16 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('moves').set       'model', Cataract.Move.find()
 
 Cataract.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'recent'
-  setupController: (controller) ->
-    console.debug("index.setup")
-
+  redirect: -> @transitionTo 'torrents'
 
 Cataract.TorrentsRoute = Ember.Route.extend
   model: -> Cataract.Torrent.find()
 
-  filterFunction: -> true
-
+Cataract.FilterRoute = Ember.Route.extend
+  model: (params) -> params.mode
   setupController: (controller, model) ->
     torrents = @controllerFor('torrents')
-    torrents.set('mode', @mode())
-    torrents.set('pureContent', model)
-    # FIXME can we assign Bindings, only once (we reuse the controller)
-    torrents.addObserver 'siteTitle', torrents, (controller, title) ->
-      @controllerFor('application').setSiteTitleByController(torrents)
-
-  renderTemplate: ->
-    @render 'torrents', controller: 'torrents'
-  mode: -> 'all'
-
-Cataract.RecentRoute = Cataract.TorrentsRoute.extend
-  mode: -> 'recent'
-Cataract.RunningRoute = Cataract.TorrentsRoute.extend
-  model: -> Cataract.Torrent.find(status: 'running')
-  mode: -> 'running'
+    torrents.set('mode', model)
 
 Cataract.Routerle = Ember.Object.extend
   enableLogging:  true
