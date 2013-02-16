@@ -46,6 +46,10 @@ Cataract = Ember.Application.create
   #     want
   # ).property('directories.@each.parentId', 'currentDisk')
 
+DS.RESTAdapter.configure "plurals",
+  directory: 'directories'
+
+
 Cataract.store = DS.Store.create
   revision: 11
   adapter: DS.RESTAdapter.create
@@ -57,9 +61,6 @@ Cataract.store = DS.Store.create
       move: 'Cataract.Move'
       disk: 'Cataract.Disk'
       directory: 'Cataract.Directory'
-
-DS.RESTAdapter.configure "plurals",
-  directory: 'directories'
 
 window.Cataract = Cataract
 
