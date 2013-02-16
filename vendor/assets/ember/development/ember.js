@@ -1,5 +1,5 @@
-// Version: v1.0.0-rc.1
-// Last commit: 8b061b4 (2013-02-15 12:10:22 -0800)
+// Version: v1.0.0-rc.1-12-g44439b3
+// Last commit: 44439b3 (2013-02-16 07:37:42 -0800)
 
 
 (function() {
@@ -150,8 +150,8 @@ Ember.deprecateFunc = function(message, func) {
 
 })();
 
-// Version: v1.0.0-rc.1
-// Last commit: 8b061b4 (2013-02-15 12:10:22 -0800)
+// Version: v1.0.0-rc.1-12-g44439b3
+// Last commit: 44439b3 (2013-02-16 07:37:42 -0800)
 
 
 (function() {
@@ -6046,12 +6046,6 @@ define("rsvp",
 define("container",
   [],
   function() {
-
-    var objectCreate = Object.create || function(parent) {
-      function F() {}
-      F.prototype = parent;
-      return new F();
-    };
 
     function InheritingDict(parent) {
       this.parent = parent;
@@ -20206,6 +20200,14 @@ Ember.Handlebars.registerHelper('each', function(path, options) {
   </script>
   ```
 
+  ```handlebars
+  {{#if isUser}}
+    {{template "user_info"}}
+  {{else}}
+    {{template "unlogged_user_info"}}
+  {{/if}}
+  ```
+
   This helper looks for templates in the global `Ember.TEMPLATES` hash. If you
   add `<script>` tags to your page with the `data-template-name` attribute set,
   they will be compiled and placed in this hash automatically.
@@ -21413,8 +21415,7 @@ Ember.Handlebars.bootstrap = function(ctx) {
   Ember.$(selectors, ctx)
     .each(function() {
     // Get a reference to the script tag
-    var script = Ember.$(this),
-        type   = script.attr('type');
+    var script = Ember.$(this);
 
     var compile = (script.attr('type') === 'text/x-raw-handlebars') ?
                   Ember.$.proxy(Handlebars.compile, Handlebars) :
@@ -24812,6 +24813,7 @@ Ember.DAG = DAG;
 
 var get = Ember.get, set = Ember.set,
     classify = Ember.String.classify,
+    capitalize = Ember.String.capitalize,
     decamelize = Ember.String.decamelize;
 
 /**
@@ -24902,7 +24904,7 @@ var get = Ember.get, set = Ember.set,
 
   To learn more about the advantages of event delegation and the Ember view
   layer, and a list of the event listeners that are setup by default, visit the
-  [Ember View Layer guide](http://emberjs.com/guides/view_layer#toc_event-delegation).
+  [Ember View Layer guide](http://emberjs.com/guides/understanding-ember/the-view-layer/#toc_event-delegation).
 
   ### Initializers
 
@@ -25451,7 +25453,8 @@ Ember.Application.reopenClass({
 function resolverFor(namespace) {
   return function(fullName) {
     var nameParts = fullName.split(":"),
-        type = nameParts[0], name = nameParts[1];
+        type = nameParts[0], name = nameParts[1],
+        root = namespace;
 
     if (type === 'template') {
       var templateName = name.replace(/\./g, '/');
@@ -25469,8 +25472,17 @@ function resolverFor(namespace) {
       name = name.replace(/\./g, '_');
     }
 
+    if (type !== 'template' && name.indexOf('/') !== -1) {
+      var parts = name.split('/');
+      name = parts[parts.length - 1];
+      var namespaceName = capitalize(parts.slice(0, -1).join('.'));
+      root = Ember.Namespace.byName(namespaceName);
+
+      Ember.assert('You are looking for a ' + name + ' ' + type + ' in the ' + namespaceName + ' namespace, but it could not be found', root);
+    }
+
     var className = classify(name) + classify(type);
-    var factory = get(namespace, className);
+    var factory = get(root, className);
 
     if (factory) { return factory; }
   };
@@ -26824,8 +26836,8 @@ Ember States
 
 
 })();
-// Version: v1.0.0-rc.1
-// Last commit: 8b061b4 (2013-02-15 12:10:22 -0800)
+// Version: v1.0.0-rc.1-12-g44439b3
+// Last commit: 44439b3 (2013-02-16 07:37:42 -0800)
 
 
 (function() {

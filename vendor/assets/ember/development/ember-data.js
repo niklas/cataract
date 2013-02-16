@@ -1,4 +1,3 @@
-// Version: shiftplan-267-g8801f2e
 // Last commit: 8801f2e (2013-02-15 13:53:27 -0800)
 
 

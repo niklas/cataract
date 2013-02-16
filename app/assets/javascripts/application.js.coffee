@@ -1,17 +1,17 @@
 #= require jquery
 #= require jquery-ui
 #= require jquery_ujs
-#= require bootstrap
 #= require jquery.sausage
+#= require handlebars-1.0.0-rc.3
+#= require ember
+#= require ember-data
+#= require ember-bootstrap
+#= require ember-rails-flash
+#= require bootstrap
 #= require endless_page
 #= require spinner
 #= require jquery-filedrop/jquery.filedrop
 #= require bindWithDelay
-#= require handlebars-1.0.0-rc.3
-#= require ember-latest
-#= require ember-data-latest
-#= require ember-bootstrap
-#= require ember-rails-flash
 #
 #= require_tree ./lib
 #= require ./cataract
