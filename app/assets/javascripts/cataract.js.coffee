@@ -14,10 +14,10 @@ Cataract = Ember.Application.create
   offlineReason: null
   autoinit: false
   terms: ''
-  olDinit: ->
+  ready: ->
     #@_super()
     # TODO put this into a view/controller combi
-    jQuery(@get('rootElement')).ajaxError (e, jqxhr, settings, exception) ->
+    jQuery(document).ajaxError (e, jqxhr, settings, exception) ->
       Cataract.set 'online', false
       if jqxhr.status == 502
         Cataract.set 'offlineReason', jqxhr.responseText
