@@ -6,9 +6,8 @@
 #= require endless_page
 #= require spinner
 #= require jquery-filedrop/jquery.filedrop
-#= require radio_buttons
 #= require bindWithDelay
-#= require handlebars-1.0.rc.2
+#= require handlebars-1.0.0-rc.3
 #= require ember-latest
 #= require ember-data-latest
 #= require ember-bootstrap
