@@ -17,6 +17,11 @@ Cataract.IndexRoute = Ember.Route.extend
 
 Cataract.TorrentsRoute = Ember.Route.extend
   model: -> Cataract.Torrent.find()
+  setupController: (torrents, model) ->
+    application = @controllerFor('application')
+    torrents.addObserver 'siteTitle', torrents, ->
+      application.setSiteTitleByController(torrents)
+
 
 Cataract.FilterRoute = Ember.Route.extend
   model: (params) -> params.mode
