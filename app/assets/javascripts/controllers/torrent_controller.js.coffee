@@ -19,14 +19,13 @@ Cataract.TorrentController = Ember.ObjectController.extend
     torrent.set( 'isExpanded', ! torrent.get('isExpanded'))
     false
 
-  start: (event) ->
-    torrent = @get('context')
-    torrent.store.createRecord Cataract.Transfer, id: torrent.get('id')
-    torrent.store.commit()
+  start: (torrent) ->
+    transfer = Cataract.Transfer.createRecord id: torrent.get('id')
+    transfer.store.commit()
     false
 
-  stop: (event) ->
-    if transfer = @get('context.transfer')
+  stop: (torrent) ->
+    if transfer = torrent.get('transfer')
       transfer.deleteRecord()
       transfer.store.commit()
     false

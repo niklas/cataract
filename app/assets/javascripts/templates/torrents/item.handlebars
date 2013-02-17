@@ -21,9 +21,9 @@
   <div class="actions">
     {{#unless isNew}}
       {{#if isRunning}}
-        <a class="stop btn btn-mini btn-danger" {{action stop target="view"}}><i class="icon-stop"></i></a>
+        <a class="stop btn btn-mini btn-danger" {{action stop this}}><i class="icon-stop"></i></a>
       {{else}}
-        <a class="start btn btn-mini btn-success" {{action start target="view"}}><i class="icon-play"></i></a>
+        <a class="start btn btn-mini btn-success" {{action start this}}><i class="icon-play"></i></a>
       {{/if}}
       <a class="destroy btn btn-mini btn-danger" {{action delete this}}><i class="icon-remove"></i></a>
       {{#if payloadExists}}
