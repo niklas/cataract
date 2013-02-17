@@ -1,6 +1,7 @@
 Cataract.Router.map ->
   @resource 'torrents', ->
     @resource 'filter', path: 'filter/:mode'
+    @resource 'torrent', path: ':torrent_id'
   @resource 'directories'
   @route 'add'
 
