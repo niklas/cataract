@@ -17,7 +17,7 @@ Feature: Payload of a torrent
 
   Scenario: content directory is visible if torrent has content
     Given I should not see "Cat Pictures" within the torrents list
-     When I expand the first torrent
+     When I explore the first torrent
      Then I should see the following attributes for the torrent:
         | content_directory | Cat Pictures    |
         | content_directory | pictures/cats   |
@@ -25,14 +25,14 @@ Feature: Payload of a torrent
 
   Scenario: click on filecount toggles filenames
     Given I should not see "tails.png"
-     When I expand the first torrent
+     When I explore the first torrent
       And I follow "1 file"
      Then I should see "tails.png"
      # does not toggle whole torrent
       And I should see "Cat Pictures"
 
   Scenario: clear a torrent's content
-     When I expand the first torrent
+     When I explore the first torrent
       And I click on the clear link
       And I follow "Clear"
       And I wait for a flash notice to appear

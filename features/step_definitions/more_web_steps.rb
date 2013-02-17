@@ -67,7 +67,7 @@ When /^I click on (the .+)$/ do |target|
   page.first(selector).click
 end
 
-When /^I expand (the .+)$/ do |target|
+When /^I explore (the .+)$/ do |target|
   selector = selector_for(target)
   page.should have_css(selector)
   page.first(selector).first('.title').click

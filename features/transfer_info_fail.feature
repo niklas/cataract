@@ -19,7 +19,7 @@ Feature: Transfer info failure
   Scenario: torrent is not actually running
      When the tick interval is reached
       And I wait for the spinner to disappear
-      And I expand the first torrent
+      And I explore the first torrent
      Then I should see the start link
 
   Scenario: rtorrent is not started

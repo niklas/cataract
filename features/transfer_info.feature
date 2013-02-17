@@ -64,7 +64,7 @@ Feature: Transfer info
         | the torrent | true    | true  |
       And I am on the home page
       And I wait for the spinner to stop
-     When I expand the first torrent
+     When I explore the first torrent
      Then I should see the stop link
 
     Given rtorrent list contains the following:

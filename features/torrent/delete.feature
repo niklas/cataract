@@ -13,7 +13,7 @@ Feature: Delete torrents
      Then the file "usb/pics/tails.png" should exist on disk
       And I am signed in
       And I am on the home page
-     When I expand the first torrent
+     When I explore the first torrent
       And I click on the destroy link
       And I wait for the modal box to appear
 
