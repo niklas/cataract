@@ -6,14 +6,15 @@ Cataract.Torrent = DS.Model.extend
   status: DS.attr 'string'
   filename: DS.attr 'string'
   url: DS.attr 'string'
+  payloadExists: DS.attr 'boolean'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
   filedata: DS.attr 'string' # TODO put into payload
 
   payload: (-> Cataract.Payload.find(@get('id'))).property()
-  payloadExists: Ember.computed ->
-    @get('payload.isLoaded') and !@get('payload.isDeleted')
+  payloadPresent: Ember.computed ->
+    @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
   .property('payload.isLoaded', 'payload.isDeleted')
 
   contentDirectory: DS.belongsTo('Cataract.Directory', key: 'content_directory_id')

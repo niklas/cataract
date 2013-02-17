@@ -1,4 +1,5 @@
 Cataract.SelectDirectoryField = Bootstrap.Forms.Select.extend
-  contentBinding: 'Cataract.directories'
+  contentBinding: 'parentView.directories'
   optionLabelPath: 'content.name'
   optionValuePath: 'content.id'
+  label: 'Directory'

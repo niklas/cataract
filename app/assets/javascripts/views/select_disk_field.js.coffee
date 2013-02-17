@@ -1,5 +1,6 @@
 Cataract.SelectDiskField = Bootstrap.Forms.Select.extend
-  contentBinding: 'Cataract.disks'
+  contentBinding: 'parentView.disks'
   optionLabelPath: 'content.name'
   optionValuePath: 'content.id'
+  label: 'Disk'
 

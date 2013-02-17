@@ -26,6 +26,18 @@ Cataract.TorrentsRoute = Ember.Route.extend
     deletePayload: (torrent) ->
       Cataract.ClearPayloadModal.popup torrent: torrent
 
+    move: (torrent) ->
+      directory = torrent.get('payload.directory') || torrent.get('contentDirectory')
+      Cataract.MovePayloadModal.popup
+        torrent: torrent
+        directories: @controllerFor('directories').get('content')
+        disks: @controllerFor('disks').get('content')
+        move:
+          id: torrent.get('id')
+          targetDisk: directory.get('disk.id')
+          targetDirectory: directory.get('id')
+
+
 
 Cataract.FilterRoute = Ember.Route.extend
   model: (params) -> params.mode
@@ -103,28 +115,6 @@ Cataract.Routerle = Ember.Object.extend
             torrent.store.commit()
           else
             torrent.deleteRecord()
-          true
-
-    move: (router, event) ->
-      torrent = event.view.get 'context'
-      directory = torrent.get('payload.directory') || torrent.get('contentDirectory')
-      proto = {
-        id: torrent.get('id')
-        targetDisk: directory.get('disk.id')
-        targetDirectory: directory.get('id')
-      }
-      Bootstrap.ModalPane.popup
-        heading: "Move payload"
-        torrent: torrent
-        move: proto
-        bodyViewClass: Cataract.MoveTorrentView
-        primary: "Move"
-        secondary: "Cancel"
-        showBackdrop: true
-        callback: (opts) ->
-          if opts.primary
-            move = torrent.store.createRecord Cataract.Move, proto
-            move.store.commit()
           true
 
     delete: (router, event) ->
