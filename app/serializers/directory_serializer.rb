@@ -1,7 +1,7 @@
 class DirectorySerializer < BaseSerializer
   embed :ids, include: false
   attributes :id, :name, :subscribed, :filter, :exists?, :show_sub_dirs?
-  has_many :children, embed: :ids
+  has_many :children, embed: :ids, key: 'children_ids'
 
   def attributes
     super.tap do |hash|

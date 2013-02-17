@@ -32,9 +32,6 @@ Cataract = Ember.Application.create
       Cataract.set 'online', true
       true
 
-  currentDisk: null
-  currentDirectory: null
-
   # TODO move into DirectoriesController
   # rootDirectories: (->
   #   Cataract.store.filter Cataract.Directory, (dir) ->

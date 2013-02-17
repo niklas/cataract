@@ -30,8 +30,6 @@
   </div>
 </div>
 
-{{view Cataract.FlashListView}}
-
 <div class="row-fluid">
   <div class="span3">
     <div id="sidebar">
@@ -43,9 +41,14 @@
       {{/unless}}
     </div>
   </div>
-  <div class="span9" id="content">
+  <div class="span5" id="content">
     <div style="display: none;">breadcrumbs</div>
     {{outlet pre}}
-    {{outlet}}
+    {{ render "torrents" }}
+  </div>
+  <div class="span4" id="details">
+    {{view Cataract.FlashListView}}
+
+    {{ outlet }}
   </div>
 </div>

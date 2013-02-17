@@ -1,11 +1,8 @@
 Cataract.Router.map ->
-  @resource 'torrents', ->
-    @resource 'filter', path: 'filter/:mode'
-    @resource 'torrent', path: ':torrent_id'
-  @resource 'directories', ->
-    @resource 'directory', path: ':directory_id'
-  @resource 'disks', ->
-    @resource 'disk', path: ':disk_id'
+  @resource 'filter', path: 'filter/:mode'
+  @resource 'torrent', path: 'torrent/:torrent_id'
+  @resource 'directory', path: 'directory/:directory_id'
+  @resource 'disk', path: 'disk/:disk_id'
   @route 'add'
 
 Cataract.ApplicationRoute = Ember.Route.extend

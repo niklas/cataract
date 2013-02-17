@@ -1,11 +1,9 @@
-<h2>{{content.name}}</h2>
+<h2>{{name}}</h2>
 
-<a class="edit" {{action editDirectory content href=true}}>edit</a>
-
-{{#if content.subscribed}}
+{{#if subscribed}}
   <span class="subscribed label label-success">subscribed</span>
 {{/if}}
 
-{{#if content.hasSubDirs}}
-{{view Cataract.DirectoriesTable contentBinding="content.children"}}
+{{#if hasSubDirs}}
+{{view Cataract.DirectoriesTable contentBinding="children"}}
 {{/if}}

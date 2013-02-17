@@ -3,14 +3,7 @@ Cataract.PlainContentView = Ember.View.extend
 
 Cataract.TableCellView = Ember.ContainerView.extend
   tagName: 'td'
-  childViews: ['child']
-  child: (->
-    content = @get('content')
-    if content.isView
-      content
-    else
-      Cataract.PlainContentView.create contentBinding: 'parentView.content'
-  ).property('content')
+  childViews: ['content']
 
 Cataract.Table = Ember.ContainerView.extend
   tagName: 'table'
@@ -41,7 +34,7 @@ Cataract.Table = Ember.ContainerView.extend
             if column.viewClass
               column.viewClass.create content: content
             else
-              content.get(column.property)
+              Cataract.PlainContentView.create content: content.get(column.property)
         ).property('content')
         cells: Ember.CollectionView.extend
           contentBinding: 'parentView.values'
