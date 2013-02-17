@@ -119,23 +119,6 @@ Cataract.Routerle = Ember.Object.extend
             torrent.deleteRecord()
           true
 
-    delete: (router, event) ->
-      torrent = event.view.get 'context'
-      Bootstrap.ModalPane.popup
-        heading: "Delete Torrent"
-        torrent: torrent
-        bodyViewClass: Cataract.TorrentConfirmDeletionView
-        primary: "Delete"
-        secondary: "Keep"
-        showBackdrop: true
-        deletePayload: true
-        callback: (opts) ->
-          if opts.primary
-            torrent.store.createRecord Cataract.Deletion, id: torrent.get('id'), deletePayload: @get('deletePayload')
-            torrent.get('stateManager').goToState('deleted.saved')
-            torrent.store.commit()
-          true
-
     setCurrentDisk: (router, event) ->
       Cataract.set 'currentDisk', event.context
 

@@ -29,3 +29,7 @@ Cataract.TorrentController = Ember.ObjectController.extend
       transfer.deleteRecord()
       transfer.store.commit()
     false
+
+  delete: (torrent) ->
+    Cataract.DeleteTorrentModal.popup
+      torrent: torrent
