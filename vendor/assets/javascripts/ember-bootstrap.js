@@ -12,7 +12,7 @@ var jQuery = window.jQuery;
 
 var modalPaneTemplate = [
 '<div class="modal-header">',
-'  <a href="#" class="close" rel="close">×</a>',
+'  <a href="#" class="close" rel="close">&times;</a>',
 '  {{view view.headerViewClass}}',
 '</div>',
 '<div class="modal-body">{{view view.bodyViewClass}}</div>',
@@ -61,10 +61,15 @@ Bootstrap.ModalPane = Ember.View.extend({
 
     if (targetRel === 'close') {
       this._triggerCallbackAndDestroy({ close: true }, event);
+      return false;
+
     } else if (targetRel === 'primary') {
       this._triggerCallbackAndDestroy({ primary: true }, event);
+      return false;
+
     } else if (targetRel === 'secondary') {
       this._triggerCallbackAndDestroy({ secondary: true }, event);
+      return false;
     }
   },
 
@@ -92,15 +97,17 @@ Bootstrap.ModalPane = Ember.View.extend({
       destroy = this.callback(options, event);
     }
     if (destroy === undefined || destroy) this.destroy();
-  }  
+  }
 });
 
 Bootstrap.ModalPane.reopenClass({
+  rootElement: ".ember-application",
   popup: function(options) {
-    var modalPane;
+    var modalPane, rootElement;
     if (!options) options = {};
     modalPane = this.create(options);
-    modalPane.append();
+    rootElement = get(this, 'rootElement');
+    modalPane.appendTo(rootElement);
     return modalPane;
   }
 });
@@ -136,7 +143,7 @@ var Bootstrap = window.Bootstrap;
 Bootstrap.AlertMessage = Ember.View.extend(Bootstrap.TypeSupport, {
   classNames: ['alert', 'alert-message'],
   baseClassName: 'alert',
-  template: Ember.Handlebars.compile('<a class="close" rel="close" href="#">×</a>{{{view.message}}}'),
+  template: Ember.Handlebars.compile('<a class="close" rel="close" href="#">&times;</a>{{{view.message}}}'),
   message: null,
   removeAfter: null,
 
@@ -358,7 +365,7 @@ Bootstrap.Badge = Ember.View.extend(Bootstrap.TypeSupport, {
   tagName: "span",
   classNames: "badge",
   baseClassName: "badge",
-  template: Ember.Handlebars.compile("{{content}}")
+  template: Ember.Handlebars.compile("{{view.content}}")
 });
 
 })();
@@ -372,7 +379,7 @@ Bootstrap.Label = Ember.View.extend(Bootstrap.TypeSupport, {
   tagName: "span",
   classNames: "label",
   baseClassName: "label",
-  template: Ember.Handlebars.compile("{{content}}")
+  template: Ember.Handlebars.compile("{{view.content}}")
 });
 
 })();
@@ -384,7 +391,7 @@ var get = Ember.get;
 var Bootstrap = window.Bootstrap;
 
 Bootstrap.Well = Ember.View.extend({
-  template: Ember.Handlebars.compile('{{content}}'),
+  template: Ember.Handlebars.compile('{{view.content}}'),
   classNames: 'well',
   content: null
 });
@@ -478,16 +485,16 @@ var get = Ember.get;
 var Bootstrap = window.Bootstrap;
 
 Bootstrap.Breadcrumb = Ember.CollectionView.extend(Bootstrap.FirstLastViewSupport, {
-	tagName: "ul",
-	classNames: "breadcrumb",
-	divider: "/",
-	itemViewClass: Ember.View.extend(Bootstrap.ItemViewTitleSupport, {
-		template: Ember.Handlebars.compile('<a href="#">{{title}}</a><span class="divider">{{parentView.divider}}</span>')
-	}),
-	lastItemViewClass: Ember.View.extend(Bootstrap.ItemViewTitleSupport, {
-		classNames: "active",
-		template: Ember.Handlebars.compile("{{title}}")
-	})
+  tagName: "ul",
+  classNames: "breadcrumb",
+  divider: "/",
+  itemViewClass: Ember.View.extend(Bootstrap.ItemViewTitleSupport, {
+    template: Ember.Handlebars.compile('<a href="#">{{title}}</a><span class="divider">{{view.parentView.divider}}</span>')
+  }),
+  lastItemViewClass: Ember.View.extend(Bootstrap.ItemViewTitleSupport, {
+    classNames: "active",
+    template: Ember.Handlebars.compile("{{title}}")
+  })
 });
 
 })();
@@ -521,11 +528,13 @@ Bootstrap.Forms.Field = Ember.View.extend({
   tagName: 'div',
   classNames: ['control-group'],
   labelCache: undefined,
+  help: undefined,
   template: Ember.Handlebars.compile([
     '{{view view.labelView viewName="labelView"}}',
     '<div class="controls">',
     '  {{view view.inputField viewName="inputField"}}',
     '  {{view view.errorsView}}',
+    '  {{view view.helpView}}',
     '</div>'].join("\n")),
 
   label: Ember.computed(function(key, value) {
@@ -543,7 +552,7 @@ Bootstrap.Forms.Field = Ember.View.extend({
       this.set('labelCache', value);
       return value;
     }
-  }).property('valueBinding'),
+  }).property(),
 
   labelView: Ember.View.extend({
     tagName: 'label',
@@ -559,7 +568,12 @@ Bootstrap.Forms.Field = Ember.View.extend({
         value = parent.get('label');
       }
 
-      return Bootstrap.Forms.human(value);
+      // If the labelCache property is present on parent, then the 
+      // label was set manually, and there's no need to humanise it.
+      // Otherwise, it comes from the binding and needs to be 
+      // humanised.
+      return parent.get('labelCache') === undefined || parent.get('labelCache') === false ? 
+        Bootstrap.Forms.human(value) : value;
     }).property('parentView.label'),
 
     inputElementId: 'for',
@@ -581,7 +595,7 @@ Bootstrap.Forms.Field = Ember.View.extend({
       var parent = this.get('parentView');
 
       if (parent !== null) {
-        var context = parent.get('bindingContext');
+        var context = parent.get('context');
         var label = parent.get('label');
 
         if (context !== null && !context.get('isValid')) {
@@ -599,7 +613,14 @@ Bootstrap.Forms.Field = Ember.View.extend({
           this.$().html('');
         }
       }
-    }, 'parentView.bindingContext.isValid', 'parentView.label')
+    }, 'parentView.context.isValid', 'parentView.label')
+  }),
+
+  helpView: Ember.View.extend({
+    tagName: 'div',
+    classNames: ['help-block'],
+    template: Ember.Handlebars.compile('{{view.content}}'),
+    contentBinding: 'parentView.help'
   }),
 
   didInsertElement: function() {
@@ -624,9 +645,11 @@ Bootstrap.Forms.Select = Bootstrap.Forms.Field.extend({
     optionLabelPathBinding: 'parentView.optionLabelPath',
     optionValuePathBinding: 'parentView.optionValuePath',
 
+    valueBinding:           'parentView.value',
     selectionBinding:       'parentView.selection',
     promptBinding:          'parentView.prompt',
-    multipleBinding:        'parentView.multiple'  
+    multipleBinding:        'parentView.multiple',
+    disabledBinding:        'parentView.disabled'
   })
 });
 
@@ -679,6 +702,45 @@ Bootstrap.Forms.TextField = Bootstrap.Forms.Field.extend({
   })
 });
 
+})();
+
+
+
+(function() {
+var Bootstrap = window.Bootstrap;
+Bootstrap.Forms.Checkbox = Bootstrap.Forms.Field.extend({
+
+  inputField: Ember.Checkbox.extend({
+    attributeBindings: ['name'],
+    checkedBinding:   'parentView.checked',
+    disabledBinding: 'parentView.disabled',
+    classNameBindings: 'parentView.inputClassNames',
+    name: Ember.computed(function() {
+      return this.get('parentView.name') || this.get('parentView.label');
+    }).property('parentView.name', 'parentView.label')
+  })
+});
+})();
+
+
+
+(function() {
+var Bootstrap = window.Bootstrap;
+Bootstrap.Forms.UneditableInput = Bootstrap.Forms.Field.extend({
+
+  inputField: Ember.View.extend({
+    tagName: 'span',
+    classNames: ['uneditable-input'],
+    attributeBindings: ['name'],
+    template: Ember.Handlebars.compile('{{view.value}}'),
+
+    valueBinding:   'parentView.value',
+    classNameBindings: 'parentView.inputClassNames',
+    name: Ember.computed(function() {
+      return this.get('parentView.name') || this.get('parentView.label');
+    }).property('parentView.name', 'parentView.label')
+  })
+});
 })();
 
 
