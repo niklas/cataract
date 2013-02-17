@@ -2,7 +2,7 @@
   <li class="nav-header">Disks</li>
   {{#each controller}}
   <li {{bindAttr class="cssClass active isMounted:mounted:unmounted"}}>
-  {{#linkTo disk this}}
+  {{#linkTo disk this class="name"}}
       <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
       {{name}}
     {{/linkTo}}
@@ -10,7 +10,7 @@
   {{/each}}
   {{#if Cataract.currentDisk}}
     <li class="divider"></li>
-    <li><a href="#" {{action setCurrentDisk null}}>reset</a></li>
+    <li><a href="#">reset</a></li>
   {{/if}}
 </ul>
 

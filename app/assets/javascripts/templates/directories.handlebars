@@ -1,8 +1,8 @@
 <ul class="nav nav-list directories">
   <li class="nav-header">Directories</li>
-  {{#each controller}}
-  <li {{bindAttr class="cssClass active isExisting:existing:missing"}}>
-    {{#linkTo directory this}}
+  {{#each controller.filtered}}
+  <li {{bindAttr class="cssClass active exists:existing:missing"}}>
+    {{#linkTo directory this class="name"}}
       <i {{bindAttr class="isExisting:icon-folder-open:icon-warning-sign"}}></i>
       {{name}}
     {{/linkTo}}
@@ -10,7 +10,7 @@
   {{/each}}
   {{#if Cataract.currentDirectory}}
     <li class="divider"></li>
-    <li><a href="#" {{action goToDirectory null}}>reset</a></li>
+    <li><a href="#">reset</a></li>
   {{/if}}
 </ul>
 

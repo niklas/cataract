@@ -1,11 +1,7 @@
-Cataract.TorrentsController = Ember.ArrayController.extend
-  filtered: (->
-    @get('content').filter( @get('filterFunction') )
-  ).property('filterFunction', 'content.@each.id')
-
+Cataract.TorrentsController = Cataract.FilteredController.extend
   termsBinding: 'Cataract.terms'
   mode: ''
-  directory: null
+  directoryBinding: 'Cataract.currentDirectory'
 
   filterFunction: (->
     terms  = Ember.A( Ember.String.w(@get('terms')) ).map (x) -> x.toLowerCase()

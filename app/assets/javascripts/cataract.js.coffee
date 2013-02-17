@@ -1,4 +1,5 @@
 #= require_self
+#= require ./addons/filtered_controller
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
@@ -31,6 +32,9 @@ Cataract = Ember.Application.create
         Cataract.store.loadMany Cataract.Torrent, data.torrents
       Cataract.set 'online', true
       true
+
+  currentDisk: null
+  currentDirectory: null
 
   # TODO move into DirectoriesController
   # rootDirectories: (->
