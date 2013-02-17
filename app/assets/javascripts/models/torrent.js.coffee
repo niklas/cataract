@@ -1,6 +1,6 @@
 Cataract.Torrent = DS.Model.extend
   title: DS.attr 'string'
-  # must simulate belongsTo thx to https://github.com/emberjs/data/issues/380
+  # must simulate belongsTo thx to https://github.com/emberjs/data/pull/475
   transfer: (-> Cataract.Transfer.find(@get('id'))).property('Cataract.transfers.@each.id')
   info_hash: DS.attr 'string'
   status: DS.attr 'string'
@@ -10,8 +10,11 @@ Cataract.Torrent = DS.Model.extend
   isRemote: (-> @get('status') == 'remote').property('status')
 
   filedata: DS.attr 'string' # TODO put into payload
+
   payload: (-> Cataract.Payload.find(@get('id'))).property()
-  payloadExists: (-> @get('payload.isLoaded') ).property('payload.isLoaded')
+  payloadExists: Ember.computed ->
+    @get('payload.isLoaded') and !@get('payload.isDeleted')
+  .property('payload.isLoaded', 'payload.isDeleted')
 
   contentDirectory: DS.belongsTo('Cataract.Directory', key: 'content_directory_id')
 

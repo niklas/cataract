@@ -21,6 +21,9 @@ Cataract.TorrentsRoute = Ember.Route.extend
     application = @controllerFor('application')
     torrents.addObserver 'siteTitle', torrents, ->
       application.setSiteTitleByController(torrents)
+  events:
+    deletePayload: (torrent) ->
+      Cataract.ClearPayloadModal.popup torrent: torrent
 
 
 Cataract.FilterRoute = Ember.Route.extend
@@ -121,28 +124,6 @@ Cataract.Routerle = Ember.Object.extend
           if opts.primary
             move = torrent.store.createRecord Cataract.Move, proto
             move.store.commit()
-          true
-
-    clear: (router, event) ->
-      torrent = event.view.get 'context'
-      Bootstrap.ModalPane.popup
-        heading: "Clear Torrent"
-        torrent: torrent
-        bodyViewClass: Cataract.TorrentConfirmClearanceView
-        primaryBinding: 'confirmButtonLabel'
-        confirmButtonLabel: (->
-         "Clear #{@get('torrent.payload.humanSize')}"
-        ).property('torrent.payload.humanSize')
-        secondary: "still need it"
-        showBackdrop: true
-        callback: (opts) ->
-          if opts.primary
-            if payload = torrent.get('payload')
-              try
-                payload.deleteRecord()
-              catch error
-                console?.debug "error while clearing payload: #{error}, trying to continue"
-              payload.store.commit()
           true
 
     delete: (router, event) ->
