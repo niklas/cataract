@@ -1,4 +1,4 @@
-<h4 class="title" {{action toggleExpand target="view"}}>{{title}}</h4>
+<h4 class="title" {{action toggleExpand this}}>{{title}}</h4>
 
 {{#if isRunning}}
   {{#if Cataract.online}}
@@ -9,7 +9,7 @@
 {{/if}}
 
 {{#if payloadExists}}
-  {{#if view.isExpanded}}
+  {{#if isExpanded}}
     {{view Cataract.PayloadView contentBinding="payload"}}
   {{else}}
     has content, click to see
@@ -17,7 +17,7 @@
 {{/if}}
 
 
-{{#if view.isExpanded}}
+{{#if isExpanded}}
   <div class="actions">
     {{#unless isNew}}
       {{#if isRunning}}

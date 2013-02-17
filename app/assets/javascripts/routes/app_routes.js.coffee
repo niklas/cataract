@@ -23,19 +23,6 @@ Cataract.TorrentsRoute = Ember.Route.extend
     application = @controllerFor('application')
     torrents.addObserver 'siteTitle', torrents, ->
       application.setSiteTitleByController(torrents)
-  events:
-    deletePayload: (torrent) ->
-      Cataract.ClearPayloadModal.popup torrent: torrent
-
-    move: (torrent) ->
-      directory = torrent.get('payload.directory') || torrent.get('contentDirectory')
-      Cataract.MovePayloadModal.popup
-        torrent: torrent
-        directories: @controllerFor('directories').get('content')
-        disks: @controllerFor('disks').get('content')
-        move: Ember.Object.create
-          targetDisk: directory.get('disk.id')
-          targetDirectory: directory.get('id')
 
 
 
