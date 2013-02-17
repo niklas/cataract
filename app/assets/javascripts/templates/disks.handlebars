@@ -1,0 +1,17 @@
+<ul class="nav nav-list disks">
+  <li class="nav-header">Disks</li>
+  {{#each controller}}
+  <li {{bindAttr class="cssClass active isMounted:mounted:unmounted"}}>
+  {{#linkTo disk this}}
+      <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+      {{name}}
+    {{/linkTo}}
+  </li>
+  {{/each}}
+  {{#if Cataract.currentDisk}}
+    <li class="divider"></li>
+    <li><a href="#" {{action setCurrentDisk null}}>reset</a></li>
+  {{/if}}
+</ul>
+
+

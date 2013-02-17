@@ -35,37 +35,8 @@
 <div class="row-fluid">
   <div class="span3">
     <div id="sidebar">
-      <ul class="nav nav-list directories">
-        <li class="nav-header">Directories</li>
-        {{#each Cataract.rootDirectories}}
-        <li {{bindAttr class="cssClass active isExisting:existing:missing"}}>
-          <a class="name" {{action goToDirectory this href=true}}>
-            <i {{bindAttr class="isExisting:icon-folder-open:icon-warning-sign"}}></i>
-            {{name}}
-          </a>
-        </li>
-        {{/each}}
-        {{#if Cataract.currentDirectory}}
-          <li class="divider"></li>
-          <li><a href="#" {{action goToDirectory null}}>reset</a></li>
-        {{/if}}
-      </ul>
-
-      <ul class="nav nav-list disks">
-        <li class="nav-header">Disks</li>
-        {{#each Cataract.disks}}
-        <li {{bindAttr class="cssClass active isMounted:mounted:unmounted"}}>
-        <a class="name" href="#" {{action setCurrentDisk this}}>
-            <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
-            {{name}}
-          </a>
-        </li>
-        {{/each}}
-        {{#if Cataract.currentDisk}}
-          <li class="divider"></li>
-          <li><a href="#" {{action setCurrentDisk null}}>reset</a></li>
-        {{/if}}
-      </ul>
+      {{ render 'directories' }}
+      {{ render 'disks' }}
 
       {{#unless Cataract.online}}
       <div class="alert alert-error">{{Cataract.offlineReason}}</div>
