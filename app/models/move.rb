@@ -2,7 +2,10 @@ class Move < ActiveRecord::Base
 
   include Queueable
 
-  attr_accessible :target_disk_id, :target_directory_id
+  attr_accessible :target_disk_id,
+                  :target_directory_id,
+                  :title,
+                  :torrent_id
 
   belongs_to :torrent
   belongs_to :target_directory, :class_name => 'Directory'
@@ -46,6 +49,9 @@ class Move < ActiveRecord::Base
 
   def final_directory
     @final_directory ||= find_final_directory
+  end
+
+  def title=(title_from_ember)
   end
 
   def title

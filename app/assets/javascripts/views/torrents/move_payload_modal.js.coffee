@@ -20,7 +20,14 @@ Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
   showBackdrop: true
   callback: (opts) ->
     if opts.primary
-      record = Cataract.Move.createRecord @get('move')
+      # OPTIMIZE do not know how to properly implement "Cancel" when using
+      # createRecord to early. Could wrap the whole modal box into a
+      # transaction
+      move =  @get('move')
+      record = Cataract.Move.createRecord
+        targetDirectory: Cataract.Directory.find(move.get('targetDirectory'))
+        targetDisk:      Cataract.Disk.find(move.get('targetDisk'))
+        torrent: @get('torrent')
       record.store.commit()
     true
 

@@ -14,7 +14,7 @@ class TorrentComponentController < InheritedResources::Base
 
   private
   def torrent
-    @torrent ||= Torrent.find( params[:id] || resource_params.first[:id] )
+    @torrent ||= Torrent.find( params[:id] || resource_params.first[:torrent_id] || resource_params.first[:id] )
   end
 
   helper_method :torrent

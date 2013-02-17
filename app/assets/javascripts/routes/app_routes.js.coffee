@@ -32,8 +32,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
         torrent: torrent
         directories: @controllerFor('directories').get('content')
         disks: @controllerFor('disks').get('content')
-        move:
-          id: torrent.get('id')
+        move: Ember.Object.create
           targetDisk: directory.get('disk.id')
           targetDirectory: directory.get('id')
 
