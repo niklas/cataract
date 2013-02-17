@@ -20,7 +20,7 @@ Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
   showBackdrop: true
   callback: (opts) ->
     if opts.primary
-      record = @get('torrent.store').createRecord Cataract.Move, @get('move')
+      record = Cataract.Move.createRecord @get('move')
       record.store.commit()
     true
 
