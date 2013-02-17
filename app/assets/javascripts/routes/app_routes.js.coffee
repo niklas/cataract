@@ -44,6 +44,12 @@ Cataract.FilterRoute = Ember.Route.extend
     torrents = @controllerFor('torrents')
     torrents.set('mode', model)
 
+Cataract.DirectoryRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    @_super(controller, model)
+    torrents = @controllerFor('torrents')
+    torrents.set 'directory', model
+
 Cataract.Routerle = Ember.Object.extend
   enableLogging:  true
   location: 'hash'

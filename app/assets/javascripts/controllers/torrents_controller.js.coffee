@@ -5,10 +5,12 @@ Cataract.TorrentsController = Ember.ArrayController.extend
 
   termsBinding: 'Cataract.terms'
   mode: ''
+  directory: null
 
   filterFunction: (->
     terms  = Ember.A( Ember.String.w(@get('terms')) ).map (x) -> x.toLowerCase()
     mode = @get('mode')
+    directory = @get('directory')
     (torrent) ->
       want = true
       torrent = torrent.record if torrent.record? # materialized or not?!
@@ -19,11 +21,11 @@ Cataract.TorrentsController = Ember.ArrayController.extend
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
-      if directory = Cataract.get('currentDirectory')
+      if directory
         want = want and directory is torrent.get('contentDirectory')
 
       want
-  ).property('terms', 'mode', 'Cataract.currentDirectory')
+  ).property('terms', 'mode', 'directory')
 
 
   siteTitle: (->
