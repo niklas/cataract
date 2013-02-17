@@ -14,7 +14,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('moves').set       'model', Cataract.Move.find()
 
 Cataract.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'torrents'
+  redirect: -> @transitionTo 'filter', 'recent'
 
 Cataract.TorrentsRoute = Ember.Route.extend
   model: -> Cataract.Torrent.find()
