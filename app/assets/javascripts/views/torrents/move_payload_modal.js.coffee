@@ -3,8 +3,8 @@ Cataract.MoveTorrentView = Ember.View.extend
   disksBinding: 'parentView.disks'
   template: Ember.Handlebars.compile """
     {{#with view.parentView.move}}
-      {{view Cataract.SelectDirectoryField selectionBinding="targetDirectory" label="directory"}}
-      {{view Cataract.SelectDiskField selectionBinding="targetDisk" label="Disk"}}
+      {{view Cataract.SelectDirectoryField valueBinding="targetDirectory" label="Directory"}}
+      {{view Cataract.SelectDiskField valueBinding="targetDisk" label="Disk"}}
     {{/with}}
   """
 
