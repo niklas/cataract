@@ -1,10 +1,16 @@
 Cataract.ApplicationController = Ember.Controller.extend
   init: ->
-    @addObserver 'siteTitle', @, (sender, key) -> $('head title').text("#{sender.get(key)} - Cataract")
-    @set('siteTitle', 'loading')
+    @addObserver 'fullSiteTitle', @, (sender, key) -> $('head title').text(sender.get(key))
     @_super()
     $('body').bind 'tick', -> Cataract.refreshTransfers(); true
 
-  setSiteTitleByController: (controller) ->
-    @set('siteTitle', controller.get('siteTitle'))
+  currentController: null
 
+  fullSiteTitle: Ember.computed ->
+    if sub = @get('currentController.siteTitle')
+      [ sub, @get('siteTitle')].join(' - ')
+    else
+      "loading Cataract"
+  .property('currentController.siteTitle')
+
+  siteTitle: 'Cataract'

@@ -20,11 +20,7 @@ Cataract.IndexRoute = Ember.Route.extend
 Cataract.TorrentsRoute = Ember.Route.extend
   model: -> Cataract.Torrent.find()
   setupController: (torrents, model) ->
-    application = @controllerFor('application')
-    torrents.addObserver 'siteTitle', torrents, ->
-      application.setSiteTitleByController(torrents)
-
-
+    @controllerFor('application').set('currentController', torrents)
 
 Cataract.FilterRoute = Ember.Route.extend
  # TODO reset event
@@ -36,6 +32,7 @@ Cataract.FilterRoute = Ember.Route.extend
   setupController: (controller, model) ->
     torrents = @controllerFor('torrents')
     torrents.set('mode', model)
+    @controllerFor('application').set('currentController', torrents)
 
 Cataract.DirectoryRoute = Ember.Route.extend
   setupController: (controller, model) ->
