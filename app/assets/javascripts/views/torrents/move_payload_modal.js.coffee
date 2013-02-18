@@ -9,11 +9,12 @@ Cataract.MoveTorrentView = Ember.View.extend
   """
 
 Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
-  heading: "Move payload"
   directories: Ember.A()
   disks: Ember.A()
   torrent: null
   move: {}
+
+  heading: "Move payload"
   bodyViewClass: Cataract.MoveTorrentView
   primary: "Move"
   secondary: "Cancel"

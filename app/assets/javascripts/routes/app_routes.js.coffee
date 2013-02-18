@@ -4,7 +4,7 @@ Cataract.Router.map ->
   @resource 'torrent', path: 'torrent/:torrent_id'
   @resource 'directory', path: 'directory/:directory_id'
   @resource 'disk', path: 'disk/:disk_id'
-  @route 'add'
+  @route 'add_torrent', path: 'add'
 
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
@@ -46,6 +46,16 @@ Cataract.DiskRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super(controller, model)
     Cataract.set 'currentDisk', model
+
+Cataract.AddTorrentRoute = Ember.Route.extend
+  model: ->
+    Ember.Object.create()
+  setupController: (controller, torrent) ->
+    # TODO transition route back
+    Cataract.AddTorrentModal.popup
+      torrent: torrent
+      directories: Cataract.Directory.find()
+      disks: Cataract.Disk.find()
 
 Cataract.Routerle = Ember.Object.extend
   enableLogging:  true
@@ -100,24 +110,6 @@ Cataract.Routerle = Ember.Object.extend
           @get('transaction').rollback()
           directory = Cataract.get('currentDirectory')
           router.transitionTo 'directories.show', directory
-
-    add: (router, event) ->
-      torrent = Cataract.Torrent.createRecord
-        fetchAutomatically: true
-        startAutomatically: true
-      Bootstrap.ModalPane.popup
-        heading: "Add Torrent"
-        torrent: torrent
-        bodyViewClass: Cataract.AddTorrentView
-        primary: "Add"
-        secondary: "Cancel"
-        showBackdrop: true
-        callback: (opts) ->
-          if opts.primary
-            torrent.store.commit()
-          else
-            torrent.deleteRecord()
-          true
 
     setCurrentDisk: (router, event) ->
       Cataract.set 'currentDisk', event.context
