@@ -178,6 +178,7 @@ class Torrent
   def payload
     @payload ||= Payload.new(self)
   end
+  attr_writer :payload_exists # FIXME ember does not support read-only attributes
 
   def ensure_content_directory
     self.content_directory ||= Setting.singleton.incoming_directory || Directory.watched.first || Directory.first

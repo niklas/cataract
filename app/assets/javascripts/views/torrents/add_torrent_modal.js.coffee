@@ -24,6 +24,4 @@ Cataract.AddTorrentModal = Bootstrap.ModalPane.extend
         filedata: torrent.get('filedata')
         filename: torrent.get('filename')
       record.store.commit()
-    else
-      torrent.delete()
     true
