@@ -55,7 +55,11 @@ end
 
 Then /^I should see the following attributes for the torrent:$/ do |table|
   table.rows_hash.each do |attr, value|
-    selector = selector_for("the #{attr}") rescue ".#{attr}"
+    selector = if attr.include?('_')
+                 ".#{attr}"
+               else
+                 selector_for("the #{attr}") rescue ".#{attr}"
+               end
     step %Q~I should see "#{value}" within "#{selector}"~
   end
 end
