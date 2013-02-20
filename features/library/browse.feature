@@ -17,10 +17,10 @@ Feature: Browsing the library
       | disk "Stuff" |
       | disk "More"  |
       And the following directories exist:
-      | directory | disk         | name            | parent             | auto_create | relative_path | show_sub_dirs |
-      | Series    | disk "More"  | Series          |                    |             | Serien        | true          |
-      | Movies    | disk "Stuff" | Movies          |                    | true        |               | false         |
-      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |             |               | false         |
+      | directory | disk         | name            | parent             | virtual | relative_path | show_sub_dirs |
+      | Series    | disk "More"  | Series          |                    | true    | Serien        | true          |
+      | Movies    | disk "Stuff" | Movies          |                    | false   |               | false         |
+      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" | true    |               | false         |
 
   Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page

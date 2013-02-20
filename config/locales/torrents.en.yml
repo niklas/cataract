@@ -14,7 +14,7 @@ en:
         target_directory: "Directory"
         target_disk: "Disk"
       directory:
-        auto_create: "create on disk"
+        virtual: "do not create on disk"
         subscribed: "subscribed"
         filter: "Filter"
   flash:

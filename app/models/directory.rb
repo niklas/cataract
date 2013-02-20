@@ -14,10 +14,10 @@ class Directory < ActiveRecord::Base
   validates_predicate :relative_path, :relative?
   validates_predicate :path, :absolute?
 
-  after_save :create_on_filesystem, :on => :create, :if => :auto_create?
-  attr_accessor :auto_create
-  def auto_create?
-    auto_create.present?
+  after_save :create_on_filesystem, :on => :create, :unless => :virtual?
+  attr_accessor :virtual
+  def virtual?
+    virtual.present?
   end
   def create_on_filesystem
     FileUtils.mkdir_p path
@@ -143,7 +143,7 @@ class Directory < ActiveRecord::Base
       else
         directory.dup.tap do |copy|
           copy.disk = disk
-          copy.auto_create = true
+          copy.virtual = false
           unless directory.is_root?
             copy.parent = find_or_create_by_directory_and_disk(directory.parent, disk)
           end

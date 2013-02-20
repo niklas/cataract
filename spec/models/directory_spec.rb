@@ -58,7 +58,7 @@ describe Directory do
   context "autocreation" do
     include FakeFS::SpecHelpers
     it "should create on filesystem if asked for" do
-      directory = create :directory, :relative_path => path, :auto_create => true
+      directory = create :directory, :relative_path => path, virtual: false
       File.directory?(directory.path).should be_true
     end
     it "should create on filesystem only if asked for" do
