@@ -5,6 +5,7 @@ class DirectoriesController < InheritedResources::Base
   load_and_authorize_resource except: [:index]
 
   def create
+    # TODO make teh ajax work and ember and such
     create! { redirect_path }
   end
 

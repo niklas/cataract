@@ -23,5 +23,5 @@ Cataract.AddTorrentModal = Bootstrap.ModalPane.extend
         url: torrent.get('url')
         filedata: torrent.get('filedata')
         filename: torrent.get('filename')
-      record.store.commit()
+      record.get('transaction').commit()
     true

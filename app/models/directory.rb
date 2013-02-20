@@ -8,6 +8,7 @@ class Directory < ActiveRecord::Base
   before_validation :set_relative_path_from_name
 
   validates_presence_of :name
+  validates_presence_of :disk_id
   validates_uniqueness_of :relative_path, scope: :disk_id
 
   validates_predicate :relative_path, :relative?

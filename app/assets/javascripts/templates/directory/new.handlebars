@@ -1,0 +1,9 @@
+{{#with view.parentView.directory}}
+  {{view Bootstrap.Forms.TextField valueBinding="name" label="Name"}}
+  {{view Cataract.SelectDiskField selectionBinding="disk" label="Disk"}}
+  <label for="directory_subscribe">
+    {{view Ember.Checkbox checkedBinding="subscribed" elementID="directory_subscribe"}}
+    subscribe
+  </label>
+{{/with}}
+

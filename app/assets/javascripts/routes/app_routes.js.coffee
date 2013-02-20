@@ -6,6 +6,7 @@ Cataract.Router.map ->
     @route 'edit', path: 'edit'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
+  @route 'new_directory', path: 'directory/new'
 
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
@@ -54,6 +55,21 @@ Cataract.AddTorrentRoute = Ember.Route.extend
       torrent: torrent
       directories: Cataract.Directory.find()
       disks: Cataract.Disk.find()
+
+Cataract.NewDirectoryRoute = Ember.Route.extend
+  model: ->
+    Cataract.Directory.createRecord
+      disk: Cataract.get('currentDisk.id')
+      parent: Cataract.get('currentDirectory.id')
+
+  setupController: (controller, model) ->
+    # TODO transition route back
+    Cataract.NewDirectoryModal.popup
+      directory: model
+      directories: model.get('disk.directories')
+      disks: Cataract.Disk.find()
+
+  renderTemplate: ->
 
 Cataract.DirectoryEditRoute = Ember.Route.extend
   model: (params) ->
