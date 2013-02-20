@@ -11,27 +11,33 @@ Feature: Subscribe Directory
       And I wait for the spinner to stop
 
      When I follow "Shame of Frowns" within the sidebar directories list
-     Then I should see "Shame of Frowns" within the content
+     Then I should see "Shame of Frowns" within the details
      When I click on the edit link
+      And I wait for the modal box to appear
       And I check "subscribed"
      Then the "Filter" field should contain "Shame of Frowns"
      When I fill in "Filter" with "frowns"
-      And I click on the save link
+      And I follow "Save"
+      And I wait for the modal box to disappear
      Then I should see flash notice "Directory 'Shame of Frowns' saved."
-      And I should see "subscribed" in a label within the content
+      And I should see "subscribed" in a label within the details
       And the directory should be subscribed
       And the directory's filter should be "frowns"
 
      When I click on the edit link
+      And I wait for the modal box to appear
       And I uncheck "subscribed"
-      And I click on the cancel link
-     Then I should see "subscribed" in a label within the content
+      And I follow "Cancel"
+      And I wait for the modal box to disappear
+     Then I should see "subscribed" in a label within the details
       And the directory should be subscribed
 
      When I click on the edit link
+      And I wait for the modal box to appear
      Then the "subscribed" checkbox should be checked
      When I uncheck "subscribed"
-      And I click on the save link
+      And I follow "Save"
+      And I wait for the modal box to disappear
      Then I should see flash notice "Directory 'Shame of Frowns' saved."
-      And I should not see "subscribed" in a label within the content
+      And I should not see "subscribed" in a label within the details
       And the directory should not be subscribed

@@ -1,14 +1,10 @@
-<h2>{{content.name}}</h2>
-
+{{#with view.parentView.directory}}
 <label for="directory_subscribed">
-  {{view Ember.Checkbox checkedBinding="content.subscribed" elementID="directory_subscribed"}}
+  {{view Ember.Checkbox checkedBinding="subscribed" elementID="directory_subscribed"}}
   subscribed
 </label>
 
-{{#if content.subscribed}}
-  {{view Bootstrap.Forms.TextField valueBinding="content.filter" label="Filter"}}
+{{#if subscribed}}
+  {{view Bootstrap.Forms.TextField valueBinding="filter" label="Filter"}}
 {{/if}}
-
-<a class="cancel btn" {{action cancel}}>Cancel</a>
-<a class="save btn btn-primary" {{action save}}>Save</a>
-
+{{/with}}

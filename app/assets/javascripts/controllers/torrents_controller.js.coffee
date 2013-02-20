@@ -5,7 +5,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend
 
   filterFunction: (->
     terms  = Ember.A( Ember.String.w(@get('terms')) ).map (x) -> x.toLowerCase()
-    mode = @get('mode')
+    mode = @get('mode') || ''
     directory = @get('directory')
     (torrent) ->
       want = true

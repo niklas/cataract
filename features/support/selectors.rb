@@ -76,8 +76,8 @@ module HtmlSelectorsHelpers
     when /^(?:a )?flash (notice|alert)$/
       ".flash.alert-#{$1}"
 
-    when 'the content'
-      "#content"
+    when /^the (\w+)$/
+      "##{$1}"
 
     when /^the (\w+) section$/
       "section.#{$1}"
