@@ -8,9 +8,9 @@ Cataract.TorrentController = Ember.ObjectController.extend
       torrent: torrent
       directories: @controllerFor('directories').get('content')
       disks: @controllerFor('disks').get('content')
-      move: Ember.Object.create
-        targetDisk: directory.get('disk.id')
-        targetDirectory: directory.get('id')
+      move: Cataract.Move.createRecord
+        targetDisk: directory.get('disk')
+        targetDirectory: directory
 
   # TODO show in the third pane instead
   toggleExpand: (torrent) ->

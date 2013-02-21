@@ -3,8 +3,8 @@ Cataract.MoveTorrentView = Ember.View.extend
   disksBinding: 'parentView.disks'
   template: Ember.Handlebars.compile """
     {{#with view.parentView.move}}
-      {{view Cataract.SelectDirectoryField valueBinding="targetDirectory" label="Directory"}}
-      {{view Cataract.SelectDiskField valueBinding="targetDisk" label="Disk"}}
+      {{view Cataract.SelectDirectoryField selectionBinding="targetDirectory" label="Directory"}}
+      {{view Cataract.SelectDiskField selectionBinding="targetDisk" label="Disk"}}
     {{/with}}
   """
 
@@ -21,14 +21,10 @@ Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
   showBackdrop: true
   callback: (opts) ->
     if opts.primary
-      # OPTIMIZE do not know how to properly implement "Cancel" when using
-      # createRecord to early. Could wrap the whole modal box into a
-      # transaction
       move =  @get('move')
-      record = Cataract.Move.createRecord
-        targetDirectory: Cataract.Directory.find(move.get('targetDirectory'))
-        targetDisk:      Cataract.Disk.find(move.get('targetDisk'))
-        torrent: @get('torrent')
-      record.store.commit()
+      move.set('torrent', @get('torrent'))
+      move.get('transaction').commit()
+    else
+      move.get('transaction').rollback()
     true
 

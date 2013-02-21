@@ -59,8 +59,8 @@ Cataract.AddTorrentRoute = Ember.Route.extend
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
     Cataract.Directory.createRecord
-      disk: Cataract.get('currentDisk.id')
-      parent: Cataract.get('currentDirectory.id')
+      disk: Cataract.get('currentDisk')
+      parent: Cataract.get('currentDirectory')
 
   setupController: (controller, model) ->
     # TODO transition route back
