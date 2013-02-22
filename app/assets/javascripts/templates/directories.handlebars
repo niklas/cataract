@@ -3,7 +3,7 @@
   {{#each controller.filtered}}
   <li {{bindAttr class="cssClass active exists:existing:missing"}}>
     {{#linkTo directory this class="name"}}
-      <i {{bindAttr class="isExisting:icon-folder-open:icon-warning-sign"}}></i>
+      <i {{bindAttr class="exists:icon-folder-open:icon-warning-sign"}}></i>
       {{name}}
     {{/linkTo}}
   </li>

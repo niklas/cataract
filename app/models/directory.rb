@@ -17,7 +17,7 @@ class Directory < ActiveRecord::Base
   after_save :create_on_filesystem, :on => :create, :unless => :virtual?
   attr_accessor :virtual
   def virtual?
-    virtual.present?
+    virtual.in?(['1', 1, true, 'true'])
   end
   def create_on_filesystem
     FileUtils.mkdir_p path
