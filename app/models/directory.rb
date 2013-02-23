@@ -154,7 +154,7 @@ class Directory < ActiveRecord::Base
   end
 
   def find_or_create_child_by_name!(child_name)
-    children.where(name: child_name).first ||
+    children.find_by_name(child_name) ||
       children.create!(name: child_name, disk: disk, virtual: virtual?)
   end
 
