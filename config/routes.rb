@@ -26,6 +26,7 @@ Cataract::Application.routes.draw do
   end
 
   resources :directories
+  resources :detected_directories, only: :index
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 

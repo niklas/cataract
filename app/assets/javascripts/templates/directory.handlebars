@@ -9,3 +9,8 @@
 {{#if hasSubDirs}}
 {{view Cataract.DirectoriesTable contentBinding="children"}}
 {{/if}}
+
+{{#if hasDetectedSubDirs}}
+<h2>Detected</h2>
+{{view Cataract.DetectedDirectoriesTable contentBinding="detectedChildren"}}
+{{/if}}

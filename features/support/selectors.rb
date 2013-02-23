@@ -38,6 +38,9 @@ module HtmlSelectorsHelpers
     when /^the #{capture_nth} (torrent)$/
       selector_for("the #{$2.pluralize} list") + " li#{Numerals[$1]}"
 
+    when /^the #{capture_nth} row$/
+      "tr#{Numerals[$1]}"
+
     when /^the director(y|ies) list$/
       "table.directories"
 

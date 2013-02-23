@@ -12,5 +12,6 @@ Then(/^#{capture_model}'s (\w+) (should(?: not)?) end with #{capture_value}$/) d
   actual_value  = model(name).send(attribute)
   expectation   = expectation.gsub(' ', '_')
 
-  actual_value.to_s.send(expectation, be_ends_with(eval(expected)))
+  ending = eval(expected)
+  actual_value.to_s.send(expectation, be_ends_with(ending), "expected #{actual_value.inspect} to end with #{ending.inspect}")
 end

@@ -64,17 +64,16 @@ Feature: Disks in Library
         | type      | path                          |
         | directory | media/adisk/Series/Tatort     |
         | directory | media/adisk/Series/Tagesschau |
-      And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series"
-    Given I am on the library page
-     When I follow "Series" within the directories list
+      And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series", show_sub_dirs: true
+      And I am on the home page
+     When I follow "Series"
+      And I wait for the spinner to stop
      Then I should see a table of the following new directories:
-       | Name              |
-       | Import Tagesschau |
-       | Import Tatort     |
-     When I follow "Import Tatort"
-      And I wait for the modal box to appear
-     Then the "Name" field should contain "Tatort"
-     When I press "Create Directory"
+       | Name       | Action |
+       | Tagesschau | Import |
+       | Tatort     | Import |
+     When I follow "Import" within the second row
+      And I wait for the spinner to stop
      Then I should see notice "Directory 'Tatort' created"
       And a directory "Tatort" should exist with name: "Tatort", disk: the disk
       And the directory "Series" should be the directory "Tatort"'s parent

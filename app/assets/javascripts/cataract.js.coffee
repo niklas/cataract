@@ -1,5 +1,5 @@
 #= require_self
-#= require ./addons/filtered_controller
+#= require_tree ./addons
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
@@ -49,6 +49,7 @@ Cataract = Ember.Application.create
 
 DS.RESTAdapter.configure "plurals",
   directory: 'directories'
+  detected_directory: 'detected_directories'
 
 DS.RESTAdapter.configure 'Cataract.Torrent', sideloadAs: 'torrents'
 
