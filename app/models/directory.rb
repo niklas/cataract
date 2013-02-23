@@ -123,12 +123,12 @@ class Directory < ActiveRecord::Base
 
   def create_intermediate_directories
     if @dirname.present?
-      if parent.present?
+      if p = parent
         while @dirname.more_than_basename?
           first, @dirname = @dirname.split_first
-          self.parent = parent.find_or_create_child_by_name!(first)
+          p = p.find_or_create_child_by_name!(first)
         end
-        self.parent = parent.find_or_create_child_by_name!(@dirname.to_s)
+        self.parent = p.find_or_create_child_by_name!(@dirname.to_s)
         @dirname = nil
       end
     end
