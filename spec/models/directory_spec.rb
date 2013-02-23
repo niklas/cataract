@@ -117,7 +117,7 @@ describe Directory do
       end
     end
 
-    let(:parent) { create :directory, disk: disk, name: 'parent' }
+    let(:parent) { create :blank_directory, disk: disk, name: 'parent' }
     context 'by parent and name' do
       let(:attr)  {{ parent: parent, name: 'thename' }}
       it "assigns disk from parent" do
@@ -135,7 +135,7 @@ describe Directory do
     end
 
     context 'by parent and relative path' do
-      let!(:sub1) { create :directory, name: 'sub1', parent: parent }
+      let!(:sub1) { create :blank_directory, name: 'sub1', parent: parent }
       let(:attr)  {{ parent: parent, relative_path: 'sub1/sub2/thename' }}
       it "assigns disk from parent" do
         creating.call
