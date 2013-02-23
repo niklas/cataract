@@ -18,6 +18,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :blank_directory, class: 'Directory' do
+    virtual true
+  end
+
   factory :move do
     torrent
     target_directory

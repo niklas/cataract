@@ -27,6 +27,10 @@ class Disk < ActiveRecord::Base
       end
   end
 
+  def self.find_or_create_by_path(path)
+    raise NotImplementedError
+  end
+
   # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|

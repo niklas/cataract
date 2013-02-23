@@ -39,8 +39,6 @@ group :test do
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
 
   gem 'simplecov', :require => false
-  gem 'pry-nav'
-  gem 'pry-stack_explorer'
 
   gem 'diff_matcher'
   gem 'launchy'
@@ -55,6 +53,9 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-nav'
+  gem 'pry-doc'
+  gem 'pry-stack_explorer'
   gem 'jasminerice'
   gem 'guard-jasmine'
 end
