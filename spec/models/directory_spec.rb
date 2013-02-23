@@ -56,64 +56,106 @@ describe Directory do
   end
 
   context 'creating' do
-    let(:creating) { lambda { directory.tap(&:create!) } }
+    let(:creating) { lambda { directory.tap(&:save!) } }
     let(:directory) { build(:blank_directory, attr) }
-    let(:disk) { create :disk, '/media/disk' }
+    let(:disk) { create :disk, path: '/media/disk' }
+    before :each do
+      Disk.stub(:find_or_create_by_path).and_return(disk)
+    end
 
-    context 'by path' do
-      let(:attr) {{ path: '/media/disk/sub1/sub2/thename' }}
-      it "finds or creates disk"
-      it "sets relative path"
+    context 'by full_path' do
+      let(:full_path) { '/media/disk/sub1/sub2/thename' }
+      let(:attr) {{ full_path: full_path }}
+      it "finds or creates disk" do
+        Disk.should_receive(:find_or_create_by_path).
+          with(Pathname.new(full_path)).
+          and_return(disk)
+        creating.call
+      end
+      it "sets relative path" do
+        directory.should_receive(:relative_path=).with(Pathname.new('sub1/sub2/thename'))
+        creating.call
+      end
+      it "sets full_path" do
+        creating.call
+        directory.full_path.to_s.should == '/media/disk/sub1/sub2/thename'
+      end
+      it "sets name" do
+        creating.call
+        directory.name.should == 'thename'
+      end
     end
 
     context 'by disk and relative path' do
-      let(:attr) {{ disk: disk, relative_path: 'sub1/sub2/thename' }}
-      it "finds or creates disk"
-      it "finds or creates parent directories"
-      it "sets name"
+      let(:attr) {{ disk: disk, relative_path: 'sub1/sub2/a name' }}
+      it "finds or creates parent directories" do
+        creating.should change(Directory, :count).from(0).to(3)
+        Directory.order('name').all.map(&:name).should == ['a name', 'sub1', 'sub2']
+      end
+      it "sets name" do
+        creating.call
+        directory.name.should == 'a name'
+      end
+      it "sets full_path" do
+        creating.call
+        directory.full_path.to_s.should == '/media/disk/sub1/sub2/a name'
+      end
     end
 
     context 'by disk and name' do
       let(:attr) {{ disk: disk, name: 'thename' }}
-      it "finds or creates disk"
-      it "assigns no parent"
-      it "keeps name"
+      before(:each) { creating.call }
+      it "assigns no parent" do
+        directory.parent.should be_nil
+      end
+      it "keeps name" do
+        directory.name.should == 'thename'
+      end
+      it "sets full_path" do
+        creating.call
+        directory.full_path.to_s.should == '/media/disk/thename'
+      end
     end
 
     let(:parent) { create :directory, disk: disk, name: 'parent' }
     context 'by parent and name' do
       let(:attr)  {{ parent: parent, name: 'thename' }}
-      it "assigns disk from parent"
-      it "keeps name"
+      it "assigns disk from parent" do
+        creating.call
+        directory.disk.should == disk
+      end
+      it "keeps name" do
+        creating.call
+        directory.name.should == 'thename'
+      end
+      it "sets full_path" do
+        creating.call
+        directory.full_path.to_s.should == '/media/disk/parent/thename'
+      end
     end
 
     context 'by parent and relative path' do
-      let(:sub1) { create :directory, name: 'sub1', disk: disk }
+      let!(:sub1) { create :directory, name: 'sub1', parent: parent }
       let(:attr)  {{ parent: parent, relative_path: 'sub1/sub2/thename' }}
-      it "assigns disk from parent"
-      it "creates or finds intermediate directories"
-      it "sets name"
-    end
-  end
-
-  context "disk" do
-    it "should be auto-set by parent" do
-      parent = create :directory
-      new = Directory.new parent: parent
-      new.valid?
-      new.disk.should == parent.disk
-    end
-  end
-
-  context "autocreation" do
-    include FakeFS::SpecHelpers
-    it "should create on filesystem if asked for" do
-      directory = create :directory, :relative_path => path, virtual: "false"
-      File.directory?(directory.path).should be_true
-    end
-    it "should create on filesystem only if asked for" do
-      directory = create :directory, :relative_path => path
-      File.directory?(directory.path).should_not be_true
+      it "assigns disk from parent" do
+        creating.call
+        directory.disk.should == disk
+      end
+      it "creates or finds intermediate directories" do
+        creating.should change(Directory, :count).from(2).to(4)
+      end
+      it "sets parent to the deepest intermediate directory" do
+        creating.call
+        directory.parent.name.should == 'sub2'
+      end
+      it "sets name" do
+        creating.call
+        directory.name.should == 'thename'
+      end
+      it "sets full_path" do
+        creating.call
+        directory.full_path.to_s.should == '/media/disk/sub1/sub2/thename'
+      end
     end
   end
 

@@ -51,7 +51,6 @@ module Filesystem
 
       validates :name, presence: true
 
-      extend SingletonMethods
     end
   end
 
@@ -75,17 +74,5 @@ module Filesystem
     else
       super Pathname.new(new_path.to_s)
     end
-  end
-
-  module SingletonMethods
-    def validates_predicate attribute, meth
-      word = meth.to_s.sub(/\?$/,'')
-      validates_each attribute do |record, attr, value|
-        if value.respond_to?(meth)
-          record.errors.add attr, "is not #{word}" unless value.send(meth)
-        end
-      end
-    end
-
   end
 end
