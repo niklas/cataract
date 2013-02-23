@@ -159,11 +159,18 @@ describe Directory do
     end
   end
 
-  context "assigning name on creation" do
-    it "should create path from the disk's path an the name" do
-      disk = create :disk, path: "/media/Zeug"
-      directory = build :directory, disk: disk, name: "krams", relative_path: nil
-      directory.path.to_s.should == "/media/Zeug/krams"
+  context "autocreation" do
+    include FakeFS::SpecHelpers
+    it "should create on filesystem if asked for" do
+      directory = create :directory, :relative_path => path, virtual: "false"
+      File.directory?(directory.full_path).should be_true
+    end
+    it "should create on filesystem only if asked for" do
+      directory = create :directory, :relative_path => path
+      File.directory?(directory.full_path).should_not be_true
+    end
+    it "should not happen by default" do
+      Directory.new.should be_virtual
     end
   end
 
