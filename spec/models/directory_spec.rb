@@ -154,7 +154,7 @@ describe Directory do
       end
       it "sets full_path" do
         creating.call
-        directory.full_path.to_s.should == '/media/disk/sub1/sub2/thename'
+        directory.full_path.to_s.should == '/media/disk/parent/sub1/sub2/thename'
       end
     end
   end
