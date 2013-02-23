@@ -21,13 +21,11 @@ class Directory < ActiveRecord::Base
 
   after_create :create_on_filesystem, unless: :virtual?
 
-  def virtual=(boolish)
-    @virtual = ['1', 1, true, 'true'].include?(boolish)
-  end
-
+  # default to true
   def virtual?
-    @virtual
+    !@virtual.in?([0, '0', false, "false"])
   end
+  attr_writer :virtual
 
   def real?
     !virtual?
