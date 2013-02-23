@@ -15,17 +15,29 @@ class Directory < ActiveRecord::Base
   validates_presence_of :disk_id
   validates_uniqueness_of :name, scope: :ancestry
 
-  # FIXME better put these validations back in
+  # FIXME better put these validations back in when relative_paths are fixed
   #validates_predicate :relative_path, :relative?
   #validates_predicate :full_path, :absolute?
 
-  after_save :create_on_filesystem, :on => :create, :unless => :virtual?
-  attr_accessor :virtual
-  def virtual?
-    virtual.in?(['1', 1, true, 'true'])
+  after_create :create_on_filesystem, unless: :virtual?
+
+  def virtual=(boolish)
+    @virtual = ['1', 1, true, 'true'].include?(boolish)
   end
+
+  def virtual?
+    @virtual
+  end
+
+  def real?
+    !virtual?
+  end
+
   def create_on_filesystem
-    FileUtils.mkdir_p full_path
+    unless virtual? # rails ignores the condition in the callback definition?!
+      FileUtils.mkdir_p full_path
+    end
+    return true # satisfy callback chain
   end
 
   # end of scope to show all directies by name, leaving out duplicate copies in different disks
@@ -145,7 +157,7 @@ class Directory < ActiveRecord::Base
 
   def find_or_create_child_by_name!(child_name)
     children.where(name: child_name).first ||
-      children.create!(name: child_name, disk: disk)
+      children.create!(name: child_name, disk: disk, virtual: virtual?)
   end
 
   # Directories not already in database
