@@ -5,6 +5,7 @@ class Directory < ActiveRecord::Base
   # the ancestry gem defines a path method to
   alias_method :ancestry_path, :path
   include Filesystem
+  before_validation :set_disk_by_parent, unless: :disk
   before_validation :set_relative_path_from_name
 
   validates_presence_of :name
@@ -34,7 +35,11 @@ class Directory < ActiveRecord::Base
   end
 
   def path
-    disk.path + (relative_path || name)
+    if parent.present?
+      parent
+    else
+      disk
+    end.path + relative_path
   rescue NoMethodError => e
     nil
   end
@@ -84,6 +89,12 @@ class Directory < ActiveRecord::Base
   def set_relative_path_from_name
     unless relative_path?
       self.relative_path = name
+    end
+  end
+
+  def set_disk_by_parent
+    if parent.present?
+      self.disk = parent.disk
     end
   end
 

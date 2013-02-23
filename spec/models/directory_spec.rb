@@ -55,6 +55,56 @@ describe Directory do
     end
   end
 
+  context 'creating' do
+    let(:creating) { lambda { directory.tap(&:create!) } }
+    let(:directory) { build(:blank_directory, attr) }
+    let(:disk) { create :disk, '/media/disk' }
+
+    context 'by path' do
+      let(:attr) {{ path: '/media/disk/sub1/sub2/thename' }}
+      it "finds or creates disk"
+      it "sets relative path"
+    end
+
+    context 'by disk and relative path' do
+      let(:attr) {{ disk: disk, relative_path: 'sub1/sub2/thename' }}
+      it "finds or creates disk"
+      it "finds or creates parent directories"
+      it "sets name"
+    end
+
+    context 'by disk and name' do
+      let(:attr) {{ disk: disk, name: 'thename' }}
+      it "finds or creates disk"
+      it "assigns no parent"
+      it "keeps name"
+    end
+
+    let(:parent) { create :directory, disk: disk, name: 'parent' }
+    context 'by parent and name' do
+      let(:attr)  {{ parent: parent, name: 'thename' }}
+      it "assigns disk from parent"
+      it "keeps name"
+    end
+
+    context 'by parent and relative path' do
+      let(:sub1) { create :directory, name: 'sub1', disk: disk }
+      let(:attr)  {{ parent: parent, relative_path: 'sub1/sub2/thename' }}
+      it "assigns disk from parent"
+      it "creates or finds intermediate directories"
+      it "sets name"
+    end
+  end
+
+  context "disk" do
+    it "should be auto-set by parent" do
+      parent = create :directory
+      new = Directory.new parent: parent
+      new.valid?
+      new.disk.should == parent.disk
+    end
+  end
+
   context "autocreation" do
     include FakeFS::SpecHelpers
     it "should create on filesystem if asked for" do
