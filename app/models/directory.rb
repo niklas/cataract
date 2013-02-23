@@ -2,10 +2,11 @@
 
 class Directory < ActiveRecord::Base
   has_ancestry
-  #include Filesystem
-  before_validation :process_path
+  include Filesystem
+  before_validation :process_full_path
+  before_validation :set_name_from_relative_path
+  before_validation :set_relative_path_from_name
   before_validation :set_disk_from_parent, unless: :disk
-  before_validation :set_name_from_provided_paths
   after_save :create_intermediate_directories
 
   # FIXME assign directories to disks through rake task
@@ -13,11 +14,10 @@ class Directory < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :disk_id
-  validates_uniqueness_of :name, scope: :ancestry
+  validates_uniqueness_of :relative_path, scope: :disk_id, allow_nil: true
 
-  # FIXME better put these validations back in when relative_paths are fixed
-  #validates_predicate :relative_path, :relative?
-  #validates_predicate :full_path, :absolute?
+  validates_predicate :relative_path, :relative?
+  validates_predicate :full_path, :absolute?
 
   after_create :create_on_filesystem, unless: :virtual?
 
@@ -44,15 +44,8 @@ class Directory < ActiveRecord::Base
   end
 
   def full_path
-    disk.path.join(relative_path)
-  end
-
-  # TODO remove table column 'relative_path'
-  def relative_path
-    if parent.present?
-      ancestors.map(&:name).inject(Pathname.new(''), &:join).join(name)
-    else
-      name
+    if relative_path.present?
+      disk.path.join(relative_path)
     end
   end
 
@@ -102,11 +95,15 @@ class Directory < ActiveRecord::Base
     @full_path = Pathname.new(new_path)
   end
   def relative_path=(new_path)
-    @relative_path = Pathname.new(new_path)
+    super
+    @relative_path = read_attribute :relative_path
+  end
+  def relative_path
+    @relative_path || super
   end
 
-  def process_path
-    if @full_path.present?
+  def process_full_path
+    if @full_path
       unless @full_path.absolute?
         raise(PathInvalid, "#{@full_path.inspect} is not absolute")
       end
@@ -116,34 +113,36 @@ class Directory < ActiveRecord::Base
 
       if disk.blank? || !@full_path.starts_with?(disk.path)
         self.disk = Disk.find_or_create_by_path(@full_path)
-        self.relative_path = @full_path.relative_path_from(disk.path)
       end
-    end
-  end
 
-  def create_intermediate_directories
-    if @dirname.present?
-      if parent.present?
-        while @dirname.more_than_basename?
-          first, @dirname = @dirname.split_first
-          self.parent = parent.find_or_create_child_by_name!(first)
-        end
-        self.parent = parent.find_or_create_child_by_name!(@dirname.to_s)
-        @dirname = nil
-      end
-    end
-  end
-
-  def set_name_from_provided_paths
-    if @full_path.present?
-      self.name ||= @full_path.basename.to_s
-      @dirname = @full_path.dirname
+      self.relative_path = @full_path.relative_path_from(disk.path)
       @full_path = nil
     end
-    if @relative_path.present?
-      self.name ||= @relative_path.basename.to_s
-      @dirname = @relative_path.dirname
+  end
+
+  def set_name_from_relative_path
+    if @relative_path
+      @intermediates = @relative_path.dirname.relative_components
+      if parent
+        self.relative_path = parent.relative_path.join @relative_path
+      end
+      if name.blank?
+        self.name = @relative_path.basename.to_s
+      end
       @relative_path = nil
+    end
+  rescue Exception => e
+    errors.add :relative_path, e.message
+  end
+
+  def set_relative_path_from_name
+    if relative_path.blank? && name.present?
+      self.relative_path = if parent
+                             parent.relative_path.join name
+                           else
+                             name
+                           end
+      @relative_path = nil   # side effects in #relative_path=
     end
   end
 
@@ -153,17 +152,35 @@ class Directory < ActiveRecord::Base
     end
   end
 
+  def create_intermediate_directories
+    unless @intermediates.blank?
+      p = nil
+      if is_root?
+        p = disk.find_or_create_root_directory_by_basename!(@intermediates.shift)
+      end
+      # build up the rest
+      if p ||= parent
+        @intermediates.each do |new_parent|
+          p = p.find_or_create_child_by_name!(new_parent)
+        end
+        self.parent = p
+        @intermediates = nil
+        save!
+      end
+    end
+  end
+
   def find_or_create_child_by_name!(child_name)
-    children.where(name: child_name).first ||
-      children.create!(name: child_name, disk: disk, virtual: virtual?)
+    children.find_by_name(child_name) ||
+      self.class.create!(name: child_name, parent: self, virtual: virtual?)
   end
 
   # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|
-      children.any? { |in_db| in_db.path == on_disk }
+      children.any? { |in_db| in_db.full_path == on_disk }
     end.map do |found|
-      children.new(relative_path: found.relative_path_from(disk.path), disk: disk, name: found.basename.to_s)
+      children.new(relative_path: found.relative_path_from(disk.path), disk: disk)
     end
   end
 
@@ -189,7 +206,7 @@ class Directory < ActiveRecord::Base
     return nil if path.nil?
     path = ::Pathname.new( path )
     all.map { |dir| [dir,
-                     path.dirname.relative_path_from(dir.path)
+                     path.dirname.relative_path_from(dir.full_path)
                    ] rescue nil }
        .compact
        .sort_by { |dir, infix| infix.to_s.length }

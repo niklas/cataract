@@ -25,7 +25,7 @@ class Move < ActiveRecord::Base
   def work
     torrent.stop
     payload = torrent.payload
-    FileUtils.mv payload.path, final_directory.path
+    FileUtils.mv payload.path, final_directory.full_path
     if payload.multiple?
       FileUtils.rmdir File.dirname(payload.files.first)
     end
@@ -63,7 +63,7 @@ class Move < ActiveRecord::Base
     score = 0
 
     dn = directory.name.downcase
-    dp = directory.path.basename.to_s.downcase
+    dp = directory.full_path.basename.to_s.downcase
     tt = torrent.title.downcase
     score += diff(dn, tt)
     score += diff(dp, tt)

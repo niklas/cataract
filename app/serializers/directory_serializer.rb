@@ -5,7 +5,7 @@ class DirectorySerializer < BaseSerializer
 
   def attributes
     super.tap do |hash|
-      hash['path'] = object.path.to_s
+      hash['full_path'] = object.full_path.to_s
       hash['parent_id'] = object.parent.try(:id)
       hash['disk_id'] = object.disk_id
     end

@@ -186,7 +186,7 @@ describe Torrent::RTorrent do
     context "with two loaded torrents" do
       before do
         described_class.online!
-        create_file incoming.path/'tails.png'
+        create_file incoming.full_path/'tails.png'
         @first   = create :torrent_with_picture_of_tails, content_directory: incoming
         @first.start!
         @second  = create :torrent_with_picture_of_tails_and_a_poem, content_directory: incoming

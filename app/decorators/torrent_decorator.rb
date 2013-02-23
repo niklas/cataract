@@ -94,7 +94,7 @@ class TorrentDecorator < ApplicationDecorator
 
   def render_directory(dir)
     h.content_tag(:span, h.link_to(dir.name, [dir.disk, dir]), class: 'name') +
-    h.content_tag(:span, dir.path, class: 'path')
+    h.content_tag(:span, dir.full_path, class: 'path')
   end
 
   def selector_for(name, resource=nil, *more)

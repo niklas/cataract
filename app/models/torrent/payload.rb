@@ -34,7 +34,7 @@ class Torrent
     end
 
     def path
-      @path ||= base_path.path/name
+      @path ||= base_path.full_path/name
     end
 
     def base_path
