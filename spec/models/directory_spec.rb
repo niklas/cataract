@@ -100,6 +100,12 @@ describe Directory do
         creating.call
         directory.full_path.to_s.should == '/media/disk/sub1/sub2/a name'
       end
+      it "assigns ancestors" do
+        creating.call
+        directory.parent.should_not be_nil
+        directory.parent.parent.should_not be_nil
+        directory.parent.parent.parent.should be_nil
+      end
     end
 
     context 'by disk and name' do
@@ -160,13 +166,14 @@ describe Directory do
   end
 
   context "autocreation" do
-    include FakeFS::SpecHelpers
     it "should create on filesystem if asked for" do
       directory = create :directory, :relative_path => path, virtual: "false"
+      directory.should_not be_virtual
       File.directory?(directory.full_path).should be_true
     end
     it "should create on filesystem only if asked for" do
       directory = create :directory, :relative_path => path
+      directory.should be_virtual
       File.directory?(directory.full_path).should_not be_true
     end
     it "should not happen by default" do

@@ -6,15 +6,14 @@ Pathname.class_eval do
   end
   alias_method :start_with?, :starts_with?
 
-  def split_first
-    if m = to_path.match( %r~^([^/]+)/(.+)$~ )
-      [ m[1], self.class.new(m[2]) ]
-    else
-      raise "cannot split first"
+  def relative_components
+    raise "is absolute" if absolute?
+    [].tap do |cs|
+      this = self
+      while this.to_s != '.'
+        cs.unshift this.basename.to_s
+        this = this.dirname
+      end
     end
-  end
-
-  def more_than_basename?
-    self != basename
   end
 end

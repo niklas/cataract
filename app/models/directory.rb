@@ -3,9 +3,9 @@
 class Directory < ActiveRecord::Base
   has_ancestry
   #include Filesystem
-  before_validation :process_path
+  before_validation :process_full_path
+  before_validation :set_name_from_relative_path
   before_validation :set_disk_from_parent, unless: :disk
-  before_validation :set_name_from_provided_paths
   after_save :create_intermediate_directories
 
   # FIXME assign directories to disks through rake task
@@ -105,8 +105,8 @@ class Directory < ActiveRecord::Base
     @relative_path = Pathname.new(new_path)
   end
 
-  def process_path
-    if @full_path.present?
+  def process_full_path
+    if @full_path
       unless @full_path.absolute?
         raise(PathInvalid, "#{@full_path.inspect} is not absolute")
       end
@@ -116,33 +116,17 @@ class Directory < ActiveRecord::Base
 
       if disk.blank? || !@full_path.starts_with?(disk.path)
         self.disk = Disk.find_or_create_by_path(@full_path)
-        self.relative_path = @full_path.relative_path_from(disk.path)
       end
-    end
-  end
 
-  def create_intermediate_directories
-    if @dirname.present?
-      if p = parent
-        while @dirname.more_than_basename?
-          first, @dirname = @dirname.split_first
-          p = p.find_or_create_child_by_name!(first)
-        end
-        self.parent = p.find_or_create_child_by_name!(@dirname.to_s)
-        @dirname = nil
-      end
-    end
-  end
-
-  def set_name_from_provided_paths
-    if @full_path.present?
-      self.name ||= @full_path.basename.to_s
-      @dirname = @full_path.dirname
+      @relative_path = @full_path.relative_path_from(disk.path)
       @full_path = nil
     end
-    if @relative_path.present?
+  end
+
+  def set_name_from_relative_path
+    if @relative_path
       self.name ||= @relative_path.basename.to_s
-      @dirname = @relative_path.dirname
+      @intermediates = @relative_path.dirname.relative_components
       @relative_path = nil
     end
   end
@@ -150,6 +134,24 @@ class Directory < ActiveRecord::Base
   def set_disk_from_parent
     if parent
       self.disk = parent.disk
+    end
+  end
+
+  def create_intermediate_directories
+    unless @intermediates.blank?
+      p = nil
+      if is_root? # must create parent
+        p = self.class.create! name: @intermediates.shift, disk: disk
+      end
+      reload
+      if p ||= parent
+        @intermediates.each do |new_parent|
+          p = p.find_or_create_child_by_name!(new_parent)
+        end
+        self.parent = p
+        @intermediates = nil
+        save!
+      end
     end
   end
 
