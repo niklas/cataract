@@ -38,6 +38,7 @@ describe Directory do
 
     it "should be used for name if none present" do
       dir = build(:directory, relative_path: 'just/the/last/matters to me', name: nil)
+      dir.valid?
       dir.name.should == 'matters to me'
     end
 

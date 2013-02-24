@@ -5,6 +5,7 @@ class Directory < ActiveRecord::Base
   include Filesystem
   before_validation :process_full_path
   before_validation :set_name_from_relative_path
+  before_validation :set_relative_path_from_name
   before_validation :set_disk_from_parent, unless: :disk
   after_save :create_intermediate_directories
 
@@ -44,14 +45,8 @@ class Directory < ActiveRecord::Base
   end
 
   def full_path
-    disk.path.join(relative_path)
-  end
-
-  def generated_relative_path
-    if parent.present?
-      ancestors.map(&:name).inject(Pathname.new(''), &:join).join(name)
-    else
-      name
+    if relative_path.present?
+      disk.path.join(relative_path)
     end
   end
 
@@ -98,11 +93,10 @@ class Directory < ActiveRecord::Base
   class PathInvalid < Exception; end
 
   def full_path=(new_path)
-    write_attribute :relative_path, nil
     @full_path = Pathname.new(new_path)
   end
   def relative_path=(new_path)
-    write_attribute :relative_path, nil
+    super
     @relative_path = Pathname.new(new_path)
   end
   def relative_path
@@ -122,7 +116,7 @@ class Directory < ActiveRecord::Base
         self.disk = Disk.find_or_create_by_path(@full_path)
       end
 
-      @relative_path = @full_path.relative_path_from(disk.path)
+      self.relative_path = @full_path.relative_path_from(disk.path)
       @full_path = nil
     end
   end
@@ -131,14 +125,18 @@ class Directory < ActiveRecord::Base
     if @relative_path
       if name.blank?
         self.name = @relative_path.basename.to_s
-        @intermediates = @relative_path.dirname.relative_components
-      else
-        @intermediates = @relative_path.relative_components
       end
+      @intermediates = @relative_path.dirname.relative_components
       @relative_path = nil
     end
   rescue Exception => e
     errors.add :relative_path, e.message
+  end
+
+  def set_relative_path_from_name
+    if relative_path.blank? && name.present?
+      self.relative_path = name
+    end
   end
 
   def set_disk_from_parent
@@ -159,7 +157,6 @@ class Directory < ActiveRecord::Base
           p = p.find_or_create_child_by_name!(new_parent)
         end
         self.parent = p
-        write_attribute :relative_path, generated_relative_path
         @intermediates = nil
         save!
       end
