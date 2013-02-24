@@ -6,3 +6,8 @@
 {{#if hasDirectories}}
 {{view Cataract.DirectoriesTable contentBinding="directories"}}
 {{/if}}
+
+{{#if hasDetectedDirs}}
+<h2>Detected</h2>
+{{view Cataract.DetectedDirectoriesTable contentBinding="detectedDirectories"}}
+{{/if}}

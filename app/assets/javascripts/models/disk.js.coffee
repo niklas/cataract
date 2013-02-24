@@ -7,3 +7,10 @@ Cataract.Disk = DS.Model.extend
   hasDirectories: Ember.computed ->
     @get('directories.length') > 0
   .property('directories.@each')
+
+  detectedDirectories: Ember.computed ->
+    Cataract.DetectedDirectory.find( disk_id: @get('id') )
+  .property('directories.@each.id')
+  hasDetectedDirs: Ember.computed ->
+    @get('detectedDirectories.length') > 0
+  .property('detectedDirectories.@each', 'directories.@each.id')
