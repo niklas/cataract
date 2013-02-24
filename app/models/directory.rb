@@ -7,13 +7,14 @@ class Directory < ActiveRecord::Base
   before_validation :set_name_from_relative_path
   before_validation :set_disk_from_parent, unless: :disk
   after_save :create_intermediate_directories
+  after_save :store_relative_path!
 
   # FIXME assign directories to disks through rake task
   belongs_to :disk
 
   validates_presence_of :name
   validates_presence_of :disk_id
-  validates_uniqueness_of :name, scope: :ancestry
+  validates_uniqueness_of :relative_path, scope: :disk_id, allow_nil: true
 
   # FIXME better put these validations back in when relative_paths are fixed
   #validates_predicate :relative_path, :relative?
@@ -47,8 +48,7 @@ class Directory < ActiveRecord::Base
     disk.path.join(relative_path)
   end
 
-  # TODO remove table column 'relative_path'
-  def relative_path
+  def generated_relative_path
     if parent.present?
       ancestors.map(&:name).inject(Pathname.new(''), &:join).join(name)
     else
@@ -99,10 +99,15 @@ class Directory < ActiveRecord::Base
   class PathInvalid < Exception; end
 
   def full_path=(new_path)
+    write_attribute :relative_path, nil
     @full_path = Pathname.new(new_path)
   end
   def relative_path=(new_path)
+    write_attribute :relative_path, nil
     @relative_path = Pathname.new(new_path)
+  end
+  def relative_path
+    @relative_path || super
   end
 
   def process_full_path
@@ -125,10 +130,16 @@ class Directory < ActiveRecord::Base
 
   def set_name_from_relative_path
     if @relative_path
-      self.name ||= @relative_path.basename.to_s
-      @intermediates = @relative_path.dirname.relative_components
+      if name.blank?
+        self.name = @relative_path.basename.to_s
+        @intermediates = @relative_path.dirname.relative_components
+      else
+        @intermediates = @relative_path.relative_components
+      end
       @relative_path = nil
     end
+  rescue Exception => e
+    errors.add :relative_path, e.message
   end
 
   def set_disk_from_parent
@@ -158,6 +169,11 @@ class Directory < ActiveRecord::Base
   def find_or_create_child_by_name!(child_name)
     children.find_by_name(child_name) ||
       children.create!(name: child_name, disk: disk, virtual: virtual?)
+  end
+
+  def store_relative_path!
+    write_attribute :relative_path, generated_relative_path
+    save!
   end
 
   # Directories not already in database

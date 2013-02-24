@@ -112,7 +112,7 @@ describe Move, 'target' do
 
     move = Move.new
     move.stub(:torrent).and_return(torrent)
-    move.stub(:final_directory).and_return(stub('dir', path: 'final_dir'))
+    move.stub(:final_directory).and_return(stub('dir', full_path: 'final_dir'))
 
     FileUtils.should_receive(:mv).with('content_dir', 'final_dir')
     move.work!

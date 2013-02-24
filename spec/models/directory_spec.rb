@@ -6,19 +6,20 @@ describe Directory do
 
   context "relative_path" do
     it "should accept path as string and convert it to Pathname" do
-      directory = create :directory, :relative_path => path
+      directory = create :directory, :relative_path => path, name: nil
       directory.reload
       directory.relative_path.should be_a(Pathname)
       directory.relative_path.should == pathname
     end
 
     it "serializes Pathname" do
-      directory = create :directory, :relative_path => pathname
+      directory = create :directory, :relative_path => pathname, name: nil
       directory.relative_path.should be_a(Pathname)
       directory.relative_path.should == pathname
     end
 
     it "is findable by pathname" do
+      pending "needed?"
       directory = create :directory, :relative_path => pathname
       Directory.by_relative_path(pathname).first.should == directory
     end
@@ -27,13 +28,6 @@ describe Directory do
       directory = build :directory
       directory.relative_path = '/tmp/lol'
       directory.should_not be_valid
-    end
-
-    it "uses disk to create absolute path" do
-      directory = create :directory, :relative_path => path
-      directory.reload
-      directory.path.should be_a(Pathname)
-      directory.path.should == directory.disk.path+pathname
     end
 
     it "cannot already exist in db on same disk" do
@@ -50,7 +44,7 @@ describe Directory do
 
     it "should be found prefixing" do
       directory = create :directory, :relative_path => pathname
-      found  = Directory.of directory.path/'some.file'
+      found  = Directory.of directory.full_path/'some.file'
       found.should == directory
     end
   end
@@ -72,10 +66,6 @@ describe Directory do
           and_return(disk)
         creating.call
       end
-      it "sets relative path" do
-        directory.should_receive(:relative_path=).with(Pathname.new('sub1/sub2/thename'))
-        creating.call
-      end
       it "sets full_path" do
         creating.call
         directory.full_path.to_s.should == '/media/disk/sub1/sub2/thename'
@@ -88,7 +78,7 @@ describe Directory do
 
     context 'by disk and relative path' do
       let(:attr) {{ disk: disk, relative_path: 'sub1/sub2/a name' }}
-      it "finds or creates parent directories" do
+      it "creates parent directories" do
         creating.should change(Directory, :count).from(0).to(3)
         Directory.order('name').all.map(&:name).should == ['a name', 'sub1', 'sub2']
       end

@@ -25,7 +25,7 @@ class Move < ActiveRecord::Base
   def work
     torrent.stop
     payload = torrent.payload
-    FileUtils.mv payload.path, final_directory.path
+    FileUtils.mv payload.path, final_directory.full_path
     if payload.multiple?
       FileUtils.rmdir File.dirname(payload.files.first)
     end
