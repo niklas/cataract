@@ -54,7 +54,7 @@ class Torrent
   def load!
     FileUtils.cp path, session_path
     remote.load! session_path
-    remote.set_directory self, content_directory.path
+    remote.set_directory self, content_directory.full_path
   end
 
   # collects the values considering the transfer of a torrent

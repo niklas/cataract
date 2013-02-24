@@ -38,7 +38,7 @@ describe Torrent do
       it "is found directly in directory" do
         pending
         torrent.should_not be_file_exists
-        Mlocate.stub(:file).with('lost.torrent').and_return([dir.path/'lost.torrent'])
+        Mlocate.stub(:file).with('lost.torrent').and_return([dir.full_path/'lost.torrent'])
         torrent.refresh!
         torrent.directory.should == dir
       end
@@ -47,7 +47,7 @@ describe Torrent do
         pending
         torrent.should_not be_file_exists
         torrent.should_not be_file_exists
-        Mlocate.stub(:file).with('lost.torrent').and_return([dir.path/'deeply'/'nested'/'lost.torrent'])
+        Mlocate.stub(:file).with('lost.torrent').and_return([dir.full_path/'deeply'/'nested'/'lost.torrent'])
         torrent.refresh!
         torrent.directory.should_not == dir
       end
@@ -58,13 +58,13 @@ describe Torrent do
       let(:torrent) { create :torrent_with_picture_of_tails }
 
       it "is found directly in existing directory" do
-        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'tails.png'].map(&:to_s))
+        Mlocate.stub(:file).with('tails.png').and_return([dir.full_path/'tails.png'].map(&:to_s))
         torrent.refresh!
         torrent.content_directory.should == dir
       end
 
       it "is found nested in existing directory" do
-        Mlocate.stub(:file).with('tails.png').and_return([dir.path/'deeply'/'nested'/'tails.png'].map(&:to_s))
+        Mlocate.stub(:file).with('tails.png').and_return([dir.full_path/'deeply'/'nested'/'tails.png'].map(&:to_s))
         torrent.refresh!
         torrent.content_directory.should == dir
         torrent.content_path_infix.should == 'deeply/nested'
@@ -72,7 +72,7 @@ describe Torrent do
 
       it "is found as a whole containing multiple files" do
         torrent = create :torrent_with_picture_of_tails_and_a_poem
-        Mlocate.should_receive(:postfix).with('content/tails.png').and_return([dir.path/'deeply'/'nested'/'content'/'tails.png'].map(&:to_s))
+        Mlocate.should_receive(:postfix).with('content/tails.png').and_return([dir.full_path/'deeply'/'nested'/'content'/'tails.png'].map(&:to_s))
         torrent.refresh!
         torrent.content_directory.should == dir
         torrent.content_path_infix.should == 'deeply/nested'

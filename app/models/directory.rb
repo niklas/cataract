@@ -207,7 +207,7 @@ class Directory < ActiveRecord::Base
     return nil if path.nil?
     path = ::Pathname.new( path )
     all.map { |dir| [dir,
-                     path.dirname.relative_path_from(dir.path)
+                     path.dirname.relative_path_from(dir.full_path)
                    ] rescue nil }
        .compact
        .sort_by { |dir, infix| infix.to_s.length }

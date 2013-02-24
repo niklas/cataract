@@ -34,7 +34,7 @@ class Disk < ActiveRecord::Base
   # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|
-      directories.any? { |in_db| in_db.path == on_disk }
+      directories.any? { |in_db| in_db.full_path == on_disk }
     end.map do |found|
       directories.new(relative_path: found.relative_path_from(path), name: found.basename.to_s)
     end
