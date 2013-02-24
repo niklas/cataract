@@ -92,6 +92,7 @@ class Directory < ActiveRecord::Base
   class PathInvalid < Exception; end
 
   def full_path=(new_path)
+    return if new_path.blank?
     @full_path = Pathname.new(new_path)
   end
   def relative_path=(new_path)

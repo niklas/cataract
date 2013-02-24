@@ -12,6 +12,7 @@ Cataract.Directory = DS.Model.extend
   children: DS.hasMany('Cataract.Directory')
   active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
   showSubDirs: DS.attr 'boolean'
+  virtual: DS.attr 'boolean'
   hasSubDirs:(->
     @get('showSubDirs') and @get('children.length') > 0
   ).property('children', 'showSubDirs')
