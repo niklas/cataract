@@ -48,7 +48,7 @@ Feature: Disks in Library
      When I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
-      And the directory's path should end with "media/adisk/Series"
+      And the directory's full_path should end with "media/adisk/Series"
       And I should be on the page of the disk
       And I should see a table of the following directories:
        | Name   |
@@ -77,7 +77,7 @@ Feature: Disks in Library
      Then I should see notice "Directory 'Tatort' created"
       And a directory "Tatort" should exist with name: "Tatort", disk: the disk
       And the directory "Series" should be the directory "Tatort"'s parent
-      And the directory "Tatort"'s path should end with "media/adisk/Series/Tatort"
+      And the directory "Tatort"'s full_path should end with "media/adisk/Series/Tatort"
       And I should see a table of the following directories:
        | Name   |
        | Tatort |
