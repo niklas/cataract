@@ -19,8 +19,8 @@ describe Directory do
     end
 
     it "is findable by pathname" do
-      directory = create :directory, :relative_path => pathname
-      Directory.by_relative_path(pathname).should == directory
+      directory = create :directory, :relative_path => pathname, name: nil
+      Directory.by_relative_path(pathname).first.should == directory
     end
 
     it "must be relative" do
