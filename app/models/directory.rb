@@ -179,7 +179,7 @@ class Directory < ActiveRecord::Base
   # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|
-      children.any? { |in_db| in_db.path == on_disk }
+      children.any? { |in_db| in_db.full_path == on_disk }
     end.map do |found|
       children.new(relative_path: found.relative_path_from(disk.path), disk: disk)
     end
