@@ -10,6 +10,6 @@ RSpec::Matchers.define :be_auto_targeted_by do |attrs|
   end
 
   failure_message_for_should do |expected|
-    "#{attrs} should auto-target_directory #{expected.inspect}, but did #{targeted(attrs).inspect}"
+    "#{attrs} should auto-target directory #{expected.inspect}, but did #{targeted(attrs).inspect}"
   end
 end
