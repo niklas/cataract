@@ -61,6 +61,7 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
     Cataract.Directory.createRecord
       disk: Cataract.get('currentDisk')
       parent: Cataract.get('currentDirectory')
+      virtual: false
 
   setupController: (controller, model) ->
     # TODO transition route back
