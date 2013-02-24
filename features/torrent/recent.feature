@@ -3,6 +3,9 @@ Feature: Recent torrents
   In order to find something to watch next
   I want to see a list of new torrents
 
+  # TODO use something like https://github.com/mathieul/page_wrapper for pagination
+  @wip
+  @todo
   Scenario: Scrolling through by endless page
     Given the following archived torrents exist:
        | title     |

@@ -1,0 +1,22 @@
+cucumber features/add.feature:11 # Scenario: Adding by URL
+cucumber features/add.feature:20 # Scenario: Adding by URL to specific directory
+cucumber features/add.feature:31 # Scenario: Upload with traditional multipart form
+cucumber features/content.feature:15 # Scenario: clear a torrent's content
+cucumber features/content/move.feature:15 # Scenario: Move torrent on the same disk
+cucumber features/content/move.feature:40 # Scenario: Move torrent to other disk into non-existing directory
+cucumber features/library/autodetection.feature:13 # Scenario: autodetect mounted disks
+cucumber features/library/autodetection.feature:32 # Scenario: autodetect directories on disk
+cucumber features/library/autodetection.feature:61 # Scenario: autodetect subdirectories
+cucumber features/library/browse.feature:25 # Scenario: disks and root directories directly accessible through the sidebar
+cucumber features/library/browse.feature:44 # Scenario: Browse to root directories on disks
+cucumber features/library/browse.feature:72 # Scenario: Browse to subdirectories
+cucumber features/library/browse.feature:88 # Scenario: alternate between copies of directories based on common relative_path
+cucumber features/library/browse.feature:106 # Scenario: torrents shown for directory ordered by name
+cucumber features/library/manage.feature:8 # Scenario: can create directories
+cucumber features/library/subscribe.feature:7 # Scenario: subscribe and unsubscribe a directory
+cucumber features/meta/github.feature:16 # Scenario: Changes until our version
+cucumber features/settings.feature:6 # Scenario: Set default download directory
+cucumber features/settings/disable_signup.feature:11 # Scenario: setting it
+cucumber features/sign_in.feature:7 # Scenario: Signing in
+cucumber features/todo.feature:7 # Scenario: User can watch/unwatch torrents
+cucumber features/torrent/delete.feature:19 # Scenario: Delete a torrent with its content

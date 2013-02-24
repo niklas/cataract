@@ -10,6 +10,7 @@ When /^the tick interval is reached$/ do
     $('body').trigger('tick')
   EOJS
   step %Q~I wait for the spinner to stop~
+  sleep 1 # give ember a second
 end
 
 When /^I confirm popup$/ do

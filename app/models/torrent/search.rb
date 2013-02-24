@@ -15,7 +15,7 @@ class Torrent
     attribute :per, default: 50
     attribute :directory_id
 
-    States = %w(all running archived remote)
+    States = %w(all recent running archived remote)
     FullTextFields = %w(title filename)
 
     def initialize(*a)
@@ -26,7 +26,7 @@ class Torrent
     def results
       results = Torrent.scoped
 
-      if status? && status != 'all'
+      if status? && !status.in?(['all', 'recent'])
         results = results.by_status( status )
       end
 

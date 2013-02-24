@@ -65,8 +65,8 @@ Given /^the file "([^"]*)" is deleted$/ do |file|
   end
 end
 
-Given /^#{capture_model}'s content exists on disk$/ do |m|
-  model!(m).content.files.each do |path|
+Given /^#{capture_model}'s (?:content|payload) exists on disk$/ do |m|
+  model!(m).payload.files.each do |path|
     step %Q~the file "#{path}" exists on disk~
   end
 end
@@ -77,7 +77,7 @@ Then /^the file "([^"]*)" should contain exactly:$/ do |file, content|
 end
 
 Then /^#{capture_model}'s content (should not|should) exist on disk$/ do |m, should_or_not|
-  step %Q~the file "#{model!(m).content.path}" #{should_or_not} exist on disk~
+  step %Q~the file "#{model!(m).payload.path}" #{should_or_not} exist on disk~
 end
 
 Then /^#{capture_model}'s file (should not|should) exist on disk$/ do |m, should_or_not|

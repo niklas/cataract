@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.12'
 gem 'pg'
 
 
@@ -13,6 +13,7 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.0.4'
   gem 'jquery-ui-rails'
   gem 'bootswatch-rails'
+  gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git', ref: "359221e49057fe737" # master that has rmber 1.0rc1
 end
 
 
@@ -38,8 +39,6 @@ group :test do
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
 
   gem 'simplecov', :require => false
-  gem 'pry-nav'
-  gem 'pry-stack_explorer'
 
   gem 'diff_matcher'
   gem 'launchy'
@@ -47,10 +46,18 @@ group :test do
 
   gem 'webmock'
   gem 'term-ansicolor' # for ScenarioTodo
+
+  # FIXME PR accepted? https://github.com/jonleighton/poltergeist/issues/89
+  gem 'poltergeist', git: '/home/niklas/src/poltergeist', ref: 'better-inspector-detection' # headless webkit with debugging
 end
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-nav'
+  gem 'pry-doc'
+  gem 'pry-stack_explorer'
+  gem 'jasminerice'
+  gem 'guard-jasmine'
 end
 
 group :development do
@@ -91,9 +98,10 @@ gem 'kaminari'
 gem 'levenshtein'
 
 gem 'carrierwave'
-gem 'jbuilder'
+gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
 gem 'whenever', :require => false
 
 gem 'feed-abstract'
 
 gem 'dalli'
+gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'

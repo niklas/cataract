@@ -2,7 +2,10 @@ class Move < ActiveRecord::Base
 
   include Queueable
 
-  attr_accessible :target_disk_id, :target_directory_id
+  attr_accessible :target_disk_id,
+                  :target_directory_id,
+                  :title,
+                  :torrent_id
 
   belongs_to :torrent
   belongs_to :target_directory, :class_name => 'Directory'
@@ -21,9 +24,10 @@ class Move < ActiveRecord::Base
   # FileUtils will use cp+rm between file system boundaries. consider using rsync for robustness and progress
   def work
     torrent.stop
-    FileUtils.mv torrent.content.path, final_directory.path
-    if torrent.content.multiple?
-      FileUtils.rmdir File.dirname(torrent.content.files.first)
+    payload = torrent.payload
+    FileUtils.mv payload.path, final_directory.full_path
+    if payload.multiple?
+      FileUtils.rmdir File.dirname(payload.files.first)
     end
     torrent.content_directory = final_directory
     torrent.save!
@@ -47,6 +51,9 @@ class Move < ActiveRecord::Base
     @final_directory ||= find_final_directory
   end
 
+  def title=(title_from_ember)
+  end
+
   def title
     I18n.translate('flash.move.create.notice', torrent: torrent.title, target: target_name)
   end
@@ -56,7 +63,7 @@ class Move < ActiveRecord::Base
     score = 0
 
     dn = directory.name.downcase
-    dp = directory.path.basename.to_s.downcase
+    dp = directory.relative_path.basename.to_s.downcase
     tt = torrent.title.downcase
     score += diff(dn, tt)
     score += diff(dp, tt)
@@ -70,7 +77,7 @@ class Move < ActiveRecord::Base
   end
 
   def diff(a,b)
-    Levenshtein.distance(a,b)
+    Levenshtein.distance(a,b) - ( a.include?(b) ? b.length * 2 : 0)
   end
 
   def find_final_directory

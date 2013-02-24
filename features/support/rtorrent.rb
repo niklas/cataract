@@ -6,12 +6,14 @@ require Rails.root/'spec/support/rtorrent_spec_helper'
 World(RTorrentSpecHelper)
 
 Before '@rtorrent' do
+  Torrent.remote.clear_caches!
   Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
   start_rtorrent
 end
 
 After '@rtorrent' do
   stop_rtorrent
+  Torrent.remote.clear_caches!
 end
 
 When /^rtorrent shuts down$/ do
@@ -25,11 +27,15 @@ Then /^the rtorrent (\w+) view (should|should not) contain #{capture_model}$/ do
 end
 
 Then /^rtorrent should download #{capture_model}$/ do |m|
-  Torrent.remote.clear_caches!
   torrent = model!(m)
   torrent.info_hash.should_not be_blank
-  wait_until(10) { Torrent.remote.for_info_hash(torrent.info_hash).present? }
-  Torrent.remote.for_info_hash(torrent.info_hash)[:active?].should be_true
+  remote = nil
+  wait_until(10) do
+    Torrent.remote.clear_caches!
+    remote = Torrent.remote.all(:active?).select {|r| r[:hash] ==  torrent.info_hash}
+    remote.present?
+  end
+  remote.should be_present
 end
 
 Given /^rtorrent list contains the following:$/ do |table|
@@ -41,6 +47,6 @@ Given /^rtorrent list contains the following:$/ do |table|
       hash
     end
   end
-  Torrent.remote.stub(:torrents).once.and_return(table.hashes.map(&:symbolize_keys))
+  Torrent.remote.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
 end
 

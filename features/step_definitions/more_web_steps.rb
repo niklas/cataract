@@ -46,7 +46,7 @@ end
 When /^I wait for (.+) to (?:disappear|stop)$/ do |name|
   selector = selector_for name
   begin
-    wait_until(10) { page.has_no_css?(selector, :visible => true) }
+    wait_until(10) { page.has_no_css?(selector) }
   rescue Capybara::TimeoutError => timeout
     STDERR.puts "saved page: #{save_page}"
     raise timeout
@@ -61,14 +61,26 @@ Then /^(.+) should disappear$/ do |name|
   step %Q~I wait for #{name} to disappear~
 end
 
-When /^I click on the (.+)$/ do |target|
-  page.first( selector_for(target) ).click
+When /^I click on (the .+)$/ do |target|
+  selector = selector_for(target)
+  page.should have_css(selector)
+  page.first(selector).click
 end
 
-Then /^I should see a (.+link)/ do |target|
+When /^I explore (the .+)$/ do |target|
+  selector = selector_for(target)
+  page.should have_css(selector)
+  page.first(selector).first('.title').click
+end
+
+Then /^I should see (.+link)/ do |target|
   page.should have_css( selector_for(target) )
 end
 
-Then /^I should not see a (.+link)/ do |target|
+Then /^I should not see (.+link)/ do |target|
   page.should have_no_css( selector_for(target) )
+end
+
+Then /^I should be under page "(.*?)"$/ do |url_prefix|
+  current_url.should be_starts_with(url_prefix)
 end

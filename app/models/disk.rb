@@ -27,13 +27,22 @@ class Disk < ActiveRecord::Base
       end
   end
 
+  def self.find_or_create_by_path(path)
+    raise NotImplementedError
+  end
+
   # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|
-      directories.any? { |in_db| in_db.path == on_disk }
+      directories.any? { |in_db| in_db.full_path == on_disk }
     end.map do |found|
       directories.new(relative_path: found.relative_path_from(path), name: found.basename.to_s)
     end
+  end
+
+  def find_or_create_root_directory_by_basename!(dir)
+    raise(ArgumentError, "must give a path with only one component, gave #{dir}") if Pathname.new(dir).relative_components.length != 1
+    directories.roots.by_relative_path(dir).first || directories.create!(relative_path: dir)
   end
 
   def set_name_from_path

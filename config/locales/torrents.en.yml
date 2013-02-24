@@ -14,7 +14,7 @@ en:
         target_directory: "Directory"
         target_disk: "Disk"
       directory:
-        auto_create: "create on disk"
+        virtual: "do not create on disk"
         subscribed: "subscribed"
         filter: "Filter"
   flash:
@@ -24,12 +24,10 @@ en:
     deletion:
       create:
         notice: "%{torrent} deleted"
-  torrents:
-    item:
-      files:
-        one: "1 file"
-        other: "%{count} files"
   simple_form:
     labels:
       defaults:
         delete_content: "delete content"
+  helper:
+    eta:
+      never: 'when pigs can fly'

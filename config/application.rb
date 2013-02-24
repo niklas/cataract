@@ -57,5 +57,9 @@ module Cataract
       g.controller_specs false
       g.view_specs false
     end
+
+    config.ember.variant = :development
+    config.handlebars.templates_root = 'templates'
+    config.handlebars.templates_path_separator = '/'
   end
 end

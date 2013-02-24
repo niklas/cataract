@@ -20,6 +20,31 @@ class Torrent
     file.present? && file.current_path.present?
   end
 
+  attr_reader :filedata
+  def filedata=(data)
+    return if data.blank?
+    if data.starts_with?('data:')
+      payload = data.split(',').last
+      @filedata = Base64.decode64(payload).force_encoding("ASCII-8BIT")
+    end
+  end
+
+  before_validation :set_file_from_raw_data, if: lambda { |t| t.filedata.present? && t.filename.present? }
+
+  # filename and filedata must be present!
+  def set_file_from_raw_data
+    self.status = 'archived'
+    self.file = ActionDispatch::Http::UploadedFile.new(filename: filename, tempfile: tempfile_for_filedata)
+  end
+
+  def tempfile_for_filedata
+    Tempfile.new('ajaxupload').tap do |tempfile|
+      tempfile.binmode
+      tempfile << filedata
+      tempfile.rewind
+    end
+  end
+
   on_refresh :refresh_file
   def refresh_file
     if !path? || !file_exists?

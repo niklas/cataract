@@ -68,15 +68,6 @@ ul.torrents {
     &.more {
       cursor: pointer;
     }
-    .row-fluid {
-      display: none;
-      &:first-of-type {
-        display: block;
-      }
-    }
-    &.full .row-fluid {
-      display: block;
-    }
   }
 }
 

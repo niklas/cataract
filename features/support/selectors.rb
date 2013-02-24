@@ -1,4 +1,14 @@
 module HtmlSelectorsHelpers
+  Numerals = {
+    'first'  => ':first',
+    'second' => ':nth-of-type(2)',
+    'third'  => ':nth-of-type(3)',
+    'forth'  => ':nth-of-type(4)'
+  }
+
+  def capture_nth
+    /(#{Numerals.keys.join('|')})/
+  end
   # Maps a name to a selector. Used primarily by the
   #
   #   When /^(.+) within (.+)$/ do |step, scope|
@@ -25,6 +35,12 @@ module HtmlSelectorsHelpers
     when /^the torrents? list$/
       "ul#torrents"
 
+    when /^the #{capture_nth} (torrent)$/
+      selector_for("the #{$2.pluralize} list") + " li#{Numerals[$1]}"
+
+    when /^the #{capture_nth} row$/
+      "tr#{Numerals[$1]}"
+
     when /^the director(y|ies) list$/
       "table.directories"
 
@@ -33,7 +49,7 @@ module HtmlSelectorsHelpers
       "div[data-role='footer']"
 
     when 'the spinner'
-      '#spinner'
+      '#spinner > .spinner'
 
     when 'the modal box'
       'div.modal'
@@ -50,18 +66,21 @@ module HtmlSelectorsHelpers
     when 'a row'
       '.row-fluid'
 
+    when 'a label'
+      'span.label' # bootstrap
+
     when /^(?:the )?item of #{capture_model}$/
       "##{ model!($1).decorate.item_id }"
 
-    when /^(\w+) link$/
+    when /^the (\w+) link$/
       "a.#{$1}"
 
     # TODO move to jquery_mobile
     when /^(?:a )?flash (notice|alert)$/
-      "#flash .alert-#{$1}"
+      ".flash.alert-#{$1}"
 
-    when 'the content'
-      ".content"
+    when /^the (\w+)$/
+      "##{$1}"
 
     when /^the (\w+) section$/
       "section.#{$1}"

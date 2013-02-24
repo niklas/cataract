@@ -26,7 +26,7 @@ Feature: filter torrents
       | title |
       | Two   |
       | One   |
-     And I should see "all torrents containing 'one'" within the window title
+     And I should see "recent torrents containing 'one'" within the window title
 
     # match on substrings
     When I filter with "w"
@@ -34,10 +34,10 @@ Feature: filter torrents
       | title |
       | Two   |
 
-    # history management
-    When I toggle the menu
-     And I follow "Library"
-     And I go back
-    Then I should see the following torrents in the torrent list:
-      | title |
-      | Two   |
+      # # TODO history management
+      # When I toggle the menu
+      #  And I follow "Library"
+      #  And I go back
+      # Then I should see the following torrents in the torrent list:
+      #   | title |
+      #   | Two   |

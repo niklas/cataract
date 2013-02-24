@@ -1,5 +1,0 @@
-page.decorate @torrent do |torrent|
-  torrent.update_flash
-  torrent.update_in_list
-end
-

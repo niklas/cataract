@@ -2,48 +2,68 @@
 
 class Directory < ActiveRecord::Base
   has_ancestry
-  # the ancestry gem defines a path method to
-  alias_method :ancestry_path, :path
   include Filesystem
+  before_validation :process_full_path
+  before_validation :set_name_from_relative_path
   before_validation :set_relative_path_from_name
+  before_validation :set_disk_from_parent, unless: :disk
+  after_save :create_intermediate_directories
 
-  validates_presence_of :name
-  validates_uniqueness_of :relative_path, scope: :disk_id
-
-  validates_predicate :relative_path, :relative?
-  validates_predicate :path, :absolute?
-
-  after_save :create_on_filesystem, :on => :create, :if => :auto_create?
-  attr_accessor :auto_create
-  def auto_create?
-    auto_create.present?
-  end
-  def create_on_filesystem
-    FileUtils.mkdir_p path
-  end
-
-  # TODO validate path is on disk
   # FIXME assign directories to disks through rake task
   belongs_to :disk
-  validates_presence_of :disk
+
+  validates_presence_of :name
+  validates_presence_of :disk_id
+  validates_uniqueness_of :relative_path, scope: :disk_id, allow_nil: true
+
+  validates_predicate :relative_path, :relative?
+  validates_predicate :full_path, :absolute?
+
+  after_create :create_on_filesystem, unless: :virtual?
+
+  # default to true
+  def virtual?
+    !@virtual.in?([0, '0', false, "false"])
+  end
+  attr_writer :virtual
+
+  def real?
+    !virtual?
+  end
+
+  def create_on_filesystem
+    unless virtual? # rails ignores the condition in the callback definition?!
+      FileUtils.mkdir_p full_path
+    end
+    return true # satisfy callback chain
+  end
 
   # end of scope to show all directies by name, leaving out duplicate copies in different disks
   def self.ignoring_copies
     all.group_by(&:name).map { |name, directories| directories.sort_by(&:disk_id).first }
   end
 
-  def path
-    disk.path + (relative_path || name)
-  rescue NoMethodError => e
-    nil
+  def full_path
+    if relative_path.present?
+      disk.path.join(relative_path)
+    end
   end
+
+  # TODO attribute writer, just for ember-data
+  attr_writer :exists
 
   def exist?
-    relative_path? && disk.present? && path.exist?
+    relative_path? && disk.present? && full_path.exist?
   end
 
-  def name
-    super.presence || (relative_path? && relative_path.basename.to_s)
+  alias_method :exists?, :exist?
+
+  def inspect
+    %Q~<Directory "#{name}" #{full_path rescue '[[bad full_path]]'}>~
+  end
+
+  def to_s
+    inspect
   end
 
   def copies
@@ -66,21 +86,106 @@ class Directory < ActiveRecord::Base
     @torrent_search ||= Torrent.new_search(directory_id: id)
   end
 
-  def set_relative_path_from_name
-    unless relative_path?
-      self.relative_path = name
+  #########################################################
+  # creation
+  #########################################################
+  class PathInvalid < Exception; end
+
+  def full_path=(new_path)
+    return if new_path.blank?
+    @full_path = Pathname.new(new_path)
+  end
+  def relative_path=(new_path)
+    super
+    @relative_path = read_attribute :relative_path
+  end
+  def relative_path
+    @relative_path || super
+  end
+
+  def process_full_path
+    if @full_path
+      unless @full_path.absolute?
+        raise(PathInvalid, "#{@full_path.inspect} is not absolute")
+      end
+      if @relative_path.present?
+        raise(PathInvalid, "gave both relative and full path")
+      end
+
+      if disk.blank? || !@full_path.starts_with?(disk.path)
+        self.disk = Disk.find_or_create_by_path(@full_path)
+      end
+
+      self.relative_path = @full_path.relative_path_from(disk.path)
+      @full_path = nil
     end
+  end
+
+  def set_name_from_relative_path
+    if @relative_path
+      @intermediates = @relative_path.dirname.relative_components
+      if parent
+        self.relative_path = parent.relative_path.join @relative_path
+      end
+      if name.blank?
+        self.name = @relative_path.basename.to_s
+      end
+      @relative_path = nil
+    end
+  rescue Exception => e
+    errors.add :relative_path, e.message
+  end
+
+  def set_relative_path_from_name
+    if relative_path.blank? && name.present?
+      self.relative_path = if parent
+                             parent.relative_path.join name
+                           else
+                             name
+                           end
+      @relative_path = nil   # side effects in #relative_path=
+    end
+  end
+
+  def set_disk_from_parent
+    if parent
+      self.disk = parent.disk
+    end
+  end
+
+  def create_intermediate_directories
+    unless @intermediates.blank?
+      p = nil
+      if is_root?
+        p = disk.find_or_create_root_directory_by_basename!(@intermediates.shift)
+      end
+      # build up the rest
+      if p ||= parent
+        @intermediates.each do |new_parent|
+          p = p.find_or_create_child_by_name!(new_parent)
+        end
+        self.parent = p
+        @intermediates = nil
+        save!
+      end
+    end
+  end
+
+  def find_or_create_child_by_name!(child_name)
+    children.find_by_name(child_name) ||
+      self.class.create!(name: child_name, parent: self, virtual: virtual?)
   end
 
   # Directories not already in database
   def detected_directories
     sub_directories.reject do |on_disk|
-      children.any? { |in_db| in_db.path == on_disk }
+      children.any? { |in_db| in_db.full_path == on_disk }
     end.map do |found|
-      children.new(relative_path: found.relative_path_from(disk.path), disk: disk, name: found.basename.to_s)
-    end
+      children.new(relative_path: found.relative_path_from(disk.path), disk: disk)
+    end.each(&:valid?) # build paths
   end
 
+  # OPTIMIZE duplicated in Ember model
   def default!
     if filter.blank?
       self.filter = name
@@ -102,7 +207,7 @@ class Directory < ActiveRecord::Base
     return nil if path.nil?
     path = ::Pathname.new( path )
     all.map { |dir| [dir,
-                     path.dirname.relative_path_from(dir.path)
+                     path.dirname.relative_path_from(dir.full_path)
                    ] rescue nil }
        .compact
        .sort_by { |dir, infix| infix.to_s.length }
@@ -127,7 +232,7 @@ class Directory < ActiveRecord::Base
       else
         directory.dup.tap do |copy|
           copy.disk = disk
-          copy.auto_create = true
+          copy.virtual = false
           unless directory.is_root?
             copy.parent = find_or_create_by_directory_and_disk(directory.parent, disk)
           end

@@ -1,18 +1,12 @@
 class TorrentsController < InheritedResources::Base
   attr_accessor :offline
 
-  respond_to :js, :html
-  respond_to :json, only: :create # jquery.filedrop
+  respond_to :json, only: [:index, :show, :create, :progress] # ember, jquery.filedrop
 
   before_filter :refresh!, only: :show
   custom_actions :resource => :prepend
 
   layout 'library'
-
-  def progress
-    @torrents = Torrent.running_or_listed(params[:running])
-    @torrents.each(&:refresh)
-  end
 
   def create
     create! { torrents_path }
@@ -25,6 +19,8 @@ class TorrentsController < InheritedResources::Base
 
   def refresh!
     if request.xhr?
+      clear_transfer_cache
+
       resource.refresh!
     end
     true

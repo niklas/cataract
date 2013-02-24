@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence(:name) { |i| "Directory ##{i}" }
     sequence(:relative_path) { |i| "directory_#{i}" }
     watched false
+    virtual true
 
     disk
 
@@ -13,8 +14,12 @@ FactoryGirl.define do
     end
 
     factory :existing_directory do
-      auto_create true
+      virtual false
     end
+  end
+
+  factory :blank_directory, class: 'Directory' do
+    virtual true
   end
 
   factory :move do

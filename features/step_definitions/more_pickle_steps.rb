@@ -2,7 +2,7 @@ Then /^#{capture_model}'s ([\w_]+) should not be ([\w_]+)$/ do |ref, method, pre
   model!(ref).send(method).should_not send("be_#{predicate}")
 end
 
-Given /^#{capture_model} is (?:marked as )?(running)$/ do |ref, status|
+Given /^#{capture_model} is (?:marked as )?(running|archived)$/ do |ref, status|
   model = model!(ref)
   model.update_attribute :status, status
   Torrent.remote.clear_caches!
@@ -12,5 +12,6 @@ Then(/^#{capture_model}'s (\w+) (should(?: not)?) end with #{capture_value}$/) d
   actual_value  = model(name).send(attribute)
   expectation   = expectation.gsub(' ', '_')
 
-  actual_value.to_s.send(expectation, be_ends_with(eval(expected)))
+  ending = eval(expected)
+  actual_value.to_s.send(expectation, be_ends_with(ending), "expected #{actual_value.inspect} to end with #{ending.inspect}")
 end

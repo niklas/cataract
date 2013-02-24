@@ -6,18 +6,16 @@ Cataract::Application.routes.draw do
     member do
       get 'prepend'
     end
-    resource :move,     controller: :move, only: [:new, :create, :show]
-    resource :deletion, controller: :deletion, only: [:new, :create, :show]
-    resource :content,  controller: :content, only: [:show, :destroy]
-    resource :transfer, controller: :transfer, only: [:create, :destroy]
   end
+  resources :payloads, only: [:show, :destroy], controller: :payload
+  resources :transfers, only: [:index, :show, :create, :destroy], controller: :transfer
+  resource :deletions, controller: :deletion, only: [:new, :create, :show]
+  resources :moves, controller: :move, only: [:index, :create]
 
   controller :torrents do
     get 'status/:status/page/:page', action: :index
     get 'page/:page',                action: :index
     get 'status/:status',            action: :index
-    get 'progress',                  action: :progress
-
     get 'status/running',            action: :index, as: :running_torrents
   end
 
@@ -26,6 +24,9 @@ Cataract::Application.routes.draw do
   resources :disks do
     resources :directories
   end
+
+  resources :directories
+  resources :detected_directories, only: :index
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 

@@ -22,7 +22,7 @@ class Torrent
     finally_stop!
     return
   end
-  alias_method_chain :method_missing, :xml_rpc
+  #alias_method_chain :method_missing, :xml_rpc
 
   def self.remote
     @remote ||= RTorrent.new rtorrent_socket_path
@@ -32,22 +32,16 @@ class Torrent
     @remote = nil
   end
 
+  def transfer
+    @transfer ||= Transfer.new self
+  end
+
   def remote
     self.class.remote
   end
 
   def self.rtorrent_socket_path
     Rails.root/'tmp'/'rtorrent.socket'
-  end
-
-  # currently downloaded by rtorrent
-  def open?
-    rtorrent_attributes.try(:[], :active?)
-  end
-
-  # attributes of running rtorrent
-  def rtorrent_attributes
-    remote.for_info_hash(info_hash)
   end
 
   # rTorrent deletes the torrent file if removing a tied torrent, so we will
@@ -60,7 +54,55 @@ class Torrent
   def load!
     FileUtils.cp path, session_path
     remote.load! session_path
-    remote.set_directory self, content_directory.path
+    remote.set_directory self, content_directory.full_path
+  end
+
+  # collects the values considering the transfer of a torrent
+  class Transfer < Struct.new(:torrent)
+    @@serializable_attributes = []
+
+    def self.serializable_attr_accessor(attr)
+      @@serializable_attributes << attr
+      attr_accessor attr
+    end
+
+    def torrent_id
+      torrent.id
+    end
+
+    def progress
+      (100.0 * completed_bytes.to_f / size_bytes.to_f).to_i
+    rescue FloatDomainError
+      0
+    end
+
+    def left_seconds
+      left_bytes.to_f / down_rate.to_f
+    end
+
+    def left_bytes
+      size_bytes.to_i - completed_bytes.to_i
+    end
+
+    def read_attribute_for_serialization(attr)
+      unless attr.in?( @@serializable_attributes + [:torrent_id, :progress])
+        raise ArgumentError, "cannot serialize #{attr}"
+      else
+        send(attr)
+      end
+    end
+
+    # FIXME spaghetti
+    def fetch!(fields=[])
+      Torrent.remote.apply [torrent], fields
+    end
+
+    def update(attrs={})
+      attrs.except(:hash).each do |attr, value|
+        send("#{attr.to_s.sub(/\?$/,'')}=", value)
+      end
+    end
+
   end
 
 
@@ -113,6 +155,10 @@ class Torrent
       else
         raise Offline, "cannot call RTorrent because it was switched offline"
       end
+    rescue Errno::ECONNREFUSED => e
+      raise Unreachable, e.message
+    rescue Errno::ENOENT => e
+      raise Unreachable, e.message
     end
 
     def self.map_method_name(meth)
@@ -136,13 +182,8 @@ class Torrent
       all.each { |e| bang e }
     end
 
-    Attributes = Set.new
-
-    Attributes << [:hash, map_method_name(:hash)]
-
     def self.define_attribute(name, &block)
       mapped = map_method_name(name)
-      Attributes << [name, mapped]
       define_method name do |torrent|
         if cached = for_info_hash(hash_for(torrent))
           cached[name]
@@ -150,15 +191,24 @@ class Torrent
           block.call call_with_torrent(mapped, torrent)
         end
       end
+      Torrent.delegate name, to: :transfer
     end
 
     def self.reader(name)
+      Torrent::Transfer.class_eval do
+        serializable_attr_accessor name
+      end
       define_attribute name do |value|
         value
       end
     end
 
     def self.predicate(name)
+      internal_name = name.to_s.sub(/\?$/,'')
+      Torrent::Transfer.class_eval do
+        attr_accessor internal_name
+        alias_method name, internal_name
+      end
       define_attribute name do |value|
         value.to_i > 0
       end
@@ -169,6 +219,7 @@ class Torrent
       define_method name do |torrent|
         call_with_torrent(mapped, torrent)
       end
+      Torrent.delegate name, to: :transfer
     end
 
 
@@ -195,8 +246,15 @@ class Torrent
       call_with_torrent 'd.set_directory', torrent, path.to_s
     end
 
-    def torrents
-      Rails.cache.fetch('rtorrent-torrents', expires_in: 1.minute) { multicall(torrents_mapping) }
+    # sets the specified fields on the given torrents' transfer(s)
+    def apply(torrents, fields)
+      by_hash = torrents.group_by(&:info_hash)
+
+      all(*fields).each do |remote|
+        if torrent = torrents.find { |t| t.info_hash == remote[:hash] }
+          torrent.transfer.update( remote )
+        end
+      end
     end
 
     def for_info_hash(info_hash)
@@ -204,14 +262,12 @@ class Torrent
     end
 
     def clear_caches!
-      Rails.cache.delete 'rtorrent-torrents'
+      Rails.cache.delete_matched 'rtorrent*'
     end
 
-    def torrents_mapping
-      Attributes.each.with_object({}) do |(acc, int), h|
-        unless acc.to_s.ends_with?('!')
-          h[acc] = "#{int}="
-        end
+    def all(*fields)
+      Rails.cache.fetch( (['rtorrent'] + fields).join('-'), expires_in: 23.seconds ) do
+        multicall(*fields)
       end
     end
 
@@ -233,12 +289,22 @@ class Torrent
       hash
     end
 
-    def multicall(mapping)
+    def multicall(*remote_fields)
+      mapping = build_multicall_mapping *remote_fields
       call('d.multicall', '', *mapping.values).map do |it|
         {}.tap do |h|
           mapping.keys.each_with_index do |meth,i|
             h[meth] = it[i]
           end
+        end
+      end
+    end
+    # give a list of rubiesque fields, get back hash, mapping them to multicall
+    # string. Always includes the torrrent's hash
+    def build_multicall_mapping(*fields)
+      (fields << :hash).each_with_object({}) do |field, mapping|
+        unless field.to_s.ends_with?('!')
+          mapping[field] = "#{self.class.map_method_name(field)}="
         end
       end
     end

@@ -22,9 +22,9 @@ end
 
 Then /^I should see a table of the following (\w+\s?\w+)(?!within.*):$/ do |plural, expected|
   plural = plural.split
-  fields = expected.column_names.map(&:underscore).map {|f| "td.#{f}" }
+  fields = expected.column_names.map(&:underscore).map {|f| "td.#{f}, .#{f}" }
   found = page.find("table.#{plural.join('.')} tbody").all("tr").select(&:visible?).map do |item|
-    fields.map {|f| item.find(f).text.strip rescue nil }
+    fields.map {|f| item.first(f).text.strip rescue nil }
   end.reject {|l| l.all?(&:nil?)}
   expected.diff! found.unshift(expected.column_names)
 end
@@ -55,7 +55,11 @@ end
 
 Then /^I should see the following attributes for the torrent:$/ do |table|
   table.rows_hash.each do |attr, value|
-    selector = selector_for("the #{attr}") rescue ".#{attr}"
+    selector = if attr.include?('_')
+                 ".#{attr}"
+               else
+                 selector_for("the #{attr}") rescue ".#{attr}"
+               end
     step %Q~I should see "#{value}" within "#{selector}"~
   end
 end
