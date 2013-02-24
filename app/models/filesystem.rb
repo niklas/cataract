@@ -13,7 +13,7 @@ module Filesystem
   end
 
   def glob(pattern)
-    Dir[ path/pattern ]
+    Dir[ full_path/pattern ]
   end
 
   module PathnameSerializer
@@ -63,6 +63,11 @@ module Filesystem
 
     def path?
       PathnameSerializer.dump(path).present?
+    end
+
+    # Directory#full_path thx to ancestry, Disk#path stays for the time being
+    def full_path
+      path
     end
   end
 
