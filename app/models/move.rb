@@ -63,7 +63,7 @@ class Move < ActiveRecord::Base
     score = 0
 
     dn = directory.name.downcase
-    dp = directory.full_path.basename.to_s.downcase
+    dp = directory.relative_path.basename.to_s.downcase
     tt = torrent.title.downcase
     score += diff(dn, tt)
     score += diff(dp, tt)
@@ -77,7 +77,7 @@ class Move < ActiveRecord::Base
   end
 
   def diff(a,b)
-    Levenshtein.distance(a,b)
+    Levenshtein.distance(a,b) - ( a.include?(b) ? b.length * 2 : 0)
   end
 
   def find_final_directory
