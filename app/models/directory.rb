@@ -182,7 +182,7 @@ class Directory < ActiveRecord::Base
       children.any? { |in_db| in_db.full_path == on_disk }
     end.map do |found|
       children.new(relative_path: found.relative_path_from(disk.path), disk: disk)
-    end
+    end.each(&:valid?) # build paths
   end
 
   # OPTIMIZE duplicated in Ember model

@@ -15,14 +15,14 @@ Cataract.Directory = DS.Model.extend
   virtual: DS.attr 'boolean'
   hasSubDirs:(->
     @get('showSubDirs') and @get('children.length') > 0
-  ).property('children', 'showSubDirs')
+  ).property('children.@each', 'showSubDirs')
 
   detectedChildren: Ember.computed ->
     Cataract.DetectedDirectory.find( directory_id: @get('id') )
-  .property('children.@each')
+  .property('children.@each.id')
   hasDetectedSubDirs: Ember.computed ->
     @get('showSubDirs') and @get('detectedChildren.length') > 0
-  .property('showSubDirs', 'detectedChildren.@each', 'children.@each')
+  .property('showSubDirs', 'detectedChildren.@each', 'children.@each.id')
 
   subscribedObserver: (->
     if @get 'subscribed'
