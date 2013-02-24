@@ -40,6 +40,10 @@ class Disk < ActiveRecord::Base
     end
   end
 
+  def find_or_create_root_directory_by_name!(dir)
+    directories.roots.find_by_name(dir) || directories.create!(name: dir)
+  end
+
   def set_name_from_path
     if path? and read_attribute(:name).blank?
       self.name = name_from_path

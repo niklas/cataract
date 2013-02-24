@@ -155,8 +155,8 @@ class Directory < ActiveRecord::Base
   def create_intermediate_directories
     unless @intermediates.blank?
       p = nil
-      if is_root? # must create root as new parent
-        p = self.class.create! name: @intermediates.shift, disk: disk
+      if is_root?
+        p = disk.find_or_create_root_directory_by_name!(@intermediates.shift)
       end
       # build up the rest
       if p ||= parent
