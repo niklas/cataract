@@ -11,7 +11,7 @@ describe Torrent, 'payload' do
     describe "with single file" do
       let(:torrent) do
         create :torrent_with_picture_of_tails, content_directory: archive do |torrent|
-          create_file storage.path/torrent.filename
+          create_file storage.full_path/torrent.filename
           torrent
         end
       end
@@ -22,7 +22,7 @@ describe Torrent, 'payload' do
       end
       it "knows the full path of its payload file" do
         payload.files.should == [
-          archive.path/'tails.png'
+          archive.full_path/'tails.png'
         ]
       end
       it "knows the name of its payload file" do
@@ -31,7 +31,7 @@ describe Torrent, 'payload' do
         ]
       end
       it "payload.path should point to file" do
-        payload.path.should == archive.path/'tails.png'
+        payload.path.should == archive.full_path/'tails.png'
       end
 
       it "can be destroyed" do
@@ -42,7 +42,7 @@ describe Torrent, 'payload' do
     describe "with multiple files" do
       let(:torrent) do
         create :torrent_with_picture_of_tails_and_a_poem, content_directory: archive do |torrent|
-          create_file storage.path/torrent.filename
+          create_file storage.full_path/torrent.filename
           torrent
         end
       end
@@ -58,12 +58,12 @@ describe Torrent, 'payload' do
       end
       it "knows the names of its payload files" do
         payload.files.should == [
-          archive.path/'content'/'banane.poem',
-          archive.path/'content'/'tails.png'
+          archive.full_path/'content'/'banane.poem',
+          archive.full_path/'content'/'tails.png'
         ]
       end
       it "payload.path should point to directory" do
-        payload.path.should == archive.path/'content'
+        payload.path.should == archive.full_path/'content'
       end
     end
 
