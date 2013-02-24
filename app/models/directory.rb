@@ -97,7 +97,7 @@ class Directory < ActiveRecord::Base
   end
   def relative_path=(new_path)
     super
-    @relative_path = Pathname.new(new_path)
+    @relative_path = read_attribute :relative_path
   end
   def relative_path
     @relative_path || super
@@ -123,6 +123,9 @@ class Directory < ActiveRecord::Base
 
   def set_name_from_relative_path
     if @relative_path
+      if parent
+        self.relative_path = parent.relative_path.join @relative_path
+      end
       if name.blank?
         self.name = @relative_path.basename.to_s
       end
