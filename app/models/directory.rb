@@ -135,7 +135,11 @@ class Directory < ActiveRecord::Base
 
   def set_relative_path_from_name
     if relative_path.blank? && name.present?
-      self.relative_path = name
+      self.relative_path = if parent
+                             parent.relative_path.join name
+                           else
+                             name
+                           end
     end
   end
 
@@ -165,7 +169,7 @@ class Directory < ActiveRecord::Base
 
   def find_or_create_child_by_name!(child_name)
     children.find_by_name(child_name) ||
-      children.create!(name: child_name, disk: disk, virtual: virtual?)
+      self.class.create!(name: child_name, parent: self, virtual: virtual?)
   end
 
   # Directories not already in database
