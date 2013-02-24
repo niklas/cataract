@@ -156,7 +156,7 @@ class Directory < ActiveRecord::Base
     unless @intermediates.blank?
       p = nil
       if is_root?
-        p = disk.find_or_create_root_directory_by_name!(@intermediates.shift)
+        p = disk.find_or_create_root_directory_by_basename!(@intermediates.shift)
       end
       # build up the rest
       if p ||= parent

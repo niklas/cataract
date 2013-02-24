@@ -40,8 +40,9 @@ class Disk < ActiveRecord::Base
     end
   end
 
-  def find_or_create_root_directory_by_name!(dir)
-    directories.roots.find_by_name(dir) || directories.create!(name: dir)
+  def find_or_create_root_directory_by_basename!(dir)
+    raise(ArgumentError, "must give a path with only one component, gave #{dir}") if Pathname.new(dir).relative_components.length != 1
+    directories.roots.by_relative_path(dir).first || directories.create!(relative_path: dir)
   end
 
   def set_name_from_path

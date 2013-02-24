@@ -27,4 +27,10 @@ describe Disk do
       disk.path.should == rootfs/'foo'/'bar'
     end
   end
+
+  context "find_or_create_root_directory_by_basename" do
+    it "should find existing dir"
+    it "should ignore non-root dirs"
+    it "should create new dir"
+  end
 end
