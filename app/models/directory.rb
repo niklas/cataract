@@ -123,13 +123,13 @@ class Directory < ActiveRecord::Base
 
   def set_name_from_relative_path
     if @relative_path
+      @intermediates = @relative_path.dirname.relative_components
       if parent
         self.relative_path = parent.relative_path.join @relative_path
       end
       if name.blank?
         self.name = @relative_path.basename.to_s
       end
-      @intermediates = @relative_path.dirname.relative_components
       @relative_path = nil
     end
   rescue Exception => e
@@ -143,6 +143,7 @@ class Directory < ActiveRecord::Base
                            else
                              name
                            end
+      @relative_path = nil   # side effects in #relative_path=
     end
   end
 
@@ -155,10 +156,10 @@ class Directory < ActiveRecord::Base
   def create_intermediate_directories
     unless @intermediates.blank?
       p = nil
-      if is_root? # must create parent
+      if is_root? # must create root as new parent
         p = self.class.create! name: @intermediates.shift, disk: disk
       end
-      reload
+      # build up the rest
       if p ||= parent
         @intermediates.each do |new_parent|
           p = p.find_or_create_child_by_name!(new_parent)
