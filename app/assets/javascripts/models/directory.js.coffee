@@ -1,6 +1,6 @@
 Cataract.Directory = DS.Model.extend
   name: DS.attr('string')
-  path: DS.attr('string')
+  fullPath: DS.attr('string')
   subscribed: DS.attr('boolean')
   filter: DS.attr('string')
   torrents: DS.hasMany('Cataract.Torrent')
