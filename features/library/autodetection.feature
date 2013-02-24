@@ -10,13 +10,15 @@ Feature: Disks in Library
     Given I am signed in
 
 
+  # TODO: where do we put disk import?
+  @wip
   Scenario: autodetect mounted disks
     Given the following disks are mounted:
       | path        |
       | var         |
       | media/Stuff |
       | media/More  |
-     When I go to the library page
+     When I go to the home page
      Then I should see "Detected" within the sidebar
       And I should see the following new disks in the sidebar disks list:
       | name  |
@@ -29,34 +31,32 @@ Feature: Disks in Library
       Then a disk should exist with name: "Stuff"
        And I should be on the page of the disk
 
-  Scenario: autodetect directories on disk
+  Scenario: autodetect root directories on disk
     Given a disk exists with name: "aDisk", path: "media/adisk"
       And the following filesystem structure exists on disk:
         | type      | path               |
         | directory | media/adisk/Series |
         | directory | media/adisk/Movies |
         | directory | media/adisk/Röbels |
-     When I go to the library page
+     When I go to the home page
+      And I follow "aDisk"
      Then I should see a table of the following new directories:
-       | Name          |
-       | Import Movies |
-       | Import Röbels |
-       | Import Series |
-     When I follow "Import Series"
-      And I wait for the modal box to appear
-     Then the "Name" field should contain "Series"
-     When I press "Create Directory"
+       | Name   | Action |
+       | Movies | Import |
+       | Röbels | Import |
+       | Series | Import |
+     When I follow "Import" within the third row
+      And I wait for the spinner to disappear
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And the directory's full_path should end with "media/adisk/Series"
-      And I should be on the page of the disk
       And I should see a table of the following directories:
        | Name   |
        | Series |
       And I should see a table of the following new directories:
-       | Name          |
-       | Import Movies |
-       | Import Röbels |
+       | Name   | Action |
+       | Movies | Import |
+       | Röbels | Import |
 
    Scenario: autodetect subdirectories 
     Given a disk exists with name: "aDisk", path: "media/adisk"
