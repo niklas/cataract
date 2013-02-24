@@ -16,9 +16,8 @@ class Directory < ActiveRecord::Base
   validates_presence_of :disk_id
   validates_uniqueness_of :relative_path, scope: :disk_id, allow_nil: true
 
-  # FIXME better put these validations back in when relative_paths are fixed
-  #validates_predicate :relative_path, :relative?
-  #validates_predicate :full_path, :absolute?
+  validates_predicate :relative_path, :relative?
+  validates_predicate :full_path, :absolute?
 
   after_create :create_on_filesystem, unless: :virtual?
 
