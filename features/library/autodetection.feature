@@ -82,5 +82,5 @@ Feature: Disks in Library
        | Name   |
        | Tatort |
       And I should see a table of the following new directories:
-       | Name              |
-       | Import Tagesschau |
+       | Name       | Action |
+       | Tagesschau | Import |
