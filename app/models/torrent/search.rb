@@ -7,7 +7,7 @@ class Torrent
   class Search < HashWithIndifferentAccess
     include ActiveAttr::Model
     include ActiveAttr::AttributeDefaults
-    include Draper::ModelSupport
+    include Draper::Decoratable
 
     attribute :status
     attribute :terms
