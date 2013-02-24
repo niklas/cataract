@@ -19,9 +19,8 @@ describe Directory do
     end
 
     it "is findable by pathname" do
-      pending "needed?"
       directory = create :directory, :relative_path => pathname
-      Directory.by_relative_path(pathname).first.should == directory
+      Directory.by_relative_path(pathname).should == directory
     end
 
     it "must be relative" do

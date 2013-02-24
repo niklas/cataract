@@ -2,12 +2,11 @@
 
 class Directory < ActiveRecord::Base
   has_ancestry
-  #include Filesystem
+  include Filesystem
   before_validation :process_full_path
   before_validation :set_name_from_relative_path
   before_validation :set_disk_from_parent, unless: :disk
   after_save :create_intermediate_directories
-  after_save :store_relative_path!
 
   # FIXME assign directories to disks through rake task
   belongs_to :disk
@@ -160,6 +159,7 @@ class Directory < ActiveRecord::Base
           p = p.find_or_create_child_by_name!(new_parent)
         end
         self.parent = p
+        write_attribute :relative_path, generated_relative_path
         @intermediates = nil
         save!
       end
@@ -169,11 +169,6 @@ class Directory < ActiveRecord::Base
   def find_or_create_child_by_name!(child_name)
     children.find_by_name(child_name) ||
       children.create!(name: child_name, disk: disk, virtual: virtual?)
-  end
-
-  def store_relative_path!
-    write_attribute :relative_path, generated_relative_path
-    save!
   end
 
   # Directories not already in database
