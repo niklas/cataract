@@ -38,6 +38,6 @@ Feature: Subscribe Directory
      When I uncheck "subscribed"
       And I follow "Save"
       And I wait for the modal box to disappear
-     Then I should see flash notice "Directory 'Shame of Frowns' saved."
+      #Then I should see flash notice "subscribed to Directory 'Shame of Frowns'."
       And I should not see "subscribed" in a label within the details
       And the directory should not be subscribed
