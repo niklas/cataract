@@ -1,5 +1,11 @@
- 
+Release 0.2.0 2012-03-02
+========================
 
+* Reimplement the whole torrent interface in EmberJS.
+* Upgrade all runtime gems.
+* autodetected subdirectories are shown
+* create directories
+* subscribe to directories
 
 
 2012-07-09 Niklas Hofer <niklas+dev@lanpartei.de>
