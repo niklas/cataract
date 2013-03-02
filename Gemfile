@@ -10,7 +10,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.4'
   gem 'uglifier', '>= 1.2.3'
   gem 'jquery-rails'
-  gem 'bootstrap-sass', '~> 2.0.4'
+  gem 'bootstrap-sass', '~> 2.3.0.1'
   gem 'jquery-ui-rails'
   gem 'bootswatch-rails'
   gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git', ref: "359221e49057fe737" # master that has rmber 1.0rc1
