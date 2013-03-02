@@ -50,7 +50,7 @@ Feature: Disks in Library
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And the directory's full_path should end with "media/adisk/Series"
-      And I should see a table of the following directories:
+      And I should see a table of the following existing directories:
        | Name   |
        | Series |
       And I should see a table of the following new directories:
@@ -78,7 +78,7 @@ Feature: Disks in Library
       And a directory "Tatort" should exist with name: "Tatort", disk: the disk
       And the directory "Series" should be the directory "Tatort"'s parent
       And the directory "Tatort"'s full_path should end with "media/adisk/Series/Tatort"
-      And I should see a table of the following directories:
+      And I should see a table of the following existing directories:
        | Name   |
        | Tatort |
       And I should see a table of the following new directories:
