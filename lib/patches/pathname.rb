@@ -1,10 +1,14 @@
-Pathname.class_eval do
-  # we want to do Rails.root / "tmp"
-  alias_method :/, :join
+module PathnameAddons
+  def self.included(base)
+    base.class_eval do
+      # we want to do Rails.root / "tmp"
+      alias_method :/, :join
+      alias_method :start_with?, :starts_with?
+    end
+  end
   def starts_with?(other)
     to_path.starts_with?(other.to_path)
   end
-  alias_method :start_with?, :starts_with?
 
   def relative_components
     raise "is absolute" if absolute?
@@ -17,3 +21,5 @@ Pathname.class_eval do
     end
   end
 end
+
+Pathname.send :include, PathnameAddons
