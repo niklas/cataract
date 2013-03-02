@@ -73,85 +73,12 @@ describe Torrent do
     end
   end
 
-  context "in filesystem" do
-    let(:storage) { create :existing_directory, relative_path: 'storage' }
-    let(:archive) { create :existing_directory, relative_path: 'archive' }
-
-    describe "with single file" do
-      let(:torrent) do
-        create :torrent_with_picture_of_tails, content_directory: archive do |torrent|
-          create_file storage.path/torrent.filename
-          torrent
-        end
-      end
-      it "knows the path of its torrent file" do
-        torrent.path.should_not be_blank
-        torrent.path.to_s.should be_ends_with('single.torrent')
-      end
-      it "knows the full path of its content file" do
-        torrent.content.files.should == [
-          archive.path/'tails.png'
-        ]
-      end
-      it "knows the name of its content file" do
-        torrent.content.relative_files.should == [
-          'tails.png'
-        ]
-      end
-      # FIXME put this on the others in own torrent/content_spec
-      it "content.path should point to file" do
-        torrent.content.path.should == archive.path/'tails.png'
-      end
-
-      it "can be destroyed" do
-        expect { torrent.destroy }.to_not raise_error
-      end
-    end
-
-    describe "with multiple files" do
-      let(:torrent) do
-        create :torrent_with_picture_of_tails_and_a_poem, content_directory: archive do |torrent|
-          create_file storage.path/torrent.filename
-          torrent
-        end
-      end
-      it "knows the path of its torrent file" do
-        torrent.path.should_not be_blank
-        torrent.path.to_s.should be_ends_with('multiple.torrent')
-      end
-      it "knows the relative paths of its content files" do
-        torrent.content.relative_files.should == [
-          'content/banane.poem',
-          'content/tails.png'
-        ]
-      end
-      it "knows the names of its content files" do
-        torrent.content.files.should == [
-          archive.path/'content'/'banane.poem',
-          archive.path/'content'/'tails.png'
-        ]
-      end
-      # FIXME put this on the others in own torrent/content_spec
-      it "content.path should point to directory" do
-        torrent.content.path.should == archive.path/'content'
-      end
-    end
-
-    describe "settings" do
-      before { create :setting, incoming_directory: storage }
-      it "should define content directory" do
-        create(:torrent, content_directory: nil).content_directory.should == storage
-      end
-    end
-
-  end
-
 
   describe 'running' do
     let(:torrent) { build :torrent_with_picture_of_tails }
     it "should be stopped when clearing" do
       torrent.should_receive(:stop)
-      torrent.content.destroy
+      torrent.payload.destroy
     end
   end
 

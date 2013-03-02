@@ -1,13 +1,20 @@
 #= require jquery
 #= require jquery-ui
 #= require jquery_ujs
-#= require bootstrap
 #= require jquery.sausage
+#= require handlebars-1.0.0-rc.3
+#= require ember
+#= require ember-data
+#= require ember-bootstrap
+#= require ember-rails-flash
+#= require bootstrap
 #= require endless_page
 #= require spinner
 #= require jquery-filedrop/jquery.filedrop
-#= require radio_buttons
 #= require bindWithDelay
+#
+#= require_tree ./lib
+#= require ./cataract
 
 jQuery ->
   $('body:has(ul#torrents):has(form#new_torrent_search)').endlessSearch list: 'ul#torrents', form: 'form#new_torrent_search'
@@ -20,22 +27,11 @@ jQuery ->
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
-  $('#torrents').on 'click', '.torrent', (event)-> $(this).toggleClass('full') if $(event.target).is('div')
-
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
-  $('body').bind 'tick', ->
-    running = $('#torrents .torrent.running').map -> $(this).attr('id').replace(/^\D+/, '')
-    $.getScript "/progress?running=#{running.get().join(',')}"
-    true
-
-  $('form#edit').hide().each ->
-    $form = $(this)
-    $('a.edit').click -> $form.toggle('slow')
-
-  setInterval ->
-    $('body').trigger 'tick'
-  , 23 * 1000
+  #setInterval ->
+  #  $('body').trigger 'tick'
+  #, 23 * 1000
 
   supportAjaxUploadProgressEvents = ->
     xhr = new XMLHttpRequest()

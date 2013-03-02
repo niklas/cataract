@@ -1,11 +1,11 @@
 class DirectoriesController < InheritedResources::Base
   belongs_to :disk, optional: true
-  respond_to :js, :html
+  respond_to :json
 
-  load_and_authorize_resource
-  layout 'library'
+  load_and_authorize_resource except: [:index]
 
   def create
+    # TODO make teh ajax work and ember and such
     create! { redirect_path }
   end
 
@@ -13,7 +13,7 @@ class DirectoriesController < InheritedResources::Base
     update! { redirect_path }
   end
 
-  private
+  protected
   def interpolation_options
     { name: resource.name }
   end
@@ -29,4 +29,10 @@ class DirectoriesController < InheritedResources::Base
   def search
     @search ||= resource.torrent_search
   end
+
+  def collection
+    authorize! :index, Directory
+    @directories ||= end_of_association_chain.order('name, disk_id').includes(:disk)
+  end
+
 end

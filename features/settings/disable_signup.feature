@@ -8,16 +8,6 @@ Feature: disable signup
      When I follow "Signup"
      Then I should see "Email"
 
-  Scenario: setting it
-    Given I am signed in
-      And I am on the home page
-     When I follow "Settings"
-     Then the "Disable signup" checkbox should not be checked
-     When I check "Disable signup"
-      And I press "Save"
-     Then a setting should exist
-      And the setting's disable_signup should be true
-
   Scenario: disable signup by setting
     Given a setting exists with disable_signup: true
      When I go to the home page

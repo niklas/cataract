@@ -59,3 +59,8 @@ table.directories {
   border-top-color: $grayLighter; // make the caret visible, was black on black before
   opacity: 0.6;
 }
+
+.alert {
+  margin-left: 1em;
+  margin-right: 1em;
+}

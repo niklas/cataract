@@ -34,8 +34,19 @@ group :test, :halt_on_fail => true do
     watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
   end
 
+  guard 'jasmine' do
+    watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$})         { "spec/javascripts" }
+    watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
+    watch(%r{app/assets/javascripts/(.+?)\.(js|coffee)})  { |m| "spec/javascripts/#{m[1]}_spec.#{m[2]}" }
+  end
+
 #                                                         V --no-drb skip spork to run simplecov 
-  guard 'cucumber', :cli => "--drb --no-source --no-profile --strict --format pretty --format rerun --out rerun.txt", :run_all => { :cli => "--format progress" }, :all_on_start => false do
+  guard 'cucumber',
+    :cli => "--drb --no-source --no-profile --strict --format pretty --format rerun --out rerun.txt --tags ~@wip",
+    :keep_failed => false,
+    :run_all => { :cli => "--format progress --tags ~@wip" },
+    :all_on_start => false,
+    :all_after_pass => false do
     watch(%r{^features/.+\.feature$})
     watch(%r{^app/(controllers|widgets)})     { "features" }
     watch(%r{^app/models/maintenance/(.+)\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
@@ -59,3 +70,4 @@ end
 guard 'bundler' do
   watch('Gemfile')
 end
+

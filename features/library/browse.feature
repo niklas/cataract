@@ -17,17 +17,15 @@ Feature: Browsing the library
       | disk "Stuff" |
       | disk "More"  |
       And the following directories exist:
-      | directory | disk         | name            | parent             | auto_create | relative_path |
-      | Series    | disk "More"  | Series          |                    |             | Serien        |
-      | Movies    | disk "Stuff" | Movies          |                    | true        |               |
-      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" |             |               |
+      | directory | disk         | name            | parent             | virtual | relative_path | show_sub_dirs |
+      | Series    | disk "More"  | Series          |                    | true    | Serien        | true          |
+      | Movies    | disk "Stuff" | Movies          |                    | false   |               | false         |
+      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" | true    |               | false         |
 
   Scenario: disks and root directories directly accessible through the sidebar
     Given I am on the home page
-     When I toggle the menu
-      And I follow "Library"
-     Then I should be on the library page
-      And I should see the following mounted disks in the sidebar disk list:
+      And I wait for the spinner to disappear
+     Then I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
@@ -41,61 +39,67 @@ Feature: Browsing the library
       | Name   |
       | Series |
 
-  Scenario: Browse to root directories on disks
-    Given I am on the library page
+  Scenario: Selecting a disk shows only *its* root directories in sidebar
+    Given I am on the home page
+      And I wait for the spinner to disappear
      When I follow "More" within the sidebar disk list
-     Then I should be on the page for disk "More"
-      And I should see the following breadcrumbs:
-      | More |
+      Then I should see the following active disks in the sidebar disk list:
+      | name  |
+      | More  |
       And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
-      And I should see a table of the following directories:
+      And I should see the following directories in the sidebar directory list:
       | Name   |
       | Series |
-      But I should not see "Movies" within the directories list
+      But I should not see "Movies" within the sidebar directory list
 
      When I follow "Stuff" within the sidebar disk list
-     Then I should be on the page for disk "Stuff"
-      And I should see the following breadcrumbs:
-      | Stuff |
+      Then I should see the following active disks in the sidebar disk list:
+      | name  |
+      | Stuff  |
       And I should see the following mounted disks in the sidebar disk list:
       | name  |
       | More  |
       | Stuff |
-      And I should see a table of the following directories:
+      And I should see the following directories in the sidebar directory list:
       | Name   |
       | Movies |
-      But I should not see "Series" within the directories list
+      But I should not see "Series" within the sidebar directory list
+
+
+     When I follow "reset" within the sidebar disk list
+     Then I should see the following mounted disks in the sidebar disk list:
+      | name  |
+      | More  |
+      | Stuff |
 
    Scenario: Browse to subdirectories
-    Given I am on the page for disk "More"
-     When I follow "Series" within the directories list
-     Then I should be on the page for the directory "Series"
-      And I should see the following breadcrumbs:
-      | More / |
-      | Series |
-      | Edit   |
-     When I follow "Shame of Frowns" within the directories list
-     Then I should be on the page for the directory "Frowns"
-      And I should see the following breadcrumbs:
-      | More /          |
-      | Series /        |
-      | Shame of Frowns |
-      | Edit            |
+    Given a torrent exists with content_directory: directory "Frowns", title: "First Shame"
 
+      And I am on the home page
+      And I wait for the spinner to disappear
+     When I follow "Series" within the sidebar directory list
+     Then I should not see "First Shame"
+     When I follow "Shame of Frowns" within the directories list
+     Then I should see the following torrents in the torrent list:
+      | title       |
+      | First Shame |
+
+  @wip
    Scenario: alternate between copies of directories based on common relative_path
-     Given a disk "Incoming" exists with name: "Incoming"
-       And a directory "Incoming Series" exists with name: "Series", disk: disk "Incoming", relative_path: "Serien"
-      When I go to the page for the directory "Series"
+    Given a disk "Incoming" exists with name: "Incoming"
+      And a directory "Incoming Series" exists with name: "Series", disk: disk "Incoming", relative_path: "Serien"
+      And I am on the home page
+      And I wait for the spinner to disappear
+      When I follow "Series"
       Then I should see the following breadcrumbs:
         | More / |
         | Series |
         | Edit   |
       When I follow "More" within the breadcrumbs
        And I follow "Incoming" within the breadcrumbs
-      Then I should be on the page for the directory "Incoming Series"
       Then I should see the following breadcrumbs:
         | Incoming / |
         | Series     |
@@ -109,17 +113,19 @@ Feature: Browsing the library
        | Short Season      | directory "Frowns" |
        | Long Season       | directory "Frowns" |
        | Short Blockbuster | directory "Movies" |
+      And I am on the home page
 
-     When I go to the page for the directory "Series"
+     When I follow "Series" within the sidebar directory list
      Then I should not see "Season"
       And I should not see "Blockbuster"
 
-     When I go to the page for the directory "Movies"
+     When I follow "Movies" within the sidebar directory list
     Then I should see the following torrents in the torrent list:
       | title             |
       | Short Blockbuster |
 
-     When I go to the page for the directory "Frowns"
+     When I follow "Series" within the sidebar directory list
+      And I follow "Frowns" within the directories list
     Then I should see the following torrents in the torrent list:
       | title        |
       | Long Season  |

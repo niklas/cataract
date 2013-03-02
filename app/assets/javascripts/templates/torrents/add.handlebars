@@ -1,0 +1,5 @@
+{{#with view.parentView.torrent}}
+  {{view Bootstrap.Forms.TextField valueBinding="url" label="URL"}}
+  {{view Cataract.SelectDirectoryField selectionBinding="contentDirectory" label="Content Directory"}}
+  {{view Cataract.FileField fileBinding="filedata" filenameBinding="filename" label="File"}}
+{{/with}}

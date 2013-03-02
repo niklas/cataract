@@ -1,4 +1,4 @@
-@rtorrent
+@javascript
 @64bit
 @rootfs
 Feature: Transfer info failure
@@ -13,18 +13,17 @@ Feature: Transfer info failure
       And the file for the torrent exists
       And the torrent's content exists on disk
       And the torrent is marked as running
+      And I am on the home page
 
+  @rtorrent
   Scenario: torrent is not actually running
-     When I go to the home page
-     Then I should see the following torrents in the torrent list:
-       | title  | size    | percent     | up          | down        |
-       | single | 71.7 KB | not running | not running | not running |
+     When the tick interval is reached
+      And I wait for the spinner to disappear
+      And I explore the first torrent
+     Then I should see the start link
 
-  Scenario: rtorrent shuts down
-    Given rtorrent shuts down
-      And I wait 1 second
-     When I go to the home page
-     Then I should see the following torrents in the torrent list:
-       | title  | size    | percent     | up          | down        |
-       | single | 71.7 KB | unavailable | unavailable | unavailable |
+  Scenario: rtorrent is not started
+     When the tick interval is reached
+      And I wait for the spinner to disappear
+     Then I should see "Connection to rtorrent refused"
 

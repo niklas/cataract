@@ -1,10 +1,11 @@
 class Torrent
+  attr_accessor :transfer_id # for ember-data
 
   def self.running_or_listed(ids)
     if ids.respond_to?(:split)
       ids = ids.split(',')
     end
-    if ids.empty?
+    if ids.blank?
       by_status('running')
     else
       where('status = ? OR id in (?)', 'running', ids)
@@ -61,20 +62,6 @@ class Torrent
 
   def finally_stop!
     update_state! :archived
-  end
-
-  def progress
-    (100.0 * completed_bytes.to_f / size_bytes.to_f).to_i
-  rescue FloatDomainError
-    0
-  end
-
-  def left_seconds
-    left_bytes.to_f / down_rate.to_f
-  end
-
-  def left_bytes
-    size_bytes.to_i - completed_bytes.to_i
   end
 
 end

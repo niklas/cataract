@@ -10,6 +10,7 @@ describe 'Factory' do
 
   FactoryGirl.factories.each do |factory|
     next if factory.name == :torrent_with_file
+    next if factory.name == :blank_directory
 
     describe "for #{factory.name}" do
       it "should build valid record" do

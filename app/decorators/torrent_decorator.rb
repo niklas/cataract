@@ -1,7 +1,7 @@
 class TorrentDecorator < ApplicationDecorator
   decorates :torrent
 
-  allows :running?, :content, :moving?, :status, :title, :content, :active?, :previous_changes, :remote?, :url
+  delegate :running?, :content, :moving?, :status, :title, :content, :active?, :previous_changes, :remote?, :url
 
   def progress
     h.render('bar', percent: percent, eta: eta)
@@ -18,51 +18,14 @@ class TorrentDecorator < ApplicationDecorator
     select(:rates).html(rates)
   end
 
-  def percent
-    handle_remote do
-      "#{torrent.progress}%"
-    end
-  end
-
-  def eta
-    handle_remote do
-      now = Time.now
-      h.distance_of_time_in_words(now, now + torrent.left_seconds)
-    end
-  rescue
-    ''
-  end
-
   def content_size
     human_bytes torrent.content_size
-  end
-
-  def up_rate
-    handle_remote do
-      human_bytes_rate torrent.up_rate
-    end
-  end
-
-  def down_rate
-    handle_remote do
-      human_bytes_rate torrent.down_rate
-    end
   end
 
   def message
     handle_remote do
       torrent.message
     end
-  end
-
-  def human_bytes(bytes)
-    return if bytes.blank?
-    h.number_to_human_size(bytes).sub(/ytes$/,'')
-  end
-
-  def human_bytes_rate(bytes)
-    return if bytes.blank?
-    human_bytes(bytes) + '/s'
   end
 
   def item_id
@@ -131,7 +94,7 @@ class TorrentDecorator < ApplicationDecorator
 
   def render_directory(dir)
     h.content_tag(:span, h.link_to(dir.name, [dir.disk, dir]), class: 'name') +
-    h.content_tag(:span, dir.path, class: 'path')
+    h.content_tag(:span, dir.full_path, class: 'path')
   end
 
   def selector_for(name, resource=nil, *more)

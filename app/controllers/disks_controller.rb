@@ -1,15 +1,10 @@
 class DisksController < InheritedResources::Base
-  load_and_authorize_resource
-  layout 'library'
+  load_and_authorize_resource except: [:index]
+  respond_to :json
 
-  respond_to :js, :html
-
-  def new
-    resource.valid?
-    new!
-  end
-
-  def create
-    create! { disk_path(@disk) }
+  protected
+  def collection
+    authorize! :index, Disk
+    @disks ||= end_of_association_chain.order('name')
   end
 end

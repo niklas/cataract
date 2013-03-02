@@ -15,7 +15,7 @@ namespace :maintenance do
   task :relativate_directories => :assign_disks_to_directories do
     disks = Disk.all
     Directory.find_each do |directory|
-      if directory.path.present? && directory.relative_path.absolute?
+      if directory.full_path.present? && directory.relative_path.absolute?
         directory.relative_path = directory.relative_path.relative_path_from directory.disk.path
         directory.save!
       end

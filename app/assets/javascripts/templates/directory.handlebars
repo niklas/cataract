@@ -1,0 +1,16 @@
+<h2>{{name}}</h2>
+
+{{#linkTo directory.edit class="edit"}}edit{{/linkTo}}
+
+{{#if subscribed}}
+  <span class="subscribed label label-success">subscribed</span>
+{{/if}}
+
+{{#if hasSubDirs}}
+{{view Cataract.DirectoriesTable contentBinding="children" classNames="existing"}}
+{{/if}}
+
+{{#if hasDetectedSubDirs}}
+<h2>Detected</h2>
+{{view Cataract.DetectedDirectoriesTable contentBinding="detectedChildren"}}
+{{/if}}
