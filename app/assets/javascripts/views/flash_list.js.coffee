@@ -6,8 +6,13 @@ Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
   template: Ember.Handlebars.compile """
   {{#with view.content}}
     {{message}}
+    <a class="close" {{action "close" target=view}}> ×</a>
   {{/with}}
   """
+  close: ->
+    flash = @get('content')
+    flash.destroy()
+    Ember.Rails.get('flashMessages').removeObject(flash)
 
 Cataract.FlashListView = Ember.Rails.FlashListView.extend
   elementId: 'ember-flash'
