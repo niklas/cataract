@@ -1,11 +1,13 @@
 Cataract::Application.configure do
+  develotest = %w(true yes y 1 uuyeah jawoll).include?(ENV['DEVELOTEST'].to_s)
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
   # test suite.  You never need to work with it otherwise.  Remember that
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs.  Don't rely on the data there!
-  config.cache_classes = true
+  config.cache_classes = !develotest
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -36,4 +38,10 @@ Cataract::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Do not compress assets
+  config.assets.compress = !develotest
+
+  # Expands the lines which load the assets
+  config.assets.debug = develotest
 end
