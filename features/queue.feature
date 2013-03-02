@@ -12,7 +12,8 @@ Feature: Queue
       And I am signed in
       And I am on the home page
      Then I should see "1" within the queue
-      And I should see "moving Shame of Bones to Archive / Adaptations" within the queue
+     When I follow "1" within the queue
+     Then I should see "moving Shame of Bones to Archive / Adaptations" within the queue
 
   @todo
   Scenario: when a move is done, it is automatically removed from the list
