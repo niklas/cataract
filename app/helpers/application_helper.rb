@@ -37,8 +37,4 @@ module ApplicationHelper
       append_to_list searches
     end
   end
-
-  VersatileRJS::Page.class_eval do
-    include PartialHelper
-  end
 end

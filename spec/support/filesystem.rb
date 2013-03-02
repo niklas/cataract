@@ -1,4 +1,7 @@
 require 'fakefs/safe'
+
+FakeFS::Pathname.send :include, PathnameAddons
+
 module FileSystem
   extend self
   def file_factory_path

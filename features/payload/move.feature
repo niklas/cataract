@@ -31,7 +31,8 @@ Feature: move content
       And the disk should be the move's target_disk
       And I should see flash notice "moving Tails to Incoming / public"
 
-      And I should see "moving Tails to Incoming / public" within the queue
+     When I follow "1" within the queue
+     Then I should see "moving Tails to Incoming / public" within the queue
 
   #Scenario: Move torrent to other disk into existing directory
 
@@ -53,5 +54,6 @@ Feature: move content
       And the disk "archive" should be the move's target_disk
       And I should see flash notice "moving Tails to Archive / Pics"
 
-      And I should see "moving Tails to Archive / Pics" within the queue
+     When I follow "1" within the queue
+     Then I should see "moving Tails to Archive / Pics" within the queue
 
