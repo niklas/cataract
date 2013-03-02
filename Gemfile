@@ -20,7 +20,7 @@ end
 group :test do
   gem 'rake'
   gem 'cucumber-rails', "~> 1.2.1", :require => false
-  gem 'rspec-rails', "~> 2.8.1"
+  gem 'rspec-rails', "~> 2.12.2"
   gem 'pickle'
   gem 'timecop'
   gem 'database_cleaner'
@@ -29,11 +29,11 @@ group :test do
   # TODO for latest chrome-webdriver remove when capybara > 1.1.2 depends on it
   gem 'selenium-webdriver', '~> 2.21.2'
 
-  gem "spork", "1.0.0rc2"
-  gem "guard-rspec", "~> 0.6.0"
-  gem "guard-cucumber", "~> 0.8.0"
-  gem "guard-spork", "~> 0.5.2"
-  gem "guard-bundler", "~> 0.1.3"
+  gem "spork", "1.0.0rc3"
+  gem "guard-rspec", "~> 2.4.0"
+  gem "guard-cucumber", "~> 1.3.2"
+  gem "guard-spork", "~> 1.4.2"
+  gem "guard-bundler", "~> 1.0.0"
   gem "libnotify", :require => false
   gem "fakefs", :require => false
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
@@ -47,8 +47,7 @@ group :test do
   gem 'webmock'
   gem 'term-ansicolor' # for ScenarioTodo
 
-  # FIXME PR accepted? https://github.com/jonleighton/poltergeist/issues/89
-  gem 'poltergeist', git: '/home/niklas/src/poltergeist', ref: 'better-inspector-detection' # headless webkit with debugging
+  gem 'poltergeist'
 end
 
 group :development, :test do
@@ -58,13 +57,13 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'jasminerice'
   gem 'guard-jasmine'
+  gem 'rb-inotify'
 end
 
 group :development do
   gem 'capistrano'
   gem 'rvm-capistrano'
-  gem 'rb-inotify'
-  gem 'notes', :require => false, :git => 'git://github.com/v0n/notes.git'
+  gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
 end
 
 group :production do
@@ -91,7 +90,6 @@ gem 'inherited_resources'
 gem 'draper'
 
 gem 'active_attr', '~> 0.5.0.alpha2' # SchedulingFilter, need AttributeDefaults
-gem 'versatile_rjs', :git => 'git://github.com/condor/versatile_rjs.git', branch: '51f35329d9a370280e896444ee4e11c5d166ffcf'
 gem 'foreman'
 gem 'kaminari'
 

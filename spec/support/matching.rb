@@ -3,7 +3,7 @@ require 'diff_matcher'
 module RSpec
   module Matchers
     class BeMatching
-      include BaseMatcher
+      attr_reader :expected
 
       def initialize(expected, opts)
         @expected = expected

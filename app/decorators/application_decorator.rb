@@ -1,4 +1,4 @@
-class ApplicationDecorator < Draper::Base
+class ApplicationDecorator < Draper::Decorator
   include ModalDecoratorHelper
 
   def selector_for(name, resource=nil, *more)
