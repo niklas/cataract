@@ -2,31 +2,37 @@
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        <a href="/" class="brand">Cataract</a>
+        <div class="nav-collapse">
+          <a href="/" class="brand">Cataract</a>
+        </div>
+
+        <ul class="nav pull-right">
+          <li>
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+          </li>
+        </ul>
+
+        <form class="navbar-search">
+          {{view Ember.TextField valueBinding="Cataract.terms" classNames="search-query" elementId="torrent_search_terms"}}
+        </form>
+
+        <ul class="nav">
+          <li>{{#linkTo filter "recent"}}Recent{{/linkTo}}</li>
+          <li>{{#linkTo filter "running"}}Running{{/linkTo}}</li>
+          <li>{{#linkTo filter "all"}}All{{/linkTo}}</li>
+          <li>{{#linkTo add_torrent}}Add{{/linkTo}}</li>
+        </ul>
 
         <div class="nav-collapse">
-
           {{view Cataract.SessionView}}
-
           {{ render 'moves' }}
-
-          <ul class="nav">
-                  <li>{{#linkTo filter "recent"}}Recent{{/linkTo}}</li>
-                  <li>{{#linkTo filter "running"}}Running{{/linkTo}}</li>
-                  <li>{{#linkTo filter "all"}}All{{/linkTo}}</li>
-                  <li>{{#linkTo add_torrent}}Add{{/linkTo}}</li>
-          </ul>
         </div>
 
 
-      <form class="navbar-search pull-left">
-        {{view Ember.TextField valueBinding="Cataract.terms" classNames="search-query" elementId="torrent_search_terms"}}
-      </form>
       </div>
     </div>
   </div>
