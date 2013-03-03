@@ -41,7 +41,8 @@ ul.torrents {
 
     .title {
       overflow: hidden;
-      margin-bottom: $baseFontSize * 0.8;
+      margin-bottom: $baseFontSize * 0.1;
+      margin-top: $baseFontSize * 0.1;
     }
 
     .actions a.btn {
