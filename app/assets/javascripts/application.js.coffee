@@ -29,9 +29,9 @@ jQuery ->
 
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
-  #setInterval ->
-  #  $('body').trigger 'tick'
-  #, 23 * 1000
+  setInterval ->
+    $('body').trigger 'tick'
+  , 23 * 1000
 
   supportAjaxUploadProgressEvents = ->
     xhr = new XMLHttpRequest()
