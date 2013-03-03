@@ -1,44 +1,15 @@
-<h4 class="title" {{action toggleExpand this}}>{{title}}</h4>
+{{#with view.content}}
+<h4 class="title">
+  {{#linkTo torrent this}}
+  {{title}}
+  {{/linkTo}}
+</h4>
 
 {{#if isRunning}}
   {{#if Cataract.online}}
     {{view Cataract.TransferView contentBinding="transfer"}}
   {{else}}
     {{Cataract.offlineReason}}
-{{/if}}
-{{/if}}
-
-{{#if payloadExists}}
-  {{#if isExpanded}}
-    {{view Cataract.PayloadView contentBinding="payload"}}
-  {{else}}
-    has content, click to see
   {{/if}}
 {{/if}}
-
-
-{{#if isExpanded}}
-  <div class="actions">
-    {{#unless isNew}}
-      {{#if isRunning}}
-        <a class="stop btn btn-mini btn-danger" {{action stop this}}><i class="icon-stop"></i></a>
-      {{else}}
-        <a class="start btn btn-mini btn-success" {{action start this}}><i class="icon-play"></i></a>
-      {{/if}}
-      <a class="destroy btn btn-mini btn-danger" {{action delete this}}><i class="icon-remove"></i></a>
-      {{#if payloadExists}}
-        <a class="clear btn btn-mini btn-danger" {{action deletePayload this}}><i class="icon-trash"></i></a>
-        {{#unless isMoving}}
-        <a class="move btn btn-mini btn-info" {{action move this}}><i class="icon-share"></i></a>
-        {{/unless}}
-      {{/if}}
-      {{/unless}}
-  </div>
-  <p>{{info_hash}}</p>
-{{/if}}
-
-
-{{#if isRemote}}
-<div class="url">{{url}}</div>
-{{/if}}
-
+{{/with}}

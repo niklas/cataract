@@ -5,10 +5,10 @@
 [35m./app/assets/javascripts/lib/ihrfrestnur.js.coffee[0m[36m:[0m[32m17[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract this to something similar to ActiveModel::Name
 [35m./app/assets/javascripts/models/detected_directory.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m      # FIXME Ember/me is too stupid to get the change
 [35m./app/assets/javascripts/models/torrent.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  filedata: DS.attr 'string' # TODO put into payload
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m28[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m # TODO reset event
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m53[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m67[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m79[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m23[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m # TODO reset event
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m48[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m62[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m74[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
 [35m./app/assets/javascripts/views/select_directory_field.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME refresh association bindings, else no value is bound, even with defaults
 [35m./app/assets/javascripts/views/select_disk_field.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME refresh association bindings, else no value is bound, even with defaults
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO cells ore similar
@@ -34,8 +34,7 @@
 [35m./app/models/torrent.rb[0m[36m:[0m[32m59[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO add tagging
 [35m./app/models/torrent.rb[0m[36m:[0m[32m71[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO use psql tsearch
 [35m./app/models/torrent.rb[0m[36m:[0m[32m153[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO audit changes
-[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m95[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME spaghetti
-[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m239[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
+[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m193[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
 [35m./app/models/torrent/states.rb[0m[36m:[0m[32m63[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
 [35m./app/models/torrent/states.rb[0m[36m:[0m[32m89[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO call this during refresh
 [35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME athentication
@@ -50,6 +49,7 @@
 [35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m66[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      # TODO: See if there is a way to have this called on exit, for a more friendly shutdown.
 [35m./lib/jobs/scheduler_job.rb[0m[36m:[0m[32m7[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO simulate cronjob here
 [35m./lib/patches/active_record.rb[0m[36m:[0m[32m1[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO convert into real Validator
+[35m./lib/transfer.rb[0m[36m:[0m[32m40[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME spaghetti
 [35m./lib/worker.rb[0m[36m:[0m[32m99[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO this should be decoupled. Must give class_name instead of channel to worker
 [35m./spec/javascripts/lib/ihrfrestnur_spec.js.coffee[0m[36m:[0m[32m63[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m          # FIXME we have no access to the parent record from the adapter. should we?
 [35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m80[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO complete list

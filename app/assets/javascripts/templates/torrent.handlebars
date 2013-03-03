@@ -1,0 +1,52 @@
+<h2>{{title}}</h2>
+
+
+{{#if isRunning}}
+  {{#if Cataract.online}}
+    {{view Cataract.TransferView contentBinding="transfer"}}
+  {{else}}
+    {{Cataract.offlineReason}}
+{{/if}}
+{{/if}}
+
+{{#if payloadExists}}
+  {{view Cataract.PayloadView contentBinding="payload"}}
+{{/if}}
+
+<div class="actions">
+  {{#unless isNew}}
+    {{#if isRunning}}
+      <a class="stop btn btn-danger" {{action stop this}}>
+        <i class="icon-stop icon-white"></i>
+        Stop
+      </a>
+    {{else}}
+      <a class="start btn btn-success" {{action start this}}>
+        <i class="icon-play icon-white"></i>
+        Start
+      </a>
+    {{/if}}
+    <a class="destroy btn btn-danger" {{action delete this}}>
+      <i class="icon-remove icon-white"></i>
+      Delete
+    </a>
+    {{#if payloadExists}}
+      <a class="clear btn btn-danger" {{action deletePayload this}}>
+        <i class="icon-trash icon-white"></i>
+        remove Content
+      </a>
+      {{#unless isMoving}}
+        <a class="move btn btn-info" {{action move this}}>
+          <i class="icon-share icon-white"></i>
+          Move
+        </a>
+      {{/unless}}
+    {{/if}}
+    {{/unless}}
+</div>
+<p>{{info_hash}}</p>
+
+{{#if isRemote}}
+<div class="url">{{url}}</div>
+{{/if}}
+
