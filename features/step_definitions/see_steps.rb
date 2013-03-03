@@ -14,7 +14,7 @@ Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |items, container, e
   with_scope container do
     found = page.all(items).select(&:visible?).map do |item|
       next if item[:class].include?('divider')
-      fields.map {|f| item.first(f).text.strip rescue nil }
+      fields.map {|f| item.first(f).text.strip rescue '(i) nil' }
     end
     expected.diff! found.unshift(expected.column_names)
   end

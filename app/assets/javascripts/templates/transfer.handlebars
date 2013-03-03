@@ -4,7 +4,9 @@
       <div class="progress progress-striped progress-success active">
         <div class="bar" {{bindAttr style="percentStyle"}}>
           <div class="percent">{{progress}}%</div>
+          {{#if eta}}
           <div class="eta">{{eta}}</div>
+          {{/if}}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ require 'xmlrpc/client'
 require 'xmlrpc/xmlrpcs'
 require 'socket'
 require 'scgi/wrapped_socket'
+require 'transfer'
 
 class Torrent
   class NotRunning < ActiveRecord::RecordInvalid; end
@@ -57,53 +58,6 @@ class Torrent
     remote.set_directory self, content_directory.full_path
   end
 
-  # collects the values considering the transfer of a torrent
-  class Transfer < Struct.new(:torrent)
-    @@serializable_attributes = []
-
-    def self.serializable_attr_accessor(attr)
-      @@serializable_attributes << attr
-      attr_accessor attr
-    end
-
-    def torrent_id
-      torrent.id
-    end
-
-    def progress
-      (100.0 * completed_bytes.to_f / size_bytes.to_f).to_i
-    rescue FloatDomainError
-      0
-    end
-
-    def left_seconds
-      left_bytes.to_f / down_rate.to_f
-    end
-
-    def left_bytes
-      size_bytes.to_i - completed_bytes.to_i
-    end
-
-    def read_attribute_for_serialization(attr)
-      unless attr.in?( @@serializable_attributes + [:torrent_id, :progress])
-        raise ArgumentError, "cannot serialize #{attr}"
-      else
-        send(attr)
-      end
-    end
-
-    # FIXME spaghetti
-    def fetch!(fields=[])
-      Torrent.remote.apply [torrent], fields
-    end
-
-    def update(attrs={})
-      attrs.except(:hash).each do |attr, value|
-        send("#{attr.to_s.sub(/\?$/,'')}=", value)
-      end
-    end
-
-  end
 
 
   # This Class represents the glue between 
@@ -195,7 +149,7 @@ class Torrent
     end
 
     def self.reader(name)
-      Torrent::Transfer.class_eval do
+      Transfer.class_eval do
         serializable_attr_accessor name
       end
       define_attribute name do |value|
@@ -205,7 +159,7 @@ class Torrent
 
     def self.predicate(name)
       internal_name = name.to_s.sub(/\?$/,'')
-      Torrent::Transfer.class_eval do
+      Transfer.class_eval do
         attr_accessor internal_name
         alias_method name, internal_name
       end

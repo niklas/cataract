@@ -47,15 +47,33 @@ Feature: Transfer info
     Given the torrent is running
       And I am on the home page
       And I wait for the spinner to stop
-      And rtorrent list contains the following:
+
+     When rtorrent list contains the following:
         | down_rate | up_rate | size_bytes | completed_bytes | hash        | active? | open? |
         | 23        | 42      | 2000       | 300             | the torrent | true    | true  |
-     When the tick interval is reached
+      And the tick interval is reached
      # size is taken from metadata
      Then I should see the following torrents in the torrent list:
         | up     | down   | percent | eta      |
         | 42 B/s | 23 B/s | 15%     | 1 minute |
 
+     # stalled
+     When rtorrent list contains the following:
+        | down_rate | up_rate | size_bytes | completed_bytes | hash        | active? | open? |
+        | 0         | 42      | 2000       | 301             | the torrent | true    | true  |
+      And the tick interval is reached
+     Then I should see the following torrents in the torrent list:
+        | up     | down  | percent | eta               |
+        | 42 B/s | 0 B/s | 15%     | when pigs can fly |
+
+     # complete
+     When rtorrent list contains the following:
+        | down_rate | up_rate | size_bytes | completed_bytes | hash        | active? | open? |
+        | 0         | 42      | 2000       | 2000            | the torrent | true    | true  |
+      And the tick interval is reached
+     Then I should see the following torrents in the torrent list:
+        | up     | down  | percent | eta     |
+        | 42 B/s | 0 B/s | 100%    | (i) nil |
 
   Scenario: stopped by someone else is detected
     Given the torrent is running
