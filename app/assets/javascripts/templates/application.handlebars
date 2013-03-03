@@ -45,6 +45,7 @@
       {{ render 'disks' }}
 
       {{#unless Cataract.online}}
+      <br />
       <div class="alert alert-error">{{Cataract.offlineReason}}</div>
       {{/unless}}
     </div>
