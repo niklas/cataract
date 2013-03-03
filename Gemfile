@@ -14,6 +14,7 @@ group :assets do
   gem 'jquery-ui-rails'
   gem 'bootswatch-rails'
   gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git', ref: "359221e49057fe737" # master that has rmber 1.0rc1
+  gem 'turbo-sprockets-rails3'
 end
 
 
