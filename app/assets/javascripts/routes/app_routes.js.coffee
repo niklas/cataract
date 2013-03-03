@@ -19,11 +19,6 @@ Cataract.ApplicationRoute = Ember.Route.extend
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'filter', 'recent'
 
-Cataract.TorrentsRoute = Ember.Route.extend
-  model: -> Cataract.Torrent.find()
-  setupController: (torrents, model) ->
-    @controllerFor('application').set('currentController', torrents)
-
 Cataract.FilterRoute = Ember.Route.extend
  # TODO reset event
   activate: ->
