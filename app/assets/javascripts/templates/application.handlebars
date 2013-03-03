@@ -39,16 +39,14 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span3">
-    <div id="sidebar" class="well">
-      {{ render 'directories' }}
-      {{ render 'disks' }}
+  <div class="span3 well" id="sidebar">
+    {{ render 'directories' }}
+    {{ render 'disks' }}
 
-      {{#unless Cataract.online}}
-      <br />
-      <div class="alert alert-error">{{Cataract.offlineReason}}</div>
-      {{/unless}}
-    </div>
+    {{#unless Cataract.online}}
+    <br />
+    <div class="alert alert-error">{{Cataract.offlineReason}}</div>
+    {{/unless}}
   </div>
   <div class="span5" id="content">
     <div style="display: none;">breadcrumbs</div>
