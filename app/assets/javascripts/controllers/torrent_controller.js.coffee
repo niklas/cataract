@@ -12,13 +12,6 @@ Cataract.TorrentController = Ember.ObjectController.extend
         targetDisk: directory.get('disk')
         targetDirectory: directory
 
-  # TODO show in the third pane instead
-  toggleExpand: (torrent) ->
-    unless torrent.get('isExpanded')
-      torrent.get('payload')
-    torrent.set( 'isExpanded', ! torrent.get('isExpanded'))
-    false
-
   start: (torrent) ->
     transfer = Cataract.Transfer.createRecord id: torrent.get('id')
     transfer.store.commit()

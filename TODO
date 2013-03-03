@@ -1,7 +1,6 @@
 [35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m20[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO put this into a view/controller combi
 [35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m26[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME load differently, see BREAKING_CHANGES
 [35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m39[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move into DirectoriesController
-[35m./app/assets/javascripts/controllers/torrent_controller.js.coffee[0m[36m:[0m[32m15[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO show in the third pane instead
 [35m./app/assets/javascripts/lib/ihrfrestnur.js.coffee[0m[36m:[0m[32m17[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract this to something similar to ActiveModel::Name
 [35m./app/assets/javascripts/models/detected_directory.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m      # FIXME Ember/me is too stupid to get the change
 [35m./app/assets/javascripts/models/torrent.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  filedata: DS.attr 'string' # TODO put into payload
