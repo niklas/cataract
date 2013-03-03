@@ -5,7 +5,7 @@ set :rvm_type, :system
 
 # bundler bootstrap
 require 'bundler/capistrano'
-#load 'deploy/assets'
+load 'deploy/assets'
 
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
@@ -57,6 +57,7 @@ namespace :deploy do
   end
 
   after "deploy:create_symlink", "deploy:symlink_shared"
+  before "deploy:assets:precompile", "deploy:symlink_shared"
 
   task :foreman do
     run "mkdir -p #{upstart_dir}"
