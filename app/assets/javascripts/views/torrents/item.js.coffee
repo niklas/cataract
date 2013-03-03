@@ -5,5 +5,13 @@ Cataract.ItemTorrentView = Ember.View.extend
   click: ->
     Cataract.Router.router.transitionTo 'torrent', @get('content')
   didInsertElement: ->
-    # TODO bind the position from top so a browser resize is recognized
+    @storeOffset()
+    @set 'resizeHandler', => @storeOffset()
+    jQuery(window).bind 'resize', @get('resizeHandler')
+
+  willDestroyElement: ->
+    jQuery(window).unbind 'resize', @get('resizeHandler')
+    @set 'resizeHandler', null
+
+  storeOffset: ->
     @get('content').set('offsetInList', @$().position().top)
