@@ -54,6 +54,10 @@ namespace :deploy do
     run "#{make_link}/tmp/rtorrent.socket"
     run "mkdir -p #{deploy_to}/#{shared_dir}/public/uploads"
     run "#{make_link}/public/uploads"
+
+    # turbo-sprockets-rails3 stores its manifest etc here
+    run "mkdir -p #{deploy_to}/#{shared_dir}/public/assets"
+    run "#{make_link}/public/assets"
   end
 
   after "deploy:create_symlink", "deploy:symlink_shared"
