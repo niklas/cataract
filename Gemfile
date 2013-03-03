@@ -57,7 +57,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'jasminerice'
   gem 'guard-jasmine'
-  gem 'rb-inotify'
+  gem 'rb-inotify', '~> 0.8.8'
 end
 
 group :development do
