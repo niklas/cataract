@@ -2,6 +2,7 @@
 #= require jquery-ui
 #= require jquery_ujs
 #= require jquery.sausage
+#= require jquery.scrollTo-1.4.3.1
 #= require handlebars-1.0.0-rc.3
 #= require ember
 #= require ember-data
