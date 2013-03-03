@@ -1,5 +1,5 @@
 <div id="header">
-  <div class="navbar navbar-fixed-top navbar-search">
+  <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -21,10 +21,12 @@
                   <li>{{#linkTo filter "all"}}All{{/linkTo}}</li>
                   <li>{{#linkTo add_torrent}}Add{{/linkTo}}</li>
           </ul>
-
-          {{view Ember.TextField valueBinding="Cataract.terms" classNames="search-query" elementId="torrent_search_terms"}}
         </div>
 
+
+      <form class="navbar-search pull-left">
+        {{view Ember.TextField valueBinding="Cataract.terms" classNames="search-query" elementId="torrent_search_terms"}}
+      </form>
       </div>
     </div>
   </div>
@@ -32,7 +34,7 @@
 
 <div class="row-fluid">
   <div class="span3">
-    <div id="sidebar">
+    <div id="sidebar" class="well">
       {{ render 'directories' }}
       {{ render 'disks' }}
 

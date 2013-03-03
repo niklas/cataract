@@ -2,8 +2,9 @@
 %html
   = render 'layouts/head'
   %script{type: "text/x-handlebars", 'data-template-name' => 'session' }= render 'session'
-  %body#ember
-    = render 'flash'
-    #container.container-fluid= yield
+  %body
+    #ember.container-fluid
+      = render 'flash'
+      = yield
   = render 'layouts/foot'
 

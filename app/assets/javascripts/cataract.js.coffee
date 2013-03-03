@@ -10,7 +10,7 @@
 #Ember.LOG_BINDINGS = true
 
 Cataract = Ember.Application.create
-  rootElement: 'body#ember'
+  rootElement: '#ember'
   online: true
   offlineReason: null
   autoinit: false
