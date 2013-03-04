@@ -54,10 +54,6 @@ namespace :deploy do
     run "#{make_link}/tmp/rtorrent.socket"
     run "mkdir -p #{deploy_to}/#{shared_dir}/public/uploads"
     run "#{make_link}/public/uploads"
-
-    # turbo-sprockets-rails3 stores its manifest etc here
-    run "mkdir -p #{deploy_to}/#{shared_dir}/public/assets"
-    run "#{make_link}/public/assets"
   end
 
   after "deploy:create_symlink", "deploy:symlink_shared"
@@ -84,12 +80,12 @@ namespace :deploy do
   before "deploy:assets:precompile", "deploy:delete_test_code"
 end
 
-namespace :rake do  
-  desc "Run a task on a remote server."  
-  # run like: cap staging rake:invoke task=a_certain_task  
-  task :invoke do  
-    run("cd #{deploy_to}/current; /usr/bin/env rake --trace #{ENV['task']} RAILS_ENV=#{rails_env}")  
-  end  
+namespace :raketask do
+  desc "Run a task on a remote server."
+  # run like: cap staging rake:invoke task=a_certain_task
+  task :invoke do
+    run("cd #{deploy_to}/current; /usr/bin/env rake --trace #{ENV['task']} RAILS_ENV=#{rails_env}")
+  end
 end
 
 namespace :services do
