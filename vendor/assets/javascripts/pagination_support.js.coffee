@@ -38,3 +38,4 @@ Ember.PaginationSupport = Ember.Mixin.create
   pageDidChange: (->
     @didRequestRange get(this, "rangeStart"), get(this, "rangeStop")
   ).observes("total", "rangeStart", "rangeStop")
+  gotoFirstPage: -> @set('rangeStart', 0)
