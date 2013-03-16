@@ -8,6 +8,13 @@ class TorrentsController < InheritedResources::Base
 
   layout 'library'
 
+  def index
+    @updated = resource_class.order('updated_at').last
+    if stale?(:etag => @updated, :last_modified => @updated.updated_at)
+      index!
+    end
+  end
+
   def create
     create! { torrents_path }
   end
