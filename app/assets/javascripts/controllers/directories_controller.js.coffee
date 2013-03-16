@@ -1,6 +1,8 @@
 Cataract.DirectoriesController = Cataract.FilteredController.extend
   currentBinding: 'Cataract.currentDirectory'
   diskBinding: 'Cataract.currentDisk'
+  contentBinding: 'filteredContent'
+  unfilteredContent: Cataract.Directory.find()
   filterFunction: Ember.computed ->
     disk = @get('disk')
     (record) ->
@@ -10,4 +12,4 @@ Cataract.DirectoriesController = Cataract.FilteredController.extend
       if disk
         want &= record.get('disk') is disk
       want
-  .property('content.@each.parent', 'disk')
+  .property('unfilteredContent.@each.parent', 'disk')

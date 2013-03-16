@@ -11,7 +11,6 @@ Cataract.Router.map ->
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
-    @controllerFor('directories').set 'model', Cataract.Directory.find()
     @controllerFor('disks').set       'model', Cataract.Disk.find()
     @controllerFor('moves').set       'model', Cataract.Move.find()
 
