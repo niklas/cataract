@@ -40,7 +40,12 @@ class Torrent
         results = results.order("created_at DESC")
       end
 
-      results.page(page || 1).per(per)
+      if per?
+        results.page(page || 1).per(per)
+      else
+        results
+      end
+
     end
 
     def to_params
