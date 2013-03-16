@@ -13,6 +13,10 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   mode: ''
   directoryBinding: 'Cataract.currentDirectory'
 
+  modeDidChange: (->
+    @didRequestRange @get("rangeStart"), @get("rangeStop")
+  ).observes("mode")
+
   termsList: Ember.computed ->
     if terms = @get('terms')
       Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
