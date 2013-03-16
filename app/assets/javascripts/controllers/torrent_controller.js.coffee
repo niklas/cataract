@@ -4,9 +4,10 @@ Cataract.TorrentController = Ember.ObjectController.extend
 
   move: (torrent) ->
     directory = torrent.get('payload.directory') || torrent.get('contentDirectory')
+    # TODO group directories by relative_path and show only one
     Cataract.MovePayloadModal.popup
       torrent: torrent
-      directories: @controllerFor('directories').get('content')
+      directories: @controllerFor('directories').get('unfilteredContent')
       disks: @controllerFor('disks').get('content')
       move: Cataract.Move.createRecord
         targetDisk: directory.get('disk')

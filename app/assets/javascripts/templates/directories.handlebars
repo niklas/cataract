@@ -1,6 +1,6 @@
 <ul class="nav nav-list directories">
   <li class="nav-header">Directories</li>
-  {{#each controller.filtered}}
+  {{#each controller}}
   <li {{bindAttr class="cssClass active exists:existing:missing"}}>
     {{#linkTo directory this class="name"}}
       <i {{bindAttr class="exists:icon-folder-open:icon-warning-sign"}}></i>
@@ -8,7 +8,7 @@
     {{/linkTo}}
   </li>
   {{/each}}
-  {{#if Cataract.currentDirectory}}
+  {{#if current}}
     <li class="divider"></li>
     <li><a href="#">reset</a></li>
   {{/if}}

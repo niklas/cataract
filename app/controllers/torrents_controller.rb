@@ -17,6 +17,10 @@ class TorrentsController < InheritedResources::Base
     @torrents ||= search.results
   end
 
+  def search_params
+    super.merge(per: nil)
+  end
+
   def refresh!
     if request.xhr?
       clear_transfer_cache
