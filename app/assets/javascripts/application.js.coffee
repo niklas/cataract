@@ -1,7 +1,6 @@
 #= require jquery
 #= require jquery-ui
 #= require jquery_ujs
-#= require jquery.sausage
 #= require jquery.scrollTo-1.4.3.1
 #= require handlebars-1.0.0-rc.3
 #= require ember
@@ -9,7 +8,7 @@
 #= require ember-bootstrap
 #= require ember-rails-flash
 #= require bootstrap
-#= require endless_page
+#= require pagination_support
 #= require spinner
 #= require jquery-filedrop/jquery.filedrop
 #= require bindWithDelay
@@ -18,8 +17,6 @@
 #= require ./cataract
 
 jQuery ->
-  $('body:has(ul#torrents):has(form#new_torrent_search)').endlessSearch list: 'ul#torrents', form: 'form#new_torrent_search'
-
   search = ->
     $(@).closest('form')
       .find('input.page').val(1).end()
