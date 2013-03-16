@@ -17,7 +17,7 @@
         </ul>
 
         <form class="navbar-search">
-          {{view Ember.TextField valueBinding="Cataract.terms" classNames="search-query" elementId="torrent_search_terms"}}
+          {{view Ember.DelayedTextField delayedValueBinding="Cataract.terms" classNames="search-query" elementId="torrent_search_terms"}}
         </form>
 
         <ul class="nav">

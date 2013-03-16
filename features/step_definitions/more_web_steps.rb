@@ -1,5 +1,6 @@
 When /^I filter with "([^"]+)"$/ do |terms|
   first('#torrent_search_terms').set(terms)
+  sleep 1 # delayed typing
 end
 
 When /^I click (?:on )?(the progress pie)$/ do |name|
