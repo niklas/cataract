@@ -3,20 +3,21 @@ require 'mlocate'
 
 describe Mlocate do
 
-  it "should locate files" do
-    found = Mlocate.file('sh')
-    found.should_not be_nil
-    found.should_not be_empty
-    found.should include('/bin/sh')
+  it "finds files" do
+    Mlocate.file('sh').should include('/bin/sh')
   end
 
-  it "should find postfix" do
+  it "finds by postfix" do
     postfix = 'cats/tails.png'
     full    = "/usr/share/#{postfix}"
     Mlocate.stub(:run).with(postfix).and_return([full])
-    found = Mlocate.postfix(postfix)
-    found.should_not be_nil
-    found.should_not be_empty
-    found.should include(full)
+    Mlocate.postfix(postfix).should include(full)
+  end
+
+  it "offers query interface for file" do
+    query = stub
+    result = stub
+    Mlocate.stub(:file).with(query).and_return(result)
+    Mlocate.locate(file: query).should == result
   end
 end
