@@ -1,0 +1,7 @@
+{{#if view.header}}
+<li class="nav-header">{{view.header}}</li>
+{{/if}}
+
+{{#each view.directories}}
+  {{view Cataract.DirectoryNavItemView contentBinding="this"}}
+{{/each}}

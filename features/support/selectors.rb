@@ -27,10 +27,10 @@ module HtmlSelectorsHelpers
       "div.navbar"
 
     when /^the sidebar disks? list$/
-      "#sidebar ul.disks"
+      "#sidebar ul.disks:first"
 
-    when /^the sidebar director(?:ies|y) list$/
-      "#sidebar ul.directories"
+    when /^the sidebar root director(?:ies|y) list$/
+      "#sidebar ul.root.directories"
 
     when /^the torrents? list$/
       "ul#torrents"

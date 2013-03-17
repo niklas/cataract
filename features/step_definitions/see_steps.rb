@@ -8,16 +8,15 @@ Then /^I should see a list of the following (\w+\s?\w+)(?!within.*):$/ do |plura
   expected.diff! found.unshift(expected.column_names)
 end
 
-Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |items, container, expected|
-  items = items.split.map(&:underscore).map(&:singularize).map {|f| ".#{f}" }.join
+# Then I should see the following mounted disks in the sidebar disk list:
+Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |item_names, container_name, expected|
+  items = item_names.split.map(&:underscore).map(&:singularize).map {|f| ".#{f}" }.join
   fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
-  with_scope container do
-    found = page.all(items).select(&:visible?).map do |item|
-      next if item[:class].include?('divider')
-      fields.map {|f| item.first(f).text.strip rescue '(i) nil' }
-    end
-    expected.diff! found.unshift(expected.column_names)
+  found = page.all("#{selector_for(container_name)} >*#{items}").select(&:visible?).map do |item|
+    next if item[:class].include?('divider')
+    fields.map {|f| item.first(f).text.strip rescue '(i) nil' }
   end
+  expected.diff! found.unshift(expected.column_names)
 end
 
 Then /^I should see a table of the following (\w+\s?\w+)(?!within.*):$/ do |plural, expected|
