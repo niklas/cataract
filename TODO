@@ -1,18 +1,18 @@
 [35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m20[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO put this into a view/controller combi
 [35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m26[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME load differently, see BREAKING_CHANGES
 [35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m39[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move into DirectoriesController
+[35m./app/assets/javascripts/controllers/torrent_controller.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO group directories by relative_path and show only one
 [35m./app/assets/javascripts/lib/ihrfrestnur.js.coffee[0m[36m:[0m[32m17[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract this to something similar to ActiveModel::Name
 [35m./app/assets/javascripts/models/detected_directory.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m      # FIXME Ember/me is too stupid to get the change
 [35m./app/assets/javascripts/models/torrent.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  filedata: DS.attr 'string' # TODO put into payload
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m23[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m # TODO reset event
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m48[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m62[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m74[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m21[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m # TODO reset event
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m47[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m61[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m73[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
 [35m./app/assets/javascripts/views/select_directory_field.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME refresh association bindings, else no value is bound, even with defaults
 [35m./app/assets/javascripts/views/select_disk_field.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME refresh association bindings, else no value is bound, even with defaults
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO cells ore similar
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m33[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {}).merge(per: 1000) # TODO paginate properly
-[35m./app/controllers/directories_controller.rb[0m[36m:[0m[32m8[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO make teh ajax work and ember and such
 [35m./app/controllers/torrent_component_controller.rb[0m[36m:[0m[32m12[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME: ember-data does not support nested resources yet, so we have to jump
 [35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
 [35m./app/models/directory.rb[0m[36m:[0m[32m12[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME assign directories to disks through rake task
