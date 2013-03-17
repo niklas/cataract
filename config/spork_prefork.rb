@@ -4,8 +4,6 @@ raise "where the fuck is spork?" unless defined?(Spork)
 
 # must load simplecov before all application code
 require 'simplecov'
-SimpleCov.start 'rails' do
-end
 
 require 'rails/application'
 
