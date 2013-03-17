@@ -164,6 +164,3 @@ class Torrent < ActiveRecord::Base
                  :search
 
 end
-
-# just mention this here to kick off preloading
-TorrentDecorator

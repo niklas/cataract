@@ -87,7 +87,6 @@ gem 'cancan'
 gem 'simple_form', '~> 2.0.0'
 gem 'haml-rails'
 gem 'inherited_resources'
-gem 'draper'
 
 gem 'active_attr', '~> 0.5.0.alpha2' # SchedulingFilter, need AttributeDefaults
 gem 'foreman'

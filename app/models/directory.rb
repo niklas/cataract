@@ -242,5 +242,3 @@ class Directory < ActiveRecord::Base
     end
   end
 end
-
-DirectoryDecorator
