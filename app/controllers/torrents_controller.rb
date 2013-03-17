@@ -21,7 +21,11 @@ class TorrentsController < InheritedResources::Base
 
   private
   def collection
-    @torrents ||= search.results
+    @torrents ||= Torrent.select(fields_for_collection).includes(:content_directory => :disk).recent
+  end
+
+  def fields_for_collection
+    [:id, :title, :info_hash, :filename, :status, :content_directory_id, :file]
   end
 
   def search_params

@@ -37,6 +37,10 @@ class Torrent < ActiveRecord::Base
   # FIXME wtf is this?
   #stampable
 
+  def self.recent
+    order 'created_at DESC, updated_at DESC'
+  end
+
   def after_find
     check_if_status_is_up_to_date
   end
