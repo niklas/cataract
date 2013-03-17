@@ -1,5 +1,7 @@
 require 'scgi'
 
+# obviously stolen from Dario Meloni https://github.com/mellon85/rtorrent-wrb/blob/master/rtorrent-scripts/scgi.rb
+
 class SCGI::Wrapper
 
   def self.wrap( content, uri, method="POST", headers=[] )
