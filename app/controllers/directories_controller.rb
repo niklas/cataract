@@ -5,29 +5,16 @@ class DirectoriesController < InheritedResources::Base
   load_and_authorize_resource except: [:index]
 
   def create
-    # TODO make teh ajax work and ember and such
-    create! { redirect_path }
+    create!
   end
 
   def update
-    update! { redirect_path }
+    update!
   end
 
   protected
   def interpolation_options
     { name: resource.name }
-  end
-
-  def redirect_path
-    if resource.is_root?
-      disk_path resource.disk
-    else
-      directory_path(resource.parent)
-    end
-  end
-
-  def search
-    @search ||= resource.torrent_search
   end
 
   def collection
