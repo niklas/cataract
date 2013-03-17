@@ -51,6 +51,7 @@ namespace :deploy do
     run "mkdir -p #{config_dir}"
     run "#{make_link}/config/database.yml"
     run "#{make_link}/config/messenger.yml"
+    run "#{make_link}/config/newrelic.yml"
     run "#{make_link}/tmp/rtorrent.socket"
     run "mkdir -p #{deploy_to}/#{shared_dir}/public/uploads"
     run "#{make_link}/public/uploads"

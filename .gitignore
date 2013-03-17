@@ -12,3 +12,4 @@ coverage/
 public/uploads/
 coverage
 public/assets/
+config/newrelic.yml

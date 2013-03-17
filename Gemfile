@@ -103,3 +103,4 @@ gem 'feed-abstract'
 gem 'dalli'
 gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git', ref: "359221e49057fe737" # master that has rmber 1.0rc1
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
+gem 'newrelic_rpm'
