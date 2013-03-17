@@ -49,7 +49,7 @@ module HtmlSelectorsHelpers
       "div[data-role='footer']"
 
     when 'the spinner'
-      '#spinner > .spinner'
+      '.spinner'
 
     when 'the modal box'
       'div.modal'

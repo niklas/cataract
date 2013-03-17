@@ -1,5 +1,4 @@
-<ul class="nav nav-list disks">
-  <li class="nav-header">Disks</li>
+<ul class="nav nav-tabs disks">
   {{#each controller}}
   <li {{bindAttr class="cssClass active isMounted:mounted:unmounted"}}>
   {{#linkTo disk this class="name"}}
@@ -8,10 +7,4 @@
     {{/linkTo}}
   </li>
   {{/each}}
-  {{#if Cataract.currentDisk}}
-    <li class="divider"></li>
-    <li><a href="#">reset</a></li>
-  {{/if}}
 </ul>
-
-

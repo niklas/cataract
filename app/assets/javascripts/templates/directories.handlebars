@@ -1,1 +1,5 @@
-{{view Cataract.DirectoryNavListView directoriesBinding="controller" header="Directories"}}
+{{#if controller.isLoaded}}
+  {{view Cataract.DirectoryNavListView directoriesBinding="controller" classNames="root"}}
+{{else}}
+  {{view Cataract.Spinner message="loading..."}}
+{{/if}}
