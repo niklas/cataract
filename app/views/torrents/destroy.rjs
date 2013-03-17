@@ -1,4 +1,0 @@
-page.reset_helm
-torrent = dom_id(@torrent)
-page[torrent].visual_effect :fade
-page[torrent].remove

@@ -1,4 +1,0 @@
-page.decorate @directory do |directory|
-  directory.append_modal render('form', directory: @directory)
-end
-

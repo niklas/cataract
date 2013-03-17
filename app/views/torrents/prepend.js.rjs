@@ -1,5 +1,0 @@
-page.decorate @torrent do |td|
-  td.close_modal
-  td.update_flash
-  td.prepend_to_list
-end

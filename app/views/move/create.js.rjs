@@ -1,6 +1,0 @@
-page.decorate @move.torrent do |td|
-  td.close_modal
-  td.update_flash
-  td.update_in_list
-  td.update_queue
-end

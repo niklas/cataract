@@ -1,1 +1,0 @@
-page[:helm_content].update link_to_remote('add!', :url => torrents_url(:url => @torrent.url), :method => :post)

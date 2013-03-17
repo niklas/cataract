@@ -1,1 +1,0 @@
-page[:helm_content].update short_error_messages_for :torrent
