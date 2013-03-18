@@ -1,16 +1,5 @@
-<ul class="nav nav-list directories">
-  <li class="nav-header">Directories</li>
-  {{#each controller}}
-  <li {{bindAttr class="cssClass active exists:existing:missing"}}>
-    {{#linkTo directory this class="name"}}
-      <i {{bindAttr class="exists:icon-folder-open:icon-warning-sign"}}></i>
-      {{name}}
-    {{/linkTo}}
-  </li>
-  {{/each}}
-  {{#if current}}
-    <li class="divider"></li>
-    <li><a href="#">reset</a></li>
-  {{/if}}
-</ul>
-
+{{#if controller.isLoaded}}
+  {{view Cataract.DirectoryNavListView directoriesBinding="controller" classNames="root"}}
+{{else}}
+  {{view Cataract.Spinner message="loading..."}}
+{{/if}}

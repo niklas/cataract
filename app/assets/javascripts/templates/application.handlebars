@@ -41,8 +41,15 @@
 <div class="row-fluid">
   <div class="span3 well" id="sidebar">
     {{view Cataract.Pagination controllerBinding="Cataract.torrentsController"}}
-    {{ render 'directories' }}
-    {{ render 'disks' }}
+
+    <div class="tabbable">
+      {{ render 'disks' }}
+      <div class="tab-content" style="overflow: visible">
+        <div class="tab-pane active">
+          {{ render 'directories' }}
+        </div>
+      </div>
+    </div>
 
     {{#unless Cataract.online}}
     <br />

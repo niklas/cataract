@@ -10,7 +10,7 @@ Feature: Subscribe Directory
       And am on the home page
       And I wait for the spinner to stop
 
-     When I follow "Shame of Frowns" within the sidebar directories list
+     When I follow "Shame of Frowns" within the sidebar root directories list
      Then I should see "Shame of Frowns" within the details
      When I click on the edit link
       And I wait for the modal box to appear

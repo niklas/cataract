@@ -18,7 +18,6 @@ Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'filter', 'recent'
 
 Cataract.FilterRoute = Ember.Route.extend
- # TODO reset event
   activate: ->
     Cataract.set 'currentDirectory', null
     Cataract.set 'currentDisk', null

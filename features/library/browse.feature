@@ -32,10 +32,10 @@ Feature: Browsing the library
       And I should see the following unmounted disks in the sidebar disk list:
       | name      |
       | Removable |
-      And I should see the following existing directories in the sidebar directory list:
+      And I should see the following existing directories in the sidebar root directory list:
       | Name   |
       | Movies |
-      And I should see the following missing directories in the sidebar directory list:
+      And I should see the following missing directories in the sidebar root directory list:
       | Name   |
       | Series |
 
@@ -50,10 +50,10 @@ Feature: Browsing the library
       | name  |
       | More  |
       | Stuff |
-      And I should see the following directories in the sidebar directory list:
+      And I should see the following directories in the sidebar root directory list:
       | Name   |
       | Series |
-      But I should not see "Movies" within the sidebar directory list
+      But I should not see "Movies" within the sidebar root directory list
 
      When I follow "Stuff" within the sidebar disk list
       Then I should see the following active disks in the sidebar disk list:
@@ -63,24 +63,19 @@ Feature: Browsing the library
       | name  |
       | More  |
       | Stuff |
-      And I should see the following directories in the sidebar directory list:
+      And I should see the following directories in the sidebar root directory list:
       | Name   |
       | Movies |
-      But I should not see "Series" within the sidebar directory list
+      But I should not see "Series" within the sidebar root directory list
 
 
-     When I follow "reset" within the sidebar disk list
-     Then I should see the following mounted disks in the sidebar disk list:
-      | name  |
-      | More  |
-      | Stuff |
 
    Scenario: Browse to subdirectories
     Given a torrent exists with content_directory: directory "Frowns", title: "First Shame"
 
       And I am on the home page
       And I wait for the spinner to disappear
-     When I follow "Series" within the sidebar directory list
+     When I follow "Series" within the sidebar root directory list
      Then I should not see "First Shame"
      When I follow "Shame of Frowns" within the directories list
      Then I should see the following torrents in the torrent list:
@@ -115,16 +110,16 @@ Feature: Browsing the library
        | Short Blockbuster | directory "Movies" |
       And I am on the home page
 
-     When I follow "Series" within the sidebar directory list
+     When I follow "Series" within the sidebar root directory list
      Then I should not see "Season"
       And I should not see "Blockbuster"
 
-     When I follow "Movies" within the sidebar directory list
+     When I follow "Movies" within the sidebar root directory list
     Then I should see the following torrents in the torrent list:
       | title             |
       | Short Blockbuster |
 
-     When I follow "Series" within the sidebar directory list
+     When I follow "Series" within the sidebar root directory list
       And I follow "Frowns" within the directories list
     Then I should see the following torrents in the torrent list:
       | title        |
