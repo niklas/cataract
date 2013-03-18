@@ -15,7 +15,7 @@ Cataract.DirectoryNavListView = Ember.View.extend
   classNames: "nav nav-list directories".w()
 
 Cataract.DirectoryNavItemView = Ember.View.extend
-  directory: null
   templateName: 'directory/nav_item'
   tagName: 'li'
-  classNameBindings: "cssClass active exists:existing:missing".w()
+  classNameBindings: ":directory active exists:existing:missing".w()
+  existsBinding: 'content.exists'
