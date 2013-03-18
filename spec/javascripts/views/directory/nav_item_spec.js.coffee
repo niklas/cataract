@@ -1,9 +1,19 @@
 describe 'Cataract.DirectoryNavItemView', ->
+
+  # linkTo needs all this
+  buildControllerWithRouter = ->
+    router = Ember.Object.create
+      isActive: Ember.K
+      generate: Ember.K
+      hasRoute: Ember.K
+    controller =
+      router: router
+      container:
+        lookup: -> router
+
   view = null
   beforeEach ->
-    @router = { generate: jasmine.createSpy() }
-    @controller = { router: @router }
-    view = Cataract.DirectoryNavItemView.create(controller: @controller)
+    view = Cataract.DirectoryNavItemView.create(controller: buildControllerWithRouter())
     Ember.run ->
       view.append()
 
@@ -40,5 +50,4 @@ describe 'Cataract.DirectoryNavItemView', ->
       expect( view.$('i.icon-folder-open').length ).toEqual(1)
 
     it "marks item as existing", ->
-      console.debug "#{view.$().get(0).className}"
       expect( view.$().hasClass('existing') ).toBe(true)
