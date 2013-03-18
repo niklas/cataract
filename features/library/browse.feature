@@ -69,11 +69,6 @@ Feature: Browsing the library
       But I should not see "Series" within the sidebar root directory list
 
 
-     When I follow "reset" within the sidebar disk list
-     Then I should see the following mounted disks in the sidebar disk list:
-      | name  |
-      | More  |
-      | Stuff |
 
    Scenario: Browse to subdirectories
     Given a torrent exists with content_directory: directory "Frowns", title: "First Shame"
