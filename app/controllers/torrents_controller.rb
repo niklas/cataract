@@ -25,7 +25,7 @@ class TorrentsController < InheritedResources::Base
   end
 
   def fields_for_collection
-    [:id, :title, :info_hash, :filename, :status, :content_directory_id, :file]
+    [:id, :title, :info_hash, :filename, :status, :content_directory_id, :file, :url]
   end
 
   def search_params
