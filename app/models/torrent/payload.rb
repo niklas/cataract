@@ -7,6 +7,7 @@ class Torrent
   attr_accessor :payload_id # for ember-data
 
   class TorrentContentError < Exception; end
+  class ContentDirectoryMissing < Exception; end
 
   # TODO WTF is this for?
   def files_hierarchy
@@ -182,6 +183,15 @@ class Torrent
 
   def ensure_content_directory
     self.content_directory ||= Setting.singleton.incoming_directory || Directory.watched.first || Directory.first
+  end
+
+  def ensure_content_directory_exists
+    ensure_content_directory
+    if content_directory
+      content_directory.create_on_filesystem!
+    else
+      raise ContentDirectoryMissing, 'could not find a directory to store content into'
+    end
   end
 
   on_refresh :find_missing_content, :if => :metainfo?

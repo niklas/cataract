@@ -33,8 +33,9 @@ class Torrent
 
   # filename and filedata must be present!
   def set_file_from_raw_data
-    self.status = 'archived'
+    self.status = :archived
     self.file = ActionDispatch::Http::UploadedFile.new(filename: filename, tempfile: tempfile_for_filedata)
+    @filedata = nil
   end
 
   def tempfile_for_filedata

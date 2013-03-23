@@ -31,11 +31,16 @@ class Directory < ActiveRecord::Base
     !virtual?
   end
 
+  # does nothing if Directory is virtual
   def create_on_filesystem
     unless virtual? # rails ignores the condition in the callback definition?!
-      FileUtils.mkdir_p full_path
+      create_on_filesystem!
     end
     return true # satisfy callback chain
+  end
+
+  def create_on_filesystem!
+    FileUtils.mkdir_p full_path
   end
 
   # end of scope to show all directies by name, leaving out duplicate copies in different disks
