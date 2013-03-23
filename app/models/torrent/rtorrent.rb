@@ -139,11 +139,7 @@ class Torrent
     def self.define_attribute(name, &block)
       mapped = map_method_name(name)
       define_method name do |torrent|
-        if cached = for_info_hash(hash_for(torrent))
-          cached[name]
-        else
-          block.call call_with_torrent(mapped, torrent)
-        end
+        block.call call_with_torrent(mapped, torrent)
       end
       Torrent.delegate name, to: :transfer
     end
@@ -189,6 +185,22 @@ class Torrent
     def load!(path)
       call 'load', path.to_s
     end
+
+    def start_and_wait!(torrent)
+      start!(torrent)
+      wait_until 10 do
+        active?(torrent)
+      end
+    end
+
+    def wait_until(duration=5, pause=0.1)
+      Timeout.timeout(duration) do
+        while sleep(pause)
+          return if yield
+        end
+      end
+    end
+
 
     # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
     #       (update rtorrent to 0.9?)
