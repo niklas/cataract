@@ -31,13 +31,15 @@ class Torrent
   def start!
     fetch!
     event_from [:paused, :archived, :new] do 
-      ensure_content_directory
+      ensure_content_directory_exists
       self.start_automatically = false
       self.load!  unless paused?
       remote.start! self
       update_state! :running
       log('started')
     end
+  rescue ContentDirectoryMissing => e
+    log('could not start: no content directory available')
   end
 
   def stop!

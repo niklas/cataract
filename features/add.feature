@@ -2,6 +2,7 @@
 @rtorrent
 @javascript
 Feature: Adding a torrent
+  I want to add torrents and have them started automatically
 
   Background:
     Given an existing directory exists with name: "Existing"
@@ -39,11 +40,14 @@ Feature: Adding a torrent
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
-      And the directory "Incoming" should be the torrent's content_directory
+      And I should see "single" within the details
+      And I should see "Incoming" within the details
+      And I should see "71.7 KB" within the details
+      And I should see the stop link
       And rtorrent should download the torrent
      Then I should see the following torrents in the torrent list:
-       | title  |
-       | single |
+       | title  | percent |
+       | single | 0%      |
 
   @todo
   @wip
