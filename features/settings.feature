@@ -6,37 +6,32 @@ Feature: Settings
 
   Background:
     Given a user exists with email: "leecher@localhost.local"
-      And I am signed in as the user
-
-  Scenario: Set default download directory
-    Given the following directories exist:
+      And the following directories exist:
       | directory | name     | id   |
       | Incoming  | Incoming | 1234 |
       | Archive   | Archive  | 4321 |
+      And I am signed in as the user
       And I am on the home page
-     When I toggle the menu
-      And I follow "leecher@localhost.local"
-      And I follow "Settings"
-     When I select "Archive" from "Download directory"
-      And I press "Save"
+      And I open the settings menu
+
+  Scenario: Set default download directory
+     When I select "Archive" from "Download Directory"
+      And I click on the save link
      Then I should see notice "Settings saved"
-      And I should be on the settings page
+      And I should be on the home page
       And a setting should exist
       And the setting's incoming_directory_id should be 4321
 
-     When I select "Incoming" from "Download directory"
-      And I press "Save"
+     When I select "Incoming" from "Download Directory"
+      And I click on the save link
      Then I should see notice "Settings saved"
       And a setting should exist
       And the setting's incoming_directory_id should be 1234
 
   Scenario: disable signup
-    Given I am on the home page
-     When I toggle the menu
-      And I follow "leecher@localhost.local"
-     When I follow "Settings"
-     Then the "Disable signup" checkbox should not be checked
+    Given the "Disable signup" checkbox should not be checked
      When I check "Disable signup"
-      And I press "Save"
-     Then a setting should exist
+      And I click on the save link
+     Then I should see notice "Settings saved"
+      And a setting should exist
       And the setting's disable_signup should be true

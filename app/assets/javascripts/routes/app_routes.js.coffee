@@ -7,9 +7,11 @@ Cataract.Router.map ->
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
   @route 'new_directory', path: 'directory/new'
+  @route 'settings'
 
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
+    Cataract.set 'settings', Cataract.Setting.find('all')
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
     @controllerFor('disks').set       'model', Cataract.Disk.find()
     @controllerFor('moves').set       'model', Cataract.Move.find()
@@ -73,6 +75,10 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
     Cataract.EditDirectoryModal.popup
       directory: model
       back: ['directory', model]
+
+Cataract.SettingsRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    controller.set 'content', Cataract.get('settings')
 
 Cataract.Routerle = Ember.Object.extend
   enableLogging:  true

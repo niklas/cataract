@@ -7,7 +7,7 @@
       %ul.dropdown-menu
         - if can? :edit, current_user
           %li= link_to :profile, edit_user_registration_path
-        = li_link :settings, settings_path, can: [:manage, Setting]
+        {{#linkTo settings}}Settings{{/linkTo}}
         %li.divider
         = li_link :changes, github_changes_url
         = li_link :updates, github_updates_url

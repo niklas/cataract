@@ -63,3 +63,12 @@ end
 Then /^I should be under page "(.*?)"$/ do |url_prefix|
   current_url.should be_starts_with(url_prefix)
 end
+
+When /^I open the settings menu$/ do
+  steps <<-EOSTEPS
+     When I toggle the menu
+      And I follow "leecher@localhost.local"
+      And I follow "Settings"
+  EOSTEPS
+
+end
