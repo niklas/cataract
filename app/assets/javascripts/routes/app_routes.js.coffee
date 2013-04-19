@@ -16,7 +16,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('disks').set       'model', Cataract.Disk.find()
     @controllerFor('moves').set       'model', Cataract.Move.find()
     # load the most recent torrents, for faster initial page load
-    @controllerFor('torrents').set    'unfilteredContent', Cataract.Torrent.find(per: 200, page: 1)
+    @controllerFor('torrents').reload()
 
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'filter', 'running'

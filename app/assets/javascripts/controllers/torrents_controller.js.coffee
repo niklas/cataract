@@ -3,6 +3,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   fullContentBinding: 'filteredContent'
   totalBinding: 'fullContent.length'
+  max: 200 # faster initialization of page
   rangeWindowSize: 50
 
   didRequestRange: (rangeStart, rangeStop) ->
@@ -44,7 +45,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         want = want and directory is torrent.get('contentDirectory')
 
       want
-  ).property('termsList', 'mode', 'directory')
+  ).property('termsList', 'mode', 'directory', 'max')
 
 
   siteTitle: (->
@@ -55,3 +56,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
       title += " in \"#{@get('directory').get('name')}\""
     title
   ).property('terms', 'mode', 'directory')
+
+  reload: ->
+    @set 'unfilteredContent', Cataract.Torrent.find(per: @get('max'), page: 1)
+
