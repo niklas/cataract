@@ -20,8 +20,8 @@ module NavigationHelpers
     when /^the library page$/
       disks_path
 
-    when /^the (running|archived|remote) list page$/
-      torrents_path # anchor: $1
+    when /^the (running|archived|remote|recent) list page$/
+      root_path + "#filter/#{$1}"
 
     when /^the (\w+) page (?:of|for) #{capture_model}$/
       polymorphic_path [model!($2), $1]

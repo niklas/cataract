@@ -22,16 +22,6 @@ Cataract = Ember.Application.create
       Cataract.set 'online', false
       if jqxhr.status == 502
         Cataract.set 'offlineReason', jqxhr.responseText
-  refreshTransfers: ->
-    # FIXME load differently, see BREAKING_CHANGES
-    running = Cataract.store.filter Cataract.Torrent, (torrent) -> torrent.get('status') == 'running'
-    $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
-      for transfer in data.transfers
-        Cataract.store.load Cataract.Transfer, transfer
-      if data.torrents
-        Cataract.store.loadMany Cataract.Torrent, data.torrents
-      Cataract.set 'online', true
-      true
 
   currentDisk: null
   currentDirectory: null

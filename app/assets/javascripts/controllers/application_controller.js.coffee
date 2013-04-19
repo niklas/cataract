@@ -1,8 +1,7 @@
 Cataract.ApplicationController = Ember.Controller.extend
   init: ->
-    @addObserver 'fullSiteTitle', @, (sender, key) -> $('head title').text(sender.get(key))
     @_super()
-    $('body').bind 'tick', -> Cataract.refreshTransfers(); true
+    @addObserver 'fullSiteTitle', @, (sender, key) -> $('head title').text(sender.get(key))
 
   needs: ['torrents']
 

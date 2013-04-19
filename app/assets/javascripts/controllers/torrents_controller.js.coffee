@@ -1,4 +1,8 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
+  init: ->
+    @_super()
+    $('body').bind 'tick', => @refreshTransfers(); true
+
   unfilteredContent: Ember.A()
 
   fullContentBinding: 'filteredContent'
@@ -60,3 +64,15 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   reload: ->
     @set 'unfilteredContent', Cataract.Torrent.find(per: @get('max'), page: 1)
 
+  refreshTransfers: ->
+    list = @get('unfilteredContent')
+    running = list.filterProperty('status', 'running')
+    $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
+      for transfer in data.transfers
+        Cataract.store.load Cataract.Transfer, transfer
+      if data.torrents
+        for updated in data.torrents
+          if listed = list.findProperty('infoHash', data.info_hash)
+            listed.setProperties updated
+      Cataract.set 'online', true
+      true

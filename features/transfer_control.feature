@@ -13,7 +13,7 @@ Feature: Transferring torrents
       And I am signed in
 
   Scenario: Start the transfer from the list
-    Given I am on the home page
+    Given I am on the recent list page
       And the tick interval is reached
      When I explore the first torrent
       And I click on the start link
