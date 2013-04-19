@@ -34,6 +34,12 @@ Then /^I should see the following breadcrumbs:$/ do |expected|
   expected.diff! found
 end
 
+# Then the torrent list should be empty
+Then /^(the.*list) should be empty$/ do |container_name|
+  found = page.all("#{selector_for(container_name)} >*").select(&:visible?)
+  found.should be_empty
+end
+
 
 Then /^the button "([^"]*)" should be active$/ do |label|
   item = page.find("a.ui-btn", :text => label)
