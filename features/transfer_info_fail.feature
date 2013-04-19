@@ -8,7 +8,7 @@ Feature: Transfer info failure
 
   Background:
     Given a existing directory exists with relative_path: "incoming"
-      And a torrent_with_picture_of_tails exists with content_directory: the directory
+    And a torrent_with_picture_of_tails exists with content_directory: the directory, status: "running"
       And I am signed in
       And the file for the torrent exists
       And the torrent's content exists on disk

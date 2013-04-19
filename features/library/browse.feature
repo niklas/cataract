@@ -72,8 +72,7 @@ Feature: Browsing the library
 
    Scenario: Browse to subdirectories
     Given a torrent exists with content_directory: directory "Frowns", title: "First Shame"
-
-      And I am on the home page
+      And I am on the recent list page
       And I wait for the spinner to disappear
      When I follow "Series" within the sidebar root directory list
      Then I should not see "First Shame"
@@ -108,7 +107,7 @@ Feature: Browsing the library
        | Short Season      | directory "Frowns" |
        | Long Season       | directory "Frowns" |
        | Short Blockbuster | directory "Movies" |
-      And I am on the home page
+      And I am on the recent list page
 
      When I follow "Series" within the sidebar root directory list
      Then I should not see "Season"

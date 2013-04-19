@@ -12,7 +12,7 @@ Feature: Delete torrents
       And the torrent's content exists on disk
      Then the file "usb/pics/tails.png" should exist on disk
       And I am signed in
-      And I am on the home page
+      And I am on the recent list page
      When I explore the first torrent
       And I click on the destroy link
       And I wait for the modal box to appear
@@ -24,6 +24,7 @@ Feature: Delete torrents
      Then I should see notice "Tails deleted"
       And I should not see "Tails" within the torrents list
       And the file "usb/pics/tails.png" should not exist on disk
+      And I should not see the destroy link
 
   Scenario: Delete a torrent keeping its payload
      When I uncheck "Also delete payload"
@@ -32,3 +33,4 @@ Feature: Delete torrents
      Then I should see notice "Tails deleted"
       And I should not see "Tails" within the torrents list
       And the file "usb/pics/tails.png" should exist on disk
+      And I should not see the destroy link

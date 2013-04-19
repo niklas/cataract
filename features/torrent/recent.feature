@@ -7,7 +7,7 @@ Feature: Recent torrents, paginated
     Given archived torrents exist titled from "Number 01" to "Number 52" in reverse chronological order
       And an archived torrent exists with title: "Unwanted"
       And I am signed in
-      And I am on the home page
+      And I am on the recent list page
 
      When I filter with "Number"
      Then I should see the torrents titled from "Number 01" to "Number 50"

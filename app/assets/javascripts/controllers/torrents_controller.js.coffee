@@ -1,5 +1,5 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
-  unfilteredContent: Cataract.Torrent.find()
+  unfilteredContent: Ember.A()
 
   fullContentBinding: 'filteredContent'
   totalBinding: 'fullContent.length'

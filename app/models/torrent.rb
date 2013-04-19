@@ -38,7 +38,7 @@ class Torrent < ActiveRecord::Base
   #stampable
 
   def self.recent
-    order 'created_at DESC, updated_at DESC'
+    order 'updated_at DESC, created_at DESC'
   end
 
   def after_find

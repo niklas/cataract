@@ -12,7 +12,7 @@ Feature: Payload of a torrent
       And the file for the torrent exists
       And the torrent's content exists on disk
       And I am signed in
-     When I go to the home page
+     When I go to the recent list page
       And I wait for the spinner to disappear
 
   Scenario: content directory is visible if torrent has content

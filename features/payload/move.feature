@@ -17,7 +17,7 @@ Feature: move content
        | Public    |       | some/where/very/public | the disk |
        | Tails     | Tails | pics/of/tails          | the disk |
        | Else      | Else  | some/where/else        | the disk |
-      And I am on the home page
+      And I am on the recent list page
      When I explore the first torrent
       And I click on the move link
       And I wait for the modal box to appear
@@ -38,7 +38,7 @@ Feature: move content
 
   Scenario: Move torrent to other disk into non-existing directory
     Given a disk "archive" exists with name: "Archive"
-      And I am on the home page
+      And I am on the recent list page
      When I explore the first torrent
       And I click on the move link
       And I wait for the modal box to appear

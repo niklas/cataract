@@ -11,7 +11,7 @@ Feature: Fetch torrent
       And a directory exists
       And the URL "http://ubuntu.com/latest.iso.torrent" points to file "single.torrent"
       And I am signed in
-      And I am on the home page
+      And I am on the recent list page
      When I explore the first torrent
       And I click on the start link
       And I wait for the spinner to disappear

@@ -21,7 +21,13 @@ class TorrentsController < InheritedResources::Base
 
   private
   def collection
-    @torrents ||= Torrent.select(fields_for_collection).includes(:content_directory => :disk).recent
+    @torrents ||= begin
+                    recent = Torrent.select(fields_for_collection).includes(:content_directory => :disk).recent
+                    if page = params[:page]
+                      recent = recent.page(page).per(params[:per])
+                    end
+                    recent
+                  end
   end
 
   def fields_for_collection

@@ -4,6 +4,8 @@ Cataract.ApplicationController = Ember.Controller.extend
     @_super()
     $('body').bind 'tick', -> Cataract.refreshTransfers(); true
 
+  needs: ['torrents']
+
   currentController: null
 
   fullSiteTitle: Ember.computed ->
