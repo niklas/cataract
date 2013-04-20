@@ -1,0 +1,13 @@
+/* not used in asset pipeline, but by the NoExternalAssetsPreProcessor */
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans'), local('DroidSans'), url(/assets/DroidSans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Droid Sans Bold'), local('DroidSans-Bold'), url(/assets/DroidSansBold.woff) format('woff');
+}

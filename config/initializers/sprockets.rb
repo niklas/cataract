@@ -1,0 +1,2 @@
+require_dependency 'no_external_assets_pre_processor'
+Rails.application.assets.register_postprocessor 'text/css', NoExternalAssetsPreProcessor
