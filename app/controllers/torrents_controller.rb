@@ -26,6 +26,9 @@ class TorrentsController < InheritedResources::Base
                     if page = params[:page]
                       recent = recent.page(page).per(params[:per])
                     end
+                    if age = params[:age]
+                      recent = recent.aged(age)
+                    end
                     recent
                   end
   end

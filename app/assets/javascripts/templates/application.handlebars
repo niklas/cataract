@@ -23,8 +23,19 @@
         <ul class="nav">
           <li>{{#linkTo filter "recent"}}Recent{{/linkTo}}</li>
           <li>{{#linkTo filter "running"}}Running{{/linkTo}}</li>
-          <li>{{#linkTo filter "all"}}All{{/linkTo}}</li>
           <li>{{#linkTo add_torrent}}Add{{/linkTo}}</li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              {{controllers.torrents.describedAge}}
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#" {{action "setAge" "month" target=controllers.torrents}}>Month</a></li>
+              <li><a href="#" {{action "setAge" "year" target=controllers.torrents}}>Year</a></li>
+              <li><a href="#" {{action "setAge" "all" target=controllers.torrents}}>All (slow)</a></li>
+            </ul>
+          </li>
         </ul>
 
         <div class="nav-collapse">
