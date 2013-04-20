@@ -83,6 +83,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         for updated in data.torrents
           if listed = list.findProperty('infoHash', data.info_hash)
             listed.setProperties updated
+            listed.stateManager.goToState('loaded')
       Cataract.set 'online', true
       true
 
