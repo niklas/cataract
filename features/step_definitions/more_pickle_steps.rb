@@ -4,7 +4,7 @@ end
 
 Given /^#{capture_model} is (?:marked as )?(running|archived)$/ do |ref, status|
   model = model!(ref)
-  model.update_attribute :status, status
+  model.class.update_all( {status: status}, {id: model.id} )
   Torrent.remote.clear_caches!
 end
 
