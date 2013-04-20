@@ -227,14 +227,8 @@ class Torrent
       torrents.find { |h| h[:hash] == info_hash }
     end
 
-    def clear_caches!
-      Rails.cache.delete_matched 'rtorrent*'
-    end
-
     def all(*fields)
-      Rails.cache.fetch( (['rtorrent'] + fields).join('-'), expires_in: 23.seconds ) do
-        multicall(*fields)
-      end
+      multicall(*fields)
     end
 
 

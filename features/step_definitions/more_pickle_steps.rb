@@ -5,7 +5,6 @@ end
 Given /^#{capture_model} is (?:marked as )?(running|archived)$/ do |ref, status|
   model = model!(ref)
   model.class.update_all( {status: status}, {id: model.id} )
-  Torrent.remote.clear_caches!
 end
 
 Then(/^#{capture_model}'s (\w+) (should(?: not)?) end with #{capture_value}$/) do |name, attribute, expectation, expected|
