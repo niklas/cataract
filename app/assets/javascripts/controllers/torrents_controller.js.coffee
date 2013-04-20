@@ -7,7 +7,16 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   fullContentBinding: 'filteredContent'
   totalBinding: 'fullContent.length'
-  max: 200 # faster initialization of page
+  age: 'month' # faster initialization of page
+  # TODO i18n
+  # human readable current age
+  describedAge: Ember.computed ->
+    if @get('age') == 'all'
+      "All since ever"
+    else
+      "in this " + @get('age')
+  .property('age')
+
   rangeWindowSize: 50
 
   didRequestRange: (rangeStart, rangeStop) ->
@@ -49,7 +58,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         want = want and directory is torrent.get('contentDirectory')
 
       want
-  ).property('termsList', 'mode', 'directory', 'max')
+  ).property('termsList', 'mode', 'directory', 'age')
 
 
   siteTitle: (->
@@ -62,7 +71,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   ).property('terms', 'mode', 'directory')
 
   reload: ->
-    @set 'unfilteredContent', Cataract.Torrent.find(per: @get('max'), page: 1)
+    @set 'unfilteredContent', Cataract.Torrent.find(age: @get('age'))
 
   refreshTransfers: ->
     list = @get('unfilteredContent')
@@ -76,3 +85,15 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
             listed.setProperties updated
       Cataract.set 'online', true
       true
+
+  setAge: (age) ->
+    @set 'age', age
+    @reload()
+    age
+
+  isRecentActive: Ember.computed ->
+    @get('mode') is 'recent'
+  .property('mode')
+  isRunningActive: Ember.computed ->
+    @get('mode') is 'running'
+  .property('mode')

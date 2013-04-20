@@ -75,6 +75,9 @@ module HtmlSelectorsHelpers
     when /^the (\w+) link$/
       "a.#{$1}"
 
+    when /^the active nav item$/
+      'ul.nav > li.active'
+
     # TODO move to jquery_mobile
     when /^(?:a )?flash (notice|alert)$/
       ".flash.alert-#{$1}"

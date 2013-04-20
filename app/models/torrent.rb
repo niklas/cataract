@@ -41,6 +41,21 @@ class Torrent < ActiveRecord::Base
     order 'updated_at DESC, created_at DESC'
   end
 
+  def self.since(date)
+    where 'created_at > ?', date
+  end
+
+  def self.aged(n)
+    case n
+    when 'month'
+      since 1.month.ago
+    when 'year'
+      since 1.year.ago
+    else
+      scoped
+    end
+  end
+
   def after_find
     check_if_status_is_up_to_date
   end
