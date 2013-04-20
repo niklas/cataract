@@ -32,8 +32,4 @@ class ApplicationController < ActionController::Base
   def search_params
     params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {}).merge(per: 1000) # TODO paginate properly
   end
-
-  def clear_transfer_cache
-    Torrent.remote.clear_caches!
-  end
 end

@@ -43,8 +43,6 @@ class TorrentsController < InheritedResources::Base
 
   def refresh!
     if request.xhr?
-      clear_transfer_cache
-
       resource.refresh!
     end
     true

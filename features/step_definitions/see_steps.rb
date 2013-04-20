@@ -41,7 +41,7 @@ Then /^(the.*list) should be empty$/ do |container_name|
 end
 
 # Then the active nav item should be "Recent"
-Then /^(the[^"]+) should be "([^"]+)"$/ do |name, label|
+Then /^(the[^"']+) should be "([^"]+)"$/ do |name, label|
   element = page.first *selector_for(name)
   element.text.should == label
 end
