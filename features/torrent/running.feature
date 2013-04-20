@@ -11,7 +11,8 @@ Feature: Running torrents
       | Two     | archived |                      |
       | Three   | remote   | http://local.torrent |
      And I am signed in
-     And I am on the home page
+    When I go to the running list page
+    Then the active nav item should be "Running"
 
     Then I should see the following torrents in the torrent list:
       | title   |

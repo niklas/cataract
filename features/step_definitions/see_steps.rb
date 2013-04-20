@@ -40,10 +40,10 @@ Then /^(the.*list) should be empty$/ do |container_name|
   found.should be_empty
 end
 
-
-Then /^the button "([^"]*)" should be active$/ do |label|
-  item = page.find("a.ui-btn", :text => label)
-  item['class'].split.should include('ui-btn-active')
+# Then the active nav item should be "Recent"
+Then /^(the.*) should be "([^"]+)"$/ do |name, label|
+  element = page.first *selector_for(name)
+  element.text.should == label
 end
 
 Then /^I should see (?:flash )?(notice|alerts) "([^"]*)"$/ do |severity, message|

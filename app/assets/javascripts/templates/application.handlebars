@@ -21,8 +21,8 @@
         </form>
 
         <ul class="nav">
-          <li>{{#linkTo filter "recent"}}Recent{{/linkTo}}</li>
-          <li>{{#linkTo filter "running"}}Running{{/linkTo}}</li>
+          <li {{bindAttr class="controllers.torrents.isRecentActive:active"}}>{{#linkTo filter "recent"}}Recent{{/linkTo}}</li>
+          <li {{bindAttr class="controllers.torrents.isRunningActive:active"}}>{{#linkTo filter "running"}}Running{{/linkTo}}</li>
           <li>{{#linkTo add_torrent}}Add{{/linkTo}}</li>
 
           <li class="dropdown">

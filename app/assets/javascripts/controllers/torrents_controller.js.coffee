@@ -90,3 +90,10 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @set 'age', age
     @reload()
     age
+
+  isRecentActive: Ember.computed ->
+    @get('mode') is 'recent'
+  .property('mode')
+  isRunningActive: Ember.computed ->
+    @get('mode') is 'running'
+  .property('mode')
