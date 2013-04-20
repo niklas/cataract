@@ -24,6 +24,10 @@ body {
 @import "dropzone";
 @import "radio_buttons";
 
+body {
+  background: #141619; /* gradient is too slow for position: fixed scrolling*/
+}
+
 form#new_torrent_search {
   label[for=torrent_search_terms] {
     display: none;
