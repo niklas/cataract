@@ -7,13 +7,15 @@
  * `require` directives for SASS files, because they're horrible and will kill
  * your cat. */
 
+$navbar_shift: 60px;
+
 /* overwrite boostrap variables here */
 @import "bootswatch/cyborg/variables";
 @import "bootstrap";
 
 /* push content down, the fixed navbar covers it */
 body {
-  padding-top: 60px;
+  padding-top: $navbar_shift;
 }
 @import "bootstrap-responsive";
 @import "bootswatch/cyborg/bootswatch";
@@ -23,6 +25,7 @@ body {
 @import "torrents";
 @import "dropzone";
 @import "radio_buttons";
+@import "fixed_positions";
 
 body {
   background: #141619; /* gradient is too slow for position: fixed scrolling*/
