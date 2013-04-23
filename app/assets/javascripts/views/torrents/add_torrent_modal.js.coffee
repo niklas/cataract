@@ -24,8 +24,6 @@ Cataract.AddTorrentModal = Bootstrap.ModalPane.extend
         filedata: torrent.get('filedata')
         filename: torrent.get('filename')
       record.one 'didCreate', ->
-        Cataract.get('torrentsController').set('mode', 'running')
-        Cataract.get('torrentsController').reload()
-        Cataract.Router.router.transitionTo 'torrent', record
+        Cataract.get('torrentsController').didAddRunningTorrent(record)
       record.get('transaction').commit()
     true
