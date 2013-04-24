@@ -10,7 +10,6 @@
 #= require bootstrap
 #= require pagination_support
 #= require spinner
-#= require jquery-filedrop/jquery.filedrop
 #= require bindWithDelay
 #
 #= require_tree ./lib
@@ -30,32 +29,6 @@ jQuery ->
   setInterval ->
     $('body').trigger 'tick'
   , 23 * 1000
-
-  supportAjaxUploadProgressEvents = ->
-    xhr = new XMLHttpRequest()
-    !! (xhr? && ('upload' of xhr) && ('onprogress' of xhr.upload))
-
-  isTouchDevice = ->
-    !!('ontouchstart' of window)
-
-  $('#dropzone').hide().each ->
-    if supportAjaxUploadProgressEvents() and not isTouchDevice()
-      $dropzone = $(this)
-      $dropzone.filedrop
-        url: $dropzone.data('url')
-        paramname: 'torrent[file]'
-        maxfiles: 25
-        maxfilesize: 5 # MB
-        docEnter: -> $dropzone.not(":visible").show()
-        docLeave: -> $dropzone.filter(":visible").hide()
-        dragEnter: -> $dropzone.addClass('hover') unless $dropzone.hasClass('hover')
-        dragLeave: -> $dropzone.removeClass('hover') if $dropzone.hasClass('hover')
-        uploadFinished: (i, file, response, time) ->
-          $.getScript(response.prepend_url)
-        error: (err,file) ->
-          switch err
-            when 'BrowserNotSupported' then alert('browser does not support html5 drag and drop')
-            when 'FileTooLarge' then alert("file #{file.name} is too large, max 5MiB")
 
   $.fn.animatedRemove = (duration=300)->
     $(this).each ->

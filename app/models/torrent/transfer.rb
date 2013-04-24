@@ -42,7 +42,7 @@ class Torrent
 
   def stop!
     event_from [:paused, :running] do
-      remote.stop! self
+      remote.stop_and_wait! self
       remote.close! self
       remote.erase! self # WARNING! will delete the torrent file
       finally_stop!

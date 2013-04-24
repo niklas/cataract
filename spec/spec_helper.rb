@@ -12,6 +12,8 @@ Spork.prefork do
   RSpec.configure do |config|
     include FactoryGirl::Syntax::Default
 
+    config.include Devise::TestHelpers, :type => :controller
+
     config.before :each do
       Torrent::RTorrent.offline!
     end

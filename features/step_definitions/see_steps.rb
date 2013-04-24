@@ -46,7 +46,7 @@ Then /^(the[^"']+) should be "([^"]+)"$/ do |name, label|
   element.text.should == label
 end
 
-Then /^I should see (?:flash )?(notice|alerts) "([^"]*)"$/ do |severity, message|
+Then /^I should see (?:flash )?(notice|alert) "([^"]*)"$/ do |severity, message|
   step %Q~I should see "#{message}" within flash #{severity}~
 end
 
@@ -68,3 +68,15 @@ Then /^I should see the following attributes for the torrent:$/ do |table|
     step %Q~I should see "#{value}" within "#{selector}"~
   end
 end
+
+Then /^(.*) (should|should not) be classified as (\w+)$/ do |name, should_or_not, klass|
+  selector = selector_for(name)
+  element = page.first(selector)
+
+  if should_or_not.include?('not')
+    element['class'].should_not =~ /\b#{klass}\b/
+  else
+    element['class'].should =~ /\b#{klass}\b/
+  end
+end
+

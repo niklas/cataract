@@ -18,6 +18,10 @@ en:
         subscribed: "subscribed"
         filter: "Filter"
   flash:
+    torrents:
+      create:
+        alert: "Could not create Torrent."
+        notice:  "Torrent was successfully created."
     move:
       create:
         notice: "moving %{torrent} to %{target}"
