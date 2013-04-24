@@ -193,6 +193,13 @@ class Torrent
       end
     end
 
+    def stop_and_wait!(torrent)
+      stop!(torrent)
+      wait_until 10 do
+        !active?(torrent)
+      end
+    end
+
     def wait_until(duration=5, pause=0.1)
       Timeout.timeout(duration) do
         while sleep(pause)
