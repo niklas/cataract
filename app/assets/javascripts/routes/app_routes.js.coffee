@@ -31,6 +31,7 @@ Cataract.FilterRoute = Ember.Route.extend
   setupController: (controller, model) ->
     torrents = @controllerFor('torrents')
     torrents.set('mode', model)
+    torrents.refreshTransfers()
     @controllerFor('application').set('currentController', torrents)
 
 Cataract.DirectoryRoute = Ember.Route.extend
