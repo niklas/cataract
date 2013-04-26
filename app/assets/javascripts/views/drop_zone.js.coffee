@@ -23,7 +23,6 @@ Cataract.DropZoneView = Ember.View.extend
     reader = new FileReader()
     transaction = Cataract.store.transaction()
     torrent = transaction.createRecord Cataract.Torrent, {}
-    transaction.add(torrent)
     torrent.one 'didCreate', ->
       Cataract.get('torrentsController')?.didAddRunningTorrent(torrent)
     reader.onload = (upload) ->

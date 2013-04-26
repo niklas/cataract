@@ -28,6 +28,6 @@ Cataract.ClearPayloadModal = Bootstrap.ModalPane.extend
           payload.deleteRecord()
         catch error
           console?.debug "error while clearing payload: #{error}, trying to continue"
-        payload.store.commit()
+        payload.get('transaction').commit()
     true
 

@@ -5,7 +5,8 @@ Cataract.DetectedDirectory = DS.Model.extend
   createDirectory: ->
     parent = @get('parent')
     disk   = @get('disk')
-    directory = Cataract.Directory.createRecord
+    transaction = Cataract.store.transaction()
+    directory = transaction.createRecord Cataract.Directory,
       name: @get('name')
       parent: parent
       disk: disk
