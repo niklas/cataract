@@ -5,11 +5,11 @@
   {{/linkTo}}
 </h4>
 
-{{#if isRunning}}
-  {{#if Cataract.online}}
+{{#if Cataract.online}}
+  {{#if isRunning}}
     {{view Cataract.TransferView contentBinding="transfer"}}
-  {{else}}
-    {{Cataract.offlineReason}}
   {{/if}}
+{{else}}
+  {{Cataract.offlineReason}}
 {{/if}}
 {{/with}}

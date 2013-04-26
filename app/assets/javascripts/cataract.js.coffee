@@ -11,8 +11,8 @@
 
 Cataract = Ember.Application.create
   rootElement: '#ember'
-  online: true
-  offlineReason: null
+  online: false # wait for first refreshTransfers
+  offlineReason: 'loading...'
   autoinit: false
   terms: ''
   ready: ->

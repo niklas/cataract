@@ -24,6 +24,7 @@ jQuery ->
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
+  # TODO put refresh-click into Ember View
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   setInterval ->
