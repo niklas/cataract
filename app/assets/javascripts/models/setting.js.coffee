@@ -1,4 +1,4 @@
-Cataract.Setting = DS.Model.extend
-  incomingDirectory: DS.belongsTo 'Cataract.Directory'
-  disableSignup: DS.attr 'boolean'
+Cataract.Setting = Emu.Model.extend
+  incomingDirectory: Emu.field 'Cataract.Directory'
+  disableSignup: Emu.field 'boolean'
 

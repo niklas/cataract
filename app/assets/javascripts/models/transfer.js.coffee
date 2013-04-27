@@ -1,8 +1,8 @@
-Cataract.Transfer = DS.Model.extend
-  progress: DS.attr 'number'
-  upRate: DS.attr 'string'
-  downRate: DS.attr 'string'
-  eta: DS.attr 'string'
+Cataract.Transfer = Emu.Model.extend
+  progress: Emu.field 'number'
+  upRate: Emu.field 'string'
+  downRate: Emu.field 'string'
+  eta: Emu.field 'string'
   progressStyle: Ember.computed ->
     "width: #{@get('progress')}%"
   .property('progress')

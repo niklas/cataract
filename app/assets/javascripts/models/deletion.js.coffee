@@ -1,2 +1,2 @@
-Cataract.Deletion = DS.Model.extend
-  deletePayload: DS.attr('boolean')
+Cataract.Deletion = Emu.Model.extend
+  deletePayload: Emu.field('boolean')

@@ -1,17 +1,17 @@
-Cataract.Directory = DS.Model.extend
-  name: DS.attr('string')
-  fullPath: DS.attr('string')
-  subscribed: DS.attr('boolean')
-  filter: DS.attr('string')
-  torrents: DS.hasMany('Cataract.Torrent')
-  disk: DS.belongsTo('Cataract.Disk', key: 'disk_id')
-  exists: DS.attr('boolean')
-  parentId: DS.attr 'number'
-  parent: DS.belongsTo('Cataract.Directory', key: 'parent_id')
-  children: DS.hasMany('Cataract.Directory')
+Cataract.Directory = Emu.Model.extend
+  name: Emu.field('string')
+  fullPath: Emu.field('string')
+  subscribed: Emu.field('boolean')
+  filter: Emu.field('string')
+  torrents: Emu.field('Cataract.Torrent', collection: true)
+  disk: Emu.field('Cataract.Disk', key: 'disk_id')
+  exists: Emu.field('boolean')
+  parentId: Emu.field 'number'
+  parent: Emu.field('Cataract.Directory', key: 'parent_id')
+  children: Emu.field('Cataract.Directory', collection: true)
   active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
-  showSubDirs: DS.attr 'boolean'
-  virtual: DS.attr 'boolean'
+  showSubDirs: Emu.field 'boolean'
+  virtual: Emu.field 'boolean'
   hasSubDirs:(->
     @get('showSubDirs') and @get('children.length') > 0
   ).property('children.@each', 'showSubDirs')

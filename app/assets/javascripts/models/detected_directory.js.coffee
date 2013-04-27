@@ -1,7 +1,7 @@
-Cataract.DetectedDirectory = DS.Model.extend
-  name: DS.attr('string')
-  parent: DS.belongsTo('Cataract.Directory')
-  disk: DS.belongsTo('Cataract.Disk')
+Cataract.DetectedDirectory = Emu.Model.extend
+  name: Emu.field('string')
+  parent: Emu.field('Cataract.Directory')
+  disk: Emu.field('Cataract.Disk')
   createDirectory: ->
     parent = @get('parent')
     disk   = @get('disk')

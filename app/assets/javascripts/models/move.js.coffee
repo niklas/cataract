@@ -1,5 +1,5 @@
-Cataract.Move = DS.Model.extend
-  torrent: DS.belongsTo('Cataract.Torrent')
-  title: DS.attr('string')
-  targetDisk: DS.belongsTo('Cataract.Disk')
-  targetDirectory: DS.belongsTo('Cataract.Directory')
+Cataract.Move = Emu.Model.extend
+  torrent: Emu.field('Cataract.Torrent')
+  title: Emu.field('string')
+  targetDisk: Emu.field('Cataract.Disk')
+  targetDirectory: Emu.field('Cataract.Directory')

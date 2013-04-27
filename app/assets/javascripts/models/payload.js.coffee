@@ -1,8 +1,8 @@
-Cataract.Payload = DS.Model.extend
-  directory: DS.belongsTo('Cataract.Directory')
-  size: DS.attr 'number'
-  filenames: DS.attr 'staticArray'
-  humanSize: DS.attr('string')
+Cataract.Payload = Emu.Model.extend
+  directory: Emu.field('Cataract.Directory')
+  size: Emu.field 'number'
+  filenames: Emu.field 'staticArray'
+  humanSize: Emu.field('string')
 
   hasContent: (->
     @get('filenames')?.length || 0 > 0

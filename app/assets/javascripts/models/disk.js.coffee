@@ -1,8 +1,8 @@
-Cataract.Disk = DS.Model.extend
-  name: DS.attr('string')
-  isMounted: DS.attr('boolean')
+Cataract.Disk = Emu.Model.extend
+  name: Emu.field('string')
+  isMounted: Emu.field('boolean')
   active: (-> this == Cataract.get('currentDisk') ).property('Cataract.currentDisk')
-  directories: DS.hasMany('Cataract.Directory')
+  directories: Emu.field('Cataract.Directory', collection: true)
   hasDirectories: Ember.computed ->
     @get('directories.length') > 0
   .property('directories.@each')
