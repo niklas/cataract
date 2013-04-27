@@ -4,7 +4,7 @@
 #= require jquery.scrollTo-1.4.3.1
 #= require handlebars-1.0.0-rc.3
 #= require ember
-#= require ember-data
+#= require ember-emu-0.1.0
 #= require ember-bootstrap
 #= require ember-rails-flash
 #= require bootstrap
@@ -12,7 +12,6 @@
 #= require spinner
 #= require bindWithDelay
 #
-#= require_tree ./lib
 #= require ./cataract
 
 jQuery ->

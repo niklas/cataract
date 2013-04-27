@@ -1,8 +1,10 @@
 Cataract.DirectoriesController = Cataract.FilteredController.extend
+  init: ->
+    @set 'unfilteredContent', Cataract.Directory.find()
   currentBinding: 'Cataract.currentDirectory'
   diskBinding: 'Cataract.currentDisk'
   contentBinding: 'roots'
-  unfilteredContent: Cataract.Directory.find()
+  unfilteredContent: Ember.A()
   # FIXME: isLoaded does not work on Arrays https://github.com/emberjs/data/issues/587
   isLoadedBinding: 'unfilteredContent.length'
 

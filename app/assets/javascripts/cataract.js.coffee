@@ -37,16 +37,13 @@ Cataract = Ember.Application.create
   #     want
   # ).property('directories.@each.parentId', 'currentDisk')
 
-DS.RESTAdapter.configure "plurals",
-  directory: 'directories'
-  detected_directory: 'detected_directories'
+Cataract.Store = Emu.Store.extend()
 
-DS.RESTAdapter.configure 'Cataract.Torrent', sideloadAs: 'torrents'
-
-Cataract.store = DS.Store.create
-  revision: 11
-  adapter: DS.RESTAdapter.create
-    bulkCommit: false
+#DS.RESTAdapter.configure "plurals",
+#  directory: 'directories'
+#  detected_directory: 'detected_directories'
+#
+#DS.RESTAdapter.configure 'Cataract.Torrent', sideloadAs: 'torrents'
 
 window.Cataract = Cataract
 
