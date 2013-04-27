@@ -31,3 +31,4 @@ Cataract.Directory = Emu.Model.extend
 
 Cataract.Directory.reopenClass
   url: 'directory'
+  resourceName: 'directories'

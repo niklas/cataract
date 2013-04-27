@@ -16,3 +16,6 @@ Cataract.DetectedDirectory = Emu.Model.extend
       parent.get('children').addObject(directory) if parent?
       disk.get('directories').addObject(directory) if disk?
     directory
+
+Cataract.DetectedDirectory.reopenClass
+  resourceName: 'detected_directories'

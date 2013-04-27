@@ -37,7 +37,12 @@ Cataract = Ember.Application.create
   #     want
   # ).property('directories.@each.parentId', 'currentDisk')
 
-Cataract.Store = Emu.Store.extend()
+jQuery.ajaxSetup
+  dataType: 'json'
+
+Cataract.Store = Emu.Store.extend
+  adapter: Emu.RestAdapter.extend
+    serializer: Emu.UnderscoreSerializer.extend()
 
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'
