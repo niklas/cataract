@@ -6,9 +6,16 @@ Cataract.Directory = Emu.Model.extend
   torrents: Emu.field('Cataract.Torrent', collection: true)
   disk: Emu.field('Cataract.Disk', key: 'disk_id')
   exists: Emu.field('boolean')
-  # Uncaught RangeError: Maximum call stack size exceeded
-  #  parent: Emu.field('Cataract.Directory', lazy: true)
-  children: Emu.field('Cataract.Directory', collection: true, lazy: true)
+  parentId: Emu.field('number')
+  parent: Ember.computed ->
+    if pid = @get('parentId')
+      Cataract.Directory.find(pid)
+    else
+      null
+  .property('parentId')
+  children: Ember.computed ->
+    Cataract.Directory.find().filterProperty 'parentId', @get('id')
+  .property() # TODO what to depend on here?
   active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
   showSubDirs: Emu.field 'boolean'
   virtual: Emu.field 'boolean'
