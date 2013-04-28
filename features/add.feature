@@ -5,8 +5,7 @@ Feature: Adding a torrent
   I want to add torrents and have them started automatically
 
   Background:
-    Given an existing directory exists with name: "Existing"
-      And a directory "Incoming" exists with name: "Incoming"
+    Given an existing directory "Incoming" exists with name: "Incoming"
       And a setting exists with incoming_directory: directory "Incoming"
       And the URL "http://hashcache.net/files/single.torrent" points to file "single.torrent"
       And I am signed in

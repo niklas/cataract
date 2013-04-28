@@ -2,7 +2,7 @@ class TransferController < TorrentComponentController
   Fields = [:up_rate, :down_rate, :size_bytes, :completed_bytes, :active?]
 
   def index
-    render json: collection, each_serializer: TransferSerializer, root: 'transfers'
+    render json: collection, each_serializer: TransferSerializer, root: false
   end
 
   def show

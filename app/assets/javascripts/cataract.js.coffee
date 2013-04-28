@@ -1,3 +1,4 @@
+#= require_tree ./lib
 #= require_self
 #= require_tree ./addons
 #= require_tree ./models
@@ -42,7 +43,7 @@ jQuery.ajaxSetup
 
 Cataract.Store = Emu.Store.extend
   adapter: Emu.RestAdapter.extend
-    serializer: Emu.UnderscoreSerializer.extend()
+    serializer: Emu.RailsSerializer.extend()
 
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'
