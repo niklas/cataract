@@ -13,17 +13,4 @@ Cataract.AddTorrentModal = Bootstrap.ModalPane.extend
   primary: "Add"
   secondary: "Cancel"
   showBackdrop: true
-  callback: (opts) ->
-    if opts.primary
-      torrent = @get('torrent')
-      record = Cataract.Torrent.createRecord
-        contentDirectory: torrent.get('contentDirectory')
-        fetchAutomatically: true
-        startAutomatically: true
-        url: torrent.get('url')
-        filedata: torrent.get('filedata')
-        filename: torrent.get('filename')
-      record.one 'didFinishSaving', ->
-        Cataract.get('torrentsController').didAddRunningTorrent(record)
-      record.save()
-    true
+  callback: Ember.K

@@ -18,12 +18,7 @@ Cataract.Torrent = Emu.Model.extend
   .property('payload.isLoaded', 'payload.isDeleted')
 
   contentDirectoryId: Emu.field 'number'
-  contentDirectory: Ember.computed ->
-    if cid = @get('contentDirectoryId')
-      Cataract.Directory.find(cid)
-    else
-      null
-  .property('contentDirectoryId')
+  contentDirectory: Emu.belongsTo('Cataract.Directory', key: 'contentDirectoryId')
 
   fetchAutomatically: Emu.field 'boolean'
   startAutomatically: Emu.field 'boolean'

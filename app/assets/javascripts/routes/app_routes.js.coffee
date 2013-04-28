@@ -46,13 +46,23 @@ Cataract.DiskRoute = Ember.Route.extend
 
 Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->
-    Ember.Object.create()
+    Cataract.Torrent.createRecord()
   setupController: (controller, torrent) ->
-    # TODO transition route back
+    router = this
+    # TODO transition route "back" (must remember last route?)
     Cataract.AddTorrentModal.popup
       torrent: torrent
       directories: Cataract.Directory.find()
       disks: Cataract.Disk.find()
+      callback: (opts) ->
+        if opts.primary
+          torrent.setProperties
+            fetchAutomatically: true
+            startAutomatically: true
+          torrent.one 'didFinishSaving', ->
+            router.controllerFor('torrents').didAddRunningTorrent(torrent)
+          torrent.save()
+        true
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->

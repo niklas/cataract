@@ -18,3 +18,21 @@ Emu.RailsSerializer = Emu.UnderscoreSerializer.extend
     wrapped = {}
     wrapped[ model.constructor.url ] = @_super(model)
     wrapped
+
+Emu.belongsTo = (type, options) ->
+  meta =
+    type: -> Ember.get(type) || type
+    options: options
+    key: -> options.key
+
+  Ember.computed (key, value) ->
+    if arguments.length is 1 # getter
+      if cid = @get(meta.key())
+        meta.type().find(cid)
+      else
+        null
+    else #setter
+      if value?
+        @set meta.key(), value.get('id')
+      value
+  .property(meta.key())

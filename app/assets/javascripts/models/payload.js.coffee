@@ -1,5 +1,6 @@
 Cataract.Payload = Emu.Model.extend
-  directory: Emu.field('Cataract.Directory')
+  directoryId: Emu.field 'number'
+  directory: Emu.belongsTo('Cataract.Directory', key: 'directoryId')
   size: Emu.field 'number'
   filenames: Emu.field 'staticArray'
   humanSize: Emu.field('string')
