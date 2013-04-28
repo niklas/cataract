@@ -14,10 +14,10 @@ Cataract.NewDirectoryModal = Bootstrap.ModalPane.extend
   secondary: "Cancel"
   showBackdrop: true
   callback: (opts) ->
+    directory = @get('directory')
     if opts.primary
-      directory = @get('directory')
-      directory.get('transaction').commit()
+      directory.save()
     else
-      directory.get('transaction').rollback()
+      directory.clear()
 
 

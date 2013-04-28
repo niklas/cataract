@@ -9,9 +9,9 @@ Cataract.EditDirectoryModal = Bootstrap.ModalPane.extend
   callback: (opts) ->
     directory = @get('directory')
     if opts.primary
-      directory.get('transaction').commit()
+      directory.save()
     else
-      directory.get('transaction').rollback()
+      directory.clear()
     if back = @get('back')
       Cataract.Router.router.transitionTo( back... )
 

@@ -3,5 +3,5 @@ Cataract.SettingsController = Ember.ObjectController.extend
   needs: ['directories']
 
   save: (x,y) ->
-    @get('content.transaction').commit()
+    @get('content').save()
     true

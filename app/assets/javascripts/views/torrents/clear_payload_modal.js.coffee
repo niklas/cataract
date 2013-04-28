@@ -23,11 +23,8 @@ Cataract.ClearPayloadModal = Bootstrap.ModalPane.extend
     if opts.primary
       if payload = @get('torrent.payload')
         torrent = @get('torrent')
-        payload.one 'didDelete', -> torrent.set('payloadExists', false)
-        try
-          payload.deleteRecord()
-        catch error
-          console?.debug "error while clearing payload: #{error}, trying to continue"
-        payload.get('transaction').commit()
+        #payload.one 'didDelete', -> torrent.set('payloadExists', false)
+        torrent.set('payloadExists', false)
+        payload.deleteRecord()
     true
 

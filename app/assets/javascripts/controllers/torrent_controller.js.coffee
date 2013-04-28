@@ -14,15 +14,13 @@ Cataract.TorrentController = Ember.ObjectController.extend
         targetDirectory: directory
 
   start: (torrent) ->
-    transaction = Cataract.store.transaction()
-    transfer = transaction.createRecord Cataract.Transfer, id: torrent.get('id')
-    transaction.commit()
+    transfer = Cataract.Transfer.createRecord id: torrent.get('id')
+    transfer.save()
     false
 
   stop: (torrent) ->
     if transfer = torrent.get('transfer')
       transfer.deleteRecord()
-      transfer.get('transaction').commit()
     false
 
   delete: (torrent) ->

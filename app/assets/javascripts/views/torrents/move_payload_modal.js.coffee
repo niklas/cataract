@@ -23,8 +23,8 @@ Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
     if opts.primary
       move =  @get('move')
       move.set('torrent', @get('torrent'))
-      move.get('transaction').commit()
+      move.save()
     else
-      move.get('transaction').rollback()
+      move.clear()
     true
 

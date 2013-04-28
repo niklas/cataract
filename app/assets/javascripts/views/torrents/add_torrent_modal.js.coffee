@@ -16,15 +16,14 @@ Cataract.AddTorrentModal = Bootstrap.ModalPane.extend
   callback: (opts) ->
     if opts.primary
       torrent = @get('torrent')
-      transaction = Cataract.store.transaction()
-      record = transaction.createRecord Cataract.Torrent,
+      record = Cataract.Torrent.createRecord
         contentDirectory: torrent.get('contentDirectory')
         fetchAutomatically: true
         startAutomatically: true
         url: torrent.get('url')
         filedata: torrent.get('filedata')
         filename: torrent.get('filename')
-      record.one 'didCreate', ->
+      record.one 'didFinishSaving', ->
         Cataract.get('torrentsController').didAddRunningTorrent(record)
-      transaction.commit()
+      record.save()
     true

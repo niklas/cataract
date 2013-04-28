@@ -1,7 +1,7 @@
 Cataract.LinkToCreateDirectory = Ember.View.extend
   template: Ember.Handlebars.compile '<a href="#" {{action createDirectory view.content target="view"}} class="btn btn-warning btn-mini">Import</a>'
   createDirectory: (detected) ->
-    detected.createDirectory().get('transaction').commit()
+    detected.createDirectory().save()
 
 Cataract.DetectedDirectoriesTable = Cataract.Table.extend
   classNames: 'table table-striped new directories'.w()

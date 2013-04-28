@@ -23,12 +23,11 @@ Cataract.DeleteTorrentModal = Bootstrap.ModalPane.extend
     if opts.primary
       torrent = @get('torrent')
       torrent = torrent.get('content') if torrent.isController
-      transaction = Cataract.store.transaction()
-      deletion = transaction.createRecord Cataract.Deletion,
+      deletion = Cataract.Deletion.createRecord
         id: torrent.get('id')
         deletePayload: @get('deletePayload')
-      deletion.one 'didCreate', ->
-        torrent.get('stateManager').goToState('deleted.saved')
+      deletion.one 'didFinishSaving', ->
+        #torrent.get('stateManager').goToState('deleted.saved')
         Cataract.get('torrentsController').reload()
-      transaction.commit()
+      deletion.save()
     true

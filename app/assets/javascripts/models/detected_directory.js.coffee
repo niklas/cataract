@@ -5,12 +5,11 @@ Cataract.DetectedDirectory = Emu.Model.extend
   createDirectory: ->
     parent = @get('parent')
     disk   = @get('disk')
-    transaction = Cataract.store.transaction()
-    directory = transaction.createRecord Cataract.Directory,
+    directory = Cataract.Directory.createRecord
       name: @get('name')
       parent: parent
       disk: disk
-    directory.one 'didCreate', ->
+    directory.one 'didFinishSaving', ->
       # FIXME Ember/me is too stupid to get the change
       # caused re-fetch of #detectedChildren
       parent.get('children').addObject(directory) if parent?
