@@ -673,9 +673,7 @@
       } else {
         attributeSerializer = Emu.AttributeSerializers[meta.type()];
         value = attributeSerializer.deserialize(value);
-        if (value) {
-          return model.set(property, value);
-        }
+        return model.set(property, value);
       }
     },
     _serializeProperty: function(model, jsonData, property, meta) {
