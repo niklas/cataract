@@ -9,9 +9,16 @@ class TorrentsController < InheritedResources::Base
   layout 'library'
 
   def index
-    @updated = resource_class.order('updated_at').last
-    if !@updated.present? || stale?(:etag => @updated, :last_modified => @updated.updated_at)
-      index!
+    respond_to do |format|
+      format.html do
+        index!
+      end
+      format.json do
+        @updated = resource_class.order('updated_at').last
+        if !@updated.present? || stale?(:etag => @updated, :last_modified => @updated.updated_at)
+          index!
+        end
+      end
     end
   end
 
