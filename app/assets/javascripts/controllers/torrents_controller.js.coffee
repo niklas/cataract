@@ -82,15 +82,16 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   refreshTransfers: ->
     list = @get('unfilteredContent')
     running = list.filterProperty('status', 'running')
-    return true # disable until we figure out how to update torrents with transfers
+    primaryKey = Emu.Model.primaryKey(Cataract.Transfer)
     $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
-      for transfer in data.transfers
-        Cataract.store.load Cataract.Transfer, transfer
-      if data.torrents
-        for updated in data.torrents
-          if listed = list.findProperty('infoHash', data.info_hash)
-            listed.setProperties updated
-            listed.stateManager.goToState('loaded')
+      for update in data
+        if transfer = Cataract.Transfer.find update[primaryKey]
+          serializer = transfer.get('store')._adapter._serializer
+          console.debug "updating", transfer.toString(), 'with', update
+          serializer.deserializeModel(transfer, update, true) # update without making it dirty
+          if torrent = Cataract.Torrent.find update[primaryKey]
+            torrent.set 'status', 'running'
+            # TODO detect stopped torrents
       Cataract.set 'online', true
       true
 
