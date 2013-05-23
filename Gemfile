@@ -58,6 +58,7 @@ group :development, :test do
   gem 'jasminerice'
   gem 'guard-jasmine'
   gem 'rb-inotify', '~> 0.8.8'
+  gem 'rails-develotest'
 end
 
 group :development do
