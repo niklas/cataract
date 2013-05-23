@@ -16,8 +16,10 @@ Cataract = Ember.Application.create
   offlineReason: 'loading...'
   autoinit: false
   terms: ''
+  transfers: Ember.A()
   ready: ->
     #@_super()
+    @set 'transfers', Cataract.Transfer.find()
     # TODO put this into a view/controller combi
     jQuery(document).ajaxError (e, jqxhr, settings, exception) ->
       Cataract.set 'online', false
@@ -42,6 +44,7 @@ jQuery.ajaxSetup
   dataType: 'json'
 
 Cataract.Store = Emu.Store.extend
+  revision: 1
   adapter: Emu.RestAdapter.extend
     serializer: Emu.RailsSerializer.extend()
 

@@ -1,7 +1,8 @@
 Cataract.Torrent = Emu.Model.extend
   title: Emu.field 'string'
-  # must simulate field thx to https://github.com/emberjs/data/pull/475
-  transfer: (-> Cataract.Transfer.find(@get('id'))).property('Cataract.transfers.@each.id')
+  transfer: Ember.computed ->
+    Cataract.get('transfers').findProperty('id', @get('id'))
+  .property('Cataract.transfers.length', 'Cataract.online', 'status')
   info_hash: Emu.field 'string'
   status: Emu.field 'string'
   filename: Emu.field 'string'

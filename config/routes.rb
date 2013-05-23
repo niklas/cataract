@@ -7,17 +7,16 @@ Cataract::Application.routes.draw do
       get 'prepend'
     end
   end
-  resources :payloads, only: [:show, :destroy], controller: :payload
-  resources :transfers, only: [:index, :show, :create, :destroy], controller: :transfer
-  resource :deletions, controller: :deletion, only: [:new, :create, :show]
-  resources :moves, controller: :move, only: [:index, :create]
 
-  controller :torrents do
-    get 'status/:status/page/:page', action: :index
-    get 'page/:page',                action: :index
-    get 'status/:status',            action: :index
-    get 'status/running',            action: :index, as: :running_torrents
+  resources :torrents do
+    resources :payloads, only: [:show, :destroy], controller: :payload
+    resources :transfers, only: [:show, :create, :destroy], controller: :transfer
+    resource :deletions, controller: :deletion, only: [:new, :create, :show]
+    resources :moves, controller: :move, only: :create
   end
+
+  resources :transfers, only: :index, controller: :transfer
+  resources :moves, only: :index, controller: :move
 
   get "recent" => 'torrents#index', :as => 'user_root' # after login
 

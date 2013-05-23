@@ -3,6 +3,7 @@ Cataract.Transfer = Emu.Model.extend
   upRate: Emu.field 'string'
   downRate: Emu.field 'string'
   eta: Emu.field 'string'
+  torrentId: Emu.field 'number' # FIXME is not set by serializer
   progressStyle: Ember.computed ->
     "width: #{@get('progress')}%"
   .property('progress')
