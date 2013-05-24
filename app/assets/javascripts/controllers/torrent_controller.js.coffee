@@ -1,4 +1,5 @@
 Cataract.TorrentController = Ember.ObjectController.extend
+  needs: ['torrents']
   deletePayload: (torrent) ->
     Cataract.ClearPayloadModal.popup torrent: torrent
 
