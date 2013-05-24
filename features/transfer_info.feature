@@ -43,7 +43,7 @@ Feature: Transfer info
         | up      |
         | 23 B/s  |
 
-  Scenario: progress pies updates themselfes
+  Scenario: progress bars updates themselfes
     Given the torrent is running
       And I am on the home page
       And I wait for the spinner to stop

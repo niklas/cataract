@@ -87,12 +87,12 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     serializer = store._adapter._serializer
     existing = Cataract.get('transfers')
     $.getJSON "/transfers?running=#{running.join(',')}", (data, textStatus, xhr) ->
+      # time as passed => recalculate
+      running = list.filterProperty('status', 'running').mapProperty('id')
       for update in data
         id = update[primaryKey]
-        if transfer = existing.findProperty('id', id)
-          serializer.deserializeModel(transfer, update, true) # update without making it dirty
-        else
-          transfer = Cataract.Transfer.createRecord update
+        transfer = existing.findProperty('id', id) || Cataract.Transfer.createRecord(id: id)
+        serializer.deserializeModel(transfer, update, true) # update without making it dirty
         if torrent = list.findProperty('id', id)
           torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
         running.removeObject(id)
