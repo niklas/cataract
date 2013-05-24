@@ -11,6 +11,7 @@ class TransferSerializer < BaseSerializer
         hash['eta'] = time_left_in_words object.left_seconds
       end
       hash['id'] = object.torrent_id # trick ember
+      hash[:active] = object.active?
     end
   end
 end

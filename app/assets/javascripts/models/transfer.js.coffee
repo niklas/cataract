@@ -13,3 +13,10 @@ Cataract.Transfer = Emu.Model.extend
   finished: Ember.computed ->
     @get('progress') == 100
   .property('progress')
+  active: Emu.field 'boolean'
+
+  # ember-emu specific for nested URL
+  parent: Emu.belongsTo('Cataract.Torrent', key: 'torrentId')
+
+Cataract.Transfer.reopenClass
+  url: 'transfer'
