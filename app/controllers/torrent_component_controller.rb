@@ -9,12 +9,10 @@ class TorrentComponentController < InheritedResources::Base
     render status: 502, text: I18n.t('rtorrent.exceptions.offline')
   end
 
-  # FIXME: ember-data does not support nested resources yet, so we have to jump
-  # through hoops finding the torrent
-
+  # FIXME: Ember-Emu cannot delete nested resources yet
   private
   def torrent
-    @torrent ||= Torrent.find( params[:id] || resource_params.first[:torrent_id] || resource_params.first[:id] )
+    @torrent ||= parent || Torrent.find( params[:id] )
   end
 
   helper_method :torrent

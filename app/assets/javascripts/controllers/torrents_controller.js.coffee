@@ -95,6 +95,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         serializer.deserializeModel(transfer, update, true) # update without making it dirty
         if torrent = list.findProperty('id', id)
           torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
+          torrent.get('transfers').clear()
+          torrent.get('transfers').pushObject(transfer)
         running.removeObject(id)
       # detect stopped torrents
       running.forEach (disap) ->
