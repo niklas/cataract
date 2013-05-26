@@ -76,6 +76,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   didAddRunningTorrent: (torrent) ->
     @set('mode', 'running')
     @reload()
+    @refreshTransfers()
     Cataract.Router.router.transitionTo 'torrent', torrent
 
 
