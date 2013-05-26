@@ -9,7 +9,6 @@
 #= require ember-rails-flash
 #= require bootstrap
 #= require pagination_support
-#= require spinner
 #= require bindWithDelay
 #
 #= require ./cataract
