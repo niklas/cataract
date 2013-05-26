@@ -28,10 +28,18 @@ class TransferController < TorrentComponentController
   end
 
   def collection
-    @transfers ||= Torrent.running_or_listed(params[:running]).tap do |torrents|
-      authorize! :index, Torrent
-      Torrent.remote.apply torrents, Fields
-      torrents.reject(&:active?).each(&:finally_stop!)
-    end.map(&:transfer)
+    @transfers ||= torrents_for_collection.tap do  |torrents|
+        authorize! :index, Torrent
+        Torrent.remote.apply torrents, Fields
+        torrents.reject(&:active?).each(&:finally_stop!)
+      end.map(&:transfer)
+  end
+
+  def torrents_for_collection
+    if parent?
+      [parent]
+    else
+      Torrent.running_or_listed(params[:running])
+    end
   end
 end
