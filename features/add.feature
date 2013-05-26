@@ -19,7 +19,7 @@ Feature: Adding a torrent
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
-      And the existing directory should be the torrent's content_directory
+      And the existing directory "Incoming" should be the torrent's content_directory
       And rtorrent should download the torrent
 
   Scenario: Adding by URL to specific directory
