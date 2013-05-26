@@ -1,7 +1,7 @@
 Cataract.Torrent = Emu.Model.extend
   title: Emu.field 'string'
   transferBinding: 'transfers.firstObject'
-  transfers: Emu.field('Cataract.Transfer', collection: true, lazy: true)
+  transfers: Emu.field('Cataract.Transfer', collection: true)
   info_hash: Emu.field 'string'
   status: Emu.field 'string'
   filename: Emu.field 'string'
