@@ -9,7 +9,7 @@ Cataract::Application.routes.draw do
   end
 
   resources :torrents do
-    resources :payloads, only: [:show, :destroy], controller: :payload
+    resource :payload, only: [:show, :destroy], controller: :payload
     resources :transfers, only: [:show, :create, :destroy], controller: :transfer
     resource :deletions, controller: :deletion, only: [:new, :create, :show]
     resources :moves, controller: :move, only: :create

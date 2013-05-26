@@ -48,6 +48,7 @@ Cataract.TorrentRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super(controller, model)
     controller.set 'content', model
+    model.loadPayload()
     # Emu::Model.findQuery uses its own collection, resulting in two copies of
     # the same Torrent. We replace it with the already loaded one
     torrents = @controllerFor('torrents').get('unfilteredContent')

@@ -12,10 +12,20 @@ Cataract.Torrent = Emu.Model.extend
 
   filedata: Emu.field 'string' # TODO put into payload
 
-  payload: (-> Cataract.Payload.find(@get('id'))).property()
+  payload: null
   payloadPresent: Ember.computed ->
     @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
   .property('payload.isLoaded', 'payload.isDeleted')
+
+  # fetch manually because Emu cannot handle singleton resources
+  loadPayload: ->
+    id = @get 'id'
+    serializer = @get('store')._adapter._serializer
+    $.getJSON("/torrents/#{id}/payload")
+      .success (data) =>
+        payload = Cataract.Payload.createRecord(id: id)
+        serializer.deserializeModel(payload, data, true)
+        @set 'payload', payload
 
   contentDirectoryId: Emu.field 'number'
   contentDirectory: Emu.belongsTo('Cataract.Directory', key: 'contentDirectoryId')
