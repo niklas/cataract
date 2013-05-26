@@ -6,7 +6,7 @@ Feature: Adding a torrent
 
   Background:
     Given an existing directory "Incoming" exists with name: "Incoming"
-      And an existing directory exists with name: "Another"
+      And an existing directory "Another" exists with name: "Another"
       And a setting exists with incoming_directory: directory "Incoming"
       And the URL "http://hashcache.net/files/single.torrent" points to file "single.torrent"
       And I am signed in
