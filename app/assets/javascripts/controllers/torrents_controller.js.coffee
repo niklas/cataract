@@ -43,7 +43,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   filterFunction: (->
     termsList  = @get('termsList')
     mode = @get('mode') || ''
-    directory = @get('directory')
+    directoryId = @get('directory.id')
     (torrent) ->
       want = true
       torrent = torrent.record if torrent.record? # materialized or not?!
@@ -54,8 +54,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
-      if directory
-        want = want and directory is torrent.get('contentDirectory')
+      if directoryId
+        want = want and directoryId is torrent.get('contentDirectoryId')
 
       want
   ).property('termsList', 'mode', 'directory', 'age')

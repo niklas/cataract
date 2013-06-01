@@ -21,7 +21,9 @@ Cataract::Application.routes.draw do
   get "recent" => 'torrents#index', :as => 'user_root' # after login
 
   resources :disks do
-    resources :directories
+    resources :directories do
+      resources :detected_directories, only: :index
+    end
     resources :detected_directories, only: :index
   end
 

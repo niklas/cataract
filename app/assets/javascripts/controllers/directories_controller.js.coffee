@@ -14,11 +14,11 @@ Cataract.DirectoriesController = Cataract.FilteredController.extend
   .property('filteredContent', 'unfilteredContent.@each.parentId')
 
   filterFunction: Ember.computed ->
-    disk = @get('disk')
+    diskId = @get('disk.id')
     (record) ->
       record = record.record if record.record? # materialized or not?!
       want = true
-      if disk
-        want &= record.get('disk') is disk
+      if diskId
+        want &= record.get('diskId') is diskId
       want
   .property('unfilteredContent.@each.disk', 'disk')
