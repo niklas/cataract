@@ -6,7 +6,7 @@ Cataract.Directory = Cataract.BaseDirectory.extend
   exists: Emu.field('boolean')
   children: Ember.computed ->
     @get('disk.directories')?.filterProperty('parentId', @get('id'))
-  .property('disk.directories.@each')
+  .property('disk.directories.@each.parentId')
   active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
   showSubDirs: Emu.field 'boolean'
   virtual: Emu.field 'boolean'
