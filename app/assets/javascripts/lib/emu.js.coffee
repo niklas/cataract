@@ -36,3 +36,7 @@ Emu.belongsTo = (type, options) ->
         @set meta.key(), value.get('id')
       value
   .property(meta.key())
+
+Emu.Model.reopen
+  deleteRecord: ->
+    @get("store").deleteRecord(this)

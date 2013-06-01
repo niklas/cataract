@@ -15,8 +15,5 @@ Cataract.Transfer = Emu.Model.extend
   .property('progress')
   active: Emu.field 'boolean'
 
-  deleteRecord: ->
-    @get("store").deleteRecord(this)
-
 Cataract.Transfer.reopenClass
   url: 'transfer'
