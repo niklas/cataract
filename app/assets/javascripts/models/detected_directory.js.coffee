@@ -1,16 +1,19 @@
-Cataract.DetectedDirectory = Emu.Model.extend
-  name: Emu.field('string')
-  parent: Emu.field('Cataract.Directory')
-  diskId: Emu.field('number')
-  disk: Emu.belongsTo('Cataract.Disk', key: 'diskId')
+Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
   createDirectory: ->
     parent = @get('parent')
     disk   = @get('disk')
-    directory = disk.get('directories').createRecord name: @get('name')
+    directory = Cataract.Directory.createRecord
+      name: @get('name')
+      diskId: disk?.get('id')
+      parentId: parent?.get('id')
     directory.one 'didFinishSaving', =>
-      disk.get('detectedDirectories').deleteRecord(this)
-      #parent.get('children').addObject(directory) if parent?
-      #disk.get('directories').addObject(directory) if disk?
+      if disk?
+        disk.notifyPropertyChange('detectedDirectories')
+        disk.get('detectedDirectories')?.deleteRecord(this)
+        disk.get('directories').pushObject(directory)
+      if parent?
+        parent.notifyPropertyChange('children')
+        parent.get('detectedChildren')?.deleteRecord(this)
     directory
 
 Cataract.DetectedDirectory.reopenClass
