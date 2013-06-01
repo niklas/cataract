@@ -2,7 +2,7 @@ Cataract.Disk = Emu.Model.extend
   name: Emu.field('string')
   isMounted: Emu.field('boolean')
   active: (-> this == Cataract.get('currentDisk') ).property('Cataract.currentDisk')
-  directories: Emu.field('Cataract.Directory', collection: true)
+  directories: Emu.field('Cataract.Directory', collection: true, lazy: true)
   hasDirectories: Ember.computed ->
     @get('directories.length') > 0
   .property('directories.@each')

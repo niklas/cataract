@@ -4,7 +4,8 @@ Cataract.Directory = Emu.Model.extend
   subscribed: Emu.field('boolean')
   filter: Emu.field('string')
   torrents: Emu.field('Cataract.Torrent', collection: true)
-  disk: Emu.field('Cataract.Disk', key: 'disk_id')
+  diskId: Emu.field('number')
+  disk: Emu.belongsTo('Cataract.Disk', key: 'diskId')
   exists: Emu.field('boolean')
   parentId: Emu.field('number')
   parent: Ember.computed ->
