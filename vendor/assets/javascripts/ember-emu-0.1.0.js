@@ -228,14 +228,14 @@
       url = model.constructor === Emu.ModelCollection ? this._serializer.serializeTypeName(model.get("type")) : "";
       currentModel = model;
       buildUrl = function() {
-        currentModel = currentModel.get("parent");
+        currentModel = currentModel.get("EMUparent");
         if (currentModel.constructor === Emu.ModelCollection) {
           return url = _this._serializer.serializeTypeName(currentModel.get("type")) + (url ? "/" + url : "");
         } else {
           return url = currentModel.primaryKeyValue() + "/" + url;
         }
       };
-      while (currentModel.get("parent")) {
+      while (currentModel.get("EMUparent")) {
         buildUrl();
       }
       return this._getBaseUrl() + url;
@@ -395,7 +395,7 @@
       if (!record._attributes[key]) {
         if (meta.options.collection) {
           record._attributes[key] = Emu.ModelCollection.create({
-            parent: record,
+            EMUparent: record,
             type: meta.type(),
             store: record.get("store"),
             lazy: meta.options.lazy
@@ -449,7 +449,7 @@
         };
         paramHash[primaryKey] = hash != null ? hash.id : void 0;
         model = this.get("type").create(paramHash);
-        model.set("parent", this);
+        model.set("EMUparent", this);
         model.setProperties(hash);
         if (this._subscribeToUpdates) {
           model.subscribeToUpdates();
