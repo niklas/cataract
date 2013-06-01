@@ -47,6 +47,7 @@ Feature: Adding a torrent
       And I should see "Incoming" within the details
       And I should see "71.7 KB" within the details
       And I should see the stop link
+     When the tick interval is reached
      Then I should see the following torrents in the torrent list:
        | title  | percent |
        | single | 0%      |
@@ -62,11 +63,12 @@ Feature: Adding a torrent
       And I should see "Incoming" within the details
       And I should see "71.7 KB" within the details
       And I should see the stop link
-      And I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
       And the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
+     When the tick interval is reached
+     Then I should see the following torrents in the torrent list:
+       | title  | percent |
+       | single | 0%      |
 
   Scenario: Uploading a non-torrent
     Given the dropzone should not be classified as inviting
