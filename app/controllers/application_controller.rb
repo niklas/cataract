@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  layout :layout_by_resource
+
+
   protected
   def h(stringy)
     CGI.escapeHTML(stringy)
@@ -31,5 +34,13 @@ class ApplicationController < ActionController::Base
 
   def search_params
     params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {}).merge(per: 1000) # TODO paginate properly
+  end
+
+  def layout_by_resource
+    if devise_controller?
+      "single"
+    else
+      "application"
+    end
   end
 end
