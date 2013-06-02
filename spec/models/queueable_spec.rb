@@ -100,11 +100,10 @@ describe Queueable do
 
       context "#work!" do
         it "should provide saveguard from exceptions" do
-          exception = RuntimeError.new
           job = model.new
-          job.stub(:work).and_raise(exception)
+          job.stub(:work).and_raise("bad things")
           job.should_receive(:handle_failure)
-          expect { job.work! }.to raise_error(exception)
+          expect { job.work! }.to raise_error
         end
 
         it "saves exception text when failing" do
