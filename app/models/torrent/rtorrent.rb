@@ -188,14 +188,14 @@ class Torrent
 
     def start_and_wait!(torrent)
       start!(torrent)
-      wait_until 10 do
+      wait_until 20 do
         active?(torrent)
       end
     end
 
     def stop_and_wait!(torrent)
       stop!(torrent)
-      wait_until 10 do
+      wait_until 20 do
         !active?(torrent)
       end
     end
