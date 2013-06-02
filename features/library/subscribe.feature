@@ -21,7 +21,7 @@ Feature: Subscribe Directory
       And I wait for the modal box to disappear
      Then I should see flash notice "Directory 'Shame of Frowns' saved."
       And I should see "subscribed" in a label within the details
-      And the directory should be subscribed
+      And the directory's subscribed should be true
       And the directory's filter should be "frowns"
 
      When I click on the edit link
@@ -30,7 +30,7 @@ Feature: Subscribe Directory
       And I follow "Cancel"
       And I wait for the modal box to disappear
      Then I should see "subscribed" in a label within the details
-      And the directory should be subscribed
+      And the directory's subscribed should be true
 
      When I click on the edit link
       And I wait for the modal box to appear
@@ -40,4 +40,4 @@ Feature: Subscribe Directory
       And I wait for the modal box to disappear
       #Then I should see flash notice "subscribed to Directory 'Shame of Frowns'."
       And I should not see "subscribed" in a label within the details
-      And the directory should not be subscribed
+      And the directory's subscribed should be false

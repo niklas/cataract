@@ -98,6 +98,7 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
+    model.prepareUndo('filter', 'subscribed')
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       directory: model

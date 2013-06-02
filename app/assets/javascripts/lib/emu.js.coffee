@@ -42,3 +42,14 @@ Emu.belongsTo = (type, options) ->
 Emu.Model.reopen
   deleteRecord: ->
     @get("store").deleteRecord(this)
+
+  prepareUndo: (fields...)->
+    for a in fields
+      console.debug "prepaing #{a}"
+      @set "#{a}_was", @get(a)
+
+  undo: (fields...) ->
+    for a in fields
+      console.debug "undong #{a}"
+      @set a, @get("#{a}_was")
+

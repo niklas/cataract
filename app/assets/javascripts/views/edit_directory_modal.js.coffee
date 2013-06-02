@@ -11,7 +11,7 @@ Cataract.EditDirectoryModal = Bootstrap.ModalPane.extend
     if opts.primary
       directory.save()
     else
-      directory.clear()
+      directory.undo('filter', 'subscribed')
     if back = @get('back')
       Cataract.Router.router.transitionTo( back... )
 
