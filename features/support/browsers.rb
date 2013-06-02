@@ -10,6 +10,7 @@ module BrowserSupport
 
     def setup_chrome
       if chrome = [`which chromium-browser`, `which google-chrome`].map(&:chomp).reject(&:blank?).first
+        STDERR.puts "Chrome binary: #{chrome}"
         Selenium::WebDriver::Chrome.path = chrome
       end
       setup_selenium :chrome,
