@@ -104,5 +104,5 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
       back: ['directory', model]
 
 Cataract.SettingsRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    controller.set 'content', Cataract.get('settings')
+  model: ->
+    Cataract.Setting.find('all')
