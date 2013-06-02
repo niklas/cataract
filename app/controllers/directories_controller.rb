@@ -5,11 +5,15 @@ class DirectoriesController < InheritedResources::Base
   load_and_authorize_resource except: [:index]
 
   def create
-    create!
+    create! do |success|
+      success.json { render json: resource }
+    end
   end
 
   def update
-    update!
+    update! do |success|
+      success.json { render json: resource }
+    end
   end
 
   protected

@@ -15,8 +15,10 @@ Emu.AttributeSerializers['staticArray'] = Emu.IdentitySerializer
 
 Emu.RailsSerializer = Emu.UnderscoreSerializer.extend
   serializeModel: (model) ->
+    serialized = @_super(model)
+    delete serialized[model.primaryKey()]
     wrapped = {}
-    wrapped[ model.constructor.url ] = @_super(model)
+    wrapped[ model.constructor.url ] = serialized
     wrapped
 
 Emu.belongsTo = (type, options) ->
