@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: git://github.com/niklas/kopflos.git
-  revision: 81edd0fb01be9855f3062331b595d572ef8dd0cd
+  revision: d206c0f5cd03adf83b8a82d86a831e8e044e5d77
   specs:
     kopflos (0.0.1)
       open4
