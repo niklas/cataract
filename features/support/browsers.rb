@@ -13,7 +13,7 @@ module BrowserSupport
         Selenium::WebDriver::Chrome.path = chrome
       end
       setup_selenium :chrome,
-        :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate],
+        :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-sandbox],
         :startpage => 'chrome://version/?name=Webdriver'
     end
 
