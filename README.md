@@ -4,6 +4,8 @@ Cataract is a Rails based web-frontend to rtorrent, organizing your torrents.
 
 Currently it is under heavy development.
 
+[![Build Status (development)](https://travis-ci.org/niklas/cataract.png?branch=development)](https://travis-ci.org/niklas/cataract)
+
 == Getting Started
 
 This version is not ready for production yet.
