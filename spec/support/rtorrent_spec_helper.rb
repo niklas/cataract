@@ -52,6 +52,9 @@ module RTorrentSpecHelper
       '-O', %Q~log.open_file="rtorrent",#{rtorrent_log_path}~,
       '-O', %Q~log.add_output="debug","rtorrent"~,
       '-O', %Q~log.add_output="storage_info","rtorrent"~,
+      '-o', 'download_rate=1',
+      '-o', 'upload_rate=1',
+      '-o', 'max_uploads=2',
     ]
   end
 
