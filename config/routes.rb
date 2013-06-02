@@ -11,12 +11,14 @@ Cataract::Application.routes.draw do
   resources :torrents do
     resource :payload, only: [:show, :destroy], controller: :payload
     resources :transfers, only: [:show, :create, :destroy], controller: :transfer
-    resource :deletions, controller: :deletion, only: [:new, :create, :show]
     resources :moves, controller: :move, only: :create
   end
 
+  # Emu cannot DELETE nested resources yet
   resources :transfers, only: [:index, :destroy], controller: :transfer
   resources :moves, only: :index, controller: :move
+  resources :payloads, only: [:destroy], controller: :payload
+  resources :deletions, controller: :deletion, only:  [:update]
 
   get "recent" => 'torrents#index', :as => 'user_root' # after login
 

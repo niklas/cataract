@@ -16,4 +16,4 @@ Cataract.Transfer = Emu.Model.extend
   active: Emu.field 'boolean'
 
 Cataract.Transfer.reopenClass
-  url: 'transfer'
+  url: 'transfer' # Emu create param

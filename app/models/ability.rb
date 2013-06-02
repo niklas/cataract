@@ -8,8 +8,9 @@ class Ability
       can :manage, Directory
       can :manage, Setting
       can :manage, Transfer
-      can :manage, :payload
-      can :create, Torrent::Deletion # can delete torrent, including its Payload
+      can :manage, :payload # Emu
+      can :manage, Torrent::Payload
+      can :update, Torrent::Deletion # can delete torrent, including its Payload (id must be present thx to Emu DELETE)
       can :manage, Move
     end
 

@@ -12,6 +12,7 @@ Cataract.Router.map ->
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
     Cataract.set 'settings', Cataract.Setting.find('all')
+    Cataract.set 'torrentsController', @controllerFor('torrents')
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
     @controllerFor('disks').set       'model', Cataract.Disk.find()
     @controllerFor('moves').set       'model', Cataract.Move.find()
@@ -25,7 +26,6 @@ Cataract.FilterRoute = Ember.Route.extend
   activate: ->
     Cataract.set 'currentDirectory', null
     Cataract.set 'currentDisk', null
-    Cataract.set 'torrentsController', @controllerFor('torrents')
 
   model: (params) -> params.mode
   setupController: (controller, model) ->
