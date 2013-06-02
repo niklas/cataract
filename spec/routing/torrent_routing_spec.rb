@@ -23,29 +23,4 @@ describe "routing for torrents" do
       id:         torrent.to_param
     )
   end
-
-  it do
-    { :get => 'status/running' }.should route_to(
-      controller: 'torrents',
-      action:     'index',
-      status:     'running'
-    )
-  end
-
-  it do
-    { :get => 'page/23' }.should route_to(
-      controller: 'torrents',
-      action:     'index',
-      page:       '23'
-    )
-  end
-
-  it do
-    { :get => 'status/running/page/23' }.should route_to(
-      controller: 'torrents',
-      status:     'running',
-      action:     'index',
-      page:       '23'
-    )
-  end
 end

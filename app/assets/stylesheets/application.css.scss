@@ -37,9 +37,8 @@ form#new_torrent_search {
   }
 }
 
-#spinner {
-  position: fixed;
-  top: 50%; left: 50%;
+.spincontainer {
+  float: left;
 }
 
 .modal > form {

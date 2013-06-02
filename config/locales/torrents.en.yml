@@ -26,7 +26,7 @@ en:
       create:
         notice: "moving %{torrent} to %{target}"
     deletion:
-      create:
+      update:
         notice: "%{torrent} deleted"
   simple_form:
     labels:

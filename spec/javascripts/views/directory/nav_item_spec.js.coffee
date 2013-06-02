@@ -6,10 +6,14 @@ describe 'Cataract.DirectoryNavItemView', ->
       isActive: Ember.K
       generate: Ember.K
       hasRoute: Ember.K
+      router: Ember.Object.create
+        recognizer: Ember.Object.create
+          names: {}
+
     controller =
-      router: router
       container:
         lookup: -> router
+      router: router
 
   view = null
   beforeEach ->

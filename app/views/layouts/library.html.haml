@@ -1,7 +1,7 @@
 !!!5
 %html
   = render 'layouts/head'
-  %script{type: "text/x-handlebars", 'data-template-name' => 'session' }= render 'session'
+  %script{type: "text/x-handlebars", 'data-template-name' => 'session' }= render 'session', handlebars: true
   %body
     #ember.container-fluid
       = render 'flash'

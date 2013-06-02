@@ -43,7 +43,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   filterFunction: (->
     termsList  = @get('termsList')
     mode = @get('mode') || ''
-    directory = @get('directory')
+    directoryId = @get('directory.id')
     (torrent) ->
       want = true
       torrent = torrent.record if torrent.record? # materialized or not?!
@@ -54,8 +54,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
-      if directory
-        want = want and directory is torrent.get('contentDirectory')
+      if directoryId
+        want = want and directoryId is torrent.get('contentDirectoryId')
 
       want
   ).property('termsList', 'mode', 'directory', 'age')
@@ -76,20 +76,37 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   didAddRunningTorrent: (torrent) ->
     @set('mode', 'running')
     @reload()
+    @refreshTransfers()
     Cataract.Router.router.transitionTo 'torrent', torrent
+
+  didDeleteTorrent: (torrent) ->
+    list = @get('unfilteredContent')
+    list.removeObject( list.findProperty('id', torrent.get('id')) )
 
 
   refreshTransfers: ->
     list = @get('unfilteredContent')
-    running = list.filterProperty('status', 'running')
-    $.getJSON "/transfers?running=#{running.mapProperty('id').join(',')}", (data, textStatus, xhr) ->
-      for transfer in data.transfers
-        Cataract.store.load Cataract.Transfer, transfer
-      if data.torrents
-        for updated in data.torrents
-          if listed = list.findProperty('infoHash', data.info_hash)
-            listed.setProperties updated
-            listed.stateManager.goToState('loaded')
+    running = list.filterProperty('status', 'running').mapProperty('id')
+    primaryKey = Emu.Model.primaryKey(Cataract.Transfer)
+    store = Ember.get(Emu, "defaultStore")
+    serializer = store._adapter._serializer
+    existing = Cataract.get('transfers')
+    $.getJSON "/transfers?running=#{running.join(',')}", (data, textStatus, xhr) ->
+      # time as passed => recalculate
+      running = list.filterProperty('status', 'running').mapProperty('id')
+      for update in data
+        id = update[primaryKey]
+        transfer = existing.findProperty('id', id) || Cataract.Transfer.createRecord(id: id)
+        serializer.deserializeModel(transfer, update, true) # update without making it dirty
+        if torrent = list.findProperty('id', id)
+          torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
+          torrent.get('transfers').clear()
+          torrent.get('transfers').pushObject(transfer)
+        running.removeObject(id)
+      # detect stopped torrents
+      running.forEach (disap) ->
+        if torrent = list.findProperty('id', disap)
+          torrent.set 'status', 'archived'
       Cataract.set 'online', true
       true
 

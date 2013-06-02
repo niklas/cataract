@@ -1,32 +1,39 @@
 Cataract::Application.routes.draw do
   get "greetings/dashboard"
 
-  resources :settings, except: [:index]
+  resources :settings, only: [:show, :update]
   resources :torrents do
     member do
       get 'prepend'
     end
   end
-  resources :payloads, only: [:show, :destroy], controller: :payload
-  resources :transfers, only: [:index, :show, :create, :destroy], controller: :transfer
-  resource :deletions, controller: :deletion, only: [:new, :create, :show]
-  resources :moves, controller: :move, only: [:index, :create]
 
-  controller :torrents do
-    get 'status/:status/page/:page', action: :index
-    get 'page/:page',                action: :index
-    get 'status/:status',            action: :index
-    get 'status/running',            action: :index, as: :running_torrents
+  resources :torrents do
+    resource :payload, only: [:show, :destroy], controller: :payload
+    resources :transfers, only: [:show, :create, :destroy], controller: :transfer
+    resources :moves, controller: :move, only: :create
   end
+
+  # Emu cannot DELETE nested resources yet
+  resources :transfers, only: [:index, :destroy], controller: :transfer
+  resources :moves, only: :index, controller: :move
+  resources :payloads, only: [:destroy], controller: :payload
+  resources :deletions, controller: :deletion, only:  [:update]
+  resources :moves, controller: :move, only: [:create, :index]
 
   get "recent" => 'torrents#index', :as => 'user_root' # after login
 
   resources :disks do
-    resources :directories
+    resources :directories do
+      resources :detected_directories, only: :index
+    end
+    resources :detected_directories, only: :index
   end
 
-  resources :directories
-  resources :detected_directories, only: :index
+  resources :directories do
+    resources :directories
+    resources :detected_directories, only: :index
+  end
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 

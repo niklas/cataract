@@ -58,7 +58,7 @@ Feature: Disks in Library
        | Movies | Import |
        | Röbels | Import |
 
-   Scenario: autodetect subdirectories 
+   Scenario: autodetect subdirectories
     Given a disk exists with name: "aDisk", path: "media/adisk"
       And the following filesystem structure exists on disk:
         | type      | path                          |

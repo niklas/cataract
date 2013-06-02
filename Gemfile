@@ -58,6 +58,7 @@ group :development, :test do
   gem 'jasminerice'
   gem 'guard-jasmine'
   gem 'rb-inotify', '~> 0.8.8'
+  gem 'rails-develotest'
 end
 
 group :development do
@@ -101,6 +102,10 @@ gem 'whenever', :require => false
 gem 'feed-abstract'
 
 gem 'dalli'
-gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git', ref: "359221e49057fe737" # master that has rmber 1.0rc1
+
+# https://github.com/emberjs/ember-rails/issues/165
+gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
+gem 'handlebars-source', '1.0.0.rc3'
+
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'

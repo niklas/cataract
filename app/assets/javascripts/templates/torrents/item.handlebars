@@ -1,15 +1,13 @@
-{{#with view.content}}
 <h4 class="title">
-  {{#linkTo torrent this}}
-  {{title}}
+  {{#linkTo torrent view.content}}
+  {{view.content.title}}
   {{/linkTo}}
 </h4>
 
-{{#if isRunning}}
-  {{#if Cataract.online}}
-    {{view Cataract.TransferView contentBinding="transfer"}}
-  {{else}}
-    {{Cataract.offlineReason}}
+{{#if Cataract.online}}
+  {{#if view.content.isRunning}}
+    {{view Cataract.TransferView contentBinding="view.content.transfer"}}
   {{/if}}
+{{else}}
+  {{Cataract.offlineReason}}
 {{/if}}
-{{/with}}

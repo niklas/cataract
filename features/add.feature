@@ -5,8 +5,8 @@ Feature: Adding a torrent
   I want to add torrents and have them started automatically
 
   Background:
-    Given an existing directory exists with name: "Existing"
-      And a directory "Incoming" exists with name: "Incoming"
+    Given an existing directory "Incoming" exists with name: "Incoming"
+      And an existing directory "Another" exists with name: "Another"
       And a setting exists with incoming_directory: directory "Incoming"
       And the URL "http://hashcache.net/files/single.torrent" points to file "single.torrent"
       And I am signed in
@@ -14,17 +14,19 @@ Feature: Adding a torrent
 
   Scenario: Adding by URL
      When I follow "Add"
-      And I fill in "URL" with "http://hashcache.net/files/single.torrent"
+     Then the selected "Content Directory" should be "Incoming"
+     When I fill in "URL" with "http://hashcache.net/files/single.torrent"
       And I follow "Add" within the modal box
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
-      And the existing directory should be the torrent's content_directory
+      And the existing directory "Incoming" should be the torrent's content_directory
       And rtorrent should download the torrent
 
   Scenario: Adding by URL to specific directory
      When I follow "Add"
-      And I fill in "URL" with "http://hashcache.net/files/single.torrent"
+     Then the selected "Content Directory" should be "Incoming"
+     When I fill in "URL" with "http://hashcache.net/files/single.torrent"
       And I select "Incoming" from "Content Directory"
       And I follow "Add" within the modal box
       And I wait for the spinner to stop
@@ -47,6 +49,7 @@ Feature: Adding a torrent
       And I should see "Incoming" within the details
       And I should see "71.7 KB" within the details
       And I should see the stop link
+     When the tick interval is reached
      Then I should see the following torrents in the torrent list:
        | title  | percent |
        | single | 0%      |
@@ -62,11 +65,12 @@ Feature: Adding a torrent
       And I should see "Incoming" within the details
       And I should see "71.7 KB" within the details
       And I should see the stop link
-      And I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
       And the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
+     When the tick interval is reached
+     Then I should see the following torrents in the torrent list:
+       | title  | percent |
+       | single | 0%      |
 
   Scenario: Uploading a non-torrent
     Given the dropzone should not be classified as inviting

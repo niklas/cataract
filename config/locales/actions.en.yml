@@ -3,6 +3,7 @@ en:
     actions:
       landing: "Ohai"
       signin: "Sign in"
+      signup: "Sign up"
       move: "Move"
       start: "Start"
       stop: "Stop"

@@ -1,5 +1,6 @@
 class SettingSerializer < BaseSerializer
-  attributes :incoming_directory, :disable_signup
+  attributes :disable_signup
+  has_one :incoming_directory
 
   def attributes
     super.tap do |hash|

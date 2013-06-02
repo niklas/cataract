@@ -80,3 +80,9 @@ Then /^(.*) (should|should not) be classified as (\w+)$/ do |name, should_or_not
   end
 end
 
+When /^I should see external link "(.*?)" pointing to "(.*?)"$/ do |title, href|
+  link = find_link title
+  link.should be_present
+  link[:href].should start_with( href )
+end
+

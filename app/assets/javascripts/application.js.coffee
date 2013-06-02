@@ -4,15 +4,13 @@
 #= require jquery.scrollTo-1.4.3.1
 #= require handlebars-1.0.0-rc.3
 #= require ember
-#= require ember-data
+#= require ember-emu-0.1.0
 #= require ember-bootstrap
 #= require ember-rails-flash
 #= require bootstrap
 #= require pagination_support
-#= require spinner
 #= require bindWithDelay
 #
-#= require_tree ./lib
 #= require ./cataract
 
 jQuery ->
@@ -24,6 +22,7 @@ jQuery ->
   $('form#new_torrent_search :radio').bind 'change', search
   $('form#new_torrent_search :text').bindWithDelay 'keyup change', search, 333
 
+  # TODO put refresh-click into Ember View
   $('#title').bind 'click', -> $('body').trigger 'tick'
 
   setInterval ->

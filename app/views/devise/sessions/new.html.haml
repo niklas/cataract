@@ -4,6 +4,3 @@
   - if devise_mapping.rememberable?
     = f.input :remember_me, :as => :boolean, :wrap => false
   = f.button :submit, translate_action('.signin')
-
-= render :partial => "devise/links"
-

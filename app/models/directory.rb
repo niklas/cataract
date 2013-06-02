@@ -64,7 +64,7 @@ class Directory < ActiveRecord::Base
   alias_method :exists?, :exist?
 
   def inspect
-    %Q~<Directory "#{name}" #{full_path rescue '[[bad full_path]]'}>~
+    %Q~<Directory #{id || 'new'} "#{name}" #{full_path rescue '[[bad full_path]]'}>~
   end
 
   def to_s

@@ -11,7 +11,8 @@ Cataract.Router.map ->
 
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
-    Cataract.set 'settings', Cataract.Setting.find('all')
+    Cataract.set 'torrentsController', @controllerFor('torrents')
+    @controllerFor('settings').set    'model',  Cataract.Setting.find('all')
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
     @controllerFor('disks').set       'model', Cataract.Disk.find()
     @controllerFor('moves').set       'model', Cataract.Move.find()
@@ -25,12 +26,12 @@ Cataract.FilterRoute = Ember.Route.extend
   activate: ->
     Cataract.set 'currentDirectory', null
     Cataract.set 'currentDisk', null
-    Cataract.set 'torrentsController', @controllerFor('torrents')
 
   model: (params) -> params.mode
   setupController: (controller, model) ->
     torrents = @controllerFor('torrents')
     torrents.set('mode', model)
+    torrents.refreshTransfers()
     @controllerFor('application').set('currentController', torrents)
 
 Cataract.DirectoryRoute = Ember.Route.extend
@@ -43,15 +44,39 @@ Cataract.DiskRoute = Ember.Route.extend
     @_super(controller, model)
     Cataract.set 'currentDisk', model
 
+Cataract.TorrentRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    @_super(controller, model)
+    controller.set 'content', model
+    model.loadPayload()
+    # Emu::Model.findQuery uses its own collection, resulting in two copies of
+    # the same Torrent. We replace it with the already loaded one
+    torrents = @controllerFor('torrents').get('unfilteredContent')
+    torrents.one 'didFinishLoading', ->
+      copy = torrents.findProperty('id', model.get('id'))
+      torrents.pushObject(model)
+      torrents.removeObject(copy)
+
 Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->
-    Ember.Object.create()
+    Cataract.Torrent.createRecord()
   setupController: (controller, torrent) ->
-    # TODO transition route back
+    router = this
+    controller.setDefaultDirectory()
+    # TODO transition route "back" (must remember last route?)
     Cataract.AddTorrentModal.popup
       torrent: torrent
       directories: Cataract.Directory.find()
       disks: Cataract.Disk.find()
+      callback: (opts) ->
+        if opts.primary
+          torrent.setProperties
+            fetchAutomatically: true
+            startAutomatically: true
+          torrent.one 'didFinishSaving', ->
+            router.controllerFor('torrents').didAddRunningTorrent(torrent)
+          torrent.save()
+        true
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
@@ -73,11 +98,12 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
+    model.prepareUndo('filter', 'subscribed')
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       directory: model
       back: ['directory', model]
 
 Cataract.SettingsRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    controller.set 'content', Cataract.get('settings')
+  model: ->
+    Cataract.Setting.find('all')

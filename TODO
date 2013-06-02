@@ -1,46 +1,48 @@
-[35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m20[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO put this into a view/controller combi
-[35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m26[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME load differently, see BREAKING_CHANGES
-[35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m39[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move into DirectoriesController
-[35m./app/assets/javascripts/controllers/torrent_controller.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO group directories by relative_path and show only one
-[35m./app/assets/javascripts/lib/ihrfrestnur.js.coffee[0m[36m:[0m[32m17[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract this to something similar to ActiveModel::Name
-[35m./app/assets/javascripts/models/detected_directory.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m      # FIXME Ember/me is too stupid to get the change
-[35m./app/assets/javascripts/models/torrent.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  filedata: DS.attr 'string' # TODO put into payload
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m21[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m # TODO reset event
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m47[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m61[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
-[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m73[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/addons/filtered_controller.js.coffee[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO _add_ property dependencies in subclass
+[35m./app/assets/javascripts/application.js.coffee[0m[36m:[0m[32m25[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO put refresh-click into Ember View
+[35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m23[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO put this into a view/controller combi
+[35m./app/assets/javascripts/cataract.js.coffee[0m[36m:[0m[32m32[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move into DirectoriesController
+[35m./app/assets/javascripts/controllers/directories_controller.js.coffee[0m[36m:[0m[32m8[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME: isLoaded does not work on Arrays https://github.com/emberjs/data/issues/587
+[35m./app/assets/javascripts/controllers/torrent_controller.js.coffee[0m[36m:[0m[32m8[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO group directories by relative_path and show only one
+[35m./app/assets/javascripts/controllers/torrents_controller.js.coffee[0m[36m:[0m[32m11[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO i18n
+[35m./app/assets/javascripts/models/torrent.js.coffee[0m[36m:[0m[32m13[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  filedata: Emu.field 'string' # TODO put into payload
+[35m./app/assets/javascripts/models/transfer.js.coffee[0m[36m:[0m[32m6[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  torrentId: Emu.field 'number' # FIXME is not set by serializer
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m66[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route "back" (must remember last route?)
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m89[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/routes/app_routes.js.coffee[0m[36m:[0m[32m102[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO transition route back
+[35m./app/assets/javascripts/unused_lib/ihrfrestnur.js.coffee[0m[36m:[0m[32m17[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract this to something similar to ActiveModel::Name
 [35m./app/assets/javascripts/views/select_directory_field.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME refresh association bindings, else no value is bound, even with defaults
 [35m./app/assets/javascripts/views/select_disk_field.js.coffee[0m[36m:[0m[32m7[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME refresh association bindings, else no value is bound, even with defaults
 [35m./app/controllers/application_controller.rb[0m[36m:[0m[32m3[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO cells ore similar
-[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m33[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {}).merge(per: 1000) # TODO paginate properly
-[35m./app/controllers/torrent_component_controller.rb[0m[36m:[0m[32m12[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME: ember-data does not support nested resources yet, so we have to jump
+[35m./app/controllers/application_controller.rb[0m[36m:[0m[32m36[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    params.slice(:status, :terms, :page, :per).merge( params[:torrent_search] || {}).merge(per: 1000) # TODO paginate properly
+[35m./app/controllers/torrent_component_controller.rb[0m[36m:[0m[32m12[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME: Ember-Emu cannot delete nested resources yet
 [35m./app/helpers/navigation_helper.rb[0m[36m:[0m[32m6[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  #   b) the given regex (TODO)
 [35m./app/models/directory.rb[0m[36m:[0m[32m12[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME assign directories to disks through rake task
-[35m./app/models/directory.rb[0m[36m:[0m[32m52[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO attribute writer, just for ember-data
+[35m./app/models/directory.rb[0m[36m:[0m[32m57[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO attribute writer, just for ember-data
 [35m./app/models/filesystem.rb[0m[36m:[0m[32m52[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME does not .serialize handles this?
 [35m./app/models/notifier.rb[0m[36m:[0m[32m1[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m# FIXME enable jabber notifications
 [35m./app/models/queueable.rb[0m[36m:[0m[32m31[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME: must reload the record because #locked_at is set to late in the psql query process,by the function in WHERE.
 [35m./app/models/queueable.rb[0m[36m:[0m[32m61[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO move away
 [35m./app/models/queueable.rb[0m[36m:[0m[32m86[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO extract and test
 [35m./app/models/queueable.rb[0m[36m:[0m[32m149[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m              -- FIXME won't this loop forever?
-[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m11[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO WTF is this for?
-[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m181[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  attr_writer :payload_exists # FIXME ember does not support read-only attributes
-[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m199[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO direct links to content
-[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m203[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
+[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m12[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO WTF is this for?
+[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m182[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  attr_writer :payload_exists # FIXME ember does not support read-only attributes
+[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m209[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO direct links to content
+[35m./app/models/torrent/payload.rb[0m[36m:[0m[32m213[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    return nil # FIXME we have no target_dir anymore
 [35m./app/models/torrent.rb[0m[36m:[0m[32m26[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  belongs_to :feed # TODO remove when series assigned
 [35m./app/models/torrent.rb[0m[36m:[0m[32m33[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME remove this insane stati code
 [35m./app/models/torrent.rb[0m[36m:[0m[32m37[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf is this?
-[35m./app/models/torrent.rb[0m[36m:[0m[32m59[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO add tagging
-[35m./app/models/torrent.rb[0m[36m:[0m[32m71[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO use psql tsearch
-[35m./app/models/torrent.rb[0m[36m:[0m[32m153[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO audit changes
-[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m193[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
+[35m./app/models/torrent.rb[0m[36m:[0m[32m78[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO add tagging
+[35m./app/models/torrent.rb[0m[36m:[0m[32m90[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO use psql tsearch
+[35m./app/models/torrent.rb[0m[36m:[0m[32m172[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO audit changes
+[35m./app/models/torrent/rtorrent.rb[0m[36m:[0m[32m212[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME providing a view name raises: XMLRPC::FaultException: Unsupported target type found.
 [35m./app/models/torrent/states.rb[0m[36m:[0m[32m63[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      :archived # TODO review status_from_rtorrent
 [35m./app/models/torrent/states.rb[0m[36m:[0m[32m89[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO call this during refresh
 [35m./app/models/user.rb[0m[36m:[0m[32m4[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME athentication
 [35m./app/models/user.rb[0m[36m:[0m[32m18[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME wtf
 [35m./app/serializers/torrent_serializer.rb[0m[36m:[0m[32m2[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME where should we provide keys for associations to Ember? content_directory or .._id?
 [35m./features/step_definitions/web_steps.rb[0m[36m:[0m[32m76[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO: Add support for checkbox, select or option
-[35m./features/support/selectors.rb[0m[36m:[0m[32m78[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO move to jquery_mobile
+[35m./features/support/selectors.rb[0m[36m:[0m[32m81[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m    # TODO move to jquery_mobile
 [35m./lib/action_messenger/base.rb[0m[36m:[0m[32m48[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m      # TODO: Templates, ActionMailer-style.
 [35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m18[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m        # TODO: Different strategies for staying online (come online only to send messages.)
 [35m./lib/action_messenger/messengers/xmpp4r_messenger.rb[0m[36m:[0m[32m19[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m        # TODO: Reconnection strategy.
@@ -50,6 +52,5 @@
 [35m./lib/patches/active_record.rb[0m[36m:[0m[32m1[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m# TODO convert into real Validator
 [35m./lib/transfer.rb[0m[36m:[0m[32m40[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m  # FIXME spaghetti
 [35m./lib/worker.rb[0m[36m:[0m[32m99[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO this should be decoupled. Must give class_name instead of channel to worker
-[35m./spec/javascripts/lib/ihrfrestnur_spec.js.coffee[0m[36m:[0m[32m63[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m          # FIXME we have no access to the parent record from the adapter. should we?
 [35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m80[0m[36m:[0m[32;1;1mTODO[0m[36m:[0m  # TODO complete list
 [35m./spec/models/torrent/rtorrent_spec.rb[0m[36m:[0m[32m84[0m[36m:[0m[33;1;1mFIXME[0m[36m:[0m    # FIXME WTF what does the torrent do here?

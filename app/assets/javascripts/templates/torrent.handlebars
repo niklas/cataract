@@ -1,8 +1,8 @@
 <h2>{{title}}</h2>
 
 
-{{#if isDeleted}}
-  Deleted
+{{#unless hasValue}}
+  does not exist
 {{else}}
   {{#if isRunning}}
     {{#if Cataract.online}}
@@ -52,5 +52,5 @@
   {{#if isRemote}}
   <div class="url">{{url}}</div>
   {{/if}}
-{{/if}}
+{{/unless}}
 
