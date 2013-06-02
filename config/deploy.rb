@@ -1,6 +1,6 @@
 # RVM bootstrap
 require 'rvm/capistrano'
-set :rvm_ruby_string, '1.9.3-p194-xmlrpc64bit@cataract'
+set :rvm_ruby_string, '2.0.0-p195@cataract'
 set :rvm_type, :system
 
 # bundler bootstrap

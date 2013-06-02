@@ -1,14 +1,22 @@
 language: ruby
 rvm:
-  - 1.9.3
+  - 2.0.0
 branches:
   only:
     - development
     - master
+    - /^feature\//
 before_install:
+  # Make sure /dev/shm has correct permissions. chrome has trouble running on openvz
+  - ls -l /dev/shm
+  - sudo chmod 1777 /dev/shm
+  - ls -l /dev/shm
   - sudo apt-add-repository -y ppa:crass/libtorrent
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo apt-get update -qq
+  - sudo dpkg -i ./google-chrome*.deb
   - sudo apt-get -qq install rtorrent screen chromium-browser mlocate
+  - sudo apt-get -f install
   - sudo updatedb
   - createdb cataract_test
 before_script:
@@ -17,4 +25,6 @@ before_script:
   - "bundle exec rake db:migrate"
 script: "bundle exec rspec && bundle exec rake cucumber:ok"
 after_failure:
+  - cat log/capybara_test.log
+  - cat log/test.log
   - cat log/rtorrent-test.log

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '~> 3.2.12'
 gem 'pg'
 
 
@@ -27,7 +27,7 @@ group :test do
   gem 'email_spec'
   gem 'factory_girl_rails'
   # TODO for latest chrome-webdriver remove when capybara > 1.1.2 depends on it
-  gem 'selenium-webdriver', '~> 2.21.2'
+  gem 'selenium-webdriver', '~> 2.33.0'
 
   gem "spork", "1.0.0rc3"
   gem "guard-rspec", "~> 2.4.0"

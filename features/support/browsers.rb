@@ -9,11 +9,15 @@ module BrowserSupport
   class << self
 
     def setup_chrome
-      if chrome = [`which chromium-browser`, `which google-chrome`].map(&:chomp).reject(&:blank?).first
+      chromes = %w(chromium-browser)
+      if ENV['TRAVIS']
+        chromes.unshift 'google-chrome'
+      end
+      if chrome = chromes.map { |c| `which #{c}`.chomp }.find(&:present?)
         Selenium::WebDriver::Chrome.path = chrome
       end
       setup_selenium :chrome,
-        :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate],
+        :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-sandbox],
         :startpage => 'chrome://version/?name=Webdriver'
     end
 
