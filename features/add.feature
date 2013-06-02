@@ -14,7 +14,8 @@ Feature: Adding a torrent
 
   Scenario: Adding by URL
      When I follow "Add"
-      And I fill in "URL" with "http://hashcache.net/files/single.torrent"
+     Then the selected "Content Directory" should be "Incoming"
+     When I fill in "URL" with "http://hashcache.net/files/single.torrent"
       And I follow "Add" within the modal box
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
@@ -24,7 +25,8 @@ Feature: Adding a torrent
 
   Scenario: Adding by URL to specific directory
      When I follow "Add"
-      And I fill in "URL" with "http://hashcache.net/files/single.torrent"
+     Then the selected "Content Directory" should be "Incoming"
+     When I fill in "URL" with "http://hashcache.net/files/single.torrent"
       And I select "Incoming" from "Content Directory"
       And I follow "Add" within the modal box
       And I wait for the spinner to stop

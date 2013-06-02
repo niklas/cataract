@@ -11,8 +11,8 @@ Cataract.Router.map ->
 
 Cataract.ApplicationRoute = Ember.Route.extend
   setupController: ->
-    Cataract.set 'settings', Cataract.Setting.find('all')
     Cataract.set 'torrentsController', @controllerFor('torrents')
+    @controllerFor('settings').set    'model',  Cataract.Setting.find('all')
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
     @controllerFor('disks').set       'model', Cataract.Disk.find()
     @controllerFor('moves').set       'model', Cataract.Move.find()
@@ -62,6 +62,7 @@ Cataract.AddTorrentRoute = Ember.Route.extend
     Cataract.Torrent.createRecord()
   setupController: (controller, torrent) ->
     router = this
+    controller.setDefaultDirectory()
     # TODO transition route "back" (must remember last route?)
     Cataract.AddTorrentModal.popup
       torrent: torrent
