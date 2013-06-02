@@ -4,6 +4,10 @@ module RTorrentSpecHelper
     Rails.root/'tmp'/'sockets'
   end
 
+  def log_path
+    Rails.root/'log'/'rtorrent-test.log'
+  end
+
   def rtorrent_socket_path
     socket_path/'rtorrent_test'
   end
@@ -44,7 +48,10 @@ module RTorrentSpecHelper
       'screen', '-DmUS', 'rtorrent_cataract_test',
       'rtorrent',
       '-n', # do not load user's rc
-      '-o', "scgi_local=#{rtorrent_socket_path}"
+      '-o', "scgi_local=#{rtorrent_socket_path}",
+      '-O', %Q~log.open_file="rtorrent",#{log_path}~,
+      '-O', %Q~log.add_output="debug","rtorrent"~,
+      '-O', %Q~log.add_output="storage_info","rtorrent"~,
     ]
   end
 

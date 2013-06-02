@@ -15,3 +15,5 @@ before_script:
   - "mkdir -p tmp/sockets"
   - "bundle exec rake db:migrate"
 script: "bundle exec rspec && bundle exec rake cucumber:ok"
+after_failure:
+  - cat log/rtorrent-test.log

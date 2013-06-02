@@ -183,6 +183,7 @@ class Torrent
 
     # load the path into rtorrent
     def load!(path)
+      raise("cannot load torrent, path not readable: #{path}") unless File.readable?(path)
       call 'load', path.to_s
     end
 
