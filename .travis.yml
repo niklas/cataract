@@ -6,6 +6,7 @@ branches:
     - development
     - master
 before_install:
+  - sudo apt-add-repository -y ppa:crass/libtorrent
   - sudo apt-get update -qq
   - sudo apt-get -qq install rtorrent screen chromium-browser mlocate
   - sudo updatedb

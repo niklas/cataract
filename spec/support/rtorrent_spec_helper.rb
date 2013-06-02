@@ -4,7 +4,7 @@ module RTorrentSpecHelper
     Rails.root/'tmp'/'sockets'
   end
 
-  def log_path
+  def rtorrent_log_path
     Rails.root/'log'/'rtorrent-test.log'
   end
 
@@ -49,7 +49,7 @@ module RTorrentSpecHelper
       'rtorrent',
       '-n', # do not load user's rc
       '-o', "scgi_local=#{rtorrent_socket_path}",
-      '-O', %Q~log.open_file="rtorrent",#{log_path}~,
+      '-O', %Q~log.open_file="rtorrent",#{rtorrent_log_path}~,
       '-O', %Q~log.add_output="debug","rtorrent"~,
       '-O', %Q~log.add_output="storage_info","rtorrent"~,
     ]
