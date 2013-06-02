@@ -8,6 +8,10 @@ branches:
     - master
     - /^feature\//
 before_install:
+  # Make sure /dev/shm has correct permissions. chrome has trouble running on openvz
+  - ls -l /dev/shm
+  - sudo chmod 1777 /dev/shm
+  - ls -l /dev/shm
   - sudo apt-add-repository -y ppa:crass/libtorrent
   - sudo apt-get update -qq
   - sudo apt-get -qq install rtorrent screen chromium-browser mlocate
