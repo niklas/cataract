@@ -1,12 +1,17 @@
 module RTorrentSpecHelper
 
+  def socket_path
+    Rails.root/'tmp'/'sockets'
+  end
+
   def rtorrent_socket_path
-    Rails.root/'tmp'/'sockets'/'rtorrent_test'
+    socket_path/'rtorrent_test'
   end
 
   def start_rtorrent(seconds=5)
     Torrent::RTorrent.online!
     FileUtils.rm rtorrent_socket_path if rtorrent_socket_path.exist?
+    FileUtils.mkdir_p socket_path unless socket_path.exist?
 
     if @rtorrent_pid = Process.spawn(*rtorrent_command)
       Process.detach @rtorrent_pid
@@ -18,6 +23,8 @@ module RTorrentSpecHelper
       end
       Torrent.reset_remote!
       Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
+    else
+      raise "could not start rtorrent"
     end
   rescue Timeout::Error => e
     STDERR.puts "could not start rtorrent, commands:\n#{rtorrent_command.inspect}"
