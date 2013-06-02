@@ -19,4 +19,6 @@ before_script:
   - "bundle exec rake db:migrate"
 script: "bundle exec rspec && bundle exec rake cucumber:ok"
 after_failure:
+  - cat log/capybara_test.log
+  - cat log/test.log
   - cat log/rtorrent-test.log
