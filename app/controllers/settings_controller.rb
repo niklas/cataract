@@ -6,11 +6,16 @@ class SettingsController < InheritedResources::Base
     @setting ||= Setting.singleton # ignore the param until we want multiple settings
   end
 
-  def create
-    create! { settings_path }
+  # must provide id for emu, so each save is an update
+  def update
+    update! do |success|
+     success.json {  render json: resource, serializer: SettingSerializer }
+    end
   end
 
-  def update
-    update! { settings_path }
+  def resource_params
+    super.tap do |prms|
+      prms.first.delete(:id)
+    end
   end
 end

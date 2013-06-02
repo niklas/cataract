@@ -1,7 +1,7 @@
 Cataract::Application.routes.draw do
   get "greetings/dashboard"
 
-  resources :settings, except: [:index]
+  resources :settings, only: [:show, :update]
   resources :torrents do
     member do
       get 'prepend'
