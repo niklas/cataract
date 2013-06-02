@@ -535,7 +535,7 @@
         if (Ember.isEmpty(value)) {
           return null;
         } else {
-          return value;
+          return value.toString();
         }
       }
     },
@@ -693,7 +693,7 @@
           return jsonData[serializedKey] = this.serializeModel(value);
         }
       } else {
-        if (value) {
+        if (typeof value !== "undefined" && value !== null) {
           attributeSerializer = Emu.AttributeSerializers[meta.type()];
           return jsonData[serializedKey] = attributeSerializer.serialize(value);
         }
