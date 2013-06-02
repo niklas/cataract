@@ -6,6 +6,7 @@ branches:
   only:
     - development
     - master
+    - /^feature\//
 before_install:
   - sudo apt-add-repository -y ppa:crass/libtorrent
   - sudo apt-get update -qq
