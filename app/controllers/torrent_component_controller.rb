@@ -12,7 +12,7 @@ class TorrentComponentController < InheritedResources::Base
   # FIXME: Ember-Emu cannot delete nested resources yet
   private
   def torrent
-    @torrent ||= parent || Torrent.find( params[:id] )
+    @torrent ||= parent || Torrent.find( params[:id] || resource_params.first[:torrent_id] )
   end
 
   helper_method :torrent

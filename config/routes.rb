@@ -19,6 +19,7 @@ Cataract::Application.routes.draw do
   resources :moves, only: :index, controller: :move
   resources :payloads, only: [:destroy], controller: :payload
   resources :deletions, controller: :deletion, only:  [:update]
+  resources :moves, controller: :move, only: [:create, :index]
 
   get "recent" => 'torrents#index', :as => 'user_root' # after login
 

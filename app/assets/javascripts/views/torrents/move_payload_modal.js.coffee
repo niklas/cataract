@@ -22,7 +22,7 @@ Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
   callback: (opts) ->
     if opts.primary
       move =  @get('move')
-      move.set('torrent', @get('torrent'))
+      move.set('torrentId', @get('torrent.id'))
       move.save()
     else
       move.clear()
