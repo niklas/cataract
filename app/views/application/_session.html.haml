@@ -1,3 +1,4 @@
+- handlebars ||= false
 %ul#session.nav.pull-right
   - if user_signed_in?
     %li.dropdown
@@ -7,7 +8,8 @@
       %ul.dropdown-menu
         - if can? :edit, current_user
           %li= link_to :profile, edit_user_registration_path
-        {{#linkTo settings}}Settings{{/linkTo}}
+        - if handlebars
+          {{#linkTo settings}}Settings{{/linkTo}}
         %li.divider
         = li_link :changes, github_changes_url
         = li_link :updates, github_updates_url
@@ -15,5 +17,6 @@
         %li.divider
         %li= link_to :signout, destroy_user_session_path, :method => :delete
   - else
-    = li_link :signup, new_user_registration_path, can: [:create, User]
+    - unless Setting.singleton.disable_signup?
+      = li_link :signup, new_user_registration_path, can: [:create, User]
     %li= link_to :signin, new_user_session_path

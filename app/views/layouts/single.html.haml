@@ -2,6 +2,12 @@
 %html
   = render 'layouts/head'
   %body
+    #header
+      .navbar
+        .navbar-inner
+          .container-fluid
+            = link_to 'Cataract', root_url
+            = render 'session'
     .container
       = yield
   = render 'layouts/foot'
