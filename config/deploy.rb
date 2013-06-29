@@ -1,6 +1,7 @@
 set :repository,  "git://github.com/niklas/cataract.git"
 
 set :upstart_dir, "/home/#{user}/.init"
+set :rtorrent_dir, "/home/#{user}/.rtorrent"
 
 namespace :deploy do
 
@@ -15,8 +16,8 @@ namespace :deploy do
       mkdir -p #{shared_path}/public/uploads &&
       #{make_link}/config/messenger.yml &&
       #{make_link}/config/newrelic.yml &&
-      #{make_link}/tmp/rtorrent.socket &&
-      #{make_link}/public/uploads
+      #{make_link}/public/uploads &&
+      ln -sf #{rtorrent_dir}/socket #{latest_release}/tmp/rtorrent.socket
     CMD
   end
 
