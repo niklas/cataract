@@ -82,63 +82,16 @@ describe Torrent do
     end
   end
 
-  describe 'clean filenames' do
-    let(:torrent)  { build(:torrent, filename: filename) }
-    let(:cleaned)  { torrent.clean_filename }
-
-    describe "pirate-bay style" do
-      let(:filename) { 'Fame of Bones 5x12 [720P - HDTV - OMMARZE].torrent' }
-      it "should keep the name" do
-        cleaned.should include("Fame of Bones")
-      end
-
-      it "should keep season and episode" do
-        cleaned.should include("5x12")
-      end
-
-      it "should keep 720P info" do
-        cleaned.should include("720")
-      end
-
-      it "should remove brackets" do
-        cleaned.should_not include("[")
-        cleaned.should_not include("]")
-      end
-
-      it "should remove extension" do
-        cleaned.should_not include(".torrent")
-      end
-
-      it "should remove release group" do
-        cleaned.should_not include("OMMARZE")
-      end
-    end
-
-    describe "Kickass-torrents style" do
-      let(:filename) { "_kat.ph_the.peanut.penguins.s01e03.friday.night.fnords.hdtv.xvid.fqm.eztv.torrent" }
-      it "should remove kat prefix" do
-        cleaned.should_not include("_kat.ph_")
-        cleaned.should_not include("kat")
-        cleaned.should_not include("ph")
-      end
-
-      it "should keep season and episode" do
-        cleaned.should include('s01e03')
-      end
-
-      it "should not include format" do
-        cleaned.should_not include('xvid')
-      end
-
-      it "should not include release group" do
-        cleaned.should_not include('fqm')
-      end
-
-      it "should not include eztv" do
-        cleaned.should_not include('eztv')
-      end
+  describe 'cleaning filenames' do
+    it 'is delegated to Cataract::FileNameCleaner' do
+      filename = stub 'Filename'
+      cleaned = stub 'cleaned Filename'
+      torrent = build :torrent, filename: filename
+      Cataract::FileNameCleaner.should_receive(:clean).with(filename).and_return(cleaned)
+      torrent.clean_filename.should == cleaned
     end
   end
+
 
 end
 

@@ -20,6 +20,8 @@
 #  info_hash         :string(40)    
 #
 
+require 'cataract/file_name_cleaner'
+
 class Torrent < ActiveRecord::Base
   has_many :watchings, :dependent => :destroy
   has_many :users, :through => :watchings
@@ -112,20 +114,7 @@ class Torrent < ActiveRecord::Base
   # * tranforms interpunctuations into spaces
   # * kills renaming spaces 
   def debrand(name)
-    return unless name.present?
-    tags = [].tap do |tags|
-      tags << '720p' if name =~ /720p/i
-    end
-    [name.
-      gsub(/(?:dvd|xvid|divx|hdtv|cam|fqm|eztv\b)/i,'').
-      sub(/^_kat\.ph_/,'').
-      gsub(/\[.*?\]/,'').
-      gsub(/\(.*?\)/,'').
-      sub(/\d{5,}.TPB/,'').
-      sub(/\.?torrent$/i,'').
-      gsub(/[._-]+/,' ').
-      gsub(/\s{2,}/,' ').
-      rstrip.lstrip, *tags].join(" ")
+    Cataract::FileNameCleaner.clean(name)
   end
 
   def clean_filename
