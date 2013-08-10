@@ -24,8 +24,21 @@ if jQuery
 
   message '<h3>Cataract</h3>'
 
-  url = document.location
+  url = document.location.href
   message "Scraping <i>#{url}</i>..."
+
+  $.ajax '<%= scraping_url %>',
+    data:
+      url: url
+    type: 'POST'
+    dataType: 'json'
+  .done (results) ->
+    message r for r in results
+    message $('<i></i>').addClass('icon-ok').addClass('icon-white').attr('id', 'ok')
+  .fail (results) ->
+    message $('<i></i>').addClass('icon-bell').addClass('icon-white').attr('id', 'notok')
+    message r for r in results
+
 
 else
   alert "could not find jQuery on this site"

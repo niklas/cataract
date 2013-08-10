@@ -1,3 +1,4 @@
+@javascript
 Feature: Bookmarklet
   In order to download torrents comfortably
   As a signed in user
@@ -6,8 +7,9 @@ Feature: Bookmarklet
 
   Scenario: from torrentz.eu (frankenstein 1931)
     Given I am signed in
-     When I use the bookmarklet on "http://torrentz.eu/dcc5fba0c3bbb3fc155df8e96736e6e5bc207287"
-      And I wait for the checkmark to appear
+      And I am on the torrentz.eu page for Frankenstein 1931
+     When I use the scraping bookmarklet
+      And I wait for the ok to appear
      Then I should see "Scraping Torrentz... success"
       And I should see "Scraping kat.ph... success"
       And I should see "Downloading torrent... success"
