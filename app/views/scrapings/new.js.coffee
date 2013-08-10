@@ -1,5 +1,12 @@
 id = 'cataract_new_scraping'
 
+current_path = ->
+  <% if Rails.env.test? %>
+  document.test_location
+  <% else %>
+  document.location.href
+  <% end %>
+
 if jQuery
   $ = jQuery
 
@@ -24,7 +31,7 @@ if jQuery
 
   message '<h3>Cataract</h3>'
 
-  url = document.location.href
+  url = current_path()
   message "Scraping <i>#{url}</i>..."
 
   $.ajax '<%= scraping_url %>',
@@ -34,9 +41,9 @@ if jQuery
     dataType: 'json'
   .done (results) ->
     message r for r in results
-    message $('<i></i>').addClass('icon-ok').addClass('icon-white').attr('id', 'ok')
+    message $('<i>OK</i>').addClass('icon-ok').addClass('icon-white').attr('id', 'ok')
   .fail (results) ->
-    message $('<i></i>').addClass('icon-bell').addClass('icon-white').attr('id', 'notok')
+    message $('<i>not OK</i>').addClass('icon-bell').addClass('icon-white').attr('id', 'notok')
     message r for r in results
 
 
