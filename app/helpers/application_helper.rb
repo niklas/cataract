@@ -4,10 +4,13 @@ module ApplicationHelper
     @settings ||= Setting.singleton
   end
 
-  def link_to_bookmarklet(title, url, opts={})
+  def link_to_bookmarklet(title, url, link_opts={})
     raise "url must be absolute" unless url.starts_with?('http')
-    version = 1
-    js = %Q~javascript:var d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f= '#{url}',l=d.location,e=encodeURIComponent,p='?v=#{version}&u='+e(l.href)%20+'&t='+e(d.title.replace(/^\s*|\s*$/g,''))%20+'&s='+e(s),u=f+p;location.href=u;~
+    opts = {
+      error_message: link_opts.delete(:error_message) || "Could not reach #{url}",
+      token: current_user.remember_token
+    }
+    js = RailsBookmarklet::compile_invocation_script(url, opts)
     link_to title, js, opts
   end
 end

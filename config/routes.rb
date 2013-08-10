@@ -18,7 +18,7 @@ Cataract::Application.routes.draw do
   resources :disks
   resources :directories
 
-  get '/scrape' => 'scrapes#new', as: :scrape
+  resource :scraping, only: [:new, :create]
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 
