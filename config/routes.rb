@@ -18,6 +18,8 @@ Cataract::Application.routes.draw do
   resources :disks
   resources :directories
 
+  get '/scrape' => 'scrapes#new', as: :scrape
+
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 
   root :to => 'greetings#dashboard'
