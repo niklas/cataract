@@ -51,30 +51,33 @@
   </div>
 </div>
 
-<div class="row-fluid">
-  <div class="span3 well" id="sidebar">
-    {{view Cataract.Pagination controllerBinding="Cataract.torrentsController"}}
+<div class="well" id="sidebar">
+  {{view Cataract.Pagination controllerBinding="Cataract.torrentsController"}}
 
-    <div class="tabbable">
-      {{ render 'disks' }}
-      <div class="tab-content">
-        <div class="tab-pane active">
-          {{ render 'directories' }}
-        </div>
+  <div class="tabbable">
+    {{ render 'disks' }}
+    <div class="tab-content">
+      <div class="tab-pane active">
+        {{ render 'directories' }}
       </div>
     </div>
-
-    {{#unless Cataract.online}}
-    <br />
-    <div class="alert alert-error">{{Cataract.offlineReason}}</div>
-    {{/unless}}
   </div>
-  <div class="span5" id="content">
+
+  {{#unless Cataract.online}}
+  <br />
+  <div class="alert alert-error">{{Cataract.offlineReason}}</div>
+  {{/unless}}
+
+</div>
+
+
+<div id="middle">
+  <div id="content">
     <div style="display: none;">breadcrumbs</div>
     {{outlet pre}}
     {{ render "torrents" }}
   </div>
-  <div class="span4" id="details">
+  <div id="details">
     {{view Cataract.FlashListView}}
     {{view Cataract.DropZoneView}}
 
