@@ -11,6 +11,6 @@ Feature: Signing in
      When I fill in "Email" with "me@cataract.local"
       And I fill in "Password" with "secret"
       And I press "Sign in"
-     Then I should see "Signed in successfully"
+     Then I should be on the list page
      # And I should see "me@cataract.local" within current user
-      And I should be on the list page
+     # Then I should see flash notice "Signed in successfully"
