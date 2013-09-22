@@ -6,7 +6,7 @@ describe TorrentsController do
   describe '#index JSON' do
     it "succeeds with at least one torrent" do
       create :torrent
-      get :index
+      get :index, format: 'json'
       response.should be_success
     end
   end

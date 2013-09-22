@@ -21,7 +21,6 @@ Cataract::Application.routes.draw do
   resources :deletions, controller: :deletion, only:  [:update]
   resources :moves, controller: :move, only: [:create, :index]
 
-  get "recent" => 'torrents#index', :as => 'user_root' # after login
 
   resources :disks do
     resources :directories do
@@ -37,7 +36,8 @@ Cataract::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 
-  root :to => 'torrents#index'
+  root :to => 'greetings#dashboard'
+  get "dashboard" => 'greetings#dashboard', :as => 'user_root' # after login
 
   if Rails.env.test?
     scope 'test' do
