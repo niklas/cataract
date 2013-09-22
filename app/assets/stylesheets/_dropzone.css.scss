@@ -1,10 +1,27 @@
 #dropzone {
-  height: 3em;
-  padding: 0;
-  margin: 1em;
-  font-size: 130%;
+  padding: 0.3em;
+  margin: 0.3em;
+  font-size: 110%;
   text-align: center;
   @include border-radius(5px);
+  color: $bodyBackground;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+
+  .inflate {
+    display: inline-block;
+    -webkit-transition: width 1s ease-in-out,
+                        height 1s ease-in-out;
+  }
+
+  &.inviting, &.hovered {
+    .inflate {
+      height: 3em;
+      width: 200px;
+    }
+  }
 
   background: $infoText;
   &.inviting {
