@@ -47,6 +47,7 @@
 
 
       </div>
+      {{view Cataract.FlashListView}}
     </div>
   </div>
 </div>
@@ -78,7 +79,6 @@
     {{ render "torrents" }}
   </div>
   <div id="details">
-    {{view Cataract.FlashListView}}
     {{view Cataract.DropZoneView}}
 
     {{ outlet }}

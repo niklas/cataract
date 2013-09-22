@@ -1,0 +1,11 @@
+#ember-flash {
+  position: absolute;
+  top: $navbar_shift;
+  right: 0px;
+  width: 33%;
+  background: transparent;
+
+  div.flash {
+    background: rgba(0, 0, 0, 0.46);
+  }
+}
