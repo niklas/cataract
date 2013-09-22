@@ -30,13 +30,21 @@ Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
     )
 
   stopTimeout: ->
-    timout = @get('timeout')
+    timeout = @get('timeout')
     if timeout
-      clearTimeOut timeout
+      clearTimeout timeout
       @set('timeout', null)
 
   didInsertElement: ->
     @startTimeout()
+
+  mouseEnter: ->
+    @stopTimeout()
+    true
+
+  mouseLeave: ->
+    @startTimeout()
+    true
 
 Cataract.FlashListView = Ember.Rails.FlashListView.extend
   elementId: 'ember-flash'
