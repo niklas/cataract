@@ -1,17 +1,21 @@
-Cataract.DirectoriesController = Cataract.FilteredController.extend
+Cataract.DirectoriesController = Ember.ArrayController.extend
   init: ->
-    @set 'unfilteredContent', Cataract.Directory.find()
+    poly = PolyDiskTree.create()
+    @setProperties
+      poly: poly
+      roots: poly.get('root.children')
+    dirs = Cataract.Directory.find()
+    # cannot bind Emu.ModelCollection to PolyDiskTree#directories, because it
+    # creates blank records, serializing after Enumerable Observers are called
+    dirs.on('didFinishLoading', ->
+      poly.get('directories').pushObjects dirs.toArray()
+    )
     @_super()
   currentBinding: 'Cataract.currentDirectory'
   diskBinding: 'Cataract.currentDisk'
   contentBinding: 'roots'
   # FIXME: isLoaded does not work on Arrays https://github.com/emberjs/data/issues/587
-  isLoadedBinding: 'unfilteredContent.length'
-
-  roots: Ember.computed ->
-    @get('filteredContent').filter (record) ->
-      !record.get('parentId')?
-  .property('filteredContent', 'unfilteredContent.@each.parentId')
+  isLoadedBinding: 'poly.directories.length'
 
   filterFunction: Ember.computed ->
     diskId = @get('disk.id')
