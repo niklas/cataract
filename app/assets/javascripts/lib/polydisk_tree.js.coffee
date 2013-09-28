@@ -3,6 +3,7 @@ slash = /\//
 PolyDiskDirectory = Ember.Object.extend
   relative_path: ''
   init: ->
+    @_super()
     @setProperties
       alternatives: Ember.A()
       children: Ember.A()
@@ -11,6 +12,18 @@ PolyDiskDirectory = Ember.Object.extend
     comps = @get('relative_path').split(slash)
     comps[ comps.length - 1 ]
   .property('relative_path')
+
+  getOrBuildChildByName: (name) ->
+    children = @get('children')
+    path = @get('relative_path')
+    child = children.findProperty('name', name)
+    unless child?
+      child = PolyDiskDirectory.create
+        relative_path: (if path.length is 0 then name else "#{path}/#{name}")
+      children.pushObject child
+      console?.debug "build child: #{child.get('relative_path')}"
+    child
+
 
 PolyDiskTree = Ember.Object.extend
   init: ->
@@ -39,20 +52,17 @@ PolyDiskTree = Ember.Object.extend
       console?.debug "found alternative for #{herePath}"
       here.get('alternatives').pushObject dir
     else if dirPath.indexOf(herePath) is 0 # dir is sub of here
-      if dirPath.indexOf('/') < 0 # direct child
-        name = dirPath
+      console?.debug "new child under #{herePath}: #{dirPath}"
+      if herePath.length is 0 # we are at root, just use first component
+        name = dirPath.split(slash)[0]
       else
         cut = dirPath.slice( herePath.length + 1 ) # dir path from here (+ slash)
-        name = cut[0]
-      console?.debug "new child under #{herePath}: #{name}"
+        name = cut.split(slash)[0]
 
-      child = here.get('children').findProperty('name', name)
-      unless child?
-        child = PolyDiskDirectory.create(relative_path: if cut? then "#{herePath}/#{name}" else name)
-        here.get('children').pushObject child
-      @_insert child, dir
+      @_insert here.getOrBuildChildByName(name), dir
 
     else
       console?.debug "cannot insert #{dirPath} at #{herePath}"
 
+window.PolyDiskDirectory = PolyDiskDirectory
 window.PolyDiskTree = PolyDiskTree
