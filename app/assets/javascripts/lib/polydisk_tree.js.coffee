@@ -5,12 +5,16 @@ PolyDiskTree = Ember.Object.extend
     @_super()
     @setProperties
       root: PolyDiskDirectory.create()
-      directories: Ember.A()
+
+    unless @get('directories')
+      @setProperties
+        directories: Ember.A()
 
     @get('directories').addEnumerableObserver(@,
       willChange: @willChangeDirectories,
       didChange:  @didChangeDirectories
     )
+
 
   willChangeDirectories: (directories, removing, addCount) ->
     # TODO

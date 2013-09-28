@@ -48,4 +48,8 @@ describe 'PolyDiskTree', ->
     it 'adds alternative for leaf', ->
       expect( tree.get('root.children.firstObject.children.firstObject.children.firstObject.alternatives.length') ).toEqual(1)
 
-
+  it 'can specify #directories on creation', ->
+    list = Ember.A()
+    list.pushObject('given')
+    tree = PolyDiskTree.create directories: list
+    expect( tree.get('directories') ).toEqual( list )
