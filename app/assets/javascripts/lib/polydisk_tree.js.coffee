@@ -1,5 +1,7 @@
 PolyDiskDirectory = Ember.Object.extend
-  alternatives: Ember.A()
+  init: ->
+    @setProperties
+      alternatives: Ember.A()
   relative_path: ''
 
 PolyDiskTree = Ember.Object.extend
