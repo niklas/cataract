@@ -2,9 +2,9 @@ describe 'PolyDiskDirectory', ->
 
   describe '.create', ->
     it 'accepts relative path', ->
-      dir = PolyDiskDirectory.create(relative_path: 'foo/bar')
+      dir = PolyDiskDirectory.create(relativePath: 'foo/bar')
 
-      expect( dir.get('relative_path') ).toEqual( 'foo/bar' )
+      expect( dir.get('relativePath') ).toEqual( 'foo/bar' )
 
   describe '#getOrBuildChildByName', ->
     l1 = null
@@ -26,14 +26,14 @@ describe 'PolyDiskDirectory', ->
       expect( l1.get('children.length') ).toEqual(1)
 
     it 'assigns correct path as root', ->
-      l1.set('relative_path',  '')
+      l1.set('relativePath',  '')
       l2 = l1.getOrBuildChildByName('sub')
-      expect( l2.get('relative_path') ).toEqual('sub')
+      expect( l2.get('relativePath') ).toEqual('sub')
 
     it 'assigns correct path as sub', ->
-      l1.set('relative_path',  'l1')
+      l1.set('relativePath',  'l1')
       l2 = l1.getOrBuildChildByName('l2')
-      expect( l2.get('relative_path') ).toEqual('l1/l2')
+      expect( l2.get('relativePath') ).toEqual('l1/l2')
 
 
 

@@ -1,5 +1,6 @@
 Cataract.Directory = Cataract.BaseDirectory.extend
   fullPath: Emu.field('string')
+  relativePath: Emu.field('string')
   subscribed: Emu.field('boolean')
   filter: Emu.field('string')
   torrents: Emu.field('Cataract.Torrent', collection: true)

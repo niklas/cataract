@@ -25,8 +25,8 @@ PolyDiskTree = Ember.Object.extend
     , @
 
   _insert: (here, dir) ->
-    herePath = here.get('relative_path')
-    dirPath  = dir.get('relative_path')
+    herePath = here.get('relativePath')
+    dirPath  = dir.get('relativePath')
     if herePath is dirPath # dir is an alternative of here
       console?.debug "found alternative for #{herePath}"
       here.get('alternatives').pushObject dir

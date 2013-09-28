@@ -9,9 +9,9 @@ describe 'PolyDiskTree', ->
 
   describe 'adding 3 root dirs with common path', ->
     beforeEach ->
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1')
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1')
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
 
     it 'creates only one child', ->
       expect( tree.get('root.children.length') ).toEqual(1)
@@ -21,9 +21,9 @@ describe 'PolyDiskTree', ->
 
   describe 'adding two levels of directories, second has duplicate', ->
     beforeEach ->
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1')
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1/Level2')
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1/Level2')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1/Level2')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1/Level2')
 
     it 'creates only one direct child', ->
       expect( tree.get('root.children.length') ).toEqual(1)
@@ -39,7 +39,7 @@ describe 'PolyDiskTree', ->
 
   describe 'adding a 3-level deep directory, skipping intermediates', ->
     beforeEach ->
-      tree.get('directories').pushObject Ember.Object.create(relative_path: 'Level1/Level2/Level3')
+      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1/Level2/Level3')
 
     it 'adds no alternatives for intermediates', ->
       expect( tree.get('root.children.firstObject.alternatives.length') ).toEqual(0)
