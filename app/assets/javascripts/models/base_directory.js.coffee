@@ -6,3 +6,6 @@ Cataract.BaseDirectory = Emu.Model.extend
   parent: Ember.computed ->
     Cataract.Directory.find( @get('parentId') )
   .property('parentId', 'disk.directories.@each')
+  nameWithDisk: Ember.computed ->
+    "#{@get('name')} (#{@get('disk.name')})"
+  .property('name', 'disk.name')
