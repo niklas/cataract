@@ -10,7 +10,7 @@ Cataract.Router.map ->
   @route 'settings'
 
 Cataract.ApplicationRoute = Ember.Route.extend
-  setupController: ->
+  beforeModel: ->
     Cataract.set 'torrentsController', @controllerFor('torrents')
     @controllerFor('settings').set    'model',  Cataract.Setting.find('all')
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
@@ -57,12 +57,12 @@ Cataract.DiskRoute = Ember.Route.extend
     Cataract.set 'currentDisk', model
 
 Cataract.TorrentRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    @_super(controller, model)
-    controller.set 'content', model
+  model: (params) ->
+    Cataract.Torrent.find params.torrent_id # FIXME ember should do this
+  afterModel: (model) ->
     model.loadPayload()
     # Emu::Model.findQuery uses its own collection, resulting in two copies of
-    # the same Torrent. We replace it with the already loaded one
+    # the same Torrent. We replace it with the newly loaded one
     torrents = @controllerFor('torrents').get('unfilteredContent')
     torrents.one 'didFinishLoading', ->
       copy = torrents.findProperty('id', model.get('id'))
