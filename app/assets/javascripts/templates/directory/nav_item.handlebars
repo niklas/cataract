@@ -1,7 +1,7 @@
-{{#linkTo directory this class="name"}}
+{{#link-to 'directory' this class="name"}}
   <i {{bindAttr class="view.exists:icon-folder-open:icon-warning-sign"}}></i>
   {{name}}
-{{/linkTo}}
+{{/link-to}}
 
 {{#if hasSubDirs}}
   {{view Cataract.DirectoryNavListView contentBinding="children"}}

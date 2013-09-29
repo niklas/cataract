@@ -1,5 +1,5 @@
 Cataract.LinkToDirectory = Ember.View.extend
-  template: Ember.Handlebars.compile '{{#linkTo directory view.content}}{{view.content.name}}{{/linkTo}}'
+  template: Ember.Handlebars.compile "{{#link-to 'directory' view.content}}{{view.content.name}}{{/link-to}}"
 
 Cataract.DirectoriesTable = Cataract.Table.extend
   classNames: 'table table-striped directories'.w()

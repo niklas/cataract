@@ -1,7 +1,7 @@
 <h2>{{name}}</h2>
 
 
-{{#linkTo new_directory class="new"}}Create Directory{{/linkTo}}
+{{#link-to 'new_directory' class="new"}}Create Directory{{/link-to}}
 
 {{#if hasDirectories}}
 {{view Cataract.DirectoriesTable contentBinding="directories" classNames="existing"}}

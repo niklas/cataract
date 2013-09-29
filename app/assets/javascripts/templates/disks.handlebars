@@ -1,10 +1,10 @@
 <ul class="nav nav-tabs disks">
   {{#each controller}}
   <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
-  {{#linkTo disk this class="name"}}
+  {{#link-to 'disk' this class="name"}}
       <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
       {{name}}
-    {{/linkTo}}
+    {{/link-to}}
   </li>
   {{/each}}
 </ul>
