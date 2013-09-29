@@ -72,8 +72,8 @@ Feature: Transfer info
         | 0         | 42      | 2000       | 2000            | the torrent | true    | true  |
       And the tick interval is reached
      Then I should see the following torrents in the torrent list:
-        | up     | down  | percent | eta     |
-        | 42 B/s | 0 B/s | 100%    | (i) nil |
+        | up     | down  | percent | eta |
+        | 42 B/s | 0 B/s | 100%    |     |
 
   Scenario: stopped by someone else is detected
     Given the torrent is running
