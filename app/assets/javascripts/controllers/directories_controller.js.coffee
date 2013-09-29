@@ -1,3 +1,4 @@
+# TODO merge with PolyDiskTree
 Cataract.DirectoriesController = Ember.ArrayController.extend
   init: ->
     poly = PolyDiskTree.create()
