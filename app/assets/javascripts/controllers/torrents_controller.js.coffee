@@ -1,6 +1,8 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
   init: ->
     @_super()
+    @setProperties
+      directoryIds: Ember.A()
     $('body').bind 'tick', => @refreshTransfers(); true
 
   unfilteredContent: Ember.A()
@@ -26,6 +28,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   termsBinding: 'Cataract.terms'
   mode: ''
   directoryBinding: 'Cataract.currentDirectory'
+  directoryIds: null
 
   filterFunctionDidChange: (->
     @gotoFirstPage()
@@ -43,7 +46,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   filterFunction: (->
     termsList  = @get('termsList')
     mode = @get('mode') || ''
-    directoryId = @get('directory.id')
+    directoryIds = (@get('directoryIds') || []).toArray()
+    directoryIds.pushObject(directoryId) if directoryId = @get('directory.id')
+
     (torrent) ->
       want = true
       torrent = torrent.record if torrent.record? # materialized or not?!
@@ -54,11 +59,11 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
-      if directoryId
-        want = want and directoryId is torrent.get('contentDirectoryId')
+      if directoryIds.length > 0
+        want = want and directoryIds.indexOf( torrent.get('contentDirectoryId') ) >= 0
 
       want
-  ).property('termsList', 'mode', 'directory', 'age')
+  ).property('termsList', 'mode', 'directory', 'age', 'directoryIds')
 
 
   siteTitle: (->

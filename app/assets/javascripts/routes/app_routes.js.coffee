@@ -1,7 +1,7 @@
 Cataract.Router.map ->
-  @resource 'filter', path: 'filter/:mode', ->
-    @resource 'directory', path: 'directory/:directory_id'
+  @resource 'filter', path: 'filter/:mode'
   @resource 'torrent', path: 'torrent/:torrent_id'
+  @resource 'poly', path: 'poly/:poly_id', ->
   @resource 'directory', path: 'directory/:directory_id', ->
     @route 'edit', path: 'edit'
   @resource 'disk', path: 'disk/:disk_id'
@@ -33,11 +33,23 @@ Cataract.FilterRoute = Ember.Route.extend
     torrents.set('mode', model)
     torrents.refreshTransfers()
     @controllerFor('application').set('currentController', torrents)
+  leave: -> # TODO
+    torrents.set('mode', null)
+
+Cataract.PolyRoute = Ember.Route.extend
+  model: (params) ->
+    parseInt(i) for i in params.poly_id.split(',')
+  setupController: (controller, model) ->
+    torrents = @controllerFor('torrents')
+    torrents.set('directoryIds', model)
+
 
 Cataract.DirectoryRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super(controller, model)
     Cataract.set 'currentDirectory', model
+  leave: -> # TODO
+    Cataract.set 'currentDirectory', null
 
 Cataract.DiskRoute = Ember.Route.extend
   setupController: (controller, model) ->
