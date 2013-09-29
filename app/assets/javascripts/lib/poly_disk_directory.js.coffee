@@ -26,6 +26,11 @@ PolyDiskDirectory = Ember.Object.extend
       console?.debug "build child: #{child.get('relativePath')}"
     child
 
+  id: Ember.computed ->
+    @get('alternatives').mapProperty('id').join(',')
+  .property('alternatives.@each.id')
+
+
   hasSubDirs: Ember.computed ->
     @get('children.length') > 0 or @get('alternatives').anyBy('hasSubDirs')
   .property('alternatives.@each.hasSubDirs', 'children.length')
