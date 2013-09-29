@@ -27,8 +27,12 @@ PolyDiskDirectory = Ember.Object.extend
     child
 
   hasSubDirs: Ember.computed ->
-    @get('children.length') > 0 or @get('alternatives').any (alt) -> alt.get('hasSubDirs')
+    @get('children.length') > 0 or @get('alternatives').anyBy('hasSubDirs')
   .property('alternatives.@each.hasSubDirs', 'children.length')
+
+  exists: Ember.computed ->
+    @get('alternatives').anyBy('exists')
+  .property('alternatives.@each.exists')
 
 
 
