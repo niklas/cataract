@@ -29,7 +29,7 @@ PolyDiskTree = Ember.Object.extend
     dirPath  = dir.get('relativePath')
     if herePath is dirPath # dir is an alternative of here
       console?.debug "found alternative for #{herePath}"
-      here.get('alternatives').pushObject dir
+      here.get('alternatives').addObject dir
     else if dirPath.indexOf(herePath) is 0 # dir is sub of here
       console?.debug "new child under #{herePath}: #{dirPath}"
       if herePath.length is 0 # we are at root, just use first component
