@@ -1,10 +1,11 @@
-// Version: 0.1.0-62-g349abd4
-// Last commit: 349abd4 (2013-04-27 12:50:48 -0300)
+// Version: 0.1.0-114-gd8cea77
+// Last commit: d8cea77 (2013-09-06 10:12:39 -0400)
 
 
 (function() {
   window.Emu = Ember.Namespace.create({
-    VERSION: "0.1.0"
+    VERSION: "0.1.0",
+    CURRENT_API_REVISION: 1
   });
 
 }).call(this);
@@ -62,29 +63,6 @@
           return application.inject("route", "store", "store:main");
         }
       });
-    }
-  });
-
-}).call(this);
-(function() {
-  Emu.ModelEvented = Ember.Mixin.create({
-    didStartLoading: function() {
-      return this.trigger("didStartLoading");
-    },
-    didFinishLoading: function() {
-      return this.trigger("didFinishLoading");
-    },
-    didStartSaving: function() {
-      return this.trigger("didStartSaving");
-    },
-    didFinishSaving: function() {
-      return this.trigger("didFinishSaving");
-    },
-    didStateChange: function() {
-      return this.trigger("didStateChange");
-    },
-    didError: function() {
-      return this.trigger("didError");
     }
   });
 
@@ -154,6 +132,20 @@
         }
       });
     },
+    findChild: function(type, store, model, parentId) {
+      var _this = this;
+
+      return $.ajax({
+        url: this._getUrlForModel(model.get("parent")) + "/" + parentId + "/" + this._serializer.serializeTypeName(type, true),
+        type: "GET",
+        success: function(jsonData) {
+          return _this._didFindById(store, model, jsonData);
+        },
+        error: function() {
+          return _this._didError(store, model);
+        }
+      });
+    },
     findQuery: function(type, store, collection, queryHash) {
       var _this = this;
 
@@ -166,6 +158,20 @@
         },
         error: function() {
           return _this._didError(store, collection);
+        }
+      });
+    },
+    findPage: function(pagedCollection, store, pageNumber) {
+      var _this = this;
+
+      return $.ajax({
+        url: this._getUrlForModel(pagedCollection) + this._serializer.serializeQueryHash({
+          pageNumber: pageNumber,
+          pageSize: pagedCollection.get("pageSize")
+        }),
+        type: "GET",
+        success: function(jsonData) {
+          return _this._didFindPage(store, pagedCollection, jsonData, pageNumber);
         }
       });
     },
@@ -214,6 +220,17 @@
       this._serializer.deserializeModel(model, jsonData);
       return store.didFindById(model);
     },
+    _didFindPage: function(store, pagedCollection, jsonData, pageNumber) {
+      var results, resultsKey, totalRecordCount, totalRecordCountKey;
+
+      totalRecordCountKey = this._serializer.serializeKey("totalRecordCount");
+      resultsKey = this._serializer.serializeKey("results");
+      totalRecordCount = jsonData[totalRecordCountKey];
+      results = jsonData[resultsKey];
+      pagedCollection.set("totalRecordCount", totalRecordCount);
+      this._serializer.deserializeCollection(pagedCollection, results, true);
+      return store.didFindPage(pagedCollection, pageNumber);
+    },
     _didError: function(store, model) {
       return store.didError(model);
     },
@@ -225,17 +242,17 @@
       var buildUrl, currentModel, url,
         _this = this;
 
-      url = model.constructor === Emu.ModelCollection ? this._serializer.serializeTypeName(model.get("type")) : "";
+      url = Emu.isCollection(model) ? this._serializer.serializeTypeName(model.get("type")) : model.get("lazy") ? this._serializer.serializeTypeName(model.constructor, true) : "";
       currentModel = model;
       buildUrl = function() {
-        currentModel = currentModel.get("EMUparent");
-        if (currentModel.constructor === Emu.ModelCollection) {
+        currentModel = currentModel.get("parent");
+        if (Emu.isCollection(currentModel)) {
           return url = _this._serializer.serializeTypeName(currentModel.get("type")) + (url ? "/" + url : "");
         } else {
-          return url = currentModel.primaryKeyValue() + "/" + url;
+          return url = (currentModel.get("lazy") ? _this._serializer.serializeTypeName(currentModel.constructor, true) : currentModel.primaryKeyValue()) + "/" + url;
         }
       };
-      while (currentModel.get("EMUparent")) {
+      while (currentModel.get("parent")) {
         buildUrl();
       }
       return this._getBaseUrl() + url;
@@ -249,6 +266,41 @@
       } else {
         return "";
       }
+    }
+  });
+
+}).call(this);
+(function() {
+  Emu.ModelEvented = Ember.Mixin.create({
+    didStartLoading: function() {
+      return this.trigger("didStartLoading");
+    },
+    didFinishLoading: function() {
+      return this.trigger("didFinishLoading");
+    },
+    didFinishPartialLoading: function() {
+      return this.trigger("didFinishPartialLoading");
+    },
+    didStartSaving: function() {
+      return this.trigger("didStartSaving");
+    },
+    didFinishSaving: function() {
+      return this.trigger("didFinishSaving");
+    },
+    didStateChange: function() {
+      return this.trigger("didStateChange");
+    },
+    didError: function() {
+      return this.trigger("didError");
+    }
+  });
+
+}).call(this);
+(function() {
+  Emu.StateTracked = Ember.Mixin.create({
+    init: function() {
+      this._super();
+      return Emu.StateTracker.create().track(this);
     }
   });
 
@@ -273,7 +325,7 @@
       }
     };
     return Ember.computed(function(key, value, oldValue) {
-      var _ref, _ref1;
+      var _ref, _ref1, _ref2;
 
       meta = this.constructor.metaForProperty(key);
       if (arguments.length > 1) {
@@ -282,14 +334,24 @@
         this.set("hasValue", true);
       } else {
         if (meta.options.lazy && this.primaryKeyValue()) {
-          if ((_ref = this.get("store")) != null) {
-            _ref.loadAll(Emu.Model.getAttr(this, key));
+          if (meta.options.collection) {
+            if ((_ref = this.get("store")) != null) {
+              _ref.loadAll(Emu.Model.getAttr(this, key));
+            }
+          } else if (meta.isModel()) {
+            if ((_ref1 = this.get("store")) != null) {
+              _ref1.loadModel(Emu.Model.getAttr(this, key));
+            }
           }
         } else if (meta.options.partial) {
-          if ((_ref1 = this.get("store")) != null) {
-            _ref1.loadModel(this);
+          if ((_ref2 = this.get("store")) != null) {
+            _ref2.loadModel(this);
           }
-        } else if (meta.options.defaultValue && !Emu.Model.getAttr(this, key)) {
+        }
+        if (meta.options.paged) {
+          Emu.Model.getAttr(this, key).loadMore();
+        }
+        if (meta.options.defaultValue && !Emu.Model.getAttr(this, key)) {
           Emu.Model.setAttr(this, key, meta.options.defaultValue);
         }
       }
@@ -299,16 +361,16 @@
 
 }).call(this);
 (function() {
-  Emu.Model = Ember.Object.extend(Emu.ModelEvented, Ember.Evented, {
+  Emu.Model = Ember.Object.extend(Emu.ModelEvented, Emu.StateTracked, Ember.Evented, {
     init: function() {
+      this._super();
       if (!this.get("store")) {
         this.set("store", Ember.get(Emu, "defaultStore"));
       }
       this._primaryKey = Emu.Model.primaryKey(this.constructor);
       if (this.get("isDirty") === void 0) {
-        this.set("isDirty", true);
+        return this.set("isDirty", true);
       }
-      return Emu.StateTracker.create().track(this);
     },
     save: function() {
       return this.get("store").save(this);
@@ -356,6 +418,7 @@
     isEmuModel: true,
     createRecord: Emu.proxyToStore("createRecord"),
     find: Emu.proxyToStore("find"),
+    findPaged: Emu.proxyToStore("findPaged"),
     primaryKey: function(type) {
       var primaryKey, primaryKeyCount,
         _this = this;
@@ -386,7 +449,7 @@
       });
     },
     getAttr: function(record, key) {
-      var meta, _ref;
+      var collectionType, meta, _ref;
 
       meta = record.constructor.metaForProperty(key);
       if ((_ref = record._attributes) == null) {
@@ -394,11 +457,13 @@
       }
       if (!record._attributes[key]) {
         if (meta.options.collection) {
-          record._attributes[key] = Emu.ModelCollection.create({
-            EMUparent: record,
+          collectionType = meta.options.paged ? Emu.PagedModelCollection : Emu.ModelCollection;
+          record._attributes[key] = collectionType.create({
+            parent: record,
             type: meta.type(),
             store: record.get("store"),
-            lazy: meta.options.lazy
+            lazy: meta.options.lazy,
+            pageSize: meta.options.pageSize
           });
           record._attributes[key].addObserver("hasValue", function() {
             return record.set("hasValue", true);
@@ -412,7 +477,13 @@
             record._attributes[key].subscribeToUpdates();
           }
         } else if (meta.isModel()) {
-          record._attributes[key] = meta.type().create();
+          record._attributes[key] = meta.type().create({
+            parent: record,
+            lazy: meta.options.lazy
+          });
+          if (meta.options.updatable) {
+            record._attributes[key].subscribeToUpdates();
+          }
           record._attributes[key].on("didStateChange", function() {
             return record.didStateChange();
           });
@@ -433,13 +504,14 @@
 
 }).call(this);
 (function() {
-  Emu.ModelCollection = Ember.ArrayProxy.extend(Emu.ModelEvented, Ember.Evented, {
+  Emu.ModelCollection = Ember.ArrayProxy.extend(Emu.ModelEvented, Emu.StateTracked, Ember.Evented, {
     init: function() {
       var _this = this;
 
       if (!this.get("content")) {
         this.set("content", Ember.A([]));
       }
+      this._super();
       this.createRecord = function(hash) {
         var model, paramHash, primaryKey;
 
@@ -449,7 +521,7 @@
         };
         paramHash[primaryKey] = hash != null ? hash.id : void 0;
         model = this.get("type").create(paramHash);
-        model.set("EMUparent", this);
+        model.set("parent", this);
         model.setProperties(hash);
         if (this._subscribeToUpdates) {
           model.subscribeToUpdates();
@@ -466,10 +538,9 @@
         _this.didStateChange();
         return _this.set("hasValue", true);
       });
-      this.find = function(predicate) {
+      return this.find = function(predicate) {
         return this.get("content").find(predicate);
       };
-      return Emu.StateTracker.create().track(this);
     },
     subscribeToUpdates: function() {
       return this._subscribeToUpdates = true;
@@ -488,6 +559,26 @@
 
 }).call(this);
 (function() {
+  Emu.PagedModelCollection = Emu.ModelCollection.extend({
+    loadedPageCursor: 1,
+    init: function() {
+      this._super();
+      this.set("pages", Em.A([]));
+      if (!this.get("pageSize")) {
+        return this.set("pageSize", 250);
+      }
+    },
+    loadMore: function() {
+      this.get("store").loadPaged(this, this.get("loadedPageCursor"));
+      return this._incrementCursor("loadedPageCursor");
+    },
+    _incrementCursor: function(cursor) {
+      return this.set(cursor, this.get(cursor) + 1);
+    }
+  });
+
+}).call(this);
+(function() {
   Emu.StateTracker = Ember.Object.extend({
     track: function(model) {
       model.on("didStartLoading", function() {
@@ -497,7 +588,8 @@
       model.on("didFinishLoading", function() {
         model.set("isLoading", false);
         model.set("isLoaded", true);
-        return model.set("isDirty", false);
+        model.set("isDirty", false);
+        return model.set("isSaved", true);
       });
       model.on("didStartSaving", function() {
         return model.set("isSaving", true);
@@ -505,7 +597,8 @@
       model.on("didFinishSaving", function() {
         model.set("isSaving", false);
         model.set("isDirty", false);
-        return model.set("isLoaded", true);
+        model.set("isLoaded", true);
+        return model.set("isSaved", true);
       });
       model.on("didStateChange", function() {
         return model.set("isDirty", true);
@@ -525,17 +618,17 @@
   Emu.AttributeSerializers = {
     string: {
       serialize: function(value) {
-        if (Ember.isEmpty(value)) {
+        if (Ember.isNone(value)) {
           return null;
         } else {
-          return value;
+          return String(value);
         }
       },
       deserialize: function(value) {
         if (Ember.isEmpty(value)) {
           return null;
         } else {
-          return value.toString();
+          return String(value);
         }
       }
     },
@@ -575,23 +668,54 @@
           return value;
         }
       }
+    },
+    number: {
+      serialize: function(value) {
+        if (Ember.isNone(value)) {
+          return null;
+        } else {
+          return Number(value);
+        }
+      },
+      deserialize: function(value) {
+        if (Ember.isEmpty(value)) {
+          return null;
+        } else {
+          return Number(value);
+        }
+      }
     }
   };
 
 }).call(this);
 (function() {
   Emu.Serializer = Ember.Object.extend({
+    pluralization: true,
     serializeKey: function(key) {
       return key[0].toLowerCase() + key.slice(1);
     },
     deserializeKey: function(key) {
       return key;
     },
-    serializeTypeName: function(type) {
-      var parts;
+    serializeTypeName: function(type, isSingular) {
+      var name, parts, serialized;
 
-      parts = type.toString().split(".");
-      return this.serializeKey(parts[parts.length - 1]);
+      if (type.resourceName) {
+        name = type.resourceName;
+        if (typeof name === 'function') {
+          return name(isSingular);
+        } else {
+          return name;
+        }
+      } else {
+        parts = type.toString().split(".");
+        serialized = this.serializeKey(parts[parts.length - 1]);
+        if (this.get("pluralization") && !isSingular) {
+          return serialized + "s";
+        } else {
+          return serialized;
+        }
+      }
     },
     serializeModel: function(model) {
       var jsonData,
@@ -608,6 +732,10 @@
       var primaryKeyValue,
         _this = this;
 
+      if (!jsonData) {
+        model.clear();
+        return;
+      }
       primaryKeyValue = jsonData[model.primaryKey()];
       if (primaryKeyValue) {
         model.primaryKeyValue(primaryKeyValue);
@@ -673,7 +801,9 @@
       } else {
         attributeSerializer = Emu.AttributeSerializers[meta.type()];
         value = attributeSerializer.deserialize(value);
-        return model.set(property, value);
+        if (value != null) {
+          return model.set(property, value);
+        }
       }
     },
     _serializeProperty: function(model, jsonData, property, meta) {
@@ -693,7 +823,7 @@
           return jsonData[serializedKey] = this.serializeModel(value);
         }
       } else {
-        if (typeof value !== "undefined" && value !== null) {
+        if (value !== void 0) {
           attributeSerializer = Emu.AttributeSerializers[meta.type()];
           return jsonData[serializedKey] = attributeSerializer.serialize(value);
         }
@@ -713,23 +843,6 @@
       return key.replace(/(\_[a-z])/g, function(x) {
         return x.toUpperCase().replace('_', '');
       });
-    },
-    serializeTypeName: function(type) {
-      var name, parts, typeString;
-
-      if (type.resourceName) {
-        name = type.resourceName;
-        if (typeof name === 'function') {
-          return name();
-        } else {
-          return name;
-        }
-      } else {
-        typeString = type.toString();
-        parts = typeString.split('.');
-        name = parts[parts.length - 1];
-        return name.replace(/([A-Z])/g, '_$1').toLowerCase().slice(1) + 's';
-      }
     }
   });
 
@@ -739,6 +852,9 @@
     init: function() {
       var _ref, _ref1, _ref2;
 
+      if (!(this.get("revision") === Emu.CURRENT_API_REVISION || Emu.TESTING)) {
+        throw new Error("Error: Emu has had breaking changes since your last update. Please review them at https://github.com/charlieridley/emu/blob/master/breaking_changes.md and update the `revision` property on your store to " + Emu.CURRENT_API_REVISION);
+      }
       if (!Ember.get(Emu, "defaultStore")) {
         Ember.set(Emu, "defaultStore", this);
       }
@@ -789,6 +905,9 @@
       var deferredQueries;
 
       this._didCollectionLoad(collection);
+      collection.get("content").forEach(function(item) {
+        return item.didFinishPartialLoading();
+      });
       deferredQueries = this.get("deferredQueries")[collection.type];
       if (deferredQueries) {
         return deferredQueries.forEach(function(deferredQuery) {
@@ -814,6 +933,20 @@
         model.primaryKeyValue(id);
       }
       return this.loadModel(model);
+    },
+    findPaged: function(type, pageSize) {
+      var pagedCollection;
+
+      if (pageSize == null) {
+        pageSize = 500;
+      }
+      pagedCollection = Emu.PagedModelCollection.create({
+        type: type,
+        pageSize: pageSize,
+        store: this
+      });
+      pagedCollection.loadMore();
+      return pagedCollection;
     },
     didFindById: function(model) {
       return model.didFinishLoading();
@@ -880,7 +1013,11 @@
     loadModel: function(model) {
       if (!model.get("isLoading") && !model.get("isLoaded")) {
         model.didStartLoading();
-        this._adapter.findById(model.constructor, this, model, model.primaryKeyValue());
+        if (!model.get("lazy")) {
+          this._adapter.findById(model.constructor, this, model, model.primaryKeyValue());
+        } else {
+          this._adapter.findChild(model.constructor, this, model, model.get("parent").primaryKeyValue());
+        }
       }
       return model;
     },
@@ -914,6 +1051,13 @@
     didDeleteRecord: function(model) {
       return this._getCollectionForType(model.constructor).deleteRecord(model);
     },
+    loadPaged: function(pagedCollection, pageNumber) {
+      pagedCollection.didStartLoading();
+      return this._adapter.findPage(pagedCollection, this, pageNumber);
+    },
+    didFindPage: function(pagedCollection, pageNumber) {
+      return pagedCollection.didFinishLoading();
+    },
     _didCollectionLoad: function(collection) {
       return collection.didFinishLoading();
     },
@@ -934,5 +1078,13 @@
       }));
     }
   });
+
+}).call(this);
+(function() {
+  var _this = this;
+
+  Emu.isCollection = function(value) {
+    return value.constructor === Emu.ModelCollection || value.constructor === Emu.PagedModelCollection;
+  };
 
 }).call(this);
