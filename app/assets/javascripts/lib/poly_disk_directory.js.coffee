@@ -30,7 +30,6 @@ PolyDiskDirectory = Ember.Object.extend
       child = PolyDiskDirectory.create
         relativePath: (if path.length is 0 then name else "#{path}/#{name}")
       children.addObject child
-      console?.debug "build child: #{child.get('relativePath')}"
     child
 
   id: Ember.computed ->
