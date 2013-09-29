@@ -2,6 +2,8 @@ slash = /\//
 
 PolyDiskDirectory = Ember.Object.extend
   relativePath: ''
+  alternatives: null
+  children: null
   init: ->
     @_super()
     @setProperties
@@ -23,6 +25,10 @@ PolyDiskDirectory = Ember.Object.extend
       children.pushObject child
       console?.debug "build child: #{child.get('relativePath')}"
     child
+
+  hasSubDirs: Ember.computed ->
+    @get('children.length') > 0 or @get('alternatives').any (alt) -> alt.get('hasSubDirs')
+  .property('alternatives.@each.hasSubDirs', 'children.length')
 
 
 
