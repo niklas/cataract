@@ -73,6 +73,7 @@ Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->
     Cataract.Torrent.createRecord()
   setupController: (controller, torrent) ->
+    controller.set 'content', torrent # Ember actually should do this for us
     router = this
     controller.setDefaultDirectory()
     # TODO transition route "back" (must remember last route?)
