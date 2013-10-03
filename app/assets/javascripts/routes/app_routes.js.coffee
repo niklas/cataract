@@ -3,8 +3,7 @@ Cataract.Router.map ->
   @resource 'torrent', path: 'torrent/:torrent_id'
   @resource 'poly', path: 'poly/:poly_id', ->
     @resource 'poly.directory', path: 'directory/:directory_id'
-  #@resource 'directory', path: 'directory/:directory_id', ->
-  #  @route 'edit', path: 'edit'
+  @route 'edit_directory', path: 'directory/:directory_id/edit'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
   @route 'new_directory', path: 'directory/new'
@@ -50,15 +49,22 @@ Cataract.PolyRoute = Ember.Route.extend
     curr = Cataract.get('currentDirectories')
     curr.clear()
     curr.pushObjects(model)
+    if model.length == 1
+      @transitionTo 'poly.directory', model, model.get('firstObject')
   deactivate: ->
     Cataract.get('currentDirectories').clear()
 
 
 Cataract.PolyDirectoryRoute = Ember.Route.extend
+  model: (params) ->
+    Cataract.Directory.find params.directory_id # FIXME ember should do this
   afterModel: (model)->
     Cataract.set 'currentDirectory', model
   deactivate: ->
     Cataract.set 'currentDirectory', null
+  controllerName: 'directory'
+  renderTemplate: ->
+    @render 'directory'
 
 Cataract.DiskRoute = Ember.Route.extend
   setupController: (controller, model) ->
@@ -116,7 +122,7 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
 
   renderTemplate: ->
 
-Cataract.DirectoryEditRoute = Ember.Route.extend
+Cataract.EditDirectoryRoute = Ember.Route.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
@@ -124,7 +130,7 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       directory: model
-      back: ['directory', model]
+      back: ['poly.directory', model.get('poly.alternatives'), model]
 
 Cataract.SettingsRoute = Ember.Route.extend
   model: ->

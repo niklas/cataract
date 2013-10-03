@@ -1,5 +1,7 @@
 Cataract.Directory = Cataract.BaseDirectory.extend
-  fullPath: Emu.field('string')
+  fullPath: Ember.computed ->
+    [@get('disk.path'), @get('relativePath')].join('/')
+  .property('disk.path', 'relativePath')
   relativePath: Emu.field('string')
   subscribed: Emu.field('boolean')
   filter: Emu.field('string')

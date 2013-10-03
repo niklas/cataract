@@ -19,6 +19,12 @@ describe 'PolyDiskTree', ->
     it 'adds 3 alternatives for that child', ->
       expect( tree.get('root.children.firstObject.alternatives.length') ).toEqual(3)
 
+    it 'sets a reference back to the poly on each alternative', ->
+      poly = tree.get('root.children.firstObject')
+      expect( poly ).not.toBe(null)
+      poly.get('alternatives').forEach (alt)->
+        expect( alt.get('poly') ).toEqual( poly )
+
   describe 'adding two levels of directories, second has duplicate', ->
     beforeEach ->
       tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')

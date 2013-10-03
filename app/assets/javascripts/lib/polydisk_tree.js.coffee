@@ -29,6 +29,7 @@ PolyDiskTree = Ember.Object.extend
     dirPath  = dir.get('relativePath')
     if herePath is dirPath # dir is an alternative of here
       here.get('alternatives').addObject dir
+      dir.set('poly', here)
     else if dirPath.indexOf(herePath) is 0 # dir is sub of here
       if herePath.length is 0 # we are at root, just use first component
         nameOnDisk = dirPath.split(slash)[0]
