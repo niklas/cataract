@@ -2,8 +2,9 @@ Cataract.Router.map ->
   @resource 'filter', path: 'filter/:mode'
   @resource 'torrent', path: 'torrent/:torrent_id'
   @resource 'poly', path: 'poly/:poly_id', ->
-  @resource 'directory', path: 'directory/:directory_id', ->
-    @route 'edit', path: 'edit'
+    @resource 'poly.directory', path: 'directory/:directory_id'
+  #@resource 'directory', path: 'directory/:directory_id', ->
+  #  @route 'edit', path: 'edit'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
   @route 'new_directory', path: 'directory/new'
@@ -34,12 +35,16 @@ Cataract.FilterRoute = Ember.Route.extend
     torrents.refreshTransfers()
     @controllerFor('application').set('currentController', torrents)
   deactivate: ->
+    torrents = @controllerFor('torrents')
     torrents.set('mode', null)
 
 Cataract.PolyRoute = Ember.Route.extend
   model: (params) ->
     Cataract.Directory.find(parseInt(i)) for i in params.poly_id.split(',')
     # FIXME we want a promise here, filtering ctrl.directories by ids
+
+  serialize: (model) ->
+    { poly_id: model.mapProperty('id').join(',') }
 
   afterModel: (model)->
     curr = Cataract.get('currentDirectories')
@@ -49,7 +54,7 @@ Cataract.PolyRoute = Ember.Route.extend
     Cataract.get('currentDirectories').clear()
 
 
-Cataract.DirectoryRoute = Ember.Route.extend
+Cataract.PolyDirectoryRoute = Ember.Route.extend
   afterModel: (model)->
     Cataract.set 'currentDirectory', model
   deactivate: ->

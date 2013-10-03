@@ -73,7 +73,7 @@
       <ul class="nav nav-tabs disks">
         {{#each Cataract.currentDirectories}}
         <li {{bindAttr class=":disk active disk.isMounted:mounted:unmounted"}}>
-        {{#link-to 'directory' this class="name"}}
+        {{#link-to 'poly.directory' this class="name"}}
             <i {{bindAttr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
             {{disk.name}}
           {{/link-to}}
