@@ -3,7 +3,7 @@ Cataract.ApplicationController = Ember.Controller.extend
     @_super()
     @get('fullSiteTitle') # observer does not fire if value is not used
 
-  needs: ['torrents']
+  needs: ['torrents', 'directories']
 
   currentController: null
 

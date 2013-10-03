@@ -55,14 +55,7 @@
 <div class="well" id="sidebar">
   {{view Cataract.Pagination controllerBinding="Cataract.torrentsController"}}
 
-  <div class="tabbable">
-    {{ render 'disks' }}
-    <div class="tab-content">
-      <div class="tab-pane active">
-        {{ render 'directories' }}
-      </div>
-    </div>
-  </div>
+  {{ render 'directories' }}
 
   {{#unless Cataract.online}}
   <br />
@@ -75,8 +68,27 @@
 <div id="middle">
   <div id="content">
     <div style="display: none;">breadcrumbs</div>
-    {{outlet pre}}
-    {{ render "torrents" }}
+
+    <div class="tabbable">
+      <ul class="nav nav-tabs disks">
+        {{#each controllers.directories}}
+        <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
+        {{#link-to 'disk' this class="name"}}
+            <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+            {{name}}
+          {{/link-to}}
+        </li>
+        {{/each}}
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active">
+          {{outlet pre}}
+          {{ render "torrents" }}
+        </div>
+      </div>
+
+    </div>
   </div>
   <div id="details">
     {{view Cataract.DropZoneView}}
