@@ -28,8 +28,8 @@ CataractApplication = Ember.Application.extend
 
   currentDisk: null
   currentDirectory: null
-  currentDirectoryAlternatives: Ember.A()
-  currentDirectoryIds: Ember.computed.mapProperty 'currentDirectoryAlternatives', 'id'
+  currentDirectories: Ember.A()
+  currentDirectoryIds: Ember.computed.mapProperty 'currentDirectories', 'id'
 
 Cataract = CataractApplication.create()
 

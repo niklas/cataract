@@ -38,16 +38,19 @@ Cataract.FilterRoute = Ember.Route.extend
 
 Cataract.PolyRoute = Ember.Route.extend
   model: (params) ->
-    ids = parseInt(i) for i in params.poly_id.split(',')
+    Cataract.Directory.find(parseInt(i)) for i in params.poly_id.split(',')
     # FIXME we want a promise here, filtering ctrl.directories by ids
 
-  setupController: (controller, model) ->
-    Cataract.set 'currentDirectoryAlternatives', model
+  afterModel: (model)->
+    curr = Cataract.get('currentDirectories')
+    curr.clear()
+    curr.pushObjects(model)
+  deactivate: ->
+    Cataract.get('currentDirectories').clear()
 
 
 Cataract.DirectoryRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    @_super(controller, model)
+  afterModel: (model)->
     Cataract.set 'currentDirectory', model
   deactivate: ->
     Cataract.set 'currentDirectory', null

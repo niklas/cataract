@@ -17,12 +17,16 @@ Feature: Browsing the library
       | disk "Stuff" |
       | disk "More"  |
       And the following directories exist:
-      | directory | disk         | name            | parent             | virtual | relative_path | show_sub_dirs |
-      | Series    | disk "More"  | Series          |                    | true    | Serien        | true          |
-      | Movies    | disk "Stuff" | Movies          |                    | false   |               | false         |
-      | Frowns    | disk "More"  | Shame of Frowns | directory "Series" | true    |               | false         |
+      | directory | disk             | name            | parent              | virtual | relative_path | show_sub_dirs |
+      | Series    | disk "More"      | Series          |                     | true    | Serien        | true          |
+      | SeriesR   | disk "Removable" | Series          |                     | true    | Serien        | true          |
+      | Movies    | disk "Stuff"     | Movies          |                     | false   |               | false         |
+      | Frowns    | disk "More"      | Shame of Frowns | directory "Series"  | true    |               | false         |
+      | FrownsR   | disk "Removable" | Shame of Frowns | directory "SeriesR" | true    |               | false         |
 
-  Scenario: disks and root directories directly accessible through the sidebar
+  # Hhow to display mount status on polys?
+  @wip
+  Scenario: directories directly accessible through the sidebar
     Given I am on the home page
       And I wait for the spinner to disappear
      Then I should see the following mounted disks in the sidebar disk list:
@@ -32,16 +36,15 @@ Feature: Browsing the library
       And I should see the following unmounted disks in the sidebar disk list:
       | name      |
       | Removable |
-      And I should see the following existing directories in the sidebar root directory list:
+      And I should see the following existing directories in the sidebar directory list:
       | Name   |
       | Movies |
-      And I should see the following missing directories in the sidebar root directory list:
+      And I should see the following missing directories in the sidebar directory list:
       | Name   |
       | Series |
 
+  @wip
   Scenario: Selecting a disk shows only *its* root directories in sidebar
-    Given I am on the home page
-      And I wait for the spinner to disappear
      When I follow "More" within the sidebar disk list
       Then I should see the following active disks in the sidebar disk list:
       | name  |
@@ -70,6 +73,7 @@ Feature: Browsing the library
 
 
 
+   @wip
    Scenario: Browse to subdirectories
     Given a torrent exists with content_directory: directory "Frowns", title: "First Shame"
       And I am on the recent list page
@@ -103,34 +107,48 @@ Feature: Browsing the library
 
    Scenario: torrents shown for directory ordered by name
     Given the following torrents exist:
-       | title             | content_directory  |
-       | Short Season      | directory "Frowns" |
-       | Long Season       | directory "Frowns" |
-       | Short Blockbuster | directory "Movies" |
+       | title             | content_directory   |
+       | Medium Season     | directory "Frowns"  |
+       | Short Season      | directory "Frowns"  |
+       | Long Season       | directory "FrownsR" |
+       | Short Blockbuster | directory "Movies"  |
       And I am on the recent list page
+      And I wait for the spinner to disappear
 
-     When I follow "Series" within the sidebar root directory list
+     When I follow "Serien" within the sidebar directory list
      Then I should not see "Season"
       And I should not see "Blockbuster"
 
-     When I follow "Movies" within the sidebar root directory list
-    Then I should see the following torrents in the torrent list:
+     When I follow "Movies" within the sidebar directory list
+     Then I should see the following torrents in the torrent list:
       | title             |
       | Short Blockbuster |
 
-     When I follow "Series" within the sidebar root directory list
-      And I follow "Frowns" within the directories list
-    Then I should see the following torrents in the torrent list:
-      | title        |
-      | Long Season  |
-      | Short Season |
+     When I follow "Frowns" within the sidebar directory list
+     Then I should see the following torrents in the torrent list:
+      | title         |
+      | Long Season   |
+      | Short Season  |
+      | Medium Season |
+      But I should not see "Blockbuster"
+
+     When I follow "Removable" within the disks tab
+     Then I should see the following torrents in the torrent list:
+      | title       |
+      | Long Season |
+      But I should not see "Blockbuster"
+
+     When I follow "More" within the disks tab
+     Then I should see the following torrents in the torrent list:
+      | title         |
+      | Short Season  |
+      | Medium Season |
       But I should not see "Blockbuster"
 
      # filter searches only in directory
      When I filter with "Short"
-    Then I should see the following torrents in the torrent list:
-      | title             |
-      | Short Season      |
-      But I should not see "Long"
-      And I should not see "Blockbuster"
+     Then I should see the following torrents in the torrent list:
+      | title        |
+      | Short Season |
+      But I should not see "Blockbuster"
 

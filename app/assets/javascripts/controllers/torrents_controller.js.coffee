@@ -1,8 +1,6 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
   init: ->
     @_super()
-    @setProperties
-      directoryIds: Ember.A()
     $('body').bind 'tick', => @refreshTransfers(); true
 
   unfilteredContent: Ember.A()
@@ -27,7 +25,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   termsBinding: 'Cataract.terms'
   mode: ''
-  directoryBdinding: 'Cataract.currentDirectory'
+  directoryBinding: 'Cataract.currentDirectory'
   directoryIdsBinding: 'Cataract.currentDirectoryIds'
 
   filterFunctionDidChange: (->
@@ -63,7 +61,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         want = want and directoryIds.indexOf( torrent.get('contentDirectoryId') ) >= 0
 
       want
-  ).property('termsList', 'mode', 'directory', 'age', 'directoryIds')
+  ).property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
 
 
   siteTitle: (->
