@@ -27,8 +27,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   termsBinding: 'Cataract.terms'
   mode: ''
-  directoryBinding: 'Cataract.currentDirectory'
-  directoryIds: null
+  directoryBdinding: 'Cataract.currentDirectory'
+  directoryIdsBinding: 'Cataract.currentDirectoryIds'
 
   filterFunctionDidChange: (->
     @gotoFirstPage()

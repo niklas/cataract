@@ -33,22 +33,23 @@ Cataract.FilterRoute = Ember.Route.extend
     torrents.set('mode', model)
     torrents.refreshTransfers()
     @controllerFor('application').set('currentController', torrents)
-  leave: -> # TODO
+  deactivate: ->
     torrents.set('mode', null)
 
 Cataract.PolyRoute = Ember.Route.extend
   model: (params) ->
-    parseInt(i) for i in params.poly_id.split(',')
+    ids = parseInt(i) for i in params.poly_id.split(',')
+    # FIXME we want a promise here, filtering ctrl.directories by ids
+
   setupController: (controller, model) ->
-    torrents = @controllerFor('torrents')
-    torrents.set('directoryIds', model)
+    Cataract.set 'currentDirectoryAlternatives', model
 
 
 Cataract.DirectoryRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super(controller, model)
     Cataract.set 'currentDirectory', model
-  leave: -> # TODO
+  deactivate: ->
     Cataract.set 'currentDirectory', null
 
 Cataract.DiskRoute = Ember.Route.extend
