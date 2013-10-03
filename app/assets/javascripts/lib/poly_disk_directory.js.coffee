@@ -17,18 +17,21 @@ PolyDiskDirectory = Ember.Object.extend
       alternatives: SortedArray.create(sortProperties: ['id'])
       children: SortedArray.create(sortProperties: ['name'])
 
-  name: Ember.computed -> # last element of relativePath
+  nameOnDisk: Ember.computed -> # last element of relativePath
     comps = @get('relativePath').split(slash)
     comps[ comps.length - 1 ]
   .property('relativePath')
 
-  getOrBuildChildByName: (name) ->
+  nameBinding: 'alternatives.firstObject.name'
+
+
+  getOrBuildChildByNameOnDisk: (nameOnDisk) ->
     children = @get('children')
     path = @get('relativePath')
-    child = children.findProperty('name', name)
+    child = children.findProperty('nameOnDisk', nameOnDisk)
     unless child?
       child = PolyDiskDirectory.create
-        relativePath: (if path.length is 0 then name else "#{path}/#{name}")
+        relativePath: (if path.length is 0 then nameOnDisk else "#{path}/#{nameOnDisk}")
       children.addObject child
     child
 

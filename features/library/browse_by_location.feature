@@ -37,7 +37,7 @@ Feature: Browsing the library
       And I am on the recent list page
       And I wait for the spinner to disappear
 
-     When I follow "Serien" within the sidebar directory list
+     When I follow "Series" within the sidebar directory list
      Then I should not see "Season"
       And I should not see "Blockbuster"
 

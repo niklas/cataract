@@ -31,12 +31,12 @@ PolyDiskTree = Ember.Object.extend
       here.get('alternatives').addObject dir
     else if dirPath.indexOf(herePath) is 0 # dir is sub of here
       if herePath.length is 0 # we are at root, just use first component
-        name = dirPath.split(slash)[0]
+        nameOnDisk = dirPath.split(slash)[0]
       else
         cut = dirPath.slice( herePath.length + 1 ) # dir path from here (+ slash)
-        name = cut.split(slash)[0]
+        nameOnDisk = cut.split(slash)[0]
 
-      @_insert here.getOrBuildChildByName(name), dir
+      @_insert here.getOrBuildChildByNameOnDisk(nameOnDisk), dir
 
     else
 
