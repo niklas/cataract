@@ -89,7 +89,5 @@ Feature: Transfer info
         | hash |
       And the torrent is marked as archived
      When the tick interval is reached
-     # no torrent in the running list anymore
-     Then the torrent list should be empty
-      And I should see the start link
+     Then I should see the start link
       But I should not see the stop link
