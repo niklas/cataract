@@ -1,16 +1,16 @@
 Cataract.Router.map ->
-  @resource 'filter', path: 'filter/:mode', ->
-    @resource 'directory', path: 'directory/:directory_id'
+  @resource 'filter', path: 'filter/:mode'
   @resource 'torrent', path: 'torrent/:torrent_id'
-  @resource 'directory', path: 'directory/:directory_id', ->
-    @route 'edit', path: 'edit'
+  @resource 'poly', path: 'poly/:poly_id', ->
+    @resource 'poly.directory', path: 'directory/:directory_id'
+  @route 'edit_directory', path: 'directory/:directory_id/edit'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
 
 Cataract.ApplicationRoute = Ember.Route.extend
-  setupController: ->
+  beforeModel: ->
     Cataract.set 'torrentsController', @controllerFor('torrents')
     @controllerFor('settings').set    'model',  Cataract.Setting.find('all')
     @controllerFor('transfers').set   'model', Cataract.Transfer.find()
@@ -33,24 +33,50 @@ Cataract.FilterRoute = Ember.Route.extend
     torrents.set('mode', model)
     torrents.refreshTransfers()
     @controllerFor('application').set('currentController', torrents)
+  deactivate: ->
+    torrents = @controllerFor('torrents')
+    torrents.set('mode', null)
 
-Cataract.DirectoryRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    @_super(controller, model)
+Cataract.PolyRoute = Ember.Route.extend
+  model: (params) ->
+    Cataract.Directory.find(parseInt(i)) for i in params.poly_id.split(',')
+    # FIXME we want a promise here, filtering ctrl.directories by ids
+
+  serialize: (model) ->
+    { poly_id: model.mapProperty('id').join(',') }
+
+  afterModel: (model)->
+    curr = Cataract.get('currentDirectories')
+    curr.clear()
+    curr.pushObjects(model)
+    if model.length == 1
+      @transitionTo 'poly.directory', model, model.get('firstObject')
+  deactivate: ->
+    Cataract.get('currentDirectories').clear()
+
+
+Cataract.PolyDirectoryRoute = Ember.Route.extend
+  model: (params) ->
+    Cataract.Directory.find params.directory_id # FIXME ember should do this
+  afterModel: (model)->
     Cataract.set 'currentDirectory', model
+  deactivate: ->
+    Cataract.set 'currentDirectory', null
+  controllerName: 'directory'
+  renderTemplate: ->
+    @render 'directory'
 
 Cataract.DiskRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    @_super(controller, model)
+  afterModel: (model) ->
     Cataract.set 'currentDisk', model
 
 Cataract.TorrentRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    @_super(controller, model)
-    controller.set 'content', model
+  model: (params) ->
+    Cataract.Torrent.find params.torrent_id # FIXME ember should do this
+  afterModel: (model) ->
     model.loadPayload()
     # Emu::Model.findQuery uses its own collection, resulting in two copies of
-    # the same Torrent. We replace it with the already loaded one
+    # the same Torrent. We replace it with the newly loaded one
     torrents = @controllerFor('torrents').get('unfilteredContent')
     torrents.one 'didFinishLoading', ->
       copy = torrents.findProperty('id', model.get('id'))
@@ -61,6 +87,7 @@ Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->
     Cataract.Torrent.createRecord()
   setupController: (controller, torrent) ->
+    controller.set 'content', torrent # Ember actually should do this for us
     router = this
     controller.setDefaultDirectory()
     # TODO transition route "back" (must remember last route?)
@@ -82,7 +109,7 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
     Cataract.Directory.createRecord
       disk: Cataract.get('currentDisk')
-      parent: Cataract.get('currentDirectory')
+      parentDirectory: Cataract.get('currentDirectory')
       virtual: false
 
   setupController: (controller, model) ->
@@ -94,7 +121,7 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
 
   renderTemplate: ->
 
-Cataract.DirectoryEditRoute = Ember.Route.extend
+Cataract.EditDirectoryRoute = Ember.Route.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
@@ -102,7 +129,7 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       directory: model
-      back: ['directory', model]
+      back: ['poly.directory', model.get('poly.alternatives'), model]
 
 Cataract.SettingsRoute = Ember.Route.extend
   model: ->

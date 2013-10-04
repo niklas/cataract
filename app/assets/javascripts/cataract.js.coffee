@@ -10,7 +10,7 @@
 
 #Ember.LOG_BINDINGS = true
 
-Cataract = Ember.Application.create
+CataractApplication = Ember.Application.extend
   rootElement: '#ember'
   online: false # wait for first refreshTransfers
   offlineReason: 'loading...'
@@ -28,6 +28,10 @@ Cataract = Ember.Application.create
 
   currentDisk: null
   currentDirectory: null
+  currentDirectories: Ember.A()
+  currentDirectoryIds: Ember.computed.mapProperty 'currentDirectories', 'id'
+
+Cataract = CataractApplication.create()
 
   # TODO move into DirectoriesController
   # rootDirectories: (->

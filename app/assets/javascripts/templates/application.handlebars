@@ -23,9 +23,9 @@
         </form>
 
         <ul class="nav">
-          <li {{bindAttr class="controllers.torrents.isRecentActive:active"}}>{{#linkTo filter "recent"}}Recent{{/linkTo}}</li>
-          <li {{bindAttr class="controllers.torrents.isRunningActive:active"}}>{{#linkTo filter "running"}}Running{{/linkTo}}</li>
-          <li>{{#linkTo add_torrent}}Add{{/linkTo}}</li>
+          <li {{bindAttr class='controllers.torrents.isRecentActive:active'}}>{{#link-to 'filter' 'recent'}}Recent{{/link-to}}</li>
+          <li {{bindAttr class='controllers.torrents.isRunningActive:active'}}>{{#link-to 'filter' 'running'}}Running{{/link-to}}</li>
+          <li>{{#link-to 'add_torrent'}}Add{{/link-to}}</li>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -55,14 +55,7 @@
 <div class="well" id="sidebar">
   {{view Cataract.Pagination controllerBinding="Cataract.torrentsController"}}
 
-  <div class="tabbable">
-    {{ render 'disks' }}
-    <div class="tab-content">
-      <div class="tab-pane active">
-        {{ render 'directories' }}
-      </div>
-    </div>
-  </div>
+  {{ render 'directories' }}
 
   {{#unless Cataract.online}}
   <br />
@@ -75,8 +68,36 @@
 <div id="middle">
   <div id="content">
     <div style="display: none;">breadcrumbs</div>
-    {{outlet pre}}
-    {{ render "torrents" }}
+
+    <div class="tabbable">
+      <ul class="nav nav-tabs disks">
+        {{#each Cataract.currentDirectories}}
+        <li {{bindAttr class=":disk active disk.isMounted:mounted:unmounted"}}>
+        {{#link-to 'poly.directory' this class="name"}}
+            <i {{bindAttr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
+            {{disk.name}}
+          {{/link-to}}
+        </li>
+        {{else}}
+          {{#each controllers.disks}}
+          <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
+          {{#link-to 'disk' this class="name"}}
+              <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+              {{name}}
+            {{/link-to}}
+          </li>
+          {{/each}}
+        {{/each}}
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active">
+          {{outlet pre}}
+          {{ render "torrents" }}
+        </div>
+      </div>
+
+    </div>
   </div>
   <div id="details">
     {{view Cataract.DropZoneView}}

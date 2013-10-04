@@ -1,5 +1,6 @@
 Cataract.LinkToDirectory = Ember.View.extend
-  template: Ember.Handlebars.compile '{{#linkTo directory view.content}}{{view.content.name}}{{/linkTo}}'
+  oldtemplate: Ember.Handlebars.compile "{{#link-to 'directory' view.content}}{{view.content.name}}{{/link-to}}"
+  template: Ember.Handlebars.compile "{{view.content.name}}"
 
 Cataract.DirectoriesTable = Cataract.Table.extend
   classNames: 'table table-striped directories'.w()
@@ -9,7 +10,7 @@ Cataract.DirectoriesTable = Cataract.Table.extend
   ]
 
 Cataract.DirectoryNavListView = Ember.View.extend
-  directories: []
+  content: []
   templateName: 'directory/nav_list'
   tagName: 'ul'
   classNames: "nav nav-list directories".w()

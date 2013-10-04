@@ -1,6 +1,6 @@
 describe 'Cataract.DirectoryNavItemView', ->
 
-  # linkTo needs all this
+  # link-to needs all this
   buildControllerWithRouter = ->
     router = Ember.Object.create
       isActive: Ember.K

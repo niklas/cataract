@@ -26,6 +26,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   termsBinding: 'Cataract.terms'
   mode: ''
   directoryBinding: 'Cataract.currentDirectory'
+  directoryIdsBinding: 'Cataract.currentDirectoryIds'
 
   filterFunctionDidChange: (->
     @gotoFirstPage()
@@ -43,7 +44,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   filterFunction: (->
     termsList  = @get('termsList')
     mode = @get('mode') || ''
+    directoryIds = @get('directoryIds')
     directoryId = @get('directory.id')
+
     (torrent) ->
       want = true
       torrent = torrent.record if torrent.record? # materialized or not?!
@@ -54,11 +57,14 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
-      if directoryId
-        want = want and directoryId is torrent.get('contentDirectoryId')
+      if directoryIds.length > 0
+        want = want and directoryIds.indexOf( torrent.get('contentDirectoryId') ) >= 0
+
+      if directoryId?
+        want = want and torrent.get('contentDirectoryId') == directoryId
 
       want
-  ).property('termsList', 'mode', 'directory', 'age')
+  ).property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
 
 
   siteTitle: (->
@@ -71,7 +77,13 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   ).property('terms', 'mode', 'directory')
 
   reload: ->
-    @set 'unfilteredContent', Cataract.Torrent.find(age: @get('age'))
+    loaded = Cataract.Torrent.find(age: @get('age'))
+
+    # FIXME Emu does not give us promises
+    loaded.one 'didFinishLoading', =>
+      @notifyPropertyChange('unfilteredContent')
+
+    @set 'unfilteredContent', loaded
 
   didAddRunningTorrent: (torrent) ->
     @set('mode', 'running')

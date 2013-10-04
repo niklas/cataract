@@ -20,7 +20,8 @@ Feature: Transfer info
       And the torrent is running
      When I go to the home page
       And I wait for the spinner to stop
-     Then I should see the following torrents in the torrent list:
+     Then the active nav item should be "Running"
+      And I should see the following torrents in the torrent list:
        | up        | down      |
        | 10 B/s    | 22.5 KB/s |
 
@@ -72,8 +73,8 @@ Feature: Transfer info
         | 0         | 42      | 2000       | 2000            | the torrent | true    | true  |
       And the tick interval is reached
      Then I should see the following torrents in the torrent list:
-        | up     | down  | percent | eta     |
-        | 42 B/s | 0 B/s | 100%    | (i) nil |
+        | up     | down  | percent | eta |
+        | 42 B/s | 0 B/s | 100%    |     |
 
   Scenario: stopped by someone else is detected
     Given the torrent is running
@@ -89,7 +90,5 @@ Feature: Transfer info
         | hash |
       And the torrent is marked as archived
      When the tick interval is reached
-     # no torrent in the running list anymore
-     Then the torrent list should be empty
-      And I should see the start link
+     Then I should see the start link
       But I should not see the stop link

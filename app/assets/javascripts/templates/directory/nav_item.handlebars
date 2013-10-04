@@ -1,8 +1,8 @@
-{{#linkTo directory this class="name"}}
+{{#link-to 'poly' id class="name"}}
   <i {{bindAttr class="view.exists:icon-folder-open:icon-warning-sign"}}></i>
   {{name}}
-{{/linkTo}}
+{{/link-to}}
 
 {{#if hasSubDirs}}
-  {{view Cataract.DirectoryNavListView directoriesBinding="children"}}
+  {{view Cataract.DirectoryNavListView contentBinding="children"}}
 {{/if}}

@@ -91,7 +91,7 @@ gem 'simple_form', '~> 2.0.0'
 gem 'haml-rails'
 gem 'inherited_resources'
 
-gem 'active_attr', '~> 0.5.0.alpha2' # SchedulingFilter, need AttributeDefaults
+gem 'active_attr', '~> 0.8.2'
 gem 'foreman'
 gem 'kaminari'
 
@@ -107,7 +107,7 @@ gem 'dalli'
 
 # https://github.com/emberjs/ember-rails/issues/165
 gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
-gem 'handlebars-source', '1.0.0.rc3'
+gem 'ember-source', '1.0.0'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'

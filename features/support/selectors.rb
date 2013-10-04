@@ -29,8 +29,11 @@ module HtmlSelectorsHelpers
     when /^the sidebar disks? list$/
       "#sidebar ul.disks:first"
 
-    when /^the sidebar root director(?:ies|y) list$/
-      "#sidebar ul.root.directories"
+    when /^the sidebar director(?:ies|y) list$/
+      "#sidebar > ul.directories"
+
+    when /^the disks tab$/
+      '#content .tabbable .disks'
 
     when /^the torrents? list$/
       "ul#torrents"
