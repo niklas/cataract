@@ -48,10 +48,10 @@ Cataract = CataractApplication.create()
 jQuery.ajaxSetup
   dataType: 'json'
 
-Cataract.Store = Emu.Store.extend
-  revision: 1
-  adapter: Emu.RestAdapter.extend
-    serializer: Emu.RailsSerializer.extend()
+# Cataract.Store = Emu.Store.extend
+#   revision: 1
+#   adapter: Emu.RestAdapter.extend
+#     serializer: Emu.RailsSerializer.extend()
 
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'

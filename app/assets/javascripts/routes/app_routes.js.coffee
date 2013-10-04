@@ -12,14 +12,13 @@ Cataract.Router.map ->
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # FIXME is this really needed with all the promises?
-    Cataract.set 'torrentsController', @controllerFor('torrents')
     store = @get('store')
     @controllerFor('settings').set    'model',  store.find('setting', 'all')
     @controllerFor('transfers').set   'model', store.findAll('transfer')
     @controllerFor('disks').set       'model', store.findAll('disk')
     #@controllerFor('moves').set       'model', store.findAll('move')
-    # load the most recent torrents, for faster initial page load
-    @controllerFor('torrents').reload()
+    # OPTIMIZE load the most recent torrents, for faster initial page load
+    # @controllerFor('torrents').reload()
 
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'filter', 'running'

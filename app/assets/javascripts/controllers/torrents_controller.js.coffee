@@ -95,6 +95,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
 
   refreshTransfers: ->
+    console?.debug 'TODO: refreshTransfers'
+    return
     list = @get('unfilteredContent')
     running = list.filterProperty('status', 'running').mapProperty('id')
     primaryKey = Emu.Model.primaryKey(Cataract.Transfer)
