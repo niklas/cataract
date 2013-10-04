@@ -109,7 +109,7 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
     Cataract.Directory.createRecord
       disk: Cataract.get('currentDisk')
-      parent: Cataract.get('currentDirectory')
+      parentDirectory: Cataract.get('currentDirectory')
       virtual: false
 
   setupController: (controller, model) ->
