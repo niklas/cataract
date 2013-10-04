@@ -20,7 +20,8 @@ Feature: Transfer info
       And the torrent is running
      When I go to the home page
       And I wait for the spinner to stop
-     Then I should see the following torrents in the torrent list:
+     Then the active nav item should be "Running"
+      And I should see the following torrents in the torrent list:
        | up        | down      |
        | 10 B/s    | 22.5 KB/s |
 
