@@ -65,6 +65,8 @@ group :development do
   gem 'capistrano'
   gem 'rvm-capistrano'
   gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
+  gem "better_errors"
+  gem 'binding_of_caller'
 end
 
 group :production do
