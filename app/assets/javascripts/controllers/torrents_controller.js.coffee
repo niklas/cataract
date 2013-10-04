@@ -77,13 +77,10 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   ).property('terms', 'mode', 'directory')
 
   reload: ->
-    loaded = Cataract.Torrent.find(age: @get('age'))
-
-    # FIXME Emu does not give us promises
-    loaded.one 'didFinishLoading', =>
-      @notifyPropertyChange('unfilteredContent')
-
+    loaded = @get('store').findQuery('torrent', age: @get('age'))
     @set 'unfilteredContent', loaded
+    loaded.then ->
+      @notifyPropertyChange('unfilteredContent')
 
   didAddRunningTorrent: (torrent) ->
     @set('mode', 'running')
@@ -91,6 +88,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @refreshTransfers()
     Cataract.Router.router.transitionTo 'torrent', torrent
 
+  # TODO still needed?
   didDeleteTorrent: (torrent) ->
     list = @get('unfilteredContent')
     list.removeObject( list.findProperty('id', torrent.get('id')) )

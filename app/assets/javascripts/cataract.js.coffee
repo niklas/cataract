@@ -19,7 +19,8 @@ CataractApplication = Ember.Application.extend
   transfers: Ember.A()
   ready: ->
     #@_super()
-    @set 'transfers', Cataract.Transfer.find()
+    # FIXME load transfer through controller needs?
+    # @set 'transfers', @get('store').findAll('transfer')
     # TODO put this into a view/controller combi
     jQuery(document).ajaxError (e, jqxhr, settings, exception) ->
       Cataract.set 'online', false
