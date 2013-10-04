@@ -1,8 +1,10 @@
-Cataract.BaseDirectory = Emu.Model.extend
-  name: Emu.field('string')
-  diskId: Emu.field('number')
-  disk: Emu.belongsTo('Cataract.Disk', key: 'diskId')
-  parentId: Emu.field('number')
+attr = DS.attr
+
+Cataract.BaseDirectory = DS.Model.extend
+  name: attr('string')
+  diskId: attr('number')
+  disk: DS.belongsTo('disk')
+  parentId: attr('number')
   # 'parent' is special in Emu #doh
   parentDirectory: Ember.computed ->
     Cataract.Directory.find( @get('parentId') )

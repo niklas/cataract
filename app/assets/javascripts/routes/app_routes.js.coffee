@@ -72,7 +72,7 @@ Cataract.DiskRoute = Ember.Route.extend
 
 Cataract.TorrentRoute = Ember.Route.extend
   model: (params) ->
-    Cataract.Torrent.find params.torrent_id # FIXME ember should do this
+    @get('store').find 'torrent', params.torrent_id # FIXME ember should do this
   afterModel: (model) ->
     model.loadPayload()
     # Emu::Model.findQuery uses its own collection, resulting in two copies of

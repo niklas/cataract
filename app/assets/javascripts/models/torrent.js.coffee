@@ -1,16 +1,18 @@
-Cataract.Torrent = Emu.Model.extend
-  title: Emu.field 'string'
+attr = DS.attr
+
+Cataract.Torrent = DS.Model.extend
+  title: attr 'string'
   transferBinding: 'transfers.firstObject'
-  transfers: Emu.field('Cataract.Transfer', collection: true)
-  info_hash: Emu.field 'string'
-  status: Emu.field 'string'
-  filename: Emu.field 'string'
-  url: Emu.field 'string'
-  payloadExists: Emu.field 'boolean'
+  transfers: attr('Cataract.Transfer', collection: true)
+  info_hash: attr 'string'
+  status: attr 'string'
+  filename: attr 'string'
+  url: attr 'string'
+  payloadExists: attr 'boolean'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
-  filedata: Emu.field 'string' # TODO put into payload
+  filedata: attr 'string' # TODO put into payload
 
   payload: null
   payloadPresent: Ember.computed ->
@@ -27,16 +29,16 @@ Cataract.Torrent = Emu.Model.extend
         serializer.deserializeModel(payload, data, true)
         @set 'payload', payload
 
-  contentDirectoryId: Emu.field 'number'
-  contentDirectory: Emu.belongsTo('Cataract.Directory', key: 'contentDirectoryId')
+  contentDirectoryId: attr 'number'
+  contentDirectory: DS.belongsTo('directory', key: 'contentDirectoryId')
 
-  fetchAutomatically: Emu.field 'boolean'
-  startAutomatically: Emu.field 'boolean'
+  fetchAutomatically: attr 'boolean'
+  startAutomatically: attr 'boolean'
 
 Cataract.Torrent.reopenClass
   url: 'torrent'
   refreshFromHashes: (hash) ->
     for field in hash
-      record = Cataract.store.find(Cataract.Torrent, field.id)
-      record.setProperties field if record?
+      @get('store').find('torrent', field.id).then (record)->
+        record.setProperties field if record?
     true

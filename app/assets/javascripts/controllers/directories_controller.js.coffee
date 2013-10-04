@@ -5,12 +5,9 @@ Cataract.DirectoriesController = Ember.ArrayController.extend
     @setProperties
       poly: poly
       roots: poly.get('root.children')
-    dirs = Cataract.Directory.find()
-    # cannot bind Emu.ModelCollection to PolyDiskTree#directories, because it
-    # creates blank records, serializing after Enumerable Observers are called
-    dirs.on('didFinishLoading', ->
+
+    @get('store').findAll('directory').then (dirs)->
       poly.get('directories').pushObjects dirs.toArray()
-    )
     @_super()
   currentBinding: 'Cataract.currentDirectory'
   diskBinding: 'Cataract.currentDisk'

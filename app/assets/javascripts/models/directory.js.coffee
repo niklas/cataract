@@ -1,23 +1,25 @@
+attr = DS.attr
+
 Cataract.Directory = Cataract.BaseDirectory.extend
   fullPath: Ember.computed ->
     [@get('disk.path'), @get('relativePath')].join('/')
   .property('disk.path', 'relativePath')
-  relativePath: Emu.field('string')
-  subscribed: Emu.field('boolean')
-  filter: Emu.field('string')
-  torrents: Emu.field('Cataract.Torrent', collection: true)
-  exists: Emu.field('boolean')
+  relativePath: attr('string')
+  subscribed: attr('boolean')
+  filter: attr('string')
+  torrents: DS.hasMany('torrent')
+  exists: attr('boolean')
   children: Ember.computed ->
     @get('disk.directories')?.filterProperty('parentId', @get('id'))
   .property('disk.directories.@each.parentId')
   active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
-  showSubDirs: Emu.field 'boolean'
-  virtual: Emu.field 'boolean'
+  showSubDirs: attr 'boolean'
+  virtual: attr 'boolean'
   hasSubDirs:(->
     @get('showSubDirs') and @get('children.length') > 0
   ).property('children', 'children.@each', 'showSubDirs')
 
-  detectedChildren: Emu.field('Cataract.DetectedDirectory', collection: true, lazy: true)
+  detectedChildren: DS.hasMany('detected-directory')
   hasDetectedSubDirs: Ember.computed ->
     @get('showSubDirs') and @get('detectedChildren.length') > 0
   .property('showSubDirs', 'detectedChildren.@each', 'children.@each.id')

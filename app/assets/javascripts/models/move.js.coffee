@@ -1,11 +1,13 @@
-Cataract.Move = Emu.Model.extend
-  torrentId: Emu.field('number')
-  torrent: Emu.belongsTo('Cataract.Torrent', key: 'torrentId')
-  title: Emu.field('string')
-  targetDiskId: Emu.field('number')
-  targetDisk: Emu.belongsTo('Cataract.Disk', key: 'targetDiskId')
-  targetDirectoryId: Emu.field('number')
-  targetDirectory: Emu.belongsTo('Cataract.Directory', key: 'targetDirectoryId')
+attr = DS.attr
+
+Cataract.Move = DS.Model.extend
+  torrentId: attr('number')
+  torrent: attr('torrent', key: 'torrentId')
+  title: attr('string')
+  targetDiskId: attr('number')
+  targetDisk: DS.belongsTo('disk')
+  targetDirectoryId: attr('number')
+  targetDirectory: DS.belongsTo('directory', key: 'targetDirectoryId')
 
 Cataract.Move.reopenClass
   url: 'move' # Emu create param

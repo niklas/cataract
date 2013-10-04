@@ -4,7 +4,7 @@
 #= require jquery.scrollTo-1.4.3.1
 #= require handlebars
 #= require ember
-#= require ember-emu-0.1.0
+#= require ember-data
 #= require ember-bootstrap
 #= require ember-rails-flash
 #= require bootstrap
