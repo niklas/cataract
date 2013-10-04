@@ -67,8 +67,7 @@ Cataract.PolyDirectoryRoute = Ember.Route.extend
     @render 'directory'
 
 Cataract.DiskRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    @_super(controller, model)
+  afterModel: (model) ->
     Cataract.set 'currentDisk', model
 
 Cataract.TorrentRoute = Ember.Route.extend

@@ -78,6 +78,15 @@
             {{disk.name}}
           {{/link-to}}
         </li>
+        {{else}}
+          {{#each controllers.disks}}
+          <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
+          {{#link-to 'disk' this class="name"}}
+              <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+              {{name}}
+            {{/link-to}}
+          </li>
+          {{/each}}
         {{/each}}
       </ul>
 
