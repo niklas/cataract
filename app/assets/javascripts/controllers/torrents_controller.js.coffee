@@ -44,7 +44,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   filterFunction: (->
     termsList  = @get('termsList')
     mode = @get('mode') || ''
-    directoryIds = @get('directoryIds')
+    directoryIds = @get('directoryIds') || []
     directoryId = @get('directory.id')
 
     (torrent) ->
