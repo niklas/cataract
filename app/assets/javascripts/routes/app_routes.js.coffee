@@ -17,7 +17,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('settings').set    'model',  store.find('setting', 'all')
     @controllerFor('transfers').set   'model', store.findAll('transfer')
     @controllerFor('disks').set       'model', store.findAll('disk')
-    @controllerFor('moves').set       'model', store.findAll('move')
+    #@controllerFor('moves').set       'model', store.findAll('move')
     # load the most recent torrents, for faster initial page load
     @controllerFor('torrents').reload()
 
