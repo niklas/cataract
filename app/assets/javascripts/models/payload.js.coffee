@@ -1,8 +1,7 @@
 attr = DS.attr
 
 Cataract.Payload = DS.Model.extend
-  directoryId: attr 'number'
-  directory: DS.belongsTo('directory', key: 'directoryId')
+  directory: DS.belongsTo('directory')
   size: attr 'number'
   filenames: attr 'staticArray'
   humanSize: attr 'string'

@@ -4,8 +4,8 @@ Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
     disk   = @get('disk')
     directory = Cataract.Directory.createRecord
       name: @get('name')
-      diskId: disk?.get('id')
-      parentId: parentDirectory?.get('id')
+      disk: disk
+      parentDirectory: parentDirectory
     directory.one 'didFinishSaving', =>
       if disk?
         disk.notifyPropertyChange('detectedDirectories')

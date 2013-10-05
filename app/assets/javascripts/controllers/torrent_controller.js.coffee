@@ -17,7 +17,7 @@ Cataract.TorrentController = Ember.ObjectController.extend
 
     start: (torrent) ->
       transfer = torrent.get('transfers').createRecord()
-      transfer.set('torrentId', torrent.get('id'))
+      transfer.set('torrent', torrent)
       transfer.one 'didFinishSaving', ->
         torrent.set 'status', 'running'
       transfer.save()

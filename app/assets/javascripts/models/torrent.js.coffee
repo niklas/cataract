@@ -28,8 +28,7 @@ Cataract.Torrent = DS.Model.extend
         serializer.deserializeModel(payload, data, true)
         @set 'payload', payload
 
-  contentDirectoryId: attr 'number'
-  contentDirectory: DS.belongsTo('directory', key: 'contentDirectoryId')
+  contentDirectory: DS.belongsTo('directory')
 
   fetchAutomatically: attr 'boolean'
   startAutomatically: attr 'boolean'

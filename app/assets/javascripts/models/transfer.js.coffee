@@ -4,7 +4,7 @@ Cataract.Transfer = DS.Model.extend
   upRate: attr 'string'
   downRate: attr 'string'
   eta: attr 'string'
-  torrentId: attr 'number' # FIXME is not set by serializer
+  torrent: DS.belongsTo('torrent')
   progressStyle: Ember.computed ->
     "width: #{@get('progress')}%"
   .property('progress')

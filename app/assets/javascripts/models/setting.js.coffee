@@ -1,9 +1,8 @@
 attr = DS.attr
 Cataract.Setting = DS.Model.extend
 
-  # must simulate association because there is no reflecting assoc in Cataract.Directory
-  incomingDirectoryId: attr 'number'
-  incomingDirectory: DS.belongsTo('directory', key: 'incomingDirectoryId')
+  # OPTIMIZE must simulate association because there is no reflecting assoc in Cataract.Directory ?
+  incomingDirectory: DS.belongsTo('directory')
   disableSignup: attr 'boolean'
 
 Cataract.Setting.reopenClass
