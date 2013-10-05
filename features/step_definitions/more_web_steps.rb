@@ -35,7 +35,9 @@ end
 
 When /^I wait for (.+) to (?:disappear|stop)$/ do |name|
   selector = selector_for name
-  page.should have_no_css(selector, :visible => true)
+  patiently 30 do # spinner may flicker
+    page.should have_no_css(selector, :visible => true)
+  end
 end
 
 Then /^(.+) should be visible/ do |name|

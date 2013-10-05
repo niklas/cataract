@@ -7,9 +7,13 @@ Cataract.Spinner = Ember.View.extend
     $(document).ajaxStart => @enable()
     @enable()
 
+  enabled: false
+
   message: 'please wait...'
 
   enable: ->
+    return if @get('enabled')
+    @set('enabled', true)
     sib = @$().siblings('a')
     @$().spin(
       lines: 8
@@ -21,6 +25,7 @@ Cataract.Spinner = Ember.View.extend
     )
 
   disable: ->
+    @set('enabled', false)
     @$().spin(false)
 
   template: Ember.Handlebars.compile "{{message}}"
