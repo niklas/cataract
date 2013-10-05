@@ -51,12 +51,6 @@ DS.RailsRESTAdapter = DS.RESTAdapter.extend
   defaultSerializer: 'DS/railsREST'
 
 Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend()
-
-# Cataract.Store = Emu.Store.extend
-#   revision: 1
-#   adapter: Emu.RestAdapter.extend
-#     serializer: Emu.RailsSerializer.extend()
-
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'
 #  detected_directory: 'detected_directories'

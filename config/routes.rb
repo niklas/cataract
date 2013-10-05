@@ -17,7 +17,7 @@ Cataract::Application.routes.draw do
   # Emu cannot DELETE nested resources yet
   resources :transfers, only: [:index, :destroy], controller: :transfer
   resources :moves, only: :index, controller: :move
-  resources :payloads, only: [:destroy], controller: :payload
+  resources :payloads, only: [:show, :destroy], controller: :payload
   resources :deletions, controller: :deletion, only:  [:update]
   resources :moves, controller: :move, only: [:create, :index]
 

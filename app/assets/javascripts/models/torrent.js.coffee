@@ -20,13 +20,7 @@ Cataract.Torrent = DS.Model.extend
 
   # fetch manually because Emu cannot handle singleton resources
   loadPayload: ->
-    id = @get 'id'
-    serializer = @get('store')._adapter._serializer
-    $.getJSON("/torrents/#{id}/payload")
-      .success (data) =>
-        payload = Cataract.Payload.createRecord(id: id)
-        serializer.deserializeModel(payload, data, true)
-        @set 'payload', payload
+    @set 'payload', @get('store').find('payload', @get('id'))
 
   contentDirectory: DS.belongsTo('directory')
 

@@ -97,32 +97,31 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
 
   refreshTransfers: ->
-    console?.debug 'TODO: refreshTransfers'
-    return
     list = @get('unfilteredContent')
     running = list.filterProperty('status', 'running').mapProperty('id')
-    primaryKey = Emu.Model.primaryKey(Cataract.Transfer)
-    store = Ember.get(Emu, "defaultStore")
-    serializer = store._adapter._serializer
-    existing = Cataract.get('transfers')
-    $.getJSON "/transfers?running=#{running.join(',')}", (data, textStatus, xhr) ->
+    store = @get('store')
+    existing = store.find
+    fetch = store.findQuery 'transfer', running: running.join(',')
+
+    fetch.then (transfers) ->
       # time as passed => recalculate
       running = list.filterProperty('status', 'running').mapProperty('id')
-      for update in data
-        id = update[primaryKey]
-        transfer = existing.findProperty('id', id) || Cataract.Transfer.createRecord(id: id)
-        serializer.deserializeModel(transfer, update, true) # update without making it dirty
+      transfers.forEach (transfer)->
+        id = transfer.get('id')
         if torrent = list.findProperty('id', id)
           torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
-          torrent.get('transfers').clear()
-          torrent.get('transfers').pushObject(transfer)
+          torrent.set('transfer', transfer)
         running.removeObject(id)
+
       # detect stopped torrents
       running.forEach (disap) ->
         if torrent = list.findProperty('id', disap)
           torrent.set 'status', 'archived'
+          torrent.set 'transfer', null
       Cataract.set 'online', true
       true
+    , (x,y)->
+      console?.debug 'could not fetch transfers:', x.responseText
 
   setAge: (age) ->
     @set 'age', age
