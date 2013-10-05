@@ -418,7 +418,6 @@ DEPENDENCIES
   devise (~> 2.0.4)
   diff_matcher
   email_spec
-  ember-data-source (= 1.0.0.beta.2)
   ember-rails!
   ember-rails-flash!
   ember-source (= 1.0.0)

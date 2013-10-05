@@ -48,6 +48,12 @@ Cataract = CataractApplication.create()
 jQuery.ajaxSetup
   dataType: 'json'
 
+DS.RailsRESTSerializer = DS.ActiveModelSerializer.extend()
+DS.RailsRESTAdapter = DS.RESTAdapter.extend
+  defaultSerializer: 'DS/railsREST'
+
+Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend()
+
 # Cataract.Store = Emu.Store.extend
 #   revision: 1
 #   adapter: Emu.RestAdapter.extend
