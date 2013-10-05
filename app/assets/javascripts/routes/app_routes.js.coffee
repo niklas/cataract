@@ -24,10 +24,6 @@ Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'filter', 'running'
 
 Cataract.FilterRoute = Ember.Route.extend
-  activate: ->
-    Cataract.set 'currentDirectory', null
-    Cataract.set 'currentDisk', null
-
   model: (params) -> params.mode
   setupController: (controller, model) ->
     torrents = @controllerFor('torrents')
@@ -61,9 +57,9 @@ Cataract.PolyDirectoryRoute = Ember.Route.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
   afterModel: (model)->
-    Cataract.set 'currentDirectory', model
+    @controllerFor('torrents').set('directory', model)
   deactivate: ->
-    Cataract.set 'currentDirectory', null
+    @controllerFor('torrents').set('directory', null)
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
@@ -112,7 +108,7 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
     Cataract.Directory.createRecord
       disk: Cataract.get('currentDisk')
-      parentDirectory: Cataract.get('currentDirectory')
+      parentDirectory: @controllerFor('torrents').get('directory')
       virtual: false
 
   setupController: (controller, model) ->

@@ -8,8 +8,9 @@ Cataract.DirectoriesController = Ember.ArrayController.extend
   poly: Ember.computed ->
     PolyDiskTree.create()
   .property()
+  needs: ['torrents']
   rootsBinding: 'poly.root.children'
-  currentBinding: 'Cataract.currentDirectory'
+  currentBinding: 'controllers.torrents.directory'
   diskBinding: 'Cataract.currentDisk'
   contentBinding: 'roots'
   # FIXME: isLoaded does not work on Arrays https://github.com/emberjs/data/issues/587
