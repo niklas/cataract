@@ -90,12 +90,6 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @refreshTransfers()
     Cataract.Router.router.transitionTo 'torrent', torrent
 
-  # TODO still needed?
-  didDeleteTorrent: (torrent) ->
-    list = @get('unfilteredContent')
-    list.removeObject( list.findProperty('id', torrent.get('id')) )
-
-
   refreshTransfers: ->
     list = @get('unfilteredContent')
     running = list.filterProperty('status', 'running').mapProperty('id')

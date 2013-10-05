@@ -12,11 +12,11 @@ Cataract::Application.routes.draw do
     resources :moves, controller: :move, only: :create
   end
 
-  # Emu cannot DELETE nested resources yet
+  # Ember-data cannot handle nested resources (yet?)
   resources :transfers, only: [:create, :index, :destroy], controller: :transfer
   resources :moves, only: :index, controller: :move
   resources :payloads, only: [:show, :destroy], controller: :payload
-  resources :deletions, controller: :deletion, only:  [:update]
+  resources :deletions, controller: :deletion, only:  [:create]
   resources :moves, controller: :move, only: [:create, :index]
 
 
