@@ -27,10 +27,8 @@ CataractApplication = Ember.Application.extend
       if jqxhr.status == 502
         Cataract.set 'offlineReason', jqxhr.responseText
 
+  # TODO move to diskcontroller?
   currentDisk: null
-  currentDirectory: null
-  currentDirectories: Ember.A()
-  currentDirectoryIds: Ember.computed.mapProperty 'currentDirectories', 'id'
 
 Cataract = CataractApplication.create()
 

@@ -25,8 +25,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   termsBinding: 'Cataract.terms'
   mode: ''
-  directoryBinding: 'Cataract.currentDirectory'
-  directoryIdsBinding: 'Cataract.currentDirectoryIds'
+  directory: null
+  directories: Ember.A()
+  directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   filterFunctionDidChange: (->
     @gotoFirstPage()
@@ -79,8 +80,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   reload: ->
     loaded = @get('store').findQuery('torrent', age: @get('age'))
     @set 'unfilteredContent', loaded
+    self = this
     loaded.then ->
-      @notifyPropertyChange('unfilteredContent')
+      self.notifyPropertyChange('unfilteredContent')
 
   didAddRunningTorrent: (torrent) ->
     @set('mode', 'running')

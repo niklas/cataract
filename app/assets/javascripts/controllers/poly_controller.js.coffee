@@ -1,2 +1,2 @@
 Cataract.PolyController = Ember.ObjectController.extend
-  needs: ['directories']
+  needs: ['directories', 'torrents']

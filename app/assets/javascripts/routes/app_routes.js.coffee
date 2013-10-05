@@ -18,7 +18,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('disks').set       'model', store.findAll('disk')
     #@controllerFor('moves').set       'model', store.findAll('move')
     # OPTIMIZE load the most recent torrents, for faster initial page load
-    # @controllerFor('torrents').reload()
+    @controllerFor('torrents').reload()
 
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'filter', 'running'
@@ -48,13 +48,13 @@ Cataract.PolyRoute = Ember.Route.extend
     { poly_id: model.mapProperty('id').join(',') }
 
   afterModel: (model)->
-    curr = Cataract.get('currentDirectories')
+    curr = @controllerFor('torrents').get('directories')
     curr.clear()
     curr.pushObjects(model)
     if model.length == 1
       @transitionTo 'poly.directory', model, model.get('firstObject')
   deactivate: ->
-    Cataract.get('currentDirectories').clear()
+    @controllerFor('torrents').get('directories').clear()
 
 
 Cataract.PolyDirectoryRoute = Ember.Route.extend
