@@ -420,7 +420,6 @@ DEPENDENCIES
   email_spec
   ember-rails!
   ember-rails-flash!
-  ember-source (= 1.0.0)
   factory_girl_rails
   fakefs
   feed-abstract
