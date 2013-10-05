@@ -13,14 +13,10 @@ Cataract.Torrent = DS.Model.extend
 
   filedata: attr 'string' # TODO put into payload
 
-  payload: null
+  payload: DS.belongsTo('payload')
   payloadPresent: Ember.computed ->
     @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
   .property('payload.isLoaded', 'payload.isDeleted')
-
-  # fetch manually because Emu cannot handle singleton resources
-  loadPayload: ->
-    @set 'payload', @get('store').find('payload', @get('id'))
 
   contentDirectory: DS.belongsTo('directory')
 

@@ -5,6 +5,7 @@ Cataract.Payload = DS.Model.extend
   size: attr 'number'
   filenames: attr 'staticArray'
   humanSize: attr 'string'
+  torrent: DS.belongsTo('torrent')
 
   hasContent: (->
     @get('filenames')?.length || 0 > 0

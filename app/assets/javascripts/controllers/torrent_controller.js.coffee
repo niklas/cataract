@@ -1,7 +1,5 @@
 Cataract.TorrentController = Ember.ObjectController.extend
   needs: ['torrents', 'directories', 'disks']
-  deletePayload: (torrent) ->
-    Cataract.ClearPayloadModal.popup torrent: torrent
 
   actions:
     move: (torrent) ->
@@ -31,3 +29,6 @@ Cataract.TorrentController = Ember.ObjectController.extend
     delete: (torrent) ->
       Cataract.DeleteTorrentModal.popup
         torrent: torrent
+
+    deletePayload: (torrent) ->
+      Cataract.ClearPayloadModal.popup torrent: torrent

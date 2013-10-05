@@ -71,15 +71,6 @@ Cataract.DiskRoute = Ember.Route.extend
 Cataract.TorrentRoute = Ember.Route.extend
   model: (params) ->
     @get('store').find 'torrent', params.torrent_id # FIXME ember should do this
-  afterModel: (model) ->
-    model.loadPayload()
-    # Emu::Model.findQuery uses its own collection, resulting in two copies of
-    # the same Torrent. We replace it with the newly loaded one
-    # torrents = @controllerFor('torrents').get('unfilteredContent')
-    # torrents.one 'didFinishLoading', ->
-    #   copy = torrents.findProperty('id', model.get('id'))
-    #   torrents.pushObject(model)
-    #   torrents.removeObject(copy)
 
 Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->

@@ -23,8 +23,7 @@ Cataract.ClearPayloadModal = Bootstrap.ModalPane.extend
     if opts.primary
       if payload = @get('torrent.payload')
         torrent = @get('torrent')
-        #payload.one 'didDelete', -> torrent.set('payloadExists', false)
-        torrent.set('payloadExists', false)
-        payload.deleteRecord()
+        payload.destroyRecord().then ->
+          torrent.set('payloadExists', false)
     true
 

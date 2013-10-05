@@ -33,7 +33,7 @@
         <i class="icon-remove icon-white"></i>
         Delete
       </a>
-      {{#if payloadExists}}
+      {{#if payloadPresent}}
         <a class="clear btn btn-danger" {{action deletePayload this}}>
           <i class="icon-trash icon-white"></i>
           remove Content
@@ -53,4 +53,3 @@
   <div class="url">{{url}}</div>
   {{/if}}
 {{/unless}}
-
