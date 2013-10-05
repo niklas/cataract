@@ -70,7 +70,7 @@ Cataract.DiskRoute = Ember.Route.extend
 
 Cataract.TorrentRoute = Ember.Route.extend
   model: (params) ->
-    @get('store').find 'torrent', params.torrent_id # FIXME ember should do this
+    @controllerFor('torrents').get('unfilteredContent').findProperty('id', params.torrent_id)
 
 Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->
