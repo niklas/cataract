@@ -8,7 +8,7 @@ Cataract::Application.routes.draw do
     end
   end
 
-  resources :torrents do
+  resources :torrents, except: [:destroy] do
     resources :moves, controller: :move, only: :create
   end
 

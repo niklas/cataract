@@ -78,10 +78,12 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   ).property('terms', 'mode', 'directory')
 
   reload: ->
-    loaded = @get('store').findQuery('torrent', age: @get('age'))
-    @set 'unfilteredContent', loaded
+    loading = @get('store').findQuery('torrent', age: @get('age'))
+    list = @get('unfilteredContent')
     self = this
-    loaded.then ->
+    loading.then (loaded)->
+      list.clear()
+      list.pushObjects(loaded)
       self.notifyPropertyChange('unfilteredContent')
 
   didAddRunningTorrent: (torrent) ->
