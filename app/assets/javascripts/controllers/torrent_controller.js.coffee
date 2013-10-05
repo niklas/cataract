@@ -16,11 +16,10 @@ Cataract.TorrentController = Ember.ObjectController.extend
           targetDirectory: directory
 
     start: (torrent) ->
-      transfer = torrent.get('transfers').createRecord()
-      transfer.set('torrent', torrent)
-      transfer.one 'didFinishSaving', ->
+      transfer = @get('store').createRecord 'transfer',
+        torrent: torrent
+      transfer.save().then ->
         torrent.set 'status', 'running'
-      transfer.save()
       false
 
     stop: (torrent) ->
