@@ -40,10 +40,9 @@ Cataract.FilterRoute = Ember.Route.extend
 
 Cataract.PolyRoute = Ember.Route.extend
   model: (params) ->
-    ids = parseInt(i) for i in params.poly_id.split(',')
-    @modelFor('directories').filter (d)->
-      ids.any (id)->
-        ids.indexOf(id) >= 0
+    ids = (i for i in params.poly_id.split(','))
+    @controllerFor('directories').get('poly.directories').filter (d)->
+      ids.indexOf(d.get('id')) >= 0
 
   serialize: (model) ->
     { poly_id: model.mapProperty('id').join(',') }

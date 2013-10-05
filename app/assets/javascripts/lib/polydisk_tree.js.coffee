@@ -3,17 +3,19 @@ slash = /\//
 PolyDiskTree = Ember.Object.extend
   init: ->
     @_super()
-    @setProperties
-      root: PolyDiskDirectory.create()
-
-    unless @get('directories')
-      @setProperties
-        directories: Ember.A()
 
     @get('directories').addEnumerableObserver(@,
       willChange: @willChangeDirectories,
       didChange:  @didChangeDirectories
     )
+
+  root: Ember.computed ->
+    PolyDiskDirectory.create()
+  .property()
+
+  directories: Ember.computed ->
+    Ember.A()
+  .property()
 
 
   willChangeDirectories: (directories, removing, addCount) ->

@@ -1,14 +1,14 @@
 # TODO merge with PolyDiskTree
 Cataract.DirectoriesController = Ember.ArrayController.extend
   init: ->
-    poly = PolyDiskTree.create()
-    @setProperties
-      poly: poly
-      roots: poly.get('root.children')
-
+    poly = @get('poly')
     @get('store').findAll('directory').then (dirs)->
       poly.get('directories').pushObjects dirs.toArray()
     @_super()
+  poly: Ember.computed ->
+    PolyDiskTree.create()
+  .property()
+  rootsBinding: 'poly.root.children'
   currentBinding: 'Cataract.currentDirectory'
   diskBinding: 'Cataract.currentDisk'
   contentBinding: 'roots'
