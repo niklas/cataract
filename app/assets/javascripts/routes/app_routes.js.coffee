@@ -30,13 +30,14 @@ Cataract.TorrentsRoute = Ember.Route.extend
   beforeModel: (queryParams)->
     if Ember.isNone(queryParams.age)
       throw "need age queryParam"
-    # warmup store by site-loading
-    @get('store').findQuery('torrent', age: queryParams.age)
 
 
   model: (params, queryParams, transition) ->
+    store = @get('store')
+    # warmup store by site-loading
+    store.findQuery('torrent', age: queryParams.age)
     # TODO should we filter&paginate here already or on the controller?
-    @get('store').filter 'torrent', (torrent)->
+    store.filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
 
@@ -44,6 +45,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
     @setupDirectories(controller, queryParams)
     controller.set 'unfilteredContent', model
     controller.set('mode', queryParams.status)
+    controller.gotoFirstPage()
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
 
@@ -56,6 +58,9 @@ Cataract.TorrentsRoute = Ember.Route.extend
           ids.indexOf(d.get('id')) >= 0
 
   renderTemplate: -> # nothing, always present in application.handlebars
+    @render 'torrents/tabs',
+      outlet: 'pre',
+      controller: @controllerFor('torrents')
     @render 'torrents/navigation',
       outlet: 'nav',
       controller: @controllerFor('torrents')

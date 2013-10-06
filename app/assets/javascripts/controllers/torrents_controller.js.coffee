@@ -1,4 +1,5 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
+  needs: ['disks']
   init: ->
     @_super()
     $('body').bind 'tick', => @refreshTransfers(); true

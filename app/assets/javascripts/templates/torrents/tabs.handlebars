@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs disks">
-  {{#each controllers.torrents.directories}}
+  {{#each directories}}
   <li {{bindAttr class=":disk active disk.isMounted:mounted:unmounted"}}>
   {{#link-to 'poly.directory' this class="name"}}
       <i {{bindAttr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
@@ -18,5 +18,5 @@
   {{/each}}
 </ul>
 
-{{view Cataract.Pagination controllerBinding="controllers.torrents"}}
+{{view Cataract.Pagination controllerBinding="this"}}
 
