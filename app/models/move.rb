@@ -55,7 +55,7 @@ class Move < ActiveRecord::Base
   end
 
   def title
-    I18n.translate('flash.move.create.notice', torrent: torrent.title, target: target_name)
+    I18n.translate('flash.moves.create.notice', torrent: torrent.title, target: target_name)
   end
 
   private

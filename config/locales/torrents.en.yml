@@ -24,7 +24,7 @@ en:
         notice:  "Torrent was successfully created."
       destroy:
         notice: "%{torrent} deleted"
-    move:
+    moves:
       create:
         notice: "moving %{torrent} to %{target}"
   simple_form:
