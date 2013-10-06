@@ -93,27 +93,27 @@ Cataract.TorrentRoute = Ember.Route.extend
     @get('store').find 'torrent', params.torrent_id
 
 Cataract.AddTorrentRoute = Ember.Route.extend
-  model: ->
-    Cataract.Torrent.createRecord()
+  model: -> @get('store').createRecord('torrent')
   setupController: (controller, torrent) ->
-    controller.set 'content', torrent # Ember actually should do this for us # it does in _super
+    controller.set 'content', torrent
+    #@_super(controller, torrent)
     router = this
     store = @get('store')
     controller.setDefaultDirectory()
-    # TODO transition route "back" (must remember last route?)
+
     Cataract.AddTorrentModal.popup
+      controller: controller
       torrent: torrent
-      directories: store.findAll('directory')
-      disks: store.findAll('disk')
-      callback: (opts) ->
-        if opts.primary
-          torrent.setProperties
-            fetchAutomatically: true
-            startAutomatically: true
-          torrent.one 'didFinishSaving', ->
-            router.controllerFor('torrents').didAddRunningTorrent(torrent)
-          torrent.save()
-        true
+      ok: (opts)->
+        record = @get('torrent')
+        record.setProperties
+          fetchAutomatically: true
+          startAutomatically: true
+        record.save()
+      cancel: (opts)->
+        @get('torrent').deleteRecord()
+
+      backRoute: ['filter', status: 'running']
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->

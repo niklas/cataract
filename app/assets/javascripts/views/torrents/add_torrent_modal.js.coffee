@@ -3,14 +3,12 @@ Cataract.AddTorrentView = Ember.View.extend
   directoriesBinding: 'parentView.directories'
   disksBinding: 'parentView.disks'
 
-Cataract.AddTorrentModal = Bootstrap.ModalPane.extend
-  directories: Ember.A()
-  disks: Ember.A()
+Cataract.AddTorrentModal = Cataract.ModalPane.extend
+  directoriesBinding: 'controller.controllers.directories.poly.directories'
+  disksBinding: 'controller.controllers.disks'
   torrent: null
 
   heading: "Add Torrent"
   bodyViewClass: Cataract.AddTorrentView
   primary: "Add"
   secondary: "Cancel"
-  showBackdrop: true
-  callback: Ember.K
