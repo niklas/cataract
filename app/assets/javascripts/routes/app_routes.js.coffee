@@ -91,8 +91,10 @@ Cataract.DiskRoute = Ember.Route.extend
     Cataract.set 'currentDisk', model
 
 Cataract.TorrentRoute = Ember.Route.extend
+  beforeModel: ->
+    @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
   model: (params) ->
-    @controllerFor('torrents').get('unfilteredContent').findProperty('id', params.torrent_id)
+    @get('store').find 'torrent', params.torrent_id
 
 Cataract.AddTorrentRoute = Ember.Route.extend
   model: ->
