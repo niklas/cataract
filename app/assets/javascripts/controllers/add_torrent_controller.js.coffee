@@ -1,4 +1,4 @@
-Cataract.AddTorrentController = Ember.ObjectController.extend
+Cataract.TorrentsAddController = Ember.ObjectController.extend
   needs: ['settings', 'disks', 'directories']
   setDefaultDirectory: ->
     self = this

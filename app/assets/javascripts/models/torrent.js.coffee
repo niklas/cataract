@@ -11,7 +11,7 @@ Cataract.Torrent = DS.Model.extend
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
 
-  filedata: attr 'string' # TODO put into payload
+  filedata: attr 'string'
 
   payload: DS.belongsTo('payload')
   payloadPresent: Ember.computed ->
