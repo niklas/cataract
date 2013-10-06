@@ -83,7 +83,7 @@ module HtmlSelectorsHelpers
 
     # TODO move to jquery_mobile
     when /^(?:a )?flash (notice|alert)$/
-      ".flash.alert-#{$1}"
+      ".flash.alert-#{$1} .message"
 
     when /^the (\w+)$/
       "##{$1}"

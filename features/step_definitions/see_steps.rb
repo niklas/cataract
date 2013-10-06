@@ -48,7 +48,7 @@ Then /^(the[^"']+) should be "([^"]+)"$/ do |name, label|
 end
 
 Then /^I should see (?:flash )?(notice|alert) "([^"]*)"$/ do |severity, message|
-  step %Q~I should see "#{message}" within flash #{severity}~
+  page.should have_css(*selector_for("flash #{severity}"), text: message)
 end
 
 Then /^I should see no link "([^"]*)"$/ do |label|

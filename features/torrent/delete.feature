@@ -22,7 +22,7 @@ Feature: Delete torrents
       And I follow "Delete"
       And I wait for the modal box to disappear
      Then I should see notice "Tails deleted"
-      And I should see notice "Freed 71.7KB"
+      And I should see notice "Freed 71.7 KB"
       And I should not see "Tails" within the torrents list
       And the file "usb/pics/tails.png" should not exist on disk
       And I should not see the destroy link
