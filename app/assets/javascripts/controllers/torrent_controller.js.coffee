@@ -27,8 +27,10 @@ Cataract.TorrentController = Ember.ObjectController.extend
       false
 
     delete: (torrent) ->
+      queryParams = Cataract.Router.router.currentParams.queryParams
       Cataract.DeleteTorrentModal.popup
         torrent: torrent
+        backRoute: ['torrents.index', queryParams: queryParams]
 
     deletePayload: (torrent) ->
       Cataract.ClearPayloadModal.popup torrent: torrent
