@@ -1,17 +1,13 @@
-Cataract.EditDirectoryModal = Bootstrap.ModalPane.extend
+Cataract.EditDirectoryModal = Cataract.ModalPane.extend
   directory: null
 
   headingBinding: 'directory.name'
   bodyViewClass: Cataract.EditDirectoryView
   primary: 'Save'
   secondary: 'Cancel'
-  showBackdrop: true
-  callback: (opts) ->
+  ok: (opts) ->
     directory = @get('directory')
-    if opts.primary
-      directory.save()
-    else
-      directory.undo('filter', 'subscribed')
-    if back = @get('back')
-      Cataract.Router.router.transitionTo( back... )
-
+    directory.save()
+  cancel: (opts)->
+    directory = @get('directory')
+    directory.rollback()

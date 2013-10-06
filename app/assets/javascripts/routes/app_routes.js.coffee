@@ -2,8 +2,8 @@ Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
   @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
     @resource 'torrent', path: '/torrent/:torrent_id'
-    @resource 'directory', path: '/directory/:directory_id'
-  @route 'edit_directory', path: 'directory/:directory_id/edit'
+    @resource 'directory', path: '/directory/:directory_id', ->
+      @route 'edit', path: '/edit'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
   @route 'new_directory', path: 'directory/new'
@@ -131,15 +131,15 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
 
   renderTemplate: ->
 
-Cataract.EditDirectoryRoute = Ember.Route.extend
+Cataract.DirectoryEditRoute = Ember.Route.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
-    model.prepareUndo('filter', 'subscribed')
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
+      controller: controller
       directory: model
-      back: ['poly.directory', model.get('poly.alternatives'), model]
+      backRoute: ['directory.index', model]
 
 Cataract.SettingsRoute = Ember.Route.extend
   model: ->
