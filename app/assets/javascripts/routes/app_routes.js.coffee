@@ -1,6 +1,8 @@
 Cataract.Router.map ->
+  @resource 'torrents', queryParams: ['age', 'directories', 'status'], ->
+    @resource 'torrent', path: '/:torrent_id'
+
   @resource 'filter', path: 'filter/:mode'
-  @resource 'torrent', path: 'torrent/:torrent_id'
   @resource 'poly', path: 'poly/:poly_id', ->
     @resource 'poly.directory', path: 'directory/:directory_id'
   @route 'edit_directory', path: 'directory/:directory_id/edit'
@@ -11,34 +13,49 @@ Cataract.Router.map ->
 
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
-    # FIXME is this really needed with all the promises?
+    # FIXME is this really needed with all the promises and needs?
     store = @get('store')
     @controllerFor('settings').set    'model',  store.find('setting', 'all')
     @controllerFor('transfers').set   'model', store.findAll('transfer')
     @controllerFor('disks').set       'model', store.findAll('disk')
     #@controllerFor('moves').set       'model', store.findAll('move')
-    # OPTIMIZE load the most recent torrents, for faster initial page load
-    @controllerFor('torrents').reload()
 
 Cataract.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'filter', 'running'
+  redirect: -> @transitionTo 'torrents', queryParams: { age: 'month', status: 'running' }
 
-Cataract.FilterRoute = Ember.Route.extend
-  model: (params) -> params.mode
-  setupController: (controller, model) ->
-    torrents = @controllerFor('torrents')
-    torrents.set('mode', model)
-    torrents.refreshTransfers()
-    @controllerFor('application').set('currentController', torrents)
-  deactivate: ->
-    torrents = @controllerFor('torrents')
-    torrents.set('mode', null)
+Cataract.TorrentsRoute = Ember.Route.extend
+  beforeModel: (queryParams)->
+    if Ember.isNone(queryParams.age)
+      debugger
+      throw "need age queryParam"
+
+  model: (params, queryParams, transition) ->
+    # warmup store by site-loading
+    @get('store').findQuery('torrent', age: queryParams.age)
+
+    # TODO should we filter&paginate here already or on the controller?
+    @get('store').filter 'torrent', (torrent)->
+      true
+
+  setupController: (controller, model, queryParams) ->
+    @setupDirectories(controller, queryParams)
+    controller.set 'unfilteredContent', model
+    controller.set('mode', queryParams.status)
+    controller.refreshTransfers()
+    @controllerFor('application').set('currentController', controller)
+
+  setupDirectories: (controller, queryParams)->
+    unless Ember.isNone(list=queryParams.directories)
+      ids = (i for i in list.split(','))
+      controller.set 'directories', @controllerFor('directories')
+        .get('poly.directories')
+        .filter (d)->
+          ids.indexOf(d.get('id')) >= 0
+
+  renderTemplate: -> # nothing, always present in application.handlebars
 
 Cataract.PolyRoute = Ember.Route.extend
   model: (params) ->
-    ids = (i for i in params.poly_id.split(','))
-    @controllerFor('directories').get('poly.directories').filter (d)->
-      ids.indexOf(d.get('id')) >= 0
 
   serialize: (model) ->
     { poly_id: model.mapProperty('id').join(',') }

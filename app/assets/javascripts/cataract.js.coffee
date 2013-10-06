@@ -9,6 +9,7 @@
 #= require_tree ./routes
 
 #Ember.LOG_BINDINGS = true
+Ember.FEATURES['query-params'] = yes
 
 CataractApplication = Ember.Application.extend
   rootElement: '#ember'
