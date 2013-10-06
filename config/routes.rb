@@ -12,9 +12,8 @@ Cataract::Application.routes.draw do
 
   # Ember-data cannot handle nested resources (yet?)
   resources :transfers, only: [:create, :index, :destroy], controller: :transfer
-  resources :moves, only: [:create, :index], controller: :move
   resources :payloads, only: [:show, :destroy], controller: :payload
-  resources :moves, controller: :move, only: [:create, :index]
+  resources :moves, only: [:create, :index]
 
 
   resources :disks do

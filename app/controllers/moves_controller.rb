@@ -1,4 +1,4 @@
-class MoveController < TorrentComponentController
+class MovesController < TorrentComponentController
   private
 
   def interpolation_options
