@@ -21,9 +21,6 @@ Cataract.ClearPayloadModal = Bootstrap.ModalPane.extend
   showBackdrop: true
   callback: (opts) ->
     if opts.primary
-      if payload = @get('torrent.payload')
-        torrent = @get('torrent')
-        payload.destroyRecord().then ->
-          torrent.set('payloadExists', false)
+      @get('torrent').clearPayload()
     true
 

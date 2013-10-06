@@ -10,7 +10,6 @@ class Ability
       can :manage, Transfer
       can :manage, :payload # Emu
       can :manage, Torrent::Payload
-      can :create, Torrent::Deletion
       can :manage, Move
     end
 

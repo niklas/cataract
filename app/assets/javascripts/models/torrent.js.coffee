@@ -17,6 +17,10 @@ Cataract.Torrent = DS.Model.extend
   payloadPresent: Ember.computed ->
     @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
   .property('payload.isLoaded', 'payload.isDeleted')
+  clearPayload: ->
+    if payload = @get('payload')
+      payload.destroyRecord().then =>
+        @set('payloadExists', false)
 
   contentDirectory: DS.belongsTo('directory')
 

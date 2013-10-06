@@ -156,26 +156,6 @@ class Torrent
     end
   end
 
-  class Deletion < HashWithIndifferentAccess
-    include ActiveAttr::Model
-    include ActiveAttr::AttributeDefaults
-
-    attribute :delete_payload
-    attribute :torrent
-
-    def save
-      if delete_payload?
-        torrent.payload.destroy
-      end
-      torrent.stop! if torrent.stoppable?
-      torrent.destroy
-    end
-  end
-
-  def build_deletion(params={})
-    @deletion ||= Deletion.new(params.merge(torrent: self))
-  end
-
   def payload
     @payload ||= Payload.new(self)
   end

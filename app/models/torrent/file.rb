@@ -99,7 +99,6 @@ class Torrent
   end
 
   has_one :move
-  has_one :deletion
 
   def moving?
     ! move.nil?

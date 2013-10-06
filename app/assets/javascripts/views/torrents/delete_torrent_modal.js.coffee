@@ -22,12 +22,9 @@ Cataract.DeleteTorrentModal = Bootstrap.ModalPane.extend
   callback: (opts) ->
     if opts.primary
       torrent = @get('torrent')
-      torrent.destroyRecord()
-      #store = torrent.get('store')
-      #deletion = store.createRecord 'deletion',
-      #  torrent: torrent
-      #  deletePayload: @get('deletePayload')
-      #deletion.save().then (x) ->
-      #  torrent.destroy()
-      #  store.dematerializeRecord(torrent)
+      if @get('deletePayload')
+        torrent.clearPayload()?.then =>
+          torrent.destroyRecord()
+      else
+        torrent.destroyRecord()
     true

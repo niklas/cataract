@@ -22,12 +22,11 @@ en:
       create:
         alert: "Could not create Torrent."
         notice:  "Torrent was successfully created."
+      destroy:
+        notice: "%{torrent} deleted"
     move:
       create:
         notice: "moving %{torrent} to %{target}"
-    deletion:
-      create:
-        notice: "%{torrent} deleted"
   simple_form:
     labels:
       defaults:
