@@ -1,9 +1,8 @@
 Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
   @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
-    @resource 'torrent', path: '/:torrent_id'
-  @resource 'poly', path: 'poly/:poly_id', ->
-    @resource 'poly.directory', path: 'directory/:directory_id'
+    @resource 'torrent', path: '/torrent/:torrent_id'
+    @resource 'directory', path: '/directory/:directory_id'
   @route 'edit_directory', path: 'directory/:directory_id/edit'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'add_torrent', path: 'add'
@@ -52,42 +51,33 @@ Cataract.TorrentsRoute = Ember.Route.extend
   setupDirectories: (controller, queryParams)->
     unless Ember.isNone(list=queryParams.directories)
       ids = (i for i in list.split(','))
-      controller.set 'directories', @controllerFor('directories')
+      dirs = @controllerFor('directories')
         .get('poly.directories')
         .filter (d)->
           ids.indexOf(d.get('id')) >= 0
+      controller.set 'directories', dirs
+      if dirs.get('length') == 1
+        dir = dirs.get('firstObject')
+        @set 'singleDirectory', true
+        @controllerFor('directory').set('content', dir)
+      else
+        @set 'singleDirectory', false
 
-  renderTemplate: -> # nothing, always present in application.handlebars
+  renderTemplate: ->
     @render 'torrents/tabs',
       outlet: 'pre',
       controller: @controllerFor('torrents')
     @render 'torrents/navigation',
       outlet: 'nav',
       controller: @controllerFor('torrents')
-
-Cataract.PolyRoute = Ember.Route.extend
-  model: (params) ->
-
-  serialize: (model) ->
-    { poly_id: model.mapProperty('id').join(',') }
-
-  afterModel: (model)->
-    curr = @controllerFor('torrents').get('directories')
-    curr.clear()
-    curr.pushObjects(model)
-    if model.length == 1
-      @transitionTo 'poly.directory', model, model.get('firstObject')
-  deactivate: ->
-    @controllerFor('torrents').get('directories').clear()
+    if @get('singleDirectory')
+      @render 'directory',
+        controller: @controllerFor('directory')
 
 
-Cataract.PolyDirectoryRoute = Ember.Route.extend
+Cataract.DirectoryRoute = Ember.Route.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
-  afterModel: (model)->
-    @controllerFor('torrents').set('directory', model)
-  deactivate: ->
-    @controllerFor('torrents').set('directory', null)
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
