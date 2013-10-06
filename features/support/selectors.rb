@@ -33,7 +33,7 @@ module HtmlSelectorsHelpers
       "#sidebar > ul.directories"
 
     when /^the disks tab$/
-      '#content .tabbable .disks'
+      '.nav-tabs.disks'
 
     when /^the torrents? list$/
       "ul#torrents"

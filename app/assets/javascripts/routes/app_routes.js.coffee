@@ -78,9 +78,13 @@ Cataract.TorrentsRoute = Ember.Route.extend
 Cataract.DirectoryRoute = Ember.Route.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
+  afterModel: (model)->
+    @controllerFor('torrents').set('directory', model)
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
+  deactivate: (model)->
+    @controllerFor('torrents').set('directory', null)
 
 Cataract.DiskRoute = Ember.Route.extend
   afterModel: (model) ->
