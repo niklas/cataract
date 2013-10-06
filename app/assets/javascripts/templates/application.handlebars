@@ -23,21 +23,7 @@
         </form>
 
         <ul class="nav">
-          <li {{bindAttr class='controllers.torrents.isRecentActive:active'}}>{{#link-to 'filter' 'recent'}}Recent{{/link-to}}</li>
-          <li {{bindAttr class='controllers.torrents.isRunningActive:active'}}>{{#link-to 'filter' 'running'}}Running{{/link-to}}</li>
-          <li>{{#link-to 'add_torrent'}}Add{{/link-to}}</li>
-
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {{controllers.torrents.describedAge}}
-              <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="#" {{action "setAge" "month" target=controllers.torrents}}>Month</a></li>
-              <li><a href="#" {{action "setAge" "year" target=controllers.torrents}}>Year</a></li>
-              <li><a href="#" {{action "setAge" "all" target=controllers.torrents}}>All (slow)</a></li>
-            </ul>
-          </li>
+          {{outlet 'nav'}}
         </ul>
 
         <div class="nav-collapse">
@@ -66,34 +52,11 @@
 <div id="middle">
   <div id="content">
     <div style="display: none;">breadcrumbs</div>
+    {{outlet 'pre'}}
 
     <div class="tabbable">
-      <ul class="nav nav-tabs disks">
-        {{#each controllers.torrents.directories}}
-        <li {{bindAttr class=":disk active disk.isMounted:mounted:unmounted"}}>
-        {{#link-to 'poly.directory' this class="name"}}
-            <i {{bindAttr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
-            {{disk.name}}
-          {{/link-to}}
-        </li>
-        {{else}}
-          {{#each controllers.disks}}
-          <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
-          {{#link-to 'disk' this class="name"}}
-              <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
-              {{name}}
-            {{/link-to}}
-          </li>
-          {{/each}}
-        {{/each}}
-      </ul>
-
-      {{view Cataract.Pagination controllerBinding="controllers.torrents"}}
-
-
       <div class="tab-content">
         <div class="tab-pane active">
-          {{outlet pre}}
           {{ render "torrents" }}
         </div>
       </div>

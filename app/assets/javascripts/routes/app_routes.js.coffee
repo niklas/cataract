@@ -1,8 +1,7 @@
 Cataract.Router.map ->
-  @resource 'torrents', queryParams: ['age', 'directories', 'status'], ->
+  @resource 'filter', path: 'filter/:status'
+  @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
     @resource 'torrent', path: '/:torrent_id'
-
-  @resource 'filter', path: 'filter/:mode'
   @resource 'poly', path: 'poly/:poly_id', ->
     @resource 'poly.directory', path: 'directory/:directory_id'
   @route 'edit_directory', path: 'directory/:directory_id/edit'
@@ -23,10 +22,13 @@ Cataract.ApplicationRoute = Ember.Route.extend
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'torrents', queryParams: { age: 'month', status: 'running' }
 
+Cataract.FilterRoute = Ember.Route.extend
+  beforeModel: (transition) ->
+    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.status }
+
 Cataract.TorrentsRoute = Ember.Route.extend
   beforeModel: (queryParams)->
     if Ember.isNone(queryParams.age)
-      debugger
       throw "need age queryParam"
 
   model: (params, queryParams, transition) ->
@@ -53,6 +55,9 @@ Cataract.TorrentsRoute = Ember.Route.extend
           ids.indexOf(d.get('id')) >= 0
 
   renderTemplate: -> # nothing, always present in application.handlebars
+    @render 'torrents/navigation',
+      outlet: 'nav',
+      controller: @controllerFor('torrents')
 
 Cataract.PolyRoute = Ember.Route.extend
   model: (params) ->
