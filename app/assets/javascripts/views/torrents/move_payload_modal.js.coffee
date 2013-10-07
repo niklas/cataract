@@ -10,7 +10,7 @@ Cataract.MoveTorrentView = Ember.View.extend
 
 # TODO group directories by relative_path and show only one
 Cataract.MovePayloadModal = Cataract.ModalPane.extend
-  directoriesBinding: 'controller.controllers.directories.poly.directories'
+  directoriesBinding: 'controller.controllers.directories.directories'
   disksBinding: 'controller.controllers.disks'
   torrent: null
   move: {}

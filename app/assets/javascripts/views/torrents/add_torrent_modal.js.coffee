@@ -4,7 +4,7 @@ Cataract.AddTorrentView = Ember.View.extend
   disksBinding: 'parentView.disks'
 
 Cataract.AddTorrentModal = Cataract.ModalPane.extend
-  directoriesBinding: 'controller.controllers.directories.poly.directories'
+  directoriesBinding: 'controller.controllers.directories.directories'
   disksBinding: 'controller.controllers.disks'
   torrent: null
 
