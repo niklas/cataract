@@ -14,19 +14,9 @@ Cataract::Application.routes.draw do
   resources :transfers, only: [:create, :index, :destroy], controller: :transfer
   resources :payloads, only: [:show, :destroy], controller: :payload
   resources :moves, only: [:create, :index]
-
-
-  resources :disks do
-    resources :directories do
-      resources :detected_directories, only: :index
-    end
-    resources :detected_directories, only: :index
-  end
-
-  resources :directories do
-    resources :directories
-    resources :detected_directories, only: :index
-  end
+  resources :detected_directories, only: :index
+  resources :disks
+  resources :directories
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 

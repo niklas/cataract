@@ -20,7 +20,10 @@ Cataract.Directory = Cataract.BaseDirectory.extend
     @get('showSubDirs') and @get('children.length') > 0
   ).property('children', 'children.@each', 'showSubDirs')
 
-  detectedChildren: DS.hasMany('detected-directory')
+  detectedChildren: Ember.computed ->
+    @get('store').findQuery('detectedDirectory', directory_id: @get('id'))
+  .property('children.@each')
+
   hasDetectedSubDirs: Ember.computed ->
     @get('showSubDirs') and @get('detectedChildren.length') > 0
   .property('showSubDirs', 'detectedChildren.@each', 'children.@each.id')

@@ -15,6 +15,3 @@ Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
         parentDirectory.notifyPropertyChange('children')
         parentDirectory.get('detectedChildren')?.deleteRecord(this)
     directory
-
-Cataract.DetectedDirectory.reopenClass
-  resourceName: 'detected_directories'
