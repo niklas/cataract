@@ -46,6 +46,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
     @setupDirectories(controller, queryParams)
     controller.set 'unfilteredContent', model
     controller.set('mode', queryParams.status)
+    controller.set('age', queryParams.age)
     controller.gotoFirstPage()
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
