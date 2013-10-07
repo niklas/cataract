@@ -60,3 +60,6 @@ Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend()
 
 window.Cataract = Cataract
 
+if console?
+  Ember.RSVP.configure 'onerror', (e)->
+    console.log "error in promise", e.message, e.stack
