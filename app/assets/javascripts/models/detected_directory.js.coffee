@@ -10,8 +10,9 @@ Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
     directory.save().then =>
       @unloadRecord()
       if disk?
-        disk.get('directories').pushObject(directory)
         disk.notifyPropertyChange('detectedDirectories')
+        # FIXME should not be neccessary with the store, when assoc would work
+        disk.get('directories').pushObject(directory)
       if parentDirectory?
         parentDirectory.then (p) =>
           p.notifyPropertyChange('detectedChildren')
