@@ -48,7 +48,7 @@ jQuery.ajaxSetup
   dataType: 'json'
 
 DS.RailsRESTSerializer = DS.ActiveModelSerializer.extend()
-DS.RailsRESTAdapter = DS.RESTAdapter.extend
+DS.RailsRESTAdapter = DS.ActiveModelAdapter.extend
   defaultSerializer: 'DS/railsREST'
 
 Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend()
