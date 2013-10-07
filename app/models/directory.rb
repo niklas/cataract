@@ -18,6 +18,7 @@ class Directory < ActiveRecord::Base
 
   validates_predicate :relative_path, :relative?
   validates_predicate :full_path, :absolute?
+  validates_with ParentNoConflictWithPathsValidator
 
   after_create :create_on_filesystem, unless: :virtual?
 
