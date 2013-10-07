@@ -1,27 +1,37 @@
 slash = /\//
 
-PolyDiskTree = Ember.Object.extend
-  init: ->
-    @_super()
+PolyDiskTree = Ember.Mixin.create
+  # Entry point, all directories, unstructed
+  #
+  # accepts a collection, for example a findAll
+  # sets observers on it
+  directories: Ember.computed (key, value) ->
+    if arguments.length > 1
+      @_setupObservers(value)
+      @set('_directories', value)
+    unless @get('_directories')
+      fresh = Ember.A()
+      @_setupObservers(fresh)
+      @set('_directories', fresh)
+    @get('_directories')
+  .property()
 
-    @get('directories').addEnumerableObserver(@,
-      willChange: @willChangeDirectories,
-      didChange:  @didChangeDirectories
-    )
-
+  # exit point, responds to #children and each to #alternatives
   root: Ember.computed ->
     PolyDiskDirectory.create()
   .property()
 
-  directories: Ember.computed ->
-    Ember.A()
-  .property()
+  _setupObservers: (list)->
+    list.addEnumerableObserver(@,
+      willChange: @_willChangeDirectories,
+      didChange:  @_didChangeDirectories
+    )
 
 
-  willChangeDirectories: (directories, removing, addCount) ->
+  _willChangeDirectories: (directories, removing, addCount) ->
     # TODO
 
-  didChangeDirectories: (directories, removeCount, adding) ->
+  _didChangeDirectories: (directories, removeCount, adding) ->
     adding.forEach (dir, index) ->
       @_insert @get('root'), dir
     , @

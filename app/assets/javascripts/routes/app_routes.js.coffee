@@ -52,7 +52,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
     unless Ember.isNone(list=queryParams.directories)
       ids = (i for i in list.split(','))
       dirs = @controllerFor('directories')
-        .get('poly.directories')
+        .get('directories')
         .filter (d)->
           ids.indexOf(d.get('id')) >= 0
       controller.set 'directories', dirs

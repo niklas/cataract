@@ -1,8 +1,9 @@
 describe 'PolyDiskTree', ->
 
+  klass = Ember.Object.extend(PolyDiskTree)
   tree = null
   beforeEach ->
-    tree = PolyDiskTree.create()
+    tree = klass.create()
 
   afterEach ->
     tree = null
@@ -57,5 +58,5 @@ describe 'PolyDiskTree', ->
   it 'can specify #directories on creation', ->
     list = Ember.A()
     list.pushObject('given')
-    tree = PolyDiskTree.create directories: list
+    tree = klass.create directories: list
     expect( tree.get('directories') ).toEqual( list )
