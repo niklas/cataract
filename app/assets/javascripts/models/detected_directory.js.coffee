@@ -6,6 +6,7 @@ Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
       name: @get('name')
       disk: disk
       parentId: @get('parentId')
+      relativePath: @get('relativePath')
 
     directory.save().then =>
       @unloadRecord()

@@ -2,6 +2,7 @@ attr = DS.attr
 
 Cataract.BaseDirectory = DS.Model.extend
   name: attr('string')
+  relativePath: attr('string')
   disk: DS.belongsTo('disk')
   parentId: attr('number')
   # 'parent' is special in Emu #doh
