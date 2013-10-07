@@ -8,7 +8,10 @@ Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
       parentId: @get('parentId')
 
     directory.save().then =>
+      @unloadRecord()
       if disk?
         disk.get('directories').pushObject(directory)
         disk.notifyPropertyChange('detectedDirectories')
-        disk.get('detectedDirectories')?.deleteRecord(this)
+      if parentDirectory?
+        parentDirectory.then (p) =>
+          p.notifyPropertyChange('detectedChildren')
