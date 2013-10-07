@@ -31,9 +31,10 @@ PolyDiskTree = Ember.Mixin.create
   _willChangeDirectories: (directories, removing, addCount) ->
     # TODO
 
+  # a simple createRecord on store calls this before saving
   _didChangeDirectories: (directories, removeCount, adding) ->
     adding.forEach (dir, index) ->
-      @_insert @get('root'), dir
+      @_insert @get('root'), dir unless dir.get('isDirty')
     , @
 
   _insert: (here, dir) ->
