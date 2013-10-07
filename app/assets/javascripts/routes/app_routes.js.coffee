@@ -86,10 +86,6 @@ Cataract.DirectoryRoute = Ember.Route.extend
   deactivate: (model)->
     @controllerFor('torrents').set('directory', null)
 
-Cataract.DiskRoute = Ember.Route.extend
-  afterModel: (model) ->
-    Cataract.set 'currentDisk', model
-
 Cataract.TorrentRoute = Ember.Route.extend
   beforeModel: ->
     @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
