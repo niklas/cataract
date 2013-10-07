@@ -35,8 +35,12 @@ Cataract.TorrentsRoute = Ember.Route.extend
 
   model: (params, queryParams, transition) ->
     store = @get('store')
-    # warmup store by site-loading
-    store.findQuery('torrent', age: queryParams.age)
+
+    # warmup store only when age has changed
+    if queryParams.age != transition.params.queryParams?.age
+      store.unloadAll('torrent')
+      store.findQuery('torrent', age: queryParams.age)
+
     # TODO should we filter&paginate here already or on the controller?
     store.filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
