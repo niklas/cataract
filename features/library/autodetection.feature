@@ -84,4 +84,3 @@ Feature: Disks in Library
       And I should see a table of the following new directories:
        | Name       | Action |
        | Tagesschau | Import |
-      And I should see "Tatort" within the sidebar
