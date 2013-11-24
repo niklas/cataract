@@ -26,7 +26,7 @@ Feature: filter torrents
       | title |
       | Two   |
       | One   |
-     And I should see "recent torrents containing 'one'" within the window title
+     And the window title should include "recent torrents containing 'one'"
 
     # match on substrings
     When I filter with "w"

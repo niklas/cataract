@@ -24,6 +24,13 @@ When(/^I go back$/) do
   page.execute_script %Q~window.history.back()~
 end
 
+# capybara does not see text in "head > title"
+Then /^the window title should include "([^"]+)"$/ do |part|
+  sel = selector_for('the window title')
+  title = evaluate_script %Q~$('#{sel}').text()~
+  title.should include(part)
+end
+
 Then /^the selected "([^"]*)" should be "([^"]*)"$/ do |field, value|
   field_labeled(field).all('option').find(&:selected?).text.should =~ /#{value}/
 end
