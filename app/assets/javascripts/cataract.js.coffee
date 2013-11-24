@@ -9,6 +9,7 @@
 #= require_tree ./routes
 
 #Ember.LOG_BINDINGS = true
+Ember.FEATURES['query-params'] = yes
 
 CataractApplication = Ember.Application.extend
   rootElement: '#ember'
@@ -19,17 +20,16 @@ CataractApplication = Ember.Application.extend
   transfers: Ember.A()
   ready: ->
     #@_super()
-    @set 'transfers', Cataract.Transfer.find()
+    # FIXME load transfer through controller needs?
+    # @set 'transfers', @get('store').findAll('transfer')
     # TODO put this into a view/controller combi
     jQuery(document).ajaxError (e, jqxhr, settings, exception) ->
       Cataract.set 'online', false
       if jqxhr.status == 502
         Cataract.set 'offlineReason', jqxhr.responseText
 
+  # TODO move to diskcontroller?
   currentDisk: null
-  currentDirectory: null
-  currentDirectories: Ember.A()
-  currentDirectoryIds: Ember.computed.mapProperty 'currentDirectories', 'id'
 
 Cataract = CataractApplication.create()
 
@@ -47,11 +47,11 @@ Cataract = CataractApplication.create()
 jQuery.ajaxSetup
   dataType: 'json'
 
-Cataract.Store = Emu.Store.extend
-  revision: 1
-  adapter: Emu.RestAdapter.extend
-    serializer: Emu.RailsSerializer.extend()
+DS.RailsRESTSerializer = DS.ActiveModelSerializer.extend()
+DS.RailsRESTAdapter = DS.ActiveModelAdapter.extend
+  defaultSerializer: 'DS/railsREST'
 
+Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend()
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'
 #  detected_directory: 'detected_directories'
@@ -60,3 +60,6 @@ Cataract.Store = Emu.Store.extend
 
 window.Cataract = Cataract
 
+if console?
+  Ember.RSVP.configure 'onerror', (e)->
+    console.log "error in promise", e.message, e.stack

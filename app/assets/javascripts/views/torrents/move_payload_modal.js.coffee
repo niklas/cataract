@@ -8,9 +8,10 @@ Cataract.MoveTorrentView = Ember.View.extend
     {{/with}}
   """
 
-Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
-  directories: Ember.A()
-  disks: Ember.A()
+# TODO group directories by relative_path and show only one
+Cataract.MovePayloadModal = Cataract.ModalPane.extend
+  directoriesBinding: 'controller.controllers.directories.directories'
+  disksBinding: 'controller.controllers.disks'
   torrent: null
   move: {}
 
@@ -18,13 +19,7 @@ Cataract.MovePayloadModal = Bootstrap.ModalPane.extend
   bodyViewClass: Cataract.MoveTorrentView
   primary: "Move"
   secondary: "Cancel"
-  showBackdrop: true
-  callback: (opts) ->
-    if opts.primary
-      move =  @get('move')
-      move.set('torrentId', @get('torrent.id'))
-      move.save()
-    else
-      move.clear()
-    true
-
+  ok: (opts)->
+    move = @get('controller.store').createRecord 'move', @get('move')
+    move.set('torrent', @get('torrent'))
+    move.save()

@@ -42,12 +42,13 @@ end
 
 # Then the active nav item should be "Recent"
 Then /^(the[^"']+) should be "([^"]+)"$/ do |name, label|
-  element = page.first *selector_for(name)
-  element.text.should == label
+  patiently 30 do
+    page.should have_css(*selector_for(name), text: label)
+  end
 end
 
 Then /^I should see (?:flash )?(notice|alert) "([^"]*)"$/ do |severity, message|
-  step %Q~I should see "#{message}" within flash #{severity}~
+  page.should have_css(*selector_for("flash #{severity}"), text: message)
 end
 
 Then /^I should see no link "([^"]*)"$/ do |label|

@@ -8,7 +8,7 @@ Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
   template: Ember.Handlebars.compile """
   {{#with view.content}}
     <a class="close" {{action "closeQuickly" target=view}}> ×</a>
-    {{message}}
+    <span class="message">{{message}}</span>
   {{/with}}
   """
 

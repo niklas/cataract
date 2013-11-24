@@ -18,6 +18,7 @@ class Directory < ActiveRecord::Base
 
   validates_predicate :relative_path, :relative?
   validates_predicate :full_path, :absolute?
+  validates_with ParentNoConflictWithPathsValidator
 
   after_create :create_on_filesystem, unless: :virtual?
 
@@ -100,13 +101,6 @@ class Directory < ActiveRecord::Base
     return if new_path.blank?
     @full_path = Pathname.new(new_path)
   end
-  def relative_path=(new_path)
-    super
-    @relative_path = read_attribute :relative_path
-  end
-  def relative_path
-    @relative_path || super
-  end
 
   def process_full_path
     if @full_path
@@ -127,15 +121,11 @@ class Directory < ActiveRecord::Base
   end
 
   def set_name_from_relative_path
-    if @relative_path
-      @intermediates = @relative_path.dirname.relative_components
-      if parent
-        self.relative_path = parent.relative_path.join @relative_path
+    if name.blank?
+      if relative_path.present?
+        @intermediates = relative_path.dirname.relative_components
+        self.name = relative_path.basename.to_s
       end
-      if name.blank?
-        self.name = @relative_path.basename.to_s
-      end
-      @relative_path = nil
     end
   rescue Exception => e
     errors.add :relative_path, e.message
@@ -148,7 +138,6 @@ class Directory < ActiveRecord::Base
                            else
                              name
                            end
-      @relative_path = nil   # side effects in #relative_path=
     end
   end
 

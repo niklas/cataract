@@ -23,11 +23,13 @@ Ember.PaginationSupport = Ember.Mixin.create
   hasNext: Ember.computed ->
     get(this, "rangeStop") < get(this, "total")
   .property("rangeStop", "total").cacheable()
-  nextPage: ->
-    @incrementProperty "rangeStart", get(this, "rangeWindowSize")  if get(this, "hasNext")
 
-  previousPage: ->
-    @decrementProperty "rangeStart", get(this, "rangeWindowSize")  if get(this, "hasPrevious")
+  actions:
+    nextPage: ->
+      @incrementProperty "rangeStart", get(this, "rangeWindowSize")  if get(this, "hasNext")
+
+    previousPage: ->
+      @decrementProperty "rangeStart", get(this, "rangeWindowSize")  if get(this, "hasPrevious")
 
   page: Ember.computed ->
     (get(this, "rangeStart") / get(this, "rangeWindowSize")) + 1

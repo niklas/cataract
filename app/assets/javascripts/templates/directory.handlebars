@@ -1,16 +1,17 @@
-<h2>{{name}}</h2>
+<h2>{{disk.name}} / {{name}}</h2>
 
-{{#link-to 'edit_directory' this class="edit"}}edit{{/link-to}}
+{{#link-to 'directory.edit' this class="edit"}}edit{{/link-to}}
 
 {{#if subscribed}}
   <span class="subscribed label label-success">subscribed</span>
-{{/if}}
-
-{{#if hasSubDirs}}
-{{view Cataract.DirectoriesTable contentBinding="children" classNames="existing"}}
 {{/if}}
 
 {{#if hasDetectedSubDirs}}
 <h2>Detected</h2>
 {{view Cataract.DetectedDirectoriesTable contentBinding="detectedChildren"}}
 {{/if}}
+
+{{#if hasSubDirs}}
+{{view Cataract.DirectoriesTable contentBinding="children" classNames="existing"}}
+{{/if}}
+

@@ -2,19 +2,18 @@ Cataract.DetectedDirectory = Cataract.BaseDirectory.extend
   createDirectory: ->
     parentDirectory = @get('parentDirectory')
     disk   = @get('disk')
-    directory = Cataract.Directory.createRecord
+    directory = @get('store').createRecord 'directory',
       name: @get('name')
-      diskId: disk?.get('id')
-      parentId: parentDirectory?.get('id')
-    directory.one 'didFinishSaving', =>
+      disk: disk
+      parentId: @get('parentId')
+      relativePath: @get('relativePath')
+
+    directory.save().then =>
+      @unloadRecord()
       if disk?
         disk.notifyPropertyChange('detectedDirectories')
-        disk.get('detectedDirectories')?.deleteRecord(this)
+        # FIXME should not be neccessary with the store, when assoc would work
         disk.get('directories').pushObject(directory)
       if parentDirectory?
-        parentDirectory.notifyPropertyChange('children')
-        parentDirectory.get('detectedChildren')?.deleteRecord(this)
-    directory
-
-Cataract.DetectedDirectory.reopenClass
-  resourceName: 'detected_directories'
+        parentDirectory.then (p) =>
+          p.notifyPropertyChange('detectedChildren')

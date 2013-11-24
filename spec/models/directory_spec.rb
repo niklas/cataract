@@ -131,26 +131,41 @@ describe Directory do
     end
 
     context 'by parent and relative path' do
+      pending "creates intermediate directories, should be made explicit"
       let!(:sub1) { create :blank_directory, name: 'sub1', parent: parent }
-      let(:attr)  {{ parent: parent, relative_path: 'sub1/sub2/thename' }}
-      it "assigns disk from parent" do
+      let(:attr)  {{ parent: parent, relative_path: 'parent/sub1/sub2/thename' }}
+      xit "assigns disk from parent" do
         creating.call
         directory.disk.should == disk
       end
-      it "creates or finds intermediate directories" do
+      xit "creates or finds intermediate directories" do
         creating.should change(Directory, :count).from(2).to(4)
       end
-      it "sets parent to the deepest intermediate directory" do
+      xit "sets parent to the deepest intermediate directory" do
         creating.call
         directory.parent.name.should == 'sub2'
       end
-      it "sets name" do
+      xit "sets name" do
         creating.call
         directory.name.should == 'thename'
       end
-      it "sets full_path" do
+      xit "sets full_path" do
         creating.call
-        directory.full_path.to_s.should == '/media/disk/parent/sub1/sub2/thename'
+        directory.full_path.to_s.should == '/media/disk/sub1/sub2/thename'
+      end
+
+    end
+
+    context 'by parent and relative path (not matching)' do
+      let!(:sub1) { create :blank_directory, name: 'sub1', parent: parent }
+      # Path would be     ../parent/sub1/sub2/thename
+      let(:attr)  {{ parent: parent, relative_path: 'sub1/sub2/thename' }}
+
+      it 'adds error on relative path' do
+        $want_pry = true
+        directory.should_not be_valid
+        $want_pry = false
+        directory.should have_at_least(1).errors_on(:relative_path)
       end
     end
   end

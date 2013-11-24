@@ -3,7 +3,7 @@ class DetectedDirectoriesController < InheritedResources::Base
 
   def index
     authorize! :index, Directory
-    render json: collection, each_serializer: DetectedDirectorySerializer, root: false
+    render json: collection, each_serializer: DetectedDirectorySerializer
   end
   private
   def collection

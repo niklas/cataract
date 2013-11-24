@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs disks">
+  {{#each directories}}
+  <li {{bindAttr class=":disk active disk.isMounted:mounted:unmounted"}}>
+  {{#link-to 'directory' this class="name"}}
+      <i {{bindAttr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
+      {{disk.name}}
+    {{/link-to}}
+  </li>
+  {{else}}
+    {{#each controllers.disks}}
+    <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
+    {{#link-to 'disk' this class="name"}}
+        <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+        {{name}}
+      {{/link-to}}
+    </li>
+    {{/each}}
+  {{/each}}
+</ul>
+
+{{view Cataract.Pagination controllerBinding="this"}}
+

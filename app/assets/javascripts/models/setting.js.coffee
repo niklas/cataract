@@ -1,9 +1,9 @@
-Cataract.Setting = Emu.Model.extend
+attr = DS.attr
+Cataract.Setting = DS.Model.extend
 
-  # must simulate association because there is no reflecting assoc in Cataract.Directory
-  incomingDirectoryId: Emu.field 'number'
-  incomingDirectory: Emu.belongsTo('Cataract.Directory', key: 'incomingDirectoryId')
-  disableSignup: Emu.field 'boolean'
+  # OPTIMIZE must simulate association because there is no reflecting assoc in Cataract.Directory ?
+  incomingDirectory: DS.belongsTo('directory')
+  disableSignup: attr 'boolean'
 
 Cataract.Setting.reopenClass
   url: 'setting' # Emu serialization key

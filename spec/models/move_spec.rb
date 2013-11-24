@@ -166,7 +166,7 @@ describe Move, 'target' do
     let(:disk2) { create :disk, name: "Disk 2" }
     let(:series1) { create :directory, disk: disk1, relative_path: 'Serien' }
     let(:series2) { create :directory, disk: disk2, relative_path: 'Serien' }
-    let(:existing) { create :directory, parent: series2, disk: disk2 }
+    let(:existing) { create :directory, parent: series2, disk: disk2, relative_path: nil }
 
     let(:source) {   create :directory, disk: disk1 }
     let(:torrent) {  create :torrent, content_directory: source }

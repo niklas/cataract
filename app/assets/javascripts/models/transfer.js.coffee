@@ -1,9 +1,10 @@
-Cataract.Transfer = Emu.Model.extend
-  progress: Emu.field 'number'
-  upRate: Emu.field 'string'
-  downRate: Emu.field 'string'
-  eta: Emu.field 'string'
-  torrentId: Emu.field 'number' # FIXME is not set by serializer
+attr = DS.attr
+Cataract.Transfer = DS.Model.extend
+  progress: attr 'number'
+  upRate: attr 'string'
+  downRate: attr 'string'
+  eta: attr 'string'
+  torrent: DS.belongsTo('torrent')
   progressStyle: Ember.computed ->
     "width: #{@get('progress')}%"
   .property('progress')
@@ -13,7 +14,7 @@ Cataract.Transfer = Emu.Model.extend
   finished: Ember.computed ->
     @get('progress') == 100
   .property('progress')
-  active: Emu.field 'boolean'
+  active: attr 'boolean'
 
 Cataract.Transfer.reopenClass
   url: 'transfer' # Emu create param

@@ -1,34 +1,34 @@
 Cataract.TorrentController = Ember.ObjectController.extend
   needs: ['torrents', 'directories', 'disks']
-  deletePayload: (torrent) ->
-    Cataract.ClearPayloadModal.popup torrent: torrent
 
   actions:
     move: (torrent) ->
       directory = torrent.get('payload.directory') || torrent.get('contentDirectory')
-      # TODO group directories by relative_path and show only one
       Cataract.MovePayloadModal.popup
+        controller: this
         torrent: torrent
-        directories: @get('controllers.directories.poly.directories')
-        disks: @get('controllers.disks').get('content')
-        move: Cataract.Move.createRecord
+        move:
           targetDisk: directory.get('disk')
           targetDirectory: directory
 
     start: (torrent) ->
-      transfer = torrent.get('transfers').createRecord()
-      transfer.set('torrentId', torrent.get('id'))
-      transfer.one 'didFinishSaving', ->
+      transfer = @get('store').createRecord 'transfer',
+        torrent: torrent
+      transfer.save().then ->
         torrent.set 'status', 'running'
-      transfer.save()
       false
 
     stop: (torrent) ->
       if transfer = torrent.get('transfer')
-        transfer.deleteRecord().success ->
+        transfer.destroyRecord().then ->
           torrent.set 'status', 'archived'
       false
 
     delete: (torrent) ->
+      queryParams = Cataract.Router.router.currentParams.queryParams
       Cataract.DeleteTorrentModal.popup
         torrent: torrent
+        backRoute: ['torrents.index', queryParams: queryParams]
+
+    deletePayload: (torrent) ->
+      Cataract.ClearPayloadModal.popup torrent: torrent

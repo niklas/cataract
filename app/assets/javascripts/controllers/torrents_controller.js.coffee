@@ -1,4 +1,5 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
+  needs: ['disks']
   init: ->
     @_super()
     $('body').bind 'tick', => @refreshTransfers(); true
@@ -25,8 +26,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   termsBinding: 'Cataract.terms'
   mode: ''
-  directoryBinding: 'Cataract.currentDirectory'
-  directoryIdsBinding: 'Cataract.currentDirectoryIds'
+  directory: null
+  directories: Ember.A()
+  directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   filterFunctionDidChange: (->
     @gotoFirstPage()
@@ -44,7 +46,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   filterFunction: (->
     termsList  = @get('termsList')
     mode = @get('mode') || ''
-    directoryIds = @get('directoryIds')
+    directoryIds = @get('directoryIds') || []
     directoryId = @get('directory.id')
 
     (torrent) ->
@@ -57,11 +59,11 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
-      if directoryIds.length > 0
-        want = want and directoryIds.indexOf( torrent.get('contentDirectoryId') ) >= 0
+      if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
+        want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
 
       if directoryId?
-        want = want and torrent.get('contentDirectoryId') == directoryId
+        want = want and torrent.get('contentDirectory.id') == directoryId
 
       want
   ).property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
@@ -76,51 +78,38 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     title
   ).property('terms', 'mode', 'directory')
 
-  reload: ->
-    loaded = Cataract.Torrent.find(age: @get('age'))
-
-    # FIXME Emu does not give us promises
-    loaded.one 'didFinishLoading', =>
-      @notifyPropertyChange('unfilteredContent')
-
-    @set 'unfilteredContent', loaded
-
   didAddRunningTorrent: (torrent) ->
     @set('mode', 'running')
     @reload()
     @refreshTransfers()
     Cataract.Router.router.transitionTo 'torrent', torrent
 
-  didDeleteTorrent: (torrent) ->
-    list = @get('unfilteredContent')
-    list.removeObject( list.findProperty('id', torrent.get('id')) )
-
-
   refreshTransfers: ->
     list = @get('unfilteredContent')
     running = list.filterProperty('status', 'running').mapProperty('id')
-    primaryKey = Emu.Model.primaryKey(Cataract.Transfer)
-    store = Ember.get(Emu, "defaultStore")
-    serializer = store._adapter._serializer
-    existing = Cataract.get('transfers')
-    $.getJSON "/transfers?running=#{running.join(',')}", (data, textStatus, xhr) ->
+    store = @get('store')
+    existing = store.find
+    fetch = store.findQuery 'transfer', running: running.join(',')
+
+    fetch.then (transfers) ->
       # time as passed => recalculate
       running = list.filterProperty('status', 'running').mapProperty('id')
-      for update in data
-        id = update[primaryKey]
-        transfer = existing.findProperty('id', id) || Cataract.Transfer.createRecord(id: id)
-        serializer.deserializeModel(transfer, update, true) # update without making it dirty
+      transfers.forEach (transfer)->
+        id = transfer.get('id')
         if torrent = list.findProperty('id', id)
           torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
-          torrent.get('transfers').clear()
-          torrent.get('transfers').pushObject(transfer)
+          torrent.set('transfer', transfer)
         running.removeObject(id)
+
       # detect stopped torrents
       running.forEach (disap) ->
         if torrent = list.findProperty('id', disap)
           torrent.set 'status', 'archived'
+          torrent.set 'transfer', null
       Cataract.set 'online', true
       true
+    , (x,y)->
+      console?.debug 'could not fetch transfers:', x.responseText
 
   setAge: (age) ->
     @set 'age', age

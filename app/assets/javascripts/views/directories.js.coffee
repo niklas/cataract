@@ -20,3 +20,4 @@ Cataract.DirectoryNavItemView = Ember.View.extend
   tagName: 'li'
   classNameBindings: ":directory active exists:existing:missing".w()
   existsBinding: 'content.exists'
+  activeBinding: 'childViews.firstObject.active'

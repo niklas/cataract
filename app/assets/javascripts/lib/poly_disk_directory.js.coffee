@@ -2,20 +2,18 @@ slash = /\//
 
 SortedArray = Ember.ArrayProxy.extend Ember.SortableMixin,
   sortAscending: true
-  init: ->
-    @setProperties
-      content: Ember.A()
-    @_super()
+  content: Ember.computed ->
+    Ember.A()
+  .property()
 
 PolyDiskDirectory = Ember.Object.extend
   relativePath: ''
-  alternatives: null
-  children: null
-  init: ->
-    @_super()
-    @setProperties
-      alternatives: SortedArray.create(sortProperties: ['id'])
-      children: SortedArray.create(sortProperties: ['name'])
+  alternatives: Ember.computed ->
+    SortedArray.create(sortProperties: ['id'])
+  .property()
+  children: Ember.computed ->
+    SortedArray.create(sortProperties: ['name'])
+  .property()
 
   nameOnDisk: Ember.computed -> # last element of relativePath
     comps = @get('relativePath').split(slash)

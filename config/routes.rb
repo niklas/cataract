@@ -8,31 +8,15 @@ Cataract::Application.routes.draw do
     end
   end
 
-  resources :torrents do
-    resource :payload, only: [:show, :destroy], controller: :payload
-    resources :transfers, only: [:show, :create, :destroy], controller: :transfer
-    resources :moves, controller: :move, only: :create
-  end
+  resources :torrents
 
-  # Emu cannot DELETE nested resources yet
-  resources :transfers, only: [:index, :destroy], controller: :transfer
-  resources :moves, only: :index, controller: :move
-  resources :payloads, only: [:destroy], controller: :payload
-  resources :deletions, controller: :deletion, only:  [:update]
-  resources :moves, controller: :move, only: [:create, :index]
-
-
-  resources :disks do
-    resources :directories do
-      resources :detected_directories, only: :index
-    end
-    resources :detected_directories, only: :index
-  end
-
-  resources :directories do
-    resources :directories
-    resources :detected_directories, only: :index
-  end
+  # Ember-data cannot handle nested resources (yet?)
+  resources :transfers, only: [:create, :index, :destroy], controller: :transfer
+  resources :payloads, only: [:show, :destroy], controller: :payload
+  resources :moves, only: [:create, :index]
+  resources :detected_directories, only: :index
+  resources :disks
+  resources :directories
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 

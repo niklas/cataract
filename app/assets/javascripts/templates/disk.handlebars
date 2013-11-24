@@ -3,11 +3,12 @@
 
 {{#link-to 'new_directory' class="new"}}Create Directory{{/link-to}}
 
-{{#if hasDirectories}}
-{{view Cataract.DirectoriesTable contentBinding="directories" classNames="existing"}}
-{{/if}}
-
 {{#if hasDetectedDirs}}
 <h2>Detected</h2>
 {{view Cataract.DetectedDirectoriesTable contentBinding="detectedDirectories"}}
 {{/if}}
+
+{{#if hasDirectories}}
+{{view Cataract.DirectoriesTable contentBinding="directories" classNames="existing"}}
+{{/if}}
+

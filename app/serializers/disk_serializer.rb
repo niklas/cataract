@@ -1,5 +1,5 @@
 class DiskSerializer < BaseSerializer
-  attributes :id, :name
+  attributes :id, :name, :directory_ids
 
   def attributes
     super.tap do |a|

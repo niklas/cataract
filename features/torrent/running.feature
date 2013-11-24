@@ -18,12 +18,12 @@ Feature: Running torrents
       | title   |
       | Another |
       | One     |
-     And I should see "running torrents" within the window title
+     And the window title should include "running torrents"
      But I should not see "Two"
      And I should not see "Three"
 
     When I filter with "ne"
-    Then I should see "running torrents containing 'ne'" within the window title
+     And the window title should include "running torrents containing 'ne'"
     Then I should see the following torrents in the torrent list:
       | title   |
       | One     |

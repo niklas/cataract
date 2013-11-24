@@ -24,3 +24,15 @@ This version is not ready for production yet.
     rvm install -n xmlrpc64bit  ruby-1.9.3-p194 --patch config/deploy/patches/xmlrpclib-i8-support.patch
 
     this patch is planned for 2.0.0 http://bugs.ruby-lang.org/issues/3090
+
+
+== Interface
+
+= Sizes
+
+42MB : MMMM
+100MB : H
+600MB : HHHHH H
+1500MB - 1.5GB: GHHHH H
+5500MB - 5.5GB : GGGGG HHHHH
+23000MB - 23GB: UUGGG

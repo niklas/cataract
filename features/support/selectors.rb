@@ -33,7 +33,7 @@ module HtmlSelectorsHelpers
       "#sidebar > ul.directories"
 
     when /^the disks tab$/
-      '#content .tabbable .disks'
+      '.nav-tabs.disks'
 
     when /^the torrents? list$/
       "ul#torrents"
@@ -83,7 +83,7 @@ module HtmlSelectorsHelpers
 
     # TODO move to jquery_mobile
     when /^(?:a )?flash (notice|alert)$/
-      ".flash.alert-#{$1}"
+      ".flash.alert-#{$1} .message"
 
     when /^the (\w+)$/
       "##{$1}"

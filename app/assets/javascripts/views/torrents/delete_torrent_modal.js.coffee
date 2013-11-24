@@ -11,24 +11,17 @@ Cataract.TorrentConfirmDeletionView = Ember.View.extend
     {{/with}}
   """
 
-Cataract.DeleteTorrentModal = Bootstrap.ModalPane.extend
+Cataract.DeleteTorrentModal = Cataract.ModalPane.extend
   torrent: null
   heading: "Delete Torrent"
   bodyViewClass: Cataract.TorrentConfirmDeletionView
   primary: "Delete"
   secondary: "Keep"
-  showBackdrop: true
   deletePayload: true
-  callback: (opts) ->
-    if opts.primary
-      torrent = @get('torrent')
-      torrent = torrent.get('content') if torrent.isController
-      deletion = Cataract.Deletion.createRecord
-        id: torrent.get('id')
-        deletePayload: @get('deletePayload')
-      deletion.one 'didFinishSaving', ->
-        torrent.clear()
-        torrent.get('store').didDeleteRecord(torrent)
-        Cataract.get('torrentsController').didDeleteTorrent(torrent)
-      deletion.save()
-    true
+  ok: (opts) ->
+    torrent = @get('torrent')
+    if @get('deletePayload')
+      torrent.clearPayload()?.then =>
+        torrent.destroyRecord()
+    else
+      torrent.destroyRecord()

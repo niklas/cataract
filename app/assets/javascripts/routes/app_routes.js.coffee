@@ -1,115 +1,131 @@
 Cataract.Router.map ->
-  @resource 'filter', path: 'filter/:mode'
-  @resource 'torrent', path: 'torrent/:torrent_id'
-  @resource 'poly', path: 'poly/:poly_id', ->
-    @resource 'poly.directory', path: 'directory/:directory_id'
-  @route 'edit_directory', path: 'directory/:directory_id/edit'
+  @resource 'filter', path: 'filter/:status'
+  @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
+    @resource 'torrent', path: '/torrent/:torrent_id'
+    @resource 'directory', path: '/directory/:directory_id', ->
+      @route 'edit', path: '/edit'
+    @route 'add', path: '/add'
   @resource 'disk', path: 'disk/:disk_id'
-  @route 'add_torrent', path: 'add'
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
 
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
-    Cataract.set 'torrentsController', @controllerFor('torrents')
-    @controllerFor('settings').set    'model',  Cataract.Setting.find('all')
-    @controllerFor('transfers').set   'model', Cataract.Transfer.find()
-    @controllerFor('disks').set       'model', Cataract.Disk.find()
-    @controllerFor('moves').set       'model', Cataract.Move.find()
-    # load the most recent torrents, for faster initial page load
-    @controllerFor('torrents').reload()
+    # FIXME is this really needed with all the promises and needs?
+    store = @get('store')
+    @controllerFor('settings').set    'model',  store.find('setting', 'all')
+    @controllerFor('transfers').set   'model', store.findAll('transfer')
+    @controllerFor('disks').set       'model', store.findAll('disk')
+    @controllerFor('moves').set       'model', store.findAll('move')
 
 Cataract.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'filter', 'running'
+  redirect: -> @transitionTo 'torrents', queryParams: { age: 'month', status: 'running' }
 
 Cataract.FilterRoute = Ember.Route.extend
-  activate: ->
-    Cataract.set 'currentDirectory', null
-    Cataract.set 'currentDisk', null
+  beforeModel: (transition) ->
+    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.status }
 
-  model: (params) -> params.mode
-  setupController: (controller, model) ->
-    torrents = @controllerFor('torrents')
-    torrents.set('mode', model)
-    torrents.refreshTransfers()
-    @controllerFor('application').set('currentController', torrents)
-  deactivate: ->
-    torrents = @controllerFor('torrents')
-    torrents.set('mode', null)
+Cataract.TorrentsRoute = Ember.Route.extend
+  beforeModel: (queryParams)->
+    if Ember.isNone(queryParams.age)
+      queryParams.age = 'month'
+    if Ember.isNone(queryParams.status)
+      queryParams.status = 'recent'
 
-Cataract.PolyRoute = Ember.Route.extend
+
+  model: (params, queryParams, transition) ->
+    store = @get('store')
+
+    # warmup store only when age has changed
+    if queryParams.age != transition.params.queryParams?.age
+      store.unloadAll('torrent')
+      store.findQuery('torrent', age: queryParams.age)
+
+    # TODO should we filter&paginate here already or on the controller?
+    store.filter 'torrent', (torrent)->
+      # do not have to requery the server after deletion of torrent
+      ! torrent.get('isDeleted')
+
+  setupController: (controller, model, queryParams) ->
+    @setupDirectories(controller, queryParams)
+    controller.set 'unfilteredContent', model
+    controller.set('mode', queryParams.status)
+    controller.set('age', queryParams.age)
+    controller.gotoFirstPage()
+    controller.refreshTransfers()
+    @controllerFor('application').set('currentController', controller)
+
+  setupDirectories: (controller, queryParams)->
+    unless Ember.isNone(list=queryParams.directories)
+      ids = (i for i in list.split(','))
+      dirs = @controllerFor('directories')
+        .get('directories')
+        .filter (d)->
+          ids.indexOf(d.get('id')) >= 0
+      controller.set 'directories', dirs
+      if dirs.get('length') == 1
+        dir = dirs.get('firstObject')
+        @set 'singleDirectory', true
+        @controllerFor('directory').set('content', dir)
+      else
+        @set 'singleDirectory', false
+
+  renderTemplate: ->
+    @render 'torrents/tabs',
+      outlet: 'pre',
+      controller: @controllerFor('torrents')
+    @render 'torrents/navigation',
+      outlet: 'nav',
+      controller: @controllerFor('torrents')
+    if @get('singleDirectory')
+      @render 'directory',
+        controller: @controllerFor('directory')
+
+
+Cataract.DirectoryRoute = Ember.Route.extend
   model: (params) ->
-    Cataract.Directory.find(parseInt(i)) for i in params.poly_id.split(',')
-    # FIXME we want a promise here, filtering ctrl.directories by ids
-
-  serialize: (model) ->
-    { poly_id: model.mapProperty('id').join(',') }
-
+    @get('store').find 'directory', params.directory_id # FIXME ember should do this
   afterModel: (model)->
-    curr = Cataract.get('currentDirectories')
-    curr.clear()
-    curr.pushObjects(model)
-    if model.length == 1
-      @transitionTo 'poly.directory', model, model.get('firstObject')
-  deactivate: ->
-    Cataract.get('currentDirectories').clear()
-
-
-Cataract.PolyDirectoryRoute = Ember.Route.extend
-  model: (params) ->
-    Cataract.Directory.find params.directory_id # FIXME ember should do this
-  afterModel: (model)->
-    Cataract.set 'currentDirectory', model
-  deactivate: ->
-    Cataract.set 'currentDirectory', null
+    @controllerFor('torrents').set('directory', model)
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
-
-Cataract.DiskRoute = Ember.Route.extend
-  afterModel: (model) ->
-    Cataract.set 'currentDisk', model
+  deactivate: (model)->
+    @controllerFor('torrents').set('directory', null)
 
 Cataract.TorrentRoute = Ember.Route.extend
+  beforeModel: ->
+    @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
   model: (params) ->
-    Cataract.Torrent.find params.torrent_id # FIXME ember should do this
-  afterModel: (model) ->
-    model.loadPayload()
-    # Emu::Model.findQuery uses its own collection, resulting in two copies of
-    # the same Torrent. We replace it with the newly loaded one
-    torrents = @controllerFor('torrents').get('unfilteredContent')
-    torrents.one 'didFinishLoading', ->
-      copy = torrents.findProperty('id', model.get('id'))
-      torrents.pushObject(model)
-      torrents.removeObject(copy)
+    @get('store').find 'torrent', params.torrent_id
 
-Cataract.AddTorrentRoute = Ember.Route.extend
-  model: ->
-    Cataract.Torrent.createRecord()
+Cataract.TorrentsAddRoute = Ember.Route.extend
+  model: -> @get('store').createRecord('torrent')
   setupController: (controller, torrent) ->
-    controller.set 'content', torrent # Ember actually should do this for us
+    controller.set 'content', torrent
+    #@_super(controller, torrent)
     router = this
+    store = @get('store')
     controller.setDefaultDirectory()
-    # TODO transition route "back" (must remember last route?)
+
     Cataract.AddTorrentModal.popup
+      controller: controller
       torrent: torrent
-      directories: Cataract.Directory.find()
-      disks: Cataract.Disk.find()
-      callback: (opts) ->
-        if opts.primary
-          torrent.setProperties
-            fetchAutomatically: true
-            startAutomatically: true
-          torrent.one 'didFinishSaving', ->
-            router.controllerFor('torrents').didAddRunningTorrent(torrent)
-          torrent.save()
-        true
+      ok: (opts)->
+        record = @get('torrent')
+        record.setProperties
+          fetchAutomatically: true
+          startAutomatically: true
+        record.save()
+      cancel: (opts)->
+        @get('torrent').deleteRecord()
+      backRoute: ['torrent', torrent]
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
-    Cataract.Directory.createRecord
-      disk: Cataract.get('currentDisk')
-      parentDirectory: Cataract.get('currentDirectory')
+    @get('store').createRecord 'directory'
+      disk: @modelFor('disk')
+      parentDirectory: @controllerFor('torrents').get('directory')
       virtual: false
 
   setupController: (controller, model) ->
@@ -117,20 +133,20 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
     Cataract.NewDirectoryModal.popup
       directory: model
       directories: model.get('disk.directories')
-      disks: Cataract.Disk.find()
+      disks: @get('store').findAll('disk')
 
   renderTemplate: ->
 
-Cataract.EditDirectoryRoute = Ember.Route.extend
+Cataract.DirectoryEditRoute = Ember.Route.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
-    model.prepareUndo('filter', 'subscribed')
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
+      controller: controller
       directory: model
-      back: ['poly.directory', model.get('poly.alternatives'), model]
+      backRoute: ['directory.index', model]
 
 Cataract.SettingsRoute = Ember.Route.extend
   model: ->
-    Cataract.Setting.find('all')
+    @get('store').find('setting', 'all')

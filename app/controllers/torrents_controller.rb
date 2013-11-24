@@ -26,6 +26,15 @@ class TorrentsController < InheritedResources::Base
     create! { torrents_path }
   end
 
+  def destroy
+    resource.stop! if resource.stoppable?
+    destroy! do |success|
+      success.json do
+        render status: 204
+      end
+    end
+  end
+
   private
   def collection
     @torrents ||= begin
@@ -54,4 +63,10 @@ class TorrentsController < InheritedResources::Base
     end
     true
   end
+
+  def interpolation_options
+    { torrent: resource.title }
+  end
+
+
 end
