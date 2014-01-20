@@ -16,13 +16,9 @@ class Maulwurf
   end
 
   def process(start_url)
-    found = self.class.directives.find do |directive|
-      directive.responsible_for? start_url
-    end
-    if found
-      page = nose.get start_url
-      found.go page
-      binding.pry
+    nose.get start_url
+    while true do
+      dig
     end
   end
 
@@ -77,6 +73,21 @@ class Maulwurf
   def nose
     @nose ||= Mechanize.new.tap do |agent|
       agent.user_agent_alias = 'Mac Safari'
+    end
+  end
+
+  def dig
+    page = nose.page
+    uri = page.uri
+    found = self.class.directives.find do |directive|
+      # OPTIMIZE full routing on uri
+      directive.responsible_for? uri.to_s
+    end
+
+    if found
+      found.go page
+    else
+      raise "no directive found for #{uri}"
     end
   end
 
