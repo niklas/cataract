@@ -1,6 +1,10 @@
 require 'mechanize'
 
 class Maulwurf
+  autoload :Directive, 'maulwurf/directive'
+  autoload :Command, 'maulwurf/command'
+  autoload :FollowCommand, 'maulwurf/follow_command'
+
   class_attribute :directives
 
   def self.follow(*a)
@@ -22,40 +26,6 @@ class Maulwurf
     end
   end
 
-  class Command
-  end
-
-  class FollowCommand < Command
-    def initialize(link_name, options={})
-      @link_name = link_name
-      @options = options
-    end
-
-    def run(page)
-      if link = page.link_with( @options.merge(text: /#{@link_name}/) )
-        link.click
-      else
-        raise 'cannot find link'
-      end
-    end
-  end
-
-  class Directive
-    attr_reader :left
-    attr_reader :right
-    def initialize directions
-      @left = directions.keys.first
-      @right = directions.values.first
-    end
-
-    def responsible_for? something
-      @left === something
-    end
-
-    def go(*a)
-      @right.run(*a)
-    end
-  end
 
   class PageDirective < Directive
   end
