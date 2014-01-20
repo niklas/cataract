@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 require 'torrent_fetcher'
 
 describe TorrentFetcher do
