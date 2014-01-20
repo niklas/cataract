@@ -8,7 +8,9 @@ describe TorrentFetcher do
 
     it 'downloads torrent' do
       Torrent.should_receive :create!
-      subject.process(torrentz_eu)
+      VCR.use_cassette 'torrentz.eu_single' do
+        subject.process(torrentz_eu)
+      end
     end
   end
 

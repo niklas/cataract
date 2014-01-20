@@ -8,6 +8,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'fakefs/spec_helpers'
   require 'webmock/rspec'
+  require 'vcr'
 
   RSpec.configure do |config|
     include FactoryGirl::Syntax::Default
@@ -21,6 +22,13 @@ Spork.prefork do
     config.before(:suite) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.before(:suite) do
+      VCR.configure do |c|
+        c.cassette_library_dir = 'fixtures/vcr_cassettes'
+        c.hook_into :webmock # or :fakeweb
+      end
     end
 
     config.before(:each) do
