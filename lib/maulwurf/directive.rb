@@ -6,11 +6,7 @@ class Maulwurf::Directive
     @right = directions.values.first
   end
 
-  def responsible_for? something
+  def responsible_for? something, *a
     @left === something
-  end
-
-  def go(*a)
-    @right.run(*a)
   end
 end

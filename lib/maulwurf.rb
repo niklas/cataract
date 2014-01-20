@@ -7,6 +7,8 @@ class Maulwurf
 
   class_attribute :directives
 
+  class Done < Exception; end
+
   def self.follow(*a)
     FollowCommand.new(*a)
   end
@@ -24,6 +26,9 @@ class Maulwurf
     while true do
       dig
     end
+  rescue Done
+    # yeah.. FIXME
+    return true
   end
 
 
@@ -31,6 +36,10 @@ class Maulwurf
   end
 
   class FileDirective < Directive
+    # ignoring given (left) mime tipe
+    def responsible_for?(uri, page)
+      page.is_a? Mechanize::File
+    end
   end
 
   private
@@ -51,11 +60,17 @@ class Maulwurf
     uri = page.uri
     found = self.class.directives.find do |directive|
       # OPTIMIZE full routing on uri
-      directive.responsible_for? uri.to_s
+      directive.responsible_for? uri.to_s, page
     end
 
     if found
-      found.go page, nose
+      if found.right.respond_to?(:run)
+        found.right.run page, nose
+      elsif found.right.is_a?(Symbol)
+        public_send found.right, page, nose
+      else
+        found.right.call page, nose
+      end
     else
       raise "no directive found for #{uri}"
     end
