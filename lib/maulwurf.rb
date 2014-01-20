@@ -16,6 +16,12 @@ class Maulwurf
   end
 
   def process(start_url)
+    found = self.class.directives.find do |directive|
+      directive.responsible_for? start_url
+    end
+    if found
+      raise 'found'
+    end
   end
 
   class Command
@@ -29,9 +35,13 @@ class Maulwurf
   class Directive
     attr_reader :left
     attr_reader :right
-    def initialize(directions)
+    def initialize directions
       @left = directions.keys.first
       @right = directions.values.first
+    end
+
+    def responsible_for? something
+      @left === something
     end
   end
 

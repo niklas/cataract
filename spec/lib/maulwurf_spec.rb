@@ -22,5 +22,18 @@ describe Maulwurf do
       end
     end
   end
-
 end
+
+describe Maulwurf::Directive do
+  describe 'with left: ABC' do
+    subject { described_class.new(/ABC/ => nil) }
+    it 'is responsible for ABC' do
+      should be_responsible_for('ABC')
+    end
+
+    it 'is not responsible for BCA' do
+      should_not be_responsible_for('BCA')
+    end
+  end
+end
+
