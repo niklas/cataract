@@ -1,3 +1,5 @@
+require 'mechanize'
+
 class Maulwurf
   class_attribute :directives
 
@@ -44,6 +46,12 @@ class Maulwurf
   def self.inherited(child)
     super
     child.directives = []
+  end
+
+  def nose
+    @nose ||= Mechanize.new.tap do |agent|
+      agent.user_agent_alias = 'Mac Safari'
+    end
   end
 
 end

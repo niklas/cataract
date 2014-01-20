@@ -51,6 +51,8 @@ group :test do
 
   # for torrent_fetcher/maulwurf
   gem "vcr", "~> 2.8.0"
+  # for maulwurf
+  gem 'mechanize'
 end
 
 group :development, :test do
