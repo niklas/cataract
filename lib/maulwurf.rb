@@ -20,7 +20,9 @@ class Maulwurf
       directive.responsible_for? start_url
     end
     if found
-      raise 'found'
+      page = nose.get start_url
+      found.go page
+      binding.pry
     end
   end
 
@@ -29,6 +31,16 @@ class Maulwurf
 
   class FollowCommand < Command
     def initialize(link_name, options={})
+      @link_name = link_name
+      @options = options
+    end
+
+    def run(page)
+      if link = page.link_with( @options.merge(text: /#{@link_name}/) )
+        link.click
+      else
+        raise 'cannot find link'
+      end
     end
   end
 
@@ -42,6 +54,10 @@ class Maulwurf
 
     def responsible_for? something
       @left === something
+    end
+
+    def go(*a)
+      @right.run(*a)
     end
   end
 
