@@ -55,7 +55,7 @@ class Maulwurf
     end
 
     if found
-      found.go page
+      found.go page, nose
     else
       raise "no directive found for #{uri}"
     end
