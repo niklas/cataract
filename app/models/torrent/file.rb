@@ -9,6 +9,8 @@ class Torrent
 
   validates_presence_of :metainfo?, if: :filedata?
 
+  after_save :clear_filedata!
+
   class FileError < ActiveRecord::ActiveRecordError; end
   class FileNotFound < FileError; end
   class HasNoMetaInfo < FileError; end
@@ -35,6 +37,10 @@ class Torrent
 
   def filedata?
     filedata.present?
+  end
+
+  def clear_filedata!
+    @filedata = nil
   end
 
   before_validation :set_file_from_raw_data, if: lambda { |t| t.filedata? && t.filename.present? }
