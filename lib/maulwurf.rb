@@ -24,11 +24,19 @@ class Maulwurf
   def process(start_url)
     nose.get start_url
     while true do
-      dig
+      dig nose.page
     end
   rescue Done
     # yeah.. FIXME
     return true
+  end
+
+  def dig(page)
+    if found = find_directive(page)
+      process_page found.right, page
+    else
+      raise "no directive found for #{page.uri}"
+    end
   end
 
 
@@ -55,21 +63,6 @@ class Maulwurf
     end
   end
 
-  def dig
-    page = nose.page
-    uri = page.uri
-    found = self.class.directives.find do |directive|
-      # OPTIMIZE full routing on uri
-      directive.responsible_for? uri.to_s, page
-    end
-
-    if found
-      process_page found.right, page
-    else
-      raise "no directive found for #{uri}"
-    end
-  end
-
   def process_page(command, page)
     if command.respond_to?(:run)
       command.run page, nose
@@ -77,6 +70,14 @@ class Maulwurf
       public_send command, page, nose
     else
       command.call page, nose
+    end
+  end
+
+  def find_directive(page)
+    uri = page.uri.to_s
+    self.class.directives.find do |directive|
+      # OPTIMIZE full routing on uri
+      directive.responsible_for? uri, page
     end
   end
 

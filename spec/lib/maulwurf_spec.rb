@@ -22,6 +22,13 @@ describe Maulwurf do
       end
     end
   end
+
+  describe '#dig' do
+    it 'runs Command'
+    it 'calls own method by symbol'
+    it 'iterates through list of Commands'
+    it 'calls Command as fallback'
+  end
 end
 
 describe Maulwurf::Directive do
