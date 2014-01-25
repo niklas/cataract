@@ -10,9 +10,12 @@ class Maulwurf::FollowCommand < Maulwurf::Command
   end
 
   def run(page, agent)
+    links = page.search @options.fetch(:css) { 'a' }
+    if links.length == 1
+      agent.click links.first
+    end
     if @text.empty?
-      links = page.search @options.fetch(:css) { 'a' }
-      if title = @options.fetch(:title)
+      if title = @options[:title]
         links = links.select {|l| l[:title] == title }
       end
       unless links.empty?

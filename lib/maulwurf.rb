@@ -10,6 +10,7 @@ class Maulwurf
   class_attribute :directives
 
   class Done < Exception; end
+  class Stopped < Exception; end
 
   def self.follow(*a)
     FollowCommand.new(*a)
@@ -25,9 +26,10 @@ class Maulwurf
 
   def process(start_url)
     nose.get start_url
-    while true do
-      dig nose.page
+    while dig(nose.page) do
+      debug { "digging" }
     end
+    debug { "Fetching failed" }
   rescue Done
     # yeah.. FIXME
     return true
@@ -37,7 +39,7 @@ class Maulwurf
     if found = find_directive(page)
       process_page page, found.right
     else
-      raise "no directive found for #{page.uri}"
+      raise Stopped, "no directive found for #{page.uri}"
     end
   end
 

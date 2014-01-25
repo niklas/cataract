@@ -4,7 +4,12 @@ class TorrentFetcher < Maulwurf
     follow('kickass.to'),
     follow('rarbg.com'),
   ]
-  page %r~http://kickass.to/[^/]+.html~ => follow(css: '#mainDetailsTable .downloadButtonGroup a', title: 'Download torrent file')
+  page %r~http://kickass.to/[^/]+.html~ =>
+    follow(css: '#mainDetailsTable .downloadButtonGroup a', title: 'Download torrent file')
+
+  page %r~http://rarbg.com/torrent/~ =>
+    follow(css: 'table.lista td.lista a[href^="/download.php"]')
+
   file 'application/x-bittorrent' => :create_torrent
 
   def create_torrent(file, *a)
