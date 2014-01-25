@@ -64,15 +64,19 @@ class Maulwurf
     end
 
     if found
-      if found.right.respond_to?(:run)
-        found.right.run page, nose
-      elsif found.right.is_a?(Symbol)
-        public_send found.right, page, nose
-      else
-        found.right.call page, nose
-      end
+      process_page found.right, page
     else
       raise "no directive found for #{uri}"
+    end
+  end
+
+  def process_page(command, page)
+    if command.respond_to?(:run)
+      command.run page, nose
+    elsif command.is_a?(Symbol)
+      public_send command, page, nose
+    else
+      command.call page, nose
     end
   end
 
