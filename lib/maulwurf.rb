@@ -1,9 +1,11 @@
 require 'mechanize'
 
 class Maulwurf
-  autoload :Directive, 'maulwurf/directive'
-  autoload :Command, 'maulwurf/command'
-  autoload :FollowCommand, 'maulwurf/follow_command'
+  autoload :Directive     , 'maulwurf/directive'
+  autoload :PageDirective , 'maulwurf/page_directive'
+  autoload :FileDirective , 'maulwurf/file_directive'
+  autoload :Command       , 'maulwurf/command'
+  autoload :FollowCommand , 'maulwurf/follow_command'
 
   class_attribute :directives
 
@@ -40,16 +42,6 @@ class Maulwurf
   end
 
 
-  class PageDirective < Directive
-  end
-
-  class FileDirective < Directive
-    # ignoring given (left) mime tipe
-    def responsible_for?(uri, page)
-      page.is_a? Mechanize::File
-    end
-  end
-
   private
 
   def self.inherited(child)
@@ -79,10 +71,15 @@ class Maulwurf
 
   def find_directive(page)
     uri = page.uri.to_s
+    debug { "finding directive for #{uri}" }
     self.class.directives.find do |directive|
       # OPTIMIZE full routing on uri
       directive.responsible_for? uri, page
     end
+  end
+
+  def debug
+    STDERR.puts yield
   end
 
 end
