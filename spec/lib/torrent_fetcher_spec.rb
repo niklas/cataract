@@ -24,4 +24,7 @@ describe TorrentFetcher do
   it 'fetches directly from monova' do
     should fetch_torrent_from('http://www.monova.org/torrent/7456513/Time.Of.The.Wolf.2003.720p.BluRay.DTS.x264-PublicHD.html')
   end
+  it 'fetches directly from torrentreactor' do
+    should fetch_torrent_from('http://www.torrentreactor.net/torrents/10901325/Time-Of-The-Wolf-2003-720p-BluRay-DTS-x264-PublicHD')
+  end
 end
