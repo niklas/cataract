@@ -33,7 +33,7 @@ class Maulwurf
 
   def dig(page)
     if found = find_directive(page)
-      process_page found.right, page
+      process_page page, found.right
     else
       raise "no directive found for #{page.uri}"
     end
@@ -63,9 +63,12 @@ class Maulwurf
     end
   end
 
-  def process_page(command, page)
+  # TODO check result to avoid having to raise Done
+  def process_page(page, command)
     if command.respond_to?(:run)
       command.run page, nose
+    elsif command.respond_to?(:each)
+      command.each { |c| process_page page, c }
     elsif command.is_a?(Symbol)
       public_send command, page, nose
     else
