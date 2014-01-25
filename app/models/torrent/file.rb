@@ -7,6 +7,8 @@ class Torrent
   mount_uploader :file, TorrentUploader
   validates_length_of :file, minimum: 10.bytes, if: :path?
 
+  validates_presence_of :metainfo?, if: :filedata?
+
   class FileError < ActiveRecord::ActiveRecordError; end
   class FileNotFound < FileError; end
   class HasNoMetaInfo < FileError; end
@@ -22,20 +24,25 @@ class Torrent
 
   attr_reader :filedata
   def filedata=(data)
-    return if data.blank?
+    return if data.blank? && !data.nil?
     if data.starts_with?('data:')
       payload = data.split(',').last
       @filedata = Base64.decode64(payload).force_encoding("ASCII-8BIT")
+    else
+      @filedata = data
     end
   end
 
-  before_validation :set_file_from_raw_data, if: lambda { |t| t.filedata.present? && t.filename.present? }
+  def filedata?
+    filedata.present?
+  end
+
+  before_validation :set_file_from_raw_data, if: lambda { |t| t.filedata? && t.filename.present? }
 
   # filename and filedata must be present!
   def set_file_from_raw_data
     self.status = :archived
     self.file = ActionDispatch::Http::UploadedFile.new(filename: filename, tempfile: tempfile_for_filedata)
-    @filedata = nil
   end
 
   def tempfile_for_filedata

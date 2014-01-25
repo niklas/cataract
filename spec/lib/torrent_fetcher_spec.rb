@@ -6,9 +6,11 @@ describe TorrentFetcher do
   shared_examples :fetcher_successfully_creating_torrent do
     let(:cassette) { url.gsub(/\//,'_').gsub(/[^\w.]/,'') }
     it 'downloads and creates torrent' do
-      Torrent.should_receive :create!
       VCR.use_cassette cassette do
-        subject.process(url)
+        expect {
+          subject.process(url)
+        }.to change(Torrent, :count).by(1)
+        Torrent.first.should be_file_exist
       end
     end
   end
