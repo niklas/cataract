@@ -27,4 +27,7 @@ describe TorrentFetcher do
   it 'fetches directly from torrentreactor' do
     should fetch_torrent_from('http://www.torrentreactor.net/torrents/10901325/Time-Of-The-Wolf-2003-720p-BluRay-DTS-x264-PublicHD')
   end
+  it 'fetches directly from torrenthound.com' do
+    should fetch_torrent_from('http://www.torrenthound.com/hash/bc1d7bbd5fecac497730bd822181120a824e5d40/torrent-info/Time-Of-The-Wolf-2003-720p-BluRay-DTS-x264-PublicHD')
+  end
 end

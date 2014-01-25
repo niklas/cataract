@@ -5,6 +5,7 @@ class TorrentFetcher < Maulwurf
     follow('monova.org'),
     follow('rarbg.com'),
     follow('torrentreactor.net'),
+    follow('torrenthound.com'),
   ]
   page %r~http://kickass.to/[^/]+.html~ =>
     follow(css: '#mainDetailsTable .downloadButtonGroup a', title: 'Download torrent file')
@@ -17,6 +18,9 @@ class TorrentFetcher < Maulwurf
 
   page %r~http://www.torrentreactor.net/torrents/~ =>
     follow(css: 'a.thanks-page-link')
+
+  page %r~http://www.torrenthound.com/hash~ =>
+    follow(css: '#torrent a')
 
   file 'application/x-bittorrent' => :create_torrent
 
