@@ -55,10 +55,13 @@ describe Maulwurf do
     describe 'with list of commands' do
       let(:c1)      { double 'Command1' }
       let(:c2)      { double 'Command2' }
-      let(:command) { [c1,c2] }
+      let(:c3)      { double 'Command3' }
+      let(:command) { [c1,c2, c3] }
       it 'iterates through list as alternatives' do
-        c1.should_receive :run
-        c2.should_receive :call
+        c1.should_receive(:run).and_return(false)
+        c2.should_receive(:call).and_return(true)
+        c3.stub run: false
+        c3.should_not_receive(:run)
         subject.dig page
       end
     end

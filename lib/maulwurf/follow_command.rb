@@ -18,13 +18,13 @@ class Maulwurf::FollowCommand < Maulwurf::Command
       unless links.empty?
         agent.click links.first
       else
-        raise "cannot find link #{@options.inspect}"
+        false
       end
     else
       if link = page.link_with( @options.merge(text: /#{@text}/) )
         link.click
       else
-        raise "cannot find link with text: #{@text} (#{@options.inspect})"
+        false
       end
     end
   end

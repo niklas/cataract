@@ -1,6 +1,9 @@
 require 'maulwurf'
 class TorrentFetcher < Maulwurf
-  page %r~http://torrentz.eu/\w{40}~ => follow('kickass.to')
+  page %r~http://torrentz.eu/\w{40}~ => [
+    follow('kickass.to'),
+    follow('rarbg.com'),
+  ]
   page %r~http://kickass.to/[^/]+.html~ => follow(css: '#mainDetailsTable .downloadButtonGroup a', title: 'Download torrent file')
   file 'application/x-bittorrent' => :create_torrent
 

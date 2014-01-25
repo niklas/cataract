@@ -68,7 +68,8 @@ class Maulwurf
     if command.respond_to?(:run)
       command.run page, nose
     elsif command.respond_to?(:each)
-      command.each { |c| process_page page, c }
+      # stop on the first command being successful
+      command.find { |c| process_page page, c }
     elsif command.is_a?(Symbol)
       public_send command, page, nose
     else
