@@ -20,7 +20,7 @@ describe TorrentFetcher do
     it_should_behave_like :fetcher_successfully_creating_torrent
   end
 
-  describe 'torrentz.eu -> baymirror.com' do
+  describe 'torrentz.eu -> rarbg.com' do
     let(:url) { 'http://torrentz.eu/bba51ddc73dc1f3bceaaa8ca7796fabe1a1a7935' }
     it_should_behave_like :fetcher_successfully_creating_torrent
   end
