@@ -24,7 +24,7 @@ class Torrent
 
   attr_reader :filedata
   def filedata=(data)
-    return if data.blank? && !data.nil?
+    return @file_data = nil if data.blank?
     if data.starts_with?('data:')
       payload = data.split(',').last
       @filedata = Base64.decode64(payload).force_encoding("ASCII-8BIT")
