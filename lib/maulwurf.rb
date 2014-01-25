@@ -30,6 +30,10 @@ class Maulwurf
       debug { "digging" }
     end
     debug { "Fetching failed" }
+    if defined?(Rails) && Rails.env.test?
+      binding.pry
+    end
+    raise Stopped, "at #{nose.page.uri}"
   rescue Done
     # yeah.. FIXME
     return true
