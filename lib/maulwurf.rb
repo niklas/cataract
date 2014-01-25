@@ -24,13 +24,17 @@ class Maulwurf
     directives << FileDirective.new(*a)
   end
 
+  def initialize(opts={})
+    @debug = opts.fetch(:debug) { false }
+  end
+
   def process(start_url)
     nose.get start_url
     while dig(nose.page) do
       debug { "digging" }
     end
     debug { "Fetching failed" }
-    if defined?(Rails) && Rails.env.test?
+    if debug? && binding.respond_to?(:pry)
       binding.pry
     end
     raise Stopped, "at #{nose.page.uri}"
@@ -86,7 +90,11 @@ class Maulwurf
   end
 
   def debug
-    STDERR.puts yield
+    STDERR.puts(yield) if debug?
+  end
+
+  def debug?
+    @debug
   end
 
 end
