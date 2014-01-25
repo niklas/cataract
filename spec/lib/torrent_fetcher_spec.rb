@@ -3,15 +3,19 @@ require 'torrent_fetcher'
 
 describe TorrentFetcher do
 
-  describe 'for torrentz.eu' do
-    let(:torrentz_eu) { 'http://torrentz.eu/962fcfa03b061506e2e133ac4b5c8bc5151c4c6a' }
-
-    it 'downloads torrent' do
+  shared_examples :fetcher_successfully_creating_torrent do
+    let(:cassette) { url.gsub(/\//,'_').gsub(/[^\w.]/,'') }
+    it 'downloads and creates torrent' do
       Torrent.should_receive :create!
-      VCR.use_cassette 'torrentz.eu_single' do
-        subject.process(torrentz_eu)
+      VCR.use_cassette cassette do
+        subject.process(url)
       end
     end
+  end
+
+  describe 'torrentz.eu -> kickass.to' do
+    let(:url) { 'http://torrentz.eu/962fcfa03b061506e2e133ac4b5c8bc5151c4c6a' }
+    it_should_behave_like :fetcher_successfully_creating_torrent
   end
 
 end
