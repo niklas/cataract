@@ -30,7 +30,7 @@ describe Maulwurf do
   describe '#dig' do
     subject { described_class.new }
     let(:command) { double 'Commandable' }
-    let(:page)    { double 'Page' }
+    let(:page)    { double 'Page', uri: 'somewhere' }
     let(:directive) { double 'Directive', right: command }
     before :each do
       subject.stub find_directive: directive

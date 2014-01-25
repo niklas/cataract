@@ -63,6 +63,7 @@ class Maulwurf
 
   # TODO check result to avoid having to raise Done
   def process_page(page, command)
+    debug { "processing page #{page.uri}" }
     if command.respond_to?(:run)
       command.run page, nose
     elsif command.respond_to?(:each)

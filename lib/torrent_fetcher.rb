@@ -2,6 +2,7 @@ require 'maulwurf'
 class TorrentFetcher < Maulwurf
   page %r~http://torrentz.eu/\w{40}~ => [
     follow('kickass.to'),
+    follow('monova.org'),
     follow('rarbg.com'),
   ]
   page %r~http://kickass.to/[^/]+.html~ =>
@@ -9,6 +10,9 @@ class TorrentFetcher < Maulwurf
 
   page %r~http://rarbg.com/torrent/~ =>
     follow(css: 'table.lista td.lista a[href^="/download.php"]')
+
+  page %r~http://www.monova.org/torrent~ =>
+    follow(css: '#downloadbox a[alt="Download!"]')
 
   file 'application/x-bittorrent' => :create_torrent
 

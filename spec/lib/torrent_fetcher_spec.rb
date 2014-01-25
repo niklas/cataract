@@ -3,26 +3,25 @@ require 'torrent_fetcher'
 
 describe TorrentFetcher do
 
-  shared_examples :fetcher_successfully_creating_torrent do
-    let(:cassette) { url.gsub(/\//,'_').gsub(/[^\w.]/,'') }
-    it 'downloads and creates torrent' do
+  matcher :fetch_torrent_from do |url|
+    match do |fetcher|
+      cassette = url.gsub(/\//,'_').gsub(/[^\w.]/,'')
       VCR.use_cassette cassette do
         expect {
-          subject.process(url)
+          fetcher.process(url)
         }.to change(Torrent, :count).by(1)
-        Torrent.first.should be_file_exist
       end
+      Torrent.first.file_exists?
     end
   end
 
-  describe 'torrentz.eu -> kickass.to' do
-    let(:url) { 'http://torrentz.eu/962fcfa03b061506e2e133ac4b5c8bc5151c4c6a' }
-    it_should_behave_like :fetcher_successfully_creating_torrent
+  it 'fetches from torrentz.eu -> kickass.to' do
+    should fetch_torrent_from('http://torrentz.eu/962fcfa03b061506e2e133ac4b5c8bc5151c4c6a')
   end
-
-  describe 'torrentz.eu -> rarbg.com' do
-    let(:url) { 'http://torrentz.eu/bba51ddc73dc1f3bceaaa8ca7796fabe1a1a7935' }
-    it_should_behave_like :fetcher_successfully_creating_torrent
+  it 'fetches from torrentz.eu -> rarbg.com' do
+    should fetch_torrent_from('http://torrentz.eu/bba51ddc73dc1f3bceaaa8ca7796fabe1a1a7935')
   end
-
+  it 'fetches directly from monova' do
+    should fetch_torrent_from('http://www.monova.org/torrent/7456513/Time.Of.The.Wolf.2003.720p.BluRay.DTS.x264-PublicHD.html')
+  end
 end
