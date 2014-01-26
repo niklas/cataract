@@ -50,7 +50,7 @@
 
 
 <div id="middle">
-  <div id="content">
+    <div id="content" {{bind-attr class="detailsExtended:shrunk"}}>
     <div style="display: none;">breadcrumbs</div>
     {{outlet 'pre'}}
 
@@ -63,8 +63,10 @@
 
     </div>
   </div>
-  <div id="details">
-    {{view Cataract.DropZoneView}}
+  <div id="details" {{bind-attr class="detailsExtended:extended"}}>
+    <div class="well">
+      {{view Cataract.DropZoneView}}
+    </div>
 
     {{ outlet }}
   </div>

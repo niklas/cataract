@@ -1,7 +1,9 @@
 @media (min-width: 767px) {
 
   $golden_ratio: 1.618;
-  $middle_width: 100% - 100% / (1 + $golden_ratio);
+  $smaller_half: 100% / (1 + $golden_ratio);
+  $bigger_half: 100% - $smaller_half;
+  $minimized: 10%;
 
   body {
     margin: 0;
@@ -20,7 +22,7 @@
       top: $navbar_shift;
       bottom: 0;
       left: 0;
-      right: $middle_width;
+      right: $bigger_half;
       overflow-y: auto;
       z-index: -5;
     }
@@ -28,7 +30,7 @@
       top: $navbar_shift;
       bottom: 0;
       right: 0;
-      width: $middle_width;
+      width: $bigger_half;
       z-index: -5;
 
       #details, #content {
@@ -39,12 +41,20 @@
 
       #content {
         top: 0;
-        bottom: 50%;
+        bottom: $minimized;
+        transition: bottom 0.7s ease-in-out;
+        &.shrunk {
+          bottom: $smaller_half;
+        }
       }
 
       #details {
-        top: 50%;
+        top: 100% - $minimized;
         bottom: 0;
+        transition: top 0.7s ease-in-out;
+        &.extended {
+          top: $bigger_half;
+        }
       }
     }
   }

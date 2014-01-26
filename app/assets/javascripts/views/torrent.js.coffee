@@ -1,2 +1,2 @@
 Cataract.TorrentView = Ember.View.extend
-  classNames: ['well']
+  classNames: ['torrent']
