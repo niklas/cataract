@@ -44,7 +44,7 @@ class Torrent < ActiveRecord::Base
   end
 
   def self.since(date)
-    where 'created_at > ?', date
+    where 'updated_at > ?', date
   end
 
   def self.aged(n)
