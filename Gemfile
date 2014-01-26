@@ -78,7 +78,6 @@ group :production do
   gem 'therubyracer' # to compile our coffeescript
   gem 'unicorn'
 end
-gem "pg"
 
 gem 'acts_as_list'
 
