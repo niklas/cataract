@@ -159,8 +159,8 @@ class Torrent < ActiveRecord::Base
   end
 
   # TODO audit changes
-  def log(*)
-    Rails.logger.debug "disabled own logging"
+  def log(*a)
+    Rails.logger.debug { a }
   end
 
   concerned_with :states,

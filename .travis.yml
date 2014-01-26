@@ -12,9 +12,9 @@ before_install:
   - sudo chmod 1777 /dev/shm
   - ls -l /dev/shm
   - sudo apt-add-repository -y ppa:crass/libtorrent
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo apt-get update -qq
-  - sudo dpkg -i ./google-chrome*.deb
+#  - sudo dpkg -i ./google-chrome*.deb
   - sudo apt-get -qq install rtorrent screen chromium-browser mlocate
   - sudo apt-get -f install
   - sudo updatedb
@@ -23,9 +23,10 @@ before_script:
   - "cp config/database.yml{.travis,}"
   - "mkdir -p tmp/sockets"
   - "bundle exec rake db:migrate"
-  - "bundle exec chromedriver-update"
-script: "bundle exec rspec && bundle exec rake cucumber:ok"
+#- "bundle exec chromedriver-update"
+script:
+  - bundle exec rspec
+  - bundle exec rake cucumber:ok
 after_failure:
   - cat log/capybara_test.log
-  - cat log/test.log
   - cat log/rtorrent-test.log

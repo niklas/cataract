@@ -48,6 +48,11 @@ group :test do
   gem 'term-ansicolor' # for ScenarioTodo
 
   gem 'poltergeist'
+
+  # for torrent_fetcher/maulwurf
+  gem "vcr", "~> 2.8.0"
+  # for maulwurf
+  gem 'mechanize'
 end
 
 group :development, :test do
@@ -73,7 +78,6 @@ group :production do
   gem 'therubyracer' # to compile our coffeescript
   gem 'unicorn'
 end
-gem "pg"
 
 gem 'acts_as_list'
 
