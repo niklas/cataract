@@ -3,6 +3,7 @@ require 'maulwurf'
 describe Maulwurf do
 
   let(:klass) { Class.new(Maulwurf) }
+  subject { described_class.new }
 
       #expr = double 'Expr'
   describe 'setup' do
@@ -27,10 +28,18 @@ describe Maulwurf do
     it 'finds first directive matching the URI of the page [private]'
   end
 
+  describe '#message' do
+    it 'adds its content to #messages' do
+      expect {
+        subject.log "lol"
+      }.to change { subject.messages.count }.from(0).to(1)
+    end
+
+  end
+
   describe '#dig' do
-    subject { described_class.new }
     let(:command) { double 'Commandable' }
-    let(:page)    { double 'Page', uri: 'somewhere' }
+    let(:page)    { double 'Page', uri: double('URI', hostname: 'somewhere') }
     let(:directive) { double 'Directive', right: command }
     before :each do
       subject.stub find_directive: directive

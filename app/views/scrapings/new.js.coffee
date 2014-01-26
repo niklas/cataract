@@ -39,8 +39,8 @@ if jQuery
       url: url
     type: 'POST'
     dataType: 'json'
-  .done (results) ->
-    message r for r in results
+  .done (results,x,y) ->
+    message r for r in results.messages
     message $('<i>OK</i>').addClass('icon-ok').addClass('icon-white').attr('id', 'ok')
   .fail (results) ->
     message $('<i>not OK</i>').addClass('icon-bell').addClass('icon-white').attr('id', 'notok')

@@ -9,26 +9,38 @@ class Maulwurf::FollowCommand < Maulwurf::Command
     end
   end
 
-  def run(page, agent)
+  def run(maulwurf, agent)
+    page = agent.page
     links = page.search @options.fetch(:css) { 'a' }
     if links.length == 1
-      agent.click links.first
+      follow links.first, agent, maulwurf
     end
     if @text.empty?
       if title = @options[:title]
-        links = links.select {|l| l[:title] == title }
+        links = links.select {|l| title === l[:title] }
       end
       unless links.empty?
-        agent.click links.first
+        follow links.first, agent, maulwurf
       else
         false
       end
     else
       if link = page.link_with( @options.merge(text: /#{@text}/) )
-        link.click
+        follow link, agent, maulwurf
       else
         false
       end
     end
+  end
+
+  private
+
+  def follow(link, agent, maulwurf)
+    if @text.blank?
+      maulwurf.log "following #{@options.inspect}"
+    else
+      maulwurf.log "following '#{@text}'"
+    end
+    agent.click link
   end
 end
