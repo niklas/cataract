@@ -81,6 +81,14 @@ Cataract.TorrentsRoute = Ember.Route.extend
       @render 'directory',
         controller: @controllerFor('directory')
 
+Cataract.DetailedRoute = Ember.Route.extend
+  setupController: (controller, model)->
+    @_super(controller, model)
+    @controllerFor('application').set 'detailsExtended', true
+  deactivate: ->
+    @_super()
+    @controllerFor('application').set 'detailsExtended', false
+
 
 Cataract.DirectoryRoute = Ember.Route.extend
   model: (params) ->
@@ -93,16 +101,11 @@ Cataract.DirectoryRoute = Ember.Route.extend
   deactivate: (model)->
     @controllerFor('torrents').set('directory', null)
 
-Cataract.TorrentRoute = Ember.Route.extend
+Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   beforeModel: ->
     @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
   model: (params) ->
     @get('store').find 'torrent', params.torrent_id
-  setupController: (controller, model)->
-    @_super(controller, model)
-    @controllerFor('application').set 'detailsExtended', true
-  deactivate: ->
-    @controllerFor('application').set 'detailsExtended', false
 
 
 Cataract.TorrentsAddRoute = Ember.Route.extend
@@ -153,6 +156,6 @@ Cataract.DirectoryEditRoute = Ember.Route.extend
       directory: model
       backRoute: ['directory.index', model]
 
-Cataract.SettingsRoute = Ember.Route.extend
+Cataract.SettingsRoute = Cataract.DetailedRoute.extend
   model: ->
     @get('store').find('setting', 'all')
