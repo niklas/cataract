@@ -12,8 +12,10 @@
 
   .inflate {
     display: inline-block;
-    -webkit-transition: width 1s ease-in-out,
-                        height 1s ease-in-out;
+    height: 1em;
+    width: 1em;
+    transition: width 0.66s ease-in-out,
+                height 1s ease-in-out;
   }
 
   &.inviting, &.hovered {

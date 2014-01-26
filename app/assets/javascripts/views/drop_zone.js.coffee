@@ -42,14 +42,15 @@ Cataract.DropZoneView = Ember.View.extend
     e.preventDefault()
     @set 'hovered', false
 
-  docOver: (e) ->
+  docEnter: (e) ->
     e.preventDefault()
+    console?.debug 'docEnter'
     unless @get('inviting')
       @set 'inviting', true
     false
 
   docLeave: (e) ->
-    console.debug "leaving doc"
+    console?.debug "docLeave"
     @set 'inviting', false
 
 
@@ -57,14 +58,23 @@ Cataract.DropZoneView = Ember.View.extend
   didInsertElement: ->
     dropzone = this
     if @supportAjaxUploadProgressEvents() and not @isTouchDevice()
-      jQuery(document)  # I am too stupid for .apply
-        .bind('dragover', (e) -> dropzone.docOver(e) )
-        .bind('dragleave', (e) -> dropzone.docLeave(e) )
+      isOver = false
+      interval = undefined
+      $(document).on "dragover", (e) ->
+        e.preventDefault()
+        clearInterval interval
+        interval = setInterval(->
+          isOver = false
+          clearInterval interval
+          dropzone.docLeave(e)
+        , 1000)
+        unless isOver
+          isOver = true
+          dropzone.docEnter(e)
     else
       @set('visible', false)
 
   willDestroyElement: ->
     jQuery(document)
-      .unbind('dragover')
-      .unbind('dragleave')
+      .off('dragover')
 
