@@ -64,7 +64,9 @@
     </div>
   </div>
   <div id="details" {{bind-attr class="detailsExtended:extended"}}>
-    {{view Cataract.DropZoneView}}
+    <div class="well">
+      {{view Cataract.DropZoneView}}
+    </div>
 
     {{ outlet }}
   </div>
