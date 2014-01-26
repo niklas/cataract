@@ -78,8 +78,11 @@ Cataract.TorrentsRoute = Ember.Route.extend
       outlet: 'nav',
       controller: @controllerFor('torrents')
     if @get('singleDirectory')
+      @controllerFor('application').set 'detailsExtended', true
       @render 'directory',
         controller: @controllerFor('directory')
+    else
+      @controllerFor('application').set 'detailsExtended', false
 
 Cataract.DetailedRoute = Ember.Route.extend
   setupController: (controller, model)->
@@ -90,7 +93,8 @@ Cataract.DetailedRoute = Ember.Route.extend
     @controllerFor('application').set 'detailsExtended', false
 
 
-Cataract.DirectoryRoute = Ember.Route.extend
+# this is dead, isn't it?
+Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
   afterModel: (model)->
@@ -99,6 +103,7 @@ Cataract.DirectoryRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'directory'
   deactivate: (model)->
+    @_super()
     @controllerFor('torrents').set('directory', null)
 
 Cataract.TorrentRoute = Cataract.DetailedRoute.extend
@@ -146,15 +151,18 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
 
   renderTemplate: ->
 
-Cataract.DirectoryEditRoute = Ember.Route.extend
+Cataract.DirectoryEditRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
+    @_super()
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       controller: controller
       directory: model
       backRoute: ['directory.index', model]
+
+Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 
 Cataract.SettingsRoute = Cataract.DetailedRoute.extend
   model: ->
