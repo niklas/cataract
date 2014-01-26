@@ -58,7 +58,16 @@ Spork.prefork do
   ActionController::Base.allow_rescue = false
 
   require 'webmock/cucumber'
-  WebMock.disable_net_connect!(:allow_localhost => true)
+  VCR.configure do |c|
+    c.hook_into :webmock
+    c.cassette_library_dir = 'features/cassettes'
+    c.allow_http_connections_when_no_cassette = true
+    c.ignore_localhost = true # selenium
+  end
+
+  VCR.cucumber_tags do |t|
+    t.tag  '@vcr', use_scenario_name: true, record: :new_episodes
+  end
 end
 
 Spork.each_run do

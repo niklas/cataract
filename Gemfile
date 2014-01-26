@@ -44,12 +44,12 @@ group :test do
   gem 'launchy'
   gem 'chromedriver-helper'
 
-  gem 'webmock'
   gem 'term-ansicolor' # for ScenarioTodo
 
   gem 'poltergeist'
 
   # for torrent_fetcher/maulwurf
+  gem 'webmock', require: false
   gem "vcr", "~> 2.8.0"
   # for maulwurf
   gem 'mechanize'
