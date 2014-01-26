@@ -77,6 +77,18 @@
           float: left;
           margin: 5px 0;
         }
+        .alert {
+          // must fit into bar. Maybe resize on hover?
+          float: left;
+          overflow: hidden;
+          width: 1em;
+          height: 1em;
+          padding: 0.5em;
+          margin-bottom: 0;
+          position: relative;
+          top: -14px; // WTF
+          white-space: nowrap;
+        }
       }
 
       #details {

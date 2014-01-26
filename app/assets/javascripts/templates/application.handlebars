@@ -40,12 +40,6 @@
 
 <div id="sidebar">
   {{ render 'directories' }}
-
-  {{#unless Cataract.online}}
-  <br />
-  <div class="alert alert-error">{{Cataract.offlineReason}}</div>
-  {{/unless}}
-
 </div>
 
 
@@ -63,6 +57,10 @@
 
   <div id="bar" class="well" {{bind-attr class="detailsExtended:up"}}>
     {{outlet 'bar'}}
+    {{#unless Cataract.online}}
+    <br />
+    <div class="alert alert-error">{{Cataract.offlineReason}}</div>
+    {{/unless}}
     {{view Cataract.DropZoneView}}
   </div>
 
