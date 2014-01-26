@@ -24,7 +24,9 @@ before_script:
   - "mkdir -p tmp/sockets"
   - "bundle exec rake db:migrate"
 #- "bundle exec chromedriver-update"
-script: "bundle exec rspec && bundle exec rake cucumber:ok"
+script:
+  - bundle exec rspec
+  - bundle exec rake cucumber:ok
 after_failure:
   - cat log/capybara_test.log
   - cat log/test.log
