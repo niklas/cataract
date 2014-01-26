@@ -32,12 +32,18 @@ ul.torrents {
     padding: 0.5em;
     margin-bottom: 0.8em;
     @include border-radius(4px);
-    @include box-shadow(lighten($bodyBackground, 15) 1px 1px 3px);
+    @include box-shadow(lighten($bodyBackground, 15) 0px 0px 3px);
     position: relative;
     cursor: pointer;
 
+    @media (min-width: 767px) {
+      width: 45%;
+      float: left;
+      margin-left: 1%;
+    }
+
     &:hover, &.active {
-      @include box-shadow(lighten($bodyBackground, 25) 1px-$emboss 1px 3px);
+      @include box-shadow(lighten($bodyBackground, 25) 1px-$emboss 1px 9px);
       @include translate($emboss, -$emboss);
     }
 
@@ -45,6 +51,9 @@ ul.torrents {
       overflow: hidden;
       margin-bottom: $baseFontSize * 0.1;
       margin-top: $baseFontSize * 0.1;
+      font-size: 1em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       .active {
         color: lighten($linkColor, 30);

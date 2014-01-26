@@ -78,11 +78,23 @@ Cataract.TorrentsRoute = Ember.Route.extend
       outlet: 'nav',
       controller: @controllerFor('torrents')
     if @get('singleDirectory')
+      @controllerFor('application').set 'detailsExtended', true
       @render 'directory',
         controller: @controllerFor('directory')
+    else
+      @controllerFor('application').set 'detailsExtended', false
+
+Cataract.DetailedRoute = Ember.Route.extend
+  setupController: (controller, model)->
+    @_super(controller, model)
+    @controllerFor('application').set 'detailsExtended', true
+  deactivate: ->
+    @_super()
+    @controllerFor('application').set 'detailsExtended', false
 
 
-Cataract.DirectoryRoute = Ember.Route.extend
+# this is dead, isn't it?
+Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
   afterModel: (model)->
@@ -91,18 +103,14 @@ Cataract.DirectoryRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'directory'
   deactivate: (model)->
+    @_super()
     @controllerFor('torrents').set('directory', null)
 
-Cataract.TorrentRoute = Ember.Route.extend
+Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   beforeModel: ->
     @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
   model: (params) ->
     @get('store').find 'torrent', params.torrent_id
-  setupController: (controller, model)->
-    @_super(controller, model)
-    @controllerFor('application').set 'detailsExtended', true
-  deactivate: ->
-    @controllerFor('application').set 'detailsExtended', false
 
 
 Cataract.TorrentsAddRoute = Ember.Route.extend
@@ -143,16 +151,19 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
 
   renderTemplate: ->
 
-Cataract.DirectoryEditRoute = Ember.Route.extend
+Cataract.DirectoryEditRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
+    @_super()
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       controller: controller
       directory: model
       backRoute: ['directory.index', model]
 
-Cataract.SettingsRoute = Ember.Route.extend
+Cataract.DiskRoute = Cataract.DetailedRoute.extend()
+
+Cataract.SettingsRoute = Cataract.DetailedRoute.extend
   model: ->
     @get('store').find('setting', 'all')
