@@ -4,6 +4,7 @@
   $smaller_half: 100% / (1 + $golden_ratio);
   $bigger_half: 100% - $smaller_half;
   $minimized: 10%;
+  $barheight: 3em;
 
   body {
     margin: 0;
@@ -43,14 +44,39 @@
         top: 0;
         bottom: $minimized;
         transition: bottom 0.7s ease-in-out;
+        padding-bottom: 0.7 * $barheight;
         &.shrunk {
           bottom: $smaller_half;
+        }
+      }
+
+      #bar {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        left: 0;
+        height: $barheight;
+        transition: bottom 0.7s ease-in-out;
+        bottom: 0;
+        padding: 1px; // well adds too much
+        margin-bottom: -2px;
+        &.up {
+          bottom: $smaller_half;
+        }
+        .nav {
+          float: left;
+          margin-bottom: 0;
+        }
+        .pagination {
+          float: left;
+          margin: 5px 0;
         }
       }
 
       #details {
         top: 100% - $minimized;
         bottom: 0;
+        padding-top: 0.7 * $barheight;
         transition: top 0.7s ease-in-out;
         &.extended {
           top: $bigger_half;

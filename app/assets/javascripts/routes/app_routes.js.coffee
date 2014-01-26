@@ -72,7 +72,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
 
   renderTemplate: ->
     @render 'torrents/tabs',
-      outlet: 'pre',
+      outlet: 'bar',
       controller: @controllerFor('torrents')
     @render 'torrents/navigation',
       outlet: 'nav',
@@ -98,7 +98,8 @@ Cataract.TorrentRoute = Ember.Route.extend
     @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
   model: (params) ->
     @get('store').find 'torrent', params.torrent_id
-  activate: ->
+  setupController: (controller, model)->
+    @_super(controller, model)
     @controllerFor('application').set 'detailsExtended', true
   deactivate: ->
     @controllerFor('application').set 'detailsExtended', false

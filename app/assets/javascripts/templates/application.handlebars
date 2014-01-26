@@ -50,24 +50,23 @@
 
 
 <div id="middle">
-    <div id="content" {{bind-attr class="detailsExtended:shrunk"}}>
-    <div style="display: none;">breadcrumbs</div>
-    {{outlet 'pre'}}
 
+  <div id="content" {{bind-attr class="detailsExtended:shrunk"}}>
     <div class="tabbable">
       <div class="tab-content">
         <div class="tab-pane active">
           {{ render "torrents" }}
         </div>
       </div>
-
     </div>
   </div>
-  <div id="details" {{bind-attr class="detailsExtended:extended"}}>
-    <div class="well">
-      {{view Cataract.DropZoneView}}
-    </div>
 
+  <div id="bar" class="well" {{bind-attr class="detailsExtended:up"}}>
+    {{outlet 'bar'}}
+    {{view Cataract.DropZoneView}}
+  </div>
+
+  <div id="details" {{bind-attr class="detailsExtended:extended"}}>
     {{ outlet }}
   </div>
 </div>
