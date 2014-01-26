@@ -15,7 +15,10 @@ class SettingsController < InheritedResources::Base
 
   def resource_params
     super.tap do |prms|
-      prms.first.delete(:id)
+      prms.first.tap do |given|
+        given.delete(:id)
+        given.delete(:bookmark_link) # every attr DS wants to write, too
+      end
     end
   end
 end
