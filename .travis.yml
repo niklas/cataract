@@ -12,9 +12,9 @@ before_install:
   - sudo chmod 1777 /dev/shm
   - ls -l /dev/shm
   - sudo apt-add-repository -y ppa:crass/libtorrent
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo apt-get update -qq
-  - sudo dpkg -i ./google-chrome*.deb
+#  - sudo dpkg -i ./google-chrome*.deb
   - sudo apt-get -qq install rtorrent screen chromium-browser mlocate
   - sudo apt-get -f install
   - sudo updatedb
