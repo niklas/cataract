@@ -155,7 +155,7 @@ Cataract.DirectoryEditRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @modelFor 'directory'
   setupController: (controller, model) ->
-    @_super()
+    @_super(controller, model)
     # TODO transition route back
     Cataract.EditDirectoryModal.popup
       controller: controller
