@@ -160,7 +160,7 @@ Cataract.DirectoryEditRoute = Cataract.DetailedRoute.extend
     Cataract.EditDirectoryModal.popup
       controller: controller
       directory: model
-      backRoute: ['directory.index', model]
+      done: -> history.back(-1)
 
 Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 
