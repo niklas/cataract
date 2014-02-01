@@ -1,0 +1,94 @@
+@mixin nize_cut_corner($stretch, $color) {
+  background: $color;
+  background:
+    radial-gradient(circle at 0 0, transparent $stretch, $color 0),
+    radial-gradient(circle at 100% 0, transparent $stretch, $color 0),
+    radial-gradient(circle at 100% 100%, transparent $stretch, $color 0),
+    radial-gradient(circle at 0 100%, transparent $stretch, $color 0);
+  background-position: top left, top right,
+                 bottom right, bottom left;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+@mixin nize_square_size($width) {
+  width: $width;
+  height: $width;
+}
+
+@mixin nize($width, $color) {
+  $each_width: $width / 3;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: $width;
+  height: $width;
+  overflow: hidden;
+
+  li {
+    margin: 0;
+    padding: 0;
+    width: $each_width;
+    height: $each_width;
+    float: left;
+
+    &:nth(3n) {
+      clear: left;
+    }
+
+    &.t1 {
+      // 1MiB point
+      background-color: $color;
+      border-radius: 50%;
+      @include nize_square_size(0.1 * $each_width);
+      margin: 0.45 * $each_width;
+    }
+    &.t2 {
+      // 10MiB line
+      background-color: $color;
+      border-radius: 50% / 6%;
+      width: 0.1 * $each_width;
+      margin-right: 0.45 * $each_width;
+      margin-left: 0.45 * $each_width;
+    }
+    &.t3 {
+      // 100Mib circle-line
+      background-color: transparent;
+      border-radius: 50%;
+      border-width: 0.1 * $each_width;
+      border-color: $color;
+      border-style: solid;
+      @include nize_square_size(0.6 * $each_width);
+      margin: 0.1 * $each_width;
+    }
+    &.t4 {
+      // 1GiB full circle
+      background-color: $color;
+      border-radius: 50%;
+      @include nize_square_size(0.8 * $each_width);
+      margin: 0.1 * $each_width;
+    }
+    &.t5 {
+      // 10 GiB
+      // stretched circle
+      border-radius: 35%;
+      @include nize_cut_corner( 0.2 * $each_width, $color );
+    }
+    &.t6 {
+      // 100GiB
+      // Diamond
+      border-radius: 35%;
+      @include nize_cut_corner( 0.5 * $each_width, $color );
+    }
+    &.t7 {
+      // 1TiB
+      // ? earth <= terra
+      border-radius: 50%;
+      @include nize_cut_corner( 0.35 * $each_width, $color );
+      @include nize_square_size(0.8 * $each_width);
+      border-width: 0.1 * $each_width;
+      border-style: solid;
+      border-color: $color;
+    }
+  }
+}

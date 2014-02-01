@@ -4,6 +4,10 @@
   {{/link-to}}
 </h4>
 
+{{#if view.content.payloadExists}}
+  {{view Cataract.Nize value=view.content.payloadKiloBytes}}
+{{/if}}
+
 {{#if Cataract.online}}
   {{#if view.content.isRunning}}
     {{view Cataract.TransferView contentBinding="view.content.transfer"}}
