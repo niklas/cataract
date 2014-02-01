@@ -27,6 +27,7 @@ body {
 @import "radio_buttons";
 @import "panes";
 @import "flash";
+@import "nize";
 
 body {
   background: #141619; /* gradient is too slow for position: fixed scrolling*/
@@ -70,4 +71,10 @@ table.directories {
 .alert {
   margin-left: 1em;
   margin-right: 1em;
+}
+
+li.torrent ul.nize {
+  @include nize(2.7em, #6F847D);
+  float: left;
+  margin-right: 0.7em;
 }
