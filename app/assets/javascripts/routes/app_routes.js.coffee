@@ -2,8 +2,7 @@ Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
   @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
     @resource 'torrent', path: '/torrent/:torrent_id'
-    @resource 'directory', path: '/directory/:directory_id', ->
-      @route 'edit', path: '/edit'
+    @resource 'directory', path: '/directory/:directory_id'
     @route 'add', path: '/add'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'new_directory', path: 'directory/new'
@@ -17,6 +16,11 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('transfers').set   'model', store.findAll('transfer')
     @controllerFor('disks').set       'model', store.findAll('disk')
     @controllerFor('moves').set       'model', store.findAll('move')
+  actions:
+    save: (model)->
+      model.save()
+    rollback: (model)->
+      model.rollback()
 
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'torrents', queryParams: { age: 'month', status: 'running' }
@@ -94,7 +98,7 @@ Cataract.DetailedRoute = Ember.Route.extend
     @controllerFor('application').set 'detailsExtended', false
 
 
-# this is dead, isn't it?
+# TODO have to think about these routes vs queryParams
 Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
@@ -151,17 +155,6 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
       disks: @get('store').findAll('disk')
 
   renderTemplate: ->
-
-Cataract.DirectoryEditRoute = Cataract.DetailedRoute.extend
-  model: (params) ->
-    @modelFor 'directory'
-  setupController: (controller, model) ->
-    @_super(controller, model)
-    # TODO transition route back
-    Cataract.EditDirectoryModal.popup
-      controller: controller
-      directory: model
-      done: -> history.back(-1)
 
 Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 
