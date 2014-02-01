@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div id="bar" class="well" {{bind-attr class="detailsExtended:up"}}>
+  <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
     {{outlet 'bar'}}
     {{#unless Cataract.online}}
     <br />

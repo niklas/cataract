@@ -44,12 +44,12 @@ group :test do
   gem 'launchy'
   gem 'chromedriver-helper'
 
-  gem 'webmock'
   gem 'term-ansicolor' # for ScenarioTodo
 
   gem 'poltergeist'
 
   # for torrent_fetcher/maulwurf
+  gem 'webmock', require: false
   gem "vcr", "~> 2.8.0"
   # for maulwurf
   gem 'mechanize'
@@ -118,3 +118,5 @@ gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'
+
+gem "rails-bookmarklet", :git => "https://github.com/oliverfriedmann/rails-bookmarklet.git"

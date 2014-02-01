@@ -46,6 +46,12 @@ GIT
     active_model_serializers (0.8.1)
       activemodel (>= 3.2)
 
+GIT
+  remote: https://github.com/oliverfriedmann/rails-bookmarklet.git
+  revision: fd827ac8e6102e0d8a3468943a096a956039085a
+  specs:
+    rails-bookmarklet (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -472,6 +478,7 @@ DEPENDENCIES
   pry-nav
   pry-stack_explorer
   rails (~> 3.2.12)
+  rails-bookmarklet!
   rails-develotest
   rake
   rb-inotify (~> 0.8.8)

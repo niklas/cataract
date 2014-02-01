@@ -12,6 +12,8 @@ class Maulwurf
   class Done < Exception; end
   class Stopped < Exception; end
 
+  attr_reader :messages
+
   def self.follow(*a)
     FollowCommand.new(*a)
   end
@@ -25,7 +27,8 @@ class Maulwurf
   end
 
   def initialize(opts={})
-    @debug = opts.fetch(:debug) { false }
+    @messages = []
+    @debug    = opts.fetch(:debug) { false }
   end
 
   def process(start_url)
@@ -33,11 +36,8 @@ class Maulwurf
     while dig(nose.page) do
       debug { "digging" }
     end
-    debug { "Fetching failed" }
-    if debug? && binding.respond_to?(:pry)
-      binding.pry
-    end
-    raise Stopped, "at #{nose.page.uri}"
+    log "Fetching failed on '#{nose.page.uri}'"
+    return false
   rescue Done
     # yeah.. FIXME
     return true
@@ -51,6 +51,10 @@ class Maulwurf
     end
   end
 
+  def log(message)
+    debug { message }
+    messages << message
+  end
 
   private
 
@@ -67,16 +71,16 @@ class Maulwurf
 
   # TODO check result to avoid having to raise Done
   def process_page(page, command)
-    debug { "processing page #{page.uri}" }
+    log "processing #{page.uri.hostname}"
     if command.respond_to?(:run)
-      command.run page, nose
+      command.run self, nose
     elsif command.respond_to?(:each)
       # stop on the first command being successful
       command.find { |c| process_page page, c }
     elsif command.is_a?(Symbol)
       public_send command, page, nose
     else
-      command.call page, nose
+      command.call self, nose
     end
   end
 

@@ -26,6 +26,9 @@ module NavigationHelpers
     when /^the (\w+) page (?:of|for) #{capture_model}$/
       polymorphic_path [model!($2), $1]
 
+    when /^the torrentz.eu page for (Frankenstein 1931)$/
+      'http://torrentz.eu/dcc5fba0c3bbb3fc155df8e96736e6e5bc207287'
+
     when /^the page (?:of|for) #{capture_model}$/
       case m = model!($1)
       when Torrent
