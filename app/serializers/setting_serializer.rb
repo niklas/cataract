@@ -6,7 +6,7 @@ class SettingSerializer < BaseSerializer
   def attributes
     super.tap do |hash|
       hash['id'] = 'all'
-      hash['bookmark_link'] = link_to_bookmarklet "Bookmarklet", new_scraping_url(format: 'js')
+      hash['bookmark_link'] = link_to_bookmarklet "Bookmarklet", new_scraping_url(format: 'js'), class: 'label'
     end
   end
 
@@ -17,6 +17,6 @@ class SettingSerializer < BaseSerializer
       token: current_user.remember_token
     }
     js = RailsBookmarklet::compile_invocation_script(url, opts)
-    content_tag :a, title, opts.merge(href: js)
+    content_tag :a, title, opts.merge(href: js).merge(link_opts)
   end
 end
