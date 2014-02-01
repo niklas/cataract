@@ -51,8 +51,6 @@ group :test do
   # for torrent_fetcher/maulwurf
   gem 'webmock', require: false
   gem "vcr", "~> 2.8.0"
-  # for maulwurf
-  gem 'mechanize'
 end
 
 group :development, :test do
@@ -120,3 +118,7 @@ gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'
 
 gem "rails-bookmarklet", :git => "https://github.com/oliverfriedmann/rails-bookmarklet.git"
+
+# for maulwurf
+gem 'mechanize'
+
