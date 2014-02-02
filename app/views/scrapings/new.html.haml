@@ -28,7 +28,7 @@
       message $('<i>OK</i>').addClass('icon-ok').addClass('icon-white').attr('id', 'ok')
     .fail (results) ->
       message $('<i>not OK</i>').addClass('icon-bell').addClass('icon-white').attr('id', 'notok')
-      message r for r in results
+      message r for r in JSON.parse(results.responseText).messages
 
 
   else
