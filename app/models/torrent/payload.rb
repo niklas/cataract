@@ -5,6 +5,7 @@ class Torrent
   before_validation :ensure_content_directory
 
   attr_accessor :payload_id # for ember-data
+  attr_writer   :payload_kilo_bytes # for ember-data
 
   class TorrentContentError < Exception; end
   class ContentDirectoryMissing < Exception; end
