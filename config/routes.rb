@@ -18,7 +18,11 @@ Cataract::Application.routes.draw do
   resources :disks
   resources :directories
 
-  resource :scraping, only: [:new, :create]
+  resource :scraping, only: [:new, :create] do
+    member do
+      get :open
+    end
+  end
 
   devise_for :users, :controllers => { :registrations => "user::registrations" }
 

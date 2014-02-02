@@ -7,6 +7,6 @@ When /^I use the scraping bookmarklet on (.+)$/ do |page_name|
 
   page.execute_script <<-EOJS
     document.test_location = '#{location}';
-    #{x.script_for_bookmarklet(new_scraping_url(format: 'js'))}
+    #{x.script_for_bookmarklet(open_scraping_url(format: 'js'))}
   EOJS
 end

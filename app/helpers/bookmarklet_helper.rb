@@ -1,6 +1,6 @@
 module BookmarkletHelper
   def link_to_scrape_bookmarklet(title="Bookmarklet", opts={})
-    link_to_bookmarklet title, new_scraping_url(format: 'js'), opts
+    link_to_bookmarklet title, open_scraping_url(format: 'js'), opts
   end
 
   def link_to_bookmarklet(title, url, link_opts={})
