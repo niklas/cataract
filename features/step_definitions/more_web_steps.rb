@@ -79,5 +79,11 @@ When /^I open the settings menu$/ do
       And I follow "leecher@localhost.local"
       And I follow "Settings"
   EOSTEPS
+end
 
+When /^(.*) in frame "([^"]+)"$/ do |inner, frame_id|
+  page.should have_css("iframe##{frame_id}") # wait for it...
+  within_frame frame_id do
+    step inner
+  end
 end

@@ -8,12 +8,13 @@ module BookmarkletHelper
     content_tag :a, title, link_opts.merge(href: js)
   end
 
-  def script_for_bookmarklet(url, error_message=nil)
-    raise "url must be absolute" unless url.starts_with?('http')
+  def script_for_bookmarklet(url, error_message=nil, opts={})
+    #raise "url must be absolute" unless url.starts_with?('http')
+    field = opts.delete(:location_attribute) { 'location' }
     opts = {
       error_message: error_message.presence || "Could not reach #{url}",
       params: {
-        "url" => "'+encodeURI(d.location)+'"
+        "url" => "'+encodeURI(d.#{field})+'"
       }
     }
     RailsBookmarklet::compile_invocation_script(url, opts)
