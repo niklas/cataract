@@ -1,0 +1,7 @@
+!!!5
+%html
+  - content_for :head do
+    = javascript_include_tag 'bookmarklet'
+  = render 'layouts/head'
+  %body
+    = yield

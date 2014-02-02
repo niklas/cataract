@@ -41,6 +41,9 @@ class Maulwurf
   rescue Done
     # yeah.. FIXME
     return true
+  rescue Stopped => e
+    log e.message
+    return false
   end
 
   def dig(page)

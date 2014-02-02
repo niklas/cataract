@@ -1,0 +1,14 @@
+:scss
+  #cataract_new_scraping {
+    position: absolute;
+    top: 23px;
+    left: 23px;
+    background-color: #141619;
+    color: #D7EEEE;
+    padding: 10px;
+    border: 2px solid #0099CC;
+  }
+%iframe#cataract_new_scraping{src: new_scraping_url(url: @url), name: 'Cataract'}
+:coffee
+  c = document.getElementById('new_scraping_container')
+  c.setAttribute('style', '')

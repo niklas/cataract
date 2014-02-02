@@ -1,0 +1,35 @@
+-# This will be included in an iframe on the page where the bookmarklet was clicked
+#cataract_new_scraping
+:coffee
+  id = 'cataract_new_scraping'
+  url = '#{j @url}'
+
+  if jQuery
+    $ = jQuery
+
+    $box = $('#' + id)
+
+    message = (html) ->
+      $('<div></div>')
+        .html(html)
+        .appendTo($box)
+
+    message '<h3>Cataract</h3>'
+
+    message "Scraping <i>#{h @url}</i>..."
+
+    $.ajax '#{scraping_url}'
+      data:
+        url: url
+      type: 'POST'
+      dataType: 'json'
+    .done (results,x,y) ->
+      message r for r in results.messages
+      message $('<i>OK</i>').addClass('icon-ok').addClass('icon-white').attr('id', 'ok')
+    .fail (results) ->
+      message $('<i>not OK</i>').addClass('icon-bell').addClass('icon-white').attr('id', 'notok')
+      message r for r in JSON.parse(results.responseText).messages
+
+
+  else
+    alert "could not find jQuery on this site"

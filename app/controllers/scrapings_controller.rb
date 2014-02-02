@@ -1,6 +1,14 @@
 require_dependency 'torrent_fetcher'
 class ScrapingsController < ApplicationController
+  include RailsBookmarklet
+  def open
+    @url = params[:url]
+    render_bookmarklet 'new_scraping', 'open'
+  end
+
   def new
+    @url = params[:url]
+    render 'new', layout: 'bookmarklet'
   end
 
   def create
