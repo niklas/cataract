@@ -2,6 +2,7 @@ set :repository,  "git://github.com/niklas/cataract.git"
 
 set :upstart_dir, "/home/#{user}/.init"
 set :rtorrent_dir, "/home/#{user}/.rtorrent"
+set :whenever_command, "bundle exec whenever"
 
 namespace :deploy do
 
