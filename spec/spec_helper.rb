@@ -3,6 +3,7 @@
 
   require 'rspec/rails'
   require 'fakefs/spec_helpers'
+  require 'factory_girl'
   require 'webmock/rspec'
   require 'vcr'
 
@@ -51,6 +52,11 @@
 #
 #  # Requires supporting ruby files with custom matchers and macros, etc,
 #  # in spec/support/ and its subdirectories.
-#  FactoryGirl.reload
 #  I18n.reload!
 #  load Rails.root/'config'/'routes.rb'
+
+def zeus_running?
+  File.exists? '.zeus.sock'
+end
+
+FactoryGirl.find_definitions unless zeus_running?

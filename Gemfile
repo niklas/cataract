@@ -27,7 +27,7 @@ group :test do
   gem 'timecop'
   gem 'database_cleaner'
   gem 'email_spec'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', require: false
   # TODO for latest chrome-webdriver remove when capybara > 1.1.2 depends on it
   gem 'selenium-webdriver'
 
