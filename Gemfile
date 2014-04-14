@@ -51,8 +51,8 @@ group :test do
   gem 'poltergeist'
 
   # for torrent_fetcher/maulwurf
-  gem 'webmock', require: false
-  gem "vcr", "~> 2.8.0"
+  gem 'webmock', '1.16', require: false
+  gem "vcr"
 
   # the zeus page says, it should is not needed and should be kept out of the
   # Gemfile guard-cucumber cannot start "zeus cucumber" because it isn't in the

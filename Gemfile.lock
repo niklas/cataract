@@ -426,10 +426,10 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    vcr (2.8.0)
+    vcr (2.9.0)
     warden (1.2.3)
       rack (>= 1.0)
-    webmock (1.17.4)
+    webmock (1.16.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     webrobots (0.1.1)
@@ -522,8 +522,8 @@ DEPENDENCIES
   turbo-sprockets-rails3
   uglifier (>= 1.2.3)
   unicorn
-  vcr (~> 2.8.0)
-  webmock
+  vcr
+  webmock (= 1.16)
   whenever
   xmlrpcs
   zeus
