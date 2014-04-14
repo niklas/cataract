@@ -94,7 +94,8 @@ Devise.setup do |config|
 
   # If true, uses the password salt as remember token. This should be turned
   # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
+  # does not exist anymore
+  # config.use_salt_as_remember_token = true
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
@@ -154,7 +155,7 @@ Devise.setup do |config|
   # and :restful_authentication_sha1 (then you should set stretches to 10, and copy
   # REST_AUTH_SITE_KEY to pepper)
   # config.encryptor = :sha512
-  config.encryptor = :old_restful_authentication
+  # config.encryptor = :old_restful_authentication
 
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key
@@ -208,4 +209,6 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+
+  config.secret_key = '3256b1403be45655c01519d693130e95502e54eb72c304da91c4e2186b48b0aa26c39657b7f8b71ac3b49f3d047ab8539c2650376b2ad43bcf8b1c551d03eefe'
 end

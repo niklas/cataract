@@ -1,13 +1,13 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.2.17'
+gem 'rails', '~> 4.0.4'
 gem 'pg'
 
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.4'
+  gem 'sass-rails'
   gem 'uglifier', '>= 1.2.3'
   gem 'jquery-rails'
   gem 'bootstrap-sass', '~> 2.3.0.1'
@@ -19,8 +19,10 @@ end
 
 group :test do
   gem 'rake'
-  gem 'cucumber-rails', "~> 1.2.1", :require => false
-  gem 'rspec-rails', "~> 2.12.2"
+  gem 'cucumber-rails', "~> 1.4.0", :require => false
+  # This is used to obtaing timings of Cucumber scenarios
+  gem 'cucumber-timed_formatter', require: 'timed'
+  gem 'rspec-rails', "~> 2.13"
   gem 'pickle'
   gem 'timecop'
   gem 'database_cleaner'
@@ -29,11 +31,11 @@ group :test do
   # TODO for latest chrome-webdriver remove when capybara > 1.1.2 depends on it
   gem 'selenium-webdriver'
 
-  gem "spork", "1.0.0rc3"
-  gem "guard-rspec", "~> 2.4.0"
-  gem "guard-cucumber", "~> 1.3.2"
-  gem "guard-spork", "~> 1.4.2"
-  gem "guard-bundler", "~> 1.0.0"
+  # Guard
+  gem 'guard'
+  gem "guard-rspec"
+  gem "guard-cucumber"
+  gem "guard-bundler"
   gem "libnotify", :require => false
   gem "fakefs", :require => false
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
@@ -51,6 +53,12 @@ group :test do
   # for torrent_fetcher/maulwurf
   gem 'webmock', require: false
   gem "vcr", "~> 2.8.0"
+
+  # the zeus page says, it should is not needed and should be kept out of the
+  # Gemfile guard-cucumber cannot start "zeus cucumber" because it isn't in the
+  # bundle: So.. we add it, but don't load it. To get fast guard response
+  # times, make sure it does not run cucumber through bundler.
+  gem 'zeus', require: false
 end
 
 group :development, :test do
@@ -58,9 +66,9 @@ group :development, :test do
   gem 'pry-nav'
   gem 'pry-doc'
   gem 'pry-stack_explorer'
-  gem 'jasminerice'
+  gem 'jasminerice', github: 'bradphelan/jasminerice'
   gem 'guard-jasmine'
-  gem 'rb-inotify', '~> 0.8.8'
+  gem 'rb-inotify'
   gem 'rails-develotest'
 end
 
@@ -87,15 +95,14 @@ gem 'scgi'
 gem 'xmlrpcs'
 gem 'ancestry'
 
-gem 'coffee-rails', '~> 3.2.2'
-gem 'compass-rails'
-gem 'devise', '~> 2.0.4'
+gem 'coffee-rails'
+gem 'devise'
 gem 'cancan'
-gem 'simple_form', '~> 2.0.0'
+gem 'simple_form'
 gem 'haml-rails'
 gem 'inherited_resources'
 
-gem 'active_attr', '~> 0.8.2'
+gem 'active_attr'
 gem 'foreman'
 gem 'kaminari'
 
@@ -122,3 +129,8 @@ gem "rails-bookmarklet", :git => "https://github.com/oliverfriedmann/rails-bookm
 # for maulwurf
 gem 'mechanize'
 
+# bad yaml
+gem 'psych'
+
+# TODO strong parameter
+gem 'protected_attributes'

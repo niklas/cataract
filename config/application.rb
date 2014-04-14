@@ -51,10 +51,6 @@ module Cataract
       bookmarklet.js
     )
 
-    if config.respond_to?(:sass)
-      config.sass.load_paths << Compass::Frameworks['compass'].stylesheets_directory
-    end
-
     config.generators do |g|
       g.orm :active_record
       g.test_framework :rspec
