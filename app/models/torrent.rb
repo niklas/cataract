@@ -80,9 +80,9 @@ class Torrent < ActiveRecord::Base
   # TODO add tagging
   # acts_as_taggable
 
-  scope :invalid, where('NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')')
+  scope :invalid, -> { where('NOT (' + Torrent::STATES.collect { |s| "(status='#{s.to_s}')"}.join(' OR ') + ')') }
 
-  scope :include_everything, includes(:tags)
+  scope :include_everything, -> { includes(:tags) }
 
   def self.watched_by(user)
     includes(:watchings).where('watchings.user_id = ?', user.id)
