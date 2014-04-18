@@ -12,7 +12,7 @@ FactoryGirl.define do
     factory :dirless_torrent do
       after :create do |torrent|
         Directory.delete_all id: torrent.directory_id
-        Torrent.update_all({ directory_id: nil}, { id: torrent.id })
+        Torrent.where(id: torrent.id).update_all( directory_id: nil)
       end
     end
 
