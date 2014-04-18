@@ -1,5 +1,4 @@
 #= require jquery
-#= require jquery-ui
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
 #= require ember-23be8f

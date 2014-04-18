@@ -4,17 +4,14 @@ gem 'rails', '~> 4.0.4'
 gem 'pg'
 
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails', '~> 4.0.3'
-  gem 'uglifier', '>= 1.2.3'
-  gem 'jquery-rails'
-  gem 'bootstrap-sass', '~> 2.3.0.1'
-  gem 'jquery-ui-rails'
-  gem 'bootswatch-rails'
-  gem 'turbo-sprockets-rails3'
-end
+# Gems used only for assets
+gem 'sass-rails', '~> 4.0.3'
+gem 'uglifier', '>= 1.2.3'
+gem 'jquery-rails'
+gem 'bootstrap-sass', '~> 2.3.0.1'
+gem 'jquery-ui-rails'
+gem 'bootswatch-rails'
+gem 'turbo-sprockets-rails3'
 
 
 group :test do
