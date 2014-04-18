@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Queueable do
   class Model < ActiveRecord::Base
+    attr_protected
     self.table_name = 'modls'
   end
   it "should be a module" do
