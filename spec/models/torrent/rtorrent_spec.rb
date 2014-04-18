@@ -136,7 +136,7 @@ describe Torrent::RTorrent do
     let(:archived) { create :torrent  }
     let(:torrent) { create :torrent_with_picture_of_tails, content_directory: incoming }
     before :each do
-      rtorrent.stub!(:all).and_return(progress_array)
+      rtorrent.stub(:all).and_return(progress_array)
       rtorrent.apply torrents, [:up_rate, :down_rate, :active?]
     end
 
