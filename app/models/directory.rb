@@ -8,6 +8,7 @@ class Directory < ActiveRecord::Base
   before_validation :set_relative_path_from_name
   before_validation :set_disk_from_parent, unless: :disk
   after_save :create_intermediate_directories
+  attr_protected # do not protect at all
 
   # FIXME assign directories to disks through rake task
   belongs_to :disk
