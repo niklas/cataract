@@ -45,7 +45,8 @@
     config.mock_with :rspec
   end
 
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+FactoryGirl.reload
 
 #  # rspec reports time since its started https://github.com/guard/guard-rspec/issues/61
 #  $rspec_start_time = Time.now
