@@ -142,7 +142,7 @@ Cataract.TorrentsAddRoute = Ember.Route.extend
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
-    @get('store').createRecord 'directory'
+    @get('store').createRecord 'directory',
       disk: @modelFor('disk')
       parentDirectory: @controllerFor('torrents').get('directory')
       virtual: false
