@@ -84,8 +84,8 @@ describe Torrent do
 
   describe 'cleaning filenames' do
     it 'is delegated to Cataract::FileNameCleaner' do
-      filename = stub 'Filename'
-      cleaned = stub 'cleaned Filename'
+      filename = double 'Filename'
+      cleaned = double 'cleaned Filename'
       torrent = build :torrent, filename: filename
       Cataract::FileNameCleaner.should_receive(:clean).with(filename).and_return(cleaned)
       torrent.clean_filename.should == cleaned

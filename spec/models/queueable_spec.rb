@@ -117,7 +117,7 @@ describe Queueable do
         it "saves exception text when failing" do
           job = model.new
           job.stub(:persisted? => true)
-          exception = mock "exception", inspect: "useful info"
+          exception = double "exception", inspect: "useful info"
           job.handle_failure(exception)
           job.message.should be_present
           job.message.should include('useful info')

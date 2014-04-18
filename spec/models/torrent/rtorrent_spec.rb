@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Torrent do
-  let(:info_hash) { mock('InfoHash') }
+  let(:info_hash) { double('InfoHash') }
 
   describe "proxy to rtorrent" do
 
-    let(:proxy)     { mock('Torrent::RTorrent') }
+    let(:proxy)     { double('Torrent::RTorrent') }
     let(:torrent)   { build :torrent }
 
     before { Torrent.reset_remote! }
@@ -17,7 +17,7 @@ describe Torrent do
 
     it "uses fixed socket path" do
       Torrent.rtorrent_socket_path.should be_a(Pathname)
-      path = mock 'socket path'
+      path = double 'socket path'
       Torrent.stub(:rtorrent_socket_path).and_return(path)
       Torrent::RTorrent.should_receive(:new).with(path)
       torrent.remote
@@ -50,7 +50,7 @@ describe Torrent::RTorrent do
     described_class.new(rtorrent_socket_path)
   end
 
-  let(:info_hash) { mock('InfoHash') }
+  let(:info_hash) { double('InfoHash') }
   let(:torrent) do
     build :torrent, :info_hash => info_hash do |torrent|
       torrent.stub(:remote).and_return(rtorrent)
@@ -80,7 +80,7 @@ describe Torrent::RTorrent do
   # TODO complete list
 
   context "for torrent" do
-    let(:torrent)  { mock('Torrent', :info_hash => info_hash) }
+    let(:torrent)  { double('Torrent', :info_hash => info_hash) }
     # FIXME WTF what does the torrent do here?
     let(:proxy) do
       described_class.new(rtorrent_socket_path).tap do |remote|
@@ -90,7 +90,7 @@ describe Torrent::RTorrent do
 
 
     it "should throw error when torrent has no info hash" do
-      torrent_without_info_hash = mock 'Torrent', :info_hash => nil
+      torrent_without_info_hash = double 'Torrent', :info_hash => nil
       expect { proxy.up_rate(torrent_without_info_hash) }.to raise_error(Torrent::HasNoInfoHash)
     end
 
@@ -119,7 +119,7 @@ describe Torrent::RTorrent do
     end
 
     context "non-torrent related methods" do
-      let(:value) { mock 'Value' }
+      let(:value) { double 'Value' }
       {
         :download_list => 'download_list'
       }.each do |meth, xml|
