@@ -31,6 +31,7 @@ class Torrent < ActiveRecord::Base
   validates_format_of :url, :with => URI.regexp, :if => :remote?
 
   concerned_with :refresh # callbacks required, so more at end of file
+  attr_protected # allow all
 
   # FIXME remove this insane stati code
   # before_save :sync
