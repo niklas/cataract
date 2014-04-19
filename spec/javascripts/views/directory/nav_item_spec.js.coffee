@@ -1,24 +1,8 @@
 describe 'Cataract.DirectoryNavItemView', ->
-
-  # link-to needs all this
-  buildControllerWithRouter = ->
-    router = Ember.Object.create
-      isActive: Ember.K
-      generate: Ember.K
-      hasRoute: Ember.K
-      router:
-        recognizer:
-          names: {}
-        queryParamsForHandler: -> undefined
-
-    controller =
-      container:
-        lookup: -> router
-      router: router
-
   view = null
   beforeEach ->
-    view = Cataract.DirectoryNavItemView.create(controller: buildControllerWithRouter())
+    TEST.stubLinkToHelper()
+    view = Cataract.DirectoryNavItemView.create()
     Ember.run ->
       view.append()
 
@@ -26,6 +10,7 @@ describe 'Cataract.DirectoryNavItemView', ->
     Ember.run ->
       view.remove()
     view = null
+    TEST.restoreLinkToHelper()
 
   it "is defined", ->
     expect(view).toBeDefined()
