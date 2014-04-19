@@ -4,4 +4,6 @@ class Setting < ActiveRecord::Base
   def self.singleton
     order(:created_at).last || new
   end
+
+  attr_accessor :scraping_url
 end
