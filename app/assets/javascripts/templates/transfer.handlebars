@@ -1,8 +1,8 @@
 {{#with view.content}}
   <div class="row-fluid">
     <div class="span6">
-      <div {{bindAttr class=":progress :progress-success finished::progress-striped downloading:active"}}>
-        <div class="bar" {{bindAttr style="progressStyle"}}>
+      <div {{bind-attr class=":progress :progress-success finished::progress-striped downloading:active"}}>
+        <div class="bar" {{bind-attr style="progressStyle"}}>
           <div class="percent">{{progress}}%</div>
           {{#if eta}}
           <div class="eta">{{eta}}</div>
