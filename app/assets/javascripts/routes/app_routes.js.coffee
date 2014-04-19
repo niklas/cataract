@@ -30,21 +30,23 @@ Cataract.FilterRoute = Ember.Route.extend
     @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.status }
 
 Cataract.TorrentsRoute = Ember.Route.extend
-  beforeModel: (queryParams, transition)->
-    if Ember.isNone(queryParams.age)
-      queryParams.age = 'month'
-    if Ember.isNone(queryParams.status)
-      queryParams.status = 'recent'
+  beforeModel: (transition)->
+    unless Ember.isNone( queryParams = transition.queryParams )
+      if Ember.isNone(queryParams.age)
+        queryParams.age = 'month'
+      if Ember.isNone(queryParams.status)
+        queryParams.status = 'recent'
 
-    store = @get('store')
-    # warmup store only when age has changed
-    if queryParams.age != transition.params.queryParams?.age
-      store.unloadAll('torrent')
-      store.findQuery('torrent', age: queryParams.age)
+      store = @get('store')
+      # warmup store only when age has changed
+      if queryParams.age != transition.params.queryParams?.age
+        store.unloadAll('torrent')
+        store.findQuery('torrent', age: queryParams.age)
 
-    @setupDirectories(queryParams) # promise
+      @setupDirectories(queryParams) # promise
+    @set 'queryParams', queryParams
 
-  model: (params, queryParams, transition) ->
+  model: (params, transition) ->
     # TODO should we filter&paginate here already or on the controller?
     @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
@@ -66,7 +68,8 @@ Cataract.TorrentsRoute = Ember.Route.extend
           else
             @set 'singleDirectory', false
 
-  setupController: (controller, model, queryParams) ->
+  setupController: (controller, model) ->
+    queryParams = @get 'queryParams'
     controller.set 'directories', @get('directories')
     controller.set 'unfilteredContent', model
     controller.set('mode', queryParams.status)
