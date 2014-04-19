@@ -1,8 +1,12 @@
 describe 'Cataract.DirectoryNavItemView', ->
   view = null
+  content = null
+
   beforeEach ->
     TEST.stubLinkToHelper()
-    view = Cataract.DirectoryNavItemView.create()
+    content = Ember.Object.create(hasSubDirs: false)
+    # it's a listView, they are strange with their content.
+    view = Cataract.DirectoryNavItemView.create(content: content, controller: content)
     Ember.run ->
       view.append()
 
@@ -23,7 +27,7 @@ describe 'Cataract.DirectoryNavItemView', ->
   describe 'for missing directory', ->
     beforeEach ->
       Ember.run ->
-        view.set 'content', Ember.Object.create(exists: false)
+        content.set 'exists', false
 
     it "adds warning icon", ->
       expect( view.$('i.icon-warning-sign').length ).toEqual(1)
@@ -34,7 +38,7 @@ describe 'Cataract.DirectoryNavItemView', ->
   describe 'for existing directory', ->
     beforeEach ->
       Ember.run ->
-        view.set 'content', Ember.Object.create(exists: true)
+        content.set 'exists', true
 
     it "adds folder icon", ->
       expect( view.$('i.icon-folder-open').length ).toEqual(1)
