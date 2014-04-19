@@ -48,13 +48,6 @@ GIT
     rubytorrent-allspice (0.3.6)
 
 GIT
-  remote: git://github.com/rails-api/active_model_serializers.git
-  revision: 2e31a141252a37f75cb5dc10e96d3975f1046085
-  specs:
-    active_model_serializers (0.9.0.alpha1)
-      activemodel (>= 3.2)
-
-GIT
   remote: https://github.com/oliverfriedmann/rails-bookmarklet.git
   revision: 99bb67ddbaf84779a10156196bfaccfe4de67029
   specs:
@@ -76,6 +69,8 @@ GEM
     active_attr (0.8.3)
       activemodel (>= 3.0.2, < 4.2)
       activesupport (>= 3.0.2, < 4.2)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     activemodel (4.0.4)
       activesupport (= 4.0.4)
       builder (~> 3.1.0)
@@ -451,7 +446,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_attr
-  active_model_serializers!
+  active_model_serializers (~> 0.8.1)
   acts_as_list
   ancestry
   better_errors
