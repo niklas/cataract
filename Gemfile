@@ -129,5 +129,8 @@ gem 'mechanize'
 # bad yaml
 gem 'psych'
 
+# .2 introduces version check on > 1.4, but ubuntu did not update the version when patching CVE-2014-2525
+gem 'safe_yaml', '1.0.1'
+
 # TODO strong parameter
 gem 'protected_attributes'
