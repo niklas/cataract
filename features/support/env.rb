@@ -68,6 +68,6 @@
 
 
 #  I18n.backend.reload!
-#  FactoryGirl.reload
+  FactoryGirl.reload
 #  load Rails.root/'config'/'routes.rb'
 
