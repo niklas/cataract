@@ -470,8 +470,10 @@ DEPENDENCIES
   devise
   diff_matcher
   email_spec
+  ember-data-source
   ember-rails!
   ember-rails-flash!
+  ember-source (= 1.5.0)
   factory_girl_rails
   fakefs
   feed-abstract
