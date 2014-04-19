@@ -11,11 +11,12 @@ Cataract.ApplicationController = Ember.Controller.extend
     $('head title').text(sender.get(key))
   ).observes('fullSiteTitle')
 
-  fullSiteTitle: Ember.computed ->
-    if sub = @get('currentController.siteTitle')
-      [ sub, @get('siteTitle')].join(' - ')
-    else
-      "loading Cataract"
-  .property('currentController.siteTitle')
+  fullSiteTitle:
+    Ember.computed ->
+      if sub = @get('currentController.siteTitle')
+        [ sub, @get('siteTitle')].join(' - ')
+      else
+        "loading Cataract"
+    .property('currentController.siteTitle')
 
   siteTitle: 'Cataract'

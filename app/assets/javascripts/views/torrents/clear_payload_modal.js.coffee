@@ -14,9 +14,10 @@ Cataract.ClearPayloadModal = Bootstrap.ModalPane.extend
   torrent: null
   heading: "Clear Torrent"
   bodyViewClass: Cataract.TorrentConfirmClearanceView
-  primary: Ember.computed ->
-   "Clear #{@get('torrent.payload.humanSize')}"
-  .property('torrent.payload.humanSize')
+  primary:
+    Ember.computed ->
+     "Clear #{@get('torrent.payload.humanSize')}"
+    .property('torrent.payload.humanSize')
   secondary: "still need it"
   showBackdrop: true
   callback: (opts) ->

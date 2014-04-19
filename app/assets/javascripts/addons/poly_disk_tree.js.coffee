@@ -5,21 +5,23 @@ PolyDiskTree = Ember.Mixin.create
   #
   # accepts a collection, for example a findAll
   # sets observers on it
-  directories: Ember.computed (key, value) ->
-    if arguments.length > 1
-      @_setupObservers(value)
-      @set('_directories', value)
-    unless @get('_directories')
-      fresh = Ember.A()
-      @_setupObservers(fresh)
-      @set('_directories', fresh)
-    @get('_directories')
-  .property()
+  directories:
+    Ember.computed (key, value) ->
+      if arguments.length > 1
+        @_setupObservers(value)
+        @set('_directories', value)
+      unless @get('_directories')
+        fresh = Ember.A()
+        @_setupObservers(fresh)
+        @set('_directories', fresh)
+      @get('_directories')
+    .property()
 
   # exit point, responds to #children and each to #alternatives
-  root: Ember.computed ->
-    PolyDiskDirectory.create()
-  .property()
+  root:
+    Ember.computed ->
+      PolyDiskDirectory.create()
+    .property()
 
   _setupObservers: (list)->
     list.addEnumerableObserver(@,

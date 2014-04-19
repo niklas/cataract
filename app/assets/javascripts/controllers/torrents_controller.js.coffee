@@ -11,12 +11,13 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   age: 'month' # faster initialization of page
   # TODO i18n
   # human readable current age
-  describedAge: Ember.computed ->
-    if @get('age') == 'all'
-      "All since ever"
-    else
-      "in this " + @get('age')
-  .property('age')
+  describedAge:
+    Ember.computed ->
+      if @get('age') == 'all'
+        "All since ever"
+      else
+        "in this " + @get('age')
+    .property('age')
 
   rangeWindowSize: 50
 
@@ -35,12 +36,13 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @didRequestRange @get("rangeStart"), @get("rangeStop")
   ).observes("filterFunction", 'mode')
 
-  termsList: Ember.computed ->
-    if terms = @get('terms')
-      Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
-    else
-      Ember.A()
-  .property('terms')
+  termsList:
+    Ember.computed ->
+      if terms = @get('terms')
+        Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
+      else
+        Ember.A()
+    .property('terms')
 
 
   filterFunction: (->
@@ -116,9 +118,11 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @reload()
     age
 
-  isRecentActive: Ember.computed ->
-    @get('mode') is 'recent'
-  .property('mode')
-  isRunningActive: Ember.computed ->
-    @get('mode') is 'running'
-  .property('mode')
+  isRecentActive:
+    Ember.computed ->
+      @get('mode') is 'recent'
+    .property('mode')
+  isRunningActive:
+    Ember.computed ->
+      @get('mode') is 'running'
+    .property('mode')
