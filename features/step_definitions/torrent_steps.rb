@@ -8,8 +8,7 @@ end
 
 When /^I explore (the .+)$/ do |target|
   selector = selector_for(target)
-  page.should have_css(selector)
-  page.find(selector).find('.title').click
+  page.find(*selector).find('.title').click
 end
 
 Given /^archived torrents exist titled from "(.*?)" to "(.*?)" in reverse chronological order$/ do |from, to|
