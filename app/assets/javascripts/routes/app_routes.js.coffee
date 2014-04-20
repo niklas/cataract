@@ -27,7 +27,7 @@ Cataract.IndexRoute = Ember.Route.extend
 
 Cataract.FilterRoute = Ember.Route.extend
   beforeModel: (transition) ->
-    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.status }
+    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.filter.status }
 
 Cataract.TorrentsRoute = Ember.Route.extend
   beforeModel: (transition)->
