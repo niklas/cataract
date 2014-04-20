@@ -23,7 +23,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   didRequestRange: (rangeStart, rangeStop) ->
     content = @get('fullContent').slice(rangeStart, rangeStop)
-    @replace 0, @get('length'), content
+    #@replace 0, @get('length'), content
+    #FIXME PaginationSupport
 
   termsBinding: 'Cataract.terms'
   mode: ''
