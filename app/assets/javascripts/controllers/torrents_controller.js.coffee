@@ -3,11 +3,11 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   queryParams: [
     'mode:status',
     'age',
-    'directories'
+    'directory'
   ]
   mode: 'recent'
   age: 'month' # faster initialization of page
-  directories: Ember.A()
+  directory: null # should be a PolyDiskDirectory
 
   init: ->
     @_super()
@@ -36,7 +36,6 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   # TODO terms as query-param?
   termsBinding: 'Cataract.terms'
-  directory: null
   directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   filterFunctionDidChange: (->

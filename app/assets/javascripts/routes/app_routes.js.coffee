@@ -1,6 +1,6 @@
 Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
-  @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
+  @resource 'torrents', queryParams: ['status', 'age', 'directory'], ->
     @resource 'torrent', path: '/torrent/:torrent_id'
     @resource 'directory', path: '/directory/:directory_id'
     @route 'add', path: '/add'
@@ -52,6 +52,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
       ! torrent.get('isDeleted')
 
   setupDirectories: (queryParams)->
+    # TODO find PolyDiskDirectory, delegate
     unless Ember.isNone(list=queryParams.directories)
       ids = (i for i in list.split(','))
       @controllerFor('directories')
