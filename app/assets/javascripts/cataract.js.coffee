@@ -9,9 +9,6 @@
 #= require_tree ./templates
 #= require_tree ./routes
 
-#Ember.LOG_BINDINGS = true
-Ember.FEATURES['query-params'] = yes
-
 CataractApplication = Ember.Application.extend
   rootElement: '#ember'
   online: false # wait for first refreshTransfers

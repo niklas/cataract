@@ -1,4 +1,5 @@
 #= require jquery
+#= require_self
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
 #= require handlebars
@@ -11,6 +12,10 @@
 #= require bindWithDelay
 #
 #= require ./cataract
+
+window.EmberENV =
+  FEATURES:
+    'query-params-new': yes
 
 jQuery ->
   search = ->
