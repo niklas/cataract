@@ -179,7 +179,7 @@ GEM
       mail (~> 2.2)
     ember-data-source (1.0.0.beta.7)
       ember-source
-    ember-source (1.5.0)
+    ember-source (1.6.0.beta.2)
       handlebars-source (~> 1.0)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -465,10 +465,10 @@ DEPENDENCIES
   devise
   diff_matcher
   email_spec
-  ember-data-source
+  ember-data-source (= 1.0.0.beta.7)
   ember-rails!
   ember-rails-flash!
-  ember-source (= 1.5.0)
+  ember-source (= 1.6.0.beta.2)
   factory_girl_rails
   fakefs
   feed-abstract

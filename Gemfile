@@ -115,8 +115,8 @@ gem 'dalli'
 
 # https://github.com/emberjs/ember-rails/issues/165
 gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
-gem 'ember-source', '1.5.0'
-gem 'ember-data-source'
+gem 'ember-source', '1.6.0.beta.2'
+gem 'ember-data-source', '1.0.0.beta.7'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'
