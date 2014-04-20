@@ -1,5 +1,5 @@
 When /^I filter with "([^"]+)"$/ do |terms|
-  first('#torrent_search_terms').set(terms)
+  find('#torrent_search_terms').set(terms)
   sleep 1 # delayed typing
 end
 
@@ -12,7 +12,7 @@ Given /^"([^"]*)" state should be chosen$/ do |state|
 end
 
 When /^I choose state "([^"]*)"$/ do |state|
-  first('label', text: state).click
+  find('label', text: state).click
 end
 
 When /^I toggle the (?:menu|navigation)$/ do
@@ -58,7 +58,7 @@ end
 When /^I click on (the .+)$/ do |target|
   selector = selector_for(target)
   page.should have_css(selector)
-  page.first(selector).click
+  page.find(selector).click
 end
 
 Then /^I should see (.+link)$/ do |target|

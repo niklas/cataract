@@ -72,7 +72,7 @@ end
 
 Then /^(.*) (should|should not) be classified as (\w+)$/ do |name, should_or_not, klass|
   selector = selector_for(name)
-  element = page.first(selector)
+  element = page.find(selector)
 
   if should_or_not.include?('not')
     element['class'].should_not =~ /\b#{klass}\b/
