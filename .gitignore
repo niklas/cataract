@@ -13,3 +13,4 @@ public/uploads/
 coverage
 public/assets/
 config/newrelic.yml
+.sass-cache/
