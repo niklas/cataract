@@ -43,38 +43,27 @@ Cataract.TorrentsRoute = Ember.Route.extend
         store.unloadAll('torrent')
         store.findQuery('torrent', age: queryParams.age)
 
-      @setupDirectories(queryParams) # promise
-
   model: (params, transition) ->
     # TODO should we filter&paginate here already or on the controller?
     @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
 
-  setupDirectories: (queryParams)->
-    # TODO find PolyDiskDirectory, delegate
-    unless Ember.isNone(list=queryParams.directories)
-      ids = (i for i in list.split(','))
-      @controllerFor('directories')
-        .get('directories')
-        .then (all) =>
-          dirs = all.filter (d)->
-            ids.indexOf(d.get('id')) >= 0
-          @set 'directories', dirs
-          if dirs.get('length') == 1
-            dir = dirs.get('firstObject')
-            @set 'singleDirectory', dir
-            @controllerFor('directory').set('model', dir)
-          else
-            @set 'singleDirectory', false
-
   setupController: (controller, model) ->
     @_super(controller, model)
-    controller.set 'directories', @get('directories')
     controller.set 'unfilteredContent', model
     controller.gotoFirstPage()
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
+
+    if dirs = controller.get('directories') # by setting path through query params
+      if dirs.get('length') == 1
+        dir = dirs.get('firstObject')
+        @set 'singleDirectory', dir
+        @controllerFor('directory').set('model', dir)
+      else
+        @set 'singleDirectory', false
+
 
   renderTemplate: ->
     @render 'torrents/tabs',
