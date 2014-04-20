@@ -1,5 +1,14 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
   needs: ['disks']
+  queryParams: [
+    'mode:status',
+    'age',
+    'directories'
+  ]
+  mode: 'recent'
+  age: 'month' # faster initialization of page
+  directories: Ember.A()
+
   init: ->
     @_super()
     $('body').bind 'tick', => @refreshTransfers(); true
@@ -8,7 +17,6 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   fullContentBinding: 'filteredContent'
   totalBinding: 'fullContent.length'
-  age: 'month' # faster initialization of page
   # TODO i18n
   # human readable current age
   describedAge:
@@ -26,10 +34,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     #@replace 0, @get('length'), content
     #FIXME PaginationSupport
 
+  # TODO terms as query-param?
   termsBinding: 'Cataract.terms'
-  mode: ''
   directory: null
-  directories: Ember.A()
   directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   filterFunctionDidChange: (->

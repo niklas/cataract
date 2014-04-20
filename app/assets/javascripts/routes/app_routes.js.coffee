@@ -44,7 +44,6 @@ Cataract.TorrentsRoute = Ember.Route.extend
         store.findQuery('torrent', age: queryParams.age)
 
       @setupDirectories(queryParams) # promise
-    @set 'queryParams', queryParams
 
   model: (params, transition) ->
     # TODO should we filter&paginate here already or on the controller?
@@ -69,11 +68,9 @@ Cataract.TorrentsRoute = Ember.Route.extend
             @set 'singleDirectory', false
 
   setupController: (controller, model) ->
-    queryParams = @get 'queryParams'
+    @_super(controller, model)
     controller.set 'directories', @get('directories')
     controller.set 'unfilteredContent', model
-    controller.set('mode', queryParams.status)
-    controller.set('age', queryParams.age)
     controller.gotoFirstPage()
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
