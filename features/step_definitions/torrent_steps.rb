@@ -7,6 +7,7 @@ Given /^#{capture_model} was (load|start|stop|refresh)p?ed$/ do |m, action|
 end
 
 When /^I explore (the .+)$/ do |target|
+  step 'all css animations are disabled'
   selector = selector_for(target)
   page.find(*selector).find('.title').click
 end

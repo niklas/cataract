@@ -26,6 +26,7 @@ Feature: Payload of a torrent
   Scenario: click on filecount toggles filenames
     Given I should not see "tails.png"
      When I explore the first torrent
+     Then I should not see "tails.png"
       And I follow "1 file"
      Then I should see "tails.png"
      # does not toggle whole torrent

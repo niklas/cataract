@@ -87,3 +87,11 @@ When /^(.*) in frame "([^"]+)"$/ do |inner, frame_id|
     step inner
   end
 end
+
+Given /^all css animations are disabled$/ do
+  execute_script <<-EOJS
+    $('<style></style>')
+      .text("* { transition-property: none !important };")
+      .appendTo('html head')
+  EOJS
+end
