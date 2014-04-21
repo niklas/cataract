@@ -1,3 +1,4 @@
+require_dependency 'base_serializer'
 class SettingSerializer < BaseSerializer
   include ActionView::Helpers::TagHelper
   include BookmarkletHelper

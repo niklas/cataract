@@ -1,3 +1,4 @@
+require_dependency 'base_serializer'
 class DiskSerializer < BaseSerializer
   attributes :id, :name, :directory_ids
 
