@@ -48,6 +48,14 @@ GIT
     rubytorrent-allspice (0.3.6)
 
 GIT
+  remote: git://github.com/tbuehl/pickle.git
+  revision: eb928db7c279f097647663c71f2f4b00f03a68b3
+  specs:
+    pickle (0.4.11)
+      cucumber (>= 0.8)
+      rake
+
+GIT
   remote: https://github.com/oliverfriedmann/rails-bookmarklet.git
   revision: 99bb67ddbaf84779a10156196bfaccfe4de67029
   specs:
@@ -297,9 +305,6 @@ GEM
     orm_adapter (0.5.0)
     paint (0.8.7)
     pg (0.17.1)
-    pickle (0.4.11)
-      cucumber (>= 0.8)
-      rake
     poltergeist (1.5.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -498,7 +503,7 @@ DEPENDENCIES
   nokogiri
   notes!
   pg
-  pickle
+  pickle!
   poltergeist
   protected_attributes
   pry
