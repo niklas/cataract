@@ -30,6 +30,9 @@ Cataract.FilterRoute = Ember.Route.extend
     @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.filter.status }
 
 Cataract.TorrentsRoute = Ember.Route.extend
+  queryParams:
+    age:
+      refreshModel: true
   beforeModel: (transition)->
     unless Ember.isNone( queryParams = transition.queryParams )
       if Ember.isNone(queryParams.age)
