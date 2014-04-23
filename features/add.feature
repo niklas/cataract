@@ -76,7 +76,7 @@ Feature: Adding a torrent
     Given the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
 
-     When I drag a file over the torrent list
+     When I drag a file over the sidebar
      Then the dropzone should be classified as inviting
       But the dropzone should not be classified as hovered
 
