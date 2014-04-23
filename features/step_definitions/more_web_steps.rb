@@ -88,10 +88,16 @@ When /^(.*) in frame "([^"]+)"$/ do |inner, frame_id|
   end
 end
 
-Given /^all css animations are disabled$/ do
+Given /^all (?:css )?animations are disabled$/ do
   execute_script <<-EOJS
     $('<style></style>')
       .text("* { transition-property: none !important };")
       .appendTo('html head')
   EOJS
+  execute_script 'jQuery.fx.off = true'
+end
+
+When /^I close all flash messages$/ do
+  step 'all animations are disabled'
+  all('.flash .close').each(&:click)
 end
