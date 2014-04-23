@@ -1,9 +1,9 @@
 Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
-  @resource 'torrents', queryParams: ['status', 'age', 'directory'], ->
-    @resource 'torrent', path: '/torrent/:torrent_id'
-    @resource 'directory', path: '/directory/:directory_id'
-    @route 'add', path: '/add'
+  @resource 'torrents', queryParams: ['status', 'age', 'directory']
+  @route 'add', path: '/add'
+  @resource 'torrent', path: '/torrent/:torrent_id'
+  @resource 'directory', path: '/directory/:directory_id'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
@@ -96,7 +96,8 @@ Cataract.TorrentRoute = Cataract.DetailedRoute.extend
     @get('store').find 'torrent', params.torrent_id
 
 
-Cataract.TorrentsAddRoute = Ember.Route.extend
+Cataract.AddRoute = Ember.Route.extend
+  controllerName: 'torrents_add'
   model: -> @get('store').createRecord('torrent')
   setupController: (controller, torrent) ->
     controller.set 'content', torrent
