@@ -55,7 +55,7 @@ class Torrent < ActiveRecord::Base
     when 'year'
       since 1.year.ago
     else
-      scoped
+      all
     end
   end
 
