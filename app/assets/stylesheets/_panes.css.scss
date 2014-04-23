@@ -96,8 +96,10 @@
         bottom: 0;
         padding-top: 0.7 * $barheight;
         transition: top 0.7s ease-in-out;
+        visibility: hidden; // no garbled content while animating out
         &.extended {
           top: $bigger_half;
+          visibility: visible;
         }
       }
     }
