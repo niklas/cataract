@@ -59,15 +59,6 @@ Cataract.TorrentsRoute = Ember.Route.extend
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
 
-    if dirs = controller.get('directories') # by setting path through query params
-      if dirs.get('length') == 1
-        dir = dirs.get('firstObject')
-        @set 'singleDirectory', dir
-        @controllerFor('directory').set('model', dir)
-      else
-        @set 'singleDirectory', false
-
-
   renderTemplate: ->
     @render 'torrents/tabs',
       outlet: 'bar',
@@ -75,12 +66,8 @@ Cataract.TorrentsRoute = Ember.Route.extend
     @render 'torrents/navigation',
       outlet: 'nav',
       controller: @controllerFor('torrents')
-    if @get('singleDirectory')
-      @controllerFor('application').set 'detailsExtended', true
-      @render 'directory',
-        controller: @controllerFor('directory')
-    else
-      @controllerFor('application').set 'detailsExtended', false
+    @render 'directory',
+      controller: @controllerFor('directory')
 
 Cataract.DetailedRoute = Ember.Route.extend
   setupController: (controller, model)->
@@ -95,8 +82,6 @@ Cataract.DetailedRoute = Ember.Route.extend
 Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
-  afterModel: (model)->
-    @controllerFor('torrents').set('directory', model)
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'

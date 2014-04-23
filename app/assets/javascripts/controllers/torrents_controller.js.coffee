@@ -1,17 +1,10 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
-  needs: ['disks', 'directories']
-  queryParams: [
-    'mode:status',
-    'age',
-    'path:directory'
-  ]
-  mode: 'recent'
-  age: 'month' # faster initialization of page
-  path: null
-  poly:
-    Ember.computed ->
-      @get('controllers.directories').findPolyByPath( @get('path') )
-    .property('path')
+  needs: ['application', 'disks', 'directories']
+
+  modeBinding: 'controllers.application.mode'
+  ageBinding: 'controllers.application.age'
+  polyBinding: 'controllers.application.poly'
+  directoriesBinding: 'controllers.application.directories'
 
   init: ->
     @_super()
@@ -39,7 +32,6 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   # TODO terms as query-param?
   termsBinding: 'Cataract.terms'
-  directoriesBinding: 'poly.alternatives'
   directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   filterFunctionDidChange: (->
