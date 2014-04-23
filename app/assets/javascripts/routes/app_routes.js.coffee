@@ -87,7 +87,7 @@ Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
     @render 'directory'
   deactivate: (model)->
     @_super()
-    @controllerFor('torrents').set('directory', null)
+    @controllerFor('directory').set('content', null) # back to query-param
 
 Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   beforeModel: ->
