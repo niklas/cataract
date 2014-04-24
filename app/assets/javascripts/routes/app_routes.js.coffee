@@ -85,6 +85,9 @@ Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
+    @render 'torrents/tabs',
+      outlet: 'bar',
+      controller: @controllerFor('torrents')
   deactivate: (model)->
     @_super()
     @controllerFor('directory').set('content', null) # back to query-param
