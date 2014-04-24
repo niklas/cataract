@@ -28,7 +28,15 @@ Cataract.DropZoneView = Ember.View.extend
         filedata: upload.target.result
         filename: file.name
         startAutomatically: true
-      torrent.save().then (t)->
+
+      uploading = torrent.save()
+
+      uploading.catch (error)->
+        torrent.rollback()
+        # how to catch the InvalidError?
+        return false
+
+      uploading.then (t)->
         controller.transitionTo('torrent', t)
 
     reader.readAsDataURL(file)
