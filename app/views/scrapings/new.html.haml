@@ -18,7 +18,7 @@
 
     message "Scraping <i>#{h @url}</i>..."
 
-    $.ajax '#{scraping_url}'
+    $.ajax '#{scraping_url}',
       data:
         url: url
       type: 'POST'
