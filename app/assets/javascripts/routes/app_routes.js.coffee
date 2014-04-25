@@ -60,12 +60,8 @@ Cataract.TorrentsRoute = Ember.Route.extend
     @controllerFor('application').set('currentController', controller)
 
   renderTemplate: ->
-    @render 'torrents/tabs',
-      outlet: 'bar',
-      controller: @controllerFor('torrents')
-    @render 'torrents/navigation',
-      outlet: 'nav',
-      controller: @controllerFor('torrents')
+    # we are always rendered
+    # but the directory maybe, depends on query-params available later
     @render 'directory',
       controller: @controllerFor('directory')
 
@@ -79,9 +75,6 @@ Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
-    @render 'torrents/tabs',
-      outlet: 'bar',
-      controller: @controllerFor('torrents')
   deactivate: (model)->
     @_super()
     @controllerFor('directory').set('content', null) # back to query-param

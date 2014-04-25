@@ -24,6 +24,7 @@
 
         <ul class="nav">
           {{outlet 'nav'}}
+          {{partial "torrents/navigation"}}
           {{render 'moves'}}
         </ul>
 
@@ -56,7 +57,7 @@
   </div>
 
   <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
-    {{outlet 'bar'}}
+    {{partial "torrents/tabs"}}
     {{#unless Cataract.online}}
     <br />
     <div class="alert alert-error">{{Cataract.offlineReason}}</div>
