@@ -1,6 +1,6 @@
 Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
-  @resource 'torrents', queryParams: ['status', 'age', 'directory']
+  @resource 'torrents'
   @route 'add', path: '/add'
   @resource 'torrent', path: '/torrent/:torrent_id'
   @resource 'directory', path: '/directory/:directory_id'

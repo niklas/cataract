@@ -1,8 +1,8 @@
-{{#link-to 'torrents' (query-params status='recent') tagName='li'}}
-  {{#link-to 'torrents' (query-params status='recent')}}Recent{{/link-to}}
+{{#link-to (query-params status='recent') tagName='li'}}
+  {{#link-to (query-params status='recent')}}Recent{{/link-to}}
 {{/link-to}}
-{{#link-to 'torrents' (query-params status='running') tagName='li'}}
-  {{#link-to 'torrents' (query-params status='running')}}Running{{/link-to}}
+{{#link-to (query-params status='running') tagName='li'}}
+  {{#link-to (query-params status='running')}}Running{{/link-to}}
 {{/link-to}}
 <li>
   {{#link-to 'add'}}Add{{/link-to}}
@@ -14,9 +14,9 @@
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <li>{{#link-to 'torrents' (query-params age='month')}}Month{{/link-to}}</li>
-    <li>{{#link-to 'torrents' (query-params age='year')}}Year{{/link-to}}</li>
-    <li>{{#link-to 'torrents' (query-params age='all')}}All (slow){{/link-to}}</li>
+    <li>{{#link-to (query-params age='month')}}Month{{/link-to}}</li>
+    <li>{{#link-to (query-params age='year')}}Year{{/link-to}}</li>
+    <li>{{#link-to (query-params age='all')}}All (slow){{/link-to}}</li>
   </ul>
 </li>
 
