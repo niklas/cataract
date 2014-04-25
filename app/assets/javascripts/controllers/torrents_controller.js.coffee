@@ -5,6 +5,7 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   ageBinding: 'controllers.application.age'
   polyBinding: 'controllers.application.poly'
   directoriesBinding: 'controllers.application.directories'
+  directoryBinding: 'controllers.application.directory'
 
   init: ->
     @_super()

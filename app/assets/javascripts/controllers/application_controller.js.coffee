@@ -1,10 +1,9 @@
 Cataract.ApplicationController = Ember.Controller.extend
-  needs: ['directories']
   init: ->
     @_super()
     @get('fullSiteTitle') # observer does not fire if value is not used
 
-  needs: ['torrents', 'directories', 'disks']
+  needs: ['torrents', 'directories', 'disks', 'directory']
 
   currentController: null
 
@@ -37,13 +36,30 @@ Cataract.ApplicationController = Ember.Controller.extend
     .property('path')
   directoriesBinding: 'poly.alternatives'
 
-  # when poly has only one alternative
+  # when poly has only one alternative or a the directory controller is active
   directory:
     Ember.computed (key, value)->
+      if dir = @get('controllers.directory.model')
+        return dir
+
       if dirs = @get('directories') # by setting path through query params
         if dirs.get('length') == 1
-          @set 'detailsExtended', true
           dirs.get('firstObject')
         else
-          @set 'detailsExtended', false # Side-effect, feels dirty, but we HACK controller hierarchy anyway
-    .property('directories.@each')
+    .property('directories.@each', 'controllers.directory.model')
+
+  detailsExtended:
+    Ember.computed ->
+      @get('target.router.currentHandlerInfos.lastObject.handler.isDetailed') ||
+        @get('directory')?
+    .property('target.router.currentHandlerInfos.lastObject.handler', 'directory')
+
+  polyDidChange: (->
+    if dirs = @get('poly.alternatives') # by setting path through query params
+      ctrl = @get('controllers.directory')
+      if dirs.get('length') == 1
+        dir = dirs.get('firstObject')
+        ctrl.set('model', dir)
+      else
+        ctrl.set('model', false) unless dirs.indexOf( ctrl.get('model') ) >= 0
+  ).observes('poly')
