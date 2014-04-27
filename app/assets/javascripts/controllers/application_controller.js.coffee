@@ -63,3 +63,13 @@ Cataract.ApplicationController = Ember.Controller.extend
       else
         ctrl.set('model', false) unless dirs.indexOf( ctrl.get('model') ) >= 0
   ).observes('poly')
+
+  # TODO i18n
+  # human readable current age
+  describedAge:
+    Ember.computed ->
+      if @get('age') == 'all'
+        "All since ever"
+      else
+        "in this " + @get('age')
+    .property('age')

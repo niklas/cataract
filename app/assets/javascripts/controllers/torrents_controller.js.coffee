@@ -15,15 +15,6 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   fullContentBinding: 'filteredContent'
   totalBinding: 'fullContent.length'
-  # TODO i18n
-  # human readable current age
-  describedAge:
-    Ember.computed ->
-      if @get('age') == 'all'
-        "All since ever"
-      else
-        "in this " + @get('age')
-    .property('age')
 
   rangeWindowSize: 50
 
