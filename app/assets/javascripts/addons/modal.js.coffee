@@ -5,12 +5,17 @@ Cataract.ModalPane = Bootstrap.ModalPane.extend
   done: Ember.K
   backRoute: null
   callback: (opts) ->
-    if opts.primary
-      @get('ok').bind(@)(opts)
-    else
-      @get('cancel').bind(@)(opts)
-    if back = @get('backRoute')
-      Cataract.Router.router.transitionTo( back... )
-    if done = @get('done')
-      done.call(@)
-    true
+    reaction = if opts.primary
+                 @get('ok').bind(@)(opts)
+               else
+                 @get('cancel').bind(@)(opts)
+
+    # dummy promise for the bad code
+    unless reaction.then
+      reaction = new Ember.RSVP.Promise(  (resolve,_)-> resolve() )
+
+    reaction.then =>
+      if back = @get('backRoute')
+        Cataract.Router.router.transitionTo( back... )
+      if done = @get('done')
+        done.call(@)

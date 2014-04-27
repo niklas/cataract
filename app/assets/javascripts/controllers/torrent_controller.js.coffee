@@ -27,7 +27,7 @@ Cataract.TorrentController = Ember.ObjectController.extend
     delete: (torrent) ->
       Cataract.DeleteTorrentModal.popup
         torrent: torrent
-        backRoute: ['torrents.index']
+        backRoute: ['torrents']
 
     deletePayload: (torrent) ->
       Cataract.ClearPayloadModal.popup torrent: torrent

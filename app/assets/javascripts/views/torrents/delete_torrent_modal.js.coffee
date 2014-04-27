@@ -21,7 +21,7 @@ Cataract.DeleteTorrentModal = Cataract.ModalPane.extend
   ok: (opts) ->
     torrent = @get('torrent')
     if @get('deletePayload')
-      torrent.clearPayload()?.then =>
+      torrent.clearPayload()?.then ->
         torrent.destroyRecord()
     else
       torrent.destroyRecord()
