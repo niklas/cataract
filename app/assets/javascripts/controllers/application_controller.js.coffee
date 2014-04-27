@@ -48,11 +48,11 @@ Cataract.ApplicationController = Ember.Controller.extend
         else
     .property('directories.@each', 'controllers.directory.model')
 
+  detailsRouteActive: false
   detailsExtended:
     Ember.computed ->
-      @get('target.router.currentHandlerInfos.lastObject.handler.isDetailed') ||
-        @get('directory')?
-    .property('target.router.currentHandlerInfos.lastObject.handler', 'directory')
+      @get('detailsRouteActive') || @get('directory')?
+    .property('detailsRouteActive', 'directory')
 
   polyDidChange: (->
     if dirs = @get('poly.alternatives') # by setting path through query params

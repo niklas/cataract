@@ -66,7 +66,12 @@ Cataract.TorrentsRoute = Ember.Route.extend
       controller: @controllerFor('directory')
 
 Cataract.DetailedRoute = Ember.Route.extend
-  isDetailed: true
+  setupController: (controller, model)->
+    @_super(controller, model)
+    @controllerFor('application').set 'detailsRouteActive', true
+  deactivate: ->
+    @_super()
+    @controllerFor('application').set 'detailsRouteActive', false
 
 # TODO have to think about these routes vs queryParams
 Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
