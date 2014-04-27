@@ -1,7 +1,7 @@
 {{view Bootstrap.Forms.Checkbox checkedBinding="content.disableSignup" label="Disable signup"}}
 {{view Cataract.SelectDirectoryField selectionBinding="content.incomingDirectory" label="Download Directory" contentBinding="directories" optionLabelPath="content.nameWithDisk"}}
 
-<a class="save btn btn-success" {{action save}}>
+<a class="save btn btn-success" {{action save content}}>
   <i class="icon-ok icon-white"></i>
   Save
 </a>
