@@ -78,7 +78,6 @@ group :development do
 end
 
 group :production do
-  gem 'therubyracer' # to compile our coffeescript
   gem 'unicorn'
 end
 
