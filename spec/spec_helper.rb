@@ -16,6 +16,10 @@
       Torrent::RTorrent.offline!
     end
 
+    config.after :each do
+      stop_rtorrent # if started
+    end
+
     config.before(:suite) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)

@@ -36,6 +36,7 @@ module RTorrentSpecHelper
   end
 
   def stop_rtorrent
+    Torrent::RTorrent.offline!
     if @rtorrent_pid
       Rails.logger.debug "killing rtorrent with pid: #{@rtorrent_pid}"
       Process.kill 'TERM', @rtorrent_pid
