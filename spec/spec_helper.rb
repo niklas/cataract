@@ -55,9 +55,3 @@ FactoryGirl.reload
 #  # in spec/support/ and its subdirectories.
 #  I18n.reload!
 #  load Rails.root/'config'/'routes.rb'
-
-def zeus_running?
-  File.exists? '.zeus.sock'
-end
-
-FactoryGirl.find_definitions unless zeus_running?
