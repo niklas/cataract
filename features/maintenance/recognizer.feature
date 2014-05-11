@@ -95,7 +95,7 @@ Feature: recognize torrents
       And directory "torrents" should be the torrent's content_directory
       And the torrent's file should exist on disk
       And the torrent's info_hash should not be blank
-      And the torrent should be running
+      And the torrent's current_state should be "running"
 
       # did not match filter
       But a torrent should not exist with url: "http://torrent.zoink.it/love and the village.torrent"
