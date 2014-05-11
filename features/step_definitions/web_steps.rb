@@ -21,8 +21,8 @@
 
 require 'uri'
 require 'cgi'
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
+#require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
+#require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
 
 module WithinHelpers
   def with_scope(locator)
@@ -37,16 +37,18 @@ When /^(.*) within (.*[^:])$/ do |inner, parent|
 end
 
 # Multi-line step scoper
-When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
-  with_scope(parent) { step "#{step}:", table_or_string }
+When /^(.*) within (.*[^:]):$/ do |inner_step, parent, table_or_string|
+  with_scope(parent) { step "#{inner_step}:", table_or_string }
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
+  wait_for_the_page_to_be_loaded
 end
 
 When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
+  wait_for_the_page_to_be_loaded
 end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
@@ -55,6 +57,7 @@ end
 
 When /^(?:|I )follow "([^"]*)"$/ do |link|
   click_link(link)
+  wait_for_the_page_to_be_loaded
 end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
@@ -240,8 +243,8 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
   expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
+  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')}
+
   if actual_params.respond_to? :should
     actual_params.should == expected_params
   else

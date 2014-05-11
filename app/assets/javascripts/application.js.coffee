@@ -12,6 +12,7 @@
 #= require bindWithDelay
 #
 #= require ./cataract
+#= require ./lib/loaded_page
 
 window.EmberENV =
   FEATURES:
