@@ -15,8 +15,8 @@ describe Mlocate do
   end
 
   it "offers query interface for file" do
-    query = stub
-    result = stub
+    query = double
+    result = double
     Mlocate.stub(:file).with(query).and_return(result)
     Mlocate.locate(file: query).should == result
   end
