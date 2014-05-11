@@ -28,8 +28,11 @@ Cataract.DropZoneView = Ember.View.extend
         filedata: upload.target.result
         filename: file.name
         startAutomatically: true
+
       torrent.save().then (t)->
         controller.transitionTo('torrent', t)
+      , (error)->
+        torrent.rollback()
 
     reader.readAsDataURL(file)
 

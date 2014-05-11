@@ -15,13 +15,15 @@ Cataract.Torrent = DS.Model.extend
   filedata: attr 'string'
 
   payload: DS.belongsTo('payload')
-  payloadPresent: Ember.computed ->
-    @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
-  .property('payload.isLoaded', 'payload.isDeleted')
+  payloadPresent:
+    Ember.computed ->
+      @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
+    .property('payload.isLoaded', 'payload.isDeleted', 'payloadExists')
   clearPayload: ->
     if payload = @get('payload')
-      payload.destroyRecord().then =>
-        @set('payloadExists', false)
+      torrent = this
+      payload.destroyRecord().then ->
+        torrent.set('payloadExists', false)
 
   contentDirectory: DS.belongsTo('directory')
 

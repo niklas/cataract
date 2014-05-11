@@ -33,6 +33,8 @@ module Cataract
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.i18n.enforce_available_locales = false
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
@@ -48,10 +50,6 @@ module Cataract
     config.assets.precompile += %w(
       bookmarklet.js
     )
-
-    if config.respond_to?(:sass)
-      config.sass.load_paths << Compass::Frameworks['compass'].stylesheets_directory
-    end
 
     config.generators do |g|
       g.orm :active_record

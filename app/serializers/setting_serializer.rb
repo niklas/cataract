@@ -1,3 +1,4 @@
+require_dependency 'base_serializer'
 class SettingSerializer < BaseSerializer
   include ActionView::Helpers::TagHelper
   include BookmarkletHelper
@@ -7,7 +8,7 @@ class SettingSerializer < BaseSerializer
   def attributes
     super.tap do |hash|
       hash['id'] = 'all'
-      hash['bookmark_link'] = link_to_scrape_bookmarklet "Bookmarklet", class: 'label'
+      hash['bookmark_link'] = link_to_scrape_bookmarklet "Bookmarklet", class: 'label', url: object.scraping_url
     end
   end
 end

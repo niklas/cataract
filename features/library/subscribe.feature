@@ -29,7 +29,8 @@ Feature: Subscribe Directory
      Then I should see "subscribed" in a label within the details
       And the directory's subscribed should be true
 
-     When I follow "unsubscribe"
+     When I close all flash messages
+      And I follow "unsubscribe"
       And I follow "Save"
      Then I should see flash notice "Directory 'Shame of Frowns' saved."
       #Then I should see flash notice "subscribed to Directory 'Shame of Frowns'."

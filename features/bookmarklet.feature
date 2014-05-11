@@ -21,4 +21,4 @@ Feature: Bookmarklet
       And I should see "started" in frame "cataract_new_scraping"
 
       And a torrent should exist
-      And the torrent should be running
+      And the torrent's status should be "running"

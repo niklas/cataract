@@ -39,10 +39,10 @@ module HtmlSelectorsHelpers
       "ul#torrents"
 
     when /^the #{capture_nth} (torrent)$/
-      selector_for("the #{$2.pluralize} list") + " li#{Numerals[$1]}"
+      css2xpath selector_for("the #{$2.pluralize} list") + "> li#{Numerals[$1]}"
 
     when /^the #{capture_nth} row$/
-      "tr#{Numerals[$1]}"
+      css2xpath "tr#{Numerals[$1]}"
 
     when /^the director(y|ies) list$/
       "table.directories"
@@ -125,6 +125,15 @@ module HtmlSelectorsHelpers
       raise "Can't find mapping from \"#{locator}\" to a selector.\n" +
         "Now, go and add a mapping in #{__FILE__}"
     end
+  end
+
+  # capybara uses the browsers' native query methods. Often they do not support CSS3
+  def complicated_css(css)
+    Nokogiri::CSS.xpath_for(css).first
+  end
+
+  def css2xpath(css)
+    [:xpath, complicated_css(css)]
   end
 end
 

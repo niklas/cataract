@@ -14,6 +14,7 @@ Feature: Adding a torrent
 
   Scenario: Adding by URL
      When I follow "Add"
+      And I wait for the modal box to appear
      Then the selected "Content Directory" should be "Incoming"
      When I fill in "URL" with "http://hashcache.net/files/single.torrent"
       And I follow "Add" within the modal box
@@ -25,14 +26,14 @@ Feature: Adding a torrent
 
   Scenario: Adding by URL to specific directory
      When I follow "Add"
-     Then the selected "Content Directory" should be "Incoming"
-     When I fill in "URL" with "http://hashcache.net/files/single.torrent"
-      And I select "Incoming" from "Content Directory"
+      And I wait for the modal box to appear
+      And I fill in "URL" with "http://hashcache.net/files/single.torrent"
+      And I select "Another" from "Content Directory"
       And I follow "Add" within the modal box
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
-      And the directory "Incoming" should be the torrent's content_directory
+      And the directory "Another" should be the torrent's content_directory
       And rtorrent should download the torrent
 
   Scenario: Upload with traditional multipart form
@@ -76,7 +77,7 @@ Feature: Adding a torrent
     Given the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
 
-     When I drag a file over the torrent list
+     When I drag a file over the sidebar
      Then the dropzone should be classified as inviting
       But the dropzone should not be classified as hovered
 

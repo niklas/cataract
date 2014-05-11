@@ -13,6 +13,7 @@ Feature: Settings
       | Archive   | Archive  | 4321 | the disk |
       And I am signed in as the user
       And I am on the home page
+      And all animations are disabled
       And I open the settings menu
 
   Scenario: Set default download directory

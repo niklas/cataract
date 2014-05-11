@@ -4,7 +4,7 @@ end
 
 Given /^#{capture_model} is (?:marked as )?(running|archived)$/ do |ref, status|
   model = model!(ref)
-  model.class.update_all( {status: status}, {id: model.id} )
+  model.class.where(id: model.id).update_all(status: status)
 end
 
 Then(/^#{capture_model}'s (\w+) (should(?: not)?) end with #{capture_value}$/) do |name, attribute, expectation, expected|

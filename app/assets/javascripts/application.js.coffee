@@ -1,9 +1,10 @@
 #= require jquery
-#= require jquery-ui
+#= require_self
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
-#= require ember-23be8f
-#= require ember-data-d45b68
+#= require handlebars
+#= require ember
+#= require ember-data
 #= require ember-bootstrap
 #= require ember-rails-flash
 #= require bootstrap
@@ -11,6 +12,11 @@
 #= require bindWithDelay
 #
 #= require ./cataract
+#= require ./lib/loaded_page
+
+window.EmberENV =
+  FEATURES:
+    'query-params-new': yes
 
 jQuery ->
   search = ->

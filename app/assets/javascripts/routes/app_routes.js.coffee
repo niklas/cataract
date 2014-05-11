@@ -1,9 +1,9 @@
 Cataract.Router.map ->
   @resource 'filter', path: 'filter/:status'
-  @resource 'torrents', queryParams: ['status', 'age', 'directories'], ->
-    @resource 'torrent', path: '/torrent/:torrent_id'
-    @resource 'directory', path: '/directory/:directory_id'
-    @route 'add', path: '/add'
+  @resource 'torrents'
+  @route 'add', path: '/add'
+  @resource 'torrent', path: '/torrent/:torrent_id'
+  @resource 'directory', path: '/directory/:directory_id'
   @resource 'disk', path: 'disk/:disk_id'
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
@@ -27,89 +27,62 @@ Cataract.IndexRoute = Ember.Route.extend
 
 Cataract.FilterRoute = Ember.Route.extend
   beforeModel: (transition) ->
-    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.status }
+    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.filter.status }
 
 Cataract.TorrentsRoute = Ember.Route.extend
-  beforeModel: (queryParams, transition)->
-    if Ember.isNone(queryParams.age)
-      queryParams.age = 'month'
-    if Ember.isNone(queryParams.status)
-      queryParams.status = 'recent'
+  queryParams:
+    age:
+      refreshModel: true
+  beforeModel: (transition)->
+    unless Ember.isNone( queryParams = transition.queryParams )
+      if Ember.isNone(queryParams.age)
+        queryParams.age = 'month'
+      if Ember.isNone(queryParams.status)
+        queryParams.status = 'recent'
 
-    store = @get('store')
-    # warmup store only when age has changed
-    if queryParams.age != transition.params.queryParams?.age
-      store.unloadAll('torrent')
-      store.findQuery('torrent', age: queryParams.age)
+      store = @get('store')
+      # warmup store only when age has changed
+      if queryParams.age != transition.params.queryParams?.age
+        store.unloadAll('torrent')
+        store.findQuery('torrent', age: queryParams.age)
 
-    @setupDirectories(queryParams) # promise
-
-  model: (params, queryParams, transition) ->
+  model: (params, transition) ->
     # TODO should we filter&paginate here already or on the controller?
     @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
 
-  setupDirectories: (queryParams)->
-    unless Ember.isNone(list=queryParams.directories)
-      ids = (i for i in list.split(','))
-      @controllerFor('directories')
-        .get('directories')
-        .then (all) =>
-          dirs = all.filter (d)->
-            ids.indexOf(d.get('id')) >= 0
-          @set 'directories', dirs
-          if dirs.get('length') == 1
-            dir = dirs.get('firstObject')
-            @set 'singleDirectory', dir
-            @controllerFor('directory').set('model', dir)
-          else
-            @set 'singleDirectory', false
-
-  setupController: (controller, model, queryParams) ->
-    controller.set 'directories', @get('directories')
+  setupController: (controller, model) ->
+    @_super(controller, model)
     controller.set 'unfilteredContent', model
-    controller.set('mode', queryParams.status)
-    controller.set('age', queryParams.age)
     controller.gotoFirstPage()
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
 
   renderTemplate: ->
-    @render 'torrents/tabs',
-      outlet: 'bar',
-      controller: @controllerFor('torrents')
-    @render 'torrents/navigation',
-      outlet: 'nav',
-      controller: @controllerFor('torrents')
-    if @get('singleDirectory')
-      @controllerFor('application').set 'detailsExtended', true
-      @render 'directory',
-        controller: @controllerFor('directory')
-    else
-      @controllerFor('application').set 'detailsExtended', false
+    # we are always rendered
+    # but the directory maybe, depends on query-params available later
+    @render 'directory',
+      controller: @controllerFor('directory')
 
 Cataract.DetailedRoute = Ember.Route.extend
   setupController: (controller, model)->
     @_super(controller, model)
-    @controllerFor('application').set 'detailsExtended', true
+    @controllerFor('application').set 'detailsRouteActive', true
   deactivate: ->
     @_super()
-    @controllerFor('application').set 'detailsExtended', false
-
+    @controllerFor('application').set 'detailsRouteActive', false
 
 # TODO have to think about these routes vs queryParams
 Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @get('store').find 'directory', params.directory_id # FIXME ember should do this
-  afterModel: (model)->
-    @controllerFor('torrents').set('directory', model)
   controllerName: 'directory'
   renderTemplate: ->
     @render 'directory'
   deactivate: (model)->
     @_super()
-    @controllerFor('torrents').set('directory', null)
+    @controllerFor('directory').set('content', null) # back to query-param
 
 Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   beforeModel: ->
@@ -118,7 +91,8 @@ Cataract.TorrentRoute = Cataract.DetailedRoute.extend
     @get('store').find 'torrent', params.torrent_id
 
 
-Cataract.TorrentsAddRoute = Ember.Route.extend
+Cataract.AddRoute = Ember.Route.extend
+  controllerName: 'torrents_add'
   model: -> @get('store').createRecord('torrent')
   setupController: (controller, torrent) ->
     controller.set 'content', torrent
@@ -142,7 +116,7 @@ Cataract.TorrentsAddRoute = Ember.Route.extend
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
-    @get('store').createRecord 'directory'
+    @get('store').createRecord 'directory',
       disk: @modelFor('disk')
       parentDirectory: @controllerFor('torrents').get('directory')
       virtual: false

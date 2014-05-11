@@ -5,21 +5,28 @@ PolyDiskTree = Ember.Mixin.create
   #
   # accepts a collection, for example a findAll
   # sets observers on it
-  directories: Ember.computed (key, value) ->
-    if arguments.length > 1
-      @_setupObservers(value)
-      @set('_directories', value)
-    unless @get('_directories')
-      fresh = Ember.A()
-      @_setupObservers(fresh)
-      @set('_directories', fresh)
-    @get('_directories')
-  .property()
+  directories:
+    Ember.computed (key, value) ->
+      if arguments.length > 1
+        @_setupObservers(value)
+        @set('_directories', value)
+      unless @get('_directories')
+        fresh = Ember.A()
+        @_setupObservers(fresh)
+        @set('_directories', fresh)
+      @set('polies', Ember.A()) # linear list
+      @get('_directories')
+    .property()
 
   # exit point, responds to #children and each to #alternatives
-  root: Ember.computed ->
-    PolyDiskDirectory.create()
-  .property()
+  root:
+    Ember.computed ->
+      PolyDiskDirectory.create()
+    .property()
+
+  polies: Ember.A()
+  findPolyByPath: (path)->
+    @get('polies').findBy 'relativePath', path
 
   _setupObservers: (list)->
     list.addEnumerableObserver(@,
@@ -50,7 +57,10 @@ PolyDiskTree = Ember.Mixin.create
         cut = dirPath.slice( herePath.length + 1 ) # dir path from here (+ slash)
         nameOnDisk = cut.split(slash)[0]
 
-      @_insert here.getOrBuildChildByNameOnDisk(nameOnDisk), dir
+      child = here.getOrBuildChildByNameOnDisk(nameOnDisk)
+      list = @get('polies')
+      list.pushObject(child) unless list.indexOf(child) >= 0
+      @_insert child, dir
 
     else
 

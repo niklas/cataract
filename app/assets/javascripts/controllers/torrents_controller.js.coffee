@@ -1,5 +1,12 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
-  needs: ['disks']
+  needs: ['application', 'disks', 'directories']
+
+  modeBinding: 'controllers.application.mode'
+  ageBinding: 'controllers.application.age'
+  polyBinding: 'controllers.application.poly'
+  directoriesBinding: 'controllers.application.directories'
+  directoryBinding: 'controllers.application.directory'
+
   init: ->
     @_super()
     $('body').bind 'tick', => @refreshTransfers(); true
@@ -8,26 +15,15 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   fullContentBinding: 'filteredContent'
   totalBinding: 'fullContent.length'
-  age: 'month' # faster initialization of page
-  # TODO i18n
-  # human readable current age
-  describedAge: Ember.computed ->
-    if @get('age') == 'all'
-      "All since ever"
-    else
-      "in this " + @get('age')
-  .property('age')
 
   rangeWindowSize: 50
 
   didRequestRange: (rangeStart, rangeStop) ->
     content = @get('fullContent').slice(rangeStart, rangeStop)
-    @replace 0, @get('length'), content
+    @set 'model', content # route sets unfilteredContent
 
+  # TODO terms as query-param?
   termsBinding: 'Cataract.terms'
-  mode: ''
-  directory: null
-  directories: Ember.A()
   directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   filterFunctionDidChange: (->
@@ -35,12 +31,13 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @didRequestRange @get("rangeStart"), @get("rangeStop")
   ).observes("filterFunction", 'mode')
 
-  termsList: Ember.computed ->
-    if terms = @get('terms')
-      Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
-    else
-      Ember.A()
-  .property('terms')
+  termsList:
+    Ember.computed ->
+      if terms = @get('terms')
+        Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
+      else
+        Ember.A()
+    .property('terms')
 
 
   filterFunction: (->
@@ -116,9 +113,11 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
     @reload()
     age
 
-  isRecentActive: Ember.computed ->
-    @get('mode') is 'recent'
-  .property('mode')
-  isRunningActive: Ember.computed ->
-    @get('mode') is 'running'
-  .property('mode')
+  isRecentActive:
+    Ember.computed ->
+      @get('mode') is 'recent'
+    .property('mode')
+  isRunningActive:
+    Ember.computed ->
+      @get('mode') is 'running'
+    .property('mode')

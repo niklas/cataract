@@ -1,8 +1,8 @@
 <ul class="nav nav-tabs disks">
   {{#each controller}}
-  <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
+  <li {{bind-attr class=":disk active isMounted:mounted:unmounted"}}>
   {{#link-to 'disk' this class="name"}}
-      <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+      <i {{bind-attr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
       {{name}}
     {{/link-to}}
   </li>

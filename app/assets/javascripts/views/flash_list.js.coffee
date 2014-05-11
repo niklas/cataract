@@ -1,10 +1,11 @@
 Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
   classNameBindings: ['basicClassName', 'alertClass']
-  alertClass: Ember.computed ->
-    "alert alert-#{@get('content.severity')}"
-  .property('content.severity')
+  alertClass:
+    Ember.computed ->
+      "alert alert-#{@get('content.severity')}"
+    .property('content.severity')
   delay: 23 * 1000
-  fadeDuration: 3 * 1000
+  fadeDuration: 1000
   template: Ember.Handlebars.compile """
   {{#with view.content}}
     <a class="close" {{action "closeQuickly" target=view}}> ×</a>

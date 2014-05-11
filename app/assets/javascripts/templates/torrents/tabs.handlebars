@@ -1,16 +1,16 @@
 <ul class="nav nav-tabs disks">
   {{#each directories}}
-  <li {{bindAttr class=":disk active disk.isMounted:mounted:unmounted"}}>
+  <li {{bind-attr class=":disk active disk.isMounted:mounted:unmounted"}}>
   {{#link-to 'directory' this class="name"}}
-      <i {{bindAttr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
+      <i {{bind-attr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
       {{disk.name}}
     {{/link-to}}
   </li>
   {{else}}
     {{#each controllers.disks}}
-    <li {{bindAttr class=":disk active isMounted:mounted:unmounted"}}>
+    <li {{bind-attr class=":disk active isMounted:mounted:unmounted"}}>
     {{#link-to 'disk' this class="name"}}
-        <i {{bindAttr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+        <i {{bind-attr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
         {{name}}
       {{/link-to}}
     </li>
@@ -18,5 +18,5 @@
   {{/each}}
 </ul>
 
-{{view Cataract.Pagination controllerBinding="this"}}
+{{view Cataract.Pagination controllerBinding="controllers.torrents"}}
 

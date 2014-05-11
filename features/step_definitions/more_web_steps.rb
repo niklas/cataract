@@ -1,5 +1,5 @@
 When /^I filter with "([^"]+)"$/ do |terms|
-  first('#torrent_search_terms').set(terms)
+  find('#torrent_search_terms').set(terms)
   sleep 1 # delayed typing
 end
 
@@ -12,7 +12,7 @@ Given /^"([^"]*)" state should be chosen$/ do |state|
 end
 
 When /^I choose state "([^"]*)"$/ do |state|
-  first('label', text: state).click
+  find('label', text: state).click
 end
 
 When /^I toggle the (?:menu|navigation)$/ do
@@ -58,7 +58,7 @@ end
 When /^I click on (the .+)$/ do |target|
   selector = selector_for(target)
   page.should have_css(selector)
-  page.first(selector).click
+  page.find(selector).click
 end
 
 Then /^I should see (.+link)$/ do |target|
@@ -86,4 +86,18 @@ When /^(.*) in frame "([^"]+)"$/ do |inner, frame_id|
   within_frame frame_id do
     step inner
   end
+end
+
+Given /^all (?:css )?animations are disabled$/ do
+  execute_script <<-EOJS
+    $('<style></style>')
+      .text("* { transition-property: none !important };")
+      .appendTo('html head')
+  EOJS
+  execute_script 'jQuery.fx.off = true'
+end
+
+When /^I close all flash messages$/ do
+  step 'all animations are disabled'
+  all('.flash .close').each(&:click)
 end

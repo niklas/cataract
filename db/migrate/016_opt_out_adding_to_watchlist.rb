@@ -1,7 +1,6 @@
 class OptOutAddingToWatchlist < ActiveRecord::Migration
   def self.up
-    add_column :users, :dont_watch_new_torrents, :boolean
-    User.find(:all).each { |u| u.update_attribute :dont_watch_new_torrents, false}
+    add_column :users, :dont_watch_new_torrents, :boolean, default: false
   end
 
   def self.down

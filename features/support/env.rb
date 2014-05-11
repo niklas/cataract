@@ -1,9 +1,6 @@
-require 'rubygems'
-require 'spork'
 
-Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
-  require File.dirname(__FILE__) + "/../../config/spork_prefork"
+  require File.expand_path("../../../config/environment", __FILE__)
 
   require 'rspec'
   require 'fileutils'
@@ -68,11 +65,9 @@ Spork.prefork do
   VCR.cucumber_tags do |t|
     t.tag  '@vcr', use_scenario_name: true, record: :new_episodes
   end
-end
 
-Spork.each_run do
-  I18n.backend.reload!
+
+#  I18n.backend.reload!
   FactoryGirl.reload
-  load Rails.root/'config'/'routes.rb'
-end
+#  load Rails.root/'config'/'routes.rb'
 

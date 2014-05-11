@@ -8,6 +8,7 @@ Feature: Delete torrents
   Background:
     Given a disk exists with path: "usb"
       And a directory exists with relative_path: "pics", disk: the disk
+      And a torrent exists with title: "Spacer to keep list"
       And a torrent with picture of tails exists with content_directory: the directory, title: "Tails"
       And the torrent's content exists on disk
      Then the file "usb/pics/tails.png" should exist on disk

@@ -12,7 +12,9 @@ end
 Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |item_names, container_name, expected|
   items = item_names.split.map(&:underscore).map(&:singularize).map {|f| ".#{f}" }.join
   fields = expected.column_names.map(&:underscore).map {|f| ".#{f}" }
-  found = page.all("#{selector_for(container_name)} >*#{items}").select(&:visible?).map do |item|
+  list = selector_for(container_name)
+  page.should have_css(list) # wait
+  found = page.all("#{list} >*#{items}").select(&:visible?).map do |item|
     next if item[:class].include?('divider')
     fields.map {|f| item.first(f).text.strip rescue '(i) nil' }
   end
@@ -72,7 +74,7 @@ end
 
 Then /^(.*) (should|should not) be classified as (\w+)$/ do |name, should_or_not, klass|
   selector = selector_for(name)
-  element = page.first(selector)
+  element = page.find(selector)
 
   if should_or_not.include?('not')
     element['class'].should_not =~ /\b#{klass}\b/

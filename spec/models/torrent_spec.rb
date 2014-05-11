@@ -61,14 +61,14 @@ describe Torrent do
     let(:torrent) { create :torrent }
 
     it "should raise Torrent::FileNotFound when file does not exist" do
-      torrent.stub!(:file_exists?).and_return(false)
+      torrent.stub(:file_exists?).and_return(false)
       expect { torrent.metainfo }.to raise_error(Torrent::HasNoMetaInfo)
     end
 
     it "should raise Torrent::FileNotFound when RubyTorrent::Metainfo cannot find file" do
-      torrent.stub!(:file_exists?).and_return(true)
-      torrent.stub!(:path).and_return('path')
-      RubyTorrent::MetaInfo.stub!(:from_bstream).and_raise(Errno::ENOENT)
+      torrent.stub(:file_exists?).and_return(true)
+      torrent.stub(:path).and_return('path')
+      RubyTorrent::MetaInfo.stub(:from_bstream).and_raise(Errno::ENOENT)
       expect { torrent.metainfo }.to raise_error(Torrent::FileNotFound)
     end
   end
@@ -84,8 +84,8 @@ describe Torrent do
 
   describe 'cleaning filenames' do
     it 'is delegated to Cataract::FileNameCleaner' do
-      filename = stub 'Filename'
-      cleaned = stub 'cleaned Filename'
+      filename = double 'Filename'
+      cleaned = double 'cleaned Filename'
       torrent = build :torrent, filename: filename
       Cataract::FileNameCleaner.should_receive(:clean).with(filename).and_return(cleaned)
       torrent.clean_filename.should == cleaned

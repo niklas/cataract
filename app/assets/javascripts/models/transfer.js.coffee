@@ -5,15 +5,18 @@ Cataract.Transfer = DS.Model.extend
   downRate: attr 'string'
   eta: attr 'string'
   torrent: DS.belongsTo('torrent')
-  progressStyle: Ember.computed ->
-    "width: #{@get('progress')}%"
-  .property('progress')
-  downloading: Ember.computed ->
-    @get('progress') != 100 and parseInt(@get('downRate')) > 0
-  .property('progress', 'downRate')
-  finished: Ember.computed ->
-    @get('progress') == 100
-  .property('progress')
+  progressStyle:
+    Ember.computed ->
+      "width: #{@get('progress')}%"
+    .property('progress')
+  downloading:
+    Ember.computed ->
+      @get('progress') != 100 and parseInt(@get('downRate')) > 0
+    .property('progress', 'downRate')
+  finished:
+    Ember.computed ->
+      @get('progress') == 100
+    .property('progress')
   active: attr 'boolean'
 
 Cataract.Transfer.reopenClass

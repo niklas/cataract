@@ -8,11 +8,19 @@ describe 'PolyDiskTree', ->
   afterEach ->
     tree = null
 
+  it 'can be created', ->
+    expect( tree ).toNotEqual(null)
+
+  it 'has directories collection', ->
+    dirs = tree.get('directories')
+    expect( dirs ).toNotEqual(undefined)
+
   describe 'adding 3 root dirs with common path', ->
     beforeEach ->
-      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
-      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
-      tree.get('directories').pushObject Ember.Object.create(relativePath: 'Level1')
+      dirs = tree.get('directories')
+      dirs.pushObject Ember.Object.create(relativePath: 'Level1')
+      dirs.pushObject Ember.Object.create(relativePath: 'Level1')
+      dirs.pushObject Ember.Object.create(relativePath: 'Level1')
 
     it 'creates only one child', ->
       expect( tree.get('root.children.length') ).toEqual(1)

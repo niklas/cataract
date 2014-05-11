@@ -3,7 +3,7 @@ require 'worker'
 
 describe Worker do
   it "can start" do
-    worker = mock('Worker')
+    worker = double('Worker')
     Worker.should_receive(:new).and_return(worker)
     worker.should_receive(:start).and_return(true)
     Worker.start
@@ -20,14 +20,14 @@ describe Worker do
   end
 
   let(:job_class) { 
-    mock('FnordClass').tap do |job_class|
+    double('FnordClass').tap do |job_class|
       subject.stub(:job_class).and_return(job_class)
     end
   }
 
   context "listening" do
     subject   { Worker.new('Fnord') }
-    let(:connection) { mock('ConnectionAdapter') }
+    let(:connection) { double('ConnectionAdapter') }
     before do
       job_class.stub(:connection).and_return(connection)
     end
@@ -72,13 +72,13 @@ describe Worker do
     subject   {
       Worker.new('Fnord').tap do |worker|
         worker.stub(:wait).and_return(true)
-        job_class = mock('Fnord')
+        job_class = double('Fnord')
         job_class.stub(:transaction).and_yield
         worker.stub(:job_class).and_return(job_class)
       end
     }
     let(:job) { 
-      mock('Job', work!: true, destroy: true).tap do |job|
+      double('Job', work!: true, destroy: true).tap do |job|
         subject.stub(:next_job).and_return(job)
       end
     }
@@ -127,7 +127,7 @@ describe Worker do
     end
 
     context "next job" do
-      let(:job)       { mock 'a Fnord' }
+      let(:job)       { double 'a Fnord' }
 
       it "uses locked scope on job_class to return a job" do
         job_class.stub_chain(:locked).and_return(job)
@@ -137,7 +137,7 @@ describe Worker do
     end
 
     context "attempting to lock job" do
-      let(:job)       { mock 'a Fnord' }
+      let(:job)       { double 'a Fnord' }
 
       it "should try 5 times by default" do
         subject.attempts.should == 5

@@ -1,24 +1,12 @@
 describe 'Cataract.DirectoryNavItemView', ->
-
-  # link-to needs all this
-  buildControllerWithRouter = ->
-    router = Ember.Object.create
-      isActive: Ember.K
-      generate: Ember.K
-      hasRoute: Ember.K
-      router:
-        recognizer:
-          names: {}
-        queryParamsForHandler: -> undefined
-
-    controller =
-      container:
-        lookup: -> router
-      router: router
-
   view = null
+  content = null
+
   beforeEach ->
-    view = Cataract.DirectoryNavItemView.create(controller: buildControllerWithRouter())
+    TEST.stubLinkToHelper()
+    content = Ember.Object.create(hasSubDirs: false)
+    # it's a listView, they are strange with their content.
+    view = Cataract.DirectoryNavItemView.create(content: content, controller: content)
     Ember.run ->
       view.append()
 
@@ -26,6 +14,7 @@ describe 'Cataract.DirectoryNavItemView', ->
     Ember.run ->
       view.remove()
     view = null
+    TEST.restoreLinkToHelper()
 
   it "is defined", ->
     expect(view).toBeDefined()
@@ -38,7 +27,7 @@ describe 'Cataract.DirectoryNavItemView', ->
   describe 'for missing directory', ->
     beforeEach ->
       Ember.run ->
-        view.set 'content', Ember.Object.create(exists: false)
+        content.set 'exists', false
 
     it "adds warning icon", ->
       expect( view.$('i.icon-warning-sign').length ).toEqual(1)
@@ -49,7 +38,7 @@ describe 'Cataract.DirectoryNavItemView', ->
   describe 'for existing directory', ->
     beforeEach ->
       Ember.run ->
-        view.set 'content', Ember.Object.create(exists: true)
+        content.set 'exists', true
 
     it "adds folder icon", ->
       expect( view.$('i.icon-folder-open').length ).toEqual(1)

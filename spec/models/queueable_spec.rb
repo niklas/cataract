@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Queueable do
   class Model < ActiveRecord::Base
+    attr_protected
     self.table_name = 'modls'
   end
   it "should be a module" do
@@ -78,13 +79,20 @@ describe Queueable do
           3.times { model.create! }
         end
 
-        it "should set locked_at on locked record" do
+        it "sets #locked_at on locked record" do
           record = model.locked
           record.should be_a(model)
           record.locked_at.should_not be_nil
         end
 
-        it "should fetch no record twice" do
+        it "fetches all records in sequence" do
+          3.times do
+            record = model.locked
+            record.should be_a(model)
+          end
+        end
+
+        it "fetches different record each time" do
           first, second, third = model.locked, model.locked, model.locked
           first.should_not eql(second)
           first.should_not eql(third)
@@ -93,7 +101,7 @@ describe Queueable do
 
         it "should not fail if no records left" do
           connection.create_queueable_lock_function
-          3.times { model.locked }
+          4.times { model.locked }
           expect { model.locked }.not_to raise_error
         end
       end
@@ -109,7 +117,7 @@ describe Queueable do
         it "saves exception text when failing" do
           job = model.new
           job.stub(:persisted? => true)
-          exception = mock "exception", inspect: "useful info"
+          exception = double "exception", inspect: "useful info"
           job.handle_failure(exception)
           job.message.should be_present
           job.message.should include('useful info')

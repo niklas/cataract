@@ -1,20 +1,11 @@
-# A sample Guardfile
-# More info at https://github.com/guard/guard#readme
-
-guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' }, :test_unit => false, :wait => 120 do
-  watch('config/application.rb')
-  watch('config/environment.rb')
-  watch(%r{^config/environments/.+\.rb$})
-  watch(%r{^config/initializers/.+\.rb$})
-  watch('Gemfile.lock')
-  watch('spec/spec_helper.rb')
-  watch('test/test_helper.rb')
-  watch('features/support/env.rb')
-end unless ENV['NO_SPORK']
-
 group :test, :halt_on_fail => true do
 
-  guard 'rspec', :cli => '--drb --color --format documentation', :version => 2, :run_all => { :cli => "--color --format progress" }, :all_on_start => false do
+  guard 'rspec',
+    cmd: 'zeus rspec --color --format documentation',
+    run_all: {
+      cli: "--color --format progress"
+    },
+    all_on_start: false do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
     watch('spec/spec_helper.rb')  { "spec" }
@@ -40,13 +31,14 @@ group :test, :halt_on_fail => true do
     watch(%r{app/assets/javascripts/(.+?)\.(js|coffee)})  { |m| "spec/javascripts/#{m[1]}_spec.#{m[2]}" }
   end
 
-#                                                         V --no-drb skip spork to run simplecov 
   guard 'cucumber',
-    :cli => "--drb --no-source --no-profile --strict --format pretty --format rerun --out rerun.txt --tags ~@wip",
-    :keep_failed => false,
-    :run_all => { :cli => "--format progress --tags ~@wip" },
-    :all_on_start => false,
-    :all_after_pass => false do
+    cli: "--no-source --no-profile --strict --format pretty --format rerun --out rerun.txt --tags ~@wip",
+    keep_failed: false,
+    run_all: { cli: "--format progress --tags ~@wip" },
+    command_prefix: 'zeus',
+    bundler: false,
+    all_on_start: false,
+    all_after_pass: false do
     watch(%r{^features/.+\.feature$})
     watch(%r{^app/(controllers|widgets)})     { "features" }
     watch(%r{^app/models/maintenance/(.+)\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }

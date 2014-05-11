@@ -1,12 +1,9 @@
-require 'rubygems'
-require 'spork'
-
-Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
-  require File.dirname(__FILE__) + "/../config/spork_prefork"
+  require File.expand_path("../../config/environment", __FILE__)
 
   require 'rspec/rails'
   require 'fakefs/spec_helpers'
+  require 'factory_girl'
   require 'webmock/rspec'
   require 'vcr'
 
@@ -47,16 +44,14 @@ Spork.prefork do
 
     config.mock_with :rspec
   end
-end
 
-Spork.each_run do
-  # rspec reports time since its started https://github.com/guard/guard-rspec/issues/61
-  $rspec_start_time = Time.now
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+FactoryGirl.reload
 
-  # Requires supporting ruby files with custom matchers and macros, etc,
-  # in spec/support/ and its subdirectories.
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-  FactoryGirl.reload
-  I18n.reload!
-  load Rails.root/'config'/'routes.rb'
-end
+#  # rspec reports time since its started https://github.com/guard/guard-rspec/issues/61
+#  $rspec_start_time = Time.now
+#
+#  # Requires supporting ruby files with custom matchers and macros, etc,
+#  # in spec/support/ and its subdirectories.
+#  I18n.reload!
+#  load Rails.root/'config'/'routes.rb'
