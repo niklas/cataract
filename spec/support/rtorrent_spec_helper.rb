@@ -12,7 +12,7 @@ module RTorrentSpecHelper
     socket_path/'rtorrent_test'
   end
 
-  def start_rtorrent(seconds=5)
+  def start_rtorrent(seconds=15)
     Torrent::RTorrent.online!
     FileUtils.rm rtorrent_socket_path if rtorrent_socket_path.exist?
     FileUtils.mkdir_p socket_path unless socket_path.exist?
