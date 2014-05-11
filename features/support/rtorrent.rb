@@ -10,7 +10,7 @@ Before '@rtorrent' do
   start_rtorrent
 end
 
-After '@rtorrent' do
+After do
   stop_rtorrent
 end
 
