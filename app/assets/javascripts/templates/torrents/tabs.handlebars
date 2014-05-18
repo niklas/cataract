@@ -2,7 +2,7 @@
   {{#each directories}}
   <li {{bind-attr class=":disk active disk.isMounted:mounted:unmounted"}}>
   {{#link-to 'directory' this class="name"}}
-      <i {{bind-attr class="disk.isMounted:icon-hdd:icon-warning-sign"}}></i>
+      <i {{bind-attr class=":glyphicon disk.isMounted:glyphicon-hdd:glyphicon-warning-sign"}}></i>
       {{disk.name}}
     {{/link-to}}
   </li>
@@ -10,7 +10,7 @@
     {{#each controllers.disks}}
     <li {{bind-attr class=":disk active isMounted:mounted:unmounted"}}>
     {{#link-to 'disk' this class="name"}}
-        <i {{bind-attr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+        <i {{bind-attr class=":glyphicon isMounted:glyphicon-hdd:glyphicon-warning-sign"}}></i>
         {{name}}
       {{/link-to}}
     </li>

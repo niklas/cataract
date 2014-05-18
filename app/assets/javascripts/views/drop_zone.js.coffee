@@ -1,7 +1,7 @@
 Cataract.DropZoneView = Ember.View.extend
   elementId: 'dropzone'
   classNameBindings: ['hovered', 'inviting']
-  template: Ember.Handlebars.compile '<i class="icon-upload"></i> <div class="inflate"></div>'
+  template: Ember.Handlebars.compile '<i class="glyphicon glyphicon-upload"></i> <div class="inflate"></div>'
   hovered: false
   inviting: false
 
