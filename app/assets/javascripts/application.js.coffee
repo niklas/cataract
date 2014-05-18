@@ -32,7 +32,7 @@ jQuery ->
 
   setInterval ->
     $('body').trigger 'tick'
-  , if document.location.href.indexOf('localhost') < 10 then 9001 * 1000 else 23 * 1000
+  , if document.location.hostname is 'localhost' then 9001 * 1000 else 23 * 1000
 
   $.fn.animatedRemove = (duration=300)->
     $(this).each ->
