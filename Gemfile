@@ -8,9 +8,9 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.2.3'
 gem 'jquery-rails'
-gem 'bootstrap-sass', '~> 2.3.0.1'
+gem 'bootstrap-sass', '~> 3.1.1.1'
 gem 'jquery-ui-rails'
-gem 'bootswatch-rails'
+gem 'bootswatch-rails', '~> 0.5.0'
 #gem 'turbo-sprockets-rails3', '~> 0.3.11'
 
 
