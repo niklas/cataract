@@ -11,6 +11,7 @@ $navbar_shift: 60px;
 
 /* overwrite boostrap variables here */
 @import "bootstrap";
+@import "bootstrap/theme";
 
 /* push content down, the fixed navbar covers it */
 body {
