@@ -59,9 +59,8 @@ table.directories {
   @include hide_fixed_column('disk');
 }
 
-$grayLighter: #777;
 .breadcrumb .caret {
-  border-top-color: $grayLighter; // make the caret visible, was black on black before
+  border-top-color: $gray-lighter; // make the caret visible, was black on black before
   opacity: 0.6;
 }
 

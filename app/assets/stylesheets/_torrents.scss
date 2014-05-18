@@ -1,7 +1,4 @@
 $pie_size: 3.2em;
-$bodyBackground: #333;
-$baseFontSize: 14px;
-$linkColor: #2D842B;
 
 @mixin icon($icon) {
   margin-left: 1.3em;
@@ -33,7 +30,7 @@ ul.torrents {
     padding: 0.5em;
     margin-bottom: 0.8em;
     border-radius: 4px;
-    @include box-shadow(lighten($bodyBackground, 15) 0px 0px 3px);
+    @include box-shadow(lighten($body-bg, 15) 0px 0px 3px);
     position: relative;
     cursor: pointer;
 
@@ -44,20 +41,20 @@ ul.torrents {
     }
 
     &:hover, &.active {
-      @include box-shadow(lighten($bodyBackground, 25) 1px-$emboss 1px 9px);
+      @include box-shadow(lighten($body-bg, 25) 1px-$emboss 1px 9px);
       @include translate($emboss, -$emboss);
     }
 
     .title {
       overflow: hidden;
-      margin-bottom: $baseFontSize * 0.1;
-      margin-top: $baseFontSize * 0.1;
+      margin-bottom: $font-size-base * 0.1;
+      margin-top: $font-size-base * 0.1;
       font-size: 1em;
       white-space: nowrap;
       text-overflow: ellipsis;
 
       .active {
-        color: lighten($linkColor, 30);
+        color: lighten($link-color, 30);
       }
     }
 

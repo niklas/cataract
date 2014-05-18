@@ -1,13 +1,10 @@
-$infoText: #9C9FB6;
-$successText: #9DB69C;
-$warningText: #B69C9E;
 #dropzone {
   padding: 0.3em;
   margin: 0.3em;
   font-size: 110%;
   text-align: center;
   border-radius: 5px;
-  color: $bodyBackground;
+  color: $body-bg;
   position: absolute;
   right: 0;
   top: 0;
@@ -28,11 +25,11 @@ $warningText: #B69C9E;
     }
   }
 
-  background: $infoText;
+  background: $state-info-text;
   &.inviting {
-    background: $warningText;
+    background: $state-warning-text;
   }
   &.hovered {
-    background: $successText;
+    background: $state-success-text;
   }
 }
