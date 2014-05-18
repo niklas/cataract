@@ -3,8 +3,8 @@
   margin: 0.3em;
   font-size: 110%;
   text-align: center;
-  @include border-radius(5px);
-  color: $bodyBackground;
+  border-radius: 5px;
+  color: $body-bg;
   position: absolute;
   right: 0;
   top: 0;
@@ -25,11 +25,11 @@
     }
   }
 
-  background: $infoText;
+  background: $state-info-text;
   &.inviting {
-    background: $warningText;
+    background: $state-warning-text;
   }
   &.hovered {
-    background: $successText;
+    background: $state-success-text;
   }
 }

@@ -10,15 +10,13 @@
 $navbar_shift: 60px;
 
 /* overwrite boostrap variables here */
-@import "bootswatch/cyborg/variables";
 @import "bootstrap";
+@import "bootstrap/theme";
 
 /* push content down, the fixed navbar covers it */
 body {
   padding-top: $navbar_shift;
 }
-@import "bootstrap-responsive";
-@import "bootswatch/cyborg/bootswatch";
 
 @import "hide_fixed_column";
 @import "torrents";
@@ -29,7 +27,7 @@ body {
 @import "nize";
 
 body {
-  background: #141619; /* gradient is too slow for position: fixed scrolling*/
+  //background: #141619; /* gradient is too slow for position: fixed scrolling*/
 }
 
 form#new_torrent_search {
@@ -63,7 +61,7 @@ table.directories {
 }
 
 .breadcrumb .caret {
-  border-top-color: $grayLighter; // make the caret visible, was black on black before
+  border-top-color: $gray-lighter; // make the caret visible, was black on black before
   opacity: 0.6;
 }
 

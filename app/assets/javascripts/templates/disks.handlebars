@@ -2,7 +2,7 @@
   {{#each controller}}
   <li {{bind-attr class=":disk active isMounted:mounted:unmounted"}}>
   {{#link-to 'disk' this class="name"}}
-      <i {{bind-attr class="isMounted:icon-hdd:icon-warning-sign"}}></i>
+      <i {{bind-attr class=":glyphicon isMounted:glyphicon-hdd:glyphicon-warning-sign"}}></i>
       {{name}}
     {{/link-to}}
   </li>
