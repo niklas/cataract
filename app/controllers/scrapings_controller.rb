@@ -1,6 +1,8 @@
 require_dependency 'torrent_fetcher'
 class ScrapingsController < ApplicationController
   include RailsBookmarklet
+  after_action :allow_iframe, only: [:new]
+
   def open
     @url = params[:url]
     render_bookmarklet 'new_scraping', 'open'
