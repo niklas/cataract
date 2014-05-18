@@ -1,15 +1,12 @@
-<div class="pagination pagination-centered">
-  <ul>
-    <li {{bind-attr class="hasPrevious::disabled"}}>
-      <a href="#" {{action "previousPage" target="controller"}}>
-        previous
-      </a>
-    </li>
-    <li {{bind-attr class="hasNext::disabled"}}>
-      <a href="#" {{action "nextPage" target="controller"}}>
-        next
-      </a>
-    </li>
-  </ul>
-</div>
-
+<ul class="pagination pagination-centered">
+  <li {{bind-attr class="hasPrevious::disabled"}}>
+    <a href="#" {{action "previousPage" target="controller"}}>
+      previous
+    </a>
+  </li>
+  <li {{bind-attr class="hasNext::disabled"}}>
+    <a href="#" {{action "nextPage" target="controller"}}>
+      next
+    </a>
+  </li>
+</ul>
