@@ -21,6 +21,11 @@ Cataract.ApplicationRoute = Ember.Route.extend
       model.save()
     rollback: (model)->
       model.rollback()
+    refreshTransfers: ->
+      if controller = @controllerFor('torrents')
+        # TODO Spinner?
+        controller.refreshTransfers()
+
 
 Cataract.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'torrents', queryParams: { age: 'month', status: 'running' }

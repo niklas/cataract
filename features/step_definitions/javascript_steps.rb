@@ -6,10 +6,8 @@ When /^I scroll to the bottom$/ do
 end
 
 When /^the tick interval is reached$/ do
-  page.execute_script <<-EOJS
-    $('body').trigger('tick')
-  EOJS
-  step %Q~I wait for the spinner to stop~
+  page.first('.status-message button').click
+  some_time_passes
   sleep 1 # give ember a second
 end
 

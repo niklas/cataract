@@ -58,10 +58,7 @@
 
   <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
     {{partial "torrents/tabs"}}
-    {{#unless Cataract.online}}
-    <br />
-    <div class="alert alert-error">{{Cataract.offlineReason}}</div>
-    {{/unless}}
+    {{status-message isOnline=Cataract.online errorMessage=Cataract.offlineReason refresh="refreshTransfers"}}
     {{view Cataract.DropZoneView}}
   </div>
 
