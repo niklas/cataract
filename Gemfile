@@ -11,7 +11,7 @@ gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 2.3.0.1'
 gem 'jquery-ui-rails'
 gem 'bootswatch-rails'
-gem 'turbo-sprockets-rails3'
+#gem 'turbo-sprockets-rails3', '~> 0.3.11'
 
 
 group :test do

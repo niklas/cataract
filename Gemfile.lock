@@ -283,8 +283,8 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.5.3)
-    minitest (5.3.3)
-    multi_json (1.9.2)
+    minitest (5.3.4)
+    multi_json (1.10.0)
     multi_test (0.1.1)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
@@ -345,7 +345,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
-    rake (10.3.1)
+    rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
@@ -412,9 +412,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbo-sprockets-rails3 (0.2.9)
-      railties (>= 3.1.0)
-      sprockets (>= 2.0.0)
     tzinfo (1.1.0)
       thread_safe (~> 0.1)
     uglifier (2.5.0)
@@ -522,7 +519,6 @@ DEPENDENCIES
   simplecov
   term-ansicolor
   timecop
-  turbo-sprockets-rails3
   uglifier (>= 1.2.3)
   unicorn
   vcr
