@@ -7,9 +7,10 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   directoriesBinding: 'controllers.application.directories'
   directoryBinding: 'controllers.application.directory'
 
-  init: ->
-    @_super()
-    $('body').bind 'tick', => @refreshTransfers(); true
+  freshTransfersOnTick: (->
+    @refreshTransfers()
+    true
+  ).on('init')
 
   unfilteredContent: Ember.A()
 
