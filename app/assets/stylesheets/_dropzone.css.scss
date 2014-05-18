@@ -1,9 +1,12 @@
+$infoText: #9C9FB6;
+$successText: #9DB69C;
+$warningText: #B69C9E;
 #dropzone {
   padding: 0.3em;
   margin: 0.3em;
   font-size: 110%;
   text-align: center;
-  @include border-radius(5px);
+  border-radius: 5px;
   color: $bodyBackground;
   position: absolute;
   right: 0;

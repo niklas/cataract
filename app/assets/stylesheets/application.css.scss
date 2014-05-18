@@ -10,15 +10,12 @@
 $navbar_shift: 60px;
 
 /* overwrite boostrap variables here */
-@import "bootswatch/cyborg/variables";
 @import "bootstrap";
 
 /* push content down, the fixed navbar covers it */
 body {
   padding-top: $navbar_shift;
 }
-@import "bootstrap-responsive";
-@import "bootswatch/cyborg/bootswatch";
 
 @import "hide_fixed_column";
 @import "torrents";
@@ -62,6 +59,7 @@ table.directories {
   @include hide_fixed_column('disk');
 }
 
+$grayLighter: #777;
 .breadcrumb .caret {
   border-top-color: $grayLighter; // make the caret visible, was black on black before
   opacity: 0.6;

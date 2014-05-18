@@ -1,4 +1,7 @@
 $pie_size: 3.2em;
+$bodyBackground: #333;
+$baseFontSize: 14px;
+$linkColor: #2D842B;
 
 @mixin icon($icon) {
   margin-left: 1.3em;
@@ -29,7 +32,7 @@ ul.torrents {
   li.torrent {
     padding: 0.5em;
     margin-bottom: 0.8em;
-    @include border-radius(4px);
+    border-radius: 4px;
     @include box-shadow(lighten($bodyBackground, 15) 0px 0px 3px);
     position: relative;
     cursor: pointer;
