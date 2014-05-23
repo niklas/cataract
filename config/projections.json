@@ -1,0 +1,40 @@
+{
+  "app/assets/javascripts/models/*.js.coffee": {
+    "command": "jsmodel",
+    "alternate": "spec/javascripts/models/%s_spec.js.coffee",
+    "template": "Cataract.%S = DS.Model.extend"
+  },
+
+  "app/assets/javascripts/controllers/*_controller.js.coffee": {
+    "command": "jscontroller",
+    "alternate": "spec/javascripts/controllers/%s_spec.js.coffee",
+    "template": "Cataract.%SController = Ember.ObjectController.extend"
+  },
+
+  "app/assets/javascripts/views/*_view.js.coffee": {
+    "command": "jsview",
+    "alternate": "spec/javascripts/views/%s_spec.js.coffee",
+    "related": "app/assets/javascripts/templates/%s.handlebars",
+    "template": "%SView = Ember.View.extend"
+  },
+
+  "app/assets/javascripts/router.js.coffee": {
+    "command": "jsrouter"
+  },
+
+  "app/assets/javascripts/routes/*_route.js.coffee": {
+    "command": "jsroute",
+    "alternate": "spec/javascripts/routes/%s_spec.js.coffee",
+    "template": "Cataract.%SRoute = Ember.Route.extend"
+  },
+
+  "spec/javascripts/*_spec.js.coffee": {
+    "command": "jsspec",
+    "alternate": "app/assets/javascripts/%s.js.coffee"
+  },
+
+  "app/assets/javascripts/templates/*.handlebars": {
+    "command": "jstemplate",
+    "alternate": "app/assets/javascripts/views/%s.js.coffee"
+  }
+}
