@@ -7,6 +7,7 @@ Cataract.Router.map ->
   @resource 'disk', path: 'disk/:disk_id'
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
+  @route 'treemap'
 
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
