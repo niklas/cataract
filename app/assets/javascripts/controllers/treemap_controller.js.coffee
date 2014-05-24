@@ -21,7 +21,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
     .property('width', 'height')
 
   didChangeObjects: (->
-    Ember.run.once this, 'buildTreeMap'
+    Ember.run.debounce this, 'buildTreeMap', 150
   ).observes('objects.@each')
 
 
