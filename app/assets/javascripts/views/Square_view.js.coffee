@@ -1,6 +1,6 @@
 Cataract.SquareView = Ember.View.extend
-  template: Ember.Handlebars.compile '{{view.size}}'
-  attributeBindings: ['style']
+  template: Ember.Handlebars.compile '{{#unless view.tooSmall}}{{view.size}}{{/unless}}'
+  attributeBindings: ['style', 'hoverTitle:title']
   classNames: ['square']
 
   width: Ember.computed.alias('content.width')
@@ -8,6 +8,17 @@ Cataract.SquareView = Ember.View.extend
   top: Ember.computed.alias('content.top')
   left: Ember.computed.alias('content.left')
   size: Ember.computed.alias('content.size')
+
+  tooSmall:
+    Ember.computed ->
+      @get('width') < 50 or @get('height') < 50
+    .property('width', 'height')
+
+  hoverTitle:
+    Ember.computed ->
+      if @get('tooSmall')
+        @get('size')
+    .property('tooSmall', 'size')
 
   color:
     Ember.computed ->
