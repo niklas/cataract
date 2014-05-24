@@ -48,7 +48,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
     worst = (row, w)->
       return Number.MAX_VALUE if row.length is 0
-      values = row.mapProperty('size').map (v)-> v/w
+      values = row.mapProperty('size')
       min = values.reduce ((m, x)-> if m < x then m else x),  Number.MAX_VALUE
       max = values.reduce ((m, x)-> if m > x then m else x),  0
       sum = values.reduce (s,x)->s+x
