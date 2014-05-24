@@ -9,7 +9,7 @@ Cataract.SquareView = Ember.View.extend
 
   color:
     Ember.computed ->
-      '' + Math.round(Math.random() * 999999)
+      ('' + Math.pow(@get('size'),23.5) ).slice(0,6)
     .property('size')
 
   style:
