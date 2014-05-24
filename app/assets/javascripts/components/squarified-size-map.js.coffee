@@ -64,7 +64,6 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
     sumOf = (list)-> list.mapProperty(sizeProp).reduce ((s,x)-> s+x), 0
     sqrt = Math.sqrt
 
-    # TODO scale values => pixel
     pixelWidth = @get('width')
     pixelHeight = @get('height')
     allPixels = pixelWidth * pixelHeight
