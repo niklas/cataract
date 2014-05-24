@@ -1,3 +1,17 @@
+<style>
+.treemap {
+        position: relative;
+}
+.treemap .square {
+        width: 10em;
+        height: 2em;
+        top: 0;
+        left: 0;
+        position: absolute;
+}
+</style>
 <button {{action addOne}}>++++</button>
 
+<div class="treemap">
 {{each x in objects itemViewClass="Cataract.SquareView"}}
+</div>

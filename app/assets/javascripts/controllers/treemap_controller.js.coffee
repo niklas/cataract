@@ -15,9 +15,21 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
     objects = @get('objects')
     return if objects.length is 0
+
+    sumOf = (list)-> list.mapProperty('size').reduce ((s,x)-> s+x), 0
+    sqrt = Math.sqrt
+
     # TODO scale values => pixel
-    width = @get('width')
-    height = @get('height')
+    pixelWidth = @get('width')
+    pixelHeight = @get('height')
+    allPixels = pixelWidth * pixelHeight
+    console?.debug "Pixels: #{pixelWidth}x#{pixelHeight} = #{allPixels}"
+    allSize = sumOf objects
+    width  = pixelWidth * sqrt(allSize) / sqrt(allPixels)
+    height = pixelHeight * sqrt(allSize) / sqrt(allPixels)
+    console?.debug "Size: #{width}x#{height} = #{allSize}"
+    widthInPixels  = (w)-> w * pixelWidth / width
+    heightInPixels = (w)-> w * pixelHeight / height
     direction = if width > height then 1 else 0
 
     worst = (row, w)->
@@ -25,7 +37,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
       values = row.mapProperty('size')
       min = values.reduce (m, x)-> if m < x then m else x
       max = values.reduce (m, x)-> if m > x then m else x
-      sum = values.reduce (s, x)-> s + x
+      sum = sumOf row
 
       Math.max (max * w**2)/(sum**2), (sum**2)/(min * w**2)
 
@@ -33,18 +45,19 @@ Cataract.TreemapController = Ember.ObjectController.extend
       Math.min width, height
 
     layoutRow = (row)->
-      area = row.mapProperty('size').reduce (s, x)-> s + x
+      area = sumOf row
       h = shortestWidth()
       w  = area / h
+      console?.debug "layouting #{row.length} items (#{area}=#{h}x#{w})"
       for item in row
         size = item.get('size')
         h = size / w
         if direction is 0
-          item.set('height', h)
-          item.set('width',   w)
+          item.set('height', heightInPixels h)
+          item.set('width',  widthInPixels w)
         else
-          item.set('height',  w)
-          item.set('width',  h)
+          item.set('height', heightInPixels w)
+          item.set('width',  widthInPixels h)
 
       if direction is 0
         width = width - w
