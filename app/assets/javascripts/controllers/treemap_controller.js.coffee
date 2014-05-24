@@ -38,7 +38,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
     console?.debug "Size: #{width}x#{height} = #{allSize}"
     widthInPixels  = (w)-> w * pixelWidth / width
     heightInPixels = (w)-> w * pixelHeight / height
-    direction = if width > height then 1 else 0
+    direction = if width < height then 1 else 0
 
     worst = (row, w)->
       return -1 if row.length is 0
