@@ -55,26 +55,35 @@ Cataract.TreemapController = Ember.ObjectController.extend
     shortestWidth = ->
       Math.min width, height
 
-    layoutRow = (row)->
+    layoutRowAsColumn = (row)->
       area = sumOf row
       h = shortestWidth()
       w  = area / h
-      console?.debug "layouting #{row.length} items (#{area}=#{h}x#{w})"
+      console?.debug "layouting #{row.length} items as column (#{area}=#{h}x#{w})"
       for item in row
         size = item.get('size')
         h = size / w
-        if direction is 0
-          item.set('height', heightInPixels h)
-          item.set('width',  widthInPixels w)
-        else
-          item.set('height', heightInPixels w)
-          item.set('width',  widthInPixels h)
+        item.set('height', heightInPixels h)
+        item.set('width',  widthInPixels w)
+      width -= w
 
+    layoutRowAsRow = (row)->
+      area = sumOf row
+      h = shortestWidth()
+      w  = area / h
+      console?.debug "layouting #{row.length} items as row (#{area}=#{h}x#{w})"
+      for item in row
+        size = item.get('size')
+        h = size / w
+        item.set('height', heightInPixels w)
+        item.set('width',  widthInPixels h)
+      height -= w
+
+    layoutRow = (row)->
       if direction is 0
-        width = width - w
+        layoutRowAsColumn(row)
       else
-        height = height - w
-
+        layoutRowAsRow(row)
       direction = 1 - direction # switch vertical/horizontal
 
 
