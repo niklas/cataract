@@ -24,6 +24,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
     objects = @get('objects')
     return if objects.length is 0
+    objects = objects.sortBy('size').reverse()
 
     sumOf = (list)-> list.mapProperty('size').reduce ((s,x)-> s+x), 0
     sqrt = Math.sqrt
