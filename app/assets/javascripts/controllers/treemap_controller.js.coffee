@@ -10,6 +10,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
   width: 600
   height: 400
+  isRunning: false
 
   style:
     Ember.computed ->
@@ -20,6 +21,8 @@ Cataract.TreemapController = Ember.ObjectController.extend
     .property('width', 'height')
 
   didChangeObjects: (->
+    return if @get('isRunning')
+    @set('isRunning', true)
     console?.debug "starting with #{@get('objects.length')} objects"
 
     objects = @get('objects')
@@ -120,6 +123,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
     squarify objects, Ember.A(), shortestWidth()
 
+    @set('isRunning', false)
   ).observes('objects.@each')
 
   actions:
