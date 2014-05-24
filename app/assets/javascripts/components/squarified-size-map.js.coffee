@@ -7,6 +7,7 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
   objects: Ember.A()
   itemViewClass: JustSizeView
   sizeProperty: 'size'
+  title: 'size'
 
   width: 600
   height: 400
@@ -187,8 +188,13 @@ Cataract.SquarifiedSizeMapComponentItemController = Ember.ObjectController.exten
       @get('width') < 50 or @get('height') < 50
     .property('width', 'height')
 
-  hoverTitle:
-    Ember.computed ->
-      if @get('tooSmall')
-        @get('size')
-    .property('tooSmall', 'size')
+  setupBindingToTitle: (->
+    attr = @get('parentController.title')
+    binding = Ember.Binding.from(attr).to("hoverTitle")
+    binding.connect this
+    @set('_titleBinding_', binding)
+  ).on('init')
+
+  willDestroy: ->
+    @_super()
+    @get('_titleBinding_').disconnect(this)
