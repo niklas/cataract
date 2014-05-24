@@ -59,11 +59,12 @@ Cataract.TreemapController = Ember.ObjectController.extend
       Math.max (max * sqw)/sqsum, sqsum/(min * sqw)
 
     shortestWidth = ->
+      console?.debug "shortest of", width, height
       Math.min width, height
 
     layoutRowVertically = (row)->
       area = sumOf row
-      h = shortestWidth()
+      h = height
       w  = area / h
       offset = currentTop
       console?.debug "layouting #{row.length} items vertically (#{area}=#{h}x#{w})"
@@ -80,7 +81,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
     layoutRowHorizontally = (row)->
       area = sumOf row
-      h = shortestWidth()
+      h = width
       w  = area / h
       offset = currentLeft
       console?.debug "layouting #{row.length} items horizontally  (#{area}=#{h}x#{w})"
