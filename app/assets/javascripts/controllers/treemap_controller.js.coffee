@@ -1,14 +1,14 @@
 Cataract.TreemapController = Ember.ObjectController.extend
   fillOnInit: (->
     list = @get('objects')
-    for n in [ 5000, 9000, 12000, 1200, 400, 5000, 800 ]
+    for n in [ 6, 6, 4, 3, 2, 2, 1]
       list.pushObject Ember.Object.create(size: n)
   ).on('init')
 
   objects: Ember.A()
 
-  width: 700
-  height: 500
+  width: 600
+  height: 400
 
   style:
     Ember.computed ->
@@ -92,6 +92,6 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
   actions:
     addOne: ->
-      n = Math.round( Math.random() * 10000 )
+      n = Math.round( Math.random() * 10 )
       @get('objects').pushObject Ember.Object.create(size: n)
 
