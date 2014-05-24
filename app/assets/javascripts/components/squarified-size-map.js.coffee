@@ -1,4 +1,6 @@
-Cataract.TreemapController = Ember.ObjectController.extend
+Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
+  classNames: ['treemap']
+  attributeBindings: ['style']
   objects: Ember.A()
 
   width: 600
@@ -8,6 +10,8 @@ Cataract.TreemapController = Ember.ObjectController.extend
   style:
     Ember.computed ->
       """
+      position: relative;
+      overflow: hidden;
       width: #{@get('width')}px;
       height: #{@get('height')}px;
       """
@@ -127,4 +131,5 @@ Cataract.TreemapController = Ember.ObjectController.extend
     addOne: ->
       n = Math.round( Math.random() * 100000 )
       @get('objects').pushObject Ember.Object.create(size: n)
+
 
