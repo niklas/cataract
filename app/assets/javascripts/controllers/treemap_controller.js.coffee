@@ -40,6 +40,10 @@ Cataract.TreemapController = Ember.ObjectController.extend
     widthInPixels  = (w)-> w * pixelWidth / width
     heightInPixels = (w)-> w * pixelHeight / height
     direction = if width < height then 1 else 0
+    currentTop = 0
+    currentLeft = 0
+
+
 
     worst = (row, w)->
       return Number.MAX_VALUE if row.length is 0
@@ -59,25 +63,35 @@ Cataract.TreemapController = Ember.ObjectController.extend
       area = sumOf row
       h = shortestWidth()
       w  = area / h
-      console?.debug "layouting #{row.length} items as column (#{area}=#{h}x#{w})"
+      offset = currentTop
+      console?.debug "layouting #{row.length} items vertically (#{area}=#{h}x#{w})"
       for item in row
         size = item.get('size')
         h = size / w
         item.set('height', heightInPixels h)
         item.set('width',  widthInPixels w)
+        item.set('left',  widthInPixels currentLeft)
+        item.set('top',  heightInPixels offset)
+        offset += h
       width -= w
+      currentLeft += w
 
     layoutRowHorizontally = (row)->
       area = sumOf row
       h = shortestWidth()
       w  = area / h
-      console?.debug "layouting #{row.length} items as row (#{area}=#{h}x#{w})"
+      offset = currentLeft
+      console?.debug "layouting #{row.length} items horizontally  (#{area}=#{h}x#{w})"
       for item in row
         size = item.get('size')
         h = size / w
         item.set('height', heightInPixels w)
         item.set('width',  widthInPixels h)
+        item.set('left',  widthInPixels offset)
+        item.set('top',  heightInPixels currentTop)
+        offset += h
       height -= w
+      currentTop += w
 
     layoutRow = (row)->
       if direction is 0
