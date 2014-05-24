@@ -21,6 +21,11 @@ Cataract.TreemapController = Ember.ObjectController.extend
     .property('width', 'height')
 
   didChangeObjects: (->
+    Ember.run.once this, 'buildTreeMap'
+  ).observes('objects.@each')
+
+
+  buildTreeMap: ->
     return if @get('isRunning')
     @set('isRunning', true)
     console?.debug "starting with #{@get('objects.length')} objects"
@@ -124,7 +129,6 @@ Cataract.TreemapController = Ember.ObjectController.extend
     squarify objects, Ember.A(), shortestWidth()
 
     @set('isRunning', false)
-  ).observes('objects.@each')
 
   actions:
     addOne: ->
