@@ -11,7 +11,7 @@
     "template": "Cataract.%SController = Ember.ObjectController.extend"
   },
 
-  "app/assets/javascripts/views/*_view.js.coffee": {
+  "app/assets/javascripts/views/*.js.coffee": {
     "command": "jsview",
     "alternate": "spec/javascripts/views/%s_spec.js.coffee",
     "related": "app/assets/javascripts/templates/%s.handlebars",

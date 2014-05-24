@@ -1,0 +1,16 @@
+{{#if isLibraryActive}}
+{{squarified-size-map elementId="map"
+                      sizeProperty="payloadKiloBytes"
+                      title="payloadKiloBytes"
+                      objects=controller
+                      itemViewClass=Cataract.TorrentWithPayloadView
+                      }}
+{{else}}
+{{collection tagName="ul" 
+             elementId="torrents"
+             classNames="torrents"
+             content=controller
+             itemViewClass="Cataract.ItemTorrentView"
+             }}
+{{/if}}
+

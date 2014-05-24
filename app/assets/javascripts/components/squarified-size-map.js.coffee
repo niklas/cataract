@@ -49,17 +49,21 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
 
   didChangeObjects: (->
     Ember.run.debounce this, 'buildTreeMap', 150
-  ).observes('objects.@each')
+  ).observes('objects.@each', 'objects')
 
 
-  buildTreeMap: ->
+  buildTreeMap: (->
     return if @get('isRunning')
     @set('isRunning', true)
     console?.debug "starting with #{@get('objects.length')} objects"
     sizeProp = @get('sizeProperty')
 
-    objects = @get('objects').filter (e)-> e.get(sizeProp) isnt 0
-    return if objects.length is 0
+    objects = @get('objects').filter (e)->
+      v = e.get(sizeProp)
+      v? and v isnt 0
+    if objects.length is 0
+      console?.info "SquarifiedSizeMapComponent: no valid sizes found"
+      return
     objects = objects.sortBy(sizeProp).reverse()
 
     sumOf = (list)-> list.mapProperty(sizeProp).reduce ((s,x)-> s+x), 0
@@ -156,6 +160,7 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
     squarify objects, Ember.A(), shortestWidth()
 
     @set('isRunning', false)
+  ).on('init')
 
 Cataract.SquarifiedSizeMapComponentItemView = Ember.View.extend
   attributeBindings: ['style', 'title']

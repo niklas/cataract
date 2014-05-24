@@ -85,3 +85,17 @@ ul.torrents {
   }
 }
 
+#map {
+  .torrent-with-payload {
+    margin: 1.5px;
+    overflow: hidden;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    font-size: 70%;
+    background: $body-bg;
+    cursor: pointer;
+    &:hover {
+      border-color: $brand-primary;
+    }
+  }
+}
