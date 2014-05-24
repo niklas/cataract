@@ -88,7 +88,10 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
 
     squarify = (children, row, w)->
-      return if children.length is 0
+      if children.length is 0
+        if row.length is 0
+          layoutRow(row) # last row
+        return
       c = children.get('firstObject')
 
       fit = row.concat(c)
