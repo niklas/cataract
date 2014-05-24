@@ -42,13 +42,15 @@ Cataract.TreemapController = Ember.ObjectController.extend
     direction = if width < height then 1 else 0
 
     worst = (row, w)->
-      return -1 if row.length is 0
-      values = row.mapProperty('size')
-      min = values.reduce (m, x)-> if m < x then m else x
-      max = values.reduce (m, x)-> if m > x then m else x
-      sum = sumOf row
+      return Number.MAX_VALUE if row.length is 0
+      values = row.mapProperty('size').map (v)-> v/w
+      min = values.reduce ((m, x)-> if m < x then m else x),  Number.MAX_VALUE
+      max = values.reduce ((m, x)-> if m > x then m else x),  0
+      sum = values.reduce (s,x)->s+x
 
-      Math.max (max * w**2)/(sum**2), (sum**2)/(min * w**2)
+      sqw = w**2
+      sqsum = sum**2
+      Math.max (max * sqw)/sqsum, sqsum/(min * sqw)
 
     shortestWidth = ->
       Math.min width, height
