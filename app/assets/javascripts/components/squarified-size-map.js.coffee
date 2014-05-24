@@ -157,11 +157,6 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
 
     @set('isRunning', false)
 
-  actions:
-    addOne: ->
-      n = Math.round( Math.random() * 100000 )
-      @get('objects').pushObject Ember.Object.create(size: n)
-
 Cataract.SquarifiedSizeMapComponentItemView = Ember.View.extend
   attributeBindings: ['style', 'title']
   classNames: ['square']
