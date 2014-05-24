@@ -1,7 +1,11 @@
+JustSizeView = Ember.View.extend
+  template: Ember.Handlebars.compile '{{#unless tooSmall}}{{size}}{{/unless}}'
+
 Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
   classNames: ['treemap']
   attributeBindings: ['style']
   objects: Ember.A()
+  itemViewClass: JustSizeView
 
   width: 600
   height: 400
@@ -132,4 +136,41 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
       n = Math.round( Math.random() * 100000 )
       @get('objects').pushObject Ember.Object.create(size: n)
 
+Cataract.SquarifiedSizeMapComponentItemView = Ember.View.extend
+  attributeBindings: ['style', 'title']
+  classNames: ['square']
 
+  width: Ember.computed.alias('controller.width')
+  height: Ember.computed.alias('controller.height')
+  top: Ember.computed.alias('controller.top')
+  left: Ember.computed.alias('controller.left')
+  size: Ember.computed.alias('controller.size')
+  title: Ember.computed.alias('controller.hoverTitle')
+
+  color:
+    Ember.computed ->
+      ('' + Math.pow(@get('size') + 2.15,23.5) ).replace(/\D/g,'').slice(0,6)
+    .property('size')
+
+  style:
+    Ember.computed ->
+      """
+      width: #{@get('width')}px;
+      height: #{@get('height')}px;
+      top: #{@get('top')}px;
+      left: #{@get('left')}px;
+      background-color: ##{@get('color')};
+      """
+    .property('width', 'height', 'top', 'left')
+
+Cataract.SquarifiedSizeMapComponentItemController = Ember.ObjectController.extend
+  tooSmall:
+    Ember.computed ->
+      @get('width') < 50 or @get('height') < 50
+    .property('width', 'height')
+
+  hoverTitle:
+    Ember.computed ->
+      if @get('tooSmall')
+        @get('size')
+    .property('tooSmall', 'size')

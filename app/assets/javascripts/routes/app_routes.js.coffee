@@ -132,3 +132,6 @@ Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 Cataract.SettingsRoute = Cataract.DetailedRoute.extend
   model: ->
     @get('store').find('setting', 'all')
+
+Cataract.TreemapController = Ember.Controller.extend()
+

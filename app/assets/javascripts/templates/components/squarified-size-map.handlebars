@@ -19,6 +19,8 @@
 }
 </style>
 
-{{each x in objects itemViewClass="Cataract.SquareView"}}
+{{#each item in objects itemViewClass="Cataract.SquarifiedSizeMapComponentItemView" itemController="squarified_size_map_component_item"}}
+{{view parentController.itemViewClass content=content}}
+{{/each}}
 
 <button {{action addOne}}>++++</button>
