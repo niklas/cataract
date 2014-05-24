@@ -25,7 +25,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
     @set('isRunning', true)
     console?.debug "starting with #{@get('objects.length')} objects"
 
-    objects = @get('objects')
+    objects = @get('objects').filter (e)-> e.get('size') isnt 0
     return if objects.length is 0
     objects = objects.sortBy('size').reverse()
 
