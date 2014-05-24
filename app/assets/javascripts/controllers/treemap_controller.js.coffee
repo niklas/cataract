@@ -125,6 +125,6 @@ Cataract.TreemapController = Ember.ObjectController.extend
 
   actions:
     addOne: ->
-      n = Math.round( Math.random() * 10 )
+      n = Math.round( Math.random() * 100000 )
       @get('objects').pushObject Ember.Object.create(size: n)
 
