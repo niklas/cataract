@@ -18,14 +18,11 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
       """
         <style>
         ##{id} .square {
-                outline: 1px solid blue;
                 width: 1px;
                 height: 1px;
                 top: 100%;
                 left: 100%;
                 position: absolute;
-                font-size: 200%;
-                color: white;
                 overflow: hidden;
                 transition: top 0.5s, left 0.5s, width 0.4s, height 0.4s;
         }
@@ -173,13 +170,7 @@ Cataract.SquarifiedSizeMapComponentItemView = Ember.View.extend
   height: Ember.computed.alias('controller.height')
   top: Ember.computed.alias('controller.top')
   left: Ember.computed.alias('controller.left')
-  size: Ember.computed.alias('controller.size')
   title: Ember.computed.alias('controller.hoverTitle')
-
-  color:
-    Ember.computed ->
-      ('' + Math.pow(@get('size') + 2.15,23.5) ).replace(/\D/g,'').slice(0,6)
-    .property('size')
 
   style:
     Ember.computed ->
@@ -188,7 +179,6 @@ Cataract.SquarifiedSizeMapComponentItemView = Ember.View.extend
       height: #{@get('height')}px;
       top: #{@get('top')}px;
       left: #{@get('left')}px;
-      background-color: ##{@get('color')};
       """
     .property('width', 'height', 'top', 'left')
 
