@@ -6,6 +6,7 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
   attributeBindings: ['style']
   objects: Ember.A()
   itemViewClass: JustSizeView
+  sizeProperty: 'size'
 
   width: 600
   height: 400
@@ -30,12 +31,13 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
     return if @get('isRunning')
     @set('isRunning', true)
     console?.debug "starting with #{@get('objects.length')} objects"
+    sizeProp = @get('sizeProperty')
 
-    objects = @get('objects').filter (e)-> e.get('size') isnt 0
+    objects = @get('objects').filter (e)-> e.get(sizeProp) isnt 0
     return if objects.length is 0
-    objects = objects.sortBy('size').reverse()
+    objects = objects.sortBy(sizeProp).reverse()
 
-    sumOf = (list)-> list.mapProperty('size').reduce ((s,x)-> s+x), 0
+    sumOf = (list)-> list.mapProperty(sizeProp).reduce ((s,x)-> s+x), 0
     sqrt = Math.sqrt
 
     # TODO scale values => pixel
@@ -58,7 +60,7 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
 
     worst = (row, w)->
       return Number.MAX_VALUE if row.length is 0
-      values = row.mapProperty('size')
+      values = row.mapProperty(sizeProp)
       min = values.reduce ((m, x)-> if m < x then m else x),  Number.MAX_VALUE
       max = values.reduce ((m, x)-> if m > x then m else x),  0
       sum = values.reduce (s,x)->s+x
@@ -78,7 +80,7 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
       offset = currentTop
       console?.debug "layouting #{row.length} items vertically (#{area}=#{h}x#{w})"
       for item in row
-        size = item.get('size')
+        size = item.get(sizeProp)
         h = size / w
         item.set('width',  widthInPixels w)
         item.set('height', heightInPixels h)
@@ -95,7 +97,7 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
       offset = currentLeft
       console?.debug "layouting #{row.length} items horizontally  (#{area}=#{h}x#{w})"
       for item in row
-        size = item.get('size')
+        size = item.get(sizeProp)
         h = size / w
         item.set('width',  widthInPixels h)
         item.set('height', heightInPixels w)
