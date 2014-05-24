@@ -1,8 +1,9 @@
 Cataract.TreemapController = Ember.ObjectController.extend
   fillOnInit: (->
-    list = @get('objects')
-    for n in [ 6, 6, 4, 3, 2, 2, 1]
-      list.pushObject Ember.Object.create(size: n)
+    @set(
+      'objects',
+      Ember.Object.create(size: n) for n in [ 6, 6, 4, 3, 2, 2, 1]
+    )
   ).on('init')
 
   objects: Ember.A()
