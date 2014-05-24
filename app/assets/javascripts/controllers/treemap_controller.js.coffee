@@ -92,7 +92,7 @@ Cataract.TreemapController = Ember.ObjectController.extend
       c = children.get('firstObject')
 
       fit = row.concat(c)
-      if worst(row, w) <= worst( fit, w)
+      if worst(row, w) >= worst( fit, w)
         squarify( children.slice(1), fit, w )
       else
         layoutRow(row)
