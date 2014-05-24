@@ -12,6 +12,33 @@ Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
   height: 400
   isRunning: false
 
+  styleTag:
+    Ember.computed ->
+      id = @get('elementId')
+      """
+        <style>
+        ##{id} .square {
+                outline: 1px solid blue;
+                width: 1px;
+                height: 1px;
+                top: 100%;
+                left: 100%;
+                position: absolute;
+                font-size: 200%;
+                color: white;
+                overflow: hidden;
+                transition: top 0.5s, left 0.5s, width 0.4s, height 0.4s;
+        }
+        ##{id} button {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 5;
+        }
+        </style>
+      """
+    .property('elementId')
+
   style:
     Ember.computed ->
       """
