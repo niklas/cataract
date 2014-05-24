@@ -34,11 +34,12 @@ Cataract.TreemapController = Ember.ObjectController.extend
     allPixels = pixelWidth * pixelHeight
     console?.debug "Pixels: #{pixelWidth}x#{pixelHeight} = #{allPixels}"
     allSize = sumOf objects
-    width  = pixelWidth * sqrt(allSize) / sqrt(allPixels)
-    height = pixelHeight * sqrt(allSize) / sqrt(allPixels)
+    scale = sqrt(allSize) / sqrt(allPixels)
+    width  = pixelWidth * scale
+    height = pixelHeight * scale
     console?.debug "Size: #{width}x#{height} = #{allSize}"
-    widthInPixels  = (w)-> w * pixelWidth / width
-    heightInPixels = (w)-> w * pixelHeight / height
+    widthInPixels  = (w)-> w / scale
+    heightInPixels = (w)-> w / scale
     direction = if width < height then 1 else 0
     currentTop = 0
     currentLeft = 0
@@ -68,8 +69,8 @@ Cataract.TreemapController = Ember.ObjectController.extend
       for item in row
         size = item.get('size')
         h = size / w
-        item.set('height', heightInPixels h)
         item.set('width',  widthInPixels w)
+        item.set('height', heightInPixels h)
         item.set('left',  widthInPixels currentLeft)
         item.set('top',  heightInPixels offset)
         offset += h
@@ -85,8 +86,8 @@ Cataract.TreemapController = Ember.ObjectController.extend
       for item in row
         size = item.get('size')
         h = size / w
-        item.set('height', heightInPixels w)
         item.set('width',  widthInPixels h)
+        item.set('height', heightInPixels w)
         item.set('left',  widthInPixels offset)
         item.set('top',  heightInPixels currentTop)
         offset += h
