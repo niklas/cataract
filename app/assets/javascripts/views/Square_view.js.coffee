@@ -11,7 +11,7 @@ Cataract.SquareView = Ember.View.extend
 
   color:
     Ember.computed ->
-      ('' + Math.pow(@get('size'),23.5) ).slice(0,6)
+      ('' + Math.pow(@get('size') + 2.15,23.5) ).replace(/\D/g,'').slice(0,6)
     .property('size')
 
   style:
