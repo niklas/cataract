@@ -1,6 +1,7 @@
 Cataract.SquareView = Ember.View.extend
   template: Ember.Handlebars.compile '{{view.size}}'
   attributeBindings: ['style']
+  classNames: ['square']
 
   width: Ember.computed.alias('content.width')
   height: Ember.computed.alias('content.height')

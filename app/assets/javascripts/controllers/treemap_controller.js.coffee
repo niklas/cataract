@@ -10,6 +10,14 @@ Cataract.TreemapController = Ember.ObjectController.extend
   width: 700
   height: 500
 
+  style:
+    Ember.computed ->
+      """
+      width: #{@get('width')}px;
+      height: #{@get('height')}px;
+      """
+    .property('width', 'height')
+
   didChangeObjects: (->
     console?.debug "starting with #{@get('objects.length')} objects"
 
