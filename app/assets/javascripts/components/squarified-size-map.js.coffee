@@ -4,11 +4,13 @@ JustSizeView = Ember.View.extend
 Cataract.SquarifiedSizeMapComponent = Ember.Component.extend
   classNames: ['treemap']
   attributeBindings: ['style']
-  objects: Ember.A()
   itemViewClass: JustSizeView
   sizeProperty: 'size'
   title: 'size'
 
+  # TODO dynamic size
+  #
+  # detect the current width of the element and calculate an optional 2/3 height from that
   width: 600
   height: 400
   isRunning: false
