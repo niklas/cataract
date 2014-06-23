@@ -2,8 +2,9 @@ describe Cataract::TitleFinder do
   let(:found_title) { subject.find_title(torrent) }
 
   context 'for Torrent without title' do
-    let(:attrs)   { {} }
-    let(:torrent) { instance_double 'Torrent', attrs.merge(title: nil).reverse_merge(persisted?: false) }
+    let(:attrs)    { {} }
+    let(:defaults) { {persisted?: false, content_filenames: nil} }
+    let(:torrent)  { instance_double 'Torrent', attrs.merge(title: nil).reverse_merge(defaults) }
 
     context "with filename present" do
       let(:attrs) {{ filename: 'milch.torrent' }}
@@ -19,7 +20,21 @@ describe Cataract::TitleFinder do
       end
     end
 
-    context "without filename and url present" do
+    context "without filename and url only contains hash" do
+      let(:hash)    { generate :info_hash }
+      let(:attrs) {{ filename: nil, title: nil,
+                     url: "http://blubb.de/#{hash}.torrent",
+                     content_filenames: [
+                       'downloaded_from.txt',
+                       'Shame of Frowns 10x08.mp4'
+                     ]
+      }}
+      it 'is build by content files' do
+        found_title.should == 'Shame of Frowns 10x08'
+      end
+    end
+
+    context "without filename, without url" do
       let(:attrs) {{ filename: nil, title: nil, url: nil }}
       context "unsaved" do
         it "just says 'new'" do
