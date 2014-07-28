@@ -32,6 +32,8 @@
       right: $bigger_half;
       overflow-y: auto;
       z-index: -5;
+
+      padding: 0 1em;
     }
     #middle {
       top: $navbar_shift;
