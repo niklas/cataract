@@ -5,4 +5,5 @@ require 'string_monkeypatches'
 require 'rubytorrent_allspice/udp_urls'
 require 'patches/pathname'
 require 'patches/active_record'
+require 'cataract'
 

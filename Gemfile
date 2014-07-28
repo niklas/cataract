@@ -18,6 +18,7 @@ group :test do
   # This is used to obtaing timings of Cucumber scenarios
   gem 'cucumber-timed_formatter', require: 'timed'
   gem 'rspec-rails', "~> 2.13"
+  gem 'rspec-fire'
   gem 'pickle', github: 'tbuehl/pickle'
   gem 'timecop'
   gem 'database_cleaner'

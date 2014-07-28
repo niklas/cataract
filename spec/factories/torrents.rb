@@ -1,11 +1,15 @@
 FactoryGirl.define do
+  chars = (0..9).to_a + ('A'..'Z').to_a
+  sequence :info_hash do |rnd|
+    chars.sample(40, random: rnd).join
+  end
   factory :remote_torrent, :class => 'Torrent' do
     status 'remote'
     sequence(:url) { |i| "http://cataract.local/#{i}.torrent" }
   end
 
   factory :torrent do
-    sequence(:info_hash) { |i| "%0.40d" % i }
+    info_hash
     sequence(:filename) { |i| "#{i}.torrent" }
 
     # this is just for migration

@@ -104,22 +104,11 @@ class Torrent < ActiveRecord::Base
   end
 
   def title
-    super.presence ||
-      debrand(filename) ||
-      (url.present? && debrand(File.basename(url)) )   ||
-      (persisted?? "Torrent ##{id}" : "new Torrent")
-  end
-
-  # * removes some 1337 comments about format/group in the filename
-  # * cuts the .torrent extention
-  # * tranforms interpunctuations into spaces
-  # * kills renaming spaces 
-  def debrand(name)
-    Cataract::FileNameCleaner.clean(name)
+    super.presence || Cataract.title_finder[self]
   end
 
   def clean_filename
-    debrand(filename)
+    Cataract.debrander[filename]
   end
 
 
