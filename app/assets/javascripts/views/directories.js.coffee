@@ -13,7 +13,7 @@ Cataract.DirectoryNavListView = Ember.View.extend
   content: []
   templateName: 'directory/nav_list'
   tagName: 'ul'
-  classNames: "nav nav-list directories".w()
+  classNames: "nav nav-pills nav-stacked directories".w()
 
 Cataract.DirectoryNavItemView = Ember.View.extend
   templateName: 'directory/nav_item'
