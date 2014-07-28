@@ -52,6 +52,8 @@ class Torrent < ActiveRecord::Base
     case n
     when 'month'
       since 1.month.ago
+    when /^month(\d+)$/
+      since $i.to_i.months.ago
     when 'year'
       since 1.year.ago
     else
