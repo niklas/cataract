@@ -58,7 +58,7 @@ describe Torrent do
   end
 
   context "metainfo" do
-    let(:torrent) { create :torrent }
+    let(:torrent) { build :torrent }
 
     it "should raise Torrent::FileNotFound when file does not exist" do
       torrent.stub(:file_exists?).and_return(false)
