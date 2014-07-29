@@ -25,6 +25,18 @@ Cataract.ApplicationRoute = Ember.Route.extend
       if controller = @controllerFor('torrents')
         # TODO Spinner?
         controller.refreshTransfers()
+    openModal: (modalName, model) ->
+      @controllerFor(modalName).set "model", model
+      @render modalName,
+        into: "application"
+        outlet: "modal"
+
+
+    closeModal: ->
+      @disconnectOutlet
+        outlet: "modal"
+        parentView: "application"
+
 
 
 Cataract.IndexRoute = Ember.Route.extend

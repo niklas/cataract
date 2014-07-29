@@ -1,13 +1,6 @@
 Cataract.TorrentConfirmDeletionView = Ember.View.extend
   template: Ember.Handlebars.compile """
     {{#with view.parentView.torrent}}
-      {{#if payloadExists}}
-        <label>
-          {{view Ember.Checkbox checkedBinding="view.parentView.deletePayload"}}
-          Also delete payload
-          <span class="size">{{payload.humanSize}}</span>
-        </label>
-      {{/if}}
     {{/with}}
   """
 
