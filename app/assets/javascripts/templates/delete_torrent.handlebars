@@ -1,5 +1,5 @@
 {{#modal-dialog action="deleteTorrent" heading="Delete Torrent" primary="Delete" secondary="Keep"}}
-  {{#if content.payloadExists}}
+  {{#if askForPayload}}
     <label>
       {{view Ember.Checkbox checkedBinding="deletePayload"}}
       Also delete payload
