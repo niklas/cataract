@@ -24,10 +24,5 @@ Cataract.TorrentController = Ember.ObjectController.extend
           torrent.set 'status', 'archived'
       false
 
-    delete: (torrent) ->
-      Cataract.DeleteTorrentModal.popup
-        torrent: torrent
-        backRoute: ['torrents']
-
     deletePayload: (torrent) ->
       Cataract.ClearPayloadModal.popup torrent: torrent
