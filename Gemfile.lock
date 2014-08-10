@@ -106,6 +106,9 @@ GEM
       ember-source
       execjs
       handlebars-source
+    barber-emblem (0.1.1)
+      barber (>= 0.4.1)
+      emblem-source
     bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
@@ -189,6 +192,10 @@ GEM
       ember-source
     ember-source (1.6.0.beta.2)
       handlebars-source (~> 1.0)
+    emblem-rails (0.2.1)
+      barber-emblem (~> 0.1.1)
+      ember-rails (>= 0.14.0)
+    emblem-source (0.3.16)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.4.0)
@@ -470,6 +477,7 @@ DEPENDENCIES
   ember-rails!
   ember-rails-flash!
   ember-source (= 1.6.0.beta.2)
+  emblem-rails
   factory_girl_rails
   fakefs
   feed-abstract
