@@ -123,13 +123,8 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
       virtual: false
 
   setupController: (controller, model) ->
-    # TODO transition route back
-    Cataract.NewDirectoryModal.popup
-      directory: model
-      directories: model.get('disk.directories')
-      disks: @get('store').findAll('disk')
-
-  renderTemplate: ->
+    @_super(controller, model)
+    @send 'openModal', 'create_directory', model
 
 Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 

@@ -15,7 +15,7 @@ Feature: Manage Library
      Then the selected "Disk" should be "aDisk"
      #      And the selected "Parent" should be ""
      When I fill in "Name" with "Series"
-      And I follow "Create Directory"
+      And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And the directory "media/adisk/Series" should exist on disk
