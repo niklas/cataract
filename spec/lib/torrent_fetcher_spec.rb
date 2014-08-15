@@ -3,7 +3,7 @@ require 'torrent_fetcher'
 
 describe TorrentFetcher do
 
-  matcher :fetch_torrent_from do |url|
+  RSpec::Matchers.define :fetch_torrent_from do |url|
     match do |fetcher|
       cassette = url.gsub(/\//,'_').gsub(/[^\w.]/,'')
       VCR.use_cassette cassette do
