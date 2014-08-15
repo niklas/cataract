@@ -233,6 +233,8 @@ GEM
     guard-rspec (4.2.8)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    guard-shell (0.6.1)
+      guard (>= 1.1.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -487,6 +489,7 @@ DEPENDENCIES
   guard-cucumber
   guard-jasmine
   guard-rspec
+  guard-shell
   haml-rails
   inherited_resources
   jasminerice!

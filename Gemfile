@@ -32,6 +32,7 @@ group :test do
   gem "guard-rspec"
   gem "guard-cucumber"
   gem "guard-bundler"
+  gem "guard-shell"
   gem "libnotify", :require => false
   gem "fakefs", :require => false
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
