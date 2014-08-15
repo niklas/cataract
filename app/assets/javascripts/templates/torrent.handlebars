@@ -39,7 +39,7 @@
           remove Content
         </a>
         {{#unless isMoving}}
-          <a class="move btn btn-info" {{action move this}}>
+          <a class="move btn btn-info" {{action openModal 'movePayload' this}}>
             <i class="icon-share icon-white"></i>
             Move
           </a>

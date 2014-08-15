@@ -1,0 +1,7 @@
+modal-dialog action="movePayload" heading="Move payload" primary="Move" secondary="Cancel" size="small"
+  .input
+    label for="target_directory" Directory
+    Cataract.SelectDirectoryField id="target_directory" selectionBinding="targetDirectory" label="Directory"
+  .input
+    label for="target_disk" Disk
+    Cataract.SelectDiskField id="target_disk" selectionBinding="targetDisk" label="Disk"
