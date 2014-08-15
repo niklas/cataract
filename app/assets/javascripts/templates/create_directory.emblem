@@ -2,9 +2,9 @@ modal-dialog action="createDirectory" heading="new Directory" primary="Create Di
   Bootstrap.Forms.TextField valueBinding="name" label="Name"
   .input
     label for="disk" Disk
-    Cataract.SelectDiskField id="disk" selectionBinding="disk" content=disks
+    Cataract.SelectDiskField id="disk" selection=disk content=disks
 
   .inputs
     label for="directory_subscribe"
-      Ember.Checkbox checkedBinding="subscribed" id="directory_subscribe"
+      Ember.Checkbox checked=subscribed id="directory_subscribe"
       | subscribe
