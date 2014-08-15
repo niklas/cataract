@@ -25,6 +25,18 @@ Cataract.ApplicationRoute = Ember.Route.extend
       if controller = @controllerFor('torrents')
         # TODO Spinner?
         controller.refreshTransfers()
+    openModal: (modalName, model) ->
+      @controllerFor(modalName).set "model", model
+      @render modalName,
+        into: "application"
+        outlet: "modal"
+
+
+    closeModal: ->
+      @disconnectOutlet
+        outlet: "modal"
+        parentView: "application"
+
 
 
 Cataract.IndexRoute = Ember.Route.extend
@@ -100,24 +112,8 @@ Cataract.AddRoute = Ember.Route.extend
   controllerName: 'torrents_add'
   model: -> @get('store').createRecord('torrent')
   setupController: (controller, torrent) ->
-    controller.set 'content', torrent
-    #@_super(controller, torrent)
-    router = this
-    store = @get('store')
-    controller.setDefaultDirectory()
-
-    Cataract.AddTorrentModal.popup
-      controller: controller
-      torrent: torrent
-      ok: (opts)->
-        record = @get('torrent')
-        record.setProperties
-          fetchAutomatically: true
-          startAutomatically: true
-        record.save()
-      cancel: (opts)->
-        @get('torrent').deleteRecord()
-      backRoute: ['torrent', torrent]
+    @_super(controller, torrent)
+    @send 'openModal', 'create_torrent', torrent
 
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
@@ -127,13 +123,8 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
       virtual: false
 
   setupController: (controller, model) ->
-    # TODO transition route back
-    Cataract.NewDirectoryModal.popup
-      directory: model
-      directories: model.get('disk.directories')
-      disks: @get('store').findAll('disk')
-
-  renderTemplate: ->
+    @_super(controller, model)
+    @send 'openModal', 'create_directory', model
 
 Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 

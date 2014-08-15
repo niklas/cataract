@@ -29,7 +29,7 @@ group :test, :halt_on_fail => true do
     watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$})         { "spec/javascripts" }
     watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
     watch(%r{app/assets/javascripts/(.+?)\.(js|coffee)})  { |m| "spec/javascripts/#{m[1]}_spec.#{m[2]}" }
-  end
+  end if false # causes bad asset builds which are missing .emblem templates
 
   guard 'cucumber',
     cli: "--no-source --no-profile --strict --format pretty --format rerun --out rerun.txt --tags ~@wip",
@@ -50,9 +50,11 @@ group :test, :halt_on_fail => true do
     watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
 
     watch(%r{^app/decorators/torrent})        { %w(transfer_info).map { |f| "features/#{f}.feature"} }
+  end
 
-    callback(:run_all_end) do
-      # update todo file
+  guard :shell do
+    watch(%r{^(spec/.+spec\.rb|features/.+feature)$}) do
+      # update todo file when deleted
       system 'script/todo'
     end
   end

@@ -1,0 +1,12 @@
+h2= name
+
+.actions
+  link-to 'new_directory' class="btn btn-primary btn-small" | Create Directory
+
+if hasDetectedDirs
+  h2 Detected
+  Cataract.DetectedDirectoriesTable contentBinding="detectedDirectories"
+
+if hasDirectories
+  Cataract.DirectoriesTable contentBinding="directories" classNames="existing"
+

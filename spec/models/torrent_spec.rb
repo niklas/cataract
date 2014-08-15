@@ -58,7 +58,7 @@ describe Torrent do
   end
 
   context "metainfo" do
-    let(:torrent) { create :torrent }
+    let(:torrent) { build :torrent }
 
     it "should raise Torrent::FileNotFound when file does not exist" do
       torrent.stub(:file_exists?).and_return(false)
@@ -84,10 +84,10 @@ describe Torrent do
 
   describe 'cleaning filenames' do
     it 'is delegated to Cataract::FileNameCleaner' do
-      filename = double 'Filename'
+      filename = "123.torrent"
       cleaned = double 'cleaned Filename'
       torrent = build :torrent, filename: filename
-      Cataract::FileNameCleaner.should_receive(:clean).with(filename).and_return(cleaned)
+      Cataract.debrander.should_receive(:[]).with(filename).and_return(cleaned)
       torrent.clean_filename.should == cleaned
     end
   end

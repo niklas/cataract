@@ -32,6 +32,7 @@ group :test do
   gem "guard-rspec"
   gem "guard-cucumber"
   gem "guard-bundler"
+  gem "guard-shell"
   gem "libnotify", :require => false
   gem "fakefs", :require => false
   gem "kopflos", :git => 'git://github.com/niklas/kopflos.git'
@@ -115,6 +116,7 @@ gem 'dalli'
 gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
 gem 'ember-source', '1.6.0.beta.2'
 gem 'ember-data-source', '1.0.0.beta.7'
+gem 'emblem-rails'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'

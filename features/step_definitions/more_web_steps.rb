@@ -32,7 +32,12 @@ Then /^the window title should include "([^"]+)"$/ do |part|
 end
 
 Then /^the selected "([^"]*)" should be "([^"]*)"$/ do |field, value|
-  field_labeled(field).all('option').find(&:selected?).text.should =~ /#{value}/
+  field = field_labeled(field)
+  options = field.all('option')
+  options.should_not be_empty, 'no options found'
+  selected = options.find(&:selected?)
+  selected.should_not be_blank, 'nothing selected'
+  selected.text.should =~ /#{value}/
 end
 
 When /^I wait for (.+) to (?:appear|start)$/ do |name|

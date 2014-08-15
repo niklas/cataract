@@ -1,5 +1,9 @@
 FactoryGirl.define do
-  chars = (0..9).to_a + ('A'..'Z').to_a
+  chars = (0..9).to_a + ('A'..'F').to_a
+  chars = chars + chars
+  chars = chars + chars
+  chars = chars + chars
+  chars = chars + chars
   sequence :info_hash do |rnd|
     chars.sample(40, random: rnd).join
   end

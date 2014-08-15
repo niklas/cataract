@@ -9,13 +9,14 @@ Feature: Manage Library
     Given a disk exists with name: "aDisk", path: "media/adisk"
       And I am signed in
       And I am on the home page
+      And all animations are disabled
      When I follow "aDisk"
       And I follow "Create Directory"
       And I wait for the modal box to appear
      Then the selected "Disk" should be "aDisk"
      #      And the selected "Parent" should be ""
      When I fill in "Name" with "Series"
-      And I follow "Create Directory"
+      And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And the directory "media/adisk/Series" should exist on disk

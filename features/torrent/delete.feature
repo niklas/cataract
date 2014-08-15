@@ -20,7 +20,7 @@ Feature: Delete torrents
 
   Scenario: Delete a torrent with its payload
      When I check "Also delete payload"
-      And I follow "Delete"
+      And I press "Delete"
       And I wait for the modal box to disappear
      Then I should see notice "Tails deleted"
       And I should see notice "Freed 71.7 KB"
@@ -30,7 +30,7 @@ Feature: Delete torrents
 
   Scenario: Delete a torrent keeping its payload
      When I uncheck "Also delete payload"
-      And I follow "Delete"
+      And I press "Delete"
       And I wait for the modal box to disappear
      Then I should see notice "Tails deleted"
       But I should not see "Freed"

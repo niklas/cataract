@@ -1,5 +1,4 @@
-Cataract.SelectDiskField = Bootstrap.Forms.Select.extend
-  contentBinding: 'parentView.disks'
+Cataract.SelectDiskField = Ember.Select.extend
   optionLabelPath: 'content.name'
   optionValuePath: 'content.id'
 

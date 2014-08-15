@@ -29,17 +29,17 @@
           Start
         </a>
       {{/if}}
-      <a class="destroy btn btn-danger" {{action delete this}}>
+      <a class="destroy btn btn-danger" {{action 'openModal' 'deleteTorrent' this}}>
         <i class="icon-remove icon-white"></i>
         Delete
       </a>
       {{#if payloadPresent}}
-        <a class="clear btn btn-danger" {{action deletePayload this}}>
+        <a class="clear btn btn-danger" {{action openModal 'clearPayload' this}}>
           <i class="icon-trash icon-white"></i>
           remove Content
         </a>
         {{#unless isMoving}}
-          <a class="move btn btn-info" {{action move this}}>
+          <a class="move btn btn-info" {{action openModal 'movePayload' this}}>
             <i class="icon-share icon-white"></i>
             Move
           </a>

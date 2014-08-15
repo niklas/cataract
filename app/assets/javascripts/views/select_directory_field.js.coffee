@@ -1,5 +1,4 @@
-Cataract.SelectDirectoryField = Bootstrap.Forms.Select.extend
-  contentBinding: 'parentView.directories'
+Cataract.SelectDirectoryField = Ember.Select.extend
   optionLabelPath: 'content.name'
   optionValuePath: 'content.id'
 

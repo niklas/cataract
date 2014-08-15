@@ -106,6 +106,9 @@ GEM
       ember-source
       execjs
       handlebars-source
+    barber-emblem (0.1.1)
+      barber (>= 0.4.1)
+      emblem-source
     bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
@@ -189,6 +192,10 @@ GEM
       ember-source
     ember-source (1.6.0.beta.2)
       handlebars-source (~> 1.0)
+    emblem-rails (0.2.1)
+      barber-emblem (~> 0.1.1)
+      ember-rails (>= 0.14.0)
+    emblem-source (0.3.16)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.4.0)
@@ -226,6 +233,8 @@ GEM
     guard-rspec (4.2.8)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    guard-shell (0.6.1)
+      guard (>= 1.1.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -470,6 +479,7 @@ DEPENDENCIES
   ember-rails!
   ember-rails-flash!
   ember-source (= 1.6.0.beta.2)
+  emblem-rails
   factory_girl_rails
   fakefs
   feed-abstract
@@ -479,6 +489,7 @@ DEPENDENCIES
   guard-cucumber
   guard-jasmine
   guard-rspec
+  guard-shell
   haml-rails
   inherited_resources
   jasminerice!

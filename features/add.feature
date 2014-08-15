@@ -17,7 +17,7 @@ Feature: Adding a torrent
       And I wait for the modal box to appear
      Then the selected "Content Directory" should be "Incoming"
      When I fill in "URL" with "http://hashcache.net/files/single.torrent"
-      And I follow "Add" within the modal box
+      And I press "Add" within the modal box
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
@@ -29,7 +29,7 @@ Feature: Adding a torrent
       And I wait for the modal box to appear
       And I fill in "URL" with "http://hashcache.net/files/single.torrent"
       And I select "Another" from "Content Directory"
-      And I follow "Add" within the modal box
+      And I press "Add" within the modal box
       And I wait for the spinner to stop
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
@@ -40,7 +40,7 @@ Feature: Adding a torrent
      When I follow "Add"
       And I attach the file "spec/factories/files/single.torrent" to "File"
       And I select "Incoming" from "Content Directory"
-      And I follow "Add" within the modal box
+      And I press "Add" within the modal box
       And I wait for the spinner to stop
 
      Then I should see flash notice "Torrent was successfully created."

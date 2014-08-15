@@ -54,5 +54,12 @@ PolyDiskDirectory = Ember.Object.extend
     .property('alternatives.@each.exists')
 
 
+PolyDiskDirectory.attr = (name)->
+  Ember.computed (key, value)->
+    if arguments.length > 1
+      @set name, value.get('alternatives.firstObject')
+    @get "#{name}.poly"
+  .property(name)
+
 
 window.PolyDiskDirectory = PolyDiskDirectory

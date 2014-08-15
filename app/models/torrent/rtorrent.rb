@@ -68,6 +68,7 @@ class Torrent
     class Offline < ::RuntimeError; end
     class Unreachable < Offline; end
     class CouldNotFindInfoHash < ::ArgumentError; end
+    class NoRemoteMethodError < ::NoMethodError; end
 
     class << self
       def offline!
@@ -82,7 +83,6 @@ class Torrent
 
     end
 
-    class NoRemoteMethodError < ::NoMethodError; end
 
     SCGIPath = '/RPC2'
 
@@ -184,7 +184,11 @@ class Torrent
     # load the path into rtorrent
     def load!(path)
       raise("cannot load torrent, path not readable: #{path}") unless File.readable?(path)
-      call 'load', path.to_s
+      if remote_respond_to?('load.normal') # 0.9+
+        call 'load.normal', '', path.to_s
+      else
+        call 'load', path.to_s
+      end
     end
 
     def start_and_wait!(torrent)
@@ -217,7 +221,7 @@ class Torrent
     end
 
     def set_directory(torrent, path)
-      call_with_torrent 'd.set_directory', torrent, path.to_s
+      call_with_torrent one_of('d.set_directory', 'd.directory.set'), torrent, path.to_s
     end
 
     # sets the specified fields on the given torrents' transfer(s)
@@ -259,7 +263,7 @@ class Torrent
 
     def multicall(*remote_fields)
       mapping = build_multicall_mapping *remote_fields
-      call('d.multicall', '', *mapping.values).map do |it|
+      call(one_of('d.multicall', 'd.multicall2'), '', *mapping.values).map do |it|
         {}.tap do |h|
           mapping.keys.each_with_index do |meth,i|
             h[meth] = it[i]
@@ -275,6 +279,14 @@ class Torrent
           mapping[field] = "#{self.class.map_method_name(field)}="
         end
       end
+    end
+
+    # rtorrent introduced a major method name change. This is our try to
+    # support both generations
+    def one_of(*candidates)
+      candidates.find do |c|
+        remote_respond_to?(c)
+      end || raise(NoRemoteMethodError, "could not find any of #{candidates.join(',')} in #{remote_methods.count} methods")
     end
   end
 end

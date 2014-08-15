@@ -18,14 +18,14 @@ Feature: Settings
 
   Scenario: Set default download directory
      When I select "Archive (More)" from "Download Directory"
-      And I click on the save link
+      And I press "Save"
      Then I should see notice "Settings saved"
       And I should be on the home page
       And a setting should exist
       And the setting's incoming_directory_id should be 4321
 
      When I select "Incoming (More)" from "Download Directory"
-      And I click on the save link
+      And I press "Save"
      Then I should see notice "Settings saved"
       And a setting should exist
       And the setting's incoming_directory_id should be 1234
@@ -33,7 +33,7 @@ Feature: Settings
   Scenario: disable signup
     Given the "Disable signup" checkbox should not be checked
      When I check "Disable signup"
-      And I click on the save link
+      And I press "Save"
      Then I should see notice "Settings saved"
       And a setting should exist
       And the setting's disable_signup should be true

@@ -17,8 +17,8 @@ Cataract.Torrent = DS.Model.extend
   payload: DS.belongsTo('payload')
   payloadPresent:
     Ember.computed ->
-      @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted')
-    .property('payload.isLoaded', 'payload.isDeleted', 'payloadExists')
+      @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted') and @get('payload.size') > 0
+    .property('payload.isLoaded', 'payload.isDeleted', 'payloadExists', 'payload.size')
   clearPayload: ->
     if payload = @get('payload')
       torrent = this
@@ -26,6 +26,7 @@ Cataract.Torrent = DS.Model.extend
         torrent.set('payloadExists', false)
 
   contentDirectory: DS.belongsTo('directory')
+  contentPolyDirectory: PolyDiskDirectory.attr('contentDirectory')
 
   fetchAutomatically: attr 'boolean'
   startAutomatically: attr 'boolean'
