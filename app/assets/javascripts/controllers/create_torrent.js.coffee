@@ -9,7 +9,7 @@ Cataract.CreateTorrentController = Ember.ObjectController.extend
         fetchAutomatically: true
         startAutomatically: true
       torrent.get('errors').clear()
-      torrent.save().then (t)->
+      torrent.save().then (t)=>
         @send('closeModal')
         @transitionToRoute 'torrent', t
     cancel: ->
