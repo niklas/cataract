@@ -15,7 +15,7 @@ before_install:
 #  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo apt-get update -qq
 #  - sudo dpkg -i ./google-chrome*.deb
-  - sudo apt-get -qq install rtorrent screen chromium-browser mlocate
+  - sudo apt-get -qq install rtorrent=0.9.2-1 libtorrent14=0.13.2-1 screen chromium-browser mlocate
   - sudo apt-get -f install
   - sudo updatedb
   - createdb cataract_test
