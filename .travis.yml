@@ -23,6 +23,7 @@ before_script:
   - "cp config/database.yml{.travis,}"
   - "mkdir -p tmp/sockets"
   - "bundle exec rake db:migrate"
+  - "echo '--color --backtrace' > .rspec"
 #- "bundle exec chromedriver-update"
 script:
   - bundle exec rspec
