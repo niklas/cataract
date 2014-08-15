@@ -26,6 +26,12 @@ Cataract.Torrent = DS.Model.extend
         torrent.set('payloadExists', false)
 
   contentDirectory: DS.belongsTo('directory')
+  contentPolyDirectory:
+    Ember.computed (key, value)->
+      if arguments.length > 1
+        @set 'contentDirectory', value.get('alternatives.firstObject')
+      @get 'contentDirectory.poly'
+    .property('contentDirectory')
 
   fetchAutomatically: attr 'boolean'
   startAutomatically: attr 'boolean'

@@ -17,7 +17,8 @@ Cataract.CreateTorrentController = Ember.ObjectController.extend
 
   setDefaultDirectory: (->
     self = this
-    @get('controllers.settings.content').then (settings)->
-      self.get('content').set('contentDirectory', settings.get('incomingDirectory') )
-  ).observes('content', 'controllers.settings.content.incomingDirectory')
+    Ember.run.once ->
+      self.get('controllers.settings.content').then (settings)->
+        self.get('content').set('contentPolyDirectory', settings.get('incomingDirectory.poly') )
+  ).observes('content', 'controllers.settings.incomingDirectory').on('init')
 
