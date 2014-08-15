@@ -9,6 +9,7 @@ Feature: Manage Library
     Given a disk exists with name: "aDisk", path: "media/adisk"
       And I am signed in
       And I am on the home page
+      And all animations are disabled
      When I follow "aDisk"
       And I follow "Create Directory"
       And I wait for the modal box to appear
