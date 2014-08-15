@@ -4,4 +4,4 @@ modal-dialog action="movePayload" heading="Move payload" primary="Move" secondar
     Cataract.SelectDirectoryField id="target_directory" selection=move.targetPolyDirectory content=directories
   .input
     label for="target_disk" Disk
-    Cataract.SelectDiskField id="target_disk" selection=move.targetDisk label="Disk"
+    Cataract.SelectDiskField id="target_disk" selection=move.targetDisk content=disks

@@ -23,7 +23,7 @@ Feature: move content
       And I wait for the modal box to appear
      When I select "public" from "Directory"
       And I select "Incoming" from "Disk"
-      And I follow "Move"
+      And I press "Move"
       And I wait for a flash notice to appear
      Then a move should exist
       And the torrent should be the move's torrent
@@ -46,7 +46,7 @@ Feature: move content
      Then the selected "Directory" should be "Pics"
       And the selected "Disk" should be "Incoming"
      When I select "Archive" from "Disk"
-      And I follow "Move"
+      And I press "Move"
       And I wait for a flash notice to appear
      Then a move should exist
       And the torrent should be the move's torrent
