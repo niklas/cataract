@@ -136,5 +136,3 @@ Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 Cataract.SettingsRoute = Cataract.DetailedRoute.extend
   model: ->
     @get('store').find('setting', 'all')
-
-Cataract.MovePayloadController = Ember.ObjectController.extend()
