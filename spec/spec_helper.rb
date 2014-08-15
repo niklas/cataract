@@ -48,6 +48,18 @@
       end
     end
 
+    # useful for debugging without being bombarded with pry prompts:
+    # in your example:
+    #   $want_pry = true
+    #   call_method_that_is_called_a_gazillion.times
+    #
+    # at thew to be instpected location:
+    #   binding.pry if $want_pry
+    config.after(:each) do
+      # other examples should not open pry
+      $want_pry = false
+    end
+
     config.mock_with :rspec
   end
 
