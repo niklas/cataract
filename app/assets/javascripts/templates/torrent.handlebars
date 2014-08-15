@@ -34,7 +34,7 @@
         Delete
       </a>
       {{#if payloadPresent}}
-        <a class="clear btn btn-danger" {{action deletePayload this}}>
+        <a class="clear btn btn-danger" {{action openModal 'clearPayload' this}}>
           <i class="icon-trash icon-white"></i>
           remove Content
         </a>

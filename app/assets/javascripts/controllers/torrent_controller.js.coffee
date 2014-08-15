@@ -14,6 +14,3 @@ Cataract.TorrentController = Ember.ObjectController.extend
         transfer.destroyRecord().then ->
           torrent.set 'status', 'archived'
       false
-
-    deletePayload: (torrent) ->
-      Cataract.ClearPayloadModal.popup torrent: torrent

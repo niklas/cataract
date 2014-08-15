@@ -35,7 +35,7 @@ Feature: Payload of a torrent
   Scenario: clear a torrent's content
      When I explore the first torrent
       And I click on the clear link
-      And I follow "Clear"
+      And I press "Clear"
       And I wait for a flash notice to appear
      Then I should see flash notice "Freed 71.7 KB"
       And I should be on the home page
