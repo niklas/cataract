@@ -87,7 +87,7 @@ describe Torrent do
       filename = "123.torrent"
       cleaned = double 'cleaned Filename'
       torrent = build :torrent, filename: filename
-      Cataract::FileNameCleaner.should_receive(:clean).with(filename).and_return(cleaned)
+      Cataract.debrander.should_receive(:[]).with(filename).and_return(cleaned)
       torrent.clean_filename.should == cleaned
     end
   end
