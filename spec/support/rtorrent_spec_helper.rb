@@ -27,6 +27,7 @@ module RTorrentSpecHelper
       end
       Torrent.reset_remote!
       Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
+      system 'ps af'
     else
       raise "could not start rtorrent"
     end
