@@ -70,7 +70,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.15.5'
   gem 'rvm-capistrano'
   gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
   gem "better_errors"
