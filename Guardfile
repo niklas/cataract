@@ -57,7 +57,7 @@ group :test, :halt_on_fail => true do
       # update todo file when deleted
       system 'script/todo'
     end
-  end
+  end if false # runs on EVERY file
 
 end
 
