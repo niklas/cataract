@@ -13,6 +13,10 @@ Cataract.Transfer = DS.Model.extend
     Ember.computed ->
       @get('progress') != 100 and parseInt(@get('downRate')) > 0
     .property('progress', 'downRate')
+  uploading:
+    Ember.computed ->
+      parseInt(@get('upRate')) > 0
+    .property('downRate')
   finished:
     Ember.computed ->
       @get('progress') == 100

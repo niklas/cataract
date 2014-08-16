@@ -2,19 +2,19 @@ with view.content
   .row-fluid
     .span6
       .progress
-        .progress-bar style=progressStyle class=":progress-bar-success finished::progress-bar-striped downloading:active"
+        .progress-bar style=progressStyle class={:progress-bar-success finished::progress-bar-striped downloading:active}
           .percent
             = progress
             | %
     .span6
-      span.badge.down
+      span.badge.rate.down class=downloading:active
         i.glyphicon.glyphicon-arrow-down
-        = downRate
-      span.badge.up
+        span.v= downRate
+      span.badge.rate.up class=uploading:active
         i.glyphicon.glyphicon-arrow-up
-        = upRate
+        span.v= upRate
       if eta
-        span.eta= eta
+        span.badge.eta= eta
       if message
         span.message= message
 
