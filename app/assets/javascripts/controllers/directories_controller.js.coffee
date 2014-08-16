@@ -1,11 +1,17 @@
 slash = /\//
 
 Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
+  needs: [
+    'application',
+    'torrents',
+  ]
+  isFiltered: Ember.computed.alias('controllers.application.filterDirectories')
+  isUnfiltered: Ember.computed.not('isFiltered')
   rootsBinding: 'root.children'
   current: null
-  isLoadedBinding: 'directories.length'
 
   contentBinding: 'roots'
+  isLoaded: Ember.computed.not('directories.isPending')
 
   init: ->
     @_super()

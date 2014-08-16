@@ -66,6 +66,7 @@ Feature: Disks in Library
         | directory | media/adisk/Series/Tagesschau |
       And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series", show_sub_dirs: true
       And I am on the home page
+      And I follow "all Directories"
      When I follow "Series"
       And I wait for the spinner to stop
      Then I should see a table of the following new directories:

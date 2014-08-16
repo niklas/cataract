@@ -17,6 +17,22 @@ PolyDiskDirectory = Ember.Object.extend
     Ember.computed ->
       SortedArray.create(sortProperties: ['name'])
     .property()
+  parent: null
+  ancestorsAndSelf:
+    Ember.computed ->
+      list = [ this ]
+      if parent = @get('parent')
+        list.unshiftObjects parent.get('ancestorsAndSelf')
+      list
+    .property('parent')
+
+  descendantsAndSelf:
+    Ember.computed ->
+      list = [ this ]
+      @get('children').mapProperty('descendantsAndSelf').forEach (descs)->
+        list.pushObjects(descs)
+      list
+    .property('children.@each')
 
   nameOnDisk:
     Ember.computed -> # last element of relativePath
@@ -34,6 +50,7 @@ PolyDiskDirectory = Ember.Object.extend
     unless child?
       child = PolyDiskDirectory.create
         relativePath: (if path.length is 0 then nameOnDisk else "#{path}/#{nameOnDisk}")
+        parent: this
       children.addObject child
     child
 

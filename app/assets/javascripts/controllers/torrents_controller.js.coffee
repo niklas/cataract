@@ -1,5 +1,5 @@
 Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
-  needs: ['application', 'disks', 'directories']
+  needs: ['application']
 
   modeBinding: 'controllers.application.mode'
   ageBinding: 'controllers.application.age'
