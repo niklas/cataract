@@ -76,3 +76,25 @@ li.torrent ul.nize {
   float: left;
   margin-right: 0.7em;
 }
+
+.rate {
+  margin-right: 0.3em;
+  &.down.active {
+    background-color: $brand-primary;
+  }
+  &.up.active {
+    background-color: $brand-success;
+  }
+  .v {
+    min-width: 4.2em;
+    display: inline-block;
+    text-align: right;
+  }
+  i.glyphicon {
+    font-size: 10px;
+  }
+}
+
+.eta {
+  margin-left: 0.7em;
+}

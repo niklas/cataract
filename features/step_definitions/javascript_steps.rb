@@ -6,7 +6,7 @@ When /^I scroll to the bottom$/ do
 end
 
 When /^the tick interval is reached$/ do
-  page.first('.status-message button').click
+  click_button 'refresh'
   some_time_passes
   sleep 1 # give ember a second
 end
