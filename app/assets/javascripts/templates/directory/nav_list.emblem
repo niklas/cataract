@@ -1,0 +1,5 @@
+if view.header
+  li.nav-header= view.header
+
+each view.content
+  Cataract.DirectoryNavItemView content=this

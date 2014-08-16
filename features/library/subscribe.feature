@@ -11,6 +11,9 @@ Feature: Subscribe Directory
       And I wait for the spinner to stop
       And all animations are disabled
 
+    Given I should not see "Same of Frowns"
+      And I follow "all Directories"
+
      When I follow "Shame of Frowns" within the sidebar directories list
      Then I should see "Shame of Frowns" within the details
 

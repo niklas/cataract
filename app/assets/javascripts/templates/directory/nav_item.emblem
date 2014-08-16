@@ -1,0 +1,6 @@
+link-to 'torrents' (query-params directory=relativePath) class="name"
+  i class=":glyphicon exists:glyphicon-folder-open:glyphicon-warning-sign"
+  = name
+
+if hasSubDirs
+  Cataract.DirectoryNavListView content=children

@@ -1,0 +1,5 @@
+if isLoaded
+  .btn-group
+    link-to (query-params filterDirectories=true)  class="btn btn-default" | present
+    link-to (query-params filterDirectories=false) class="btn btn-default" | all Directories
+  Cataract.DirectoryNavListView content=controller.roots classNames="root"

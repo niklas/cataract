@@ -1,8 +1,0 @@
-{{#link-to 'torrents' (query-params directory=relativePath) class="name"}}
-  <i {{bind-attr class=":glyphicon exists:glyphicon-folder-open:glyphicon-warning-sign"}}></i>
-  {{name}}
-{{/link-to}}
-
-{{#if hasSubDirs}}
-  {{view Cataract.DirectoryNavListView contentBinding="children"}}
-{{/if}}

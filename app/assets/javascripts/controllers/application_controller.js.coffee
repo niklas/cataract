@@ -25,11 +25,13 @@ Cataract.ApplicationController = Ember.Controller.extend
   queryParams: [
     'mode:status',
     'age',
-    'path:directory'
+    'path:directory',
+    'filterDirectories'
   ]
   mode: 'recent'
   age: 'month' # faster initialization of page
   path: null
+  filterDirectories: true
   poly:
     Ember.computed ->
       @get('controllers.directories').findPolyByPath( @get('path') )
