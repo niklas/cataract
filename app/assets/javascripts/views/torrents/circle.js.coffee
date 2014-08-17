@@ -1,6 +1,7 @@
 Cataract.CircleTorrentView = Ember.View.extend
   templateName: 'torrents/circle'
   classNames: ['payload_circle']
+  classNameBindings: ['active']
   attributeBindings: ['style']
 
   maxWidth: 100
@@ -34,3 +35,4 @@ Cataract.CircleTorrentView = Ember.View.extend
 
   click: ->
     Cataract.Router.router.transitionTo 'torrent', @get('content')
+  activeBinding: 'childViews.firstObject.active'
