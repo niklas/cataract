@@ -1,7 +1,7 @@
 Cataract.TorrentsView = Ember.CollectionView.extend
   tagName: "ul"
   elementId: "torrents"
-  classNames: "torrents"
+  classNames: ["torrents", "clearfix"]
   contentBinding: 'controller'
   itemViewClass:
     Ember.computed ->

@@ -22,12 +22,12 @@ Cataract.CircleTorrentView = Ember.View.extend
   style:
     Ember.computed ->
       diameter = Math.round @get('diameter')
+      diameter = Math.max diameter, 42
+      font = if diameter < 50 then '80%' else '100%'
       """
       width: #{diameter}px;
       height: #{diameter}px;
       line-height: #{diameter}px;
-      -foo-limit: #{@get('maxWidth')};
-      -foo-log: #{@get('logBytes')};
-      -foo-max: #{@get('max')};
+      font-size: #{font};
       """
     .property('diameter')
