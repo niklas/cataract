@@ -137,3 +137,6 @@ Cataract.TorrentsController =
         when 'library' then ['payloadKiloBytes']
         else ['createdAt']
     .property('mode')
+
+  payloadSizes: Ember.computed.mapBy 'content', 'payloadKiloBytes'
+  maxPayloadKiloBytes: Ember.computed.max('payloadSizes')
