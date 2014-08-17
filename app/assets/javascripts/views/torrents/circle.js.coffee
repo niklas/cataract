@@ -31,3 +31,6 @@ Cataract.CircleTorrentView = Ember.View.extend
       font-size: #{font};
       """
     .property('diameter')
+
+  click: ->
+    Cataract.Router.router.transitionTo 'torrent', @get('content')
