@@ -13,6 +13,24 @@ Cataract.TorrentsController =
     true
   ).on('init')
 
+  # because the torrents list is always rendered (and should contain items), we
+  # cannot wait for the route to setup the content of it.
+  assignedFixedQuery: (->
+    @set 'unfilteredContent', @get('store').filter 'torrent', (torrent)->
+      # do not have to requery the server after deletion of torrent
+      ! torrent.get('isDeleted')
+  ).on('init')
+
+  # we use our current queryParams, fetch its torrents to fill the DS cache as
+  # a side effect
+  warmupStore: (->
+    console?.debug "warming up...."
+    store = @get('store')
+    # TODO fetch only torrents having content if status is 'library'
+    # warmup store only when age has changed
+    store.findQuery('torrent', age: @get('age'))
+  ).on('init')
+
   unfilteredContent: Ember.A()
 
   fullContentBinding: 'filteredContent'

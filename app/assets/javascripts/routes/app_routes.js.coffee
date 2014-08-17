@@ -37,6 +37,9 @@ Cataract.ApplicationRoute = Ember.Route.extend
         outlet: "modal"
         parentView: "application"
 
+    queryParamsDidChange: (changed, totalPresent, removed)->
+      if changed.status || changed.age
+        @controllerFor('torrents').warmupStore()
 
 
 Cataract.IndexRoute = Ember.Route.extend
@@ -47,32 +50,8 @@ Cataract.FilterRoute = Ember.Route.extend
     @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.filter.status }
 
 Cataract.TorrentsRoute = Ember.Route.extend
-  queryParams:
-    age:
-      refreshModel: true
-  beforeModel: (transition)->
-    unless Ember.isNone( queryParams = transition.queryParams )
-      if Ember.isNone(queryParams.age)
-        queryParams.age = 'month'
-      if Ember.isNone(queryParams.status)
-        queryParams.status = 'recent'
-
-      store = @get('store')
-      # TODO fetch only torrents having content if status is 'library'
-      # warmup store only when age has changed
-      if queryParams.age != transition.params.queryParams?.age
-        store.unloadAll('torrent')
-        store.findQuery('torrent', age: queryParams.age)
-
-  model: (params, transition) ->
-    # TODO should we filter&paginate here already or on the controller?
-    @get('store').filter 'torrent', (torrent)->
-      # do not have to requery the server after deletion of torrent
-      ! torrent.get('isDeleted')
-
   setupController: (controller, model) ->
-    @_super(controller, model)
-    controller.set 'unfilteredContent', model
+    console?.debug 'neeeeded?'
     controller.gotoFirstPage()
     controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
