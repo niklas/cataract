@@ -3,13 +3,8 @@ Cataract.CircleTorrentView = Ember.View.extend
   classNames: ['payload_circle']
   attributeBindings: ['style']
 
-  limit: 50
+  maxWidth: 100
   max: Ember.computed.alias('controller.maxPayloadKiloBytes')
-  factor:
-    Ember.computed ->
-      @get('limit') / @get('max')
-    .property('limit', 'max')
-  tagName: 'li'
 
   logBytes:
     Ember.computed ->
@@ -21,7 +16,7 @@ Cataract.CircleTorrentView = Ember.View.extend
 
   diameter:
     Ember.computed ->
-      @get('logBytes') * @get('factor')
+      ( @get('logBytes') / Math.log(@get('max')) ) * @get('maxWidth')
     .property('logBytes', 'factor')
 
   style:
@@ -31,8 +26,8 @@ Cataract.CircleTorrentView = Ember.View.extend
       width: #{diameter}px;
       height: #{diameter}px;
       line-height: #{diameter}px;
-      -foo-limit: #{@get('limit')};
+      -foo-limit: #{@get('maxWidth')};
+      -foo-log: #{@get('logBytes')};
       -foo-max: #{@get('max')};
-      -foo-factor: #{@get('factor')};
       """
     .property('diameter')
