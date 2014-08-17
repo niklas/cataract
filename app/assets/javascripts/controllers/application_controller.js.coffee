@@ -35,7 +35,7 @@ Cataract.ApplicationController = Ember.Controller.extend
   poly:
     Ember.computed ->
       @get('controllers.directories').findPolyByPath( @get('path') )
-    .property('path')
+    .property('path', 'controllers.directories.@each')
   directoriesBinding: 'poly.alternatives'
 
   # when poly has only one alternative or a the directory controller is active
