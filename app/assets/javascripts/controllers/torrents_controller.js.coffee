@@ -37,6 +37,12 @@ Cataract.TorrentsController =
     @set 'loadedContent', store.findQuery('torrent', age: @get('age'))
   ).on('init')
 
+  freshTransfersOnTick: (->
+    @refreshTransfers()
+    true
+  ).on('init')
+
+
 
   # we will sort, filter, paginate
   # resulting in a update of 'finalContent'
@@ -116,17 +122,11 @@ Cataract.TorrentsController =
   rangeWindowSize: 50
 
   didRequestRange: ->
+    console?.debug "final"
     rangeStart = @get('rangeStart')
     rangeStop = @get('rangeStop')
     content = @get('filteredContent').slice(rangeStart, rangeStop)
     @set 'finalContent', content
-
-  freshTransfersOnTick: (->
-    @refreshTransfers()
-    true
-  ).on('init')
-
-
 
 
 
