@@ -1,4 +1,4 @@
-link-to 'torrents' (query-params directory=relativePath) class="name"
+link-to (query-params directory=relativePath) class="name"
   i class={:glyphicon exists:glyphicon-folder-open:glyphicon-warning-sign}
   = name
 

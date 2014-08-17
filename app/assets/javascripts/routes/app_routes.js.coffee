@@ -1,6 +1,4 @@
 Cataract.Router.map ->
-  @resource 'filter', path: 'filter/:status'
-  @resource 'torrents'
   @route 'add', path: '/add'
   @resource 'torrent', path: '/torrent/:torrent_id'
   @resource 'directory', path: '/directory/:directory_id'
@@ -42,12 +40,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
         @controllerFor('torrents').warmupStore()
 
 
-Cataract.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'torrents', queryParams: { age: 'month', status: 'running' }
-
-Cataract.FilterRoute = Ember.Route.extend
-  beforeModel: (transition) ->
-    @transitionTo 'torrents', queryParams: { age: 'month', status: transition.params.filter.status }
+Cataract.IndexRoute = Ember.Route.extend()
 
 Cataract.TorrentsRoute = Ember.Route.extend
   setupController: (controller, model) ->
