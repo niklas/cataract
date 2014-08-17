@@ -92,6 +92,8 @@ ul.torrents {
     height: 10px;
     line-height: 10px;
 
+    transition: width 0.8s, height 0.8s, line-height 0.9s;
+
     margin: 0.5em;
     border-radius: 50%;
     text-align: center;
