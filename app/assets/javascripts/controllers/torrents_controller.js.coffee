@@ -65,17 +65,6 @@ Cataract.TorrentsController =
   # Filter
   #######################################################################
 
-  filteredContent:
-    Ember.computed ->
-      @get('arrangedContent').filter( @get('filterFunction') )
-    .property('filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
-
-  filterFunctionDidChange: (->
-    @gotoFirstPage()
-    # wait for old views to be destroyed
-    Ember.run.next this, @didRequestRange
-  ).observes("filterFunction", 'mode')
-
   termsList:
     Ember.computed ->
       if terms = @get('terms')
@@ -84,34 +73,47 @@ Cataract.TorrentsController =
         Ember.A()
     .property('terms')
 
+  filterFunction:
+    Ember.computed ->
+      console?.debug "filterfunc"
+      termsList  = @get('termsList')
+      mode = @get('mode') || ''
+      directoryIds = @get('directoryIds') || []
+      directoryId = @get('directory.id')
 
-  filterFunction: (->
-    termsList  = @get('termsList')
-    mode = @get('mode') || ''
-    directoryIds = @get('directoryIds') || []
-    directoryId = @get('directory.id')
+      (torrent) ->
+        want = true
+        torrent = torrent.record if torrent.record? # materialized or not?!
+        text = "#{torrent.get('title')} #{torrent.get('filename')}".toLowerCase()
+        want = want and termsList.every (term) -> text.indexOf(term) >= 0
 
-    (torrent) ->
-      want = true
-      torrent = torrent.record if torrent.record? # materialized or not?!
-      text = "#{torrent.get('title')} #{torrent.get('filename')}".toLowerCase()
-      want = want and termsList.every (term) -> text.indexOf(term) >= 0
+        if mode.length > 0
+          if mode == 'running'
+            want = want and torrent.get('status') is 'running'
 
-      if mode.length > 0
-        if mode == 'running'
-          want = want and torrent.get('status') is 'running'
+          if mode == 'library'
+            want = want and torrent.get('payloadExists')
 
-        if mode == 'library'
-          want = want and torrent.get('payloadExists')
+        if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
+          want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
 
-      if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
-        want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
+        if directoryId?
+          want = want and torrent.get('contentDirectory.id') == directoryId
 
-      if directoryId?
-        want = want and torrent.get('contentDirectory.id') == directoryId
+        want
+    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
 
-      want
-  ).property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
+  filterFunctionDidChange: (->
+    console.debug 'filterFunctionDidChange'
+    @gotoFirstPage()
+    # wait for old views to be destroyed
+    Ember.run.next this, @didRequestRange
+  ).observes("filterFunction", 'mode')
+
+  filteredContent:
+    Ember.computed ->
+      @get('arrangedContent').filter( @get('filterFunction') )
+    .property('filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
 
   #######################################################################
