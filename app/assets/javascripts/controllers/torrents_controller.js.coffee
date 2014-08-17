@@ -19,6 +19,8 @@ Cataract.TorrentsController =
     @set 'unfilteredContent', @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
+    @gotoFirstPage()
+    @refreshTransfers()
   ).on('init')
 
   # we use our current queryParams, fetch its torrents to fill the DS cache as

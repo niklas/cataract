@@ -52,8 +52,6 @@ Cataract.FilterRoute = Ember.Route.extend
 Cataract.TorrentsRoute = Ember.Route.extend
   setupController: (controller, model) ->
     console?.debug 'neeeeded?'
-    controller.gotoFirstPage()
-    controller.refreshTransfers()
     @controllerFor('application').set('currentController', controller)
 
   renderTemplate: ->
