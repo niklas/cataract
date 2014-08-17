@@ -58,6 +58,7 @@ Cataract.TorrentsRoute = Ember.Route.extend
         queryParams.status = 'recent'
 
       store = @get('store')
+      # TODO fetch only torrents having content if status is 'library'
       # warmup store only when age has changed
       if queryParams.age != transition.params.queryParams?.age
         store.unloadAll('torrent')

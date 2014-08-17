@@ -24,6 +24,10 @@ Cataract.Torrent = DS.Model.extend
       torrent = this
       payload.destroyRecord().then ->
         torrent.set('payloadExists', false)
+  payloadHumanSize:
+    Ember.computed ->
+      fileSize @get('payloadKiloBytes'), short: true
+    .property('payloadKiloBytes')
 
   contentDirectory: DS.belongsTo('directory')
   contentPolyDirectory: PolyDiskDirectory.attr('contentDirectory')

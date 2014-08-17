@@ -1,0 +1,3 @@
+with view.content
+  if payloadExists
+    = payloadHumanSize

@@ -57,6 +57,9 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
         if mode == 'running'
           want = want and torrent.get('status') == 'running'
 
+        if mode == 'library'
+          want = want and torrent.get('payloadExists')
+
       if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
         want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
 

@@ -83,5 +83,23 @@ ul.torrents {
       cursor: pointer;
     }
   }
+
+  li.payload_circle {
+    display: block;
+
+    // defaults
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+
+    margin: 0.5em;
+    border-radius: 50%;
+    text-align: center;
+    float: left;
+
+    background-color: $btn-info-bg;
+    color: $btn-info-color;
+    box-shadow: -1px 1px 3px darken($brand-info, 50);
+  }
 }
 
