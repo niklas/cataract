@@ -74,7 +74,7 @@ Cataract.DirectoryRoute = Cataract.DetailedRoute.extend
 
 Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   beforeModel: ->
-    @controllerFor('torrents').get('unfilteredContent') # waiting for promise to resolve
+    @controllerFor('torrents').get('loadedContent') # waiting for promise to resolve
   model: (params) ->
     @get('store').find 'torrent', params.torrent_id
 

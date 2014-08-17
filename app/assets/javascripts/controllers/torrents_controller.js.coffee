@@ -1,22 +1,25 @@
 Cataract.TorrentsController =
-  Cataract.FilteredController.extend Ember.PaginationSupport, Ember.SortableMixin,
+  Ember.ArrayController.extend Ember.PaginationSupport, Ember.SortableMixin,
   needs: ['application']
 
-  modeBinding: 'controllers.application.mode'
-  ageBinding: 'controllers.application.age'
-  polyBinding: 'controllers.application.poly'
-  directoriesBinding: 'controllers.application.directories'
-  directoryBinding: 'controllers.application.directory'
+  mode:         Ember.computed.alias  'controllers.application.mode'
+  age:          Ember.computed.alias  'controllers.application.age'
+  poly:         Ember.computed.alias  'controllers.application.poly'
+  directories:  Ember.computed.alias  'controllers.application.directories'
+  directory:    Ember.computed.alias  'controllers.application.directory'
+  directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
-  freshTransfersOnTick: (->
-    @refreshTransfers()
-    true
-  ).on('init')
+  # TODO terms as query-param?
+  terms:        Ember.computed.alias 'Cataract.terms'
+
+  #######################################################################
+  # Initialization
+  #######################################################################
 
   # because the torrents list is always rendered (and should contain items), we
   # cannot wait for the route to setup the content of it.
-  assignedFixedQuery: (->
-    @set 'unfilteredContent', @get('store').filter 'torrent', (torrent)->
+  initializeContent: (->
+    @set 'content', @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
     @gotoFirstPage()
@@ -29,26 +32,37 @@ Cataract.TorrentsController =
     console?.debug "warming up...."
     store = @get('store')
     # TODO fetch only torrents having content if status is 'library'
-    # warmup store only when age has changed
-    store.findQuery('torrent', age: @get('age'))
+
+    # save that just to be able to wait in a route
+    @set 'loadedContent', store.findQuery('torrent', age: @get('age'))
   ).on('init')
 
-  unfilteredContent: Ember.A()
 
-  fullContentBinding: 'filteredContent'
-  totalBinding: 'fullContent.length'
+  # we will sort, filter, paginate
+  # resulting in a update of 'finalContent'
+  finalContent: Ember.computed.defaultTo('content')
 
-  rangeWindowSize: 50
+  #######################################################################
+  # Sorting
+  #######################################################################
+  sortAscending: false
+  sortProperties:
+    Ember.computed ->
+      switch @get('mode')
+        when 'library' then ['payloadKiloBytes']
+        else ['createdAt']
+    .property('mode')
+  # results in sorted 'content' in 'arrangedContent'
 
-  didRequestRange: ->
-    rangeStart = @get('rangeStart')
-    rangeStop = @get('rangeStop')
-    content = @get('fullContent').slice(rangeStart, rangeStop)
-    @set 'content', content # route sets unfilteredContent
 
-  # TODO terms as query-param?
-  termsBinding: 'Cataract.terms'
-  directoryIds: Ember.computed.mapProperty 'directories', 'id'
+  #######################################################################
+  # Filter
+  #######################################################################
+
+  filteredContent:
+    Ember.computed ->
+      @get('arrangedContent').filter( @get('filterFunction') )
+    .property('filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
   filterFunctionDidChange: (->
     @gotoFirstPage()
@@ -79,7 +93,7 @@ Cataract.TorrentsController =
 
       if mode.length > 0
         if mode == 'running'
-          want = want and torrent.get('status') == 'running'
+          want = want and torrent.get('status') is 'running'
 
         if mode == 'library'
           want = want and torrent.get('payloadExists')
@@ -93,6 +107,32 @@ Cataract.TorrentsController =
       want
   ).property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
 
+
+  #######################################################################
+  # Paginate
+  #######################################################################
+
+  totalBinding: 'fullContent.length'
+  rangeWindowSize: 50
+
+  didRequestRange: ->
+    rangeStart = @get('rangeStart')
+    rangeStop = @get('rangeStop')
+    content = @get('filteredContent').slice(rangeStart, rangeStop)
+    @set 'finalContent', content
+
+  freshTransfersOnTick: (->
+    @refreshTransfers()
+    true
+  ).on('init')
+
+
+
+
+
+  #######################################################################
+  # Other
+  #######################################################################
 
   siteTitle: (->
     title = "#{@get('mode')} torrents"
@@ -110,7 +150,7 @@ Cataract.TorrentsController =
     Cataract.Router.router.transitionTo 'torrent', torrent
 
   refreshTransfers: ->
-    list = @get('unfilteredContent')
+    list = @get('arrangedContent') # unfiltered, but sorted
     running = list.filterProperty('status', 'running').mapProperty('id')
     store = @get('store')
     existing = store.find
@@ -136,11 +176,6 @@ Cataract.TorrentsController =
     , (x,y)->
       console?.debug 'could not fetch transfers:', x.responseText
 
-  setAge: (age) ->
-    @set 'age', age
-    @reload()
-    age
-
   isRecentActive:
     Ember.computed ->
       @get('mode') is 'recent'
@@ -148,14 +183,6 @@ Cataract.TorrentsController =
   isRunningActive:
     Ember.computed ->
       @get('mode') is 'running'
-    .property('mode')
-
-  sortAscending: false
-  sortProperties:
-    Ember.computed ->
-      switch @get('mode')
-        when 'library' then ['payloadKiloBytes']
-        else ['createdAt']
     .property('mode')
 
   payloadSizes: Ember.computed.mapBy 'content', 'payloadKiloBytes'
