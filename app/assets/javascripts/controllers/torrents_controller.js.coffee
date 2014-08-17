@@ -1,4 +1,5 @@
-Cataract.TorrentsController = Cataract.FilteredController.extend Ember.PaginationSupport,
+Cataract.TorrentsController =
+  Cataract.FilteredController.extend Ember.PaginationSupport, Ember.SortableMixin,
   needs: ['application']
 
   modeBinding: 'controllers.application.mode'
@@ -19,9 +20,11 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   rangeWindowSize: 50
 
-  didRequestRange: (rangeStart, rangeStop) ->
+  didRequestRange: ->
+    rangeStart = @get('rangeStart')
+    rangeStop = @get('rangeStop')
     content = @get('fullContent').slice(rangeStart, rangeStop)
-    @set 'model', content # route sets unfilteredContent
+    @set 'content', content # route sets unfilteredContent
 
   # TODO terms as query-param?
   termsBinding: 'Cataract.terms'
@@ -29,7 +32,8 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
 
   filterFunctionDidChange: (->
     @gotoFirstPage()
-    @didRequestRange @get("rangeStart"), @get("rangeStop")
+    # wait for old views to be destroyed
+    Ember.run.next this, @didRequestRange
   ).observes("filterFunction", 'mode')
 
   termsList:
@@ -124,4 +128,12 @@ Cataract.TorrentsController = Cataract.FilteredController.extend Ember.Paginatio
   isRunningActive:
     Ember.computed ->
       @get('mode') is 'running'
+    .property('mode')
+
+  sortAscending: false
+  sortProperties:
+    Ember.computed ->
+      switch @get('mode')
+        when 'library' then ['payloadKiloBytes']
+        else ['createdAt']
     .property('mode')

@@ -11,6 +11,7 @@ Cataract.Torrent = DS.Model.extend
   payloadKiloBytes: attr 'number'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
+  createdAt: attr 'date'
 
   filedata: attr 'string'
 
