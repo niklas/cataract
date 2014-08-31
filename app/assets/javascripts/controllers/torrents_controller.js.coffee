@@ -129,7 +129,7 @@ Cataract.TorrentsController =
     .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
   filteredContentDidChange: (->
-    @didRequestRange()
+    Ember.run.once => @didRequestRange()
   ).observes('filteredContent')
 
 
