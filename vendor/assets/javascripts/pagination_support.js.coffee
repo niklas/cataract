@@ -39,5 +39,5 @@ Ember.PaginationSupport = Ember.Mixin.create
   .property("total", "rangeWindowSize").cacheable()
   pageDidChange: (->
     @didRequestRange get(this, "rangeStart"), get(this, "rangeStop")
-  ).observes("total", "rangeStart", "rangeStop")
+  ).observes("total", "rangeStart")
   gotoFirstPage: -> @set('rangeStart', 0)
