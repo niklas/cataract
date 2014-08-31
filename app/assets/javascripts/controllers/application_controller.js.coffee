@@ -1,11 +1,11 @@
 Cataract.ApplicationController = Ember.Controller.extend
-  init: ->
-    @_super()
-    @get('fullSiteTitle') # observer does not fire if value is not used
+  setupTitle: (->
+    Ember.run.later =>
+      @get('fullSiteTitle') # observer does not fire if value is not used
+      @propertyDidChange('fullSiteTitle')
+  ).on('init')
 
   needs: ['torrents', 'directories', 'disks', 'directory']
-
-  currentController: null
 
   fullSiteTitleObserver: ( (sender, key) ->
     $('head title').text(sender.get(key))
@@ -13,11 +13,11 @@ Cataract.ApplicationController = Ember.Controller.extend
 
   fullSiteTitle:
     Ember.computed ->
-      if sub = @get('currentController.siteTitle')
+      if sub = @get('controllers.torrents.siteTitle')
         [ sub, @get('siteTitle')].join(' - ')
       else
         "loading Cataract"
-    .property('currentController.siteTitle')
+    .property('controllers.torrents.siteTitle')
 
   siteTitle: 'Cataract'
 

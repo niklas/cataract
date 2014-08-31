@@ -46,10 +46,6 @@ Cataract.ApplicationRoute = Ember.Route.extend
 Cataract.IndexRoute = Ember.Route.extend()
 
 Cataract.TorrentsRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    console?.debug 'neeeeded?'
-    @controllerFor('application').set('currentController', controller)
-
   renderTemplate: ->
     # we are always rendered
     # but the directory maybe, depends on query-params available later
