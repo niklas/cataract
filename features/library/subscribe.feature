@@ -5,7 +5,8 @@ Feature: Subscribe Directory
   I want to mark directories as subscribed
 
   Scenario: subscribe and unsubscribe a directory
-    Given a directory exists with name: "Shame of Frowns"
+    Given a disk exists with name: "aDisk"
+      And a directory exists with name: "Shame of Frowns", disk: the disk
       And I am signed in as user
       And am on the home page
       And I wait for the spinner to stop
@@ -15,6 +16,7 @@ Feature: Subscribe Directory
       And I follow "all Directories"
 
      When I follow "Shame of Frowns" within the sidebar directories list
+      And I follow "aDisk"
      Then I should see "Shame of Frowns" within the details
 
      When I follow "subscribe"
