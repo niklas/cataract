@@ -22,8 +22,6 @@ Cataract.TorrentsController =
     @set 'content', @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
-    @gotoFirstPage()
-    @refreshTransfers()
   ).on('init')
 
   # we use our current queryParams, fetch its torrents to fill the DS cache as
@@ -34,7 +32,8 @@ Cataract.TorrentsController =
     # TODO fetch only torrents having content if status is 'library'
 
     # save that just to be able to wait in a route
-    @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then => @didRequestRange()
+    @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then =>
+      @gotoFirstPage()
   ).on('init')
 
   freshTransfersOnTick: (->
@@ -128,16 +127,11 @@ Cataract.TorrentsController =
       @get('arrangedContent').filter( @get('filterFunction') )
     .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
-  filteredContentDidChange: (->
-    Ember.run.once => @didRequestRange()
-  ).observes('filteredContent')
-
-
   #######################################################################
   # Paginate
   #######################################################################
 
-  totalBinding: 'fullContent.length'
+  total: Ember.computed.alias 'filteredContent.length'
   rangeWindowSize: 50
 
   didRequestRange: ->
