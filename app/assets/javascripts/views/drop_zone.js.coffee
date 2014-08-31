@@ -30,7 +30,7 @@ Cataract.DropZoneView = Ember.View.extend
         startAutomatically: true
 
       torrent.save().then (t)->
-        controller.transitionTo('torrent', t)
+        controller.transitionToRoute('torrent', t)
       , (error)->
         torrent.rollback()
 
