@@ -135,6 +135,7 @@ Cataract.TorrentsController =
     rangeStop = @get('rangeStop')
     content = @get('filteredContent').slice(rangeStart, rangeStop)
     @set 'finalContent', content
+    @refreshTransfers()
 
 
 
@@ -157,8 +158,9 @@ Cataract.TorrentsController =
     @refreshTransfers()
     Cataract.Router.router.transitionTo 'torrent', torrent
 
+  # TODO treat transfers as a normal model with infoHash as foreign key
   refreshTransfers: ->
-    list = @get('arrangedContent') # unfiltered, but sorted
+    list = @get('content') # unfiltered, but sorted
     running = list.filterProperty('status', 'running').mapProperty('id')
     store = @get('store')
     existing = store.find
