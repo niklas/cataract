@@ -28,7 +28,7 @@ Cataract.ApplicationController = Ember.Controller.extend
     'path:directory',
     'filterDirectories'
   ]
-  mode: 'recent'
+  mode: 'running'
   age: 'month' # faster initialization of page
   path: null
   filterDirectories: true
