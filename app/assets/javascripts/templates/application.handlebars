@@ -45,6 +45,14 @@
     <div class="tabbable">
       <div class="tab-content">
         <div class="tab-pane active">
+          {{ controller }}
+          {{ controller.age }}
+          {{ controller.path }}
+          {{ controller.directory }}
+          {{ controller.directories.length }}
+          {{ controllers.torrents.age }}
+          {{ controllers.torrents.directories.length }}
+          {{ controllers.torrents.directoryIds.length }}
           {{ render "torrents" }}
         </div>
       </div>

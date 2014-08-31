@@ -34,7 +34,7 @@ Cataract.TorrentsController =
     # TODO fetch only torrents having content if status is 'library'
 
     # save that just to be able to wait in a route
-    @set 'loadedContent', store.findQuery('torrent', age: @get('age'))
+    @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then => @didRequestRange()
   ).on('init')
 
   freshTransfersOnTick: (->
@@ -100,20 +100,26 @@ Cataract.TorrentsController =
         if directoryId?
           want = want and torrent.get('contentDirectory.id') == directoryId
 
+        console?.log "want", want
         want
-    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each')
+    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories')
 
   filterFunctionDidChange: (->
     console.debug 'filterFunctionDidChange'
     @gotoFirstPage()
     # wait for old views to be destroyed
-    Ember.run.next this, @didRequestRange
-  ).observes("filterFunction", 'mode')
+    @didRequestRange()
+  ).observes("filterFunction")
+
+  directoriesDidChange: (->
+    console?.debug "directoriesDidChange"
+  ).observes('directories')
 
   filteredContent:
     Ember.computed ->
+      console?.debug "filteredContent"
       @get('arrangedContent').filter( @get('filterFunction') )
-    .property('filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
+    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
 
   #######################################################################
