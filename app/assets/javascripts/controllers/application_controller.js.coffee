@@ -32,6 +32,7 @@ Cataract.ApplicationController = Ember.Controller.extend
   age: 'month' # faster initialization of page
   path: null
   filterDirectories: true
+  terms: ''
   poly:
     Ember.computed ->
       @get('controllers.directories').findPolyByPath( @get('path') )

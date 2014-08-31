@@ -10,7 +10,7 @@ Cataract.TorrentsController =
   directoryIds: Ember.computed.mapProperty 'directories', 'id'
 
   # TODO terms as query-param?
-  terms:        Ember.computed.alias 'Cataract.terms'
+  terms:        Ember.computed.alias 'controllers.application.terms'
 
   #######################################################################
   # Initialization
