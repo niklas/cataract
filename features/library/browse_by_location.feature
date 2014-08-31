@@ -75,3 +75,9 @@ Feature: Browsing the library
       | Short Season |
       But I should not see "Blockbuster"
 
+    When I follow "reset Directory"
+    Then I should see the following torrents in the torrent list:
+      | title             |
+      | Short Blockbuster |
+      | Short Season      |
+
