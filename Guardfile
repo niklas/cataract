@@ -9,7 +9,7 @@ group :test, :halt_on_fail => true do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
     watch('spec/spec_helper.rb')  { "spec" }
-    watch(%r{^spec/factories/.+$}) { 'spec' }
+    #watch(%r{^spec/factories/.+$}) { 'spec' }
 
     # Rails example
     watch(%r{^spec/.+_spec\.rb$})
@@ -40,10 +40,10 @@ group :test, :halt_on_fail => true do
     all_on_start: false,
     all_after_pass: false do
     watch(%r{^features/.+\.feature$})
-    watch(%r{^app/(controllers|widgets)})     { "features" }
+    #watch(%r{^app/(controllers|widgets)})     { "features" }
     watch(%r{^app/models/maintenance/(.+)\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0]  }
-    watch(%r{^spec/support/.+$})              { 'features' }
-    watch(%r{^spec/factories/.+$})            { 'features' }
+    #watch(%r{^spec/support/.+$})              { 'features' }
+    #watch(%r{^spec/factories/.+$})            { 'features' }
     watch(%r{^features/step_definitions/filesystem_steps.rb$})  { 'features -t @fakefs,@rootfs' }
     watch(%r{^app/models/.*(?:sync|file|content)})  { 'features -t @fakefs,@rootfs' }
 #watch(%r{^features/support/.+$})          { 'features' }
