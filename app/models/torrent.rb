@@ -53,7 +53,7 @@ class Torrent < ActiveRecord::Base
     when 'month'
       since 1.month.ago
     when /^month(\d+)$/
-      since $i.to_i.months.ago
+      since $1.to_i.months.ago
     when 'year'
       since 1.year.ago
     else

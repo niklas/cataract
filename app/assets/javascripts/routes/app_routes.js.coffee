@@ -37,7 +37,10 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
     queryParamsDidChange: (changed, totalPresent, removed)->
       if changed.status || changed.age
-        @controllerFor('torrents').warmupStore()
+        Ember.run.once =>
+          @controllerFor('torrents').warmupStore()
+
+      true
 
 
 Cataract.IndexRoute = Ember.Route.extend()
