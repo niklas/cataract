@@ -12,6 +12,7 @@ Cataract.Torrent = DS.Model.extend
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
   createdAt: attr 'date'
+  updatedAt: attr 'date'
 
   filedata: attr 'string'
 

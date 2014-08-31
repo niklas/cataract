@@ -2,6 +2,7 @@
 #= require_self
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
+#= require moment
 #= require handlebars
 #= require ember
 #= require ember-data

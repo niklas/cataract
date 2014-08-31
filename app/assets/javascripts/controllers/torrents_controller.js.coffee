@@ -78,6 +78,7 @@ Cataract.TorrentsController =
       console?.debug "filterfunc"
       termsList  = @get('termsList')
       mode = @get('mode') || ''
+      age = @get('age') || ''
       directoryIds = @get('directoryIds') || []
       directoryId = @get('directory.id')
 
@@ -88,11 +89,21 @@ Cataract.TorrentsController =
         want = want and termsList.every (term) -> text.indexOf(term) >= 0
 
         if mode.length > 0
-          if mode == 'running'
-            want = want and torrent.get('status') is 'running'
+          switch mode
+            when 'running'
+              want = want and torrent.get('status') is 'running'
+            when 'library'
+              want = want and torrent.get('payloadExists')
 
-          if mode == 'library'
-            want = want and torrent.get('payloadExists')
+        if age.length > 0
+          sinceDate = switch age
+            when 'month' then moment().subtract(1, 'month')
+            when 'year' then moment().subtract(1, 'year')
+            else
+              if m = age.match(/^month(\d+)$/)
+                moment().subtract( parseInt(m[1], 10), 'month')
+          if sinceDate
+            want = want and torrent.get('updatedAt') > sinceDate
 
         if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
           want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0

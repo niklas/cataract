@@ -9,20 +9,16 @@ Feature: Browse library by age
 
   Scenario: by age
       # more than one year ago
-    Given today is 2011-12-31
-      And a torrent exists with title: "Bones"
-      # one year ago, more than a month
-      And today is 2012-01-03
-      And a torrent exists with title: "Rotten Beef"
-      And today is 2012-11-31
-      And a torrent exists with title: "Old Beef"
-      # one month ago
-      And today is 2012-12-03
-      And a torrent exists with title: "Edible Beef"
-      And today is 2012-12-31
-      And a torrent exists with title: "Fresh Beef"
+    Given a torrent exists with title: "Bones", updated_ago: "13 months"
 
-    Given today is 2013-01-01
+      # one year ago, more than a month
+      And a torrent exists with title: "Rotten Beef", updated_ago: "11 months"
+      And a torrent exists with title: "Old Beef", updated_ago: "40 days"
+
+      # one month ago
+      And a torrent exists with title: "Edible Beef", updated_ago: "28 days"
+      And a torrent exists with title: "Fresh Beef", updated_ago: "1 days"
+
       And I am signed in
 
      When I go to the recent list page
