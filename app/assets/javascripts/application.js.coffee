@@ -2,6 +2,7 @@
 #= require_self
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
+#= require moment
 #= require handlebars
 #= require ember
 #= require ember-data
@@ -10,6 +11,7 @@
 #= require bootstrap
 #= require pagination_support
 #= require bindWithDelay
+#= require ./lib/file_size
 #
 #= require ./cataract
 #= require ./lib/loaded_page

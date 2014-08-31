@@ -83,5 +83,57 @@ ul.torrents {
       cursor: pointer;
     }
   }
+
+  li.payload_circle {
+    display: block;
+
+    // defaults
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+
+    transition: width 0.8s, height 0.8s, line-height 0.9s;
+
+    margin: 0.5em;
+    border-radius: 50%;
+    text-align: center;
+    float: left;
+
+    background-color: $btn-info-bg;
+    color: $btn-info-color;
+    box-shadow: -1px 1px 3px darken($brand-info, 50);
+    cursor: pointer;
+
+    position: relative;
+    .title {
+      display: none; // must hover
+      position: absolute;
+      top: 87%;
+
+      // center with overflow
+      left: 50%;
+      margin-left: -150%;
+      width: 300%;
+      z-index: 2; // do not overlap with other circles
+
+      background-color: rgba( darken($btn-info-bg, 30), 0.5);
+      color: $btn-info-color;
+      line-height: 110%;
+      border-radius: $border-radius-base;
+      padding: 0.3em;
+    }
+
+    &:hover {
+      box-shadow: -2px 2px 5px darken($brand-info, 30);
+      .title {
+        display: block;
+      }
+    }
+
+    &.active {
+      background-color: $btn-default-bg;
+      color: $btn-default-color;
+    }
+  }
 }
 

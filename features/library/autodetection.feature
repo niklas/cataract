@@ -68,6 +68,7 @@ Feature: Disks in Library
       And I am on the home page
       And I follow "all Directories"
      When I follow "Series"
+      And I follow "aDisk"
       And I wait for the spinner to stop
      Then I should see a table of the following new directories:
        | Name       | Action |

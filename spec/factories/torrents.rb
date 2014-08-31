@@ -51,6 +51,14 @@ FactoryGirl.define do
       end
     end
 
+    ignore do # transient
+      updated_ago '1 day'
+    end
+    updated_at do
+      if updated_ago =~ /^(\d+) (day|week|month|year)s?$/
+        $1.to_i.public_send($2).ago
+      end
+    end
   end
 
   factory :feed do

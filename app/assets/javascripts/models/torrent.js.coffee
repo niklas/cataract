@@ -11,6 +11,8 @@ Cataract.Torrent = DS.Model.extend
   payloadKiloBytes: attr 'number'
   isRunning: (-> @get('status') == 'running').property('status')
   isRemote: (-> @get('status') == 'remote').property('status')
+  createdAt: attr 'date'
+  updatedAt: attr 'date'
 
   filedata: attr 'string'
 
@@ -24,6 +26,10 @@ Cataract.Torrent = DS.Model.extend
       torrent = this
       payload.destroyRecord().then ->
         torrent.set('payloadExists', false)
+  payloadHumanSize:
+    Ember.computed ->
+      fileSize @get('payloadKiloBytes'), short: true
+    .property('payloadKiloBytes')
 
   contentDirectory: DS.belongsTo('directory')
   contentPolyDirectory: PolyDiskDirectory.attr('contentDirectory')

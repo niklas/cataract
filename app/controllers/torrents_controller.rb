@@ -14,7 +14,7 @@ class TorrentsController < InheritedResources::Base
         index!
       end
       format.json do
-        @updated = resource_class.order('updated_at').last
+        @updated = collection.first
         if !@updated.present? || stale?(:etag => @updated, :last_modified => @updated.updated_at)
           index!
         end
@@ -50,7 +50,7 @@ class TorrentsController < InheritedResources::Base
   end
 
   def fields_for_collection
-    [:id, :title, :info_hash, :filename, :status, :content_directory_id, :file, :url]
+    [:id, :title, :info_hash, :filename, :status, :content_directory_id, :file, :url, :created_at, :updated_at]
   end
 
   def search_params

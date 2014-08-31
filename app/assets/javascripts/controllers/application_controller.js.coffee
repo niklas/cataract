@@ -1,11 +1,11 @@
 Cataract.ApplicationController = Ember.Controller.extend
-  init: ->
-    @_super()
-    @get('fullSiteTitle') # observer does not fire if value is not used
+  setupTitle: (->
+    Ember.run.later =>
+      @get('fullSiteTitle') # observer does not fire if value is not used
+      @propertyDidChange('fullSiteTitle')
+  ).on('init')
 
   needs: ['torrents', 'directories', 'disks', 'directory']
-
-  currentController: null
 
   fullSiteTitleObserver: ( (sender, key) ->
     $('head title').text(sender.get(key))
@@ -13,11 +13,11 @@ Cataract.ApplicationController = Ember.Controller.extend
 
   fullSiteTitle:
     Ember.computed ->
-      if sub = @get('currentController.siteTitle')
+      if sub = @get('controllers.torrents.siteTitle')
         [ sub, @get('siteTitle')].join(' - ')
       else
         "loading Cataract"
-    .property('currentController.siteTitle')
+    .property('controllers.torrents.siteTitle')
 
   siteTitle: 'Cataract'
 
@@ -28,14 +28,15 @@ Cataract.ApplicationController = Ember.Controller.extend
     'path:directory',
     'filterDirectories'
   ]
-  mode: 'recent'
+  mode: 'running'
   age: 'month' # faster initialization of page
   path: null
   filterDirectories: true
+  terms: ''
   poly:
     Ember.computed ->
       @get('controllers.directories').findPolyByPath( @get('path') )
-    .property('path')
+    .property('path', 'controllers.directories.@each')
   directoriesBinding: 'poly.alternatives'
 
   # when poly has only one alternative or a the directory controller is active
@@ -51,10 +52,7 @@ Cataract.ApplicationController = Ember.Controller.extend
     .property('directories.@each', 'controllers.directory.model')
 
   detailsRouteActive: false
-  detailsExtended:
-    Ember.computed ->
-      @get('detailsRouteActive') || @get('directory')?
-    .property('detailsRouteActive', 'directory')
+  detailsExtended: Ember.computed.alias('detailsRouteActive')
 
   polyDidChange: (->
     if dirs = @get('poly.alternatives') # by setting path through query params

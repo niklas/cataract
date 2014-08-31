@@ -6,9 +6,9 @@ Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
     'torrents',
   ]
   isFiltered: Ember.computed.alias('controllers.application.filterDirectories')
+  currentPath: Ember.computed.alias('controllers.application.path')
   isUnfiltered: Ember.computed.not('isFiltered')
   rootsBinding: 'root.children'
-  current: null
 
   contentBinding: 'roots'
   isLoaded: Ember.computed.not('directories.isPending')
@@ -25,3 +25,8 @@ Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
         @set 'current', alts.get('firstObject')
 
     found
+
+  hasCurrentPath:
+    Ember.computed ->
+      @get('currentPath.length') > 0
+    .property('currentPath')

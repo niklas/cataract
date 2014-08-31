@@ -25,7 +25,7 @@ Cataract.DirectoryNavItemView = Ember.View.extend
 
   hasResults:
     Ember.computed ->
-      torrents = @get('controller.controllers.torrents.unfilteredContent')
+      torrents = @get('controller.controllers.torrents.arrangedContent')
       @get('content.descendantsAndSelf').any (a)->
         torrents.isAny('contentPolyDirectory', a)
-    .property('controller.controllers.torrents.unfilteredContent.@each.contentPolyDirectory', 'content.descendantsAndSelf.@each')
+    .property('controller.controllers.torrents.arrangedContent.@each.contentPolyDirectory', 'content.descendantsAndSelf.@each')

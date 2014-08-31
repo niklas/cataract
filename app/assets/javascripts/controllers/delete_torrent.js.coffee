@@ -7,7 +7,7 @@ Cataract.DeleteTorrentController = Ember.ObjectController.extend
       back = =>
         @send('closeModal')
         # must move away from the torrent
-        @transitionToRoute('torrents')
+        @transitionToRoute('application')
 
       if @get('deletePayload')
         torrent.clearPayload()?.then ->

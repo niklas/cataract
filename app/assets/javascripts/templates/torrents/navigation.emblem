@@ -1,0 +1,26 @@
+link-to (query-params status='recent') tagName='li'
+  link-to (query-params status='recent') | Recent
+link-to (query-params status='running') tagName='li'
+  link-to (query-params status='running') | Running
+link-to (query-params status='library') tagName='li'
+  link-to (query-params status='library') | Library
+li
+  link-to 'add' | Add
+
+li.dropdown
+  a href="#" class="dropdown-toggle" data-toggle="dropdown"
+    = describedAge
+    b.caret
+
+  ul.dropdown-menu
+    li
+     link-to (query-params age='month')  | Month
+    li
+     link-to (query-params age='month3') | 3 Months
+    li
+     link-to (query-params age='month6') | Half a year
+    li
+     link-to (query-params age='year')   | Year
+    li
+     link-to (query-params age='all')    | All (slow)
+

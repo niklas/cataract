@@ -17,11 +17,8 @@ module NavigationHelpers
     when /^the sign ?in page$/
       new_user_session_path
 
-    when /^the library page$/
-      disks_path
-
-    when /^the (running|archived|remote|recent) list page$/
-      root_path + "#/filter/#{$1}"
+    when /^the (running|archived|remote|recent|library) list page$/
+      root_path + "#/?status=#{$1}"
 
     when /^the (\w+) page (?:of|for) #{capture_model}$/
       polymorphic_path [model!($2), $1]
