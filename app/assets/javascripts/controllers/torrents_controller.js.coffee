@@ -110,7 +110,6 @@ Cataract.TorrentsController =
         if directoryId?
           want = want and torrent.get('contentDirectory.id') == directoryId
 
-        console?.log "want", want
         want
     .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories')
 
@@ -135,7 +134,6 @@ Cataract.TorrentsController =
   rangeWindowSize: 50
 
   didRequestRange: ->
-    console?.debug "final"
     rangeStart = @get('rangeStart')
     rangeStop = @get('rangeStop')
     content = @get('filteredContent').slice(rangeStart, rangeStop)

@@ -1,9 +1,5 @@
 with view.content
   link-to 'torrent' this class="title"
     = title
-    ul
-      li = controller.controllers.application.directories.length
-      li = controller.directories.length
-      li = controller.directoryIds.length
   if payloadExists
     = payloadHumanSize
