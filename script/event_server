@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'sinatra'
+require 'redis'
+
+conns = []
+
+get '/subscribe' do
+  content_type 'text/event-stream'
+  # FIXME INSECURE only allow from same domain
+  headers['Access-Control-Allow-Origin'] = '*'
+  stream(:keep_open) do |out|
+    conns << out
+    out.callback { conns.delete(out) }
+  end
+end
+
+Thread.new do
+  redis = Redis.connect
+  redis.psubscribe('message', 'message.*') do |on|
+    on.pmessage do |match, channel, message|
+      channel = channel.sub('message.', '')
+
+      conns.each do |out|
+        out << "event: #{channel}\n"
+        out << "data: #{message}\n\n"
+      end
+    end
+  end
+end

@@ -14,6 +14,7 @@ class TorrentsController < InheritedResources::Base
         index!
       end
       format.json do
+        publish 'message', text: "#{collection.length} torrents fetched", foo: 23
         @updated = collection.first
         if !@updated.present? || stale?(:etag => @updated, :last_modified => @updated.updated_at)
           index!
@@ -67,6 +68,4 @@ class TorrentsController < InheritedResources::Base
   def interpolation_options
     { torrent: resource.title }
   end
-
-
 end

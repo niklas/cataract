@@ -333,6 +333,8 @@ GEM
       pry (>= 0.9.11)
     psych (2.0.5)
     rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.0)
@@ -356,6 +358,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
+    redis (3.1.0)
     responders (1.0.0)
       railties (>= 3.2, < 5)
     rspec (2.14.1)
@@ -400,6 +403,10 @@ GEM
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.5.0)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -518,6 +525,7 @@ DEPENDENCIES
   rails-develotest
   rake
   rb-inotify
+  redis
   rspec-fire
   rspec-rails (~> 2.13)
   rubytorrent-allspice!
@@ -528,6 +536,7 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   simplecov
+  sinatra
   term-ansicolor
   timecop
   uglifier (>= 1.2.3)

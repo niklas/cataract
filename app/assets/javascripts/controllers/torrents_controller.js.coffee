@@ -41,6 +41,17 @@ Cataract.TorrentsController =
     true
   ).on('init')
 
+  # OPTIMIZE where is the best place for this?
+  reactToModelChanges: (->
+    store = @get('store')
+    @get('serverEvents.source').addEventListener 'torrent', (event)->
+      parsed = JSON.parse(event.data)
+      if id = parsed.id
+        store.find('torrent', id).then (torrent)->
+          torrent.sideUpdateAttributes(parsed)
+
+  ).on('init')
+
 
 
   # we will sort, filter, paginate

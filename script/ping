@@ -1,0 +1,3 @@
+#!/bin/sh
+
+redis-cli publish message "{\"text\": \"Hello. It is now $(date).\"}"
