@@ -30,7 +30,7 @@ class Maintenance::Recognizer < Maintenance::Base
         items_from_all_feeds.select do |item|
           directory.regexp.match "#{item.summary} #{item.title}"
         end.each do |item|
-          torrent = Torrent.new(status: 'remote', url: item.link, content_directory: directory)
+          torrent = Torrent.new(status: 'remote', url: item.link, content_directory: directory, title: item.title)
           if torrent.save
             created << torrent
           else
