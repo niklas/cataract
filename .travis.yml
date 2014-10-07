@@ -32,7 +32,7 @@ before_script:
 #- "bundle exec chromedriver-update"
 script:
   - bundle exec rspec
-  - bundle exec rake cucumber:ok
+  - bundle exec cucumber -rfeatures features
 after_failure:
   - cat log/capybara_test.log
   - cat log/rtorrent-test.log
