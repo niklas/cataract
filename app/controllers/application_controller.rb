@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  delegate :publish, to: Cataract::Publisher
+
   layout :layout_by_resource
 
 

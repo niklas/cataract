@@ -134,3 +134,6 @@ gem 'safe_yaml', '1.0.1'
 
 # TODO strong parameter
 gem 'protected_attributes'
+
+gem 'sinatra'
+gem 'redis'
