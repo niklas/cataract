@@ -22,7 +22,6 @@ before_install:
   - sudo dpkg -i debs/*
   - sudo apt-get -qq install screen chromium-browser mlocate redis-server
   - sudo apt-get -f install
-  - sudo /etc/init.d/redis-server start
   - sudo updatedb
   - createdb cataract_test
 before_script:
@@ -37,3 +36,5 @@ script:
 after_failure:
   - cat log/capybara_test.log
   - cat log/rtorrent-test.log
+services:
+  - redis-server
