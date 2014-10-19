@@ -1,3 +1,4 @@
+require 'redis'
 class Cataract::Publisher
   def self.publish(channel, message)
     redis.publish "message.#{channel}", message.to_json
