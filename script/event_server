@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+ENV['PORT'] = '4567'
+
 require 'rubygems'
 require 'bundler'
 Bundler.require :event_server
