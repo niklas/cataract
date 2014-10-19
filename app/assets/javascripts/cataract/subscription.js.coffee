@@ -4,7 +4,7 @@ url = ->
   if l.hostname is 'localhost'
     'http://localhost:4567/subscribe'
   else
-    "#{l.protocol}#{l.host}/subscribe"
+    "#{l.protocol}//#{l.host}/subscribe"
 
 Cataract.initializer
   name: 'subscription' # to server side events
