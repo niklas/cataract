@@ -135,5 +135,7 @@ gem 'safe_yaml', '1.0.1'
 # TODO strong parameter
 gem 'protected_attributes'
 
-gem 'sinatra'
-gem 'redis'
+group :event_server do
+  gem 'sinatra'
+  gem 'redis'
+end

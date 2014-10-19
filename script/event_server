@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'sinatra'
-require 'redis'
+require 'bundler'
+Bundler.require :event_server
 
 conns = []
 
