@@ -1,4 +1,4 @@
-rvm use ruby-2.0.0-p195@cataract --create
+rvm use ruby-2.0.0-p576@cataract --create
 
 # useful aliases may be added here
 alias cu='truncate --size 0 log/*.log; clear; bundle exec cucumber -r features/'
