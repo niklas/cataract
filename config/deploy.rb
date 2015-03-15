@@ -1,7 +1,6 @@
 set :repository,  "git://github.com/niklas/cataract.git"
 
 set :upstart_dir, "/home/#{user}/.init"
-set :rtorrent_dir, "/home/#{user}/.rtorrent"
 set :whenever_command, "bundle exec whenever"
 
 namespace :deploy do
@@ -18,7 +17,7 @@ namespace :deploy do
       #{make_link}/config/messenger.yml &&
       #{make_link}/config/newrelic.yml &&
       #{make_link}/public/uploads &&
-      ln -sf #{rtorrent_dir}/socket #{latest_release}/tmp/rtorrent.socket
+      ln -sf #{shared_path}/tmp/rtorrent.socket #{latest_release}/tmp/rtorrent.socket
     CMD
   end
 
