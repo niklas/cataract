@@ -17,7 +17,7 @@ group :test do
   gem 'cucumber-rails', :require => false
   # This is used to obtaing timings of Cucumber scenarios
   gem 'cucumber-timed_formatter', require: 'timed'
-  gem 'rspec-rails'
+  gem 'rspec-rails', "~> 2.14.2"
   gem 'pickle', github: 'tbuehl/pickle'
   gem 'timecop'
   gem 'database_cleaner'
