@@ -14,10 +14,12 @@ Cataract.ApplicationRoute = Ember.Route.extend
     @controllerFor('disks').set       'model', store.findAll('disk')
     @controllerFor('moves').set       'model', store.findAll('move')
 
-    store.findAll('transfer').then (transfers)->
+    store.findAll('transfer').then (transfers)=>
       @controllerFor('transfers').set 'model', transfers
     , (jqxhr)=>
       @controllerFor('application').transfersError(jqxhr)
+
+    true
   actions:
     save: (model)->
       model.save()

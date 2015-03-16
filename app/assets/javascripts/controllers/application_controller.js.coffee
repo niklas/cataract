@@ -5,7 +5,7 @@ Cataract.ApplicationController = Ember.Controller.extend
       @propertyDidChange('fullSiteTitle')
   ).on('init')
 
-  needs: ['torrents', 'directories', 'disks', 'directory']
+  needs: ['torrents', 'directories', 'disks', 'directory', 'transfers']
 
   fullSiteTitleObserver: ( (sender, key) ->
     $('head title').text(sender.get(key))

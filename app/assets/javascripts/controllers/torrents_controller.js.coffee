@@ -180,7 +180,7 @@ Cataract.TorrentsController =
     existing = store.find
     fetch = store.findQuery 'transfer', running: running.join(',')
 
-    fetch.then (transfers) ->
+    fetch.then (transfers) =>
       # time as passed => recalculate
       running = list.filterProperty('status', 'running').mapProperty('id')
       transfers.forEach (transfer)->
