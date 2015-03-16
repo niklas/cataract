@@ -33,13 +33,13 @@
     end
 
     config.before(:each) do
-      unless RSpec.current_example.metadata[:without_transaction]
+      unless example.metadata[:without_transaction]
         DatabaseCleaner.start
       end
     end
 
     config.after(:each) do
-      if RSpec.current_example.metadata[:without_transaction]
+      if example.metadata[:without_transaction]
         DatabaseCleaner.clean_with(:truncation)
       else
         DatabaseCleaner.clean
