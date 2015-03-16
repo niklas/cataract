@@ -9,7 +9,7 @@ RSpec::Matchers.define :be_auto_targeted_by do |attrs|
     targeted(attrs) == expected
   end
 
-  failure_message do |expected|
+  failure_message_for_should do |expected|
     "#{attrs} should auto-target directory #{expected.inspect}, but did #{targeted(attrs).inspect}"
   end
 end
