@@ -1,6 +1,6 @@
 # =require 'spin'
 # =require 'jquery.spin'
-Cataract.Spinner = Ember.View.extend
+Cataract.LoadingSpinnerComponent = Ember.Component.extend
   classNames: ['spincontainer']
   didInsertElement: ->
     $(document).ajaxStop  => @disable()
@@ -27,5 +27,3 @@ Cataract.Spinner = Ember.View.extend
   disable: ->
     @set('enabled', false)
     @$().spin(false)
-
-  template: Ember.Handlebars.compile "{{message}}"
