@@ -356,7 +356,6 @@ GEM
     pry-stack_explorer (0.4.9.2)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    psych (2.0.13)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -555,7 +554,6 @@ DEPENDENCIES
   pry-doc
   pry-nav
   pry-stack_explorer
-  psych
   rails (~> 4.1.0)
   rails-bookmarklet!
   rails-develotest
@@ -565,7 +563,6 @@ DEPENDENCIES
   rspec-rails
   rubytorrent-allspice!
   rvm-capistrano
-  safe_yaml (= 1.0.1)
   sass-rails (~> 4.0.3)
   scgi
   selenium-webdriver
