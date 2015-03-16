@@ -58,7 +58,14 @@
       $want_pry = false
     end
 
-    config.mock_with :rspec
+    config.expect_with :rspec do |c|
+      # ...or explicitly enable both
+      c.syntax = [:should, :expect]
+    end
+    config.mock_with :rspec do |c|
+      # ...or explicitly enable both
+      c.syntax = [:should, :expect]
+    end
   end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
