@@ -4,7 +4,7 @@ describe Cataract::TitleFinder do
   context 'for Torrent without title' do
     let(:attrs)    { {} }
     let(:defaults) { {persisted?: false, content_filenames: nil} }
-    let(:torrent)  { instance_double 'Torrent', attrs.merge(title: nil).reverse_merge(defaults) }
+    let(:torrent)  { double 'Torrent', attrs.merge(title: nil).reverse_merge(defaults) }
 
     context "with filename present" do
       let(:attrs) {{ filename: 'milch.torrent' }}
