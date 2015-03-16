@@ -15,7 +15,7 @@ module RSpec
         @difference.matching?
       end
 
-      def failure_message_for_should
+      def failure_message
         @difference.to_s
       end
     end
