@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ScrapingsController do
-  signin_user
+  before { signin_user }
   describe '#new' do
     it 'allows to displayed in an iframe' do
       get :new, url: 'http://somewhere.com'

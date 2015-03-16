@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TorrentsController do
-  signin_user
+  before { signin_user }
 
   describe '#index JSON' do
     it "succeeds with at least one torrent" do
