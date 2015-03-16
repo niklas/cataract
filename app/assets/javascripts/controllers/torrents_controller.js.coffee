@@ -195,10 +195,10 @@ Cataract.TorrentsController =
         if torrent = list.findProperty('id', disap)
           torrent.set 'status', 'archived'
           torrent.set 'transfer', null
-      Cataract.set 'online', true
+      @get('controllers.application').transfersSuccess()
       true
-    , (x,y)->
-      console?.debug 'could not fetch transfers:', x.responseText
+    , (jqxhr)=>
+      @get('controllers.application').transfersError(jqxhr)
 
   isRecentActive:
     Ember.computed ->

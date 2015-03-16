@@ -17,15 +17,6 @@ CataractApplication = Ember.Application.extend
   autoinit: false
   terms: ''
   transfers: Ember.A()
-  ready: ->
-    #@_super()
-    # FIXME load transfer through controller needs?
-    # @set 'transfers', @get('store').findAll('transfer')
-    # TODO put this into a view/controller combi
-    jQuery(document).ajaxError (e, jqxhr, settings, exception) ->
-      Cataract.set 'online', false
-      if jqxhr.status == 502
-        Cataract.set 'offlineReason', jqxhr.responseText
 
   # TODO move to diskcontroller?
   currentDisk: null

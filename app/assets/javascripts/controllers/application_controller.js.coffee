@@ -73,3 +73,11 @@ Cataract.ApplicationController = Ember.Controller.extend
       else
         "in this " + @get('age')
     .property('age')
+
+  transfersError: (jqxhr)->
+    Cataract.set 'online', false
+    if jqxhr.responseText?
+      Cataract.set 'offlineReason', jqxhr.responseText
+
+  transfersSuccess: ()->
+    Cataract.set 'online', true
