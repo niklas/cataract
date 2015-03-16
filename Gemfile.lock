@@ -578,4 +578,4 @@ DEPENDENCIES
   webmock (= 1.16)
   whenever
   xmlrpcs
-  zeus (~> 0.15.0)
+  zeus

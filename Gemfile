@@ -54,7 +54,7 @@ group :test do
   # Gemfile guard-cucumber cannot start "zeus cucumber" because it isn't in the
   # bundle: So.. we add it, but don't load it. To get fast guard response
   # times, make sure it does not run cucumber through bundler.
-  gem 'zeus', '~> 0.15.0', require: false
+  gem 'zeus', require: false
 end
 
 group :development, :test do
