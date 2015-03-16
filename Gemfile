@@ -14,11 +14,10 @@ gem 'jquery-ui-rails'
 
 group :test do
   gem 'rake'
-  gem 'cucumber-rails', "~> 1.4.0", :require => false
+  gem 'cucumber-rails', :require => false
   # This is used to obtaing timings of Cucumber scenarios
   gem 'cucumber-timed_formatter', require: 'timed'
-  gem 'rspec-rails', "~> 2.13"
-  gem 'rspec-fire'
+  gem 'rspec-rails'
   gem 'pickle', github: 'tbuehl/pickle'
   gem 'timecop'
   gem 'database_cleaner'
