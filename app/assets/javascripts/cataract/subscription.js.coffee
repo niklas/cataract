@@ -1,7 +1,7 @@
 url = ->
   l = window.location
 
-  if l.hostname is 'localhost'
+  if l.hostname is 'localhost' or l.hostname is '127.0.0.1'
     'http://localhost:4567/subscribe'
   else
     "#{l.protocol}//#{l.host}/subscribe"
