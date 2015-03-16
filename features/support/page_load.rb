@@ -8,11 +8,9 @@ module PageLoadSupport
 
   def wait_for_the_page_to_be_loaded
     unless page.mode == :rack_test
-      within page.send(:scopes).first do
-        page.should have_css('html.loaded')
-        some_time_passes
-        step %Q~I wait for the spinner to stop~
-      end
+      page.should have_css('html.loaded')
+      some_time_passes
+      step %Q~I wait for the spinner to stop~
     end
   rescue Selenium::WebDriver::Error::UnhandledAlertError => e
     unless e.message =~ /An open modal dialog blocked the operation/
