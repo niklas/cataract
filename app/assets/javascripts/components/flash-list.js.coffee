@@ -1,3 +1,5 @@
+# TODO make this a real (TM) component
+# may require re-factoring of ember-rails-flash gem
 Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
   classNameBindings: ['basicClassName', 'alertClass']
   alertClass:
@@ -47,6 +49,6 @@ Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
     @startTimeout()
     true
 
-Cataract.FlashListView = Ember.Rails.FlashListView.extend
+Cataract.FlashListComponent = Ember.Rails.FlashListView.extend
   elementId: 'ember-flash'
   itemViewClass: Cataract.FlashItemView
