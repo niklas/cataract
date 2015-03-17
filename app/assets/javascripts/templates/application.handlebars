@@ -55,7 +55,7 @@
 
   <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
     {{partial "torrents/tabs"}}
-    {{status-message isOnline=Cataract.online errorMessage=Cataract.offlineReason refresh="refreshTransfers"}}
+    {{status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason refresh="refreshTransfers"}}
     {{drop-zone action="uploadTorrent"}}
   </div>
 

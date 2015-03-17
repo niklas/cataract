@@ -5,10 +5,10 @@
   does not exist
 {{else}}
   {{#if isRunning}}
-    {{#if Cataract.online}}
+    {{#if transferStatus.online}}
       {{view Cataract.TransferView contentBinding="transfer"}}
     {{else}}
-      {{Cataract.offlineReason}}
+      {{transferStatus.offlineReason}}
   {{/if}}
   {{/if}}
 

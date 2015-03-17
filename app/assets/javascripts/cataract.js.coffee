@@ -12,8 +12,6 @@
 
 CataractApplication = Ember.Application.extend
   rootElement: '#ember'
-  online: false # wait for first refreshTransfers
-  offlineReason: 'loading...'
   autoinit: false
   terms: ''
   transfers: Ember.A()

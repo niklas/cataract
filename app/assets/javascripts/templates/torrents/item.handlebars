@@ -8,10 +8,10 @@
   {{view Cataract.Nize value=view.content.payloadKiloBytes}}
 {{/if}}
 
-{{#if Cataract.online}}
+{{#if transferStatus.online}}
   {{#if view.content.isRunning}}
     {{view Cataract.TransferView contentBinding="view.content.transfer"}}
   {{/if}}
 {{else}}
-  {{Cataract.offlineReason}}
+  {{transferStatus.offlineReason}}
 {{/if}}
