@@ -1,0 +1,15 @@
+.row-fluid
+  .span6.content_directory
+    = content.directory.name
+    = content.directory.fullPath
+  .span6
+    .size= content.humanSize
+    button.btn.btn-small.count click="toggleFiles"
+      = filesCount
+
+if isShowingFiles
+  .row-fluid
+    .span12
+      ul.files
+        each fn in content.filenames
+          li= fn
