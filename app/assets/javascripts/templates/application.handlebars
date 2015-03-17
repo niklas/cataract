@@ -17,7 +17,7 @@
 
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
-            {{view Ember.DelayedTextField delayedValueBinding="controller.terms" classNames="form-control search-query" elementId="torrent_search_terms"}}
+            {{delayed-input value=controller.terms classNames="form-control search-query" elementId="torrent_search_terms"}}
           </div>
         </form>
 
