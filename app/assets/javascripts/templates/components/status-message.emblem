@@ -1,0 +1,6 @@
+if isOnline
+  .alert.alert-success OK
+else
+  .alert.alert-danger= errorMessage
+
+button.btn click="refreshStatus" refresh
