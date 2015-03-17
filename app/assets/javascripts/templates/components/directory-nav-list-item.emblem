@@ -1,4 +1,4 @@
-link-to (query-params directory=content.relativePath) class="name"
+link-to (query-params path=content.relativePath) class="name"
   i class={:glyphicon content.exists:glyphicon-folder-open:glyphicon-warning-sign}
   = content.name
 
