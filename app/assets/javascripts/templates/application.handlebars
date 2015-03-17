@@ -56,7 +56,7 @@
   <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
     {{partial "torrents/tabs"}}
     {{status-message isOnline=Cataract.online errorMessage=Cataract.offlineReason refresh="refreshTransfers"}}
-    {{view Cataract.DropZoneView}}
+    {{drop-zone action="uploadTorrent"}}
   </div>
 
   <div id="details" {{bind-attr class="detailsExtended:extended"}}>

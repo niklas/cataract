@@ -1,7 +1,7 @@
-Cataract.DropZoneView = Ember.View.extend
+Cataract.DropZoneComponent = Ember.Component.extend
   elementId: 'dropzone'
   classNameBindings: ['hovered', 'inviting']
-  template: Ember.Handlebars.compile '<i class="glyphicon glyphicon-upload"></i> <div class="inflate"></div>'
+
   hovered: false
   inviting: false
 
@@ -16,25 +16,9 @@ Cataract.DropZoneView = Ember.View.extend
     event.preventDefault()
     @set 'hovered', false
     @set 'inviting', false
-    @upload file for file in event.dataTransfer.files
+    @sendAction 'action', file for file in event.dataTransfer.files
     false
 
-  upload: (file) ->
-    reader = new FileReader()
-    controller = @get('controller')
-    torrent = controller.get('store').createRecord('torrent')
-    reader.onload = (upload) ->
-      torrent.setProperties
-        filedata: upload.target.result
-        filename: file.name
-        startAutomatically: true
-
-      torrent.save().then (t)->
-        controller.transitionToRoute('torrent', t)
-      , (error)->
-        torrent.rollback()
-
-    reader.readAsDataURL(file)
 
   dragOver: (e) ->
     e.preventDefault()
@@ -80,4 +64,3 @@ Cataract.DropZoneView = Ember.View.extend
   willDestroyElement: ->
     jQuery(document)
       .off('dragover')
-

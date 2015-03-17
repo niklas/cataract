@@ -6,52 +6,6 @@ Cataract.Router.map ->
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
 
-Cataract.ApplicationRoute = Ember.Route.extend
-  beforeModel: ->
-    # FIXME is this really needed with all the promises and needs?
-    store = @get('store')
-    @controllerFor('settings').set    'model',  store.find('setting', 'all')
-    @controllerFor('disks').set       'model', store.findAll('disk')
-    @controllerFor('moves').set       'model', store.findAll('move')
-
-    store.findAll('transfer').then (transfers)=>
-      @controllerFor('transfers').set 'model', transfers
-    , (jqxhr)=>
-      @controllerFor('application').transfersError(jqxhr)
-
-    true
-  actions:
-    save: (model)->
-      model.save()
-    rollback: (model)->
-      model.rollback()
-    refreshTransfers: ->
-      if controller = @controllerFor('torrents')
-        # TODO Spinner?
-        controller.refreshTransfers()
-    openModal: (modalName, model) ->
-      @controllerFor(modalName).set "model", model
-      @render modalName,
-        into: "application"
-        outlet: "modal"
-
-
-    closeModal: ->
-      @disconnectOutlet
-        outlet: "modal"
-        parentView: "application"
-
-    queryParamsDidChange: (changed, totalPresent, removed)->
-      if changed.status || changed.age
-        Ember.run.once =>
-          @controllerFor('torrents').warmupStore()
-
-      true
-
-    createDirectoryFromDetected: (detected) ->
-      detected.createDirectory()
-
-
 Cataract.IndexRoute = Ember.Route.extend()
 
 Cataract.TorrentsRoute = Ember.Route.extend
