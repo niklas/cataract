@@ -1,0 +1,6 @@
+ul.nav.nav-pills.nav-stacked.directories
+  if header
+    li.nav-header= header
+  each dir in content
+    directory-nav-list-item content=dir torrents=torrents isUnfiltered=isUnfiltered
+

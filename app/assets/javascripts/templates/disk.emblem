@@ -6,15 +6,15 @@ h2= name
 if hasDetectedDirs
   h2 Detected
   ul.new.directories
-    each directory in detectedDirectories
+    each dir in detectedDirectories
       li
-        a.btn.btn-warning.btn-mini click="createDirectory directory" href="#" Import
-        span.name= directory.name
+        a.btn.btn-warning.btn-mini click="createDirectory dir" href="#" Import
+        span.name= dir.name
 
 if hasDirectories
   ul.directories.existing
-    each directory in directories
+    each dir in directories
       li
-        link-to 'directory' directory classNames="name"
-          = directory.name
+        link-to 'directory' dir classNames="name"
+          = dir.name
 

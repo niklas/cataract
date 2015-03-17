@@ -74,7 +74,7 @@ Feature: Disks in Library
        | Name       |
        | Tagesschau |
        | Tatort     |
-     When I follow "Import" within the second row
+     When I follow "Import" within the second of the new directories
       And I wait for the spinner to stop
      Then I should see notice "Directory 'Tatort' created"
       And a directory "Tatort" should exist with name: "Tatort", disk: the disk

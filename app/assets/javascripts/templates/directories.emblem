@@ -4,4 +4,4 @@ if isLoaded
     link-to (query-params filterDirectories=false) class="btn btn-default" | all Directories
     if hasCurrentPath
       link-to 'application' (query-params directory='') class="btn btn-warning" | reset Directory
-  Cataract.DirectoryNavListView content=controller.roots classNames="root"
+  directory-nav-list content=controller.roots classNames="root" torrents=controllers.torrents isUnfiltered=controller.isUnfiltered
