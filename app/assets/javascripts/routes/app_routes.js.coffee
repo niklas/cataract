@@ -2,7 +2,7 @@ Cataract.Router.map ->
   @route 'add', path: '/add'
   @resource 'torrent', path: '/torrent/:torrent_id'
   @resource 'directory', path: '/directory/:directory_id'
-  @resource 'disk', path: 'disk/:disk_id'
+  @route 'disk', path: 'disk/:disk_id'
   @route 'new_directory', path: 'directory/new'
   @route 'settings'
 
@@ -101,8 +101,6 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super(controller, model)
     @send 'openModal', 'create_directory', model
-
-Cataract.DiskRoute = Cataract.DetailedRoute.extend()
 
 Cataract.SettingsRoute = Cataract.DetailedRoute.extend
   model: ->

@@ -40,12 +40,12 @@ Feature: Disks in Library
         | directory | media/adisk/Röbels |
      When I go to the home page
       And I follow "aDisk"
-     Then I should see a table of the following new directories:
-       | Name   | Action |
-       | Movies | Import |
-       | Röbels | Import |
-       | Series | Import |
-     When I follow "Import" within the third row
+     Then I should see a list of the following new directories:
+       | name   |
+       | Movies |
+       | Röbels |
+       | Series |
+     When I follow "Import" within the third of the new directories
       And I wait for the spinner to disappear
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
