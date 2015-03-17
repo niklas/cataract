@@ -48,6 +48,9 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
       true
 
+    createDirectoryFromDetected: (detected) ->
+      detected.createDirectory()
+
 
 Cataract.IndexRoute = Ember.Route.extend()
 

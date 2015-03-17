@@ -32,6 +32,9 @@ module HtmlSelectorsHelpers
     when /^the sidebar director(?:ies|y) list$/
       "#sidebar > ul.directories"
 
+    when /^the detail bar$/
+      '#bar'
+
     when /^the disks tab$/
       '.nav-tabs.disks'
 

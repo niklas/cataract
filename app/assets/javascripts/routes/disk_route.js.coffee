@@ -1,4 +1,1 @@
-Cataract.DiskRoute = Cataract.DetailedRoute.extend
-  actions:
-    createDirectory: (detected) ->
-      detected.createDirectory()
+Cataract.DiskRoute = Cataract.DetailedRoute.extend()

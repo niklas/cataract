@@ -1,0 +1,8 @@
+ul.nav.nav-tabs.disks
+  each dir in directories
+    disk-item isMounted=dir.disk.isMounted label=dir.disk.name target=dir targetRoute='directory'
+  else
+    each disk in controllers.disks
+      disk-item isMounted=disk.isMounted label=disk.name target=disk targetRoute='disk'
+
+Cataract.Pagination controller=controllers.torrents

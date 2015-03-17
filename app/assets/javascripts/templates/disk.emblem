@@ -8,7 +8,7 @@ if hasDetectedDirs
   ul.new.directories
     each dir in detectedDirectories
       li
-        a.btn.btn-warning.btn-mini click="createDirectory dir" href="#" Import
+        a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
         span.name= dir.name
 
 if hasDirectories

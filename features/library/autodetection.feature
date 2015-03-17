@@ -67,8 +67,9 @@ Feature: Disks in Library
       And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series", show_sub_dirs: true
       And I am on the home page
       And I follow "all Directories"
-     When I follow "Series"
-      And I follow "aDisk"
+     When I follow "Series" within the sidebar directory list
+      # TODO should indicate that there are more details
+      And I follow "aDisk" within the detail bar
       And I wait for the spinner to stop
      Then I should see a list of the following new directories:
        | Name       |
