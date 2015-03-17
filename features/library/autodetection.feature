@@ -41,7 +41,7 @@ Feature: Disks in Library
      When I go to the home page
       And I follow "aDisk"
      Then I should see a list of the following new directories:
-       | name   |
+       | Name   |
        | Movies |
        | Röbels |
        | Series |
@@ -50,13 +50,13 @@ Feature: Disks in Library
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And the directory's full_path should end with "media/adisk/Series"
-      And I should see a table of the following existing directories:
+      And I should see a list of the following existing directories:
        | Name   |
        | Series |
-      And I should see a table of the following new directories:
-       | Name   | Action |
-       | Movies | Import |
-       | Röbels | Import |
+      And I should see a list of the following new directories:
+       | Name   |
+       | Movies |
+       | Röbels |
 
    Scenario: autodetect subdirectories
     Given a disk exists with name: "aDisk", path: "media/adisk"
@@ -70,19 +70,19 @@ Feature: Disks in Library
      When I follow "Series"
       And I follow "aDisk"
       And I wait for the spinner to stop
-     Then I should see a table of the following new directories:
-       | Name       | Action |
-       | Tagesschau | Import |
-       | Tatort     | Import |
+     Then I should see a list of the following new directories:
+       | Name       |
+       | Tagesschau |
+       | Tatort     |
      When I follow "Import" within the second row
       And I wait for the spinner to stop
      Then I should see notice "Directory 'Tatort' created"
       And a directory "Tatort" should exist with name: "Tatort", disk: the disk
       And the directory "Series" should be the directory "Tatort"'s parent
       And the directory "Tatort"'s full_path should end with "media/adisk/Series/Tatort"
-      And I should see a table of the following existing directories:
+      And I should see a list of the following existing directories:
        | Name   |
        | Tatort |
-      And I should see a table of the following new directories:
-       | Name       | Action |
-       | Tagesschau | Import |
+      And I should see a list of the following new directories:
+       | Name       |
+       | Tagesschau |
