@@ -56,7 +56,7 @@ Cataract.TorrentsController =
 
   # we will sort, filter, paginate
   # resulting in a update of 'finalContent'
-  finalContent: Ember.computed.defaultTo('content')
+  finalContent: Ember.computed.oneWay('content')
 
   #######################################################################
   # Sorting
