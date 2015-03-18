@@ -2,7 +2,7 @@ attr = DS.attr
 
 Cataract.Torrent = DS.Model.extend
   title: attr 'string'
-  transfer: DS.belongsTo('transfer')
+  transfer: DS.belongsTo('transfer', async: true)
   info_hash: attr 'string'
   status: attr 'string'
   filename: attr 'string'
