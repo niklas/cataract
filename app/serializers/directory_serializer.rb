@@ -5,8 +5,6 @@ class DirectorySerializer < BaseSerializer
              :exists?,
              :show_sub_dirs?
 
-  has_many :children, embed: :ids, key: 'children_ids'
-
   def attributes
     super.tap do |hash|
       hash['relative_path'] = object.relative_path.to_s
