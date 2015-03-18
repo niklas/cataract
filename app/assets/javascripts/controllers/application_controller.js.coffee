@@ -23,10 +23,10 @@ Cataract.ApplicationController = Ember.Controller.extend
 
   # save these here to access from all controllers
   queryParams: [
-    'mode:status',
     'age',
     'filterDirectories'
     'path',
+    mode: 'status'
   ]
   mode: 'running'
   age: 'month' # faster initialization of page
