@@ -69,8 +69,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '~> 2.15.5'
-  gem 'rvm-capistrano'
+  gem 'capistrano', '~> 2.15.5', require: false
+  gem 'rvm-capistrano', require: false
   gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
   gem "better_errors"
   gem 'binding_of_caller'
