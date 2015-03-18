@@ -63,11 +63,10 @@ Cataract.TorrentsController =
   #######################################################################
   sortAscending: false
   sortProperties:
-    Ember.computed ->
+    Ember.computed 'mode', ->
       switch @get('mode')
         when 'library' then ['payloadKiloBytes']
         else ['createdAt']
-    .property('mode')
   # results in sorted 'content' in 'arrangedContent'
 
 
@@ -76,15 +75,14 @@ Cataract.TorrentsController =
   #######################################################################
 
   termsList:
-    Ember.computed ->
+    Ember.computed 'terms', ->
       if terms = @get('terms')
         Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
       else
         Ember.A()
-    .property('terms')
 
   filterFunction:
-    Ember.computed ->
+    Ember.computed 'termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories', ->
       console?.debug "filterfunc"
       termsList  = @get('termsList')
       mode = @get('mode') || ''
@@ -122,7 +120,6 @@ Cataract.TorrentsController =
           want = want and torrent.get('contentDirectory.id') == directoryId
 
         want
-    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories')
 
   filterFunctionDidChange: (->
     console.debug 'filterFunctionDidChange'
@@ -132,10 +129,9 @@ Cataract.TorrentsController =
   ).observes("filterFunction")
 
   filteredContent:
-    Ember.computed ->
+    Ember.computed 'termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each', ->
       console?.debug "filteredContent"
       @get('arrangedContent').filter( @get('filterFunction') )
-    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
   #######################################################################
   # Paginate
