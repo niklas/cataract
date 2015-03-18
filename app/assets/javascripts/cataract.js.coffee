@@ -19,7 +19,10 @@ CataractApplication = Ember.Application.extend
   # TODO move to diskcontroller?
   currentDisk: null
 
-Cataract = CataractApplication.create()
+
+Cataract = CataractApplication.create
+  LOG_TRANSITIONS: false
+  LOG_TRANSITIONS_INTERNAL: false
 
   # TODO move into DirectoriesController
   # rootDirectories: (->
