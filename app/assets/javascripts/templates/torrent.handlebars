@@ -6,7 +6,7 @@
 {{else}}
   {{#if isRunning}}
     {{#if transferStatus.online}}
-      {{view Cataract.TransferView contentBinding="transfer"}}
+      {{transfer-bar content=transfer}}
     {{else}}
       {{transferStatus.offlineReason}}
   {{/if}}
