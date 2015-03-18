@@ -1,0 +1,6 @@
+if wantsCircleView
+  each t in content
+    Cataract.CircleTorrentView content=t
+else
+  each t in content
+    Cataract.ItemTorrentView content=t
