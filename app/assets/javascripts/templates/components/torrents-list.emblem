@@ -3,4 +3,4 @@ if wantsCircleView
     Cataract.CircleTorrentView content=t
 else
   each t in content
-    Cataract.ItemTorrentView content=t
+    = torrent-item content=t
