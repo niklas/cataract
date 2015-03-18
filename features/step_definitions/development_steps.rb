@@ -14,6 +14,17 @@ When /^I debug the page$/ do
   end
 end
 
+When /^I open the ember inspector$/ do
+  ember_inspector_bookmarklet = <<-EOJS
+    (function() { var s = document.createElement('script'); s.src = '//ember-extension.s3.amazonaws.com/dist_bookmarklet/load_inspector.js'; document.body.appendChild(s); })();
+  EOJS
+  reopen = lambda { page.execute_script ember_inspector_bookmarklet }
+  reopen
+
+  # If you close the inspector too early, just type `reopen[]`
+  binding.pry
+end
+
 After do
   @debugging_page = false
 end
