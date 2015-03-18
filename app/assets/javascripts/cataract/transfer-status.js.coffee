@@ -8,3 +8,4 @@ Cataract.initializer
 
     application.register 'transfer-status:main', status, instantiate: false
     application.inject 'controller', 'transferStatus', 'transfer-status:main'
+    application.inject 'component', 'transferStatus', 'transfer-status:main'

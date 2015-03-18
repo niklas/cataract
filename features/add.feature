@@ -35,6 +35,14 @@ Feature: Adding a torrent
       And a torrent should exist
       And the directory "Another" should be the torrent's content_directory
       And rtorrent should download the torrent
+      And I should see "single" within the details
+      And I should see "Another" within the details
+      And I should see "71.7 KB" within the details
+      And I should see the stop link
+     When the tick interval is reached
+     Then I should see the following torrents in the torrent list:
+       | title  | percent |
+       | single | 0%      |
 
   Scenario: Upload with traditional multipart form
      When I follow "Add"

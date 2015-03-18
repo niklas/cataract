@@ -7,6 +7,6 @@ if content.payloadExists
 
 if transferStatus.online
   if content.isRunning
-    transfer-bar content=content.transfer
+    = transfer-bar content=content.transfer
 else
   = transferStatus.offlineReason
