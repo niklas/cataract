@@ -91,6 +91,14 @@ Cataract.TorrentsController =
       directoryIds = @get('directoryIds') || []
       directoryId = @get('directory.id')
 
+      if age.length > 0
+        sinceDate = switch age
+          when 'month' then moment().subtract(1, 'month')
+          when 'year' then moment().subtract(1, 'year')
+          else
+            if m = age.match(/^month(\d+)$/)
+              moment().subtract( parseInt(m[1], 10), 'month')
+
       (torrent) ->
         want = true
         torrent = torrent.record if torrent.record? # materialized or not?!
@@ -104,15 +112,8 @@ Cataract.TorrentsController =
             when 'library'
               want = want and torrent.get('payloadExists')
 
-        if age.length > 0
-          sinceDate = switch age
-            when 'month' then moment().subtract(1, 'month')
-            when 'year' then moment().subtract(1, 'year')
-            else
-              if m = age.match(/^month(\d+)$/)
-                moment().subtract( parseInt(m[1], 10), 'month')
-          if sinceDate
-            want = want and torrent.get('updatedAt') > sinceDate
+        if sinceDate
+          want = want and torrent.get('updatedAt') > sinceDate
 
         if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
           want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
