@@ -17,8 +17,7 @@
 #= require ./lib/loaded_page
 
 window.EmberENV =
-  FEATURES:
-    'query-params-new': yes
+  nothing: true
 
 jQuery ->
   search = ->
