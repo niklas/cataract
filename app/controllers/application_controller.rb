@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
 
+  before_action :reset_rtorrent_connection
+
   protected
   def h(stringy)
     CGI.escapeHTML(stringy)
@@ -49,4 +51,9 @@ class ApplicationController < ActionController::Base
   def allow_iframe
     response.headers.except! 'X-Frame-Options'
   end
+
+  def reset_rtorrent_connection
+    Torrent.reset_remote!
+  end
+
 end
