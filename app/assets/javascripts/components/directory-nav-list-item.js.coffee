@@ -7,10 +7,8 @@ Cataract.DirectoryNavListItemComponent = Ember.Component.extend
   classNameBindings: ['active', 'content.exists:existing:missing']
   activeBinding: 'childViews.firstObject.active'
   isVisible: Ember.computed.or('hasResults', 'isUnfiltered')
-  hasResults:
-    Ember.computed ->
-      torrents = @get('torrents.arrangedContent')
-      @get('content.descendantsAndSelf').any (a)->
-        torrents.isAny('contentPolyDirectory', a)
-    .property('torrents.arrangedContent.@each.contentPolyDirectory', 'content.descendantsAndSelf.@each')
+  hasResults: Ember.computed 'torrents.arrangedContent.@each.contentPolyDirectory', 'content.descendantsAndSelf.@each', ->
+    torrents = @get('torrents.arrangedContent')
+    @get('content.descendantsAndSelf').any (a)->
+      torrents.isAny('contentPolyDirectory', a)
 
