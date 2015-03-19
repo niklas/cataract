@@ -22,9 +22,10 @@ Cataract.Torrent = DS.Model.extend
       @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted') and @get('payload.size') > 0
     .property('payload.isLoaded', 'payload.isDeleted', 'payloadExists', 'payload.size')
   clearPayload: ->
-    if payload = @get('payload')
-      torrent = this
-      payload.destroy().then ->
+    torrent = this
+    @get('payload').then (payload)->
+      payload.deleteRecord()
+      payload.save().then ->
         torrent.set('payloadExists', false)
   payloadHumanSize:
     Ember.computed ->

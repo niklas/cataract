@@ -11,6 +11,7 @@ Cataract.TorrentController = Ember.ObjectController.extend
 
     stop: (torrent) ->
       if transfer = torrent.get('transfer')
-        transfer.destroy().then ->
+        transfer.deleteRecord()
+        transfer.save().then ->
           torrent.set 'status', 'archived'
       false

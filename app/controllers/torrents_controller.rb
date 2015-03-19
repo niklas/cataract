@@ -4,7 +4,6 @@ class TorrentsController < InheritedResources::Base
   respond_to :json, only: [:index, :show, :create, :progress] # ember, jquery.filedrop
 
   before_filter :refresh!, only: :show
-  custom_actions :resource => :prepend
 
   layout 'library'
 

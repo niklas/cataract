@@ -11,6 +11,8 @@ Cataract.DeleteTorrentController = Ember.ObjectController.extend
 
       if @get('deletePayload')
         torrent.clearPayload()?.then ->
-          torrent.destroy().then back
+          torrent.deleteRecord()
+          torrent.save().then back
       else
-        torrent.destroy().then back
+        torrent.deleteRecord()
+        torrent.save().then back
