@@ -1,3 +1,0 @@
-[submodule "vendor/assets/javascripts/jquery-filedrop"]
-	path = vendor/assets/javascripts/jquery-filedrop
-	url = git://github.com/weixiyen/jquery-filedrop.git
