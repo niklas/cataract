@@ -2,7 +2,7 @@ attr = DS.attr
 
 Cataract.Torrent = DS.Model.extend
   title: attr 'string'
-  transfer: DS.belongsTo('transfer')
+  transfer: DS.belongsTo('transfer', async: true)
   info_hash: attr 'string'
   status: attr 'string'
   filename: attr 'string'
@@ -16,15 +16,16 @@ Cataract.Torrent = DS.Model.extend
 
   filedata: attr 'string'
 
-  payload: DS.belongsTo('payload')
+  payload: DS.belongsTo('payload', async: true)
   payloadPresent:
     Ember.computed ->
       @get('payloadExists') and @get('payload.isLoaded') and !@get('payload.isDeleted') and @get('payload.size') > 0
     .property('payload.isLoaded', 'payload.isDeleted', 'payloadExists', 'payload.size')
   clearPayload: ->
-    if payload = @get('payload')
-      torrent = this
-      payload.destroyRecord().then ->
+    torrent = this
+    @get('payload').then (payload)->
+      payload.deleteRecord()
+      payload.save().then ->
         torrent.set('payloadExists', false)
   payloadHumanSize:
     Ember.computed ->

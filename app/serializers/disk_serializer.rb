@@ -1,6 +1,9 @@
 require_dependency 'base_serializer'
 class DiskSerializer < BaseSerializer
-  attributes :id, :name, :directory_ids
+  attributes :id,
+             :name
+
+  has_many   :directories
 
   def attributes
     super.tap do |a|

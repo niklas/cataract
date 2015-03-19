@@ -1,5 +1,0 @@
-with view.content
-  link-to 'torrent' this class="title"
-    = title
-  if payloadExists
-    = payloadHumanSize

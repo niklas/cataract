@@ -5,7 +5,7 @@ Cataract.ApplicationController = Ember.Controller.extend
       @propertyDidChange('fullSiteTitle')
   ).on('init')
 
-  needs: ['torrents', 'directories', 'disks', 'directory']
+  needs: ['torrents', 'directories', 'disks', 'directory', 'transfers']
 
   fullSiteTitleObserver: ( (sender, key) ->
     $('head title').text(sender.get(key))
@@ -23,10 +23,10 @@ Cataract.ApplicationController = Ember.Controller.extend
 
   # save these here to access from all controllers
   queryParams: [
-    'mode:status',
     'age',
-    'path:directory',
     'filterDirectories'
+    'path',
+    mode: 'status'
   ]
   mode: 'running'
   age: 'month' # faster initialization of page
@@ -73,3 +73,13 @@ Cataract.ApplicationController = Ember.Controller.extend
       else
         "in this " + @get('age')
     .property('age')
+
+  transfersError: (jqxhr)->
+    status = @get 'transferStatus' # globally injected
+    status.set 'online', false
+    if jqxhr.responseText?
+      status.set 'offlineReason', jqxhr.responseText
+
+  transfersSuccess: ()->
+    status = @get 'transferStatus' # globally injected
+    status.set 'online', true

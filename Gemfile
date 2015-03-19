@@ -14,11 +14,10 @@ gem 'jquery-ui-rails'
 
 group :test do
   gem 'rake'
-  gem 'cucumber-rails', "~> 1.4.0", :require => false
+  gem 'cucumber-rails', :require => false
   # This is used to obtaing timings of Cucumber scenarios
   gem 'cucumber-timed_formatter', require: 'timed'
-  gem 'rspec-rails', "~> 2.13"
-  gem 'rspec-fire'
+  gem 'rspec-rails', "~> 2.14.2"
   gem 'pickle', github: 'tbuehl/pickle'
   gem 'timecop'
   gem 'database_cleaner'
@@ -55,7 +54,7 @@ group :test do
   # Gemfile guard-cucumber cannot start "zeus cucumber" because it isn't in the
   # bundle: So.. we add it, but don't load it. To get fast guard response
   # times, make sure it does not run cucumber through bundler.
-  gem 'zeus', '~> 0.15.0', require: false
+  gem 'zeus', require: false
 end
 
 group :development, :test do
@@ -70,8 +69,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '~> 2.15.5'
-  gem 'rvm-capistrano'
+  gem 'capistrano', '~> 2.15.5', require: false
+  gem 'rvm-capistrano', require: false
   gem 'notes', :require => false, :git => 'git://github.com/niklas/notes.git'
   gem "better_errors"
   gem 'binding_of_caller'
@@ -114,8 +113,8 @@ gem 'dalli'
 
 # https://github.com/emberjs/ember-rails/issues/165
 gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
-gem 'ember-source', '1.6.0.beta.2'
-gem 'ember-data-source', '1.0.0.beta.7'
+gem 'ember-source', '~> 1.9.0'
+gem 'ember-data-source', '1.0.0.beta.14.1'
 gem 'emblem-rails'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
@@ -125,12 +124,6 @@ gem "rails-bookmarklet", :git => "https://github.com/oliverfriedmann/rails-bookm
 
 # for maulwurf
 gem 'mechanize'
-
-# bad yaml
-gem 'psych'
-
-# .2 introduces version check on > 1.4, but ubuntu did not update the version when patching CVE-2014-2525
-gem 'safe_yaml', '1.0.1'
 
 # TODO strong parameter
 gem 'protected_attributes'

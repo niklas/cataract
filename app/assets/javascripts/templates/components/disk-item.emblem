@@ -1,0 +1,3 @@
+link-to targetRoute target class="name"
+  i.glyphicon.foo class={isMounted.glyphicon-hdd:glyphicon-warning-sign}
+  = label

@@ -1,0 +1,66 @@
+$size: 1em;
+$cube_size: 43%;
+$bouncynessX: 4.5em;
+$bouncynessY: 1.8em;
+$duration: 2.8s;
+
+
+// we want to stay fixed relative to the brand
+.navbar-brand {
+    position: relative;
+}
+
+.loading-spinner {
+    width: $size;
+    height: $size;
+    position: absolute;
+
+    // position middle in brand logo at Cata-ract
+    left: 0.3em;
+    top: 0.3em;
+
+    .cube1, .cube2 {
+        background-color: #333;
+        width: $cube_size;
+        height: $cube_size;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        -webkit-animation: cubemove $duration infinite ease-in-out;
+        animation: cubemove $duration infinite ease-in-out;
+    }
+
+    .cube2 {
+        -webkit-animation-delay: -$duration/2;
+        animation-delay: -$duration/2;
+    }
+}
+
+
+@-webkit-keyframes cubemove {
+  25% { -webkit-transform: translateX($bouncynessX) rotate(-90deg) scale(0.5) }
+  50% { -webkit-transform: translateX($bouncynessX) translateY($bouncynessY) rotate(-180deg) }
+  75% { -webkit-transform: translateX(0px) translateY($bouncynessY) rotate(-270deg) scale(0.5) }
+  100% { -webkit-transform: rotate(-360deg) }
+}
+
+@keyframes cubemove {
+  25% {
+    transform: translateX($bouncynessX) rotate(-90deg) scale(0.5);
+    -webkit-transform: translateX($bouncynessX) rotate(-90deg) scale(0.5);
+  } 50% {
+    transform: translateX($bouncynessX) translateY($bouncynessY) rotate(-179deg);
+    -webkit-transform: translateX($bouncynessX) translateY($bouncynessY) rotate(-179deg);
+  } 50.1% {
+    transform: translateX($bouncynessX) translateY($bouncynessY) rotate(-180deg);
+    -webkit-transform: translateX($bouncynessX) translateY($bouncynessY) rotate(-180deg);
+  } 75% {
+    transform: translateX(0px) translateY($bouncynessY) rotate(-270deg) scale(0.5);
+    -webkit-transform: translateX(0px) translateY($bouncynessY) rotate(-270deg) scale(0.5);
+  } 100% {
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+  }
+}
+

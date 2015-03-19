@@ -1,0 +1,7 @@
+li class={hasPrevious::disabled}
+  a href="#" click="previous"
+    previous
+li class={hasNext::disabled}
+  a href="#" click="next"
+    next
+

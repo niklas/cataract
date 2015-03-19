@@ -1,0 +1,4 @@
+link-to 'torrent' content class="title"
+  = content.title
+if content.payloadExists
+  = content.payloadHumanSize

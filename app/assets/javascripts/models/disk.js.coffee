@@ -5,6 +5,7 @@ Cataract.Disk = DS.Model.extend
   isMounted: attr('boolean')
   active: (-> this == Cataract.get('currentDisk') ).property('Cataract.currentDisk')
   directories: DS.hasMany('directory')
+  path: attr 'string'
   hasDirectories:
     Ember.computed ->
       @get('directories.length') > 0

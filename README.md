@@ -1,34 +1,34 @@
-== Welcome to Cataract
+Cataract
+========
 
-Cataract is a Rails based web-frontend to rtorrent, organizing your torrents.
+Cataract is a web-frontend to rtorrent based on Rails and Ember.js, helping you organize your torrents.
 
-Currently it is under heavy development.
+Currently (2015-03) it is under heavy development.
 
 [![Build Status (development)](https://travis-ci.org/niklas/cataract.png?branch=development)](https://travis-ci.org/niklas/cataract)
 
-== Getting Started
+Getting Started
+===============
 
-This version is not ready for production yet.
+This version is almost ready for production. We plan to have an easy way of
+self-deploying it using git to any Ubuntu-based server you desire.
 
-== The Plan (TM)
+Minimahl Vibrant Produkt
+========================
 
  * automatically download subscribed TV shows
  * mobile-friendly interface
  * out-of-box working installation procedure
 
- == Installation Notes
- The following will be implemented as puppet manifests, but for now we just note the specialities here
 
- * uses ruby 1.9, preferrably 1.9.3
- * must apply patch to support 64 bit integers in XMLRPC (i8)
-    rvm install -n xmlrpc64bit  ruby-1.9.3-p194 --patch config/deploy/patches/xmlrpclib-i8-support.patch
+Ideas
+=====
 
-    this patch is planned for 2.0.0 http://bugs.ruby-lang.org/issues/3090
+Sizes at a glance
+-----------------
 
-
-== Interface
-
-= Sizes
+Display content Sizes in a different way to distringuish little albums of mp3
+from whole seasons of HD video.
 
 42MB : MMMM
 100MB : H

@@ -2,7 +2,6 @@
   require File.expand_path("../../config/environment", __FILE__)
 
   require 'rspec/rails'
-  require 'rspec/fire'
   require 'fakefs/spec_helpers'
   require 'factory_girl'
   require 'webmock/rspec'
@@ -12,7 +11,6 @@
     include FactoryGirl::Syntax::Default
 
     config.include Devise::TestHelpers, :type => :controller
-    config.include(RSpec::Fire)
 
     config.before :each do
       Torrent::RTorrent.offline!
@@ -60,7 +58,14 @@
       $want_pry = false
     end
 
-    config.mock_with :rspec
+    config.expect_with :rspec do |c|
+      # ...or explicitly enable both
+      c.syntax = [:should, :expect]
+    end
+    config.mock_with :rspec do |c|
+      # ...or explicitly enable both
+      c.syntax = [:should, :expect]
+    end
   end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}

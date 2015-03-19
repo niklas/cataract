@@ -32,4 +32,4 @@ at_exit do
       file.puts todos
     end
   end
-end
+end unless ENV['TRAVIS']

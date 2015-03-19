@@ -19,6 +19,7 @@ Cataract.TorrentsController =
   # because the torrents list is always rendered (and should contain items), we
   # cannot wait for the route to setup the content of it.
   initializeContent: (->
+    fn = @get('filterFunction') # consume so observers fire
     @set 'content', @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
@@ -56,18 +57,17 @@ Cataract.TorrentsController =
 
   # we will sort, filter, paginate
   # resulting in a update of 'finalContent'
-  finalContent: Ember.computed.defaultTo('content')
+  finalContent: Ember.computed.oneWay('content')
 
   #######################################################################
   # Sorting
   #######################################################################
   sortAscending: false
   sortProperties:
-    Ember.computed ->
+    Ember.computed 'mode', ->
       switch @get('mode')
         when 'library' then ['payloadKiloBytes']
         else ['createdAt']
-    .property('mode')
   # results in sorted 'content' in 'arrangedContent'
 
 
@@ -76,21 +76,28 @@ Cataract.TorrentsController =
   #######################################################################
 
   termsList:
-    Ember.computed ->
+    Ember.computed 'terms', ->
       if terms = @get('terms')
         Ember.A( Ember.String.w(terms)).map (x) -> x.toLowerCase()
       else
         Ember.A()
-    .property('terms')
 
   filterFunction:
-    Ember.computed ->
+    Ember.computed 'termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories', ->
       console?.debug "filterfunc"
       termsList  = @get('termsList')
       mode = @get('mode') || ''
       age = @get('age') || ''
       directoryIds = @get('directoryIds') || []
       directoryId = @get('directory.id')
+
+      if age.length > 0
+        sinceDate = switch age
+          when 'month' then moment().subtract(1, 'month')
+          when 'year' then moment().subtract(1, 'year')
+          else
+            if m = age.match(/^month(\d+)$/)
+              moment().subtract( parseInt(m[1], 10), 'month')
 
       (torrent) ->
         want = true
@@ -105,15 +112,8 @@ Cataract.TorrentsController =
             when 'library'
               want = want and torrent.get('payloadExists')
 
-        if age.length > 0
-          sinceDate = switch age
-            when 'month' then moment().subtract(1, 'month')
-            when 'year' then moment().subtract(1, 'year')
-            else
-              if m = age.match(/^month(\d+)$/)
-                moment().subtract( parseInt(m[1], 10), 'month')
-          if sinceDate
-            want = want and torrent.get('updatedAt') > sinceDate
+        if sinceDate
+          want = want and torrent.get('updatedAt') > sinceDate
 
         if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
           want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
@@ -122,7 +122,6 @@ Cataract.TorrentsController =
           want = want and torrent.get('contentDirectory.id') == directoryId
 
         want
-    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories')
 
   filterFunctionDidChange: (->
     console.debug 'filterFunctionDidChange'
@@ -132,10 +131,9 @@ Cataract.TorrentsController =
   ).observes("filterFunction")
 
   filteredContent:
-    Ember.computed ->
+    Ember.computed 'termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each', ->
       console?.debug "filteredContent"
       @get('arrangedContent').filter( @get('filterFunction') )
-    .property('termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each')
 
   #######################################################################
   # Paginate
@@ -180,7 +178,7 @@ Cataract.TorrentsController =
     existing = store.find
     fetch = store.findQuery 'transfer', running: running.join(',')
 
-    fetch.then (transfers) ->
+    fetch.then (transfers) =>
       # time as passed => recalculate
       running = list.filterProperty('status', 'running').mapProperty('id')
       transfers.forEach (transfer)->
@@ -195,10 +193,10 @@ Cataract.TorrentsController =
         if torrent = list.findProperty('id', disap)
           torrent.set 'status', 'archived'
           torrent.set 'transfer', null
-      Cataract.set 'online', true
+      @get('controllers.application').transfersSuccess()
       true
-    , (x,y)->
-      console?.debug 'could not fetch transfers:', x.responseText
+    , (jqxhr)=>
+      @get('controllers.application').transfersError(jqxhr)
 
   isRecentActive:
     Ember.computed ->

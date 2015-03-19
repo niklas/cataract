@@ -1,0 +1,25 @@
+h2 #{disk.name} / #{name}
+
+if subscribed
+  span.subscribed.label.label.info subscribed
+  a.btn.btn-danger click="unsubscribe this" href="#" unsubscribe
+  Bootstrap.Forms.TextField value=filter label="Filter"
+else
+  a.btn.btn-danger click="subscribe this" href="#" subscribe
+
+Cataract.SaveOrCancel content=this
+
+if hasDetectedSubDirs
+  %h2 Detected
+  ul.new.directories
+    each dir in detectedChildren
+      li
+        a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
+        span.name= dir.name
+
+if hasSubDirs
+  ul.directories.existing
+    each dir in children
+      li
+        link-to 'directory' dir classNames="name"
+          = dir.name

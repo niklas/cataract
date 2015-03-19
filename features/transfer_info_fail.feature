@@ -1,5 +1,4 @@
 @javascript
-@64bit
 @rootfs
 Feature: Transfer info failure
   In order to see why my torrents are not downloading

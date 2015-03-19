@@ -14,3 +14,4 @@ coverage
 public/assets/
 config/newrelic.yml
 .sass-cache/
+db/schema.rb

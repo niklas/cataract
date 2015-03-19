@@ -5,15 +5,15 @@
   does not exist
 {{else}}
   {{#if isRunning}}
-    {{#if Cataract.online}}
-      {{view Cataract.TransferView contentBinding="transfer"}}
+    {{#if transferStatus.online}}
+      {{transfer-bar content=transfer}}
     {{else}}
-      {{Cataract.offlineReason}}
+      {{transferStatus.offlineReason}}
   {{/if}}
   {{/if}}
 
   {{#if payloadExists}}
-    {{view Cataract.PayloadView contentBinding="payload"}}
+    {{payload-details content=payload}}
   {{/if}}
 
   <div class="actions">

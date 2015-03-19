@@ -1,0 +1,6 @@
+if wantsCircleView
+  each t in content
+    = torrent-circle-item content=t
+else
+  each t in content
+    = torrent-item content=t

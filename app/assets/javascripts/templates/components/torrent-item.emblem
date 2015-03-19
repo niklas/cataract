@@ -1,0 +1,12 @@
+h4.title
+  link-to 'torrent' content
+    = content.title
+
+if content.payloadExists
+  span.payloadSize= content.payloadHumanSize
+
+if transferStatus.online
+  if content.isRunning
+    = transfer-bar content=content.transfer
+else
+  = transferStatus.offlineReason

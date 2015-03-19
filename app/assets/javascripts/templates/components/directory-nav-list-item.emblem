@@ -1,0 +1,7 @@
+link-to (query-params path=content.relativePath) class="name"
+  i class={:glyphicon content.exists:glyphicon-folder-open:glyphicon-warning-sign}
+  = content.name
+
+if content.hasSubDirs
+  directory-nav-list content=content.children torrents=torrents isUnfiltered=isUnfiltered
+

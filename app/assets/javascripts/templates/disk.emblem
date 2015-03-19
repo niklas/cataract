@@ -5,8 +5,16 @@ h2= name
 
 if hasDetectedDirs
   h2 Detected
-  Cataract.DetectedDirectoriesTable contentBinding="detectedDirectories"
+  ul.new.directories
+    each dir in detectedDirectories
+      li
+        a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
+        span.name= dir.name
 
 if hasDirectories
-  Cataract.DirectoriesTable contentBinding="directories" classNames="existing"
+  ul.directories.existing
+    each dir in directories
+      li
+        link-to 'directory' dir classNames="name"
+          = dir.name
 

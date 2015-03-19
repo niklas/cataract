@@ -12,24 +12,18 @@ Cataract.Directory = Cataract.BaseDirectory.extend
   # TODO use observer for this?
   #active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
   showSubDirs: attr 'boolean'
-  children:
-    Ember.computed ->
+
+  children: Ember.computed 'disk.directories.@each.parentId', ->
       @get('disk.directories').filterProperty('parentId', parseInt(@get('id')))
-    .property('disk.directories.@each.parentId')
-  hasSubDirs:(->
+  hasSubDirs: Ember.computed 'children.length', 'showSubDirs',->
     @get('showSubDirs') and @get('children.length') > 0
-  ).property('children.length', 'showSubDirs')
   virtual: attr 'boolean'
 
-  detectedChildren:
-    Ember.computed ->
-      @get('store').findQuery('detectedDirectory', directory_id: @get('id'))
-    .property()
+  detectedChildren: Ember.computed ->
+    @get('store').findQuery('detectedDirectory', directory_id: @get('id'))
 
-  hasDetectedSubDirs:
-    Ember.computed ->
+  hasDetectedSubDirs: Ember.computed 'showSubDirs', 'detectedChildren.@each', 'children.@each.id', ->
       @get('showSubDirs') and @get('detectedChildren.length') > 0
-    .property('showSubDirs', 'detectedChildren.@each', 'children.@each.id')
 
   subscribedObserver: (->
     if @get 'subscribed'

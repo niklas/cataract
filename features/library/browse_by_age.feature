@@ -16,13 +16,12 @@ Feature: Browse library by age
       And a torrent exists with title: "Old Beef", updated_ago: "40 days"
 
       # one month ago
-      And a torrent exists with title: "Edible Beef", updated_ago: "28 days"
+      And a torrent exists with title: "Edible Beef", updated_ago: "25 days"
       And a torrent exists with title: "Fresh Beef", updated_ago: "1 days"
 
       And I am signed in
 
      When I go to the recent list page
-      And I wait for the spinner to stop
      Then the active nav item should be "Recent"
       And I should see the following torrents in the torrent list:
       | title       |

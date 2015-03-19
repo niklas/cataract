@@ -1,3 +1,16 @@
+module BrowserInspectorHelper
+
+  def open_ember_inspector
+    ember_inspector_bookmarklet = <<-EOJS
+      (function() { var s = document.createElement('script'); s.src = '//ember-extension.s3.amazonaws.com/dist_bookmarklet/load_inspector.js'; document.body.appendChild(s); })();
+    EOJS
+    page.execute_script ember_inspector_bookmarklet
+  end
+
+end
+
+World(BrowserInspectorHelper)
+
 When /^I pause$/ do
   STDERR.puts "Pausing..."
   if system(%Q~zenity --question --text="Paused. Want to pry?"~)

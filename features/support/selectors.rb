@@ -32,6 +32,9 @@ module HtmlSelectorsHelpers
     when /^the sidebar director(?:ies|y) list$/
       "#sidebar > ul.directories"
 
+    when /^the detail bar$/
+      '#bar'
+
     when /^the disks tab$/
       '.nav-tabs.disks'
 
@@ -41,11 +44,16 @@ module HtmlSelectorsHelpers
     when /^the #{capture_nth} (torrent)$/
       css2xpath selector_for("the #{$2.pluralize} list") + "> li#{Numerals[$1]}"
 
+    when /^the #{capture_nth} of the (.*)$/
+      nth = $1
+      sel = (['ul'] + $2.split(' ')).join('.')
+      "#{sel} > li#{Numerals[nth]}"
+
     when /^the #{capture_nth} row$/
       css2xpath "tr#{Numerals[$1]}"
 
     when /^the director(y|ies) list$/
-      "table.directories"
+      "ul.directories"
 
     when "the footer"
       raise "no footer"

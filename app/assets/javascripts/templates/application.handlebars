@@ -7,15 +7,17 @@
           <span class="glyphicon glyphicon-bar"></span>
           <span class="glyphicon glyphicon-bar"></span>
         </button>
-        <a href="/" class="navbar-brand">Cataract</a>
-        {{view Cataract.Spinner}}
+        <a href="/" class="navbar-brand">
+          Cataract
+          {{loading-spinner}}
+        </a>
       </div>
 
       <div class="collapse navbar-collapse">
 
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
-            {{view Ember.DelayedTextField delayedValueBinding="controller.terms" classNames="form-control search-query" elementId="torrent_search_terms"}}
+            {{delayed-input value=controller.terms classNames="form-control search-query" elementId="torrent_search_terms"}}
           </div>
         </form>
 
@@ -25,12 +27,12 @@
           {{render 'moves'}}
         </ul>
 
-        {{view Cataract.SessionView}}
+        {{rails-session}}
 
       </div>
 
     </div>
-    {{view Cataract.FlashListView}}
+    {{flash-list}}
   </nav>
 </div>
 
@@ -45,7 +47,7 @@
     <div class="tabbable">
       <div class="tab-content">
         <div class="tab-pane active">
-          {{ render "torrents" }}
+          {{torrents-list content=controllers.torrents.finalContent mode=mode}}
         </div>
       </div>
     </div>
@@ -53,8 +55,8 @@
 
   <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
     {{partial "torrents/tabs"}}
-    {{status-message isOnline=Cataract.online errorMessage=Cataract.offlineReason refresh="refreshTransfers"}}
-    {{view Cataract.DropZoneView}}
+    {{status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason refresh="refreshTransfers"}}
+    {{drop-zone action="uploadTorrent"}}
   </div>
 
   <div id="details" {{bind-attr class="detailsExtended:extended"}}>

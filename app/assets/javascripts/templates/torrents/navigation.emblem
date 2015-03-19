@@ -1,9 +1,9 @@
-link-to (query-params status='recent') tagName='li'
-  link-to (query-params status='recent') | Recent
-link-to (query-params status='running') tagName='li'
-  link-to (query-params status='running') | Running
-link-to (query-params status='library') tagName='li'
-  link-to (query-params status='library') | Library
+link-to (query-params mode='recent') tagName='li'
+  link-to (query-params mode='recent') | Recent
+link-to (query-params mode='running') tagName='li'
+  link-to (query-params mode='running') | Running
+link-to (query-params mode='library') tagName='li'
+  link-to (query-params mode='library') | Library
 li
   link-to 'add' | Add
 

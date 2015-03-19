@@ -40,23 +40,23 @@ Feature: Disks in Library
         | directory | media/adisk/Röbels |
      When I go to the home page
       And I follow "aDisk"
-     Then I should see a table of the following new directories:
-       | Name   | Action |
-       | Movies | Import |
-       | Röbels | Import |
-       | Series | Import |
-     When I follow "Import" within the third row
+     Then I should see a list of the following new directories:
+       | Name   |
+       | Movies |
+       | Röbels |
+       | Series |
+     When I follow "Import" within the third of the new directories
       And I wait for the spinner to disappear
      Then I should see notice "Directory 'Series' created"
       And a directory should exist with name: "Series", disk: the disk
       And the directory's full_path should end with "media/adisk/Series"
-      And I should see a table of the following existing directories:
+      And I should see a list of the following existing directories:
        | Name   |
        | Series |
-      And I should see a table of the following new directories:
-       | Name   | Action |
-       | Movies | Import |
-       | Röbels | Import |
+      And I should see a list of the following new directories:
+       | Name   |
+       | Movies |
+       | Röbels |
 
    Scenario: autodetect subdirectories
     Given a disk exists with name: "aDisk", path: "media/adisk"
@@ -67,22 +67,23 @@ Feature: Disks in Library
       And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series", show_sub_dirs: true
       And I am on the home page
       And I follow "all Directories"
-     When I follow "Series"
-      And I follow "aDisk"
+     When I follow "Series" within the sidebar directory list
+      # TODO should indicate that there are more details
+      And I follow "aDisk" within the detail bar
       And I wait for the spinner to stop
-     Then I should see a table of the following new directories:
-       | Name       | Action |
-       | Tagesschau | Import |
-       | Tatort     | Import |
-     When I follow "Import" within the second row
+     Then I should see a list of the following new directories:
+       | Name       |
+       | Tagesschau |
+       | Tatort     |
+     When I follow "Import" within the second of the new directories
       And I wait for the spinner to stop
      Then I should see notice "Directory 'Tatort' created"
       And a directory "Tatort" should exist with name: "Tatort", disk: the disk
       And the directory "Series" should be the directory "Tatort"'s parent
       And the directory "Tatort"'s full_path should end with "media/adisk/Series/Tatort"
-      And I should see a table of the following existing directories:
+      And I should see a list of the following existing directories:
        | Name   |
        | Tatort |
-      And I should see a table of the following new directories:
-       | Name       | Action |
-       | Tagesschau | Import |
+      And I should see a list of the following new directories:
+       | Name       |
+       | Tagesschau |
