@@ -27,7 +27,7 @@ Feature: Payload of a torrent
     Given I should not see "tails.png"
      When I explore the first torrent
      Then I should not see "tails.png"
-      And I follow "1 file"
+      And I press "1 file"
      Then I should see "tails.png"
      # does not toggle whole torrent
       And I should see "Cat Pictures"

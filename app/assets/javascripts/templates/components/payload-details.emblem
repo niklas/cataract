@@ -5,7 +5,7 @@
   .span6
     .size= content.humanSize
     button.btn.btn-small.count click="toggleFiles"
-      = filesCount
+      = content.filesCount
 
 if isShowingFiles
   .row-fluid
