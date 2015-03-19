@@ -2,7 +2,7 @@ Cataract.DirectoryNavListItemComponent = Ember.Component.extend
   isUnfiltered: true
   torrents: null
 
-  tagname: 'li'
+  tagName: 'li'
   classNames: ['directory']
   classNameBindings: ['active', 'content.exists:existing:missing']
   activeBinding: 'childViews.firstObject.active'
