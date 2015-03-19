@@ -5,4 +5,4 @@ ul.nav.nav-tabs.disks
     each disk in controllers.disks
       disk-item isMounted=disk.isMounted label=disk.name target=disk targetRoute='disk'
 
-= pagination-group hasPrevious=controller.hasPrevious previous="previousPage" next="nextPage" hasNext=controller.hasNext classNames="pagination pagination-centered"
+= pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="pagination pagination-centered"

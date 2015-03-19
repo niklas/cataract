@@ -61,3 +61,13 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
       reader.readAsDataURL(file)
       true
+
+    nextPage: ->
+      controller = @controllerFor('torrents')
+      if controller.get("hasNext")
+        controller.incrementProperty "rangeStart", controller.get("rangeWindowSize")
+
+    previousPage: ->
+      controller = @controllerFor('torrents')
+      if controller.get("hasPrevious")
+        controller.decrementProperty "rangeStart", controller.get("rangeWindowSize")
