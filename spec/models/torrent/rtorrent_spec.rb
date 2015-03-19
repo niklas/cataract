@@ -200,8 +200,6 @@ describe Torrent::RTorrent do
 
       # put it all in one block to reduce test suite runtime
       it "should be multicallable" do
-        needs_64_bit_xmlrpc_patch
-
         results.should be_a(Array)
         results.should have(2).records
 
