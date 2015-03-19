@@ -1,6 +1,6 @@
-Cataract.TorrentCircleItemComponent = Ember.Component.extend
+#= require './torrent-item'
+Cataract.TorrentCircleItemComponent = Cataract.TorrentItemComponent.extend
   classNames: ['payload_circle']
-  classNameBindings: ['active']
   attributeBindings: ['style']
 
   maxWidth: 100
@@ -31,5 +31,3 @@ Cataract.TorrentCircleItemComponent = Ember.Component.extend
       font-size: #{font};
       """
     .property('diameter')
-
-  activeBinding: 'childViews.firstObject.active'

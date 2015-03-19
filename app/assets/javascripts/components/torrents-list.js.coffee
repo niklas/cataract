@@ -7,5 +7,3 @@ Cataract.TorrentsListComponent = Ember.Component.extend
   classNames: ["torrents", "clearfix"]
 
   wantsCircleView: Ember.computed.equal 'mode', 'library'
-
-
