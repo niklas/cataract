@@ -38,7 +38,7 @@ default_environment["RAILS_ENV"] = 'production'
 
 # server details
 set :rvm_type, :system
-set(:rvm_ruby_string) { "ruby-2.0.0-p195@#{application}" }
+set(:rvm_ruby_string) { "ruby-2.2.0@#{application}" }
 
 default_run_options[:pty] = true
 
