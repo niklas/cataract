@@ -13,7 +13,7 @@ class TorrentSerializer < BaseSerializer
     super.tap do |hash|
       if object.payload.exists?
         hash['payload_exists'] = true
-        hash['payload_kilo_bytes'] = object.payload.size / 1000
+        hash['payload_bytes'] = object.payload.size
       end
       hash['payload_id'] = object.id
       #hash['transfer_id'] = object.running?? object.id : nil

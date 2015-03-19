@@ -11,7 +11,6 @@
 #= require bootstrap
 #= require pagination_support
 #= require bindWithDelay
-#= require ./lib/file_size
 #
 #= require ./cataract
 #= require ./lib/loaded_page

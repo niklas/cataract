@@ -3,7 +3,7 @@ h4.title
     = content.title
 
 if content.payloadExists
-  span.payloadSize= content.payloadHumanSize
+  span.payloadSize= human-kilo-bytes content.payloadBytes
 
 if transferStatus.online
   if content.isRunning
