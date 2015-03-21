@@ -10,6 +10,12 @@ ul.directories {
         a {
             background: white;
             box-shadow: 2px 2px 6px 1px black;
+            // do not grow in width indefinitely
+            display: inline-block;
+            max-width: 20em;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
     }
 
