@@ -23,8 +23,13 @@ ul.directories {
         }
     }
 
+    &.root > li:first-of-type {
+        margin-top: 0;
+    }
+
 }
 
 #sidebar .well {
     margin-top: 1em;
+    padding: 0.5em;
 }
