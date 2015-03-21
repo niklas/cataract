@@ -1,3 +1,10 @@
+$golden_ratio: 1.618;
+$smaller_half_factor: 1 / (1 + $golden_ratio);
+$bigger_half_factor:  1 - $smaller_half_factor;
+$smaller_half: 100% * $smaller_half_factor;
+$bigger_half:  100% * $bigger_half_factor;
+$minimized: 10%;
+
 @media (max-width: 766px) {
   #sidebar {
     max-height: 13em;
@@ -6,10 +13,6 @@
 }
 @media (min-width: 767px) {
 
-  $golden_ratio: 1.618;
-  $smaller_half: 100% / (1 + $golden_ratio);
-  $bigger_half: 100% - $smaller_half;
-  $minimized: 10%;
   $barheight: 3em;
 
   body {
@@ -29,7 +32,7 @@
       top: $navbar_shift;
       bottom: 0;
       left: 0;
-      right: $bigger_half;
+      width: $smaller_half;
       overflow-y: auto;
       z-index: -5;
 
@@ -39,7 +42,7 @@
       top: $navbar_shift;
       bottom: 0;
       right: 0;
-      width: $bigger_half;
+      left: $smaller_half;
       z-index: -5;
 
       #details, #content {
@@ -115,3 +118,14 @@
   }
 }
 
+// on desktops, do not grow sidebar
+@media (min-width: 992px) {
+    body {
+        #sidebar {
+            width: $smaller_half_factor * 992px;
+        }
+        #middle {
+            left: $smaller_half_factor * 992px;
+        }
+    }
+}
