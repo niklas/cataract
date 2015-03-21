@@ -17,6 +17,10 @@ Feature: Add and Subscribe to Series
 
   Scenario: From empty disk to hours of episodes
      When I follow "Library"
+     Then I should see a table of the following disks:
+      | Name  |
+      | aDisk |
+     When I follow "aDisk" within the disks table
       And I follow "Create Directory"
       And I wait for the modal box to appear
      Then the selected "Disk" should be "aDisk"

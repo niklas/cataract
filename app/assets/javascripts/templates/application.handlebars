@@ -44,23 +44,18 @@
 <div id="middle">
 
   <div id="content" {{bind-attr class="detailsExtended:shrunk"}}>
-    <div class="tabbable">
-      <div class="tab-content">
-        <div class="tab-pane active">
-          {{torrents-list content=controllers.torrents.finalContent mode=mode}}
-        </div>
-      </div>
-    </div>
+    {{outlet}}
   </div>
 
   <div id="bar" {{bind-attr class=":well detailsExtended:up"}}>
+    {{ outlet 'bar' }}
     {{partial "torrents/tabs"}}
     {{status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason refresh="refreshTransfers"}}
     {{drop-zone action="uploadTorrent"}}
   </div>
 
   <div id="details" {{bind-attr class="detailsExtended:extended"}}>
-    {{ outlet }}
+    {{ outlet 'details' }}
   </div>
 </div>
 

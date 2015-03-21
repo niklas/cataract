@@ -55,6 +55,9 @@ module HtmlSelectorsHelpers
     when /^the director(y|ies) list$/
       "ul.directories"
 
+    when /^the (\w+s) table$/
+      "table.#{$1}"
+
     when "the footer"
       raise "no footer"
       "div[data-role='footer']"

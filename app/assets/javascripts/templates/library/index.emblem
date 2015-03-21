@@ -1,0 +1,15 @@
+if disks.length
+  table.table.table-striped.disks
+    thead
+      tr
+        th Name
+        th Directories
+
+    tbody
+      each disk in disks
+       tr
+         td
+           disk-item tagName='div' label=disk.name isMounted=disk.isMounted target=disk
+         td= disk.directories.length
+else
+  | no diskzes
