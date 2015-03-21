@@ -65,10 +65,11 @@ class Torrent
   # XMLRPC Client/RTorrent wrapper
 
   class RTorrent < XMLRPC::ClientS
-    class Offline < ::RuntimeError; end
+    class Error < ::Exception; end
+    class Offline < Error; end
     class Unreachable < Offline; end
-    class CouldNotFindInfoHash < ::ArgumentError; end
-    class NoRemoteMethodError < ::NoMethodError; end
+    class CouldNotFindInfoHash < Error; end
+    class NoRemoteMethodError < Error; end
 
     class << self
       def offline!

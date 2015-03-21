@@ -6,11 +6,18 @@ class ApplicationController < ActionController::Base
   include EmberRailsFlash::FlashInHeader
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:alert] = translate('message.access_denied')
+    flash.now[:alert] = translate('message.access_denied')
     respond_to do |denied|
       denied.html { redirect_to root_url }
       denied.json   { render json: {}, status: 403 }
       denied.js   { render 'denied', status: 403 }
+    end
+  end
+
+  rescue_from RuntimeError, Torrent::RTorrent::Error do |exception|
+    flash.now[:alert] = exception.message
+    respond_to do |frak|
+      frak.json { render json: { error: exception.message }, status: 500 }
     end
   end
 

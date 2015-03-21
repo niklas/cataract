@@ -42,7 +42,15 @@ DS.RailsRESTSerializer = DS.ActiveModelSerializer.extend()
 DS.RailsRESTAdapter = DS.ActiveModelAdapter.extend
   defaultSerializer: 'DS/railsREST'
 
-Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend()
+Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend
+  ajaxError: (jqxhr)->
+    #@_super(jqxhr)
+    if jqxhr and jqxhr.status is 500
+      Ember.Rails.flashMessages.createMessage
+        severity: 'error'
+        message: jqxhr.responseJSON.error
+      # stop propagating
+      false
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'
 #  detected_directory: 'detected_directories'
