@@ -17,6 +17,10 @@ ul.directories {
             text-overflow: ellipsis;
             overflow: hidden;
         }
+        a.toggle {
+            background: inherit;
+            box-shadow: none;
+        }
     }
 
 }
