@@ -58,6 +58,9 @@ module HtmlSelectorsHelpers
     when /^the (\w+s) table$/
       "table.#{$1}"
 
+    when /^the (\w+) title$/
+      "##{$1} h2.title"
+
     when "the footer"
       raise "no footer"
       "div[data-role='footer']"

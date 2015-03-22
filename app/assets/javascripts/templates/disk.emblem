@@ -1,4 +1,4 @@
-h2= name
+h2.title= name
 
 .actions
   link-to 'new_directory' class="btn btn-primary btn-small" | Create Directory

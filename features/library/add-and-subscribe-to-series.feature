@@ -29,7 +29,7 @@ Feature: Add and Subscribe to Series
       And I check "contains more directories"
       And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
-      And I should see "Series" within the bar title
+      And I should see "aDisk / Series" within the content title
       And a directory "Series" should exist with name: "Series", disk: the disk
       And the directory "media/adisk/Series" should exist on disk
 
@@ -42,7 +42,7 @@ Feature: Add and Subscribe to Series
       And I fill in "Filter" with "shame frowns"
       And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
-      And I should see "Series/Shame of Frowns" within the bar title
+      And I should see "aDisk / Series / Shame of Frowns" within the content title
       And a directory "Frowns" should exist with name: "Shame of Throwns", disk: the disk, parent: the directory "Series"
       And the directory "media/adisk/Series/Shame of Frowns" should exist on disk
 
@@ -57,7 +57,7 @@ Feature: Add and Subscribe to Series
       And I wait for the spinner to disappear
      Then I should see the stop link
       But I should not see the start link
-      And I should see "Shame of Frowns S03E09" within the bar title
+      And I should see "Shame of Frowns S03E09" within the content title
       And a torrent "Spoiler" should exist with name: "Shame of Frowns S03E09"
       And the rtorrent main view should contain the torrent "Spoiler"
 
@@ -66,6 +66,6 @@ Feature: Add and Subscribe to Series
       And I wait for the spinner to disappear
      Then I should see the stop link
       But I should not see the start link
-      And I should see "Shame of Frowns S01E01" within the bar title
+      And I should see "Shame of Frowns S01E01" within the content title
       And a torrent "Pilot" should exist with name: "Shame of Frowns S01E01"
       And the rtorrent main view should contain the torrent "Pilot"

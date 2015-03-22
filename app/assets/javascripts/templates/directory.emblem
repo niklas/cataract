@@ -1,4 +1,4 @@
-h2 #{disk.name} / #{name}
+h2.title #{disk.name} / #{name}
 
 if subscribed
   span.subscribed.label.label.info subscribed
