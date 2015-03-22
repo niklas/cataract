@@ -30,6 +30,20 @@ Cataract.Directory = Cataract.BaseDirectory.extend
         @set 'filter', @get('name')
     ).observes('subscribed')
 
+  ancestorsAndSelf: Ember.computed 'parentDirectory', ->
+    if parent = @get('parentDirectory')
+      list = parent.get('ancestorsAndSelf')
+      list.pushObject this
+      list
+    else
+      [ this ]
+
+  descendantsAndSelf: Ember.computed 'children.@each', ->
+    list = [ this ]
+    @get('children').mapProperty('descendantsAndSelf').forEach (descs)->
+      list.pushObjects(descs)
+    list
+
 Cataract.Directory.reopenClass
   url: 'directory'
   resourceName: 'directories'

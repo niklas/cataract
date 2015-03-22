@@ -44,9 +44,10 @@ Feature: Add and Subscribe to Series
       And I fill in "Filter" with "shame frowns"
       And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
-      And the directory "media/adisk/Series/Shame of Frowns" should exist on disk
       And I should see "aDisk / Series / Shame of Frowns" within the content title
-      And a directory "Frowns" should exist with name: "Shame of Throwns", disk: the disk, parent: the directory "Series"
+      And a directory "Frowns" should exist with name: "Shame of Frowns", disk: the disk
+      And the directory "Series" should be the directory "Frowns"'s parent
+      And the directory "media/adisk/Series/Shame of Frowns" should exist on disk
 
      When I follow "available episodes online"
      Then I should see the following torrents in the torrent list:

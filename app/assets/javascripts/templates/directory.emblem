@@ -1,9 +1,10 @@
 h2.title
   small= disk.name
-  '
-  | /
-  '
-  = name
+  each d in ancestorsAndSelf
+    '
+    | /
+    '
+    = d.name
 
 Cataract.SaveOrCancel content=this
 
