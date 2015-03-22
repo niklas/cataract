@@ -27,16 +27,16 @@ else
 
 ul.nav.nav-tabs
   unless showSubDirs
-    li role="presentation"
+    presentation-li
       link-to 'directory.online' this
         | available episodes online
   else
     if hasDetectedSubDirs
-      li role="presentation"
+      presentation-li
         link-to 'directory.detect' this
           | detected Children
     if hasSubDirs
-      li role="presentation"
+      presentation-li
         link-to 'directory.children' this
           | Children
 = outlet
