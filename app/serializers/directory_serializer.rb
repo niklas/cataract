@@ -5,12 +5,16 @@ class DirectorySerializer < BaseSerializer
              :exists?,
              :show_sub_dirs?
   has_one    :disk
+  has_one    :parent_directory
 
   def attributes
     super.tap do |hash|
       hash['relative_path'] = object.relative_path.to_s
-      hash['parent_id'] = object.parent.try(:id)
       hash['filter'] = object.filter
     end
+  end
+
+  def parent_directory
+    object.parent
   end
 end

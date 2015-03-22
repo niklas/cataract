@@ -13,8 +13,7 @@ Cataract.Directory = Cataract.BaseDirectory.extend
   #active: (-> this == Cataract.get('currentDirectory') ).property('Cataract.currentDirectory')
   showSubDirs: attr 'boolean'
 
-  children: Ember.computed 'disk.directories.@each.parentId', ->
-      @get('disk.directories').filterProperty('parentId', parseInt(@get('id')))
+  children: DS.hasMany 'directory', inverse: 'parentDirectory'
   hasSubDirs: Ember.computed 'children.length', 'showSubDirs',->
     @get('showSubDirs') and @get('children.length') > 0
   virtual: attr 'boolean'

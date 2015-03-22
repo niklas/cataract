@@ -187,6 +187,9 @@ class Directory < ActiveRecord::Base
     end
   end
 
+  # serializer avoids confusing Ember
+  alias_method :parent_directory_id=, :parent_id=
+
   # finds the directory of the path, no infixes allowed
   def self.of(path)
     dir, infix = with_minimal_infix(path)
