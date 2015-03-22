@@ -25,19 +25,20 @@ else
       '
       | Create Subdirectory
 
-  if hasDetectedSubDirs
-    .row
-      %h3 Detected
-      ul.new.directories
-        each dir in detectedChildren
-          li
-            a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
-            span.name= dir.name
+ul.nav.nav-tabs
+  unless showSubDirs
+    li role="presentation"
+      link-to 'directory.online' this
+        | available episodes online
+  else
+    if hasDetectedSubDirs
+      li role="presentation"
+        link-to 'directory.detect' this
+          | detected Children
+    if hasSubDirs
+      li role="presentation"
+        link-to 'directory.children' this
+          | Children
+= outlet
 
-  if hasSubDirs
-    .row
-      ul.directories.existing
-        each dir in children
-          li
-            link-to 'directory' dir classNames="name"
-              = dir.name
+

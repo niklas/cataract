@@ -8,7 +8,10 @@ Cataract.Router.map ->
   @route 'running'
   @route 'recent'
   @route 'library', ->
-    @resource 'directory', path: 'directory/:directory_id'
+    @resource 'directory', path: 'directory/:directory_id', ->
+      @route 'online'
+      @route 'detect'
+      @route 'children'
     @resource 'disk', path: 'disk/:disk_id'
 Cataract.IndexRoute = Ember.Route.extend()
 
