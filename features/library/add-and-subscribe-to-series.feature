@@ -10,7 +10,7 @@ Feature: Add and Subscribe to Series
 
   Background:
     Given a disk exists with name: "aDisk", path: "media/adisk"
-      And a directory exists with name: "Movies", disk: the disk
+      And a directory exists with name: "Movies", disk: the disk, relative_path: "Movies"
       And I am signed in
       And I am on the home page
       And all animations are disabled
@@ -25,7 +25,7 @@ Feature: Add and Subscribe to Series
       And I follow "Create Directory"
       And I wait for the modal box to appear
      Then the selected "Disk" should be "aDisk"
-      And the selected "Parent" should be ""
+      And the selected "Parent" should be "[Root]"
 
      When I fill in "Name" with "Series"
       And I check "contains more directories"
@@ -44,9 +44,9 @@ Feature: Add and Subscribe to Series
       And I fill in "Filter" with "shame frowns"
       And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"
+      And the directory "media/adisk/Series/Shame of Frowns" should exist on disk
       And I should see "aDisk / Series / Shame of Frowns" within the content title
       And a directory "Frowns" should exist with name: "Shame of Throwns", disk: the disk, parent: the directory "Series"
-      And the directory "media/adisk/Series/Shame of Frowns" should exist on disk
 
      When I follow "available episodes online"
      Then I should see the following torrents in the torrent list:
