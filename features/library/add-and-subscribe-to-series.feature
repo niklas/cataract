@@ -38,7 +38,7 @@ Feature: Add and Subscribe to Series
      Then the selected "Disk" should be "aDisk"
       And the selected "Parent" should be "Series"
      When I fill in "Name" with "Shame of Frowns"
-      And I check "subscribed"
+      And I check "subscribe"
       And I fill in "Filter" with "shame frowns"
       And I press "Create Directory"
      Then I should see notice "Directory 'Series' created"

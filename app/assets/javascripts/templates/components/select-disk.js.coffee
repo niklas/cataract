@@ -1,4 +1,4 @@
-Cataract.SelectDiskField = Ember.Select.extend
+Cataract.SelectDiskComponent = Ember.Select.extend
   optionLabelPath: 'content.name'
   optionValuePath: 'content.id'
 
@@ -6,3 +6,4 @@ Cataract.SelectDiskField = Ember.Select.extend
     # FIXME refresh association bindings, else no value is bound, even with defaults
     @$(':input').change()
     @_super()
+
