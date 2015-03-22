@@ -11,6 +11,10 @@ modal-dialog action="createDirectory" heading="new Directory" primary="Create Di
         label for="directory_disk" Disk
         = select-disk selection=disk content=disks elementId="directory_disk" classNames='form-control'
 
+      .form-group
+        label for="directory_parent" Parent
+        = select-directory selection=parentDirectory content=disk.directories elementId="directory_parent" classNames='form-control'
+
       .checkbox
         label
           = input type="checkbox" checked=showSubDirs

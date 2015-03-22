@@ -4,6 +4,6 @@ Cataract.SelectDiskComponent = Ember.Select.extend
 
   didInsertElement: ->
     # FIXME refresh association bindings, else no value is bound, even with defaults
-    @$(':input').change()
+    @$().change()
     @_super()
 
