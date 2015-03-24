@@ -128,6 +128,10 @@ gem 'mechanize'
 # TODO strong parameter
 gem 'protected_attributes'
 
+gem 'interactor'
+
+gem 'kat'
+
 group :event_server do
   gem 'sinatra'
   gem 'redis'

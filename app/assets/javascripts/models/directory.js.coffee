@@ -44,6 +44,8 @@ Cataract.Directory = Cataract.BaseDirectory.extend
       list.pushObjects(descs)
     list
 
+  remoteTorrents: DS.hasMany 'remote-torrent', async: true
+
 Cataract.Directory.reopenClass
   url: 'directory'
   resourceName: 'directories'
