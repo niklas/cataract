@@ -8,7 +8,9 @@ describe SearchTorrentsOnline do
     let(:ctx) { subject.context }
 
     it 'sets empty `torrents` when nothing was found' do
-      subject.call
+      VCR.use_cassette 'kat-no-results' do
+        subject.call
+      end
       ctx.should be_a_success
 
       ctx.torrents.should_not be_nil

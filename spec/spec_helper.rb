@@ -29,6 +29,10 @@
       VCR.configure do |c|
         c.cassette_library_dir = 'fixtures/vcr_cassettes'
         c.hook_into :webmock # or :fakeweb
+        c.before_record do |i|
+          # else the saved body is in binary and we cannot edit it
+          i.response.body.force_encoding('UTF-8')
+        end
       end
     end
 

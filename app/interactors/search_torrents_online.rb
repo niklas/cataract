@@ -6,6 +6,7 @@ class SearchTorrentsOnline
     if filter && filter.present?
 
       kat = Kat.search filter, categories: 'tv'
+      kat.search
 
       context.torrents = kat.results.map do |r|
       end
