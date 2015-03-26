@@ -16,5 +16,12 @@ describe SearchTorrentsOnline do
       ctx.torrents.should be_empty
     end
 
+    context 'without filter' do
+      let(:filter) { nil }
+      it 'fails' do
+        expect { subject.call }.to raise_error(Interactor::Failure)
+      end
+    end
+
   end
 end
