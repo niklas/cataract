@@ -18,6 +18,23 @@ describe SearchTorrentsOnline do
       ctx.torrents.should be_empty
     end
 
+    it 'fills `torrents` with serializable items' do
+      VCR.use_cassette 'kat-a-lot-results' do
+        subject.call
+      end
+      ctx.should be_a_success
+
+      ctx.torrents.should_not be_empty
+
+      ctx.torrents.map(&:title).each do |title|
+        title.downcase.should include('shame')
+      end
+
+      ctx.torrents.map(&:id).each do |id|
+        id.should =~ /^[A-F0-9]{40}$/
+      end
+    end
+
     context 'without filter' do
       let(:filter) { nil }
       it 'fails' do
