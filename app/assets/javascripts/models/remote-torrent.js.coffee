@@ -1,3 +1,3 @@
 Cataract.RemoteTorrent = DS.Model.extend
-  name: DS.attr 'string'
+  title: DS.attr 'string'
   directory: DS.belongsTo 'directory'

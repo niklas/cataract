@@ -1,5 +1,6 @@
 class RemoteTorrent
   include ActiveModel::Model
+  include ActiveModel::SerializerSupport
 
   attr_accessor :title
   attr_accessor :uri
@@ -7,7 +8,8 @@ class RemoteTorrent
   attr_accessor :age
   attr_accessor :seeds
   attr_accessor :magnet
-  validates_presence_of :title, :uri
+  attr_accessor :directory
+  validates_presence_of :title, :uri, :id
 
   def id
     @id ||= extract_id_from(magnet)
@@ -16,7 +18,7 @@ class RemoteTorrent
   private
 
   def extract_id_from(source)
-    if source =~ /([A-F0-9]{40})/
+    if source =~ /([A-F0-9]{40})/i
       $1
     end
   end
