@@ -14,10 +14,7 @@
             = tor.seeds
 
           .col-md-3
-            a.start.btn.btn-success click="createFromRemote tor"
-              span.glyphicon.glyphicon-play
-              '
-              | Download
+            icon-button action='createFromRemote' param=tor severity="success" icon="play" name='start' | Download
         else
           .col-md-1.size.clearfix
             | 1.7GiB

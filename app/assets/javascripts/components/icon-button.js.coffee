@@ -2,7 +2,8 @@ Cataract.IconButtonComponent = Ember.Component.extend
   tagName: 'button'
   icon: 'oil'
   severity: 'normal'
-  name: Ember.computed.readOnly 'icon'
+  name: Ember.computed.alias 'icon'
+  param: null # for action
   classNames: ['btn']
   classNameBindings: ['severityClass']
 
@@ -11,4 +12,7 @@ Cataract.IconButtonComponent = Ember.Component.extend
 
   severityClass: Ember.computed 'severity', ->
     "btn-#{@get 'severity'}"
+
+  click: ->
+    @sendAction('action', @get('param'))
 
