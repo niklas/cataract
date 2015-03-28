@@ -82,8 +82,8 @@ module HtmlSelectorsHelpers
     when /^(?:the )?item of #{capture_model}$/
       "##{ model!($1).decorate.item_id }"
 
-    when /^the (\w+) link$/
-      "a.#{$1}"
+    when /^the (\w+) (?:link|button)$/
+      "button.#{$1}"
 
     when /^the active nav item$/
       'ul.nav > li.active'

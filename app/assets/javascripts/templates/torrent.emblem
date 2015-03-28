@@ -14,16 +14,16 @@ else
   .actions
     unless isNew
       if isRunning
-        icon-button action="stop this" severity="danger" icon="stop" | Stop
+        icon-button action='stop' param=this severity="danger" icon="stop" | Stop
       else
-        icon-button action="start this" severity="success" icon="play" name='start' | Start
+        icon-button action='start' param=this severity="success" icon="play" name='start' | Start
 
-      icon-button action="openModal 'deleteTorrent'" severity="danger" icon="remove" | Delete
+      icon-button action='openModal' param='deleteTorrent' severity="danger" icon="remove" | Delete
 
       if payloadPresent
-        icon-button action="openModal 'clearPayload'" severity="danger" icon="trash" | remove Content
+        icon-button action='openModal' param='clearPayload' severity="danger" icon="trash" | remove Content
         unless isMoving
-          icon-button action="openModal 'movePayload'" severity="info" icon="share" | Move
+          icon-button action='openModal' param='movePayload' severity="info" icon="share" | Move
 
   p= info_hash
 

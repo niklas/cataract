@@ -2,10 +2,10 @@ Cataract.IconButtonComponent = Ember.Component.extend
   tagName: 'button'
   icon: 'oil'
   severity: 'normal'
-  name: Ember.computed.alias 'icon'
+  name: Ember.computed.oneWay 'icon'
   param: null # for action
   classNames: ['btn']
-  classNameBindings: ['severityClass']
+  classNameBindings: ['severityClass', 'name']
 
   iconClass: Ember.computed 'icon', ->
     "glyphicon-#{@get 'icon'}"
