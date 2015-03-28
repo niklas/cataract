@@ -1,0 +1,31 @@
+h2.title= title
+
+unless isLoaded
+  | does not exist
+else
+  if isRunning
+    if transferStatus.online
+      transfer-bar content=transfer
+    else
+      = transferStatus.offlineReason
+  if payloadExists
+    payload-details content=payload
+
+  .actions
+    unless isNew
+      if isRunning
+        icon-button action="stop this" severity="danger" icon="stop" | Stop
+      else
+        icon-button action="start this" severity="success" icon="play" name='start' | Start
+
+      icon-button action="openModal 'deleteTorrent'" severity="danger" icon="remove" | Delete
+
+      if payloadPresent
+        icon-button action="openModal 'clearPayload'" severity="danger" icon="trash" | remove Content
+        unless isMoving
+          icon-button action="openModal 'movePayload'" severity="info" icon="share" | Move
+
+  p= info_hash
+
+  if isRemote
+    .url= url
