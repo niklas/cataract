@@ -3,17 +3,17 @@
     each tor in content
       li.remote.torrent.row
 
-        .col-md-7.title
+        .col-md-5.title
           = tor.title
 
         unless tor.torrent
           .col-md-1.size
             | 1.7GiB
 
-          .col-md-1.seeds
+          .col-md-2.seeds
             = tor.seeds
 
-          .col-md-2
+          .col-md-3
             a.start.btn.btn-success click="createFromRemote tor"
               span.glyphicon.glyphicon-play
               '
@@ -22,8 +22,8 @@
           .col-md-1.size
             | 1.7GiB
 
-          .col-md-1.payload
+          .col-md-2.payload
             | TODO payload
 
-          .col-md-2
+          .col-md-3
             torrent-transfer content=tor.torrent
