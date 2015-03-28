@@ -18,7 +18,7 @@ module NavigationHelpers
       new_user_session_path
 
     when /^the (running|archived|remote|recent|library) list page$/
-      root_path + "#/?status=#{$1}"
+      root_path + "#/#{$1}"
 
     when /^the (\w+) page (?:of|for) #{capture_model}$/
       polymorphic_path [model!($2), $1]
