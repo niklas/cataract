@@ -80,6 +80,7 @@ describe Move do
       end
 
       it "should stop running torrent" do
+        Torrent::RTorrent.online!
         multiple.should_receive(:stop)
         move.work!
       end
