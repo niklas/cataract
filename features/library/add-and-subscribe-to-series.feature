@@ -60,15 +60,15 @@ Feature: Add and Subscribe to Series
       | Shame of Frowns S01E02 HDTV x264-PULLERS[seti]                  |
       | Shame of Frowns S01E01 HDTV x264-PULLERS[seti]                  |
 
-    Given the URL "http://torcache.net/torrent/AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.season.1.720p.bluray.x264.shtlord" points to file "single.torrent"
      When I click on the start link within the second torrent
-     Then I should see flash notice "Torrent was successfully created."
-      And I should see the stop link
-      But I should not see the start link
+     Then I should not see any flash alert
+      But I should see flash notice "Torrent was successfully created."
+      And I should see the stop link within the second torrent
+      But I should not see the start link within the second torrent
       And I should see the following remote torrents in a torrent list:
       | title                                                           | progress |
       | Shame of Frowns S05E00 A Date in the Wife HDTV x264-EBAT [seti] |          |
-      | Shame of Frowns - Season 1 - 720p BluRay - x264 - ShtlOrd       |      0 % |
+      | Shame of Frowns - Season 1 - 720p BluRay - x264 - ShtlOrd       |       0% |
       | Shame of Frowns S03E09 HDTV x264-PULLERS[seti]                  |          |
       | Shame of Frowns S01E02 HDTV x264-PULLERS[seti]                  |          |
       | Shame of Frowns S01E01 HDTV x264-PULLERS[seti]                  |          |
@@ -87,3 +87,5 @@ Feature: Add and Subscribe to Series
       | Shame of Frowns S01E01 HDTV x264-PULLERS[seti]                  |          |
       And a torrent "Spoiler" should exist with title: "Shame of Frowns S03E09 HDTV x264-PULLERS[seti]"
       And the rtorrent main view should contain the torrent "Spoiler"
+      And a torrent "Pilot" should exist with name: "Shame of Frowns S01E01"
+      And the rtorrent main view should contain the torrent "Pilot"

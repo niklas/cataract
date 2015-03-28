@@ -1,0 +1,12 @@
+if content.isRunning
+  transfer-bar content=content.transfer
+
+  a.stop.btn.btn-danger click="stpo content"
+    span.glyphicon.glyphicon-stop
+    '
+    | Stop
+else
+  a.start.btn.btn-success click="start content"
+    span.glyphicon.glyphicon-play
+    '
+    | Start

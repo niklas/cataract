@@ -64,6 +64,7 @@ When /^I click on (the (?:#{match_nth})?\s?\w+\s?\w+)(?!within.*)$/ do |target|
   selector = selector_for(target)
   page.should have_css(selector)
   page.find(selector).click
+  wait_for_the_page_to_be_loaded
 end
 
 Then /^I should see (.+link)$/ do |target|

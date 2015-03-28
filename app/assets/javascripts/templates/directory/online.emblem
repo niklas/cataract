@@ -6,14 +6,24 @@
         .col-md-7.title
           = tor.title
 
-        .col-md-1.size
-          | 1.7GiB
+        unless tor.torrent
+          .col-md-1.size
+            | 1.7GiB
 
-        .col-md-1.seeds
-          = tor.seeds
+          .col-md-1.seeds
+            = tor.seeds
 
-        .col-md-2.actions
-          a.start.btn.btn-success click="createFromRemote tor"
-            span.glyphicon.glyphicon-play
-            '
-            | Download
+          .col-md-2
+            a.start.btn.btn-success click="createFromRemote tor"
+              span.glyphicon.glyphicon-play
+              '
+              | Download
+        else
+          .col-md-1.size
+            | 1.7GiB
+
+          .col-md-1.payload
+            | TODO payload
+
+          .col-md-2
+            torrent-transfer content=tor.torrent
