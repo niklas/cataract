@@ -38,3 +38,27 @@ end
 When /^I wait (\d+) seconds?$/ do |seconds|
   sleep seconds.to_i
 end
+
+Before do
+  $step_by_step = false
+end
+
+When 'I go step by step' do
+  $step_by_step = true
+end
+
+AfterStep do |scenario, x|
+  if $step_by_step
+    require 'io/console'
+    $stderr.puts
+    $stderr.print "Step by step. Press 'p' for pry, 'c' for continue, any other key to continue> "
+    case pressed = $stdin.getch
+    when 'p'
+      binding.pry
+    when 'c'
+      $step_by_step = false
+    else
+      # go one
+    end
+  end
+end

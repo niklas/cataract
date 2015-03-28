@@ -37,6 +37,29 @@ class Torrent
 
     def fetch_url(url)
       @response = Net::HTTP::get_response(url)
+      Rails.logger.debug { "fetching #{url} => #{@response.code} #{@response.inspect}" }
+      case @response
+      when Net::HTTPRedirection
+        if limit > 0
+          new_url = @response['location']
+          Rails.logger.debug { "following redirect to #{new_url}" }
+          fetch_url new_url, limit - 1
+        else
+          torrent.errors.add :url, "unfetchable: redirect loop"
+          false
+        end
+      when Net::HTTPSuccess
+        Rails.logger.debug { "fetched #{@response.inspect}" }
+        @response
+      else
+        Rails.logger.debug { "unfetchable: #{@response.inspect}" }
+        torrent.errors.add :url, "unfetchable: #{@response.inspect}"
+        false
+      end
+    rescue URI::InvalidURIError
+      # often there are special chars (unescaped) in the filename
+      escaped = url.sub(%r~(?<=/)[^/]+$~) { |m| CGI.escape(m) }
+      fetch_url(escaped, limit)
     rescue SocketError, Errno::ECONNREFUSED, NoMethodError => e
       torrent.errors.add :url, "unfetchable: #{e}"
       false

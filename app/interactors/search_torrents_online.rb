@@ -11,6 +11,7 @@ class SearchTorrentsOnline
       found = kat.search(page)
 
       if found
+        debug { "#{self.class} searched for #{filter.inspect}, got #{found.length}+ results" }
         context.torrents = found.map do |r|
           RemoteTorrent.new(
             title: r[:title],
@@ -30,6 +31,12 @@ class SearchTorrentsOnline
       end
     else
       context.fail! message: 'must have #filter set'
+    end
+  end
+
+  def debug(&block)
+    if context.logger
+      context.logger.debug &block
     end
   end
 end

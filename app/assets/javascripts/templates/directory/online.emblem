@@ -1,5 +1,5 @@
 .row
-  ul.new.torrents
-    each tor in remoteTorrents
-      li
-        .name= tor.name
+  ul#torrents.new.torrents
+    each tor in content
+      li.remote.torrent
+        .title= tor.title

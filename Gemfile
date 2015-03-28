@@ -130,7 +130,7 @@ gem 'protected_attributes'
 
 gem 'interactor'
 
-gem 'kat'
+gem 'kat', github: 'niklas/kat', branch: 'remove-andand-depdendency'
 
 group :event_server do
   gem 'sinatra'

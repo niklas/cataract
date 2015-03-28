@@ -16,7 +16,7 @@ class RemoteTorrentsController < ApplicationController
   end
 
   def search_torrents
-    result = SearchTorrentsOnline.call filter: directory.filter
+    result = SearchTorrentsOnline.call filter: directory.filter, logger: Rails.logger
     if result.success?
       result.torrents
     else
