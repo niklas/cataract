@@ -19,10 +19,12 @@
               '
               | Download
         else
-          .col-md-1.size
+          .col-md-1.size.clearfix
             | 1.7GiB
+            if tor.torrent.isRunning
+              span.badge.eta= tor.torrent.transfer.eta
 
-          .col-md-2.payload
+          .col-md-2.payload.clearfix
             | TODO payload
 
           .col-md-3
