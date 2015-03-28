@@ -5,23 +5,16 @@ Cataract.Transfer = DS.Model.extend
   downRate: attr 'string'
   eta: attr 'string'
   torrent: DS.belongsTo('torrent')
-  progressStyle:
-    Ember.computed ->
-      "width: #{@get('progress')}%"
-    .property('progress')
-  downloading:
-    Ember.computed ->
-      @get('progress') != 100 and parseInt(@get('downRate')) > 0
-    .property('progress', 'downRate')
-  uploading:
-    Ember.computed ->
-      parseInt(@get('upRate')) > 0
-    .property('downRate')
-  finished:
-    Ember.computed ->
-      @get('progress') == 100
-    .property('progress')
   active: attr 'boolean'
+
+  isFinished: Ember.computed 'progress', ->
+    @get('progress') is 100
+
+  isUploading: Ember.computed 'upRate', ->
+    parseInt(@get('upRate')) > 0
+
+  isDownloading: Ember.computed 'isFinished', 'downRate', ->
+    !@get('isFinished') and parseInt(@get('downRate')) > 0
 
 Cataract.Transfer.reopenClass
   url: 'transfer' # Emu create param

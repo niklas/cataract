@@ -1,10 +1,6 @@
 .row-fluid
   .span6
-    .progress
-      .progress-bar style=progressStyle class={:progress-bar-success finished::progress-bar-striped downloading:active}
-        .percent
-          = progress
-          | %
+    = progress-bar percentage=progress hasStripes=isFinished isAnimated=isDownloading breakLabel=50
   .span6
     span.badge.rate.down class=downloading:active
       i.glyphicon.glyphicon-arrow-down
