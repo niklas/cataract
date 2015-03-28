@@ -20,7 +20,7 @@ en:
   flash:
     torrents:
       create:
-        alert: "Could not create Torrent: %{error_messages}"
+        alert: "Could not create Torrent because %{error_messages}"
         notice:  "Torrent was successfully created."
       destroy:
         notice: "%{torrent} deleted"

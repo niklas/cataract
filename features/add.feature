@@ -94,7 +94,7 @@ Feature: Adding a torrent
       And the dropzone should be classified as hovered
 
      When I drop file "spec/spec_helper.rb" onto the dropzone
-     Then I should see flash alert "Could not create Torrent."
+     Then I should see flash alert "Could not create Torrent"
       And the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
 
