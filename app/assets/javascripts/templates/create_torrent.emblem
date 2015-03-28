@@ -1,6 +1,14 @@
 modal-dialog action="createTorrent" heading="Add Torrent" primary="Add" secondary="Cancel"
-  Bootstrap.Forms.TextField value=url label="URL"
-  .input
-    label for="content_directory" Content Directory
-    Cataract.SelectDirectoryField id="content_directory" content=directories selection=contentPolyDirectory
-  Cataract.FileField file=filedata filename=filename label="File"
+  .container-fluid
+    .form-horizontal
+
+      .form-group
+        label for="torrent_url" URL
+        = input value=url class="form-control" elementId="torrent_url"
+
+      .form-group
+        label for="content_directory" Content Directory
+        select-directory elementId="content_directory" content=directories selection=contentPolyDirectory classNames='form-control'
+
+      .form-group
+        Cataract.FileField file=filedata filename=filename label="File"

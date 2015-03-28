@@ -14,11 +14,3 @@ Cataract.CreateTorrentController = Ember.ObjectController.extend
         @transitionToRoute 'torrent', t
     cancel: ->
       @get('content').deleteRecord()
-
-  setDefaultDirectory: (->
-    self = this
-    Ember.run.once ->
-      self.get('controllers.settings.content').then (settings)->
-        self.get('content').set('contentPolyDirectory', settings.get('incomingDirectory.poly') )
-  ).observes('content', 'controllers.settings.incomingDirectory').on('init')
-
