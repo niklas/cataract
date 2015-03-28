@@ -35,7 +35,8 @@ class Torrent
 
     private
 
-    def fetch_url(url)
+    def fetch_url(url, limit=5)
+      url = URI.parse(url) unless url.is_a?(URI)
       @response = Net::HTTP::get_response(url)
       Rails.logger.debug { "fetching #{url} => #{@response.code} #{@response.inspect}" }
       case @response
@@ -61,6 +62,7 @@ class Torrent
       escaped = url.sub(%r~(?<=/)[^/]+$~) { |m| CGI.escape(m) }
       fetch_url(escaped, limit)
     rescue SocketError, Errno::ECONNREFUSED, NoMethodError => e
+      Rails.logger.debug { "unfetchable: #{e}" }
       torrent.errors.add :url, "unfetchable: #{e}"
       false
     end
