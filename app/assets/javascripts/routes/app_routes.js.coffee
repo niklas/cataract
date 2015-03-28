@@ -41,6 +41,10 @@ Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   model: (params) ->
     @get('store').find 'torrent', params.torrent_id
 
+  renderTemplate: ->
+    @_super()
+    @render 'torrents/running'
+
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
     @get('store').createRecord 'directory',
