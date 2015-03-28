@@ -54,6 +54,7 @@ AfterStep do |scenario, x|
     $stderr.print "Step by step. Press 'p' for pry, 'c' for stop stepping, any other key to continue> "
     case pressed = $stdin.getch
     when 'p'
+      open_ember_inspector
       binding.pry
     when 'c'
       $step_by_step = false
