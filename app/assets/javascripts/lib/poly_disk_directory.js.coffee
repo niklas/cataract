@@ -74,7 +74,7 @@ PolyDiskDirectory = Ember.Object.extend
 PolyDiskDirectory.attr = (name)->
   Ember.computed (key, value)->
     if arguments.length > 1
-      @set name, value.get('alternatives.firstObject')
+      @set name, if value? then value.get('alternatives.firstObject') else value
     @get "#{name}.poly"
   .property(name)
 
