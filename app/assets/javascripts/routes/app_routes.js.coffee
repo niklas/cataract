@@ -29,6 +29,9 @@ Cataract.DetailedRoute = Ember.Route.extend
   deactivate: ->
     @_super()
     @controllerFor('application').set 'detailsRouteActive', false
+  renderTemplate: ->
+    @render outlet: 'details'
+
 
 # TODO have to think about these routes vs queryParams
 
