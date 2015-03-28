@@ -51,7 +51,7 @@ AfterStep do |scenario, x|
   if $step_by_step
     require 'io/console'
     $stderr.puts
-    $stderr.print "Step by step. Press 'p' for pry, 'c' for continue, any other key to continue> "
+    $stderr.print "Step by step. Press 'p' for pry, 'c' for stop stepping, any other key to continue> "
     case pressed = $stdin.getch
     when 'p'
       binding.pry
