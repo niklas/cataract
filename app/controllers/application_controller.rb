@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
     flash.now[:alert] = exception.message
     respond_to do |frak|
       frak.json { render json: { error: exception.message }, status: 500 }
+      frak.html { render text: exception.message, status: 500 }
     end
   end
 
