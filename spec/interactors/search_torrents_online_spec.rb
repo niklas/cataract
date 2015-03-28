@@ -4,7 +4,7 @@ describe SearchTorrentsOnline do
 
   context '#call' do
     subject { described_class.new filter: filter }
-    let(:filter) { 'Shame of Frowns' }
+    let(:filter) { 'shame frowns' }
     let(:ctx) { subject.context }
 
     it 'sets empty `torrents` when nothing was found' do
@@ -32,6 +32,10 @@ describe SearchTorrentsOnline do
 
       ctx.torrents.map(&:id).each do |id|
         id.should =~ /^[A-F0-9]{40}$/
+      end
+
+      ctx.torrents.map(&:uri).each do |uri|
+        uri.should start_with('http')
       end
     end
 

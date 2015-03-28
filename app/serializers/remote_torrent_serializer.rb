@@ -1,5 +1,7 @@
 class RemoteTorrentSerializer < BaseSerializer
-  attributes :id, :title
+  attributes :id,
+             :title,
+             :uri
 
   has_one :directory
 

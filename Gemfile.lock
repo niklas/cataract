@@ -28,7 +28,7 @@ GIT
 
 GIT
   remote: git://github.com/niklas/kat.git
-  revision: 265cea02aaf793ade61159a81db966e991a2460e
+  revision: 515906ced11c801ca30ea1d1f88b7f47ffe1bd0b
   branch: remove-andand-depdendency
   specs:
     kat (2.0.7)

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://kickass.to/usearch/Shame%20of%20Frowns/
+    uri: http://kickass.to/usearch/shame%20frowns/
     body:
       encoding: US-ASCII
       string: ''

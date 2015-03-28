@@ -34,12 +34,6 @@ ul.torrents {
     position: relative;
     cursor: pointer;
 
-    @media (min-width: 767px) {
-      width: 45%;
-      float: left;
-      margin-left: 1%;
-    }
-
     &:hover, &.active {
       @include box-shadow(lighten($body-bg, 25) 1px-$emboss 1px 9px);
       @include translate($emboss, -$emboss);
@@ -81,6 +75,17 @@ ul.torrents {
     }
     &.more {
       cursor: pointer;
+    }
+
+    &.cards {
+        li.torrent {
+            @media (min-width: 767px) {
+              width: 45%;
+              float: left;
+              margin-left: 1%;
+            }
+
+        }
     }
   }
 

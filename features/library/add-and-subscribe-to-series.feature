@@ -1,5 +1,6 @@
 @javascript
 @rootfs
+@rtorrent
 @vcr
 Feature: Add and Subscribe to Series
   In order to never miss another episode
@@ -61,7 +62,8 @@ Feature: Add and Subscribe to Series
 
     Given the URL "http://torcache.net/torrent/AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.season.1.720p.bluray.x264.shtlord" points to file "single.torrent"
      When I click on the start link within the second torrent
-     Then I should see the stop link
+     Then I should see flash notice "Torrent was successfully created."
+      And I should see the stop link
       But I should not see the start link
       And I should see the following remote torrents in a torrent list:
       | title                                                           | progress |
