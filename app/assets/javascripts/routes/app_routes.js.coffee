@@ -13,7 +13,6 @@ Cataract.Router.map ->
       @route 'detect'
       @route 'children'
     @resource 'disk', path: 'disk/:disk_id'
-Cataract.IndexRoute = Ember.Route.extend()
 
 Cataract.TorrentsRoute = Ember.Route.extend
   renderTemplate: ->
