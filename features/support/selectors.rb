@@ -20,7 +20,7 @@ module HtmlSelectorsHelpers
       "#sidebar ul.disks:first"
 
     when /^the sidebar director(?:ies|y) list$/
-      "#sidebar > ul.directories"
+      "#sidebar > .well > ul.directories"
 
     when /^the detail bar$/
       '#bar'
