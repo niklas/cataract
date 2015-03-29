@@ -1,9 +1,9 @@
 link-to targetRoute target class="name"
   i.glyphicon.foo class={isMounted.glyphicon-hdd:glyphicon-warning-sign}
   span.name= label
-  dl.stat
-    dt Size
-    dd.size= human-kilo-bytes content.size short=true
-    dt Free
-    dd.free= human-kilo-bytes content.free short=true
-  = yield
+dl.stat
+  dt Size
+  dd.size= human-kilo-bytes content.size short=true
+  dt Free
+  dd.free= human-kilo-bytes content.free short=true
+= yield
