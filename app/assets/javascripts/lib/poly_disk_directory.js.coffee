@@ -13,6 +13,10 @@ PolyDiskDirectory = Ember.Object.extend
     Ember.computed ->
       SortedArray.create(sortProperties: ['id'])
     .property()
+
+  hasMoreAlternatives: Ember.computed 'alternatives.length', ->
+    ( @get('alternatives.length') || 0) > 1
+
   children:
     Ember.computed ->
       SortedArray.create(sortProperties: ['name'])

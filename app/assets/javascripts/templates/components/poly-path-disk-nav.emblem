@@ -1,0 +1,6 @@
+if content.hasMoreAlternatives
+  ul.nav.nav-tabs.disks
+    each dir in content.alternatives
+      disk-item content=dir.disk targetRoute=targetRoute target=dir
+else
+  disk-item tagName='div' content=firstAlternative.disk targetRoute=targetRoute target=firstAlternative

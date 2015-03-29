@@ -9,7 +9,7 @@ if disks.length
       each disk in disks
        tr
          td
-           disk-item tagName='div' label=disk.name isMounted=disk.isMounted target=disk
+           disk-item tagName='div' content=disk
          td= disk.directories.length
 else
   | no diskzes

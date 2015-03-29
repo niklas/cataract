@@ -1,7 +1,10 @@
+defaultTo = Ember.computed.oneWay
+
 Cataract.DiskItemComponent = Ember.Component.extend
-  label: '<label>'
-  isMounted: false
-  target: null # a model to link to
+  content: null # disk
+  label:     defaultTo 'content.name'
+  isMounted: defaultTo 'content.isMounted'
+  target:    defaultTo 'content' # a model to link to
   targetRoute: 'disk' # the route for the target
   tagName: 'li'
   classNames: ['disk']

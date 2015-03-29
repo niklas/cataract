@@ -1,8 +1,8 @@
 ul.nav.nav-tabs.disks
   each dir in directories
-    disk-item isMounted=dir.disk.isMounted label=dir.disk.name target=dir targetRoute='directory'
+    disk-item content=dir.disk targetRoute='directory' target=dir
   else
     each disk in controllers.disks
-      disk-item isMounted=disk.isMounted label=disk.name target=disk targetRoute='disk'
+      disk-item content=disk
 
 = pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="pagination pagination-centered"

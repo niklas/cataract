@@ -1,3 +1,5 @@
+poly-path-disk-nav content=poly
+
 h2.title
   small= disk.name
   each d in ancestorsAndSelf
