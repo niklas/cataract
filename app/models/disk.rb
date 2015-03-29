@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Disk < ActiveRecord::Base
-  include Filesystem
+  include PathOnFilesystem
   has_many :directories
   before_validation :set_name_from_path
 
@@ -65,6 +65,20 @@ class Disk < ActiveRecord::Base
 
   def mounted?
     self.class.detected_paths.include?(path.to_s)
+  end
+
+  def size
+    stat.block_size * stat.blocks
+  end
+
+  def free
+    stat.block_size * stat.blocks_available
+  end
+
+  private
+
+  def stat
+    @stat ||= Sys::Filesystem.stat(path.to_s)
   end
 
 end

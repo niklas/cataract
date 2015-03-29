@@ -6,6 +6,8 @@ Cataract.Disk = DS.Model.extend
   active: (-> this == Cataract.get('currentDisk') ).property('Cataract.currentDisk')
   directories: DS.hasMany('directory')
   path: attr 'string'
+  size: attr 'number'
+  free: attr 'number'
   hasDirectories:
     Ember.computed ->
       @get('directories.length') > 0

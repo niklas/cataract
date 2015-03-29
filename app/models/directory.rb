@@ -2,7 +2,7 @@
 
 class Directory < ActiveRecord::Base
   has_ancestry
-  include Filesystem
+  include PathOnFilesystem
   before_validation :process_full_path
   before_validation :set_name_from_relative_path
   before_validation :set_relative_path_from_name

@@ -33,4 +33,26 @@ describe Disk do
     it "should ignore non-root dirs"
     it "should create new dir"
   end
+
+  context 'root mount' do
+    let(:disk) { build :disk, path: '/' }
+
+    context '#size' do
+      it 'is a number > 0' do
+        disk.size.should be_a(Fixnum)
+        disk.size.should > 0
+      end
+    end
+
+    context '#free' do
+      it 'is a number > 0' do
+        disk.free.should be_a(Fixnum)
+        disk.free.should > 0
+      end
+
+      it 'is less than size' do
+        disk.free.should < disk.size
+      end
+    end
+  end
 end

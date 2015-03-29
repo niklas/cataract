@@ -1,5 +1,5 @@
 # encoding: utf-8
-module Filesystem
+module PathOnFilesystem
   def basename
     path? && path.basename.to_s
   end
