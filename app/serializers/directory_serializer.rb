@@ -4,8 +4,9 @@ class DirectorySerializer < BaseSerializer
              :subscribed,
              :exists?,
              :show_sub_dirs?
-  has_one    :disk
-  has_one    :parent_directory
+  # we usually load all directories + disk on startup, so we can assume certain # things:
+  has_one    :disk,             include: false # it includes us already
+  has_one    :parent_directory, include: false # is surely already loaded
 
   def attributes
     super.tap do |hash|
