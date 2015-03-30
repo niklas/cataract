@@ -17,7 +17,7 @@ module NavigationHelpers
     when /^the sign ?in page$/
       new_user_session_path
 
-    when /^the (running|archived|remote|recent|library) list page$/
+    when /^the (running|archived|remote|recent|library) (?:list )?page$/
       root_path + "#/#{$1}"
 
     when /^the (\w+) page (?:of|for) #{capture_model}$/

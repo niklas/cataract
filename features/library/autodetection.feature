@@ -18,7 +18,7 @@ Feature: Disks in Library
       | var         |
       | media/Stuff |
       | media/More  |
-     When I go to the home page
+     When I go to the library page
      Then I should see "Detected" within the sidebar
       And I should see the following new disks in the sidebar disks list:
       | name  |
@@ -38,8 +38,8 @@ Feature: Disks in Library
         | directory | media/adisk/Series |
         | directory | media/adisk/Movies |
         | directory | media/adisk/Röbels |
-     When I go to the home page
-      And I follow "aDisk"
+     When I go to the library page
+      And I follow "aDisk" within the content
      Then I should see a list of the following new directories:
        | Name   |
        | Movies |
@@ -65,7 +65,7 @@ Feature: Disks in Library
         | directory | media/adisk/Series/Tatort     |
         | directory | media/adisk/Series/Tagesschau |
       And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series", show_sub_dirs: true
-      And I am on the home page
+      And I am on the library page
       And I follow "all Directories"
      When I follow "Series" within the sidebar directory list
       # TODO should indicate that there are more details
