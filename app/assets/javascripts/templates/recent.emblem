@@ -1,4 +1,4 @@
 if poly
   poly-path-disk-nav content=poly
 
-h2.title Recent
+torrents-list content=content mode=mode
