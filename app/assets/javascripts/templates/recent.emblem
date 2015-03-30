@@ -2,3 +2,4 @@ if poly
   poly-path-disk-nav content=poly
 
 torrents-list content=content.finalContent mode=mode
+= outlet
