@@ -147,7 +147,6 @@ Cataract.TorrentsController =
     rangeStop = @get('rangeStop')
     content = @get('filteredContent').slice(rangeStart, rangeStop)
     @set 'finalContent', content
-    @refreshTransfers()
 
 
 
