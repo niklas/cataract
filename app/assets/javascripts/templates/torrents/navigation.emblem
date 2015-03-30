@@ -1,11 +1,12 @@
-link-to 'recent' tagName='li'
+presentation-li
   link-to 'recent' | Recent
-link-to 'running' tagName='li'
+presentation-li
   link-to 'running' | Running
-link-to 'library' tagName='li'
+presentation-li
   link-to 'library' | Library
-li
-  link-to 'add' | Add
+presentation-li
+  link-to-add active=adding
+    | Add
 
 li.dropdown
   a href="#" class="dropdown-toggle" data-toggle="dropdown"
