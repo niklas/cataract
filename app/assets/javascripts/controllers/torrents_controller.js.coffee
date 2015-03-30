@@ -5,6 +5,9 @@ Cataract.TorrentsController =
   mode:         Ember.computed.alias  'controllers.application.mode'
   age:          Ember.computed.alias  'controllers.application.age'
   poly:         Ember.computed.alias  'controllers.application.poly'
+  disk:         Ember.computed.alias  'controllers.application.disk'
+
+  # TODO remove?
   directories:  Ember.computed.alias  'controllers.application.directories'
   directory:    Ember.computed.alias  'controllers.application.directory'
   directoryIds: Ember.computed.mapProperty 'directories', 'id'
@@ -83,13 +86,15 @@ Cataract.TorrentsController =
         Ember.A()
 
   filterFunction:
-    Ember.computed 'termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'directories', ->
+    Ember.computed 'termsList', 'mode', 'age', 'poly', 'disk', ->
       console?.debug "filterfunc"
       termsList  = @get('termsList')
-      mode = @get('mode') || ''
-      age = @get('age') || ''
-      directoryIds = @get('directoryIds') || []
-      directoryId = @get('directory.id')
+      mode       = @get('mode') || ''
+      age        = @get('age') || ''
+      poly       = @get('poly')
+      diskId     = @get('disk')
+
+      directoryIds = poly?.get('alternatives')?.mapProperty('id') || []
 
       if age.length > 0
         sinceDate = switch age
@@ -118,8 +123,8 @@ Cataract.TorrentsController =
         if directoryIds.length > 0 and torrent.get('contentDirectory.isLoaded')
           want = want and directoryIds.indexOf( torrent.get('contentDirectory.id') ) >= 0
 
-        if directoryId?
-          want = want and torrent.get('contentDirectory.id') == directoryId
+        if diskId? and torrent.get('contentDirectory.isLoaded')
+          want = want and torrent.get('contentDirectory.disk.id') == diskId
 
         want
 

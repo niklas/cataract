@@ -1,4 +1,4 @@
-link-to targetRoute target class="name"
+link-to (query-params disk=content.id) class="name"
   i.glyphicon.foo class={isMounted.glyphicon-hdd:glyphicon-warning-sign}
   span.name= label
 dl.stat
