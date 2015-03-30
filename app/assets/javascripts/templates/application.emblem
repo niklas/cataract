@@ -33,3 +33,5 @@
     = outlet 'details'
 
 = outlet 'modal'
+if adding
+  = render 'create_torrent'
