@@ -1,0 +1,18 @@
+ul.directories
+  ul.directories
+    // nesting of tree
+    margin-left: 2em
+
+  li
+    a
+      // do not grow in width indefinitely
+      max-width: 20em
+      white-space: nowrap
+      display: inline-block
+
+      &.toggle
+        background: inherit
+        box-shadow: none
+
+  &.root > li:first-of-type
+    margin-top: 0
