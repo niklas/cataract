@@ -1,4 +1,4 @@
 if poly
   poly-path-disk-nav content=poly
 
-torrents-list content=content mode=mode
+torrents-list content=content.finalContent mode=mode
