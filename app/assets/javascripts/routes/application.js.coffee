@@ -2,8 +2,6 @@ Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # FIXME is this really needed with all the promises and needs?
     store = @get('store')
-    @controllerFor('settings').set    'model',  store.find('setting', 'all')
-    @controllerFor('disks').set       'model', store.findAll('disk')
     @controllerFor('moves').set       'model', store.findAll('move')
 
     store.findAll('transfer').then (transfers)=>
@@ -11,7 +9,13 @@ Cataract.ApplicationRoute = Ember.Route.extend
     , (jqxhr)=>
       @controllerFor('application').transfersError(jqxhr)
 
-    true
+    Ember.RSVP.hash
+      settings: store.find('setting', 'all')
+      disks:     store.findAll('disk')
+    .then (loaded)=>
+      @controllerFor('settings').set 'model', loaded.settings
+      @controllerFor('disks').set    'model', loaded.disks
+
   actions:
     save: (model)->
       model.save()
