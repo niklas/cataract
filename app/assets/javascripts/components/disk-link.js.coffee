@@ -1,10 +1,10 @@
 defaultTo = Ember.computed.oneWay
 
-Cataract.DiskItemComponent = Ember.Component.extend
+Cataract.DiskLinkComponent = Ember.Component.extend
   content: null # disk
   label:     defaultTo 'content.name'
   isMounted: defaultTo 'content.isMounted'
-  tagName: 'li'
+  targetRoute: 'disk' # the route for the target
   classNames: ['disk']
   classNameBindings: [
     'active'
@@ -12,3 +12,4 @@ Cataract.DiskItemComponent = Ember.Component.extend
   ]
 
   activeBinding: 'childViews.firstObject.active'
+
