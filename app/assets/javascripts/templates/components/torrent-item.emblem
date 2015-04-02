@@ -1,12 +1,4 @@
-h4.title
+.col-md-5.title
   link-to 'torrent' content
     = content.title
-
-if content.payloadExists
-  span.payloadSize= human-kilo-bytes content.payloadBytes
-
-if transferStatus.online
-  if content.isRunning
-    = transfer-bar content=content.transfer
-else
-  = transferStatus.offlineReason
+torrent-details content=content

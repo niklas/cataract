@@ -1,6 +1,6 @@
 Cataract.TorrentItemComponent = Ember.Component.extend
   classNames: ['torrent']
-  classNameBindings: ['active']
+  classNameBindings: ['active', 'row']
   tagName: 'li'
   activeBinding: 'childViews.firstObject.active'
 

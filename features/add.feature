@@ -54,14 +54,11 @@ Feature: Adding a torrent
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
       And rtorrent should download the torrent
-      And I should see "single" within the details
-      And I should see "Incoming" within the details
-      And I should see "71.7 KB" within the details
-      And I should see the stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
+       | title  | percent | content_directory | payloadSize |
+       | single | 0%      | Incoming          | 71.7KB      |
+      And I should see the stop link
 
   Scenario: Upload by dragging a file to the dropzone
      When I drag a file over the dropzone
@@ -70,16 +67,13 @@ Feature: Adding a torrent
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
       And rtorrent should download the torrent
-      And I should see "single" within the details
-      And I should see "Incoming" within the details
-      And I should see "71.7 KB" within the details
-      And I should see the stop link
       And the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
+       | title  | percent | content_directory | payloadSize |
+       | single | 0%      | Incoming          | 71.7KB      |
+      And I should see the stop link
 
   Scenario: Uploading a non-torrent
     Given the dropzone should not be classified as inviting

@@ -1,0 +1,23 @@
+.col-md-1.size.clearfix
+  if content.payloadExists
+    span.payloadSize= human-kilo-bytes content.payloadBytes
+  if content.isRunning
+    span.badge.eta= content.transfer.eta
+
+.col-md-2.payload.clearfix
+  if payloadPresent
+    payload-details content=content.payload
+    icon-button action='openModal' param='clearPayload' severity="danger" icon="trash" | remove Content
+    unless isMoving
+      icon-button action='openModal' param='movePayload' severity="info" icon="share" | Move
+  if payloadExists
+    p= info_hash
+
+.col-md-3
+  unless content.isRemote
+    torrent-transfer content=content
+
+    unless content.isRunning
+      icon-button action='openModal' param='deleteTorrent' severity="danger" icon="remove" | Delete
+  else
+    .url= content.url
