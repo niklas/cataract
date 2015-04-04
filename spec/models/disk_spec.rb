@@ -55,4 +55,16 @@ describe Disk do
       end
     end
   end
+
+  context 'unmounted disk' do
+    let(:disk) { build :disk, path: '/never/gonna/give/you/up' }
+
+    it 'has 0 size' do
+      disk.size.should == 0
+    end
+
+    it 'has 0 free' do
+      disk.free.should == 0
+    end
+  end
 end

@@ -69,10 +69,14 @@ class Disk < ActiveRecord::Base
 
   def size
     stat.block_size * stat.blocks
+  rescue Sys::Filesystem::Error
+    0
   end
 
   def free
     stat.block_size * stat.blocks_available
+  rescue Sys::Filesystem::Error
+    0
   end
 
   private
