@@ -1,3 +1,4 @@
+$duration: 0.66s;
 #dropzone {
   padding: 0.3em;
   margin: 0.3em;
@@ -5,23 +6,23 @@
   text-align: center;
   border-radius: 5px;
   color: $body-bg;
-  position: absolute;
-  right: 0;
-  top: 0;
-
+  .glyphicon {
+      font-size: 150%;
+      transition: font-size $duration ease-in-out;
+  }
 
   .inflate {
-    display: inline-block;
+    display: block;
     height: 1em;
-    width: 1em;
-    transition: width 0.66s ease-in-out,
-                height 1s ease-in-out;
+    transition: height $duration ease-in-out;
   }
 
   &.inviting, &.hovered {
+    .glyphicon {
+      font-size: 300%;
+    }
     .inflate {
-      height: 2.5em;
-      width: 200px;
+      height: 6.5em;
     }
   }
 

@@ -1,5 +1,10 @@
 Cataract.CreateTorrentController = Ember.ObjectController.extend
-  needs: ['settings', 'disks', 'directories']
+  needs: [
+    'application'
+    'settings'
+    'disks'
+    'directories'
+  ]
   directoriesBinding: 'controllers.directories.polies'
   disksBinding: 'controllers.disks'
 

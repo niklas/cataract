@@ -28,7 +28,6 @@
     = outlet 'bar'
     = partial "torrents/tabs"
     status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason refresh="refreshTransfers"
-    drop-zone action="uploadTorrent"
   #details class={detailsExtended:extended}
     = outlet 'details'
 

@@ -81,10 +81,12 @@ Cataract.ApplicationRoute = Ember.Route.extend
       unless @get('adding')
         app.set '_previousAdding', false
         app.set 'adding', true
+      app.set 'dragging', true
       false
 
     dragLeaveDocument: ->
-      # nothing for now, keep the add box open, must close manually
-      #
+      # keep the add box open, must close manually
       # else after drop on input[file] the modal box closes and clears the field
+      app = @controllerFor('application')
+      app.set 'dragging', false
       false

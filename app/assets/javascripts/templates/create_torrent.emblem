@@ -12,3 +12,5 @@ modal-dialog action="createTorrent" heading="Add Torrent" primary="Add" secondar
 
       .form-group
         Cataract.FileField file=filedata filename=filename label="File"
+
+      drop-zone action="uploadTorrent" inviting=controllers.application.dragging
