@@ -4,8 +4,9 @@ Cataract.IconButtonComponent = Ember.Component.extend
   severity: 'normal'
   name: Ember.computed.oneWay 'icon'
   param: null # for action
+  disabled: false
   classNames: ['btn']
-  classNameBindings: ['severityClass', 'name']
+  classNameBindings: ['severityClass', 'name', 'disabled']
 
   iconClass: Ember.computed 'icon', ->
     "glyphicon-#{@get 'icon'}"

@@ -54,7 +54,3 @@ Cataract.NewDirectoryRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super(controller, model)
     @send 'openModal', 'create_directory', model
-
-Cataract.SettingsRoute = Cataract.DetailedRoute.extend
-  model: ->
-    @get('store').find('setting', 'all')
