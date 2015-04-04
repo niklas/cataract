@@ -84,9 +84,8 @@ Feature: Transfer info
       And rtorrent list contains the following:
         | hash        | active? | open? |
         | the torrent | true    | true  |
-      And I am on the home page
-      And I wait for the spinner to stop
-     When I explore the first torrent
+      And I am on the recent list page
+      # stopped torrent should disappear from running list
      Then I should see the stop link
 
     Given rtorrent list contains the following:
