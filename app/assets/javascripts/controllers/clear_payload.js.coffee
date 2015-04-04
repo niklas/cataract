@@ -7,4 +7,6 @@ Cataract.ClearPayloadController = Ember.ObjectController.extend
     clearPayload: ->
       @get('content').clearPayload().then =>
         @send('closeModal')
+      , (x)->
+        console?.debug 'could not clear payload', x
 

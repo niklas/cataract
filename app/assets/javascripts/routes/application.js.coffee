@@ -26,6 +26,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
         # TODO Spinner?
         controller.refreshTransfers()
     openModal: (modalName, model) ->
+      model = model.get('content') if model.isController
       @controllerFor(modalName).set "model", model
       @render modalName,
         into: "application"
