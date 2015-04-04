@@ -1,6 +1,7 @@
 .content_directory_name= content.directory.name
 unless isCollapsed
-  .content_directory_path= content.directory.fullPath
+  .content_directory_path title=content.directory.fullPath
+    = content.directory.relativePath
   .files-meta
     .payload-size= content.humanSize
     button.btn.btn-small.count click="toggleFiles"
