@@ -26,7 +26,7 @@
     = outlet
   #bar.well class={detailsExtended:up}
     = outlet 'bar'
-    = partial "torrents/tabs"
+    pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="pagination pagination-centered"
     status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason refresh="refreshTransfers"
   #details class={detailsExtended:extended}
     = outlet 'details'

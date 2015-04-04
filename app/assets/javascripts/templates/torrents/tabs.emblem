@@ -1,8 +1,0 @@
-ul.nav.nav-tabs.disks
-  each dir in directories
-    disk-item content=dir.disk targetRoute='directory' target=dir
-  else
-    each disk in controllers.disks
-      disk-item content=disk
-
-= pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="pagination pagination-centered"
