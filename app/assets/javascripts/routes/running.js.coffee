@@ -5,3 +5,5 @@ Cataract.RunningRoute = Ember.Route.extend
     @_super(c,m)
 
     @controllerFor('application').set 'mode', 'running'
+    m.gotoFirstPage()
+    m.didRequestRange()
