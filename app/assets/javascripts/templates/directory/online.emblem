@@ -16,4 +16,5 @@
           .col-md-3
             icon-button action='createFromRemote' param=tor severity="success" icon="play" name='start' | Download
         else
-          torrent-details content=tor.torrent
+          with tor.torrent as content
+            partial 'torrent-details'

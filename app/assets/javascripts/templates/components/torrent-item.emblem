@@ -1,4 +1,4 @@
 .col-md-5.title
   link-to 'torrent' content
     = content.title
-torrent-details content=content isCollapsed=isCollapsed
+partial 'torrent-details'

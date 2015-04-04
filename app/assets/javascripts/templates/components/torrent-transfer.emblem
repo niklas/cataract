@@ -1,6 +1,6 @@
 if content.isRunning
   transfer-bar content=content.transfer
 
-  icon-button action='stop' param=this severity="danger" icon="stop" | Stop
+  icon-button action='stop' param=content severity="danger" icon="stop" | Stop
 else
-  icon-button action='start' param=this severity="success" icon="play" name='start' | Start
+  icon-button action='start' param=content severity="success" icon="play" name='start' | Start

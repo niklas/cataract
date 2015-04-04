@@ -90,3 +90,19 @@ Cataract.ApplicationRoute = Ember.Route.extend
       app = @controllerFor('application')
       app.set 'dragging', false
       false
+
+    startTorrent: (torrent) ->
+      torrent = torrent.get('content') if torrent.isController
+      transfer = @get('store').createRecord 'transfer',
+        torrent: torrent
+      transfer.save().then ->
+        torrent.set 'status', 'running'
+      false
+
+    stopTorrent: (torrent) ->
+      torrent = torrent.get('content') if torrent.isController
+      torrent.get('transfer').then (transfer)->
+        transfer.deleteRecord()
+        transfer.save().then ->
+          torrent.set 'status', 'archived'
+      false
