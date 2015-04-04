@@ -8,9 +8,9 @@
   if content.payloadPresent
     payload-details content=content.payload
     icon-button action='openModal' param='clearPayload' severity="danger" icon="trash" | remove Content
-    unless isMoving
+    unless content.isMoving
       icon-button action='openModal' param='movePayload' severity="info" icon="share" | Move
-  if payloadExists
+  if content.payloadExists
     p= info_hash
 
 .col-md-3

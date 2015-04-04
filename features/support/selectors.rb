@@ -34,8 +34,17 @@ module HtmlSelectorsHelpers
     when /^a torrents? list$/
       "ul.torrents"
 
+    when /^the remote torrents? list$/
+      "ul#remote-torrents"
+
+    when /^a remote torrents? list$/
+      "ul.remote-torrents"
+
     when /^the #{capture_nth} (torrent)$/
       css2xpath selector_for("the #{$2.pluralize} list") + "> li#{Numerals[$1]}"
+
+    when /^the #{capture_nth} remote (torrent)$/
+      css2xpath selector_for("the remote #{$2.pluralize} list") + "> li#{Numerals[$1]}"
 
     when /^the #{capture_nth} of the (.*)$/
       nth = $1

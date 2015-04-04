@@ -52,7 +52,7 @@ Feature: Add and Subscribe to Series
       And the directory "media/adisk/Series/Shame of Frowns" should exist on disk
 
      When I follow "available episodes online"
-     Then I should see the following remote torrents in a torrent list:
+     Then I should see the following remote torrents in a remote torrent list:
       | title                                                           |
       | Shame of Frowns S05E00 A Date in the Wife HDTV x264-EBAT [seti] |
       | Shame of Frowns - Season 1 - 720p BluRay - x264 - ShtlOrd       |
@@ -60,12 +60,13 @@ Feature: Add and Subscribe to Series
       | Shame of Frowns S01E02 HDTV x264-PULLERS[seti]                  |
       | Shame of Frowns S01E01 HDTV x264-PULLERS[seti]                  |
 
-     When I click on the start link within the second torrent
+     When I click on the start link within the second remote torrent
      Then I should not see any flash alert
       But I should see flash notice "Torrent was successfully created."
-      And I should see the stop link within the second torrent
-      But I should not see the start link within the second torrent
-      And I should see the following remote torrents in a torrent list:
+      And I should see the stop link within the second remote torrent
+      But I should not see the start link within the second remote torrent
+      And the tick interval is reached
+      And I should see the following remote torrents in a remote torrent list:
       | title                                                           | percent |
       | Shame of Frowns S05E00 A Date in the Wife HDTV x264-EBAT [seti] |         |
       | Shame of Frowns - Season 1 - 720p BluRay - x264 - ShtlOrd       | 0%      |
@@ -75,10 +76,11 @@ Feature: Add and Subscribe to Series
       And a torrent "Season" should exist with title: "Shame of Frowns - Season 1 - 720p BluRay - x264 - ShtlOrd"
       And the rtorrent main view should contain the torrent "Season"
 
-     When I click on the start link within the third torrent
-     Then I should see the stop link within the third torrent
-      But I should not see the start link within the third torrent
-      And I should see the following remote torrents in a torrent list:
+     When I click on the start link within the third remote torrent
+     Then I should see the stop link within the third remote torrent
+      But I should not see the start link within the third remote torrent
+      And the tick interval is reached
+      And I should see the following remote torrents in a remote torrent list:
       | title                                                           | percent |
       | Shame of Frowns S05E00 A Date in the Wife HDTV x264-EBAT [seti] |         |
       | Shame of Frowns - Season 1 - 720p BluRay - x264 - ShtlOrd       | 0%      |
