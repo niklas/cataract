@@ -60,6 +60,9 @@ module HtmlSelectorsHelpers
     when /^the (\w+s) table$/
       "table.#{$1}"
 
+    when 'the window title'
+      "html head title"
+
     when /^the (\w+) title$/
       "##{$1} h2.title"
 
@@ -112,9 +115,6 @@ module HtmlSelectorsHelpers
       ".#{$1}"
     when /^the transfer of #{capture_model}$/
       "#transfer_torrent_#{model!($1).id}"
-
-    when 'the window title'
-      "title"
 
     when 'the page title'
       "h1#title"
