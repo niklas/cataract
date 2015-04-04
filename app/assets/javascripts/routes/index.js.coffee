@@ -1,3 +1,3 @@
 Cataract.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'recent'
+  redirect: -> @transitionTo 'running'
 
