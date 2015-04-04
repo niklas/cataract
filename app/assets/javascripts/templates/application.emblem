@@ -35,3 +35,5 @@
 = outlet 'modal'
 if adding
   = render 'create_torrent'
+
+drag-detector enterAction='dragEnterDocument' leaveAction="dragLeaveDocument"

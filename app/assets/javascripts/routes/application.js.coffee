@@ -75,3 +75,16 @@ Cataract.ApplicationRoute = Ember.Route.extend
       controller = @controllerFor('torrents')
       if controller.get("hasPrevious")
         controller.decrementProperty "rangeStart", controller.get("rangeWindowSize")
+
+    dragEnterDocument: ->
+      app = @controllerFor('application')
+      unless @get('adding')
+        app.set '_previousAdding', false
+        app.set 'adding', true
+      false
+
+    dragLeaveDocument: ->
+      # nothing for now, keep the add box open, must close manually
+      #
+      # else after drop on input[file] the modal box closes and clears the field
+      false
