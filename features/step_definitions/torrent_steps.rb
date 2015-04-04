@@ -9,7 +9,7 @@ end
 When /^I explore (the .+)$/ do |target|
   step 'all css animations are disabled'
   selector = selector_for(target)
-  page.find(*selector).find('.title').click
+  page.find(*selector).click
 end
 
 Given /^archived torrents exist titled from "(.*?)" to "(.*?)" in reverse chronological order$/ do |from, to|
