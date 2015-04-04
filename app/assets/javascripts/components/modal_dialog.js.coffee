@@ -14,7 +14,8 @@ Cataract.ModalDialogComponent = Ember.Component.extend
     .property('size')
   cancel: 'closeModal'
   didInsertElement: ->
-     @$().modal 'show'
+     @$().modal
+       backdrop: 'static' # do not close on click
   willDestroyElement: ->
     @$().modal 'hide'
   actions:

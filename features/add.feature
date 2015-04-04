@@ -58,25 +58,21 @@ Feature: Adding a torrent
       And I should see the stop link
 
   Scenario: Upload by dragging a file to the dropzone
-     When I drag a file over the dropzone
+     When I drag a file over the content
+      And I wait for the modal box to appear
       And I drop file "spec/factories/files/single.torrent" onto the dropzone
 
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
       And rtorrent should download the torrent
-      And the dropzone should not be classified as inviting
-      And the dropzone should not be classified as hovered
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
        | title  | percent | content_directory_name | payload_size |
-       | single | 0%      | Incoming               | 71.7KB       |
+       | single | 0%      | Incoming               | 71.7KiB      |
       And I should see the stop link
 
   Scenario: Uploading a non-torrent
-    Given the dropzone should not be classified as inviting
-      And the dropzone should not be classified as hovered
-
-     When I drag a file over the sidebar
+     When I drag a file over the content
      Then the dropzone should be classified as inviting
       But the dropzone should not be classified as hovered
 

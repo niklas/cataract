@@ -59,7 +59,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
           startAutomatically: true
 
         torrent.save().then (t)->
-          route.transitionTo('torrent', t)
+          route.transitionTo queryParams: { adding: false }
         , (error)->
           torrent.rollback()
 
