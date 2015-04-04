@@ -1,11 +1,11 @@
 .col-md-1.size.clearfix
   if content.payloadExists
-    span.payloadSize= human-kilo-bytes content.payloadBytes
+    span.payload_size= human-kilo-bytes content.payloadBytes short=true
   if content.isRunning
     span.badge.eta= content.transfer.eta
 
 .col-md-2.payload.clearfix
-  if payloadPresent
+  if content.payloadPresent
     payload-details content=content.payload
     icon-button action='openModal' param='clearPayload' severity="danger" icon="trash" | remove Content
     unless isMoving

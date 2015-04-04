@@ -8,7 +8,7 @@
 
         unless tor.torrent
           .col-md-1.size
-            span.payloadSize= human-kilo-bytes tor.size
+            span.payload-size= human-kilo-bytes tor.size short=true
 
           .col-md-2.seeds
             = tor.seeds

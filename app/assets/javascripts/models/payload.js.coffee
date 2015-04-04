@@ -4,6 +4,7 @@ Cataract.Payload = DS.Model.extend
   directory: DS.belongsTo('directory')
   size: attr 'number'
   filenames: attr 'staticArray'
+  # TODO format size with helper
   humanSize: attr 'string'
   torrent: DS.belongsTo('torrent')
 

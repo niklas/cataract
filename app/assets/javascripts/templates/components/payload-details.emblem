@@ -1,9 +1,8 @@
 .row-fluid
-  .span6.content_directory
-    = content.directory.name
-    = content.directory.fullPath
-  .span6
-    .size= content.humanSize
+  .content_directory_name= content.directory.name
+  .content_directory_path= content.directory.fullPath
+  .files-meta
+    .payload-size= content.humanSize
     button.btn.btn-small.count click="toggleFiles"
       = content.filesCount
 

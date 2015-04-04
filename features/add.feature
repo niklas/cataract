@@ -35,14 +35,11 @@ Feature: Adding a torrent
       And a torrent should exist
       And the directory "Another" should be the torrent's content_directory
       And rtorrent should download the torrent
-      And I should see "single" within the details
-      And I should see "Another" within the details
-      And I should see "71.7 KB" within the details
-      And I should see the stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
+       | title  | percent | content_directory_name | payload_size |
+       | single | 0%      | Another                | 71.7KiB      |
+      And I should see the stop link
 
   Scenario: Upload with traditional multipart form
      When I follow "Add"
@@ -56,8 +53,8 @@ Feature: Adding a torrent
       And rtorrent should download the torrent
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent | content_directory | payloadSize |
-       | single | 0%      | Incoming          | 71.7KB      |
+       | title  | percent | content_directory_name | payload_size |
+       | single | 0%      | Incoming               | 71.7KiB      |
       And I should see the stop link
 
   Scenario: Upload by dragging a file to the dropzone
@@ -71,8 +68,8 @@ Feature: Adding a torrent
       And the dropzone should not be classified as hovered
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent | content_directory | payloadSize |
-       | single | 0%      | Incoming          | 71.7KB      |
+       | title  | percent | content_directory_name | payload_size |
+       | single | 0%      | Incoming               | 71.7KB       |
       And I should see the stop link
 
   Scenario: Uploading a non-torrent
