@@ -24,3 +24,4 @@
   else
     unless isCollapsed
       .url= content.url
+      icon-button action='start' param=content severity="success" icon="play" name='start' | Fetch & Start
