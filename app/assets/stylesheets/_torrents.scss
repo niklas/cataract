@@ -23,21 +23,10 @@ $pie_size: 3.2em;
 $emboss: 3px;
 
 ul.torrents {
-  list-style: none;
-  margin: 5*$emboss;
+  margin-right: 5*$emboss;
   position: relative; /* for scrollTo */
   li.torrent {
     padding: 0.5em;
-    margin-bottom: 0.8em;
-    border-radius: 4px;
-    @include box-shadow(lighten($body-bg, 15) 0px 0px 3px);
-    position: relative;
-    cursor: pointer;
-
-    &:hover, &.active {
-      @include box-shadow(lighten($body-bg, 25) 1px-$emboss 1px 9px);
-      @include translate($emboss, -$emboss);
-    }
 
     .title {
       overflow: hidden;

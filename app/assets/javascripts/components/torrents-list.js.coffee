@@ -4,6 +4,10 @@ Cataract.TorrentsListComponent = Ember.Component.extend
 
   tagName: "ul"
   elementId: "torrents"
-  classNames: ["torrents", "clearfix"]
+  classNames: [
+    "torrents"
+    "clearfix"
+    'list-group'
+  ]
 
   wantsCircleView: Ember.computed.equal 'mode', 'library'
