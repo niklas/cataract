@@ -5,10 +5,14 @@ Cataract.TorrentItemComponent = Ember.Component.extend
     'list-group-item'
     'clearfix'
   ]
-  classNameBindings: ['active']
+  classNameBindings: [
+    'active'
+    'isCollapsed:collapsed:expanded'
+  ]
   tagName: 'li'
   activeBinding: 'childViews.firstObject.active'
+  isCollapsed: true
 
-  click: (e)->
-    unless $(e.target).is('a')
-      @$().find('a:first').click()
+  click: (e) ->
+    unless $(e.target).is('a,button')
+      @toggleProperty 'isCollapsed'
