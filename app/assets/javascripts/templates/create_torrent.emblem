@@ -1,4 +1,4 @@
-modal-dialog action="createTorrent" heading="Add Torrent" primary="Add" secondary="Cancel"
+modal-dialog action="createTorrent" heading="Add Torrent" primary="Add" secondary="Cancel" cancel="cancel"
   .container-fluid
     .form-horizontal
 
