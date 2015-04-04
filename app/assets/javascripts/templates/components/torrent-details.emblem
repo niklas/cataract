@@ -6,18 +6,21 @@
 
 .col-md-2.payload.clearfix
   if content.payloadPresent
-    payload-details content=content.payload
+    payload-details content=content.payload isCollapsed=isCollapsed
     icon-button action='openModal' param='clearPayload' severity="danger" icon="trash" | remove Content
     unless content.isMoving
       icon-button action='openModal' param='movePayload' severity="info" icon="share" | Move
   if content.payloadExists
-    p= info_hash
+    unless isCollapsed
+      p= info_hash
 
 .col-md-3
   unless content.isRemote
-    torrent-transfer content=content
+    torrent-transfer content=content tagName='span'
 
     unless content.isRunning
-      icon-button action='openModal' param='deleteTorrent' severity="danger" icon="remove" | Delete
+      unless isCollapsed
+        icon-button action='openModal' param='deleteTorrent' severity="danger" icon="remove" | Delete
   else
-    .url= content.url
+    unless isCollapsed
+      .url= content.url
