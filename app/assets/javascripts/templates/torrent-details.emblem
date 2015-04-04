@@ -7,9 +7,9 @@
 .col-md-2.payload.clearfix
   if content.payloadPresent
     payload-details content=content.payload isCollapsed=isCollapsed
-    icon-button action='openModal' param='clearPayload' severity="danger" icon="trash" | remove Content
+    icon-button action='dialog' param='clearPayload' severity="danger" icon="trash" name="clear" | remove Content
     unless content.isMoving
-      icon-button action='openModal' param='movePayload' severity="info" icon="share" | Move
+      icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move
   if content.payloadExists
     unless isCollapsed
       p= info_hash
@@ -20,7 +20,7 @@
 
     unless content.isRunning
       unless isCollapsed
-        icon-button action='openModal' param='deleteTorrent' severity="danger" icon="remove" | Delete
+        icon-button action='dialog' param='deleteTorrent' severity="danger" icon="remove" | Delete
   else
     unless isCollapsed
       .url= content.url

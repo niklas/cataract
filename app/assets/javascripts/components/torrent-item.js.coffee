@@ -21,6 +21,8 @@ Cataract.TorrentItemComponent = Ember.Component.extend
   # just forward from torrent-transfer
   startAction: 'startTorrent'
   stopAction: 'stopTorrent'
+  dialogAction: 'openModal'
   actions:
-    start: (t)-> @sendAction 'startAction', t
-    stop:  (t)-> @sendAction 'stopAction', t
+    start:  (t)-> @sendAction 'startAction', t
+    stop:   (t)-> @sendAction 'stopAction', t
+    dialog: (t)-> @sendAction 'dialogAction', t, @get('content')
