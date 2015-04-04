@@ -76,6 +76,15 @@ ul.torrents {
 
         }
     }
+
+    &.collapsed {
+        .btn span.text {
+            display: none;
+        }
+    }
+
+    &.expanded {
+    }
   }
 
   li.payload_circle {
