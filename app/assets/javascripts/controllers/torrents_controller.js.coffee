@@ -23,7 +23,7 @@ Cataract.TorrentsController =
   # cannot wait for the route to setup the content of it.
   initializeContent: (->
     fn = @get('filterFunction') # consume so observers fire
-    @set 'content', @get('store').filter 'torrent', (torrent)->
+    @set 'model', @get('store').filter 'torrent', (torrent)->
       # do not have to requery the server after deletion of torrent
       ! torrent.get('isDeleted')
   ).on('init')
