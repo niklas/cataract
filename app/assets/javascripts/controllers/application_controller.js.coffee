@@ -33,7 +33,7 @@ Cataract.ApplicationController = Ember.Controller.extend
   mode: 'running'
   age: 'month' # faster initialization of page
   path: null
-  disk: null
+  disk: undefined
   adding: false
   filterDirectories: true
   terms: ''
