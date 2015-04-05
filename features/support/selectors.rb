@@ -16,9 +16,6 @@ module HtmlSelectorsHelpers
     when /^the (menu|header)$/
       "div.navbar"
 
-    when /^the sidebar disks? list$/
-      "#sidebar ul.disks:first"
-
     when /^the sidebar director(?:ies|y) list$/
       "#sidebar > .well > ul.directories"
 
@@ -26,7 +23,7 @@ module HtmlSelectorsHelpers
       '#bar'
 
     when /^the disks tab$/
-      '.nav-tabs.disks'
+      '.disk-nav'
 
     when /^the torrents? list$/
       "ul#torrents"
