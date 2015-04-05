@@ -23,6 +23,7 @@ before_install:
   - sudo apt-get -qq install screen chromium-browser mlocate redis-server
   - sudo apt-get -f install
   - sudo updatedb
+  - sudo /etc/init.d/redis-server start
   - createdb cataract_test
 before_script:
   - "cp config/database.yml{.travis,}"
@@ -30,7 +31,6 @@ before_script:
   - "bundle exec rake db:migrate"
   - "bundle exec rake assets:precompile"
   - "echo '--color --backtrace' > .rspec"
-  - "cat /etc/redis/redis.conf"
   - "ps fax"
   - "netstat -atn"
 #- "bundle exec chromedriver-update"
@@ -40,5 +40,3 @@ script:
 after_failure:
   - cat log/capybara_test.log
   - cat log/rtorrent-test.log
-services:
-  - redis-server
