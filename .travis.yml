@@ -30,6 +30,9 @@ before_script:
   - "bundle exec rake db:migrate"
   - "bundle exec rake assets:precompile"
   - "echo '--color --backtrace' > .rspec"
+  - "cat /etc/redis/redis.conf"
+  - "ps fax"
+  - "netstat -atn"
 #- "bundle exec chromedriver-update"
 script:
   - bundle exec rspec
