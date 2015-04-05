@@ -1,21 +1,8 @@
 # You need some sort of indication that an Ajax transaction exists. jQuery.active doesn't seem to do the
-# trick, so we use the following JS (well, we use CoffeeScript, but whatever) that gets inserted into 
-# our application. 
-#
-#$(function() {
-#  var body, doc;
-#  body = $('body');
-#  doc = $(document);
-#  doc.ajaxStart(function() {
-#    return body.addClass('ajax-in-progress').removeClass('ajax-quiet');
-#  });
-#  return doc.ajaxStop(function() {
-#    return body.addClass('ajax-quiet').removeClass('ajax-in-progress');
-#  });
-#});
+# trick, so we check the loading-spinner is visible in our application.
 #
 # You can see below, in wait_for_ember_run_loop_to_complete, that we call: 
-# jQuery('body').hasClass('ajax-quiet')
+# jQuery('.loading-spinner:visible').length == 0
  
 module EmberHelpers
   # Chill out until Ember is ready to go. First we wait for the page to load, because redirects
@@ -54,7 +41,7 @@ module EmberHelpers
     # internally, so hey, if it's good enough for production, it's good enough for testing.
     2000.times do #this means up to 20 seconds
       return if page.evaluate_script "'undefined' == typeof window.jQuery"
-      return if page.evaluate_script "$('body').hasClass('ajax-quiet') && (typeof Ember === 'object') && !Ember.run.hasScheduledTimers() && !Ember.run.currentRunLoop"
+      return if page.evaluate_script "$('.loading-spinner:visible').length == 0 && (typeof Ember === 'object') && !Ember.run.hasScheduledTimers() && !Ember.run.currentRunLoop"
       sleep 0.01
     end
   end
