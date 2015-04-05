@@ -89,5 +89,3 @@ Feature: Add and Subscribe to Series
       | Shame of Frowns S01E01 HDTV x264-PULLERS[seti]                  |         |
       And a torrent "Spoiler" should exist with title: "Shame of Frowns S03E09 HDTV x264-PULLERS[seti]"
       And the rtorrent main view should contain the torrent "Spoiler"
-      And a torrent "Pilot" should exist with name: "Shame of Frowns S01E01"
-      And the rtorrent main view should contain the torrent "Pilot"
