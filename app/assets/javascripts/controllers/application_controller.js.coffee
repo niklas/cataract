@@ -5,7 +5,7 @@ Cataract.ApplicationController = Ember.Controller.extend
       @propertyDidChange('fullSiteTitle')
   ).on('init')
 
-  needs: ['torrents', 'directories', 'disks', 'directory', 'transfers']
+  needs: ['torrents', 'directories', 'disks', 'transfers']
 
   fullSiteTitleObserver: ( (sender, key) ->
     $('head title').text(sender.get(key))
@@ -37,36 +37,26 @@ Cataract.ApplicationController = Ember.Controller.extend
   adding: false
   filterDirectories: true
   terms: ''
-  poly:
-    Ember.computed ->
-      @get('controllers.directories').findPolyByPath( @get('path') )
-    .property('path', 'controllers.directories.@each')
+  poly: Ember.computed 'path', ->
+    @get('controllers.directories').findPolyByPath( @get('path') )
   directoriesBinding: 'poly.alternatives'
 
   # when poly has only one alternative or a the directory controller is active
-  directory:
-    Ember.computed (key, value)->
-      if dir = @get('controllers.directory.model')
-        return dir
+  directory: Ember.computed 'directories.@each', 'disk', ->
+    # by setting path through query params
+    dirs = @get('directories')
+    disk = @get('disk')
 
-      if dirs = @get('directories') # by setting path through query params
-        if dirs.get('length') == 1
-          dirs.get('firstObject')
-        else
-    .property('directories.@each', 'controllers.directory.model')
+    dir = null
+    if dirs
+      if dirs.length is 1
+        dir = dirs.get('firstObject')
+      else
+        dir = dirs.findProperty('disk.id', '' + disk)
+    dir
 
   detailsRouteActive: false
   detailsExtended: Ember.computed.alias('detailsRouteActive')
-
-  polyDidChange: (->
-    if dirs = @get('poly.alternatives') # by setting path through query params
-      ctrl = @get('controllers.directory')
-      if dirs.get('length') == 1
-        dir = dirs.get('firstObject')
-        ctrl.set('model', dir)
-      else
-        ctrl.set('model', false) unless dirs.indexOf( ctrl.get('model') ) >= 0
-  ).observes('poly')
 
   # TODO i18n
   # human readable current age
