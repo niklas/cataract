@@ -3,12 +3,13 @@ class SearchTorrentsOnline
 
   def call
     filter = context.filter
+    page   = context.page || 0
     if filter && filter.present?
 
       kat = Kat.search filter, categories: 'tv'
-      kat.search
+      kat.search(page)
 
-      found = kat.search(page)
+      found = kat.results[page]
 
       if found
         debug { "#{self.class} searched for #{filter.inspect}, got #{found.length}+ results" }
