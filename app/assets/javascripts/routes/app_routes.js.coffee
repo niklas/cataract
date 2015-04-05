@@ -43,14 +43,3 @@ Cataract.TorrentRoute = Cataract.DetailedRoute.extend
   renderTemplate: ->
     @_super()
     @render 'torrents/running'
-
-Cataract.NewDirectoryRoute = Ember.Route.extend
-  model: ->
-    @get('store').createRecord 'directory',
-      disk: @modelFor('disk')
-      parentDirectory: @controllerFor('torrents').get('directory')
-      virtual: false
-
-  setupController: (controller, model) ->
-    @_super(controller, model)
-    @send 'openModal', 'create_directory', model
