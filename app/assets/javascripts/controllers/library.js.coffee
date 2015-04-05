@@ -14,7 +14,9 @@ Cataract.LibraryController = Ember.Controller.extend
 
   locationDidChange: (->
     if directory = @get('directory')
-      @transitionToRoute 'directory', directory
+      Ember.run.later =>
+        @transitionToRoute 'directory', directory
     else if disk = @get('disk')
-      @transitionToRoute 'disk', disk
+      Ember.run.later =>
+        @transitionToRoute 'disk', disk
   ).observes('directory', 'disk')
