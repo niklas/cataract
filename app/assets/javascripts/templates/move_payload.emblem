@@ -1,7 +1,11 @@
 modal-dialog action="movePayload" heading="Move payload" primary="Move" secondary="Cancel"
-  .input
-    label for="target_directory" Directory
-    Cataract.SelectDirectoryField id="target_directory" selection=move.targetPolyDirectory content=directories
-  .input
-    label for="target_disk" Disk
-    Cataract.SelectDiskField id="target_disk" selection=move.targetDisk content=disks
+  .container-fluid
+    .form-horizontal
+
+      .form-group
+        label for="target_directory" Directory
+        = select-directory id="target_directory" selection=move.targetPolyDirectory content=directories classNames="form-control"
+
+      .form-group
+        label for="target_disk" Disk
+        = select-disk id="target_disk" selection=move.targetDisk content=disks classNames="form-control"

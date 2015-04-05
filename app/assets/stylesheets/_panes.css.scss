@@ -24,7 +24,7 @@ $minimized: 10%;
       z-index: 5;
     }
     #sidebar, #middle, #details, #content {
-      overflow: hidden;
+      /* overflow: hidden; causes #content to shift up ~32px under the #header in cromium */
       position: absolute;
     }
 

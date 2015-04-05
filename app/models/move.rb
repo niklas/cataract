@@ -23,7 +23,7 @@ class Move < ActiveRecord::Base
 
   # FileUtils will use cp+rm between file system boundaries. consider using rsync for robustness and progress
   def work
-    torrent.stop
+    torrent.stop unless Torrent.remote.offline?
     payload = torrent.payload
     FileUtils.mv payload.path, final_directory.full_path
     if payload.multiple?

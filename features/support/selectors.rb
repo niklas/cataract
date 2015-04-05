@@ -1,14 +1,4 @@
 module HtmlSelectorsHelpers
-  Numerals = {
-    'first'  => ':first',
-    'second' => ':nth-of-type(2)',
-    'third'  => ':nth-of-type(3)',
-    'forth'  => ':nth-of-type(4)'
-  }
-
-  def capture_nth
-    /(#{Numerals.keys.join('|')})/
-  end
   # Maps a name to a selector. Used primarily by the
   #
   #   When /^(.+) within (.+)$/ do |step, scope|
@@ -26,23 +16,32 @@ module HtmlSelectorsHelpers
     when /^the (menu|header)$/
       "div.navbar"
 
-    when /^the sidebar disks? list$/
-      "#sidebar ul.disks:first"
-
     when /^the sidebar director(?:ies|y) list$/
-      "#sidebar > ul.directories"
+      "#sidebar > .well > ul.directories"
 
     when /^the detail bar$/
       '#bar'
 
     when /^the disks tab$/
-      '.nav-tabs.disks'
+      '.disk-nav'
 
     when /^the torrents? list$/
       "ul#torrents"
 
+    when /^a torrents? list$/
+      "ul.torrents"
+
+    when /^the remote torrents? list$/
+      "ul#remote-torrents"
+
+    when /^a remote torrents? list$/
+      "ul.remote-torrents"
+
     when /^the #{capture_nth} (torrent)$/
       css2xpath selector_for("the #{$2.pluralize} list") + "> li#{Numerals[$1]}"
+
+    when /^the #{capture_nth} remote (torrent)$/
+      css2xpath selector_for("the remote #{$2.pluralize} list") + "> li#{Numerals[$1]}"
 
     when /^the #{capture_nth} of the (.*)$/
       nth = $1
@@ -54,6 +53,15 @@ module HtmlSelectorsHelpers
 
     when /^the director(y|ies) list$/
       "ul.directories"
+
+    when /^the (\w+s) table$/
+      "table.#{$1}"
+
+    when 'the window title'
+      "html head title"
+
+    when /^the (\w+) title$/
+      "##{$1} h2.title"
 
     when "the footer"
       raise "no footer"
@@ -83,8 +91,8 @@ module HtmlSelectorsHelpers
     when /^(?:the )?item of #{capture_model}$/
       "##{ model!($1).decorate.item_id }"
 
-    when /^the (\w+) link$/
-      "a.#{$1}"
+    when /^the (\w+) (?:link|button)$/
+      "button.#{$1}"
 
     when /^the active nav item$/
       'ul.nav > li.active'
@@ -104,9 +112,6 @@ module HtmlSelectorsHelpers
       ".#{$1}"
     when /^the transfer of #{capture_model}$/
       "#transfer_torrent_#{model!($1).id}"
-
-    when 'the window title'
-      "title"
 
     when 'the page title'
       "h1#title"

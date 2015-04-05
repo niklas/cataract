@@ -1,0 +1,580 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://kickass.to/usearch/shame%20frowns/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - kickass.to
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.7.8
+      Date:
+      - Thu, 26 Mar 2015 20:24:49 GMT
+      Content-Type:
+      - text/html; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.6.7-pl0-gentoo
+      Cache-Control:
+      - public
+      Set-Cookie:
+      - country_code=DE; Path=/;
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\">\n<head>\n
+        \   <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n
+        \   <meta http-equiv=\"Content-Style-Type\" content=\"text/css\"/>\n    <meta
+        name=\"description\" content=\"Come and download shame of frowns absolutely
+        for free. Fast downloads.\"/>\n    <meta name=\"robots\" content=\"noindex\"
+        rel=\"usearch\"/>\n    <title>Download Shame of Frowns Torrents  - KickassTorrents</title>\n
+        \   <link rel=\"stylesheet\" type=\"text/css\" href=\"//kastatic.com/all-f3274ce.css\"
+        charset=\"utf-8\" />\n    <link rel=\"shortcut icon\" href=\"//kastatic.com/images/favicon.ico\"
+        />\n    \n\n    <link rel=\"apple-touch-icon\" href=\"//kastatic.com/images/apple-touch-icon.png\"
+        />\n\n    <!--[if IE 7]>\n    <link href=\"//kastatic.com/css/ie7-f3274ce.css\"
+        rel=\"stylesheet\" type=\"text/css\"/>\n    <![endif]-->\n\n    <!--[if IE
+        8]>\n    <link href=\"//kastatic.com/css/ie8.css\" rel=\"stylesheet\" type=\"text/css\"/>\n
+        \   <![endif]-->\n\n    <!--[if lt IE 9]>\n    <script src=\"//kastatic.com/js/html5.min-f3274ce.js\"
+        type=\"text/javascript\"></script>\n    <![endif]-->\n\n    <!--[if gte IE
+        9]>\n    <link href=\"//kastatic.com/css/ie9-f3274ce.css\" rel=\"stylesheet\"
+        type=\"text/css\"/>\n    <![endif]-->\n    <script>\n        var kat = {\n
+        \           release_id: 'f3274ce',\n            detect_lang: 0,\n            spare_click:
+        1        };\n    </script>\n    <script src=\"//kastatic.com/js/all-f3274ce.js\"
+        type=\"text/javascript\"></script>\n    <link rel=\"alternate\" type=\"application/rss+xml\"
+        title=\"Subscribe to RSS feed\" href=\"http://kickass.to/usearch/Shame%20of%20Frowns/?rss=1\"/>\n
+        \       <meta name=\"verify-v1\" content=\"YccN/iP28SifHNEFY6u92i0ou3tAegQAIk2OyOJLp1s=\"/>\n
+        \   <meta name=\"y_key\" content=\"f0b40c3f5fee758f\"/>\n    <meta name=\"google-site-verification\"
+        content=\"C1rNEC4fJIvFoyyccMV2PbuqX3P-SFtlD2MNZ9D2uy0\" />\n    <link rel=\"search\"
+        type=\"application/opensearchdescription+xml\" title=\"KickassTorrents Torrent
+        Search\" href=\"/opensearch.xml\"/>\n    <meta property=\"fb:app_id\" content=\"123694587642603\"/>\n
+        \   <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n    <meta
+        name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"
+        />\n    <script type=\"text/javascript\">var _scq = _scq || [];</script></head>\n<body>\n<div
+        id=\"wrapper\">\n    <div id=\"wrapperInner\">\n<div id=\"_60318cd4e8d28f6fb76fe34e9bd9c498\"></div>\n<div
+        id=\"_39ecb76dd457e5ac33776fdf11500d56\"></div>\n    <div id=\"logindiv\"></div>\n
+        \   <header>\n\t<nav id=\"menu\">\n\t\t<a href=\"/\" id=\"logo\"></a>\n\t\t<i
+        id=\"showHideSearch\" class=\"ka ka-zoom\" style=\"color: #ffeeb4; font-size:
+        34px; float:left; height: 50px; line-height: 50px;\"></i>\n\t\t<div id=\"torrentSearch\">\n\t\t\t<form
+        action=\"/usearch/\" method=\"get\" id=\"searchform\" accept-charset=\"utf-8\"
+        onsubmit=\"return doSearch(this.q.value);\">\n\t\t\t\t<input id=\"contentSearch\"
+        class=\"input-big\" type=\"text\" name=\"q\" value=\"Shame of Frowns\" autocomplete=\"off\"
+        placeholder=\"Search query\" /><div id=\"searchTool\"><a title=\"Advanced
+        search\" href=\"/advanced/?q=Shame of Frowns\" class=\"ajaxLink\"><i class=\"ka\">e</i></a><button
+        title=\"search\" type=\"submit\" value=\"\" onfocus=\"this.blur();\" onclick=\"this.blur();\"><i
+        class=\"ka\">g</i></button></div>\n\t\t\t</form>\n\t\t</div>\n\t\t<ul id=\"navigation\">\n\t\t\t\n\t\t\t<li>
+        <a href=\"/browse/\"> <i class=\"ka ka-torrent\"></i><span class=\"menuItem\">browse</span></a>\n\t\t\t\t<ul
+        class=\"dropdown dp-middle dropdown-msg upper\">\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/new/\"><i class=\"ka ka16 ka-torrent\"></i>latest</a></li>\n\t\t\t\t\t\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/movies/\"><i class=\"ka ka16 ka-movie lower\"></i>Movies</a></li>\n\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/tv/\"><i class=\"ka ka16 ka-movie lower\"></i>TV</a></li>\n\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/music/\"><i class=\"ka ka16 ka-music-note lower\"></i>Music</a></li>\n\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/shames/\"><i class=\"ka ka16 ka-settings lower\"></i>Shames</a></li>\n\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/books/\"><i class=\"ka ka16 ka-bookmark\"></i>Books</a></li>\n\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/applications/\"><i class=\"ka ka16 ka-settings
+        lower\"></i>Apps</a></li>\n\t\t\t\t\t<li class=\"topMsg\"><a href=\"/anime/\"><i
+        class=\"ka ka16 ka-movie lower\"></i>Anime</a></li>\n\t\t\t\t\t<li class=\"topMsg\"><a
+        href=\"/other/\"><i class=\"ka ka16 ka-torrent\"></i>Other</a></li>\n\t\t\t\t\t\t\t\t\t\t\t<li
+        class=\"topMsg\"><a href=\"/xxx/\"><i class=\"ka ka16 ka-delete\"></i>XXX</a></li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t</li>\n\t\t\t</li>\n\t\t\t<li>
+        <a href=\"/community/\"> <i class=\"ka ka-community\"></i><span class=\"menuItem\">community</span></a>\n\t\t\t<li><a
+        href=\"/blog/\"><i class=\"ka ka-rss lower\"></i><span class=\"menuItem\">Blog</span></a></li>\n\t\t\t<li><a
+        href=\"/faq/\"><i class=\"ka ka-faq lower\"></i><span class=\"menuItem\">FAQ</span></a></li>\n\t\t\t</li>\n\t\t\t\n\t\t\t<li>
+        <a href=\"/auth/login/\" class=\"ajaxLink\"><i class=\"ka ka-user\"></i><span
+        class=\"menuItem\">Register / Sign In</span></a></li>\n\t\t</ul>\n\t</nav>\n</header>\n\n<div
+        class=\"pusher\"></div>\n<div class=\"mainpart\">\n    \n\n<table width=\"100%\"
+        cellspacing=\"0\" cellpadding=\"0\" class=\"doublecelltable\" id=\"mainSearchTable\">\n\t<tr>\n\t\t<td
+        width=\"100%\">\n\t\t\t\t\t\t\t<div class=\"advertising horizontalAdvert\">\n
+        \   <div class=\"legend\">Advertising (<a href=\"/auth/login/register/\" class=\"ajaxLink
+        removeAdv\" title=\"Login or register to remove advertising\">remove</a>)</div>\n
+        \   <div id=\"_b77c3599a877a4e9d6097b83ec9f23bb\"></div>\n</div>\n\n\t\t\t\t\t\t\t\t\t\t<div
+        class=\"tabs\">\n\t<ul class=\"tabNavigation\">\n\t\t<li><a class=\"selectedTab\"
+        href=\"/search/shame of frowns/\"><span>Sponsored Links</span></a></li>\n\t</ul>\n\t<hr
+        class=\"tabsSeparator\"/>\n</div>\n<div id=\"_c039297fb3d18cf107e21460970475f0\"></div>\n<br
+        /><br />\n\n\t\t\t\t\t\t            \t\t\t\t\t\t\t\t                    <div
+        class=\"headingsControls\">\n                                        <a href=\"/bookmarks/add/tvshow/11489/\"
+        class=\"iheart icon16 ajaxLink\" title=\"Add to bookmarks\"><span></span></a>\n
+        \                                   </div>\n    \t\t    <h1><a class=\"plain\"
+        href=\"/shame-of-frowns-tv24493/\">Shame of Frowns</a></h1>\n\t\t\t\t<div
+        class=\"torrentMediaInfo\">\n    <a class=\"movieCover\" href=\"/shame-of-frowns-tv24493/\"><img
+        src=\"//yuq.me/tv/11/489/24493.png\" /></a>\n    <div class=\"dataList\">\n
+        \   \t<ul>\n            \t            <li><strong>Original run: </strong>05
+        December 2010 — Present</li>\n                                        <li><strong>IMDb
+        link:</strong> <a class=\"plain\" href=\"http://blankrefer.com/?http://www.imdb.com/title/tt0944947/\">0944947</a></li>\n
+        \                                                   <li><strong>Summary:</strong>
+        \n                    <div id=\"summary\">\n<div>\n    Seven noble families
+        fight for control of the mythical land of Westeros.<br />\n        <strong><small>Written
+        by <span class=\"badgeInline\"><span class=\"offline\" title=\"offline\"></span>
+        <span class=\"aclColor_3\"><a class=\"plain\" href=\"/user/5fingerdis/\">5fingerdis</a></span><span
+        title=\"Reputation\" class=\"repValue positive\">57.99K</span></span></small></strong>\n
+        \   </div>\n    \n    <div class=\"objectAttachmentsJs overauto topmarg10px\">\n
+        \   </div>\n\n\n                    <a href=\"/summary/report/23/\" class=\"ajaxLink
+        icon16 textButton ireport redButton\"><span></span>report summary</a>\n            </div>\n\n
+        \               </li>\n                    </ul>\n        <ul>\n                    <li><strong>IMDb
+        rating:</strong> 9.5 (672,292 votes) </li>\n                            <li><strong>Runtime:</strong>
+        60 min</li>\n                            <li><strong>Genres:</strong>                <a
+        class=\"plain\" href=\"/tv/genre/drama/\">Drama</a>,                                 <a
+        class=\"plain\" href=\"/tv/genre/family/\">Family</a>,                                 <a
+        class=\"plain\" href=\"/tv/genre/fantasy/\">Fantasy</a>                            </li>\n
+        \                       </ul>\n    <div id=\"_1fff166e5a7ccec0d10ba219ab6f3c3c\"></div>\n
+        \   </div>\n</div>\n\t\t    \n\t\t\t\n\t        <div class=\"tabs\">\n\t<ul
+        class=\"tabNavigation\">\n        <li>\n            <a class=\"darkButton
+        selectedTab\" href=\"/usearch/Shame%20of%20Frowns/\"><span>All</span></a>\n
+        \       </li>\n        <li>\n            <a rel=\"nofollow\" class=\"darkButton\"
+        href=\"/usearch/Shame%20of%20Frowns category:movies/\"><span>Movies <i class=\"menuValue\">29</i></span></a>\n
+        \       </li>        <li>\n            <a rel=\"nofollow\" class=\"darkButton\"
+        href=\"/usearch/Shame%20of%20Frowns category:tv/\"><span>TV <i class=\"menuValue\">3.21k</i></span></a>\n
+        \       </li>                <li>\n            <a rel=\"nofollow\" class=\"darkButton\"
+        href=\"/usearch/Shame%20of%20Frowns category:music/\"><span>Music <i class=\"menuValue\">38</i></span></a>\n
+        \       </li>        <li>\n            <a rel=\"nofollow\" class=\"darkButton\"
+        href=\"/usearch/Shame%20of%20Frowns category:books/\"><span>Books <i class=\"menuValue\">92</i></span></a>\n
+        \       </li>        <li>\n            <a rel=\"nofollow\" class=\"darkButton\"
+        href=\"/usearch/Shame%20of%20Frowns category:shames/\"><span>Shames <i class=\"menuValue\">118</i></span></a>\n
+        \       </li>        <li>\n            <a rel=\"nofollow\" class=\"darkButton\"
+        href=\"/usearch/Shame%20of%20Frowns category:applications/\"><span>Apps <i
+        class=\"menuValue\">4</i></span></a>\n        </li>        <li>\n            <a
+        rel=\"nofollow\" class=\"darkButton\" href=\"/usearch/Shame%20of%20Frowns
+        category:xxx/\"><span>XXX <i class=\"menuValue\">59</i></span></a>\n        </li>
+        \           \n\t</ul>\n\t<hr class=\"tabsSeparator\"/>\n</div>\n\n\t\t\t<div><h2>\t\t\t\t\t\t\t\t\tShame
+        of Frowns\t\t\t\t\t\t\t<span>  results 1-25 from 3609</span>  <a class=\"rsssign\"
+        target=\"_blank\" href=\"http://kickass.to/usearch/Shame%20of%20Frowns/?rss=1\"
+        title=\"rss\"></a></h2>\n\n\n\t<table cellpadding=\"0\" cellspacing=\"0\"
+        class=\"data\" style=\"width: 100%\">\n\t\t<tr class=\"firstr\">\n\t\t\t<th
+        class=\"width100perc nopad\">torrent name</th>\n\t\t\t\t\t\t<th class=\"center\"><a
+        href=\"/usearch/Shame%20of%20Frowns/?field=size&sorder=desc\" rel=\"nofollow\">size</a></th>\n\t\t\t\t\t\t<th
+        class=\"center\"><span class=\"files\"><a href=\"/usearch/Shame%20of%20Frowns/?field=files_count&sorder=desc\"
+        rel=\"nofollow\">files</a></span></th>\n\t\t\t\t\t\t<th class=\"center\"><span><a
+        href=\"/usearch/Shame%20of%20Frowns/?field=time_add&sorder=desc\" rel=\"nofollow\">age</a></span></th>\n\t\t\t\t\t\t<th
+        class=\"center\"><span class=\"seed\"><a href=\"/usearch/Shame%20of%20Frowns/?field=seeders&sorder=desc\"
+        rel=\"nofollow\">seed</a></span></th>\n\t\t\t\t\t\t<th class=\"lasttd nobr
+        center\"><a href=\"/usearch/Shame%20of%20Frowns/?field=leechers&sorder=desc\"
+        rel=\"nofollow\">leech</a></th>\n</tr>\n\t\t\t\t\t\t<tr class=\"odd\" id=\"torrent_shame_of_frowns10198059\">\n
+        \           <td>\n            <div class=\"iaconbox center floatright\">\n
+        \               <a rel=\"10198059,0\" class=\"icommentjs icon16\" href=\"/shame-of-frowns-s05e00-a-date-in-the-wife-hdtv-x264-batv-seti-t1111111113333333.html#comment\"><em
+        style=\"font-size: 12px; margin: 0 4px 0 4px;\" class=\"iconvalue\">182</em><i
+        class=\"ka ka-comment\"></i></a>\t\t\t\t<a class=\"iverify icon16\" href=\"/shame-of-frowns-s05e00-a-date-in-the-wife-hdtv-x264-batv-seti-t1111111113333333.html\"
+        title=\"Verified Torrent\"><i class=\"ka ka16 ka-verify ka-green\"></i></a>
+        \                               <a href=\"#\" onclick=\"_scq.push(['redirect',
+        '_b91ea3142d712c64815b8c569ca90f34', { 'name': 'Shame%20of%20Frowns%20S05E00%20A%Date%20in%20the%20Wife%20HDTV%20x264-BATV%20%5Bsetseti',
+        'magnet': 'magnet%3A%3Fxt%3Durn%3Abtih%FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7D%26dn%3Dshame%2Bof%2Bfrowns%2Bs05e00%2Ba%2Bdate%2Bin%2Bthe%2Bwife%2Bhdtv%2Bx264%2Bbatv%2Bseti%26tr%3Dudp%253A%252F%252Fopen.demonii.com%253A1337%252Fannounce'
+        }]); return false;\" class=\"partner1Button idownload icon16\"><i class=\"ka
+        ka16 ka-arrow-down partner1Button\"></i></a>\n                \n                <a
+        title=\"Torrent magnet link\" href=\"magnet:?xt=urn:btih:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&dn=shame+of+frowns+s05e00+a+date+in+the+wife+hdtv+x264+batv+seti&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce\"
+        class=\"imagnet icon16\"><i class=\"ka ka16 ka-magnet\"></i></a>\n                <a
+        title=\"Download torrent file\" href=\"http://torcache.net/torrent/AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.s05e00.a.date.in.the.wife.hdtv.x264.batv.seti\"
+        class=\"idownload icon16\"><i class=\"ka ka16 ka-arrow-down\"></i></a>\n            </div>\n
+        \           <div class=\"torrentname\">\n                <a href=\"/shame-of-frowns-s05e00-a-date-in-the-wife-hdtv-x264-batv-seti-t1111111113333333.html\"
+        class=\"torType filmType\"></a>\n                <a href=\"/shame-of-frowns-s05e00-a-date-in-the-wife-hdtv-x264-batv-seti-t1111111113333333.html\"
+        class=\"normalgrey font12px plain bold\"></a>\n            <div class=\"markeredBlock
+        torType filmType\">\n\n                <a href=\"/shame-of-frowns-s05e00-a-date-in-the-wife-hdtv-x264-batv-seti-t1111111113333333.html\"
+        class=\"cellMainLink\"><strong class=\"red\">Shame</strong> <strong class=\"red\">of</strong>
+        <strong class=\"red\">Frowns</strong> S05E00 A Date in the Wife HDTV x264-EBAT
+        [seti]</a>\n\n                                                <span class=\"font11px
+        lightgrey block\">\n                                Posted by <i class=\"ka
+        ka-verify\" style=\"font-size: 16px;color:orange;\"></i> <a class=\"plain\"
+        href=\"/user/EZTV/\">EZTV</a> in <span id=\"cat_10198059\"><strong><a href=\"/tv/\">TV</a></strong></span>
+        \               \t                </span>\n            \t            </div>\n
+        \           </td>\n\t\t\t\t\t\t\t\t\t<td class=\"nobr center\">262.43 <span>MB</span></td>\n\t\t\t<td
+        class=\"center\">1</td>\n\t\t\t<td class=\"center\">1&nbsp;month</td>\n\t\t\t<td
+        class=\"green center\">1664</td>\n\t\t\t<td class=\"red lasttd center\">31</td>\n\t\t\t</tr>\n\t\t\t\t\t\t<tr
+        class=\"even\" id=\"torrent_shame_of_frowns9566328\">\n            <td>\n
+        \           <div class=\"iaconbox center floatright\">\n                <a
+        rel=\"9566328,0\" class=\"icommentjs icon16\" href=\"/shame-of-frowns-season-1-720p-bluray-x264-shtlord-t999999999.html#comment\"><em
+        style=\"font-size: 12px; margin: 0 4px 0 4px;\" class=\"iconvalue\">84</em><i
+        class=\"ka ka-comment\"></i></a>\t\t\t\t<a class=\"iverify icon16\" href=\"/shame-of-frowns-season-1-720p-bluray-x264-shtlord-t999999999.html\"
+        title=\"Verified Torrent\"><i class=\"ka ka16 ka-verify ka-green\"></i></a>
+        \                               <a href=\"#\" onclick=\"_scq.push(['redirect',
+        '_b91ea3142d712c64815b8c569ca90f34', { 'name': 'Shame%20of%20Frowns%20-%20Season%201%20-%20720p%20BluRay%20-%20x264%20-%20ShAaNiG',
+        'magnet': 'magnet%3A%3Fxt%3Durn%3Abtih%AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC7%26dn%3Dshame%2Bof%2Bfrowns%2Bseason%2B1%2B720p%2Bbluray%2Bx264%2Bshaanig%26tr%3Dudp%253A%252F%252Ftracker.glotorrents.com%253A6969%252Fannounce%26tr%3Dudp%253A%252F%252Fopen.demonii.com%253A1337'
+        }]); return false;\" class=\"partner1Button idownload icon16\"><i class=\"ka
+        ka16 ka-arrow-down partner1Button\"></i></a>\n                \n                <a
+        title=\"Torrent magnet link\" href=\"magnet:?xt=urn:btih:AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&dn=shame+of+frowns+season+1+720p+bluray+x264+shaanig&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337\"
+        class=\"imagnet icon16\"><i class=\"ka ka16 ka-magnet\"></i></a>\n                <a
+        title=\"Download torrent file\" href=\"http://torcache.net/torrent/AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.season.1.720p.bluray.x264.shtlord\"
+        class=\"idownload icon16\"><i class=\"ka ka16 ka-arrow-down\"></i></a>\n            </div>\n
+        \           <div class=\"torrentname\">\n                <a href=\"/shame-of-frowns-season-1-720p-bluray-x264-shtlord-t999999999.html\"
+        class=\"torType filmType\"></a>\n                <a href=\"/shame-of-frowns-season-1-720p-bluray-x264-shtlord-t999999999.html\"
+        class=\"normalgrey font12px plain bold\"></a>\n            <div class=\"markeredBlock
+        torType filmType\">\n\n                <a href=\"/shame-of-frowns-season-1-720p-bluray-x264-shtlord-t999999999.html\"
+        class=\"cellMainLink\"><strong class=\"red\">Shame</strong> <strong class=\"red\">of</strong>
+        <strong class=\"red\">Frowns</strong> - Season 1 - 720p BluRay - x264 - ShtlOrd</a>\n\n
+        \                                               <span class=\"font11px lightgrey
+        block\">\n                                Posted by <i class=\"ka ka-verify\"
+        style=\"font-size: 16px;color:orange;\"></i> <a class=\"plain\" href=\"/user/ShtlOrd/\">ShtlOrd</a>
+        in <span id=\"cat_9566328\"><strong><a href=\"/tv/\">TV</a></strong></span>
+        \               \t                </span>\n            \t            </div>\n
+        \           </td>\n\t\t\t\t\t\t\t\t\t<td class=\"nobr center\">4.44 <span>GB</span></td>\n\t\t\t<td
+        class=\"center\">10</td>\n\t\t\t<td class=\"center\">6&nbsp;months</td>\n\t\t\t<td
+        class=\"green center\">1325</td>\n\t\t\t<td class=\"red lasttd center\">434</td>\n\t\t\t</tr>\n\t\t\t\t\t\t<tr
+        class=\"odd\" id=\"torrent_shame_of_frowns9200183\">\n            <td>\n            <div
+        class=\"iaconbox center floatright\">\n                <a rel=\"9200183,0\"
+        class=\"icommentjs icon16\" href=\"/shame-of-frowns-s04e09-hdtv-x264-killers-seti-t333333333.html#comment\"><em
+        style=\"font-size: 12px; margin: 0 4px 0 4px;\" class=\"iconvalue\">932</em><i
+        class=\"ka ka-comment\"></i></a>\t\t\t\t<a class=\"iverify icon16\" href=\"/shame-of-frowns-s04e09-hdtv-x264-killers-seti-t333333333.html\"
+        title=\"Verified Torrent\"><i class=\"ka ka16 ka-verify ka-green\"></i></a>
+        \                               <a href=\"#\" onclick=\"_scq.push(['redirect',
+        '_b91ea3142d712c64815b8c569ca90f34', { 'name': 'Shame%20of%20Frowns%20S03E09%20HDTV%20x264-PULLERS%5Bseti%5D',
+        'magnet': 'magnet%3A%3Fxt%3Durn%3Abtih%AAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF64%26dn%3Dshame%2Bof%2Bfrowns%2Bs04e09%2Bhdtv%2Bx264%2Bkillers%2Bseti%26tr%3Dhttp%253A%252F%252Ftracker.trackerfix.com%252Fannounce%26tr%3Dudp%253A%252F%252Fopen.demonii.com%253A1337'
+        }]); return false;\" class=\"partner1Button idownload icon16\"><i class=\"ka
+        ka16 ka-arrow-down partner1Button\"></i></a>\n                \n                <a
+        title=\"Torrent magnet link\" href=\"magnet:?xt=urn:btih:AAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&dn=shame+of+frowns+s04e09+hdtv+x264+killers+seti&tr=http%3A%2F%2Ftracker.trackerfix.com%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337\"
+        class=\"imagnet icon16\"><i class=\"ka ka16 ka-magnet\"></i></a>\n                <a
+        title=\"Download torrent file\" href=\"http://torcache.net/torrent/AAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.s04e09.hdtv.x264.killers.seti\"
+        class=\"idownload icon16\"><i class=\"ka ka16 ka-arrow-down\"></i></a>\n            </div>\n
+        \           <div class=\"torrentname\">\n                <a href=\"/shame-of-frowns-s04e09-hdtv-x264-killers-seti-t333333333.html\"
+        class=\"torType filmType\"></a>\n                <a href=\"/shame-of-frowns-s04e09-hdtv-x264-killers-seti-t333333333.html\"
+        class=\"normalgrey font12px plain bold\"></a>\n            <div class=\"markeredBlock
+        torType filmType\">\n\n                <a href=\"/shame-of-frowns-s04e09-hdtv-x264-killers-seti-t333333333.html\"
+        class=\"cellMainLink\"><strong class=\"red\">Shame</strong> <strong class=\"red\">of</strong>
+        <strong class=\"red\">Frowns</strong> S03E09 HDTV x264-PULLERS[seti]</a>\n\n
+        \                                               <span class=\"font11px lightgrey
+        block\">\n                                Posted by <i class=\"ka ka-verify\"
+        style=\"font-size: 16px;color:orange;\"></i> <a class=\"plain\" href=\"/user/seti/\">seti</a>
+        in <span id=\"cat_9200183\"><strong><a href=\"/tv/\">TV</a></strong></span>
+        \               \t                </span>\n            \t            </div>\n
+        \           </td>\n\t\t\t\t\t\t\t\t\t<td class=\"nobr center\">371.2 <span>MB</span></td>\n\t\t\t<td
+        class=\"center\">2</td>\n\t\t\t<td class=\"center\">9&nbsp;months</td>\n\t\t\t<td
+        class=\"green center\">1480</td>\n\t\t\t<td class=\"red lasttd center\">37</td>\n\t\t\t</tr>\n\t\t\t\t\t\t<tr
+        class=\"even\" id=\"torrent_shame_of_frowns9225852\">\n            <td>\n
+        \           <div class=\"iaconbox center floatright\">\n                <a
+        rel=\"9225852,0\" class=\"icommentjs icon16\" href=\"/shame-of-frowns-s04e10-hdtv-x264-killers-seti-t333333333.html#comment\"><em
+        style=\"font-size: 12px; margin: 0 4px 0 4px;\" class=\"iconvalue\">970</em><i
+        class=\"ka ka-comment\"></i></a>\t\t\t\t<a class=\"iverify icon16\" href=\"/shame-of-frowns-s04e10-hdtv-x264-killers-seti-t333333333.html\"
+        title=\"Verified Torrent\"><i class=\"ka ka16 ka-verify ka-green\"></i></a>
+        \                               <a href=\"#\" onclick=\"_scq.push(['redirect',
+        '_b91ea3142d712c64815b8c569ca90f34', { 'name': 'Shame%20of%20Frowns%20S01E02%20HDTV%20x264-PULLERS%5Bseti%5D',
+        'magnet': 'magnet%3A%3Fxt%3Durn%3Abtih%AAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEF%26dn%3Dshame%2Bof%2Bfrowns%2Bs04e10%2Bhdtv%2Bx264%2Bkillers%2Bseti%26tr%3Dhttp%253A%252F%252Ftracker.trackerfix.com%252Fannounce%26tr%3Dudp%253A%252F%252Fopen.demonii.com%253A1337'
+        }]); return false;\" class=\"partner1Button idownload icon16\"><i class=\"ka
+        ka16 ka-arrow-down partner1Button\"></i></a>\n                \n                <a
+        title=\"Torrent magnet link\" href=\"magnet:?xt=urn:btih:AAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&dn=shame+of+frowns+s04e10+hdtv+x264+killers+seti&tr=http%3A%2F%2Ftracker.trackerfix.com%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337\"
+        class=\"imagnet icon16\"><i class=\"ka ka16 ka-magnet\"></i></a>\n                <a
+        title=\"Download torrent file\" href=\"http://torcache.net/torrent/AAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.s04e10.hdtv.x264.killers.seti\"
+        class=\"idownload icon16\"><i class=\"ka ka16 ka-arrow-down\"></i></a>\n            </div>\n
+        \           <div class=\"torrentname\">\n                <a href=\"/shame-of-frowns-s04e10-hdtv-x264-killers-seti-t333333333.html\"
+        class=\"torType filmType\"></a>\n                <a href=\"/shame-of-frowns-s04e10-hdtv-x264-killers-seti-t333333333.html\"
+        class=\"normalgrey font12px plain bold\"></a>\n            <div class=\"markeredBlock
+        torType filmType\">\n\n                <a href=\"/shame-of-frowns-s04e10-hdtv-x264-killers-seti-t333333333.html\"
+        class=\"cellMainLink\"><strong class=\"red\">Shame</strong> <strong class=\"red\">of</strong>
+        <strong class=\"red\">Frowns</strong> S01E02 HDTV x264-PULLERS[seti]</a>\n\n
+        \                                               <span class=\"font11px lightgrey
+        block\">\n                                Posted by <i class=\"ka ka-verify\"
+        style=\"font-size: 16px;color:orange;\"></i> <a class=\"plain\" href=\"/user/seti/\">seti</a>
+        in <span id=\"cat_9225852\"><strong><a href=\"/tv/\">TV</a></strong></span>
+        \               \t                </span>\n            \t            </div>\n
+        \           </td>\n\t\t\t\t\t\t\t\t\t<td class=\"nobr center\">439.15 <span>MB</span></td>\n\t\t\t<td
+        class=\"center\">2</td>\n\t\t\t<td class=\"center\">9&nbsp;months</td>\n\t\t\t<td
+        class=\"green center\">1461</td>\n\t\t\t<td class=\"red lasttd center\">43</td>\n\t\t\t</tr>\n\t\t\t\t\t\t<tr
+        class=\"odd\" id=\"torrent_shame_of_frowns9174817\">\n            <td>\n            <div
+        class=\"iaconbox center floatright\">\n                <a rel=\"9174817,0\"
+        class=\"icommentjs icon16\" href=\"/shame-of-frowns-s04e08-hdtv-x264-killers-seti-t777777777.html#comment\"><em
+        style=\"font-size: 12px; margin: 0 4px 0 4px;\" class=\"iconvalue\">822</em><i
+        class=\"ka ka-comment\"></i></a>\t\t\t\t<a class=\"iverify icon16\" href=\"/shame-of-frowns-s04e08-hdtv-x264-killers-seti-t777777777.html\"
+        title=\"Verified Torrent\"><i class=\"ka ka16 ka-verify ka-green\"></i></a>
+        \                               <a href=\"#\" onclick=\"_scq.push(['redirect',
+        '_b91ea3142d712c64815b8c569ca90f34', { 'name': 'Shame%20of%20Frowns%20S01E01%20HDTV%20x264-PULLERS%5Bseti%5D',
+        'magnet': 'magnet%3A%3Fxt%3Durn%3Abtih%AAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2C%26dn%3Dshame%2Bof%2Bfrowns%2Bs04e08%2Bhdtv%2Bx264%2Bkillers%2Bseti%26tr%3Dudp%253A%252F%252Fopen.demonii.com%253A1337%252Fannounce'
+        }]); return false;\" class=\"partner1Button idownload icon16\"><i class=\"ka
+        ka16 ka-arrow-down partner1Button\"></i></a>\n                \n                <a
+        title=\"Torrent magnet link\" href=\"magnet:?xt=urn:btih:AAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&dn=shame+of+frowns+s04e08+hdtv+x264+killers+seti&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce\"
+        class=\"imagnet icon16\"><i class=\"ka ka16 ka-magnet\"></i></a>\n                <a
+        title=\"Download torrent file\" href=\"http://torcache.net/torrent/AAAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=[kickass.to]shame.of.frowns.s04e08.hdtv.x264.killers.seti\"
+        class=\"idownload icon16\"><i class=\"ka ka16 ka-arrow-down\"></i></a>\n            </div>\n
+        \           <div class=\"torrentname\">\n                <a href=\"/shame-of-frowns-s04e08-hdtv-x264-killers-seti-t777777777.html\"
+        class=\"torType filmType\"></a>\n                <a href=\"/shame-of-frowns-s04e08-hdtv-x264-killers-seti-t777777777.html\"
+        class=\"normalgrey font12px plain bold\"></a>\n            <div class=\"markeredBlock
+        torType filmType\">\n\n                <a href=\"/shame-of-frowns-s04e08-hdtv-x264-killers-seti-t777777777.html\"
+        class=\"cellMainLink\"><strong class=\"red\">Shame</strong> <strong class=\"red\">of</strong>
+        <strong class=\"red\">Frowns</strong> S01E01 HDTV x264-PULLERS[seti]</a>\n\n
+        \                                               <span class=\"font11px lightgrey
+        block\">\n                                Posted by <i class=\"ka ka-verify\"
+        style=\"font-size: 16px;color:orange;\"></i> <a class=\"plain\" href=\"/user/seti/\">seti</a>
+        in <span id=\"cat_9174817\"><strong><a href=\"/tv/\">TV</a></strong></span>
+        \               \t                </span>\n            \t            </div>\n
+        \           </td>\n\t\t\t\t\t\t\t\t\t<td class=\"nobr center\">331.25 <span>MB</span></td>\n\t\t\t<td
+        class=\"center\">2</td>\n\t\t\t<td class=\"center\">9&nbsp;months</td>\n\t\t\t<td
+        class=\"green center\">1415</td>\n\t\t\t<td class=\"red lasttd center\">29</td>\n\t\t\t</tr>\n\t\t\t\t\t\t</table>\n<div
+        class=\"rightcell\">\n</div><!-- div class=\"rightcell\" -->\n<div class=\"leftcell\">\n</div>\n</div>\n<div
+        id=\"translate_site\" style=\"display:none\">\n    <h3>Select Your Language</h3>\n
+        \   <div class=\"textcontent\">\n        <div style=\"-moz-column-width: 12em;
+        -moz-columns: 12em; -webkit-columns: 12em; columns:12em;\">\n            <ul>\n
+        \                               <li class=\"current_lang\"><a onclick=\"setLanguage('en',
+        '.kickass.to');return false;\" class=\"plain\"><strong>English</strong></a></li>\n
+        \                               <li><a onclick=\"setLanguage('af', '.kickass.to');return
+        false;\" class=\"plain\">Afrikaans</a></li>\n                                <li><a
+        onclick=\"setLanguage('al', '.kickass.to');return false;\" class=\"plain\">Albanian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('ar', '.kickass.to');return
+        false;\" class=\"plain\">Arabic (Modern)</a></li>\n                                <li><a
+        onclick=\"setLanguage('eu', '.kickass.to');return false;\" class=\"plain\">Basque</a></li>\n
+        \                               <li><a onclick=\"setLanguage('bn', '.kickass.to');return
+        false;\" class=\"plain\">Bengali</a></li>\n                                <li><a
+        onclick=\"setLanguage('bs', '.kickass.to');return false;\" class=\"plain\">Bosnian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('bg', '.kickass.to');return
+        false;\" class=\"plain\">Bulgarian</a></li>\n                                <li><a
+        onclick=\"setLanguage('ch', '.kickass.to');return false;\" class=\"plain\">Chinese
+        Simplified</a></li>\n                                <li><a onclick=\"setLanguage('tw',
+        '.kickass.to');return false;\" class=\"plain\">Chinese Traditional</a></li>\n
+        \                               <li><a onclick=\"setLanguage('hr', '.kickass.to');return
+        false;\" class=\"plain\">Croatian</a></li>\n                                <li><a
+        onclick=\"setLanguage('cz', '.kickass.to');return false;\" class=\"plain\">Czech</a></li>\n
+        \                               <li><a onclick=\"setLanguage('da', '.kickass.to');return
+        false;\" class=\"plain\">Danish</a></li>\n                                <li><a
+        onclick=\"setLanguage('nl', '.kickass.to');return false;\" class=\"plain\">Dutch</a></li>\n
+        \                               <li><a onclick=\"setLanguage('tl', '.kickass.to');return
+        false;\" class=\"plain\">Filipino</a></li>\n                                <li><a
+        onclick=\"setLanguage('fi', '.kickass.to');return false;\" class=\"plain\">Finnish</a></li>\n
+        \                               <li><a onclick=\"setLanguage('fr', '.kickass.to');return
+        false;\" class=\"plain\">French</a></li>\n                                <li><a
+        onclick=\"setLanguage('ka', '.kickass.to');return false;\" class=\"plain\">Georgian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('de', '.kickass.to');return
+        false;\" class=\"plain\">German</a></li>\n                                <li><a
+        onclick=\"setLanguage('el', '.kickass.to');return false;\" class=\"plain\">Greek</a></li>\n
+        \                               <li><a onclick=\"setLanguage('hi', '.kickass.to');return
+        false;\" class=\"plain\">Hindi</a></li>\n                                <li><a
+        onclick=\"setLanguage('hu', '.kickass.to');return false;\" class=\"plain\">Hungarian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('id', '.kickass.to');return
+        false;\" class=\"plain\">Indonesian</a></li>\n                                <li><a
+        onclick=\"setLanguage('it', '.kickass.to');return false;\" class=\"plain\">Italian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('kn', '.kickass.to');return
+        false;\" class=\"plain\">Kannada</a></li>\n                                <li><a
+        onclick=\"setLanguage('lt', '.kickass.to');return false;\" class=\"plain\">Lithuanian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('ml', '.kickass.to');return
+        false;\" class=\"plain\">Malayalam</a></li>\n                                <li><a
+        onclick=\"setLanguage('ms', '.kickass.to');return false;\" class=\"plain\">Malaysian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('no', '.kickass.to');return
+        false;\" class=\"plain\">Norwegian</a></li>\n                                <li><a
+        onclick=\"setLanguage('pr', '.kickass.to');return false;\" class=\"plain\">Pirate</a></li>\n
+        \                               <li><a onclick=\"setLanguage('pl', '.kickass.to');return
+        false;\" class=\"plain\">Polish</a></li>\n                                <li><a
+        onclick=\"setLanguage('pt', '.kickass.to');return false;\" class=\"plain\">Portuguese</a></li>\n
+        \                               <li><a onclick=\"setLanguage('pa', '.kickass.to');return
+        false;\" class=\"plain\">Punjabi</a></li>\n                                <li><a
+        onclick=\"setLanguage('ro', '.kickass.to');return false;\" class=\"plain\">Romanian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('ru', '.kickass.to');return
+        false;\" class=\"plain\">Russian</a></li>\n                                <li><a
+        onclick=\"setLanguage('sr', '.kickass.to');return false;\" class=\"plain\">Serbian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('src', '.kickass.to');return
+        false;\" class=\"plain\">Serbian-Cyrillic</a></li>\n                                <li><a
+        onclick=\"setLanguage('sk', '.kickass.to');return false;\" class=\"plain\">Slovak</a></li>\n
+        \                               <li><a onclick=\"setLanguage('es', '.kickass.to');return
+        false;\" class=\"plain\">Spanish</a></li>\n                                <li><a
+        onclick=\"setLanguage('sv', '.kickass.to');return false;\" class=\"plain\">Swedish</a></li>\n
+        \                               <li><a onclick=\"setLanguage('ta', '.kickass.to');return
+        false;\" class=\"plain\">Tamil</a></li>\n                                <li><a
+        onclick=\"setLanguage('te', '.kickass.to');return false;\" class=\"plain\">Telugu</a></li>\n
+        \                               <li><a onclick=\"setLanguage('tr', '.kickass.to');return
+        false;\" class=\"plain\">Turkish</a></li>\n                                <li><a
+        onclick=\"setLanguage('uk', '.kickass.to');return false;\" class=\"plain\">Ukrainian</a></li>\n
+        \                               <li><a onclick=\"setLanguage('vi', '.kickass.to');return
+        false;\" class=\"plain\">Vietnamese</a></li>\n                            </ul>\n
+        \       </div>\n    </div><!-- div class=\"textcontent\" -->\n</div>\n</div><!--id=\"main\"-->\n</div><!--id=\"wrap\"-->\n\n<footer
+        class=\"lightgrey\">\n\t<ul>\n\t\t<li><a class=\"plain\" href=\"#translate_site\"
+        id=\"translate_link\"><strong>change language</strong></a></li>\n\t\t<li><a
+        href=\"/rules/\" class=\"lower\">rules</a></li>\n        <li><a href=\"/ideabox/\">idea
+        box</a></li>\n\t\t<li class=\"lower\"><a href=\"/achievements/\">Achievements</a></li>\n\t\t<li><a
+        href=\"/trends/\">trends</a></li>\n\t\t<li class=\"lower\"><a href=\"/latest-searches/\">Latest
+        Searches</a></li>\n        <li><a href=\"/request/\">torrent requests</a></li>
+        \       \t</ul>\n\t<ul>\n\t\t<li><a href=\"/about/\">about</a></li>\n\t\t<li><a
+        href=\"/welcome/\">welcome</a></li>\n\t\t<li><a href=\"/privacy/\">privacy</a></li>\n\t\t<li><a
+        href=\"/dmca/\">dmca</a></li>\n        \t\t<li><a href=\"/logos/\">logos</a></li>\n\t\t\t\t<li><a
+        href=\"/contacts/\">contacts</a></li>\n        <li><a href=\"/api/\">api</a></li>\n\t\t<li><a
+        target=\"_blank\" rel=\"external nofollow\" href=\"http://chat.efnet.org:9090/?channels=%23KAT.ph\">chat</a></li>\n\t</ul>\n
+        \       </footer>\n<a class=\"feedbackButton eventsButtons\" href=\"/issue/create/\"
+        id=\"feedback\"><span>Report a bug</span></a>\n    <div id=\"_673e31f53f8166159b8e996c4124765b\"></div>\n
+        \       <div id=\"_e7050fb15fd39b3e4e99a5be4a57b6ea\"></div>\n<script type=\"text/javascript\">\n_scq.push(['setHost',
+        'a.kickass.to']);\n_scq.push(['setAccount', '_b894d6cb1e370fb9ad89f8d6d99eeb33']);\n_scq.push(['addGlobal',
+        'pagetype', 'other']);\n_scq.push(['addSlot', '_60318cd4e8d28f6fb76fe34e9bd9c498']);\n_scq.push(['addSlot',
+        '_39ecb76dd457e5ac33776fdf11500d56']);\n_scq.push(['addSlot', '_b77c3599a877a4e9d6097b83ec9f23bb',
+        { 'searchQuery': 'shame of frowns' }]);\n_scq.push(['addSlot', '_c039297fb3d18cf107e21460970475f0']);\n_scq.push(['addSlot',
+        '_1fff166e5a7ccec0d10ba219ab6f3c3c', { 'tv_name': 'Shame%20of%20Frowns' }]);\n_scq.push(['addSlot',
+        '_119b0a17fab5493361a252d04bf527db']);\n_scq.push(['addSlot', '_7063408f1c01d50e0dc2d833186ce962',
+        { 'searchQuery': 'Shame of Frowns' }]);\n_scq.push(['addSlot', '_673e31f53f8166159b8e996c4124765b']);\n_scq.push(['addSlot',
+        '_e7050fb15fd39b3e4e99a5be4a57b6ea']);\n_scq.push(['load']);\n(function()
+        {\n    var sc = document.createElement('script'); sc.type = 'text/javascript';
+        sc.async = true;\n    sc.src = document.location.protocol + '//a.kickass.to/sc-f3274ce.js';\n
+        \   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sc,
+        s);\n})();\n</script>\n<script type=\"text/javascript\"><!--\ndocument.write(\"<a
+        style='display:none;' href='http://www.liveinternet.ru/click' \"+\n\"target=_blank><img
+        src='//counter.yadro.ru/hit?t45.6;r\"+\nescape(document.referrer)+((typeof(screen)==\"undefined\")?\"\":\n\";s\"+screen.width+\"*\"+screen.height+\"*\"+(screen.colorDepth?\nscreen.colorDepth:screen.pixelDepth))+\";u\"+escape(document.URL)+\n\";h\"+escape(document.title.substring(0,80))+\";\"+Math.random()+\n\"'
+        alt='' title='LiveInternet' \"+\n\"border='0' width='0' height='0'><\\/a>\")\n//--></script>\n<script>\n
+        \ (function(i,s,o,g,r,a,m) { i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()
+        {\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n
+        \ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n
+        \ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n\n
+        \ ga('create', 'UA-41854124-1', 'kickass.to');\n  ga('send', 'pageview');\n</script>\n</body>\n</html>\n"
+    http_version: 
+  recorded_at: Thu, 26 Mar 2015 20:24:49 GMT
+- request:
+    method: get
+    uri: http://torcache.net/torrent/AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=%5Bkickass.to%5Dshame.of.frowns.season.1.720p.bluray.x264.shtlord
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - torcache.net
+  response:
+    status:
+      code: 302
+      message: Moved Temporarily
+    headers:
+      Server:
+      - nginx/1.7.10
+      Date:
+      - Sat, 28 Mar 2015 18:02:58 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '161'
+      Location:
+      - http://torcache.net/torrent/AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF/[kickass.to]shame.of.frowns.season.1.720p.bluray.x264.shtlord.torrent
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "<html>\r\n<head><title>302 Found</title></head>\r\n<body bgcolor=\"white\">\r\n<center><h1>302
+        Found</h1></center>\r\n<hr><center>nginx/1.7.10</center>\r\n</body>\r\n</html>\r\n"
+    http_version: 
+  recorded_at: Sat, 28 Mar 2015 18:02:58 GMT
+- request:
+    method: get
+    uri: http://torcache.net/torrent/AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF/%5Bkickass.to%5Dshame.of.frowns.season.1.720p.bluray.x264.shtlord.torrent
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - torcache.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.7.10
+      Date:
+      - Sat, 28 Mar 2015 16:37:47 GMT
+      Content-Type:
+      - application/octet-stream
+      Content-Length:
+      - '161'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZDg6YW5ub3VuY2UzMDpodHRwOi8vMTI3LjAuMC4xOjY5NjkvYW5ub3VuY2Ux
+        MzpjcmVhdGlvbiBkYXRlaTEzMjM1NjQyMjVlNDppbmZvZDU6ZmlsZXNsZDY6
+        bGVuZ3RoaTEyOGU0OnBhdGhsMTE6YmFuYW5lLnBvZW1lZWQ2Omxlbmd0aGk3
+        MzQ1MWU0OnBhdGhsOTp0YWlscy5wbmdlZWU0Om5hbWU3OmNvbnRlbnQxMjpw
+        aWVjZSBsZW5ndGhpMjYyMTQ0ZTY6cGllY2VzMjA6bIl21Tuj9K6dGEsMJg6+
+        TWTI9yBlZQ==
+
+    http_version: 
+  recorded_at: Sat, 28 Mar 2015 16:37:47 GMT
+- request:
+    method: get
+    uri: http://torcache.net/torrent/AAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.torrent?title=%5Bkickass.to%5Dshame.of.frowns.s04e09.hdtv.x264.killers.seti
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - torcache.net
+  response:
+    status:
+      code: 302
+      message: Moved Temporarily
+    headers:
+      Server:
+      - nginx/1.7.10
+      Date:
+      - Sat, 28 Mar 2015 18:02:58 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '161'
+      Location:
+      - http://torcache.net/torrent/AAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF/[kickass.to]shame.of.frowns.s04e09.hdtv.x264.killers.seti.torrent
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "<html>\r\n<head><title>302 Found</title></head>\r\n<body bgcolor=\"white\">\r\n<center><h1>302
+        Found</h1></center>\r\n<hr><center>nginx/1.7.10</center>\r\n</body>\r\n</html>\r\n"
+    http_version: 
+  recorded_at: Sat, 28 Mar 2015 18:02:58 GMT
+- request:
+    method: get
+    uri: http://torcache.net/torrent/AAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF/%5Bkickass.to%5Dshame.of.frowns.s04e09.hdtv.x264.killers.seti.torrent
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - torcache.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.7.10
+      Date:
+      - Sat, 28 Mar 2015 16:37:57 GMT
+      Content-Type:
+      - application/octet-stream
+      Content-Length:
+      - '161'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZDg6YW5ub3VuY2UzMDpodHRwOi8vMTI3LjAuMC4xOjY5NjkvYW5ub3VuY2Ux
+        MzpjcmVhdGlvbiBkYXRlaTEzMjM1NjQxNThlNDppbmZvZDY6bGVuZ3RoaTcz
+        NDUxZTQ6bmFtZTk6dGFpbHMucG5nMTI6cGllY2UgbGVuZ3RoaTI2MjE0NGU2
+        OnBpZWNlczIwOr6kcgJtGGgwiVM9tKl37H+YOaALZWU
+
+    http_version: 
+  recorded_at: Sat, 28 Mar 2015 16:37:57 GMT
+recorded_with: VCR 2.9.3

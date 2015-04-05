@@ -1,0 +1,20 @@
+.row
+  ul#remote-torrents.new.torrents.container-fluid.remote-torrents
+    each tor in content
+      li.remote.torrent.row
+
+        .col-md-5.title
+          = tor.title
+
+        unless tor.torrent
+          .col-md-1.size
+            span.payload-size= human-kilo-bytes tor.size short=true
+
+          .col-md-2.seeds
+            = tor.seeds
+
+          .col-md-3
+            icon-button action='createFromRemote' param=tor severity="success" icon="play" name='start' | Download
+        else
+          with tor.torrent as content
+            partial 'torrent-details'

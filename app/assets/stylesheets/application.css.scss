@@ -20,7 +20,9 @@ body {
 
 @import "hide_fixed_column";
 @import "torrents";
+@import "fs";
 @import "directories";
+@import "disk";
 @import "dropzone";
 @import "radio_buttons";
 @import "panes";
@@ -79,7 +81,8 @@ li.torrent ul.nize {
 }
 
 .rate {
-  margin-right: 0.3em;
+  margin: 0 0.3em 0.7em 0.3em;
+
   &.down.active {
     background-color: $brand-primary;
   }
@@ -87,7 +90,7 @@ li.torrent ul.nize {
     background-color: $brand-success;
   }
   .v {
-    min-width: 4.2em;
+    min-width: 1.75em;
     display: inline-block;
     text-align: right;
   }

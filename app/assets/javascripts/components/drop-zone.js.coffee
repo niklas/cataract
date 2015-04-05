@@ -5,13 +5,6 @@ Cataract.DropZoneComponent = Ember.Component.extend
   hovered: false
   inviting: false
 
-  supportAjaxUploadProgressEvents: ->
-    xhr = new XMLHttpRequest()
-    !! (xhr? && ('upload' of xhr) && ('onprogress' of xhr.upload))
-
-  isTouchDevice: ->
-    !!('ontouchstart' of window)
-
   drop: (event) ->
     event.preventDefault()
     @set 'hovered', false
@@ -29,38 +22,4 @@ Cataract.DropZoneComponent = Ember.Component.extend
     e.preventDefault()
     @set 'hovered', false
 
-  docEnter: (e) ->
-    e.preventDefault()
-    console?.debug 'docEnter'
-    unless @get('inviting')
-      @set 'inviting', true
-    false
 
-  docLeave: (e) ->
-    console?.debug "docLeave"
-    @set 'inviting', false
-
-
-
-  didInsertElement: ->
-    dropzone = this
-    if @supportAjaxUploadProgressEvents() and not @isTouchDevice()
-      isOver = false
-      interval = undefined
-      $(document).on "dragover", (e) ->
-        e.preventDefault()
-        clearInterval interval
-        interval = setInterval(->
-          isOver = false
-          clearInterval interval
-          dropzone.docLeave(e)
-        , 1000)
-        unless isOver
-          isOver = true
-          dropzone.docEnter(e)
-    else
-      @set('visible', false)
-
-  willDestroyElement: ->
-    jQuery(document)
-      .off('dragover')

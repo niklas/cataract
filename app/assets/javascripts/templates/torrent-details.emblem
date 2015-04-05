@@ -1,0 +1,27 @@
+.col-md-1.size.clearfix
+  if content.payloadExists
+    span.payload_size= human-kilo-bytes content.payloadBytes short=true
+  if content.isRunning
+    span.badge.eta= content.transfer.eta
+
+.col-md-2.payload.clearfix
+  if content.payloadPresent
+    payload-details content=content.payload isCollapsed=isCollapsed
+    icon-button action='dialog' param='clearPayload' severity="danger" icon="trash" name="clear" | remove Content
+    unless content.isMoving
+      icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move
+  if content.payloadExists
+    unless isCollapsed
+      p= info_hash
+
+.col-md-3
+  unless content.isRemote
+    torrent-transfer content=content tagName='span'
+
+    unless content.isRunning
+      unless isCollapsed
+        icon-button action='dialog' param='deleteTorrent' severity="danger" icon="remove" name="destroy" | Delete
+  else
+    unless isCollapsed
+      .url= content.url
+      icon-button action='start' param=content severity="success" icon="play" name='start' | Fetch & Start

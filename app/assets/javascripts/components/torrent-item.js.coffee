@@ -1,9 +1,28 @@
 Cataract.TorrentItemComponent = Ember.Component.extend
-  classNames: ['torrent']
-  classNameBindings: ['active']
+  classNames: [
+    'torrent'
+    'row'
+    'list-group-item'
+    'clearfix'
+  ]
+  classNameBindings: [
+    'active'
+    'isCollapsed:collapsed:expanded'
+  ]
   tagName: 'li'
   activeBinding: 'childViews.firstObject.active'
+  isCollapsed: true
 
-  click: (e)->
-    unless $(e.target).is('a')
-      @$().find('a:first').click()
+  click: (e) ->
+    unless $(e.target).is('a,button')
+      @toggleProperty 'isCollapsed'
+
+
+  # just forward from torrent-transfer
+  startAction: 'startTorrent'
+  stopAction: 'stopTorrent'
+  dialogAction: 'openModal'
+  actions:
+    start:  (t)-> @sendAction 'startAction', t
+    stop:   (t)-> @sendAction 'stopAction', t
+    dialog: (t)-> @sendAction 'dialogAction', t, @get('content')

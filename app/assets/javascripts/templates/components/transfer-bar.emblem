@@ -1,21 +1,4 @@
-.row-fluid
-  .span6
-    .progress
-      .progress-bar style=progressStyle class={:progress-bar-success finished::progress-bar-striped downloading:active}
-        .percent
-          = progress
-          | %
-  .span6
-    span.badge.rate.down class=downloading:active
-      i.glyphicon.glyphicon-arrow-down
-      span.v= downRate
-    span.badge.rate.up class=uploading:active
-      i.glyphicon.glyphicon-arrow-up
-      span.v= upRate
-    if eta
-      span.badge.eta= eta
-    if message
-      span.message= message
-
-
-
+.row
+  .col-xs-6= transfer-rate content=downRate direction='down' isActive=isDownloading
+  .col-xs-6= transfer-rate content=upRate direction='up' isActive=isUploading
+= progress-bar percentage=progress hasStripes=isFinished isAnimated=isDownloading breakLabel=50 decimals=1

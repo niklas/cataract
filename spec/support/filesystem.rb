@@ -100,6 +100,10 @@ end
 
 RSpec::Matchers.define :exist_as_directory do
   match { |actual| File.directory?(actual.to_s) }
+  failure_message_for_should do |expected|
+    x = `find #{FileSystem.relativate('')} -type d`
+    %Q~expected #{actual.to_s} to exist as directory, but did not.\nfind -type d\n#{x}~
+  end
 end
 RSpec::Matchers.define :exist_as_file do
   match { |actual| File.file?(actual.to_s) }

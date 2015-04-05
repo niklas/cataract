@@ -128,6 +128,13 @@ gem 'mechanize'
 # TODO strong parameter
 gem 'protected_attributes'
 
+gem 'interactor'
+
+gem 'kat', github: 'niklas/kat', branch: 'remove-andand-depdendency'
+
+# mounts and diskspace
+gem 'sys-filesystem', require: 'sys/filesystem'
+
 group :event_server do
   gem 'sinatra'
   gem 'redis'

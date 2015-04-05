@@ -13,41 +13,44 @@ Feature: Transfer info
       And the torrent's content exists on disk
 
 
+  # neither units, nor /s
+  @small_screen
   Scenario: properly format values
     Given rtorrent list contains the following:
         | up_rate | down_rate | hash        | active? | open? |
         | 10      | 23000     | the torrent | true    | true  |
       And the torrent is running
      When I go to the home page
-      And I wait for the spinner to stop
      Then the active nav item should be "Running"
       And I should see the following torrents in the torrent list:
-       | up        | down      |
-       | 10 B/s    | 22.5 KB/s |
+       | up | down |
+       | 10 | 23K  |
 
+  # neither units, nor /s
+  @mobile_screen
   Scenario: transfer data is not cached and updated on every tick
     Given the torrent is running
       And rtorrent list contains the following:
         | up_rate | hash        | active? | open? |
         | 5       | the torrent | true    | true  |
      When I go to the home page
-      And I wait for the spinner to stop
      Then I should see the following torrents in the torrent list:
-        | up      |
-        | 5 B/s   |
+        | up |
+        | 5  |
 
     Given rtorrent list contains the following:
         | up_rate | hash        | active? | open? |
         | 23      | the torrent | true    | true  |
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-        | up      |
-        | 23 B/s  |
+        | up |
+        | 23 |
 
+  # units with /s
+  @big_screen
   Scenario: progress bars updates themselfes
     Given the torrent is running
       And I am on the home page
-      And I wait for the spinner to stop
 
      When rtorrent list contains the following:
         | down_rate | up_rate | size_bytes | completed_bytes | hash        | active? | open? |
@@ -55,8 +58,8 @@ Feature: Transfer info
       And the tick interval is reached
      # size is taken from metadata
      Then I should see the following torrents in the torrent list:
-        | up     | down   | percent | eta      |
-        | 42 B/s | 23 B/s | 15%     | 1 minute |
+        | up    | down  | percent | eta      |
+        | 42B/s | 23B/s | 15%     | 1 minute |
 
      # stalled
      When rtorrent list contains the following:
@@ -64,8 +67,8 @@ Feature: Transfer info
         | 0         | 42      | 2000       | 301             | the torrent | true    | true  |
       And the tick interval is reached
      Then I should see the following torrents in the torrent list:
-        | up     | down  | percent | eta               |
-        | 42 B/s | 0 B/s | 15%     | when pigs can fly |
+        | up    | down | percent | eta               |
+        | 42B/s | 0B/s | 15%     | when pigs can fly |
 
      # complete
      When rtorrent list contains the following:
@@ -73,17 +76,16 @@ Feature: Transfer info
         | 0         | 42      | 2000       | 2000            | the torrent | true    | true  |
       And the tick interval is reached
      Then I should see the following torrents in the torrent list:
-        | up     | down  | percent | eta |
-        | 42 B/s | 0 B/s | 100%    |     |
+        | up    | down | percent | eta |
+        | 42B/s | 0B/s | 100%    |     |
 
   Scenario: stopped by someone else is detected
     Given the torrent is running
       And rtorrent list contains the following:
         | hash        | active? | open? |
         | the torrent | true    | true  |
-      And I am on the home page
-      And I wait for the spinner to stop
-     When I explore the first torrent
+      And I am on the recent list page
+      # stopped torrent should disappear from running list
      Then I should see the stop link
 
     Given rtorrent list contains the following:

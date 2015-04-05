@@ -1,10 +1,31 @@
 modal-dialog action="createDirectory" heading="new Directory" primary="Create Directory" secondary="Cancel"
-  Bootstrap.Forms.TextField valueBinding="name" label="Name"
-  .input
-    label for="disk" Disk
-    Cataract.SelectDiskField id="disk" selection=disk content=disks
 
-  .inputs
-    label for="directory_subscribe"
-      Ember.Checkbox checked=subscribed id="directory_subscribe"
-      | subscribe
+  .container-fluid
+    .form-horizontal
+
+      .form-group
+        label for="directory_name" Name
+        = input value=name class="form-control" elementId="directory_name"
+
+      .form-group
+        label for="directory_disk" Disk
+        = select-disk selection=disk content=disks elementId="directory_disk" classNames='form-control'
+
+      .form-group
+        label for="directory_parent" Parent
+        = select-directory selection=parentDirectory content=disk.directories elementId="directory_parent" classNames='form-control' prompt="[Root]"
+
+      .checkbox
+        label
+          = input type="checkbox" checked=showSubDirs
+          | contains more directories
+
+      .checkbox
+        label
+          = input type="checkbox" checked=subscribed disabled=showSubDirs
+          | subscribe
+
+      if subscribed
+        .form-group
+          label for="directory_filter" Filter
+          = input value=filter class="form-control" elementId="directory_filter"

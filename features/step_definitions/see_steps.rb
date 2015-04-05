@@ -16,7 +16,7 @@ Then /^I should see the following (\w+\s?\w+) in (.*):$/ do |item_names, contain
   page.should have_css(list) # wait
   found = page.all("#{list} >*#{items}").select(&:visible?).map do |item|
     next if item[:class].include?('divider')
-    fields.map {|f| item.first(f).text.strip rescue '(i) nil' }
+    fields.map {|f| item.first(f).text.strip rescue '' }
   end
   expected.diff! found.unshift(expected.column_names)
 end
@@ -52,6 +52,12 @@ end
 Then /^I should see (?:flash )?(notice|alert) "([^"]*)"$/ do |severity, message|
   page.should have_css(*selector_for("flash #{severity}"), text: message)
 end
+
+Then /^I should not see any (?:flash )?(notice|alert)$/ do |severity|
+  wait_for_the_page_to_be_loaded
+  page.should have_no_css(*selector_for("flash #{severity}"))
+end
+
 
 Then /^I should see no link "([^"]*)"$/ do |label|
   page.should have_no_css('a', :text => label)

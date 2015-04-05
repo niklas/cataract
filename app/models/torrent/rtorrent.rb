@@ -104,8 +104,12 @@ class Torrent
       !remote_methods.empty? # initialize will fail earlier
     end
 
+    def offline?
+      self.class.offline?
+    end
+
     def call(*a, &block)
-      unless self.class.offline?
+      unless offline?
         super
       else
         raise Offline, "cannot call RTorrent because it was switched offline"

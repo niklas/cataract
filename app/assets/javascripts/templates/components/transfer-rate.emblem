@@ -1,0 +1,4 @@
+i.glyphicon class={icon}
+span.v= quantifiedContent
+span.f= factor
+span.u.visible-lg-inline= unit

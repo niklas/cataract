@@ -1,0 +1,5 @@
+if diskNavVisible
+  poly-path-disk-nav content=poly
+
+= outlet
+torrents-list content=content.finalContent mode=mode

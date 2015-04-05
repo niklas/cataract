@@ -65,6 +65,6 @@ class TorrentsController < InheritedResources::Base
   end
 
   def interpolation_options
-    { torrent: resource.title }
+    { torrent: resource.title, error_messages: resource.errors.full_messages.to_sentence }
   end
 end

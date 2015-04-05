@@ -1,0 +1,38 @@
+#header
+  nav.navbar.navbar-default.navbar-fixed-top role="navigation"
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle data-target=".nav-collapse" data-toggle="collapse" type="button"
+          span.glyphicon.glyphicon-bar
+          span.glyphicon.glyphicon-bar
+          span.glyphicon.glyphicon-bar
+        a.navbar-brand  href="/"
+          | Cataract
+          loading-spinner
+      .collapse.navbar-collapse
+        form.navbar-form.navbar-left role="search"
+          .form-group
+            delayed-input value=controller.terms classNames="form-control search-query" elementId="torrent_search_terms"
+        ul.nav.navbar-nav
+          = outlet 'nav'
+          = partial "torrents/navigation"
+          = render 'moves'
+        rails-session
+    flash-list
+#sidebar
+  = render 'directories'
+#middle
+  #content.container-fluid class={detailsExtended:shrunk}
+    = outlet
+  #bar.well class={detailsExtended:up}
+    = outlet 'bar'
+    pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="pagination pagination-centered"
+    status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason refresh="refreshTransfers"
+  #details class={detailsExtended:extended}
+    = outlet 'details'
+
+= outlet 'modal'
+if adding
+  = render 'create_torrent'
+
+drag-detector enterAction='dragEnterDocument' leaveAction="dragLeaveDocument"

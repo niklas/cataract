@@ -1,11 +1,12 @@
-link-to (query-params mode='recent') tagName='li'
-  link-to (query-params mode='recent') | Recent
-link-to (query-params mode='running') tagName='li'
-  link-to (query-params mode='running') | Running
-link-to (query-params mode='library') tagName='li'
-  link-to (query-params mode='library') | Library
-li
-  link-to 'add' | Add
+presentation-li
+  link-to 'recent' | Recent
+presentation-li
+  link-to 'running' | Running
+presentation-li
+  link-to 'library' | Library
+presentation-li
+  link-to-add active=adding
+    | Add
 
 li.dropdown
   a href="#" class="dropdown-toggle" data-toggle="dropdown"

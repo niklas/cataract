@@ -8,7 +8,8 @@
 #= require ember-data
 #= require ember-bootstrap
 #= require ember-rails-flash
-#= require bootstrap
+#= require bootstrap/dropdown
+#= require bootstrap/modal
 #= require pagination_support
 #= require bindWithDelay
 #

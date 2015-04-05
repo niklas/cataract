@@ -2,7 +2,7 @@
 
 class Directory < ActiveRecord::Base
   has_ancestry
-  include Filesystem
+  include PathOnFilesystem
   before_validation :process_full_path
   before_validation :set_name_from_relative_path
   before_validation :set_relative_path_from_name
@@ -186,6 +186,9 @@ class Directory < ActiveRecord::Base
       self.filter = name
     end
   end
+
+  # serializer avoids confusing Ember
+  alias_method :parent_directory_id=, :parent_id=
 
   # finds the directory of the path, no infixes allowed
   def self.of(path)

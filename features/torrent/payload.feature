@@ -12,25 +12,22 @@ Feature: Payload of a torrent
       And the file for the torrent exists
       And the torrent's content exists on disk
       And I am signed in
-     When I go to the recent list page
-      And I wait for the spinner to disappear
-
-  Scenario: content directory is visible if torrent has content
-    Given I should not see "Cat Pictures" within the torrents list
-     When I explore the first torrent
-     Then I should see the following attributes for the torrent:
-        | content_directory | Cat Pictures    |
-        | content_directory | pictures/cats   |
-      And I should see "1 file"
+      And I am on the recent list page
 
   Scenario: click on filecount toggles filenames
-    Given I should not see "tails.png"
+    Given I should see the following torrents in a torrent list:
+      | title | content_directory_name | content_directory_path |
+      | Tails | Cat Pictures           |                        |
+      But I should not see "tails.png"
+      And I should not see "1 file"
      When I explore the first torrent
-     Then I should not see "tails.png"
-      And I press "1 file"
-     Then I should see "tails.png"
-     # does not toggle whole torrent
-      And I should see "Cat Pictures"
+     Then I should see "1 file"
+     Then I should see the following torrents in a torrent list:
+      | title | content_directory_name | content_directory_path |
+      | Tails | Cat Pictures           | pictures/cats          |
+      But I should not see "tails.png"
+     When I press "1 file"
+      And I should see "tails.png"
 
   Scenario: clear a torrent's content
      When I explore the first torrent

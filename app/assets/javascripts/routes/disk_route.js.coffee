@@ -1,1 +1,1 @@
-Cataract.DiskRoute = Cataract.DetailedRoute.extend()
+Cataract.DiskRoute = Ember.Route.extend()

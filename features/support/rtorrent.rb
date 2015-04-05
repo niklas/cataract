@@ -38,6 +38,7 @@ Given /^rtorrent list contains the following:$/ do |table|
       hash
     end
   end
-  Torrent.remote.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
+  # we recreate RTorrent interface on every request
+  Torrent::RTorrent.any_instance.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
 end
 

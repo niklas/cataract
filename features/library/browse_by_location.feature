@@ -55,13 +55,13 @@ Feature: Browsing the library
       But I should not see "Blockbuster"
 
 
-     When I follow "Removable" within the disks tab
+     When I follow "Removable"
      Then I should see the following torrents in the torrent list:
       | title       |
       | Long Season |
       But I should not see "Blockbuster"
 
-     When I follow "More" within the disks tab
+     When I follow "More"
      Then I should see the following torrents in the torrent list:
       | title         |
       | Short Season  |

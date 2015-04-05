@@ -1,6 +1,7 @@
 #= require_tree ./lib
 #= require_self
 #= require_tree ./cataract
+#= require_tree ./initializers
 #= require_tree ./addons
 #= require_tree ./models
 #= require_tree ./controllers
@@ -44,13 +45,14 @@ DS.RailsRESTAdapter = DS.ActiveModelAdapter.extend
 
 Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend
   ajaxError: (jqxhr)->
-    #@_super(jqxhr)
     if jqxhr and jqxhr.status is 500
       Ember.Rails.flashMessages.createMessage
         severity: 'error'
         message: jqxhr.responseJSON.error
       # stop propagating
       false
+    else
+      @_super(jqxhr)
 #DS.RESTAdapter.configure "plurals",
 #  directory: 'directories'
 #  detected_directory: 'detected_directories'

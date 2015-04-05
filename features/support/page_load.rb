@@ -28,7 +28,7 @@ module PageLoadSupport
   def _wait_for_the_page_to_be_loaded
     page.should have_css('html.loaded')
     some_time_passes
-    step %Q~I wait for the spinner to stop~
+    wait_for_ember_run_loop_to_complete
   end
 
   def some_time_passes

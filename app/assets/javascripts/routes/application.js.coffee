@@ -2,8 +2,6 @@ Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # FIXME is this really needed with all the promises and needs?
     store = @get('store')
-    @controllerFor('settings').set    'model',  store.find('setting', 'all')
-    @controllerFor('disks').set       'model', store.findAll('disk')
     @controllerFor('moves').set       'model', store.findAll('move')
 
     store.findAll('transfer').then (transfers)=>
@@ -11,7 +9,13 @@ Cataract.ApplicationRoute = Ember.Route.extend
     , (jqxhr)=>
       @controllerFor('application').transfersError(jqxhr)
 
-    true
+    Ember.RSVP.hash
+      settings: store.find('setting', 'all')
+      disks:     store.findAll('disk')
+    .then (loaded)=>
+      @controllerFor('settings').set 'model', loaded.settings
+      @controllerFor('disks').set    'model', loaded.disks
+
   actions:
     save: (model)->
       model.save()
@@ -22,6 +26,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
         # TODO Spinner?
         controller.refreshTransfers()
     openModal: (modalName, model) ->
+      model = model.get('content') if model.isController
       @controllerFor(modalName).set "model", model
       @render modalName,
         into: "application"
@@ -55,7 +60,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
           startAutomatically: true
 
         torrent.save().then (t)->
-          route.transitionTo('torrent', t)
+          route.transitionTo queryParams: { adding: false }
         , (error)->
           torrent.rollback()
 
@@ -71,3 +76,34 @@ Cataract.ApplicationRoute = Ember.Route.extend
       controller = @controllerFor('torrents')
       if controller.get("hasPrevious")
         controller.decrementProperty "rangeStart", controller.get("rangeWindowSize")
+
+    dragEnterDocument: ->
+      app = @controllerFor('application')
+      unless @get('adding')
+        app.set '_previousAdding', false
+        app.set 'adding', true
+      app.set 'dragging', true
+      false
+
+    dragLeaveDocument: ->
+      # keep the add box open, must close manually
+      # else after drop on input[file] the modal box closes and clears the field
+      app = @controllerFor('application')
+      app.set 'dragging', false
+      false
+
+    startTorrent: (torrent) ->
+      torrent = torrent.get('content') if torrent.isController
+      transfer = @get('store').createRecord 'transfer',
+        torrent: torrent
+      transfer.save().then ->
+        torrent.set 'status', 'running'
+      false
+
+    stopTorrent: (torrent) ->
+      torrent = torrent.get('content') if torrent.isController
+      torrent.get('transfer').then (transfer)->
+        transfer.deleteRecord()
+        transfer.save().then ->
+          torrent.set 'status', 'archived'
+      false

@@ -118,7 +118,7 @@ class Torrent
     end
 
     def destroy
-      torrent.stop
+      torrent.stop unless Torrent.remote.offline?
       if exists?
         FileUtils.rm_rf path
       else

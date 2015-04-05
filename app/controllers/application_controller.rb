@@ -14,10 +14,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  rescue_from RuntimeError, Torrent::RTorrent::Error do |exception|
+  rescue_from RuntimeError, Torrent::RTorrent::Error, Cataract::Application::Error do |exception|
     flash.now[:alert] = exception.message
     respond_to do |frak|
       frak.json { render json: { error: exception.message }, status: 500 }
+      frak.html { render text: exception.message, status: 500 }
     end
   end
 

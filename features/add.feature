@@ -10,7 +10,7 @@ Feature: Adding a torrent
       And a setting exists with incoming_directory: directory "Incoming"
       And the URL "http://hashcache.net/files/single.torrent" points to file "single.torrent"
       And I am signed in
-      And I am on the list page
+      And I am on the running page
 
   Scenario: Adding by URL
      When I follow "Add"
@@ -35,14 +35,11 @@ Feature: Adding a torrent
       And a torrent should exist
       And the directory "Another" should be the torrent's content_directory
       And rtorrent should download the torrent
-      And I should see "single" within the details
-      And I should see "Another" within the details
-      And I should see "71.7 KB" within the details
-      And I should see the stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
+       | title  | percent | content_directory_name | payload_size |
+       | single | 0%      | Another                | 71.7KiB      |
+      And I should see the stop link
 
   Scenario: Upload with traditional multipart form
      When I follow "Add"
@@ -54,38 +51,28 @@ Feature: Adding a torrent
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
       And rtorrent should download the torrent
-      And I should see "single" within the details
-      And I should see "Incoming" within the details
-      And I should see "71.7 KB" within the details
-      And I should see the stop link
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
+       | title  | percent | content_directory_name | payload_size |
+       | single | 0%      | Incoming               | 71.7KiB      |
+      And I should see the stop link
 
   Scenario: Upload by dragging a file to the dropzone
-     When I drag a file over the dropzone
+     When I drag a file over the content
+      And I wait for the modal box to appear
       And I drop file "spec/factories/files/single.torrent" onto the dropzone
 
      Then I should see flash notice "Torrent was successfully created."
       And a torrent should exist
       And rtorrent should download the torrent
-      And I should see "single" within the details
-      And I should see "Incoming" within the details
-      And I should see "71.7 KB" within the details
-      And I should see the stop link
-      And the dropzone should not be classified as inviting
-      And the dropzone should not be classified as hovered
      When the tick interval is reached
      Then I should see the following torrents in the torrent list:
-       | title  | percent |
-       | single | 0%      |
+       | title  | percent | content_directory_name | payload_size |
+       | single | 0%      | Incoming               | 71.7KiB      |
+      And I should see the stop link
 
   Scenario: Uploading a non-torrent
-    Given the dropzone should not be classified as inviting
-      And the dropzone should not be classified as hovered
-
-     When I drag a file over the sidebar
+     When I drag a file over the content
      Then the dropzone should be classified as inviting
       But the dropzone should not be classified as hovered
 
@@ -94,7 +81,7 @@ Feature: Adding a torrent
       And the dropzone should be classified as hovered
 
      When I drop file "spec/spec_helper.rb" onto the dropzone
-     Then I should see flash alert "Could not create Torrent."
+     Then I should see flash alert "Could not create Torrent"
       And the dropzone should not be classified as inviting
       And the dropzone should not be classified as hovered
 
