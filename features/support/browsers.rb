@@ -90,3 +90,9 @@ end
 Before '@javascript','@small_screen' do
   switch_browser_size(:small)
 end
+
+After '@javascript' do |scenario|
+  if scenario.failed?
+    $stderr.puts(page.driver.console_messages) rescue nil
+  end
+end
