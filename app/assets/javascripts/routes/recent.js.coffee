@@ -5,3 +5,5 @@ Cataract.RecentRoute = Ember.Route.extend
     @_super(c,m)
 
     @controllerFor('application').set 'mode', 'recent'
+    m.gotoFirstPage()
+    m.didRequestRange()
