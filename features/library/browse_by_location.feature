@@ -35,7 +35,6 @@ Feature: Browsing the library
        | Long Season       | directory "FrownsR" |
        | Short Blockbuster | directory "Movies"  |
       And I am on the recent list page
-      And I wait for the spinner to disappear
 
      When I follow "Series" within the sidebar directory list
      Then I should not see "Season"

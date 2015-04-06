@@ -5,7 +5,8 @@ class DiskSerializer < BaseSerializer
              :size,
              :free
 
-  has_many   :directories
+  # TODO fetch only disks when polydisktree can act properly on PromisedArray
+  # has_many   :directories
 
   def attributes
     super.tap do |a|
