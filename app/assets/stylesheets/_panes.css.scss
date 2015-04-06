@@ -82,21 +82,6 @@ $minimized: 10%;
           float: left;
           margin: 5px 0;
         }
-        .status-message {
-          // must fit into bar. Maybe resize on hover?
-          float: left;
-          overflow: hidden;
-          white-space: nowrap;
-          max-width: 3em;
-          transition: max-width 0.3s ease-in-out;
-          -webkit-transition: max-width 0.3s ease-in-out;
-          margin-left: 0.3em;
-
-          &:hover {
-            max-width: 23em;
-            cursor: pointer;
-          }
-        }
         .alert {
           padding: 0.5em;
           margin: 0;
