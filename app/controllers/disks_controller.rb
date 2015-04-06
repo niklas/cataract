@@ -5,6 +5,6 @@ class DisksController < InheritedResources::Base
   protected
   def collection
     authorize! :index, Disk
-    @disks ||= end_of_association_chain.order('name')
+    @disks ||= end_of_association_chain.order('name').includes(:directories)
   end
 end

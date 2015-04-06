@@ -4,14 +4,17 @@ module Cataract
 
     def find_title(torrent)
       debrand(torrent.filename) ||
-      from_content(torrent.content_filenames) ||
+      from_content(torrent) ||
       (torrent.url.present? && debrand(File.basename(torrent.url)) )   ||
       (torrent.persisted?? "Torrent ##{torrent.id}" : "new Torrent")
     end
 
   private
 
-    def from_content(files)
+    def from_content(torrent)
+      return unless torrent.respond_to?(:content_filenames)
+
+      files = torrent.content_filenames
       if files.present?
         if found = files.grep(SignificantFiles)
           clean = found.first.gsub(SignificantFiles, '')
