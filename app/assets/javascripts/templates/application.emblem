@@ -12,6 +12,7 @@
       .navbar-text
         status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason
       .collapse.navbar-collapse
+        button.btn.btn-xs.navbar-btn click="refreshTransfers" refresh
         form.navbar-form.navbar-left role="search"
           .form-group
             delayed-input value=controller.terms classNames="form-control search-query" elementId="torrent_search_terms"
@@ -28,7 +29,6 @@
     = outlet
   #bar.well class={detailsExtended:up}
     = outlet 'bar'
-    button.btn.navbar-btn click="refreshTransfers" refresh
     pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="nav navbar-nav pagination pagination-centered"
   #details class={detailsExtended:extended}
     = outlet 'details'
