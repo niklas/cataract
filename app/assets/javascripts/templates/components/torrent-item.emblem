@@ -1,4 +1,3 @@
 .col-md-5.title
-  link-to 'torrent' content
-    = content.title
+  = content.title
 partial 'torrent-details'
