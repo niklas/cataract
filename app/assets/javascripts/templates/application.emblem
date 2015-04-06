@@ -20,7 +20,7 @@
           = outlet 'nav'
           = partial "torrents/navigation"
           = render 'moves'
-        rails-session
+        rails-session classNames="nav navbar-nav navbar-right"
     flash-list
 #sidebar
   = render 'directories'

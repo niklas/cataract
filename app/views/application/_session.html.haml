@@ -1,22 +1,21 @@
 - handlebars ||= false
-%ul#session.navbar-nav.nav.navbar-right
-  - if user_signed_in?
-    %li.dropdown
-      %a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-        %span.name= current_user.email
-        = caret_tag
-      %ul.dropdown-menu
-        - if can? :edit, current_user
-          %li= link_to :profile, edit_user_registration_path
-        - if handlebars
-          %li {{#link-to 'settings'}}Settings{{/link-to}}
-        %li.divider
-        = li_link :changes, github_changes_url
-        = li_link :updates, github_updates_url
-        = li_link :problems, github_issues_url
-        %li.divider
-        %li= link_to :signout, destroy_user_session_path, :method => :delete
-  - else
-    - unless Setting.singleton.disable_signup?
-      = li_link :signup, new_user_registration_path, can: [:create, User]
-    %li= link_to :signin, new_user_session_path
+- if user_signed_in?
+  %li.dropdown
+    %a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
+      %span.name= current_user.email
+      = caret_tag
+    %ul.dropdown-menu
+      - if can? :edit, current_user
+        %li= link_to :profile, edit_user_registration_path
+      - if handlebars
+        %li {{#link-to 'settings'}}Settings{{/link-to}}
+      %li.divider
+      = li_link :changes, github_changes_url
+      = li_link :updates, github_updates_url
+      = li_link :problems, github_issues_url
+      %li.divider
+      %li= link_to :signout, destroy_user_session_path, :method => :delete
+- else
+  - unless Setting.singleton.disable_signup?
+    = li_link :signup, new_user_registration_path, can: [:create, User]
+  %li= link_to :signin, new_user_session_path
