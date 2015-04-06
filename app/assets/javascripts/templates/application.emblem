@@ -27,9 +27,8 @@
 #middle
   #content.container-fluid class={detailsExtended:shrunk}
     = outlet
-  #bar.well class={detailsExtended:up}
-    = outlet 'bar'
-    pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="nav navbar-nav pagination pagination-centered"
+  nav#bar.navbar.navbar-default.navbar-fixed-bottom
+    pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="nav navbar-nav navbar-right pagination pagination-centered"
   #details class={detailsExtended:extended}
     = outlet 'details'
 

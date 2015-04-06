@@ -23,7 +23,7 @@ $minimized: 10%;
     #header {
       z-index: 5;
     }
-    #sidebar, #middle, #details, #content {
+    #sidebar, #details {
       /* overflow: hidden; causes #content to shift up ~32px under the #header in cromium */
       position: absolute;
     }
@@ -62,29 +62,13 @@ $minimized: 10%;
       }
 
       #bar {
-        position: absolute;
         z-index: 2;
-        width: 100%;
-        left: 0;
-        height: $barheight;
-        transition: bottom 0.7s ease-in-out;
-        bottom: 0;
-        padding: 1px; // well adds too much
-        margin-bottom: -2px;
-        &.up {
-          bottom: $smaller_half;
-        }
-        .nav {
-          float: left;
-          margin-bottom: 0;
-        }
+        padding-left: 1em;
+        padding-right: 1em;
+        left: initial; /* navbar should not span full width */
+
         .pagination {
-          float: left;
-          margin: 5px 0;
-        }
-        .alert {
-          padding: 0.5em;
-          margin: 0;
+            margin: 10px 0;
         }
       }
 
