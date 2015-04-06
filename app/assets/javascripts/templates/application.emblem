@@ -28,11 +28,9 @@ nav.navbar.navbar-default.navbar-fixed-top role="navigation"
       = render 'directories'
     #content.col-md-9
       = outlet
-      = outlet 'details'
 
 nav#bar.navbar.navbar-default.navbar-fixed-bottom
   pagination-group hasPrevious=controllers.torrents.hasPrevious previous="previousPage" next="nextPage" hasNext=controllers.torrents.hasNext classNames="nav navbar-nav navbar-right pagination pagination-centered"
-#details class={detailsExtended:extended}
 
 = outlet 'modal'
 if adding

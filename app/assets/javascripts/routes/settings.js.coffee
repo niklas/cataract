@@ -1,3 +1,3 @@
-Cataract.SettingsRoute = Cataract.DetailedRoute.extend
+Cataract.SettingsRoute = Ember.Route.extend
   model: ->
     @get('store').find('setting', 'all')

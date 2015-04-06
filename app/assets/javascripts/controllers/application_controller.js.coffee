@@ -55,9 +55,6 @@ Cataract.ApplicationController = Ember.Controller.extend
         dir = dirs.findProperty('disk.id', '' + disk)
     dir
 
-  detailsRouteActive: false
-  detailsExtended: Ember.computed.alias('detailsRouteActive')
-
   # TODO i18n
   # human readable current age
   describedAge:
