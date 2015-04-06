@@ -1,9 +1,5 @@
 $golden_ratio: 1.618;
 $smaller_half_factor: 1 / (1 + $golden_ratio);
-$bigger_half_factor:  1 - $smaller_half_factor;
-$smaller_half: 100% * $smaller_half_factor;
-$bigger_half:  100% * $bigger_half_factor;
-$minimized: 10%;
 
 @media (max-width: 766px) {
   #sidebar {
@@ -23,45 +19,20 @@ $minimized: 10%;
     #header {
       z-index: 5;
     }
-    #sidebar, #details {
-      /* overflow: hidden; causes #content to shift up ~32px under the #header in cromium */
-      position: absolute;
-    }
 
     #sidebar {
-      top: $navbar_shift;
-      bottom: 0;
-      left: 0;
-      width: $smaller_half;
       overflow-y: auto;
       z-index: -5;
 
       padding: 0 1em;
     }
-    #middle {
-      top: $navbar_shift;
-      bottom: 0;
-      right: 0;
-      left: $smaller_half;
-      z-index: -5;
 
-      #details, #content {
-        left: 0;
-        right: 0;
-        overflow-y: auto;
-      }
+    #content {
+      overflow-y: auto;
+    }
 
-      #content {
-        top: 0;
-        bottom: $minimized;
-        transition: bottom 0.7s ease-in-out;
-        padding-bottom: 0.7 * $barheight;
-        &.shrunk {
-          bottom: $smaller_half;
-        }
-      }
 
-      #bar {
+    #bar {
         z-index: 2;
         padding-left: 1em;
         padding-right: 1em;
@@ -70,31 +41,7 @@ $minimized: 10%;
         .pagination {
             margin: 10px 0;
         }
-      }
-
-      #details {
-        top: 100% - $minimized;
-        bottom: 0;
-        padding-top: 0.7 * $barheight;
-        transition: top 0.7s ease-in-out;
-        visibility: hidden; // no garbled content while animating out
-        &.extended {
-          top: $bigger_half;
-          visibility: visible;
-        }
-      }
     }
+
   }
-}
-
-// on desktops, do not grow sidebar
-@media (min-width: 992px) {
-    body {
-        #sidebar {
-            width: $smaller_half_factor * 992px;
-        }
-        #middle {
-            left: $smaller_half_factor * 992px;
-        }
-    }
 }
