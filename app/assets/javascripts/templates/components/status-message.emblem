@@ -1,6 +1,5 @@
 if isOnline
-  .alert.alert-success OK
+  | Online
 else
-  .alert.alert-danger= errorMessage
+  | Offline
 
-button.btn click="refreshStatus" refresh

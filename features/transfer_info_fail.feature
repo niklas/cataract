@@ -38,5 +38,5 @@ Feature: Transfer info failure
     Given I am on the home page
      When the tick interval is reached
       And I wait for the spinner to disappear
-     Then I should see "Connection to rtorrent refused"
+     Then I should see "Connection to rtorrent refused" as status title
 

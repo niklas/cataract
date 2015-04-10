@@ -107,3 +107,7 @@ When /^I close all flash messages$/ do
   step 'all animations are disabled'
   all('.flash .close').each(&:click)
 end
+
+Then /^(?:|I )should see "([^"]*)" as status title$/ do |text|
+  page.should have_css(".status[title='#{text}']")
+end

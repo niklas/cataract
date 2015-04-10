@@ -1,8 +1,20 @@
 Cataract.StatusMessageComponent = Ember.Component.extend
-  classNames: ['status-message']
   isOnline: false
   errorMessage: ''
-  actions:
-    refreshStatus: ->
-      @sendAction('refresh')
 
+  tagName: 'span'
+  classNames: ['label']
+  classNameBindings: ['labelSeverity']
+  attributeBindings: ['title']
+
+  labelSeverity: Ember.computed 'isOnline', ->
+    if @get('isOnline')
+      'label-success'
+    else
+      'label-danger'
+
+  title: Ember.computed 'isOnline', 'errorMessage', ->
+    unless @get('isOnline')
+      @get('errorMessage')
+
+  click: -> @sendAction()
