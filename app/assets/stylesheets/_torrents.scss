@@ -45,7 +45,7 @@ ul.torrents {
       float: right;
       margin: 5px;
     }
-    .rates, .rates > div, .size {
+    .rates, .rates > div {
       float: left;
       margin: 5px;
     }
@@ -82,8 +82,12 @@ ul.torrents {
     }
 
     &.collapsed {
-        .btn span.text {
-            display: none;
+        .btn {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            span.text {
+                display: none;
+            }
         }
     }
 
