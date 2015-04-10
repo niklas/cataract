@@ -1,10 +1,6 @@
 attr = DS.attr
 
 Cataract.Directory = Cataract.BaseDirectory.extend
-  fullPath:
-    Ember.computed ->
-      [@get('disk.path'), @get('relativePath')].join('/')
-    .property('disk.path', 'relativePath')
   subscribed: attr('boolean')
   filter: attr('string')
   torrents: DS.hasMany('torrent')

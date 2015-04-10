@@ -1,7 +1,8 @@
 link-to (query-params path=content.directory.relativePath) class="content_directory_name"
   directory-item content=content.directory
 unless isCollapsed
-  .content_directory_path title=content.directory.fullPath
+  disk-item content=content.directory.disk statsVisible=false
+  .content_directory_path title=content.directory.pathWithDisk
     = content.directory.relativePath
   .files-meta
     .payload-size= content.humanSize
