@@ -12,10 +12,14 @@ Cataract.TorrentItemComponent = Ember.Component.extend
   tagName: 'li'
   activeBinding: 'childViews.firstObject.active'
   isCollapsed: true
+  isShowingFiles: false
 
   click: (e) ->
     unless $(e.target).is('a,button')
       @toggleProperty 'isCollapsed'
+
+  isNotCollapsed: Ember.computed.not 'isCollapsed'
+  showPayload: Ember.computed.and 'content.payloadPresent', 'isNotCollapsed'
 
 
   # just forward from torrent-transfer
@@ -26,3 +30,6 @@ Cataract.TorrentItemComponent = Ember.Component.extend
     start:  (t)-> @sendAction 'startAction', t
     stop:   (t)-> @sendAction 'stopAction', t
     dialog: (t)-> @sendAction 'dialogAction', t, @get('content')
+    toggleFiles: ->
+      @toggleProperty 'isShowingFiles'
+      false

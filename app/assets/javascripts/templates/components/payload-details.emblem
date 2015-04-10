@@ -1,15 +1,8 @@
-.content_directory_name= content.directory.name
+link-to (query-params path=content.directory.relativePath) class="content_directory_name"
+  directory-item content=content.directory
 unless isCollapsed
-  .content_directory_path title=content.directory.fullPath
+  disk-item content=content.directory.disk statsVisible=false
+  .content_directory_path title=content.directory.pathWithDisk
     = content.directory.relativePath
   .files-meta
     .payload-size= content.humanSize
-    button.btn.btn-small.count click="toggleFiles"
-      = content.filesCount
-
-  if isShowingFiles
-    .row-fluid
-      .span12
-        ul.files
-          each fn in content.filenames
-            li= fn

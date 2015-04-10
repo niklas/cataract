@@ -496,7 +496,6 @@ http_interactions:
         MzQ1MWU0OnBhdGhsOTp0YWlscy5wbmdlZWU0Om5hbWU3OmNvbnRlbnQxMjpw
         aWVjZSBsZW5ndGhpMjYyMTQ0ZTY6cGllY2VzMjA6bIl21Tuj9K6dGEsMJg6+
         TWTI9yBlZQ==
-
     http_version: 
   recorded_at: Sat, 28 Mar 2015 16:37:47 GMT
 - request:
@@ -573,8 +572,7 @@ http_interactions:
         ZDg6YW5ub3VuY2UzMDpodHRwOi8vMTI3LjAuMC4xOjY5NjkvYW5ub3VuY2Ux
         MzpjcmVhdGlvbiBkYXRlaTEzMjM1NjQxNThlNDppbmZvZDY6bGVuZ3RoaTcz
         NDUxZTQ6bmFtZTk6dGFpbHMucG5nMTI6cGllY2UgbGVuZ3RoaTI2MjE0NGU2
-        OnBpZWNlczIwOr6kcgJtGGgwiVM9tKl37H+YOaALZWU
-
+        OnBpZWNlczIwOr6kcgJtGGgwiVM9tKl37H+YOaALZWU=
     http_version: 
   recorded_at: Sat, 28 Mar 2015 16:37:57 GMT
 recorded_with: VCR 2.9.3

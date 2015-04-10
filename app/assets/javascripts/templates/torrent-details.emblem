@@ -4,17 +4,17 @@
   if content.isRunning
     span.badge.eta= content.transfer.eta
 
-.col-md-2.payload.clearfix
+.col-md-3.payload.clearfix
   if content.payloadPresent
     payload-details content=content.payload isCollapsed=isCollapsed
-    icon-button action='dialog' param='clearPayload' severity="danger" icon="trash" name="clear" | remove Content
-    unless content.isMoving
-      icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move
+    unless isCollapsed
+      unless content.isMoving
+        icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move
   if content.payloadExists
     unless isCollapsed
       p= info_hash
 
-.col-md-3
+.col-md-3.text-right
   unless content.isRemote
     torrent-transfer content=content tagName='span'
 

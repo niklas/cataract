@@ -2,9 +2,10 @@ link-to (query-params disk=content.id) class="name"
   i.glyphicon class={isMounted:glyphicon-hdd:glyphicon-warning-sign}
   '
   span.name= label
-dl.stat
-  dt Size
-  dd.size= human-kilo-bytes content.size short=true
-  dt Free
-  dd.free= human-kilo-bytes content.free short=true
+if statsVisible
+  dl.stat
+    dt Size
+    dd.size= human-kilo-bytes content.size short=true
+    dt Free
+    dd.free= human-kilo-bytes content.free short=true
 = yield

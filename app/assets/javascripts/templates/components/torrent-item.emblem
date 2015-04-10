@@ -1,3 +1,13 @@
-.col-md-5.title
-  = content.title
+.col-md-5
+  if showPayload
+    button.btn.btn-sm.count.pull-right click="toggleFiles"
+      = content.payload.filesCount
+  .title
+    = content.title
+
+  if showPayload
+    if isShowingFiles
+      payload-files content=content.payload.filenames
+      icon-button action='dialog' param='clearPayload' severity="danger" icon="trash" name="clear" | remove Content
+
 partial 'torrent-details'
