@@ -1,0 +1,3 @@
+ul.files.list-group
+  each fn in content
+    li.list-group-item= fn

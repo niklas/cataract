@@ -45,9 +45,13 @@ ul.torrents {
       float: right;
       margin: 5px;
     }
-    .rates, .rates > div, .size, .count {
+    .rates, .rates > div, .size {
       float: left;
       margin: 5px;
+    }
+
+    ul.files {
+        margin-top: 2em;
     }
 
     .progress {

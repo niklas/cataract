@@ -4,12 +4,3 @@ unless isCollapsed
     = content.directory.relativePath
   .files-meta
     .payload-size= content.humanSize
-    button.btn.btn-small.count click="toggleFiles"
-      = content.filesCount
-
-  if isShowingFiles
-    .row-fluid
-      .span12
-        ul.files
-          each fn in content.filenames
-            li= fn
