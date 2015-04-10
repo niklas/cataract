@@ -1,0 +1,3 @@
+i class={:glyphicon content.exists:glyphicon-folder-open:glyphicon-warning-sign}
+'
+= content.name

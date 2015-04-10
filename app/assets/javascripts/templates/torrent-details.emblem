@@ -4,7 +4,7 @@
   if content.isRunning
     span.badge.eta= content.transfer.eta
 
-.col-md-2.payload.clearfix
+.col-md-3.payload.clearfix
   if content.payloadPresent
     payload-details content=content.payload isCollapsed=isCollapsed
     unless isCollapsed

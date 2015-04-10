@@ -8,7 +8,8 @@ Feature: Payload of a torrent
 
   Background:
     Given a series exists with title: "Lolcats"
-      And a directory "A" exists with name: "Cat Pictures", relative_path: "pictures/cats"
+      And a directory "P" exists with name: "Pictures", relative_path: "pictures"
+      And a directory "A" exists with name: "Cat Pictures", relative_path: "pictures/cats", parent: directory: "P"
       And a torrent_with_picture_of_tails exists with series: the series, title: "Tails", content_directory: directory "A"
       And the file for the torrent exists
       And the torrent's content exists on disk

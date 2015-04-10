@@ -1,4 +1,5 @@
-.content_directory_name= content.directory.name
+link-to (query-params path=content.directory.relativePath) class="content_directory_name"
+  directory-item content=content.directory
 unless isCollapsed
   .content_directory_path title=content.directory.fullPath
     = content.directory.relativePath

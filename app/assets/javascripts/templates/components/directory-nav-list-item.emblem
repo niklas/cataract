@@ -1,7 +1,5 @@
 link-to (query-params path=content.relativePath) class="name"
-  i class={:glyphicon content.exists:glyphicon-folder-open:glyphicon-warning-sign}
-  '
-  = content.name
+  directory-item content=content
 
 if content.hasSubDirs
   a.toggle.glyphicon.glyphicon-arrow-down
