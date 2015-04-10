@@ -9,7 +9,7 @@ nav.navbar.navbar-default.navbar-fixed-top role="navigation"
         | Cataract
         loading-spinner
     .navbar-text
-      status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason classNames="status"
+      status-message isOnline=transferStatus.online errorMessage=transferStatus.offlineReason classNames="status" action="refreshTransfers"
     .collapse.navbar-collapse
       button.btn.btn-xs.navbar-btn click="refreshTransfers" refresh
       form.navbar-form.navbar-left role="search"

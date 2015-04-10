@@ -6,9 +6,10 @@ When /^I scroll to the bottom$/ do
 end
 
 When /^the tick interval is reached$/ do
-  click_button 'refresh'
+  sel = 'nav .status'
+  page.should have_css(sel), 'need a button or something to click on to generate a tick'
+  page.find(sel).click
   some_time_passes
-  sleep 1 # give ember a second
 end
 
 When /^I confirm popup$/ do

@@ -16,3 +16,5 @@ Cataract.StatusMessageComponent = Ember.Component.extend
   title: Ember.computed 'isOnline', 'errorMessage', ->
     unless @get('isOnline')
       @get('errorMessage')
+
+  click: -> @sendAction()
