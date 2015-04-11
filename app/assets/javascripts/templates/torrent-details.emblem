@@ -5,8 +5,10 @@
     span.badge.eta= content.transfer.eta
 
 .col-md-3.payload.clearfix
-  if content.payloadPresent
-    payload-details content=content.payload isCollapsed=isCollapsed
+  link-to (query-params path=content.contentDirectory.relativePath) class="content_directory_name"
+    directory-item content=content.contentDirectory
+  if showPayload
+    payload-details content=content.payload
     unless isCollapsed
       unless content.isMoving
         icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move

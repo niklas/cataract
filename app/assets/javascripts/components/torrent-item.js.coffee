@@ -19,7 +19,7 @@ Cataract.TorrentItemComponent = Ember.Component.extend
       @toggleProperty 'isCollapsed'
 
   isNotCollapsed: Ember.computed.not 'isCollapsed'
-  showPayload: Ember.computed.and 'content.payloadPresent', 'isNotCollapsed'
+  showPayload: Ember.computed.and 'content.payloadExists', 'isNotCollapsed'
 
 
   # just forward from torrent-transfer
