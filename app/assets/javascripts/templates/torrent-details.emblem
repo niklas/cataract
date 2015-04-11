@@ -1,8 +1,6 @@
 .col-md-1.size.clearfix
   if content.payloadExists
     span.payload_size= human-kilo-bytes content.payloadBytes short=true
-  if content.isRunning
-    span.badge.eta= content.transfer.eta
 
 .col-md-3.payload.clearfix
   link-to (query-params path=content.contentDirectory.relativePath) class="content_directory_name"

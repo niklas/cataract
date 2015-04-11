@@ -61,10 +61,10 @@ ul.torrents {
         &.percent {
           left: 10%;
         }
-        &.eta {
-          right: 10%;
-        }
       }
+    }
+    .eta {
+        float: left;
     }
     &.more {
       cursor: pointer;
