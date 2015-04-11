@@ -10,7 +10,7 @@ Cataract.CreateTorrentController = Ember.ObjectController.extend
 
   # Future Torrent attributes
   url:                    null
-  contentPolyDirectory:   null
+  contentPolyDirectory:   Ember.computed.oneWay 'controllers.settings.incomingDirectory.poly'
   filename:               null
   filedata:               null
 

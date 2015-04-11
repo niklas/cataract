@@ -9,13 +9,14 @@ Cataract.ApplicationRoute = Ember.Route.extend
     , (jqxhr)=>
       @controllerFor('application').transfersError(jqxhr)
 
-    Ember.RSVP.hash
-      settings: store.find('setting', 'all')
-      disks:     store.findAll('disk')
-      directories: @controllerFor('directories').get('directories')
-    .then (loaded)=>
-      @controllerFor('settings').set 'model', loaded.settings
-      @controllerFor('disks').set    'model', loaded.disks
+    store.find('setting', 'all').then (settings)=>
+      @controllerFor('settings').set 'model', settings
+
+      Ember.RSVP.hash
+        disks:     store.findAll('disk')
+        directories: @controllerFor('directories').get('directories')
+      .then (loaded)=>
+        @controllerFor('disks').set    'model', loaded.disks
 
   actions:
     save: (model)->
