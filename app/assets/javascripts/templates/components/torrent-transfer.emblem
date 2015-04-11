@@ -1,5 +1,6 @@
 if content.isRunning
   transfer-bar content=content.transfer
+  span.eta= content.transfer.eta
 
   icon-button action='stop' param=content severity="danger" icon="stop" | Stop
 else

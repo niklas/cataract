@@ -1,6 +1,6 @@
 Cataract.DeleteTorrentController = Ember.ObjectController.extend
   deletePayload: false
-  askForPayloadBinding: 'content.payloadPresent'
+  askForPayloadBinding: 'content.payloadExists'
   actions:
     deleteTorrent: ->
       torrent = @get('content')
