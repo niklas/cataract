@@ -14,8 +14,7 @@ Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
   isLoaded: Ember.computed.not('directories.isPending')
 
   loadAllDirectories: (->
-    Ember.run.later =>
-      @set 'directories', @get('store').findAll('directory')
+    @set 'directories', @get('store').findAll('directory')
    ).on('init')
 
   findPolyByPath: (path)->
