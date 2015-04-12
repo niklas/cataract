@@ -1,5 +1,10 @@
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
+    # just wait a bit for all the transitions to load
+    Ember.run.later =>
+      @send 'refreshTransfersAutomatically'
+    , 5555
+
     # FIXME is this really needed with all the promises and needs?
     store = @get('store')
     @controllerFor('moves').set       'model', store.findAll('move')
@@ -27,6 +32,13 @@ Cataract.ApplicationRoute = Ember.Route.extend
       if controller = @controllerFor('torrents')
         # TODO Spinner?
         controller.refreshTransfers()
+
+    refreshTransfersAutomatically: ->
+      @send 'refreshTransfers'
+      Ember.run.later =>
+        @send 'refreshTransfersAutomatically'
+      , 5555
+
     openModal: (modalName, model) ->
       model = model.get('content') if model.isController
       @controllerFor(modalName).set "model", model
