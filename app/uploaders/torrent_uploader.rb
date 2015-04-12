@@ -41,7 +41,7 @@ class TorrentUploader < CarrierWave::Uploader::Base
   private
 
   def set_filename_on_model
-    model.filename = filename
+    model.filename ||= filename
   end
 
   def set_info_hash

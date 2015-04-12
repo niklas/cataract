@@ -40,67 +40,26 @@ Feature: recognize torrents
   @todo
   Scenario: recognize torrent's contents somewhere (with mlocate)
 
+  @vcr
   Scenario: auto-fetch torrents for tv-shows in subscribed directories
     Given a disk exists with path: "media"
-      And a torrent exists with filename: "fefebestfrowns.torrent"
+      And a torrent exists with filename: "[kickass.to]ow-my-balls-s23e44.720p.x264.hdtv.mvgroup.org.torrent"
       And the following directories exist:
         | directory | relative_path | subscribed | filter | disk     |
-        | torrents  | torrents      | true       | frowns | the disk |
-      And a feed exists with url: "http://ezrss.it/shows.rss"
-      And the URL "http://ezrss.it/shows.rss" points to the following content:
-      """
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <!DOCTYPE torrent PUBLIC "-//bitTorrent//DTD torrent 0.1//EN" "http://xmlns.ezrss.it/0.1/dtd/">
-        <rss version="2.0">
-          <channel>
-            <item>
-              <title><![CDATA[Shame of Frowns - Final 7x24 [ROFLTV - KAGROUP]]]></title>
-              <link>http://torrent.zoink.it/Shame of Frowns s07e24.torrent</link>
-              <description><![CDATA[Show Name: Shame of Frowns - A Song of Clowns and Desire]]></description>
-              <enclosure url="http://torrent.zoink.it/Shame of Frowns s07e24.torrent" length="12345" type="application/x-bittorrent" />
-              <torrent xmlns="http://xmlns.ezrss.it/0.1/">
-                <fileName><![CDATA[http://torrent.zoink.it/Shame of Frowns s07e24.torrent]]></fileName>
-                <contentLength>12345</contentLength>
-                <infoHash>AFFEAFFEAFFEAFFEAFFEAFFEAFFEAFFEAFFEAFFE</infoHash>
-              </torrent>
-            </item>
-            <item>
-              <title><![CDATA[Love and the Village]]></title>
-              <link>http://torrent.zoink.it/love and the village.torrent</link>
-              <description><![CDATA[Love and the Village]]></description>
-              <enclosure url="http://torrent.zoink.it/love and the village.torrent" length="23456" type="application/x-bittorrent" />
-              <torrent xmlns="http://xmlns.ezrss.it/0.1/">
-                <fileName><![CDATA[http://torrent.zoink.it/love and the village.torrent]]></fileName>
-                <contentLength>12345</contentLength>
-                <infoHash>7070707070707070707070707070707070707070</infoHash>
-              </torrent>
-            </item>
-            <item>
-              <title><![CDATA[Fefe Best Of Frowns]]></title>
-              <link>http://torrent.zoink.it/fefebestfrowns.torrent</link>
-              <description><![CDATA[Fefe Best of Frowns]]></description>
-              <enclosure url="http://torrent.zoink.it/fefebestfrowns.torrent" length="23456" type="application/x-bittorrent" />
-              <torrent xmlns="http://xmlns.ezrss.it/0.1/">
-                <fileName><![CDATA[http://torrent.zoink.it/fefebestfrowns.torrent]]></fileName>
-                <contentLength>12345</contentLength>
-                <infoHash>FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE</infoHash>
-              </torrent>
-            </item>
-          </channel>
-        </rss>
-      """
-      And the URL "http://torrent.zoink.it/Shame of Frowns s07e24.torrent" points to file "single.torrent"
+        | torrents  | torrents      | true       | o      | the disk |
+      And a feed exists with url: "https://kickass.to/usearch/user:eztv/?rss=1"
      When the Recognizer runs
-     Then a torrent "frowns" should exist with filename: "Shame_of_Frowns_s07e24.torrent", url: "http://torrent.zoink.it/Shame of Frowns s07e24.torrent"
+     Then a torrent should exist with title: "Electophobia S01E02"
+      And the torrent's filename should be "[kickass.to]elecophobia.s010e02.720p.x264.hdtv.mvgroup.org.torrent"
       And directory "torrents" should be the torrent's content_directory
       And the torrent's file should exist on disk
       And the torrent's info_hash should not be blank
       And the torrent's current_state should be "running"
 
       # did not match filter
-      But a torrent should not exist with url: "http://torrent.zoink.it/love and the village.torrent"
+      And a torrent should not exist with title: "Cakes S06E25"
       # already exists ( by filename )
-      And a torrent should not exist with url: "http://torrent.zoink.it/fefebestfrowns.torrent"
+      But a torrent should not exist with title: "Ow my Balls S23E44"
 
 
   @todo

@@ -30,7 +30,7 @@ class Torrent
     end
 
     def original_filename
-      filename_from_response
+      torrent.filename.presence || filename_from_response
     end
 
     private
@@ -73,8 +73,6 @@ class Torrent
              cdis.sub(/^.*filename=(.+)$/,'\1').
                   sub(/^"+/, '').
                   sub(/"+$/, '')
-           elsif !torrent.url.blank?
-             torrent.url.sub(/.*\//,'')
            else
              %Q[downloaded-torrent-#{torrent.id}]
            end
@@ -117,9 +115,11 @@ class Torrent
 
   def set_filename_from_url
     if filename.blank? && url.present?
-      self.filename = File.basename url
+      res = ExtractFilenameFromURL.call(url: url)
+      if res.success?
+        self.filename = res.filename
+      end
     end
-  rescue Exception => e
   end
 
 end
