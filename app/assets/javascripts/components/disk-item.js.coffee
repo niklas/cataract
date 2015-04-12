@@ -5,7 +5,7 @@ Cataract.DiskItemComponent = Ember.Component.extend
   label:     defaultTo 'content.name'
   isMounted: defaultTo 'content.isMounted'
   tagName: 'li'
-  classNames: ['disk']
+  classNames: ['disk', 'list-group-item']
   classNameBindings: [
     'active'
     'isMounted:mounted:unmounted'
