@@ -23,6 +23,92 @@ Feature: Browsing the library
       | Movies    | disk "Stuff"     | Movies          |                     | false   |               | false         |
       | Frowns    | disk "More"      | Shame of Frowns | directory "Series"  | true    |               | false         |
       | FrownsR   | disk "Removable" | Shame of Frowns | directory "SeriesR" | true    |               | false         |
+      | FrownsR   | disk "Removable" | Ow my Balls     | directory "SeriesR" | true    |               | false         |
+
+  Scenario: browsing around the filesystem
+    Given I am on the home page
+
+    # show root polies
+     When I follow "Library"
+     Then I should see a list of the following polies:
+       | name   |
+       | Movies |
+       | Series |
+
+    # Stuff only has Movies
+     When I follow "Stuff"
+     Then I should see a list of the following directories:
+       | name   |
+       | Movies |
+
+    # Removable has both
+     When I follow "Removable"
+     Then I should see a list of the following directories:
+       | name   |
+       | Movies |
+       | Series |
+
+    # More has only Series
+     When I follow "More"
+     Then I should see a list of the following directories:
+       | name   |
+       | Series |
+
+    # back to root polies
+     When I follow "All"
+     Then I should see a list of the following polies:
+       | name   |
+       | Movies |
+       | Series |
+
+    # Only Stuff has Movies
+     When I follow "Movies"
+     Then I should see "Stuff" within the disks tab
+      But I should not see "More" within the disks tab
+      And I should not see "Removable" within the disks tab
+      And I should not see "Series" within the content
+
+    # up a dir to roots
+     When I follow "reset Directory" within the sidebar
+     Then I should see a list of the following polies:
+       | name   |
+       | Movies |
+       | Series |
+
+    # sub polies
+     When I follow "Series"
+     Then I should see a list of the following directories:
+       | name            |
+       | Oh my Balls     |
+       | Shame of Frowns |
+      But I should not see "Stuff" within the disks tab
+
+    # More has only on Series
+     When I follow "More"
+     Then I should see a list of the following directories:
+       | name            |
+       | Shame of Frowns |
+
+    # Removable has all Series
+     When I follow "Removable"
+     Then I should see a list of the following directories:
+       | name            |
+       | Oh my Balls     |
+       | Shame of Frowns |
+
+    # Subsub dir does only exist on "Removable"
+     When I follow "Oh my Balls"
+     Then I should see "Removable" within the disks tab
+      But I should not see "More" within the disks tab
+      And I should not see "Stuff" within the disks tab
+
+    # back to roots
+     When I follow "reset Directory" within the sidebar
+     Then I should see a list of the following polies:
+       | name   |
+       | Movies |
+       | Series |
+
 
 
   Scenario: torrents shown for directory ordered by something
