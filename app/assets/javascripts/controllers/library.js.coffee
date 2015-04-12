@@ -3,12 +3,14 @@ alias = Ember.computed.alias
 Cataract.LibraryController = Ember.Controller.extend
   needs: [
     'application'
+    'directories'
   ]
 
   polyBinding: 'controllers.application.poly'
   diskBinding: 'controllers.application.disk'
   directoryBinding: 'controllers.application.directory'
 
+  rootDirectoriesBinding: 'controllers.directories'
   noDirectory: Ember.computed.not 'directory'
   diskNavVisible: Ember.computed.and 'poly', 'noDirectory'
 

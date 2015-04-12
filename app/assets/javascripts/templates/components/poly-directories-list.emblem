@@ -1,0 +1,5 @@
+ul.polies.list-group
+  each dir in content
+    presentation-li classNames="list-group-item"
+      link-to (query-params path=dir.relativePath) classNames="name"
+        = dir.name

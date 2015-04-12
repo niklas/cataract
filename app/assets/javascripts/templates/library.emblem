@@ -2,4 +2,8 @@ if diskNavVisible
   poly-path-disk-nav content=poly
 
 = outlet
+if poly.hasSubDirs
+  poly-directories-list content=poly.children
+else
+  poly-directories-list content=rootDirectories
 torrents-list content=content.finalContent mode=mode
