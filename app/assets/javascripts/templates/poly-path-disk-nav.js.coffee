@@ -7,11 +7,8 @@ Cataract.PolyPathDiskNavComponent = Ember.Component.extend
     'row'
   ]
 
-  alternatives: c.alias 'content.alternatives'
-  firstAlternative: c.alias 'alternatives.firstObject'
-  disks:        c.mapProperty 'alternatives', 'disk'
-  allDiskSize:  c.mapProperty 'disks', 'size'
-  allDiskFree:  c.mapProperty 'disks', 'free'
+  allDiskSize:  c.mapProperty 'content', 'size'
+  allDiskFree:  c.mapProperty 'content', 'free'
   sumDiskSize:  c.sum 'allDiskSize'
   sumDiskFree:  c.sum 'allDiskFree'
 

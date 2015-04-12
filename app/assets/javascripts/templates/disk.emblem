@@ -13,11 +13,3 @@ if hasDetectedDirs
       li
         a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
         span.name= dir.name
-
-if hasDirectories
-  ul.directories.existing
-    each dir in directories
-      li
-        link-to 'directory' dir classNames="name"
-          = dir.name
-
