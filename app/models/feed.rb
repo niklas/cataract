@@ -5,6 +5,7 @@ class Feed < ActiveRecord::Base
 
   before_validation :set_url_as_title
 
+  # TODO use FetchRSSFeed
   def items
     parsed.items
   end
