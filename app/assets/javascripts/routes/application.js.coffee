@@ -1,9 +1,10 @@
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # just wait a bit for all the transitions to load
-    Ember.run.later =>
-      @send 'refreshTransfersAutomatically'
-    , 5555
+    if document.location.port is '80'
+      Ember.run.later =>
+        @send 'refreshTransfersAutomatically'
+      , 5555
 
     # FIXME is this really needed with all the promises and needs?
     store = @get('store')
