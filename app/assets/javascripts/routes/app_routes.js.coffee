@@ -12,3 +12,6 @@ Cataract.Router.map ->
       @route 'detect'
       @route 'children'
     @resource 'disk', path: 'disk/:disk_id'
+
+  @resource 'feeds', ->
+    @route 'show', path: ':feed_id'

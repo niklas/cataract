@@ -8,6 +8,7 @@
       - if can? :edit, current_user
         %li= link_to :profile, edit_user_registration_path
       - if handlebars
+        %li {{#link-to 'feeds'}}Feeds{{/link-to}}
         %li {{#link-to 'settings'}}Settings{{/link-to}}
       %li.divider
       = li_link :changes, github_changes_url
