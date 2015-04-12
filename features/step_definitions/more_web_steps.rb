@@ -16,7 +16,7 @@ When /^I choose state "([^"]*)"$/ do |state|
 end
 
 When /^I toggle the (?:menu|navigation)$/ do
-  page.find('a.btn-navbar').click
+  page.find('#session a.dropdown-toggle').click
 end
 
 When(/^I go back$/) do
@@ -79,7 +79,6 @@ Then /^I should be under page "(.*?)"$/ do |url_prefix|
 end
 
 When /^I open the (settings|feeds) menu$/ do |entry|
-  page.execute_script %Q~$('a.btn-navbar').click()~
   page.find('#session a.dropdown-toggle').click
   step %Q~I follow "#{entry.capitalize}"~
 end

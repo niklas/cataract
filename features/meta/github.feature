@@ -11,7 +11,6 @@ Feature: Github integration
       And I am signed in as the user
       And I am on the home page
      When I toggle the menu
-      And I follow "leecher@localhost.local"
      Then I should see external link "Changes" pointing to "https://github.com/niklas/cataract/commits"
       And I should see external link "Updates" pointing to "https://github.com/niklas/cataract/compare"
       And I should see external link "Problems" pointing to "https://github.com/niklas/cataract/issues"
