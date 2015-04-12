@@ -5,3 +5,5 @@ Cataract.LibraryIndexRoute = Ember.Route.extend
       @transitionTo 'directory', dir
     else if disk = app.get('disk')
       @transitionTo 'disk', disk
+    else unless app.get('poly')
+      @transitionTo queryParams: { path: '' }
