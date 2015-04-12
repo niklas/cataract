@@ -82,6 +82,7 @@ class Torrent
   end
 
   def fetch_from_url
+    set_filename_from_url
     if url.present? && !file_exists? && !downloaded?
       if download.go!
         self.file = download
