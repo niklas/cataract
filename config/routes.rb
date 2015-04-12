@@ -18,6 +18,7 @@ Cataract::Application.routes.draw do
   resources :disks
   resources :directories
   resources :remote_torrents, only: [:index]
+  resources :feeds, only: [:index]
 
   resource :scraping, only: [:new, :create] do
     member do

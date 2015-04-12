@@ -14,6 +14,7 @@ describe Torrent do
       it "should fetch from url when saving" do
         torrent.should_receive(:fetch_from_url).and_return(true)
         torrent.save!
+        torrent.filename.should == 'single.torrent'
       end
 
     end

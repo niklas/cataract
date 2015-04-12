@@ -11,6 +11,7 @@ class Ability
       can :manage, :payload # Emu
       can :manage, Torrent::Payload
       can :manage, Move
+      can :manage, Feed
     end
 
     unless settings.disable_signup?

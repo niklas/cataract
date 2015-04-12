@@ -5,24 +5,6 @@ class Feed < ActiveRecord::Base
 
   before_validation :set_url_as_title
 
-  def items
-    parsed.items
-  end
-
-  protected
-
-  def parsed_url
-    URI.parse(url)
-  end
-
-  def parsed
-    @parsed ||= FeedAbstract::Feed.new(fetched)
-  end
-
-  def fetched
-    Net::HTTP::get(parsed_url)
-  end
-
   private
   def set_url_as_title
     self.title = self.url if self.title.blank?

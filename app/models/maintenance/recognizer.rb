@@ -28,9 +28,9 @@ class Maintenance::Recognizer < Maintenance::Base
     [].tap do |created|
       Directory.subscribed.each do |directory|
         items_from_all_feeds.select do |item|
-          directory.regexp.match "#{item.summary} #{item.title}"
+          directory.regexp.match item.title
         end.each do |item|
-          torrent = Torrent.new(status: 'remote', url: item.link, content_directory: directory, title: item.title)
+          torrent = Torrent.new(status: 'remote', url: item.uri, content_directory: directory, title: item.title)
           if torrent.save
             created << torrent
           else
@@ -43,7 +43,14 @@ class Maintenance::Recognizer < Maintenance::Base
   end
 
   def items_from_all_feeds
-    @items ||= Feed.all.map(&:items).flatten
+    @items ||= Feed.all.map do |feed|
+      res = FetchTorrentsFromRSS.call feed: feed
+      if res.success?
+        res.torrents
+      else
+        [] # ignore failures
+      end
+    end.flatten
   end
 
 end

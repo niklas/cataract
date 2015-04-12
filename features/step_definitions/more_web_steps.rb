@@ -16,8 +16,7 @@ When /^I choose state "([^"]*)"$/ do |state|
 end
 
 When /^I toggle the (?:menu|navigation)$/ do
-  page.execute_script %Q~$('a.btn-navbar').click()~
-  sleep 0.5
+  page.find('#session a.dropdown-toggle').click
 end
 
 When(/^I go back$/) do
@@ -79,12 +78,9 @@ Then /^I should be under page "(.*?)"$/ do |url_prefix|
   current_url.should be_starts_with(url_prefix)
 end
 
-When /^I open the settings menu$/ do
-  steps <<-EOSTEPS
-     When I toggle the menu
-      And I follow "leecher@localhost.local"
-      And I follow "Settings"
-  EOSTEPS
+When /^I open the (settings|feeds) menu$/ do |entry|
+  page.find('#session a.dropdown-toggle').click
+  step %Q~I follow "#{entry.capitalize}"~
 end
 
 When /^(.*) in frame "([^"]+)"$/ do |inner, frame_id|

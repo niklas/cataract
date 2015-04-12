@@ -1,0 +1,4 @@
+.panel
+  h4 Something went horribly wrong
+  .alert.alert-danger
+    = content

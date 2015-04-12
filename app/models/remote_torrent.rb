@@ -12,12 +12,13 @@ class RemoteTorrent
   validates_presence_of :title, :uri, :id
 
   def id
-    @id ||= extract_id_from(magnet)
+    @id ||= extract_id_from(magnet) || extract_id_from(uri)
   end
 
   private
 
   def extract_id_from(source)
+    return unless source
     if source =~ /([A-F0-9]{40})/i
       $1
     end

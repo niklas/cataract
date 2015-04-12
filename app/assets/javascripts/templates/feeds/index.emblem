@@ -1,0 +1,8 @@
+ul.feeds.list-group.container-fluid
+  each feed in controller
+    li.feed.list-group-item.row
+      .col-sm-6
+        link-to 'feeds.show' feed classNames="title"
+          = feed.title
+      .col-sm-6
+        .url= feed.url

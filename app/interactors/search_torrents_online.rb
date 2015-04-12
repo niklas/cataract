@@ -1,5 +1,6 @@
 class SearchTorrentsOnline
   include Interactor
+  include InteractorLoggable
 
   def call
     filter = context.filter
@@ -34,11 +35,4 @@ class SearchTorrentsOnline
       context.fail! message: 'must have #filter set'
     end
   end
-
-  def debug(&block)
-    if context.logger
-      context.logger.debug &block
-    end
-  end
 end
-
