@@ -1,0 +1,102 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://kickass.to/usearch/user:eztv/?rss=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - kickass.to
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.7.10
+      Date:
+      - Sun, 12 Apr 2015 16:18:42 GMT
+      Content-Type:
+      - application/rss+xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.6.7-pl0-gentoo
+      Cache-Control:
+      - public
+      Set-Cookie:
+      - country_code=DE; Path=/;
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rss version="2.0" xmlns:torrent="http://xmlns.ezrss.it/0.1/">
+        <channel>
+            <title>Torrents by keyword "user:eztv" - KickassTorrents</title>
+            <link>http://kickass.to/</link>
+            <description>Torrents by keyword "user:eztv"</description>
+            <item>
+                <title>Cakes S06E25</title>
+
+                <category>TV</category>
+              <author>http://kickass.to/user/EZTV/</author>        <link>http://kickass.to/james-baker-the-man-who-made-washington-work-720p-hdtv-x264-mvgroup-org-t10494663.html</link>
+                <guid>http://kickass.to/james-baker-the-man-who-made-washington-work-720p-hdtv-x264-mvgroup-org-t10494663.html</guid>
+                <pubDate>Sun, 12 Apr 2015 15:00:57 +0000</pubDate>
+                <torrent:contentLength>1245156882</torrent:contentLength>
+                <torrent:infoHash>BD8DC3F89DA5969325CD6DA114CB3E14E2A8EB56</torrent:infoHash>
+                <torrent:magnetURI><![CDATA[magnet:?xt=urn:btih:BD8DC3F89DA5969325CD6DA114CB3E14E2A8EB56&dn=james+baker+the+man+who+made+washington+work+720p+hdtv+x264+mvgroup+org&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce]]></torrent:magnetURI>
+                <torrent:seeds>58</torrent:seeds>
+                <torrent:peers>75</torrent:peers>
+                <torrent:verified>1</torrent:verified>
+                <torrent:fileName>james.baker.the.man.who.made.washington.work.720p.hdtv.x264.mvgroup.org.torrent</torrent:fileName>
+                <enclosure url="http://torcache.net/torrent/BD8DC3F89DA5969325CD6DA114CB3E14E2A8EB56.torrent?title=[kickass.to]james.baker.the.man.who.made.washington.work.720p.hdtv.x264.mvgroup.org" length="1245156882" type="application/x-bittorrent" />
+            </item>
+            <item>
+                <title>Ow my Balls S23E44</title>
+
+                <category>TV</category>
+              <author>http://kickass.to/user/EZTV/</author>        <link>http://kickass.to/britains-got-the-builders-in-1of6-720p-x264-hdtv-mvgroup-org-t10494628.html</link>
+                <guid>http://kickass.to/britains-got-the-builders-in-1of6-720p-x264-hdtv-mvgroup-org-t10494628.html</guid>
+                <pubDate>Sun, 12 Apr 2015 14:51:04 +0000</pubDate>
+                <torrent:contentLength>1393369846</torrent:contentLength>
+                <torrent:infoHash>7C0514923994C5E2C1F0B49BEF3426E76B214447</torrent:infoHash>
+                <torrent:magnetURI><![CDATA[magnet:?xt=urn:btih:7C0514923994C5E2C1F0B49BEF3426E76B214447&dn=britains+got+the+builders+in+1of6+720p+x264+hdtv+mvgroup+org&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce]]></torrent:magnetURI>
+                <torrent:seeds>3</torrent:seeds>
+                <torrent:peers>14</torrent:peers>
+                <torrent:verified>1</torrent:verified>
+                <torrent:fileName>britains.got.the.builders.in.1of6.720p.x264.hdtv.mvgroup.org.torrent</torrent:fileName>
+                <enclosure url="http://torcache.net/torrent/7C0514923994C5E2C1F0B49BEF3426E76B214447.torrent?title=[kickass.to]britains.got.the.builders.in.1of6.720p.x264.hdtv.mvgroup.org" length="1393369846" type="application/x-bittorrent" />
+            </item>
+            <item>
+                <title>Electophobia S01E02</title>
+
+                <category>TV</category>
+              <author>http://kickass.to/user/EZTV/</author>        <link>http://kickass.to/our-world-2015-ukraines-fragile-ceasefire-720p-x264-hdtv-mvgroup-org-t10494142.html</link>
+                <guid>http://kickass.to/our-world-2015-ukraines-fragile-ceasefire-720p-x264-hdtv-mvgroup-org-t10494142.html</guid>
+                <pubDate>Sun, 12 Apr 2015 12:06:16 +0000</pubDate>
+                <torrent:contentLength>641327231</torrent:contentLength>
+                <torrent:infoHash>4B787A623FACC779FD3A37E0A8D06AE2CAB94C56</torrent:infoHash>
+                <torrent:magnetURI><![CDATA[magnet:?xt=urn:btih:4B787A623FACC779FD3A37E0A8D06AE2CAB94C56&dn=our+world+2015+ukraines+fragile+ceasefire+720p+x264+hdtv+mvgroup+org&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce]]></torrent:magnetURI>
+                <torrent:seeds>7</torrent:seeds>
+                <torrent:peers>34</torrent:peers>
+                <torrent:verified>1</torrent:verified>
+                <torrent:fileName>our.world.2015.ukraines.fragile.ceasefire.720p.x264.hdtv.mvgroup.org.torrent</torrent:fileName>
+                <enclosure url="http://torcache.net/torrent/4B787A623FACC779FD3A37E0A8D06AE2CAB94C56.torrent?title=[kickass.to]our.world.2015.ukraines.fragile.ceasefire.720p.x264.hdtv.mvgroup.org" length="641327231" type="application/x-bittorrent" />
+            </item>
+            </channel>
+        </rss>
+    http_version: 
+  recorded_at: Sun, 12 Apr 2015 16:18:43 GMT
+recorded_with: VCR 2.9.3

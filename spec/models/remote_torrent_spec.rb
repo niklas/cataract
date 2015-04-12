@@ -11,6 +11,14 @@ describe RemoteTorrent do
       )
       r.id.should == hash
     end
+
+    it 'is extracted from uri if magnet links does not succeed' do
+      r = described_class.new(
+        magnet: "magnet:",
+        uri: "http://torcache.net/torrent/#{hash}.torrent?title=foobar"
+      )
+      r.id.should == hash
+    end
   end
 
 end

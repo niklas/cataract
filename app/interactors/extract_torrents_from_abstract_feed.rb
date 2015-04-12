@@ -11,10 +11,10 @@ class ExtractTorrentsFromAbstractFeed
         context.torrents = found.map do |r|
           RemoteTorrent.new(
             title: r.title,
-            uri:   r.link
+            uri:   r.item.enclosure.url
           ).tap do |t|
             unless t.valid?
-              context.fail! message: "cannot integrate #{r.inspect}"
+              context.fail! message: "Could not build torrent: #{t.errors.full_messages.to_sentence}"
             end
           end
         end

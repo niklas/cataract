@@ -2,9 +2,9 @@ h2.title
   = title
   .small= url
 
-ul.remote-torrents.container-fluid
+ul.remote-torrents.list-group.container-fluid
   each tor in remoteTorrents
-    li.remote.torrent.row
+    li.list-group-item.remote.torrent.row
       .col-md-5.title
         = tor.title
       .col-md-7

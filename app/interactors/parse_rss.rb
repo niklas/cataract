@@ -8,6 +8,6 @@ class ParseRSS
       context.fail! message: 'no http_response found in context'
     end
   rescue RSS::Error => e
-    context.fail! message: "Could not parse RSS: #{e.inspect}"
+    context.fail! message: "Could not parse RSS: #{e}"
   end
 end
