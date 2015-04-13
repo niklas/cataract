@@ -30,33 +30,33 @@ Feature: Browsing the library
 
     # show root polies
      When I follow "Library"
-     Then I should see a list of the following polies:
+     Then I should see a list of the following polies within the content:
        | name   |
        | Movies |
        | Series |
 
     # Stuff only has Movies
      When I follow "Stuff"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the content:
        | name   |
        | Movies |
 
     # Removable has both
      When I follow "Removable"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the content:
        | name   |
        | Movies |
        | Series |
 
     # More has only Series
      When I follow "More"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the content:
        | name   |
        | Series |
 
     # back to root polies
      When I follow "All"
-     Then I should see a list of the following polies:
+     Then I should see a list of the following polies within the content:
        | name   |
        | Movies |
        | Series |
@@ -70,14 +70,14 @@ Feature: Browsing the library
 
     # up a dir to roots
      When I follow "reset Directory" within the sidebar
-     Then I should see a list of the following polies:
+     Then I should see a list of the following polies within the content:
        | name   |
        | Movies |
        | Series |
 
     # sub polies
      When I follow "Series"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the content:
        | name            |
        | Oh my Balls     |
        | Shame of Frowns |
@@ -85,13 +85,13 @@ Feature: Browsing the library
 
     # More has only on Series
      When I follow "More"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the content:
        | name            |
        | Shame of Frowns |
 
     # Removable has all Series
      When I follow "Removable"
-     Then I should see a list of the following directories:
+     Then I should see a list of the following directories within the content:
        | name            |
        | Oh my Balls     |
        | Shame of Frowns |
@@ -104,7 +104,7 @@ Feature: Browsing the library
 
     # back to roots
      When I follow "reset Directory" within the sidebar
-     Then I should see a list of the following polies:
+     Then I should see a list of the following polies within the content:
        | name   |
        | Movies |
        | Series |

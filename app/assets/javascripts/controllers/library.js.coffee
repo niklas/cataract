@@ -17,6 +17,13 @@ Cataract.LibraryController = Ember.Controller.extend
   diskBinding: 'controllers.application.disk'
   directoryBinding: 'controllers.application.directory'
 
-  rootDirectoriesBinding: 'controllers.directories'
+  allRootDirectoriesBinding: 'controllers.directories.root.children'
+  rootDirectories: Ember.computed 'allRootDirectories', 'disk', 'disk.@each.rootDirectories', ->
+    if disk = @get('disk')
+      @get('controllers.directories.directories')
+        .filterProperty('parentDirectory', null)
+        .filterProperty('disk.id', disk)
+    else
+      @get('allRootDirectories')
   noDirectory: Ember.computed.not 'directory'
   diskNavVisible: Ember.computed.and 'poly', 'noDirectory'
