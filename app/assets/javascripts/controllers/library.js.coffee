@@ -4,15 +4,10 @@ Cataract.LibraryController = Ember.Controller.extend
   needs: [
     'application'
     'directories'
-    'disks'
   ]
 
   polyBinding: 'controllers.application.poly'
-  disks: Ember.computed 'poly', 'poly.@each.alternatives.disk', ->
-    if @get('poly')
-      @get('poly.alternatives').mapProperty('disk')
-    else
-      @get('controllers.disks')
+  disksBinding: 'controllers.application.disks'
 
   diskBinding: 'controllers.application.disk'
   directoryBinding: 'controllers.application.directory'

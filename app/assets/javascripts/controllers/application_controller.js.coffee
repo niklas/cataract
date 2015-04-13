@@ -55,6 +55,13 @@ Cataract.ApplicationController = Ember.Controller.extend
         dir = dirs.findProperty('disk.id', '' + disk)
     dir
 
+  # The currently available disks depending on the path from queryParams
+  disks: Ember.computed 'poly', 'poly.@each.alternatives.disk', ->
+    if @get('poly')
+      @get('poly.alternatives').mapProperty('disk')
+    else
+      @get('controllers.disks')
+
   # TODO i18n
   # human readable current age
   describedAge:
