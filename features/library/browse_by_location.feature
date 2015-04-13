@@ -19,11 +19,12 @@ Feature: Browsing the library
       And the following directories exist:
       | directory | disk             | name            | parent              | virtual | relative_path | show_sub_dirs |
       | Series    | disk "More"      | Series          |                     | true    | Serien        | true          |
-      | SeriesR   | disk "Removable" | Series          |                     | true    | Serien        | true          |
-      | Movies    | disk "Stuff"     | Movies          |                     | false   |               | false         |
+      | MoviesM   | disk "More"      | Movies          |                     | true    |               | false         |
       | Frowns    | disk "More"      | Shame of Frowns | directory "Series"  | true    |               | false         |
+      | Movies    | disk "Stuff"     | Movies          |                     | false   |               | false         |
+      | SeriesR   | disk "Removable" | Series          |                     | true    | Serien        | true          |
       | FrownsR   | disk "Removable" | Shame of Frowns | directory "SeriesR" | true    |               | false         |
-      | FrownsR   | disk "Removable" | Ow my Balls     | directory "SeriesR" | true    |               | false         |
+      | BallsR    | disk "Removable" | Oh my Balls     | directory "SeriesR" | true    |               | false         |
 
   Scenario: browsing around the filesystem
     Given I am on the home page
@@ -41,15 +42,15 @@ Feature: Browsing the library
        | name   |
        | Movies |
 
-    # Removable has both
-     When I follow "Removable"
+    # More has both
+     When I follow "More"
      Then I should see a list of the following directories within the content:
        | name   |
        | Movies |
        | Series |
 
-    # More has only Series
-     When I follow "More"
+    # Removable has only Series
+     When I follow "Removable"
      Then I should see a list of the following directories within the content:
        | name   |
        | Series |
@@ -64,8 +65,8 @@ Feature: Browsing the library
     # Only Stuff has Movies
      When I follow "Movies"
      Then I should see "Stuff" within the disks tab
-      But I should not see "More" within the disks tab
-      And I should not see "Removable" within the disks tab
+      And I should see "More" within the disks tab
+      But I should not see "Removable" within the disks tab
       And I should not see "Series" within the content
 
     # up a dir to roots
@@ -77,7 +78,7 @@ Feature: Browsing the library
 
     # sub polies
      When I follow "Series"
-     Then I should see a list of the following directories within the content:
+     Then I should see a list of the following polies within the content:
        | name            |
        | Oh my Balls     |
        | Shame of Frowns |
