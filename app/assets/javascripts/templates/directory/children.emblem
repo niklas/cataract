@@ -1,8 +1,0 @@
-if hasSubDirs
-  .row
-    ul.directories.existing
-      each dir in children
-        li
-          link-to 'directory' dir classNames="name"
-            = dir.name
-

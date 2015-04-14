@@ -35,10 +35,6 @@ ul.nav.nav-tabs
       presentation-li
         link-to 'directory.detect' this
           | detected Children
-    if hasSubDirs
-      presentation-li
-        link-to 'directory.children' this
-          | Children
 = outlet
 
 
