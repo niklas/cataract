@@ -8,7 +8,7 @@ h2.title
     '
     = d.name
 
-Cataract.SaveOrCancel content=this
+save-or-cancel content=this cancelAction="rollback" saveAction="save"
 
 unless showSubDirs
 
