@@ -4,10 +4,10 @@ unless disks.isEmpty
 = outlet
 
 if directory
-  poly-directories-list content=directory.children classNames="directories"
+  poly-directories-list content=directory.children classNames="directories existing"
 else
   if disk
-    poly-directories-list content=rootDirectories classNames="directories"
+    poly-directories-list content=rootDirectories classNames="directories existing"
   else
     if poly
       if poly.hasSubDirs

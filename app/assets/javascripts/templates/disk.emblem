@@ -8,8 +8,8 @@ h2.title= name
 
 if hasDetectedDirs
   h2 Detected
-  ul.new.directories
+  ul.new.directories.list-group
     each dir in detectedDirectories
-      li
-        a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
+      li.list-group-item
+        a.btn.btn-warning.btn-sm.pull-right click="createDirectoryFromDetected dir" href="#" Import
         span.name= dir.name
