@@ -1,2 +1,2 @@
-a.btn-btn-inverse-btn-sm href="" click="cancel" | Cancel
-a.btn-btn-primary-btn-lg href="" click="save" | Save
+a.btn.btn-default.btn-sm href="" click="cancel" Cancel
+a.btn.btn-primary.btn-sm href="" click="save" Save

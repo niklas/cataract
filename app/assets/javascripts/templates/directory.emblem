@@ -1,3 +1,4 @@
+save-or-cancel content=this cancelAction="rollback" saveAction="save" classNames="pull-right"
 h2.title
   small= disk.name
   each d in ancestorsAndSelf
@@ -6,17 +7,17 @@ h2.title
     '
     = d.name
 
-save-or-cancel content=this cancelAction="rollback" saveAction="save"
-
 unless showSubDirs
 
-  .row
+  .form-horizontal
+    .checkbox.text-right
+      label
+        = input type="checkbox" checked=subscribed
+        span.subscribed.label class={subscribed:label-success:label-default} subscribed
     if subscribed
-      span.subscribed.label.label.info subscribed
-      a.btn.btn-sm.btn-danger click="unsubscribe this" href="#" unsubscribe
-      Bootstrap.Forms.TextField value=filter label="Filter"
-    else
-      a.btn.btn-sm.btn-danger click="subscribe this" href="#" subscribe
+      .form-group
+        label for="directoryFilter" Filter
+        = input value=filter classNames='form-control' elementId="directoryFilter"
 
 else
   .row

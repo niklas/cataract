@@ -63,7 +63,7 @@ Then /^I should see no link "([^"]*)"$/ do |label|
   page.should have_no_css('a', :text => label)
 end
 
-Then /^I (should not|should) see "([^"]*)" in (\w+\s?\w+)(?!within.*)$/ do |should_or_not, text, container|
+Then /^I (should not|should) see "([^"]*)" in (\w+\s?\w+\s?\w+)(?!within.*)$/ do |should_or_not, text, container|
   page.send should_or_not.sub(/\s/,'_'), have_css(selector_for(container), text: text)
 end
 

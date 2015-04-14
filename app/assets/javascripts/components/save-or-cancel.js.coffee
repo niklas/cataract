@@ -7,7 +7,13 @@ Cataract.SaveOrCancelComponent = Ember.Component.extend
   cancelAction: 'cancel'
 
   actions:
-    save: -> @sendAction 'saveAction', @get('content')
-    cancel: -> @sendAction 'cancelAction', @get('content')
+    save: ->
+      content = @get 'content'
+      content = content.get 'content' if content.isController
+      @sendAction 'saveAction', content
+    cancel: ->
+      content = @get 'content'
+      content = content.get 'content' if content.isController
+      @sendAction 'cancelAction', content
 
 
