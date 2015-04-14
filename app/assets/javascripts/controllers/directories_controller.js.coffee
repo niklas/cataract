@@ -13,10 +13,6 @@ Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
   contentBinding: 'roots'
   isLoaded: Ember.computed.not('directories.isPending')
 
-  loadAllDirectories: (->
-    @set 'directories', @get('store').findAll('directory')
-   ).on('init')
-
   findPolyByPath: (path)->
     if found = @_super(path)
       # activate directory when poly has only one alternative

@@ -20,8 +20,9 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
       Ember.RSVP.hash
         disks:     store.findAll('disk')
-        directories: @controllerFor('directories').get('directories')
+        directories: store.findAll('directory')
       .then (loaded)=>
+        @controllerFor('directories').set('directories', @get('store').filter('directory', -> true))
         @controllerFor('disks').set    'model', loaded.disks
 
   actions:
