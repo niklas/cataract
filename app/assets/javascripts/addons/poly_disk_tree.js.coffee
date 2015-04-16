@@ -5,24 +5,20 @@ Cataract.PolyDiskTreeMixin = Ember.Mixin.create
   #
   # accepts a collection, for example a findAll
   # sets observers on it
-  directories:
-    Ember.computed (key, value) ->
-      if arguments.length > 1
-        @_setupObservers(value)
-        @set('_directories', value)
-      unless @get('_directories')
-        fresh = Ember.A()
-        @_setupObservers(fresh)
-        @set('_directories', fresh)
-      @set('polies', Ember.A()) # linear list
-      @get('_directories')
-    .property()
+  directories: Ember.computed (key, value) ->
+    if arguments.length > 1
+      @_setupObservers(value)
+      @set('_directories', value)
+    unless @get('_directories')
+      fresh = Ember.A()
+      @_setupObservers(fresh)
+      @set('_directories', fresh)
+    @set('polies', Ember.A()) # linear list
+    @get('_directories')
 
   # exit point, responds to #children and each to #alternatives
-  root:
-    Ember.computed ->
-      Cataract.PolyDiskDirectory.create()
-    .property()
+  root: Ember.computed ->
+    Cataract.PolyDiskDirectory.create()
 
   polies: Ember.A()
   findPolyByPath: (path)->
