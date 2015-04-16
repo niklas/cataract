@@ -30,4 +30,7 @@ Cataract.LibraryController = Ember.Controller.extend
     else if disk = @get('disk')
       Ember.run.later =>
         @transitionToRoute 'disk', disk
+    else
+      Ember.run.later =>
+        @transitionToRoute 'library.index'
   ).observes('directory', 'disk')
