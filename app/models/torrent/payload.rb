@@ -121,6 +121,7 @@ class Torrent
       torrent.stop unless Torrent.remote.offline?
       if exists?
         FileUtils.rm_rf path
+        torrent.payload_exists = false
       else
         torrent.errors.add :payload, :blank
       end
@@ -160,7 +161,14 @@ class Torrent
   def payload
     @payload ||= Payload.new(self)
   end
-  attr_writer :payload_exists # FIXME ember does not support read-only attributes
+
+  before_validation :cache_payload_exists
+  def cache_payload_exists
+    unless payload_exists_changed?
+      self.payload_exists = payload.exists?
+    end
+    true
+  end
 
   def ensure_content_directory
     self.content_directory ||= Setting.singleton.incoming_directory || Directory.watched.first || Directory.first

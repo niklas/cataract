@@ -116,16 +116,21 @@ Feature: Browsing the library
     # TODO order by name ame
     # TODO how to display mount status on polys?
     Given the following torrents exist:
-       | title             | content_directory   |
-       | Medium Season     | directory "Frowns"  |
-       | Short Season      | directory "Frowns"  |
-       | Long Season       | directory "FrownsR" |
-       | Short Blockbuster | directory "Movies"  |
-      And I am on the recent list page
+       | title             | content_directory   | updated_ago | payload_exists |
+       | Medium Season     | directory "Frowns"  |             | true           |
+       | Short Season      | directory "Frowns"  |             | true           |
+       | Long Season       | directory "FrownsR" |             | true           |
+       | Short Blockbuster | directory "Movies"  | 13 months   | true           |
+       | Old Blockbuster   | directory "Movies"  | 13 months   | false          |
+      And I am on the library page
 
      When I follow "Series" within the sidebar directory list
      Then I should not see "Season"
       And I should not see "Blockbuster"
+
+    Given I should not see "Movies" within the sidebar directory list
+     When I follow "all Directories"
+     Then I should see "Movies" within the sidebar directory list
 
      When I follow "Movies" within the sidebar directory list
      Then I should see the following torrents in the torrent list:

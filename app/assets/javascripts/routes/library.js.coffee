@@ -4,5 +4,6 @@ Cataract.LibraryRoute = Ember.Route.extend
   setupController: (c,m)->
     @_super(c,m)
 
+    @controllerFor('application').set 'mode', 'library'
     m.gotoFirstPage()
     m.didRequestRange()

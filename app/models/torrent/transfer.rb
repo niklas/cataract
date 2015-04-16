@@ -34,6 +34,7 @@ class Torrent
     self.start_automatically = false
     self.load! unless paused?
     remote.start_and_wait! self
+    self.payload_exists = true # let's be optimistic
     update_state! :running
     log('started')
   rescue ContentDirectoryMissing => e
