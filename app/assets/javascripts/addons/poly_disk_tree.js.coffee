@@ -1,51 +1,19 @@
 slash = /\//
 
-Cataract.PolyDiskTreeMixin = Ember.Mixin.create
-  # Entry point, all directories, unstructed
-  #
-  # accepts a collection, for example a findAll
-  # sets observers on it
-  directories: Ember.computed (key, value) ->
-    if arguments.length > 1
-      @_setupObservers(value)
-      @set('_directories', value)
-    unless @get('_directories')
-      fresh = Ember.A()
-      @_setupObservers(fresh)
-      @set('_directories', fresh)
-    @set('polies', Ember.A()) # linear list
-    @get('_directories')
+get = Ember.get
+reduceComputed = Ember.reduceComputed
 
-  # exit point, responds to #children and each to #alternatives
-  root: Ember.computed ->
-    Cataract.PolyDiskDirectory.create()
+treeProperty = (dependentKey, property) ->
 
-  polies: Ember.A()
-  findPolyByPath: (path)->
-    @get('polies').findBy 'relativePath', path
+  klass = Cataract.PolyDiskDirectory
+  backProperty = 'poly'
 
-  _setupObservers: (list)->
-    list.addEnumerableObserver(@,
-      willChange: @_willChangeDirectories,
-      didChange:  @_didChangeDirectories
-    )
-
-
-  _willChangeDirectories: (directories, removing, addCount) ->
-    # TODO
-
-  # a simple createRecord on store calls this before saving
-  _didChangeDirectories: (directories, removeCount, adding) ->
-    adding.forEach (dir, index) ->
-      @_insert @get('root'), dir unless dir.get('isDirty') or dir.get('isLoaded')
-    , @
-
-  _insert: (here, dir) ->
-    herePath = here.get('relativePath')
-    dirPath  = dir.get('relativePath')
+  insert = (tree, here, dir) ->
+    herePath = here.get(property)
+    dirPath  = dir.get(property)
     if herePath is dirPath # dir is an alternative of here
       here.get('alternatives').addObject dir
-      dir.set('poly', here)
+      dir.set(backProperty, here)
     else if dirPath.indexOf(herePath) is 0 # dir is sub of here
       if herePath.length is 0 # we are at root, just use first component
         nameOnDisk = dirPath.split(slash)[0]
@@ -54,8 +22,40 @@ Cataract.PolyDiskTreeMixin = Ember.Mixin.create
         nameOnDisk = cut.split(slash)[0]
 
       child = here.getOrBuildChildByNameOnDisk(nameOnDisk)
-      list = @get('polies')
+      list = tree.get('all')
       list.pushObject(child) unless list.indexOf(child) >= 0
-      @_insert child, dir
+      insert tree, child, dir
 
-    else
+  options =
+    initialValue: null
+    initialize: (_tree, changeMeta, instanceMeta)->
+      tree = Ember.Object.create
+        root: klass.create()
+        all:  Ember.A()
+
+    addedItem: (tree, item, changeMeta, instanceMeta)->
+      insert tree, tree.get('root'), item
+      tree
+
+    removedItem: (tree, item, changeMeta, instanceMeta)->
+      # TODO
+      tree
+
+  reduceComputed "#{dependentKey}.@each.#{property}", options
+
+
+
+
+Cataract.PolyDiskTreeMixin = Ember.Mixin.create
+  # Entry point, all directories, unstructed
+  #
+  # accepts a collection, for example a findAll
+  # sets observers on it
+  directories: Ember.A()
+  tree: treeProperty 'directories', 'relativePath'
+  # exit point, responds to #children and each to #alternatives
+  rootBinding: 'tree.root'
+  poliesBinding: 'tree.all'
+
+  findPolyByPath: (path)->
+    @get('polies').findBy 'relativePath', path
