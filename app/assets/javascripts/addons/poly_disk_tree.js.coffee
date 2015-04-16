@@ -1,14 +1,12 @@
 slash = /\//
 
-get = Ember.get
-reduceComputed = Ember.reduceComputed
 
 treeProperty = (dependentKey, property) ->
 
   klass = Cataract.PolyDiskDirectory
   backProperty = 'poly'
 
-  insert = (tree, here, dir) ->
+  insert = (list, here, dir) ->
     herePath = here.get(property)
     dirPath  = dir.get(property)
     if herePath is dirPath # dir is an alternative of here
@@ -22,26 +20,24 @@ treeProperty = (dependentKey, property) ->
         nameOnDisk = cut.split(slash)[0]
 
       child = here.getOrBuildChildByNameOnDisk(nameOnDisk)
-      list = tree.get('all')
       list.pushObject(child) unless list.indexOf(child) >= 0
-      insert tree, child, dir
+      insert list, child, dir
 
   options =
-    initialValue: null
-    initialize: (_tree, changeMeta, instanceMeta)->
-      tree = Ember.Object.create
-        root: klass.create()
-        all:  Ember.A()
+    initialValue: null # shared between instances, will be discarded on first add
 
     addedItem: (tree, item, changeMeta, instanceMeta)->
-      insert tree, tree.get('root'), item
+      tree = instanceMeta.tree ||= Ember.Object.create
+        root: klass.create()
+        all: Ember.A()
+      insert tree.get('all'), tree.get('root'), item
       tree
 
     removedItem: (tree, item, changeMeta, instanceMeta)->
       # TODO
-      tree
+      instanceMeta.tree
 
-  reduceComputed "#{dependentKey}.@each.#{property}", options
+  Ember.reduceComputed dependentKey, "#{dependentKey}.@each.#{property}", options
 
 
 
@@ -58,4 +54,4 @@ Cataract.PolyDiskTreeMixin = Ember.Mixin.create
   poliesBinding: 'tree.all'
 
   findPolyByPath: (path)->
-    @get('polies').findBy 'relativePath', path
+    @get('polies')?.findBy 'relativePath', path
