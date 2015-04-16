@@ -1,6 +1,6 @@
 slash = /\//
 
-PolyDiskTree = Ember.Mixin.create
+Cataract.PolyDiskTreeMixin = Ember.Mixin.create
   # Entry point, all directories, unstructed
   #
   # accepts a collection, for example a findAll
@@ -21,7 +21,7 @@ PolyDiskTree = Ember.Mixin.create
   # exit point, responds to #children and each to #alternatives
   root:
     Ember.computed ->
-      PolyDiskDirectory.create()
+      Cataract.PolyDiskDirectory.create()
     .property()
 
   polies: Ember.A()
@@ -68,5 +68,3 @@ PolyDiskTree = Ember.Mixin.create
       @_insert child, dir
 
     else
-
-window.PolyDiskTree = PolyDiskTree

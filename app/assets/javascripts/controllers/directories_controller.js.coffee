@@ -1,6 +1,6 @@
 slash = /\//
 
-Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
+Cataract.DirectoriesController = Ember.ArrayController.extend Cataract.PolyDiskTreeMixin,
   needs: [
     'application',
     'torrents',

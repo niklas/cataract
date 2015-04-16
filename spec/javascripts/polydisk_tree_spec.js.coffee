@@ -1,6 +1,6 @@
-describe 'PolyDiskTree', ->
+describe 'Cataract.PolyDiskTreeMixin', ->
 
-  klass = Ember.Object.extend(PolyDiskTree)
+  klass = Ember.Object.extend(Cataract.PolyDiskTreeMixin)
   tree = null
   beforeEach ->
     tree = klass.create()

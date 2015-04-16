@@ -1,17 +1,17 @@
 slash = /\//
 
-SortedArray = Ember.ArrayProxy.extend Ember.SortableMixin,
+Cataract.SortedArray = Ember.ArrayProxy.extend Ember.SortableMixin,
   sortAscending: true
   content:
     Ember.computed ->
       Ember.A()
     .property()
 
-PolyDiskDirectory = Ember.Object.extend
+Cataract.PolyDiskDirectory = Ember.Object.extend
   relativePath: ''
   alternatives:
     Ember.computed ->
-      SortedArray.create(sortProperties: ['id'])
+      Cataract.SortedArray.create(sortProperties: ['id'])
     .property()
 
   hasMoreAlternatives: Ember.computed 'alternatives.length', ->
@@ -19,7 +19,7 @@ PolyDiskDirectory = Ember.Object.extend
 
   children:
     Ember.computed ->
-      SortedArray.create(sortProperties: ['name'])
+      Cataract.SortedArray.create(sortProperties: ['name'])
     .property()
   parent: null
   ancestorsAndSelf:
@@ -52,7 +52,7 @@ PolyDiskDirectory = Ember.Object.extend
     path = @get('relativePath')
     child = children.findProperty('nameOnDisk', nameOnDisk)
     unless child?
-      child = PolyDiskDirectory.create
+      child = Cataract.PolyDiskDirectory.create
         relativePath: (if path.length is 0 then nameOnDisk else "#{path}/#{nameOnDisk}")
         parent: this
       children.addObject child
@@ -75,12 +75,9 @@ PolyDiskDirectory = Ember.Object.extend
     .property('alternatives.@each.exists')
 
 
-PolyDiskDirectory.attr = (name)->
+Cataract.PolyDiskDirectory.attr = (name)->
   Ember.computed (key, value)->
     if arguments.length > 1
       @set name, if value? then value.get('alternatives.firstObject') else value
     @get "#{name}.poly"
   .property(name)
-
-
-window.PolyDiskDirectory = PolyDiskDirectory

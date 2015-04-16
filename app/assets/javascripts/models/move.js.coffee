@@ -5,4 +5,4 @@ Cataract.Move = DS.Model.extend
   title: attr('string')
   targetDisk: DS.belongsTo('disk')
   targetDirectory: DS.belongsTo('directory')
-  targetPolyDirectory: PolyDiskDirectory.attr('targetDirectory')
+  targetPolyDirectory: Cataract.PolyDiskDirectory.attr('targetDirectory')
