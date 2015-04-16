@@ -1,7 +1,4 @@
-link-to (query-params disk=content.id) class="name"
-  i.glyphicon class={isMounted:glyphicon-hdd:glyphicon-warning-sign}
-  '
-  span.name= label
+disk-link content=content label=label
 if statsVisible
   dl.stat
     dt Size
