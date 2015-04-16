@@ -67,6 +67,6 @@ describe 'Cataract.PolyDiskTreeMixin', ->
 
   it 'can specify #directories on creation', ->
     list = Ember.A()
-    list.pushObject('given')
+    list.pushObject Ember.Object.create(x: 'given')
     tree = klass.create directories: list
     expect( tree.get('directories') ).toEqual( list )
