@@ -32,7 +32,7 @@ Cataract.ApplicationController = Ember.Controller.extend
   ]
   mode: 'running'
   age: 'month' # faster initialization of page
-  path: null
+  path: undefined
   disk: undefined
   adding: false
   filterDirectories: true
@@ -54,6 +54,17 @@ Cataract.ApplicationController = Ember.Controller.extend
       else
         dir = dirs.findProperty('disk.id', '' + disk)
     dir
+
+  # The currently available disks depending on the path from queryParams
+  disks: Ember.computed 'poly', 'poly.@each.alternatives.disk', ->
+    if @get('poly')
+      @get('poly.alternatives').mapProperty('disk')
+    else
+      @get('controllers.disks')
+
+  # 'disk' is just the id from the query params
+  diskObject: Ember.computed 'disk', ->
+    @get('store').find 'disk', @get('disk')
 
   # TODO i18n
   # human readable current age

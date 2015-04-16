@@ -1,5 +1,4 @@
-poly-path-disk-nav content=poly
-
+save-or-cancel content=this cancelAction="rollback" saveAction="save" classNames="pull-right"
 h2.title
   small= disk.name
   each d in ancestorsAndSelf
@@ -8,17 +7,17 @@ h2.title
     '
     = d.name
 
-Cataract.SaveOrCancel content=this
-
 unless showSubDirs
 
-  .row
+  .form-horizontal
+    .checkbox.text-right
+      label
+        = input type="checkbox" checked=subscribed
+        span.subscribed.label class={subscribed:label-success:label-default} subscribed
     if subscribed
-      span.subscribed.label.label.info subscribed
-      a.btn.btn-sm.btn-danger click="unsubscribe this" href="#" unsubscribe
-      Bootstrap.Forms.TextField value=filter label="Filter"
-    else
-      a.btn.btn-sm.btn-danger click="subscribe this" href="#" subscribe
+      .form-group
+        label for="directoryFilter" Filter
+        = input value=filter classNames='form-control' elementId="directoryFilter"
 
 else
   .row
@@ -37,10 +36,6 @@ ul.nav.nav-tabs
       presentation-li
         link-to 'directory.detect' this
           | detected Children
-    if hasSubDirs
-      presentation-li
-        link-to 'directory.children' this
-          | Children
 = outlet
 
 

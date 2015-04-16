@@ -4,3 +4,4 @@ Cataract.RecentController = Ember.ArrayController.extend
   ]
 
   polyBinding: 'controllers.application.poly'
+  disksBinding: 'controllers.application.disks'

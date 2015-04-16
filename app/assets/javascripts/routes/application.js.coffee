@@ -1,9 +1,10 @@
 Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # just wait a bit for all the transitions to load
-    Ember.run.later =>
-      @send 'refreshTransfersAutomatically'
-    , 5555
+    if document.location.port is '80'
+      Ember.run.later =>
+        @send 'refreshTransfersAutomatically'
+      , 5555
 
     # FIXME is this really needed with all the promises and needs?
     store = @get('store')
@@ -19,8 +20,9 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
       Ember.RSVP.hash
         disks:     store.findAll('disk')
-        directories: @controllerFor('directories').get('directories')
+        directories: store.findAll('directory')
       .then (loaded)=>
+        @controllerFor('directories').set('directories', @get('store').filter('directory', -> true))
         @controllerFor('disks').set    'model', loaded.disks
 
   actions:

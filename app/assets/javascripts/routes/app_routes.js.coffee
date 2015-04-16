@@ -10,7 +10,6 @@ Cataract.Router.map ->
     @resource 'directory', path: 'directory/:directory_id', ->
       @route 'online'
       @route 'detect'
-      @route 'children'
     @resource 'disk', path: 'disk/:disk_id'
 
   @resource 'feeds', ->

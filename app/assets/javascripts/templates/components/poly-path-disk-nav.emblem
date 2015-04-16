@@ -1,4 +1,7 @@
 .well.fs.clearfix
-  each dir in content.alternatives
-    .col-xs-4.col-md-3
-      disk-item content=dir.disk targetRoute=targetRoute target=dir classNames="list-group-item" tagName='div'
+  .col-xs-4.col-md-3
+    disk-item content=noDisk tagName='div'
+  if content.length
+    each disk in content
+      .col-xs-4.col-md-3
+        disk-item content=disk tagName='div'

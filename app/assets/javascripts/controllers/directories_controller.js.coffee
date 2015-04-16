@@ -1,6 +1,6 @@
 slash = /\//
 
-Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
+Cataract.DirectoriesController = Ember.ArrayController.extend Cataract.PolyDiskTreeMixin,
   needs: [
     'application',
     'torrents',
@@ -12,10 +12,6 @@ Cataract.DirectoriesController = Ember.ArrayController.extend PolyDiskTree,
 
   contentBinding: 'roots'
   isLoaded: Ember.computed.not('directories.isPending')
-
-  loadAllDirectories: (->
-    @set 'directories', @get('store').findAll('directory')
-   ).on('init')
 
   findPolyByPath: (path)->
     if found = @_super(path)

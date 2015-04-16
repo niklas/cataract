@@ -1,5 +1,5 @@
-#= require_tree ./lib
 #= require_self
+#= require_tree ./lib
 #= require_tree ./cataract
 #= require_tree ./initializers
 #= require_tree ./addons

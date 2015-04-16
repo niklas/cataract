@@ -1,8 +1,8 @@
-describe 'PolyDiskDirectory', ->
+describe 'Cataract.PolyDiskDirectory', ->
 
   describe '.create', ->
     it 'accepts relative path', ->
-      dir = PolyDiskDirectory.create(relativePath: 'foo/bar')
+      dir = Cataract.PolyDiskDirectory.create(relativePath: 'foo/bar')
 
       expect( dir.get('relativePath') ).toEqual( 'foo/bar' )
 
@@ -10,7 +10,7 @@ describe 'PolyDiskDirectory', ->
     l1 = null
     l2 = null
     beforeEach ->
-      l1 = PolyDiskDirectory.create()
+      l1 = Cataract.PolyDiskDirectory.create()
     afterEach ->
       l1 = null
       l2 = null

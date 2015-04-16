@@ -1,5 +1,18 @@
-if diskNavVisible
-  poly-path-disk-nav content=poly
+unless disks.isEmpty
+  poly-path-disk-nav content=disks
 
 = outlet
+
+if directory
+  poly-directories-list content=directory.children classNames="directories existing"
+else
+  if disk
+    poly-directories-list content=rootDirectories classNames="directories existing"
+  else
+    if poly
+      if poly.hasSubDirs
+        poly-directories-list content=poly.children classNames="polies"
+    else
+      poly-directories-list content=rootDirectories classNames="polies"
+
 torrents-list content=content.finalContent mode=mode

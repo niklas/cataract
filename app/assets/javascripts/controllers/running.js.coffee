@@ -4,3 +4,4 @@ Cataract.RunningController = Ember.ArrayController.extend
     'torrents'
   ]
 
+  disksBinding: 'controllers.application.disks'
