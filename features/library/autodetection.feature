@@ -65,7 +65,7 @@ Feature: Disks in Library
         | directory | media/adisk/Series/Tagesschau |
       And a directory "Series" exists with name: "Series", disk: the disk, relative_path: "Series", show_sub_dirs: true
       And I am on the library page
-     When I follow "aDisk" within the disks table
+     When I follow "aDisk"
       And I follow "Series" within the directories list within the content
       And I follow "detected Children" within the content
      Then I should see a list of the following new directories:
@@ -80,7 +80,6 @@ Feature: Disks in Library
       And I should see a list of the following new directories:
        | Name       |
        | Tagesschau |
-     When I follow "Children"
-     Then I should see a list of the following existing directories:
+      And I should see a list of the following existing directories:
        | Name   |
        | Tatort |
