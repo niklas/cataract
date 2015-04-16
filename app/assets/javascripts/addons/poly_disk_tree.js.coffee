@@ -26,14 +26,14 @@ treeProperty = (dependentKey, property) ->
   options =
     initialValue: null # shared between instances, will be discarded on first add
 
-    addedItem: (tree, item, changeMeta, instanceMeta)->
+    addedItem: (_tree, item, changeMeta, instanceMeta)->
       tree = instanceMeta.tree ||= Ember.Object.create
         root: klass.create()
         all: Ember.A()
       insert tree.get('all'), tree.get('root'), item
       tree
 
-    removedItem: (tree, item, changeMeta, instanceMeta)->
+    removedItem: (_tree, item, changeMeta, instanceMeta)->
       # TODO
       instanceMeta.tree
 

@@ -4,6 +4,8 @@ describe 'Cataract.PolyDiskTreeMixin', ->
   tree = null
   beforeEach ->
     tree = klass.create()
+    # must set so we do not share it between test runs
+    tree.set('directories', Ember.A())
 
   afterEach ->
     tree = null
