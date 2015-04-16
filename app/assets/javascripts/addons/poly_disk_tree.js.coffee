@@ -41,12 +41,7 @@ Cataract.PolyDiskTreeMixin = Ember.Mixin.create
   # a simple createRecord on store calls this before saving
   _didChangeDirectories: (directories, removeCount, adding) ->
     adding.forEach (dir, index) ->
-      unless dir.get('isDirty')
-        if dir.get('isLoaded')
-          @_insert @get('root'), dir
-        else
-          dir.then =>
-            @_insert @get('root'), dir
+      @_insert @get('root'), dir unless dir.get('isDirty') or dir.get('isLoaded')
     , @
 
   _insert: (here, dir) ->
