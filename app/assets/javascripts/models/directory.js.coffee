@@ -28,7 +28,7 @@ Cataract.Directory = Cataract.BaseDirectory.extend
 
   ancestorsAndSelf: Ember.computed 'parentDirectory', ->
     if parent = @get('parentDirectory')
-      list = parent.get('ancestorsAndSelf')
+      list = parent.get('ancestorsAndSelf').copy()
       list.pushObject this
       list
     else
