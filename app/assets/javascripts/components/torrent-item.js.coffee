@@ -6,11 +6,9 @@ Cataract.TorrentItemComponent = Ember.Component.extend
     'clearfix'
   ]
   classNameBindings: [
-    'active'
     'isCollapsed:collapsed:expanded'
   ]
   tagName: 'li'
-  activeBinding: 'childViews.firstObject.active'
   isCollapsed: true
   isShowingFiles: false
 
