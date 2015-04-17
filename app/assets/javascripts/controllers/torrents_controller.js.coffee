@@ -48,7 +48,7 @@ Cataract.TorrentsController =
       @set 'isFetching', false
 
   reactToModelChanges: (->
-    @get('serverEvents.source').addModelEventListener 'torrent', @get('store')
+    @get('serverEvents.source').addModelEventListener 'torrent'
   ).on('init')
 
 
