@@ -193,6 +193,8 @@ Cataract.TorrentsController =
         if torrent = list.findProperty('id', id)
           torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
           torrent.set('transfer', transfer)
+        else
+          store.find 'torrent', id
         running.removeObject(id)
 
       # detect stopped torrents
