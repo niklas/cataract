@@ -30,7 +30,7 @@ Cataract.TorrentsController =
 
   # we use our current queryParams, fetch its torrents to fill the DS cache as
   # a side effect
-  warmupStore: (->
+  warmupStore: ->
     console?.debug "warming up...."
     store = @get('store')
     # TODO fetch only torrents having content if status is 'library'
@@ -39,7 +39,6 @@ Cataract.TorrentsController =
       # save that just to be able to wait in a route
       @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then =>
         @gotoFirstPage()
-  ).on('init')
 
   freshTransfersOnTick: (->
     @refreshTransfers()
