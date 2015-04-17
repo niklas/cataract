@@ -1,7 +1,8 @@
 .col-md-5
   if showPayload
-    button.btn.btn-sm.count.pull-right click="toggleFiles"
-      = content.payload.filesCount
+    if hasFiles
+      button.btn.btn-sm.count.pull-right click="toggleFiles"
+        = content.payload.filesCount
   .title
     = content.title
 
