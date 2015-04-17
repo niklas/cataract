@@ -65,7 +65,7 @@ class Torrent
   # XMLRPC Client/RTorrent wrapper
 
   class RTorrent < XMLRPC::ClientS
-    class Error < ::Exception; end
+    class Error < ::StandardError; end
     class Offline < Error; end
     class Unreachable < Offline; end
     class CouldNotFindInfoHash < Error; end
