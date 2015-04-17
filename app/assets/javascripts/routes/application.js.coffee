@@ -18,12 +18,15 @@ Cataract.ApplicationRoute = Ember.Route.extend
     store.find('setting', 'all').then (settings)=>
       @controllerFor('settings').set 'model', settings
 
+
       Ember.RSVP.hash
         disks:     store.findAll('disk')
         directories: store.findAll('directory')
+        torrents: @get('torrents.finalContent')
       .then (loaded)=>
         @controllerFor('directories').set('directories', @get('store').filter('directory', -> true))
         @controllerFor('disks').set    'model', loaded.disks
+        @get('torrents').gotoFirstPage()
 
   actions:
     save: (model)->
