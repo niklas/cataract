@@ -147,6 +147,7 @@ Cataract.TorrentsController =
     'filterFunction',
     'arrangedContent.@each.id',
     'arrangedContent.@each.status',
+    'arrangedContent.@each.payloadExists',
     'arrangedContent.@each',
     ->
       console?.debug "filteredContent"
