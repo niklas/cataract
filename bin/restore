@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+# Reads STDIN and feeds the local development database with it.
+
+require 'ostruct'
+require 'yaml'
+require 'erb'
+
+env = ARGV.shift || 'development'
+
+filename = File.expand_path('../../config/database.yml',  __FILE__)
+erb = File.read filename
+template = ERB.new(erb)
+Rails = OpenStruct.new
+Rails.env = env
+db_config = YAML.load(template.result)
+
+$stderr.puts "restoring database for environment #{env}"
+c = db_config[env] || raise("cannot find env '#{env}' in database.yml")
+
+if c['password']
+  ENV['PGPASSWORD'] = c['password']
+  system 'psql',
+    '--host', c['host'].to_s,
+    '--port', c['port'].to_s,
+    '--username', c['username'],
+    '-d', c['database']
+else
+  system 'psql', '-d', c['database']
+end
+
