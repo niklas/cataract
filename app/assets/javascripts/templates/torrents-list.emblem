@@ -1,0 +1,4 @@
+unless content.isFetching
+  torrents-list content=content.finalContent mode=mode
+else
+  loading-spinner listen=false enabled=true

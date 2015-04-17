@@ -15,4 +15,4 @@ else
     else
       poly-directories-list content=rootDirectories classNames="polies"
 
-torrents-list content=content.finalContent mode=mode
+partial 'torrents-list'

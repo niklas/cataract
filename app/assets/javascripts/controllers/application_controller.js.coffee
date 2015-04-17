@@ -85,3 +85,30 @@ Cataract.ApplicationController = Ember.Controller.extend
   transfersSuccess: ()->
     status = @get 'transferStatus' # globally injected
     status.set 'online', true
+
+  fetchTorrentsForChange: (change='age')->
+    console?.debug "will fetch because changes on", change
+    if torrents = @get('controllers.torrents')
+      switch change
+        when 'age'
+          if age = @get('age')
+            torrents.fetch(age: age)
+        when 'directory'
+          if directory = @get('directory')
+            torrents.fetch(directory_id: directory.id, with_content: true)
+          else
+            console?.warn 'no directory found to fetch'
+        when 'poly'
+          if poly = @get('poly')
+            dirIds = poly.get('alternatives').mapProperty('id')
+            if dirIds.length > 0
+              torrents.fetch(directory_id: dirIds.join(','), with_content: true)
+          else
+            console?.warn 'no poly found to fetch'
+    else
+      console?.warn 'need controllers.torrents, but not found'
+
+
+  observeAndScheduleFetchTorrents: ( (val, prop)->
+    Ember.run.scheduleOnce 'actions', this, this.fetchTorrentsForChange, prop
+  ).observes('age', 'directory', 'poly')

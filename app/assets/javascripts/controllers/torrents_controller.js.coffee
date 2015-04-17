@@ -33,12 +33,19 @@ Cataract.TorrentsController =
     true
   ).on('init')
 
+  isFetching: false
   fetch: (opts)->
-    # pause all observers while the JSON response is processed
-    Ember.run.sync =>
-      console?.debug "fetching torrents", opts
-      @get('store').findQuery('torrent', opts).then =>
-        @gotoFirstPage()
+    console?.debug "will fetch on next", opts
+    # Do not render the torrents list so less observers fire.
+    # TODO we actually want to pause all observers while the JSON response is
+    #      processed
+    # If we do none of this, the delay until the list is show will be increased
+    # by a factor of ~10, (more than 10s for ~200 records)
+    @set 'isFetching', true
+    @get('store').findQuery('torrent', opts).then =>
+      console?.debug "fetched torrents", opts
+      @gotoFirstPage()
+      @set 'isFetching', false
 
   # OPTIMIZE where is the best place for this?
   reactToModelChanges: (->
