@@ -7,12 +7,12 @@ class TorrentSerializer < BaseSerializer
              :status,
              :content_directory_id,
              :updated_at,
+             :payload_exists,
              :created_at
 
   def attributes
     super.tap do |hash|
-      if object.payload.exists?
-        hash['payload_exists'] = true
+      if object.payload_exists?
         hash['payload_bytes'] = object.payload.size
       end
       hash['payload_id'] = object.id

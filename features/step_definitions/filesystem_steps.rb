@@ -1,7 +1,11 @@
 require Rails.root/'spec/support/filesystem'
 
 Given /^the file for #{capture_model} exists$/ do |m|
-  step %Q~the file "#{model!(m).path}" exists on disk~
+  model = model!(m)
+  step %Q~the file "#{model.path}" exists on disk~
+  if model.is_a?(Torrent)
+    model.update_attribute :payload_exists, true
+  end
 end
 
 Given /^the following filesystem structure exists on disk:$/ do |table|
@@ -66,8 +70,12 @@ Given /^the file "([^"]*)" is deleted$/ do |file|
 end
 
 Given /^#{capture_model}'s (?:content|payload) exists on disk$/ do |m|
-  model!(m).payload.files.each do |path|
+  model = model!(m)
+  model.payload.files.each do |path|
     step %Q~the file "#{path}" exists on disk~
+  end
+  if model.is_a?(Torrent)
+    model.update_attribute :payload_exists, true
   end
 end
 
