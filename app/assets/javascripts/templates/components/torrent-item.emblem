@@ -3,6 +3,9 @@
     if hasFiles
       button.btn.btn-sm.count.pull-right click="toggleFiles"
         = content.payload.filesCount
+  unless isCollapsed
+    .id.pull-right
+      code= content.id
   .title
     = content.title
 
