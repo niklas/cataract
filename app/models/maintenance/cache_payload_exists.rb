@@ -1,6 +1,6 @@
 class Maintenance::CachePayloadExists < Maintenance::Base
   def work
-    Torrent.transition do
+    Torrent.transaction do
       Torrent.find_in_batches batch_size: 333 do |batch|
         batch.each do |torrent|
           really = torrent.payload.exists?
