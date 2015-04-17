@@ -21,7 +21,14 @@ class Maintenance::Recognizer < Maintenance::Base
           if torrent.save
             created << torrent 
           else
-            logger.info "sync - could not create Torrent from #{filepath}: #{torrent.errors.full_messages.join(',')}"
+            # FIXME do not depend on English locale
+            if torrent.errors[:filename].include?('has already been taken')
+              if md5(filepath) == md5(torrent.file.path)
+                File.rm_f filepath
+              end
+            else
+              logger.info "sync - could not create Torrent from #{filepath}: #{torrent.errors.full_messages.join(',')}"
+            end
           end
         end
       end
@@ -63,6 +70,12 @@ class Maintenance::Recognizer < Maintenance::Base
         [] # ignore failures
       end
     end.flatten
+  end
+
+  def md5(path)
+    Digest::MD5.hexdigest(File.read path)
+  rescue StandardError
+    return rand # never the same *crosses fingers*
   end
 
 end
