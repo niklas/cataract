@@ -90,7 +90,7 @@ Cataract.ApplicationController = Ember.Controller.extend
     console?.debug "will fetch because changes on", change
     if torrents = @get('controllers.torrents')
       switch change
-        when 'age'
+        when 'age', 'mode'
           if age = @get('age')
             torrents.fetch(age: age)
         when 'directory'
@@ -111,4 +111,4 @@ Cataract.ApplicationController = Ember.Controller.extend
 
   observeAndScheduleFetchTorrents: ( (val, prop)->
     Ember.run.scheduleOnce 'actions', this, this.fetchTorrentsForChange, prop
-  ).observes('age', 'directory', 'poly')
+  ).observes('age', 'directory', 'poly', 'mode')
