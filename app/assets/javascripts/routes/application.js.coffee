@@ -58,10 +58,30 @@ Cataract.ApplicationRoute = Ember.Route.extend
         parentView: "application"
 
     queryParamsDidChange: (changed, totalPresent, removed)->
-      if changed.status || changed.age
-        Ember.run.once =>
-          @controllerFor('torrents').warmupStore()
+      console?.debug 'qP', changed, totalPresent, removed, this.toString()
+      app = @controllerFor('application')
+      torrents = @get('torrents')
+      Ember.run.schedule 'routerTransitions', ->
+        if totalPresent.status is 'library'
 
+          if totalPresent.disk and totalPresent.path
+
+            if directory = app.get('directory')
+              torrents.fetch(directory_id: directory.id, with_content: true)
+            else
+              debugger
+              console?.warn 'no directory found to fetch'
+
+          else if totalPresent.path
+            if poly = app.get('poly')
+              dirIds = poly.get('alternatives').mapProperty('id').join(',')
+              torrents.fetch directory_id: dirIds, with_content: true
+            else
+              console?.warn 'no poly found to fetch'
+
+        if totalPresent.status is 'recent'
+          if changed.age
+            torrents.fetch(age: changed.age)
       true
 
     createDirectoryFromDetected: (detected) ->

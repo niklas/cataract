@@ -28,22 +28,17 @@ Cataract.TorrentsController =
       ! torrent.get('isDeleted')
   ).on('init')
 
-  # we use our current queryParams, fetch its torrents to fill the DS cache as
-  # a side effect
-  warmupStore: ->
-    console?.debug "warming up...."
-    store = @get('store')
-    # TODO fetch only torrents having content if status is 'library'
-
-    Ember.run.sync => # pause all observers while the JSON response is processed
-      # save that just to be able to wait in a route
-      @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then =>
-        @gotoFirstPage()
-
   freshTransfersOnTick: (->
     @refreshTransfers()
     true
   ).on('init')
+
+  fetch: (opts)->
+    # pause all observers while the JSON response is processed
+    Ember.run.sync =>
+      console?.debug "fetching torrents", opts
+      @get('store').findQuery('torrent', opts).then =>
+        @gotoFirstPage()
 
   # OPTIMIZE where is the best place for this?
   reactToModelChanges: (->
