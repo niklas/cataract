@@ -21,3 +21,12 @@ Cataract.initializer
     application.register 'subscription:main', Ember.Object.extend(source: source)
     application.inject('controller', 'serverEvents', 'subscription:main')
 
+
+    # model: singular model name, for example 'torrent'
+    # store: store to push the changes into
+    source.addModelEventListener = (model, store)->
+      source.addEventListener model, (event)->
+        parsed = JSON.parse(event.data)
+        if 'object' is typeof(parsed)
+          store.pushPayload model, parsed
+
