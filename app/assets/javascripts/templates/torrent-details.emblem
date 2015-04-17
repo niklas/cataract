@@ -18,9 +18,9 @@
   unless content.isRemote
     torrent-transfer content=content tagName='span'
 
-    unless content.isRunning
-      unless isCollapsed
-        icon-button action='dialog' param='deleteTorrent' severity="danger" icon="remove" name="destroy" | Delete
+  unless content.isRunning
+    unless isCollapsed
+      icon-button action='dialog' param='deleteTorrent' severity="danger" icon="remove" name="destroy" | Delete
   else
     unless isCollapsed
       .url= content.url
