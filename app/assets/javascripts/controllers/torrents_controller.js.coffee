@@ -35,7 +35,7 @@ Cataract.TorrentsController =
     store = @get('store')
     # TODO fetch only torrents having content if status is 'library'
 
-    Ember.run => # pause all observers while the JSON response is processed
+    Ember.run.sync => # pause all observers while the JSON response is processed
       # save that just to be able to wait in a route
       @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then =>
         @gotoFirstPage()

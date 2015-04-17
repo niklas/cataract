@@ -25,11 +25,12 @@ Cataract.LibraryController = Ember.Controller.extend
 
   locationDidChange: (->
     if directory = @get('directory')
-      Ember.run.later =>
+      Ember.run.sync =>
         @get('store').find 'torrent', directory_id: directory.id, with_content: true
+      Ember.run.later =>
         @transitionToRoute 'directory', directory
     else if poly = @get('poly')
-      Ember.run.later =>
+      Ember.run.sync =>
         dirIds = poly.get('alternatives').mapProperty('id').join(',')
         @get('store').find 'torrent', directory_id: dirIds, with_content: true
     else if disk = @get('disk')
