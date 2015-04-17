@@ -38,7 +38,14 @@ class Maintenance::Recognizer < Maintenance::Base
           end
         end
       end
-      created.each(&:fetch!).each(&:start!)
+      created.each do |t|
+        begin
+          t.fetch!
+          t.save!
+          t.start!
+        rescue Torrent::RTorrent::CouldNotFindInfoHash => e
+        end
+      end
     end
   end
 
