@@ -138,10 +138,20 @@ Cataract.TorrentsController =
     @didRequestRange()
   ).observes("filterFunction")
 
-  filteredContent:
-    Ember.computed 'termsList', 'mode', 'directory', 'age', 'directoryIds.@each', 'filterFunction', 'arrangedContent.@each.id', 'arrangedContent.@each.status', 'arrangedContent.@each', ->
+  filteredContent: Ember.computed(
+    'termsList',
+    'mode',
+    'directory',
+    'age',
+    'directoryIds.@each',
+    'filterFunction',
+    'arrangedContent.@each.id',
+    'arrangedContent.@each.status',
+    'arrangedContent.@each',
+    ->
       console?.debug "filteredContent"
       @get('arrangedContent').filter( @get('filterFunction') )
+  )
 
   #######################################################################
   # Paginate
