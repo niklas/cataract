@@ -3,7 +3,7 @@ class SettingSerializer < BaseSerializer
   include ActionView::Helpers::TagHelper
   include BookmarkletHelper
   attributes :disable_signup
-  has_one :incoming_directory
+  has_one :incoming_directory, embed: :ids, include: false
 
   def attributes
     super.tap do |hash|
