@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+# Dumps the full database to STDOUT, including tables containing private data. You
+# must give an environment as first argument
+
+require 'yaml'
+db_config = YAML.load_file(File.expand_path('../../config/database.yml',  __FILE__))
+
+env = ARGV.shift || raise(ArgumentError, "please specify environment as first argument")
+$stderr.puts "dumping database for environment #{env}"
+c = db_config[env]
+
+
+ENV['PGPASSWORD'] = c['password'] || raise(ArgumentError, 'cannot find password')
+
+# first structure
+system 'pg_dump',
+  '--format', 'plain',
+  '--clean', # drop before create, erase old data in target
+  '--no-owner',
+  '--verbose',
+  '--host', c['host'].to_s,
+  '--port', c['port'].to_s,
+  '--username', c['username'],
+  '--no-password',
+  c['database']

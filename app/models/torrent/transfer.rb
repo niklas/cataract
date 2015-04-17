@@ -1,7 +1,7 @@
 class Torrent
   attr_accessor :transfer_id # for ember-data
 
-  def self.running_or_listed(ids)
+  def self.running_or_listed(ids=nil)
     if ids.respond_to?(:split)
       ids = ids.split(',')
     end

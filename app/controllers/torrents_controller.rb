@@ -45,6 +45,9 @@ class TorrentsController < InheritedResources::Base
                     if age = params[:age]
                       recent = recent.aged(age)
                     end
+                    if running = params[:running]
+                      recent = recent.running_or_listed
+                    end
                     if directory_id = params[:directory_id]
                       recent = recent.where(content_directory_id: directory_id.split(',').map(&:to_i))
                     end

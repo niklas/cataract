@@ -8,16 +8,21 @@ $duration: 2.8s;
 // we want to stay fixed relative to the brand
 .navbar-brand {
     position: relative;
+    .loading-spinner {
+        position: absolute;
+
+        // position middle in brand logo at Cata-ract
+        left: 0.3em;
+        top: 0.3em;
+        margin: 0;
+    }
 }
 
 .loading-spinner {
     width: $size;
     height: $size;
-    position: absolute;
-
-    // position middle in brand logo at Cata-ract
-    left: 0.3em;
-    top: 0.3em;
+    position: relative;
+    margin: 2 * $size;
 
     .cube1, .cube2 {
         background-color: #333;

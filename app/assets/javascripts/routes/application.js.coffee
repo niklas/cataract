@@ -2,7 +2,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # just wait a bit for all the transitions to load
     if document.location.port is '80'
-      Ember.run.later =>
+      Ember.run.next =>
         @send 'refreshTransfersAutomatically'
       , 5555
 
@@ -18,12 +18,15 @@ Cataract.ApplicationRoute = Ember.Route.extend
     store.find('setting', 'all').then (settings)=>
       @controllerFor('settings').set 'model', settings
 
+
       Ember.RSVP.hash
         disks:     store.findAll('disk')
         directories: store.findAll('directory')
+        torrents: @get('torrents.finalContent')
       .then (loaded)=>
         @controllerFor('directories').set('directories', @get('store').filter('directory', -> true))
         @controllerFor('disks').set    'model', loaded.disks
+        @get('torrents').gotoFirstPage()
 
   actions:
     save: (model)->
@@ -37,7 +40,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
     refreshTransfersAutomatically: ->
       @send 'refreshTransfers'
-      Ember.run.later =>
+      Ember.run.next =>
         @send 'refreshTransfersAutomatically'
       , 5555
 
@@ -53,13 +56,6 @@ Cataract.ApplicationRoute = Ember.Route.extend
       @disconnectOutlet
         outlet: "modal"
         parentView: "application"
-
-    queryParamsDidChange: (changed, totalPresent, removed)->
-      if changed.status || changed.age
-        Ember.run.once =>
-          @controllerFor('torrents').warmupStore()
-
-      true
 
     createDirectoryFromDetected: (detected) ->
       detected.createDirectory()

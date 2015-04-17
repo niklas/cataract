@@ -10,18 +10,23 @@
     unless isCollapsed
       unless content.isMoving
         icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move
-  if content.payloadExists
-    unless isCollapsed
+  unless isCollapsed
+    if content.payloadExists
       p= info_hash
+    dl.meta
+      dt Updated
+      dd.updated-at= content.updatedAt
+      dt Created
+      dd.created-at= content.createdAt
 
 .col-md-3.text-right
   unless content.isRemote
     torrent-transfer content=content tagName='span'
-
-    unless content.isRunning
-      unless isCollapsed
-        icon-button action='dialog' param='deleteTorrent' severity="danger" icon="remove" name="destroy" | Delete
   else
     unless isCollapsed
       .url= content.url
       icon-button action='start' param=content severity="success" icon="play" name='start' | Fetch & Start
+
+  unless isCollapsed
+    unless content.isRunning
+      icon-button action='dialog' param='deleteTorrent' severity="danger" icon="remove" name="destroy" | Delete

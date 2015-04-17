@@ -28,23 +28,24 @@ Cataract.TorrentsController =
       ! torrent.get('isDeleted')
   ).on('init')
 
-  # we use our current queryParams, fetch its torrents to fill the DS cache as
-  # a side effect
-  warmupStore: (->
-    console?.debug "warming up...."
-    store = @get('store')
-    # TODO fetch only torrents having content if status is 'library'
-
-    Ember.run => # pause all observers while the JSON response is processed
-      # save that just to be able to wait in a route
-      @set 'loadedContent', store.findQuery('torrent', age: @get('age')).then =>
-        @gotoFirstPage()
-  ).on('init')
-
   freshTransfersOnTick: (->
     @refreshTransfers()
     true
   ).on('init')
+
+  isFetching: false
+  fetch: (opts)->
+    console?.debug "will fetch on next", opts
+    # Do not render the torrents list so less observers fire.
+    # TODO we actually want to pause all observers while the JSON response is
+    #      processed
+    # If we do none of this, the delay until the list is show will be increased
+    # by a factor of ~10, (more than 10s for ~200 records)
+    @set 'isFetching', true
+    @get('store').findQuery('torrent', opts).then =>
+      console?.debug "fetched torrents", opts
+      @gotoFirstPage()
+      @set 'isFetching', false
 
   # OPTIMIZE where is the best place for this?
   reactToModelChanges: (->
@@ -61,7 +62,7 @@ Cataract.TorrentsController =
 
   # we will sort, filter, paginate
   # resulting in a update of 'finalContent'
-  finalContent: Ember.computed.oneWay('content')
+  finalContent: Ember.computed.oneWay('model')
 
   #######################################################################
   # Sorting
@@ -70,7 +71,7 @@ Cataract.TorrentsController =
   sortProperties:
     Ember.computed 'mode', ->
       switch @get('mode')
-        when 'library' then ['payloadKiloBytes']
+        when 'library' then ['payloadKiloBytes', 'createdAt']
         else ['createdAt']
   # results in sorted 'content' in 'arrangedContent'
 
@@ -192,6 +193,8 @@ Cataract.TorrentsController =
         if torrent = list.findProperty('id', id)
           torrent.set 'status', if transfer.get('active') then 'running' else 'archived'
           torrent.set('transfer', transfer)
+        else
+          store.find 'torrent', id
         running.removeObject(id)
 
       # detect stopped torrents

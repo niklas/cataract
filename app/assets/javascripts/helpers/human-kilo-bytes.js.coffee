@@ -9,8 +9,8 @@ Ember.Handlebars.helper 'human-kilo-bytes', (value, meta)->
   unit = if short then 'B' else 'Bytes'
   unit = 'i' + unit if base is 1024
 
-  quant.val.toFixed(decimals) +
+  val = if quant.val > 0 then quant.val.toFixed(decimals) else '???'
+  val +
     (if short then '' else ' ') +
     quant.factor +
     unit
-
