@@ -52,10 +52,8 @@ Cataract.TorrentsController =
     store = @get('store')
     @get('serverEvents.source').addEventListener 'torrent', (event)->
       parsed = JSON.parse(event.data)
-      if id = parsed.id
-        store.find('torrent', id).then (torrent)->
-          torrent.sideUpdateAttributes(parsed)
-
+      if 'object' is typeof(parsed)
+        store.pushPayload 'torrent', parsed
   ).on('init')
 
 

@@ -2,7 +2,9 @@ require 'redis'
 class Cataract::Publisher
   def self.publish(channel, message)
     channel = "message.#{channel}" unless channel.include?('.')
-    redis.publish channel, message.to_json
+    content = message.to_json
+    Rails.logger.debug { "Publish #{channel} #{content}" }
+    redis.publish channel, content
   rescue Redis::CannotConnectError => e
     # Travis fails to start redis on 2015-04-05
     Rails.logger.warn { e.to_s }
@@ -10,7 +12,7 @@ class Cataract::Publisher
 
   def self.publish_record_update(record)
     serializer = record.active_model_serializer.new(record)
-    publish 'update', serializer.to_json
+    publish record.class.model_name.singular, serializer
   end
 
   def self.redis
