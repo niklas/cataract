@@ -12,6 +12,11 @@ class Maintenance::Recognizer < Maintenance::Base
         logger.info { "sync - in #{directory.full_path}" }
         directory.glob('*.torrent').each do |filepath|
           logger.info { "sync - found: #{filepath}" }
+          unless filepath.valid_encoding?
+            n = filepath.scrub
+            File.rename filepath, n
+            filepath = n
+          end
           torrent = Torrent.new(status: 'new', file: File.open(filepath))
           if torrent.save
             created << torrent 
