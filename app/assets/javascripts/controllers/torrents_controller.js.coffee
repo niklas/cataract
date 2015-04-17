@@ -71,7 +71,7 @@ Cataract.TorrentsController =
   sortProperties:
     Ember.computed 'mode', ->
       switch @get('mode')
-        when 'library' then ['payloadKiloBytes']
+        when 'library' then ['payloadKiloBytes', 'createdAt']
         else ['createdAt']
   # results in sorted 'content' in 'arrangedContent'
 
