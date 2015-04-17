@@ -30,7 +30,7 @@ Cataract.ApplicationController = Ember.Controller.extend
     'adding',
     mode: 'status'
   ]
-  mode: 'running'
+  mode: null
   age: 'month' # faster initialization of page
   path: undefined
   disk: undefined
@@ -91,8 +91,11 @@ Cataract.ApplicationController = Ember.Controller.extend
     if torrents = @get('controllers.torrents')
       switch change
         when 'age', 'mode'
-          if age = @get('age')
-            torrents.fetch(age: age)
+          if @get('mode') is 'running'
+            torrents.fetch(running: true)
+          else
+            if age = @get('age')
+              torrents.fetch(age: age)
         when 'directory'
           if directory = @get('directory')
             torrents.fetch(directory_id: directory.id, with_content: true)
