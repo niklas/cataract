@@ -15,9 +15,9 @@
       p= info_hash
     dl.meta
       dt Updated
-      dd.updated-at= content.updatedAt
+      dd.updated-at= ago content.updatedAt
       dt Created
-      dd.created-at= content.createdAt
+      dd.created-at= ago content.createdAt
 
 .col-md-3.text-right
   unless content.isRemote
