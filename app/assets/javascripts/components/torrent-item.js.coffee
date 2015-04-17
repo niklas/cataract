@@ -13,7 +13,7 @@ Cataract.TorrentItemComponent = Ember.Component.extend
   isShowingFiles: false
 
   click: (e) ->
-    unless $(e.target).is('a,button')
+    unless $(e.target).closest('a,button').length > 0
       @toggleProperty 'isCollapsed'
 
   isNotCollapsed: Ember.computed.not 'isCollapsed'
