@@ -1,6 +1,6 @@
 Cataract.ApplicationController = Ember.Controller.extend
   setupTitle: (->
-    Ember.run.later =>
+    Ember.run.next =>
       @get('fullSiteTitle') # observer does not fire if value is not used
       @propertyDidChange('fullSiteTitle')
   ).on('init')

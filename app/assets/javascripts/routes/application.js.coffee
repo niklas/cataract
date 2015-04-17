@@ -2,7 +2,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
   beforeModel: ->
     # just wait a bit for all the transitions to load
     if document.location.port is '80'
-      Ember.run.later =>
+      Ember.run.next =>
         @send 'refreshTransfersAutomatically'
       , 5555
 
@@ -37,7 +37,7 @@ Cataract.ApplicationRoute = Ember.Route.extend
 
     refreshTransfersAutomatically: ->
       @send 'refreshTransfers'
-      Ember.run.later =>
+      Ember.run.next =>
         @send 'refreshTransfersAutomatically'
       , 5555
 
