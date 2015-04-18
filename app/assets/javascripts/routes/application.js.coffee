@@ -119,3 +119,8 @@ Cataract.ApplicationRoute = Ember.Route.extend
         transfer.save().then ->
           torrent.set 'status', 'archived'
       false
+
+    scrolled: (scrollTop)->
+      app = @controllerFor 'application'
+
+      app.set 'fixDisks', scrollTop > 250

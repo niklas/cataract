@@ -120,3 +120,5 @@ Cataract.ApplicationController = Ember.Controller.extend
   observeAndScheduleFetchTorrents: ( (val, prop)->
     Ember.run.scheduleOnce 'actions', this, this.fetchTorrentsForChange, prop
   ).observes('age', 'directory', 'poly', 'mode')
+
+  fixDisks: false
