@@ -1,7 +1,8 @@
 class PayloadController < TorrentComponentController
   respond_to :json
 
-  before_filter :get_actual_size, :only => [:destroy]
+  before_filter :get_actual_size, only: [:destroy]
+  after_action :publish_destroy,  only: [:destroy]
 
   def show
     render json: resource, serializer: PayloadSerializer
@@ -13,7 +14,15 @@ class PayloadController < TorrentComponentController
   end
 
   def interpolation_options
-    { bytes: PayloadSerializer.new(resource).human_bytes(@actual_size) }
+    { bytes: human_actual_size }
+  end
+
+  def publish_destroy
+    super resource
+  end
+
+  def human_actual_size
+    self.class.helpers.human_bytes(@actual_size).sub(/ytes$/,'')
   end
 
 end

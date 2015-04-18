@@ -28,6 +28,7 @@ class Move < ActiveRecord::Base
   def work
     torrent.stop unless Torrent.remote.offline?
     payload = torrent.payload
+    source_directory = source
     FileUtils.mv payload.path, final_directory.full_path
     if payload.multiple?
       FileUtils.rmdir File.dirname(payload.files.first)
@@ -37,10 +38,11 @@ class Move < ActiveRecord::Base
 
     self.done = true
 
+    publish source_directory
     publish final_directory
     publish torrent
     publish torrent.payload
-    publish
+    publish_destroy
   end
 
   def done?

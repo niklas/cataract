@@ -52,6 +52,11 @@ ul.torrents {
 
     ul.files {
         margin-top: 2em;
+        max-height: 17em;
+        overflow-y: auto;
+        li {
+            word-wrap: break-word;
+        }
     }
 
     .progress {

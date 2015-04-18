@@ -3,15 +3,18 @@ class DiskSerializer < BaseSerializer
   attributes :id,
              :name,
              :size,
-             :free
+             :free,
+             :is_mounted,
+             :path
 
   # TODO fetch only disks when polydisktree can act properly on PromisedArray
   # has_many   :directories
 
-  def attributes
-    super.tap do |a|
-      a['is_mounted'] = object.mounted?
-      a['path'] = object.path.to_s
-    end
+  def is_mounted
+    object.mounted?
+  end
+
+  def path
+    object.path.to_s
   end
 end

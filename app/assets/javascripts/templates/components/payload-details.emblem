@@ -2,4 +2,4 @@ disk-link content=content.directory.disk statsVisible=false
 .content_directory_path title=content.directory.pathWithDisk
   = content.directory.relativePath
 .files-meta
-  .payload-size= content.humanSize
+  .payload-size= human-kilo-bytes content.size
