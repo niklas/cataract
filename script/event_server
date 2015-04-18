@@ -5,6 +5,7 @@ ENV['PORT'] = '4567'
 require 'rubygems'
 require 'bundler'
 Bundler.require :event_server
+require 'json'
 
 conns = []
 
@@ -23,6 +24,15 @@ Thread.new do
   redis.psubscribe('message', 'message.*') do |on|
     on.pmessage do |match, channel, message|
       channel = channel.sub('message.', '')
+
+      json = JSON.parse(message)
+      if meta = json['_meta']
+        if delay = meta['delay']
+          sleep delay
+        end
+        json.delete('_meta')
+        message = json.to_json
+      end
 
       conns.each do |out|
         out << "event: #{channel}\n"

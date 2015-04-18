@@ -31,12 +31,7 @@ class TorrentComponentController < InheritedResources::Base
   end
 
   def publish_resource
-    pru = Process.fork do
-      sleep 2
-      Cataract::Publisher.publish_record_update resource
-      Kernel.exit!
-    end
-    Process.detach pru
+    Cataract::Publisher.publish_record_update resource, delay: 5
     true
   end
 end
