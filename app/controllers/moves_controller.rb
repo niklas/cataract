@@ -1,4 +1,5 @@
 class MovesController < TorrentComponentController
+  after_action :publish_resource, only: [:create]
   private
 
   def interpolation_options
