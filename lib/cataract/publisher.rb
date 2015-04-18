@@ -16,6 +16,11 @@ class Cataract::Publisher
     publish record.class.model_name.element, serializer.as_json, opts
   end
 
+  def self.publish_record_deletion(record, opts={})
+    return unless record.id
+    publish 'delete_' + record.class.model_name.element, { id: record.id }, opts
+  end
+
   def self.redis
     @redis ||= Redis.connect
   end
