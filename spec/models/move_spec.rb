@@ -109,10 +109,11 @@ end
 describe Move, 'target' do
   it "moves the torrent's payload to the final directory" do
     torrent = double('Torrent', payload: double('payload', multiple?: false, path: 'content_dir'),
-                                stop: true, save!: true, 'content_directory=' => true )
+                                stop: true, save!: true, 'content_directory=' => true, content_directory: nil )
 
     move = Move.new
     move.should_receive(:publish).at_least(:once)
+    move.should_receive(:publish_destroy).once
     move.stub(:torrent).and_return(torrent)
     move.stub(:final_directory).and_return(double('dir', full_path: 'final_dir'))
 

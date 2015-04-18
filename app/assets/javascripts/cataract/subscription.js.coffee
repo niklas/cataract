@@ -36,3 +36,8 @@ Cataract.initializer
               return # skip update, is out of date
           store.pushPayload model, parsed
 
+      source.addEventListener 'delete_' + model, (event)->
+        parsed = JSON.parse(event.data)
+        if 'object' is typeof(parsed)
+          if (id = parsed.id) and (have = store.recordForId(model, parsed.id))
+            have.unloadRecord()
