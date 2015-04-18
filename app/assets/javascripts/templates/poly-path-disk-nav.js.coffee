@@ -17,5 +17,6 @@ Cataract.PolyPathDiskNavComponent = Ember.Component.extend
       name: '[All]'
       size:  @get('sumDiskSize')
       free:  @get('sumDiskFree')
+      used:  @get('sumDiskSize') - @get('sumDiskFree')
       isMounted: true
       id:    undefined

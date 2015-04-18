@@ -5,4 +5,6 @@ if statsVisible
     dd.size= human-kilo-bytes content.size short=true
     dt Free
     dd.free= human-kilo-bytes content.free short=true
+
+  percentage-pie total=content.size value=content.used
 = yield
