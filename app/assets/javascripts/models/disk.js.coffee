@@ -8,6 +8,8 @@ Cataract.Disk = DS.Model.extend
   path: attr 'string'
   size: attr 'number'
   free: attr 'number'
+  used: Ember.computed 'size', 'free', ->
+    @get('size') - @get('free')
   hasDirectories:
     Ember.computed ->
       @get('directories.length') > 0

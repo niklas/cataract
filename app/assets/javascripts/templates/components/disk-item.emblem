@@ -1,5 +1,7 @@
 disk-link content=content label=label
 if statsVisible
+  percentage-pie total=content.size value=content.used classNames="pull-left"
+
   dl.stat
     dt Size
     dd.size= human-kilo-bytes content.size short=true

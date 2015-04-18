@@ -1,3 +1,5 @@
+@import 'mixins/pies'
+
 .disk-nav
   .name
     font-size: 120%
@@ -5,6 +7,31 @@
   .stat
     text-align: right
     margin-right: 0.5em
+
+  +pie(5em)
+
+@media (min-width: 767px)
+  .disk-nav
+    .name
+      transition: font-size 0.5 ease-in-out
+  .fix-disks .disk-nav
+    position: fixed
+    min-width: 66%
+    right: 0
+    .disk
+      .name
+        font-size: 95%
+      .pie
+        font-size: 30%
+        position: absolute
+        top: 1.3em
+        right: 0.5em
+
+      .stat
+        display: none
+    .fs
+      margin-top: 0
+      padding: 0 0.3em 0.7em 0
 
 .disk
   .name

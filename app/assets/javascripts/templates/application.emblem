@@ -37,3 +37,4 @@ if adding
   = render 'create_torrent'
 
 drag-detector enterAction='dragEnterDocument' leaveAction="dragLeaveDocument"
+scroll-detector action='scrolled'
