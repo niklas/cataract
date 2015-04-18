@@ -10,12 +10,15 @@ Cataract.PercentagePieComponent = Ember.Component.extend
   percentage: Ember.computed 'value', 'total', ->
     100 * @get('value') / @get('total')
 
+  percent: Ember.computed 'percentage', ->
+    "#{ Math.round(@get 'percentage') }%"
+
   style: Ember.computed 'percentage', 'elementId', ->
     me = @get 'elementId'
     deg = Math.round( @get('percentage') * 360 / 100 )
     css = if deg <= 180
       """
-        ##{me} .slice {
+        ##{me} .slice:BEFORE {
           transform: rotate(#{deg}deg);
         }
       """

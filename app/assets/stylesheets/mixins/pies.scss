@@ -1,35 +1,44 @@
 @mixin pie($size) {
-  $usedColor: $component-active-bg;
-  $baseColor: $gray;
-  .pie {
-    height: $size;
-    width: $size;
-    margin: $size * 0.23;
-    position: relative;
-    .background {
-      background-color: $baseColor;
-      position: absolute;
-      width: $size;
-      height: $size;
-      border-radius: $size / 2;
-      box-shadow: -1px 1px 3px #000;
-    }
-    .slice {
-      position: absolute;
-      width: $size;
-      height: $size;
-      border-radius: $size / 2;
-      clip: rect(0px, $size, $size, $size / 2);
-
-      .p {
-        position: absolute;
-        width: $size;
+    $sliceColor:  $component-active-bg;
+    $baseColor:   $gray-lighter;
+    $shadowColor: $gray-darker;
+    .pie {
         height: $size;
+        width: $size;
+        margin: $size * 0.23;
+        position: relative;
         border-radius: $size / 2;
-        clip: rect(0px, $size / 2, $size, 0px);
-        background-color: $usedColor;
-      }
+        overflow: hidden;
+        box-shadow: 1px 1px 3px $gray-darker;
+
+        .background, .slice {
+            position: absolute;
+            height: $size;
+            transform-origin: left center;
+        }
+
+        .background {
+            background-color: $baseColor;
+            width:  $size;
+        }
+        .slice {
+            width:  $size / 2;
+            left: $size / 2;
+            overflow: hidden;
+            &:BEFORE {
+                content: "";
+                position: absolute;
+                width: $size / 2;
+                height: $size;
+                left: -$size /2;
+                border-radius: $size/2 0 0 $size/2;
+                transform-origin: right center;
+                background-color: $sliceColor;
+            }
+            &:AFTER {
+                background-color: $sliceColor;
+            }
+        }
     }
-  }
 }
 

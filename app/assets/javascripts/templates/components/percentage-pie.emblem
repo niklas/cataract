@@ -1,4 +1,3 @@
 == style
 .background
-.slice
-  .p= percentage
+.slice title=percent
