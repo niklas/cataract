@@ -30,13 +30,13 @@ class Cataract::Publisher
 
   def self.publish_record_destroy(record, opts={})
     serializer = ensure_record_has_id!(record)
-    id = serializer.attributes[:id]
+    id = serializer.id
     publish 'delete_' + record.class.model_name.element, {id: id}, opts
   end
 
   def self.ensure_record_has_id!(record)
     serializer = record.active_model_serializer.new(record)
-    id = serializer.attributes[:id]
+    id = serializer.id
     raise HasNoId unless id # ember-data needs an id
 
     serializer
