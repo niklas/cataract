@@ -52,6 +52,9 @@ ul.torrents {
 
     ul.files {
         margin-top: 2em;
+        li {
+            word-wrap: break-word;
+        }
     }
 
     .progress {
