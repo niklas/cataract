@@ -11,14 +11,17 @@ class Cataract::Publisher
   end
 
   def self.publish_record_update(record, opts={})
-    return unless record.persisted?
     serializer = record.active_model_serializer.new(record)
+    id = serializer.as_json[:id]
+    return unless id # ember-data needs an id
     publish record.class.model_name.element, serializer.as_json, opts
   end
 
   def self.publish_record_destroy(record, opts={})
-    return unless record.id
-    publish 'delete_' + record.class.model_name.element, { id: record.id }, opts
+    serializer = record.active_model_serializer.new(record)
+    id = serializer.as_json[:id]
+    return unless id # ember-data needs an id
+    publish 'delete_' + record.class.model_name.element, {id: id}, opts
   end
 
   def self.redis

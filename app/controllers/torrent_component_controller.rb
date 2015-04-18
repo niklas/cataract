@@ -31,7 +31,7 @@ class TorrentComponentController < InheritedResources::Base
   end
 
   def publish_resource
-    Cataract::Publisher.publish_record_update resource, delay: 5
+    super resource, delay: 5
     true
   end
 end

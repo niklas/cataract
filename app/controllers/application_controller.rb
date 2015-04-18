@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   helper :all
 
   include EmberRailsFlash::FlashInHeader
+  include Publishable
 
   rescue_from CanCan::AccessDenied do |exception|
     flash.now[:alert] = translate('message.access_denied')
@@ -21,8 +22,6 @@ class ApplicationController < ActionController::Base
       frak.html { render text: exception.message, status: 500 }
     end
   end
-
-  delegate :publish, to: Cataract::Publisher
 
   layout :layout_by_resource
 

@@ -13,7 +13,7 @@ class TorrentsController < InheritedResources::Base
         index!
       end
       format.json do
-        publish 'message', text: "#{collection.length} torrents fetched", foo: 23
+        publish_message "#{collection.length} torrents fetched"
         @updated = collection.first
         if !@updated.present? || stale?(:etag => @updated, :last_modified => @updated.updated_at)
           index!

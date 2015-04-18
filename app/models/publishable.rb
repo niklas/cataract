@@ -1,9 +1,21 @@
 module Publishable
-  def publish(model=self)
-    Cataract::Publisher.publish_record_update model
+  def publisher
+    Cataract::Publisher
   end
 
-  def publish_destroy(model=self)
-    Cataract::Publisher.publish_record_destroy model
+  def publish(model=self, opts={})
+    publisher.publish_record_update model, opts
+  end
+
+  def publish_resource(resource, opts={})
+    publish(resource, opts)
+  end
+
+  def publish_destroy(model=self, opts={})
+    publisher.publish_record_destroy model, opts
+  end
+
+  def publish_message(msg='something', opts={})
+    publisher.publish 'message', opts.merge(text: msg)
   end
 end
