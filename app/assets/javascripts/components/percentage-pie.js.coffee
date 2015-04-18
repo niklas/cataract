@@ -7,7 +7,9 @@ Cataract.PercentagePieComponent = Ember.Component.extend
     'title'
   ]
 
-  titleBinding: 'percent'
+  which: 'used'
+  title: Ember.computed 'percent', 'which', ->
+    "#{@get 'percent'} #{@get 'which'}"
 
   value: 0
   total: 1
