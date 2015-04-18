@@ -3,6 +3,11 @@ Cataract.PercentagePieComponent = Ember.Component.extend
   classNames: [
     'pie'
   ]
+  attributeBindings: [
+    'title'
+  ]
+
+  titleBinding: 'percent'
 
   value: 0
   total: 1
