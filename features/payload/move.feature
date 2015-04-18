@@ -1,4 +1,5 @@
 @rootfs
+@sse
 @javascript
 Feature: move content
   In order to use the space of all my harddrives effectivly
