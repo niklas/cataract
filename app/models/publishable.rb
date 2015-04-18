@@ -7,9 +7,7 @@ module Publishable
     publisher.publish_record_update model, opts
   end
 
-  def publish_resource(resource, opts={})
-    publish(resource, opts)
-  end
+  alias_method :publish_resource, :publish
 
   def publish_destroy(model=self, opts={})
     publisher.publish_record_destroy model, opts

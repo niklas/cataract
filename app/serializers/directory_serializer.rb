@@ -9,9 +9,9 @@ class DirectorySerializer < BaseSerializer
 
   def attributes
     super.tap do |hash|
-      hash['relative_path'] = object.relative_path.to_s
-      hash['filter'] = object.filter
-      hash['parent_directory_id'] = object.parent_id
+      hash[:relative_path] = object.relative_path.to_s
+      hash[:filter] = object.filter
+      hash[:parent_directory_id] = object.parent_id
     end
   end
 
