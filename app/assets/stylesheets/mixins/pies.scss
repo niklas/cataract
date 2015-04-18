@@ -34,6 +34,8 @@
                 border-radius: $size/2 0 0 $size/2;
                 transform-origin: right center;
                 background-color: $sliceColor;
+                transition: transform 1s ease-in-out;
+                z-index: 1;
             }
 
             &.big {
