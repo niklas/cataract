@@ -112,8 +112,9 @@ describe Move, 'target' do
                                 stop: true, save!: true, 'content_directory=' => true )
 
     move = Move.new
+    move.should_receive(:publish).at_least(:once)
     move.stub(:torrent).and_return(torrent)
-    move.stub(:final_directory).and_return(stub('dir', full_path: 'final_dir'))
+    move.stub(:final_directory).and_return(double('dir', full_path: 'final_dir'))
 
     FileUtils.should_receive(:mv).with('content_dir', 'final_dir')
     move.work!

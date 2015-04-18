@@ -3,6 +3,7 @@ class Torrent
 
   belongs_to :content_directory, :class_name => 'Directory'
   before_validation :ensure_content_directory
+  before_validation :clear_payload_cache!
 
   attr_accessor :payload_id # for ember-data
   attr_writer   :payload_bytes # for ember-data
@@ -150,6 +151,14 @@ class Torrent
       end
     end
 
+    def persisted?
+      true
+    end
+
+    def active_model_serializer
+      PayloadSerializer
+    end
+
     private
     def utf8(string)
       string.encode('UTF-8')
@@ -160,6 +169,10 @@ class Torrent
 
   def payload
     @payload ||= Payload.new(self)
+  end
+
+  def clear_payload_cache!
+    @payload = nil
   end
 
   before_validation :cache_payload_exists

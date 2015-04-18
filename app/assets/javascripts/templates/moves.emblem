@@ -1,0 +1,11 @@
+ul#queue.nav.pull-right
+  unless moves.isEmpty
+
+    li.dropdown
+      a.dropdown-toggle href="#" data-toggle="dropdown"
+        span.badge.badge.info= moves.length
+      ul.dropdown-menu
+        each move in moves
+          li
+            a href="#"
+              = move.title

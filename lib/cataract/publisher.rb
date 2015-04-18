@@ -11,8 +11,9 @@ class Cataract::Publisher
   end
 
   def self.publish_record_update(record)
+    return unless record.persisted?
     serializer = record.active_model_serializer.new(record)
-    publish record.class.model_name.singular, serializer
+    publish record.class.model_name.element, serializer
   end
 
   def self.redis

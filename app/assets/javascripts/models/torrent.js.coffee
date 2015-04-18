@@ -31,6 +31,9 @@ Cataract.Torrent = DS.Model.extend
   fetchAutomatically: attr 'boolean'
   startAutomatically: attr 'boolean'
 
+  # keep Torrent open when updates come in, else the component would be re-rendered?!
+  isCollapsed: true
+
 Cataract.Torrent.reopenClass
   url: 'torrent'
   refreshFromHashes: (hash) ->

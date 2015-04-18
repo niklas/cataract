@@ -49,6 +49,7 @@ Cataract.TorrentsController =
 
   reactToModelChanges: (->
     @get('serverEvents.source').addModelEventListener 'torrent'
+    @get('serverEvents.source').addModelEventListener 'payload'
   ).on('init')
 
 

@@ -1,6 +1,7 @@
 class Move < ActiveRecord::Base
 
   include Queueable
+  include Publishable
 
   attr_accessible :target_disk_id,
                   :target_directory_id,
@@ -17,6 +18,8 @@ class Move < ActiveRecord::Base
   validates_numericality_of :torrent_id
   validates_numericality_of :target_directory_id
 
+  attr_accessor :done
+
   def self.recent
     order('created_at DESC')
   end
@@ -31,6 +34,17 @@ class Move < ActiveRecord::Base
     end
     torrent.content_directory = final_directory
     torrent.save!
+
+    self.done = true
+
+    publish final_directory
+    publish torrent
+    publish torrent.payload
+    publish
+  end
+
+  def done?
+    !!done
   end
 
   def auto_target!
