@@ -35,8 +35,31 @@
                 transform-origin: right center;
                 background-color: $sliceColor;
             }
-            &:AFTER {
-                background-color: $sliceColor;
+
+            &.big {
+                // if the piece represents more than 50% of the whole chart.
+                // then make it a square, and ensure the transform origin is
+                // back in the center.
+                width: $size;
+                height: $size;
+                left: 0;
+                transform-origin: center center;
+
+                // if it's part of a big piece, bring it back into the square
+                &:BEFORE {
+                    left: 0;
+                }
+                // big pieces will also need a second semicircle, pointed in
+                // the opposite direction to hide the first part behind
+                &:AFTER {
+                    background-color: $sliceColor;
+                    content: "";
+                    position: absolute;
+                    width: $size / 2;
+                    height: $size;
+                    left: $size /2;
+                    border-radius: 0 $size/2 $size/2 0;
+                }
             }
         }
     }
