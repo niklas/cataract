@@ -14,11 +14,15 @@ class PayloadController < TorrentComponentController
   end
 
   def interpolation_options
-    { bytes: PayloadSerializer.new(resource).human_bytes(@actual_size) }
+    { bytes: human_actual_size }
   end
 
   def publish_destroy
     super resource
+  end
+
+  def human_actual_size
+    self.class.helpers.human_bytes(@actual_size).sub(/ytes$/,'')
   end
 
 end
