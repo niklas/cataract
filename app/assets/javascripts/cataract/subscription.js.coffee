@@ -25,10 +25,14 @@ Cataract.initializer
     store = container.lookup('store:main')
 
     # model: singular model name, for example 'torrent'
-    # store: store to push the changes into
     source.addModelEventListener = (model)->
       source.addEventListener model, (event)->
         parsed = JSON.parse(event.data)
         if 'object' is typeof(parsed)
+          if attr = parsed[model]
+            have = store.recordForId(model, attr.id).get('updatedAt')
+            fresh = attr.updated_at
+            if have and fresh and fresh < have
+              return # skip update, is out of date
           store.pushPayload model, parsed
 
