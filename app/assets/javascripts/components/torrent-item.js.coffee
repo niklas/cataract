@@ -9,7 +9,7 @@ Cataract.TorrentItemComponent = Ember.Component.extend
     'isCollapsed:collapsed:expanded'
   ]
   tagName: 'li'
-  isCollapsed: true
+  isCollapsedBinding: 'content.isCollapsed'
   isShowingFiles: false
 
   click: (e) ->

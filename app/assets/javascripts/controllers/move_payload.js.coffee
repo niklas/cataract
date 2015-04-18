@@ -8,6 +8,7 @@ Cataract.MovePayloadController = Ember.ObjectController.extend
       directory = @get('content.payload.directory') || @get('content.contentDirectory')
       if directory
         move = @get('store').createRecord 'move',
+          done: false,
           torrent: @get('content')
           targetDisk: directory.get('disk')
           targetDirectory: directory

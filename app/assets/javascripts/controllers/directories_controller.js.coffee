@@ -26,3 +26,7 @@ Cataract.DirectoriesController = Ember.ArrayController.extend Cataract.PolyDiskT
     Ember.computed ->
       @get('currentPath.length') > 0
     .property('currentPath')
+
+  reactToModelChanges: (->
+    @get('serverEvents.source').addModelEventListener 'directory'
+  ).on('init')

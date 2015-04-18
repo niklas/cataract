@@ -47,15 +47,9 @@ Cataract.TorrentsController =
       @gotoFirstPage()
       @set 'isFetching', false
 
-  # OPTIMIZE where is the best place for this?
   reactToModelChanges: (->
-    store = @get('store')
-    @get('serverEvents.source').addEventListener 'torrent', (event)->
-      parsed = JSON.parse(event.data)
-      if id = parsed.id
-        store.find('torrent', id).then (torrent)->
-          torrent.sideUpdateAttributes(parsed)
-
+    @get('serverEvents.source').addModelEventListener 'torrent'
+    @get('serverEvents.source').addModelEventListener 'payload'
   ).on('init')
 
 

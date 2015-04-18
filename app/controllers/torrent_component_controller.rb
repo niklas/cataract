@@ -29,4 +29,14 @@ class TorrentComponentController < InheritedResources::Base
   def build_resource
     resource
   end
+
+  def publish_resource
+    pru = Process.fork do
+      sleep 2
+      Cataract::Publisher.publish_record_update resource
+      Kernel.exit!
+    end
+    Process.detach pru
+    true
+  end
 end

@@ -6,3 +6,4 @@ Cataract.Move = DS.Model.extend
   targetDisk: DS.belongsTo('disk')
   targetDirectory: DS.belongsTo('directory')
   targetPolyDirectory: Cataract.PolyDiskDirectory.attr('targetDirectory')
+  done: DS.attr('boolean')
