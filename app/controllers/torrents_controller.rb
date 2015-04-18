@@ -33,6 +33,7 @@ class TorrentsController < InheritedResources::Base
         render status: 204
       end
     end
+    publish_destroy resource, delay: 1
   end
 
   private
