@@ -1,11 +1,13 @@
 @mixin pie($size) {
+  $usedColor: $component-active-bg;
+  $baseColor: $gray;
   .pie {
-    float: left;
     height: $size;
     width: $size;
     margin: $size * 0.23;
+    position: relative;
     .background {
-      background-color: grey;
+      background-color: $baseColor;
       position: absolute;
       width: $size;
       height: $size;
@@ -25,7 +27,7 @@
         height: $size;
         border-radius: $size / 2;
         clip: rect(0px, $size / 2, $size, 0px);
-        background-color: #1b458b;
+        background-color: $usedColor;
       }
     }
   }

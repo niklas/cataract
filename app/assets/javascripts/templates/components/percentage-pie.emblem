@@ -1,9 +1,4 @@
-= human-kilo-bytes value
-'
-| of
-'
-= human-kilo-bytes total
-br
-| (
-= percentage
-| %)
+== style
+.background
+.slice
+  .p= percentage
