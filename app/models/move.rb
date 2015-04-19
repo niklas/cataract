@@ -42,7 +42,7 @@ class Move < ActiveRecord::Base
     publish final_directory
     publish torrent
     publish torrent.payload
-    publish_destroy
+    publish
   end
 
   def done?
