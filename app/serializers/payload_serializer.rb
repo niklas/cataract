@@ -12,5 +12,9 @@ class PayloadSerializer < BaseSerializer
   def directory_id
     object.torrent.content_directory_id
   end
+
+  def size
+    object.actual_size
+  end
 end
 
