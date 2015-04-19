@@ -123,6 +123,7 @@ class Torrent
       if exists?
         FileUtils.rm_rf path
         torrent.payload_exists = false
+        torrent.save!
       else
         torrent.errors.add :payload, :blank
       end
