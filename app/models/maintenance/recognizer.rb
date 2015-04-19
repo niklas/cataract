@@ -2,8 +2,9 @@
 class Maintenance::Recognizer < Maintenance::Base
 
   def work
-    on_disk
-    in_net
+    (on_disk + in_net).each do |t|
+      Cataract::Publisher.publish_record_update t
+    end
   end
 
   def on_disk
