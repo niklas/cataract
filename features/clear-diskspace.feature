@@ -34,9 +34,9 @@ Feature: Payload of a torrent
      Then I should see "tails.png"
 
      When I click on the clear link
-      And I press "Clear"
+      And I press "Clear 71.7 KiB"
       And I wait for a flash notice to appear
-     Then I should see flash notice "Freed 71.7 KB"
+     Then I should see flash notice "Freed 71.7 KiB"
       And I should be on the home page
       And the torrent's content should not exist on disk
       And I should not see the clear link
