@@ -35,6 +35,7 @@ class Cataract::Publisher
   end
 
   def self.ensure_record_has_id!(record)
+    raise CannotPublish unless record
     serializer = record.active_model_serializer.new(record)
     id = serializer.id
     raise HasNoId unless id # ember-data needs an id

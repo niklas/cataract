@@ -18,6 +18,7 @@ class PayloadController < TorrentComponentController
   end
 
   def publish_destroy
+    publish torrent.content_directory
     super resource
   end
 
