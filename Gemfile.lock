@@ -207,6 +207,9 @@ GEM
     emblem-source (0.4.0)
     erubis (2.7.0)
     eventmachine (1.0.7)
+    exception_notification (4.1.0)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.4.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -530,6 +533,7 @@ DEPENDENCIES
   ember-rails-flash!
   ember-source (~> 1.9.0)
   emblem-rails
+  exception_notification
   factory_girl_rails
   fakefs
   feed-abstract

@@ -61,4 +61,11 @@ Cataract::Application.configure do
   config.action_mailer.default_url_options = { :host => 'cataract.local' }
 
   config.eager_load = true
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    :email_prefix => "[ERROR] ",
+    :sender_address => %{"notifier" <notifier@cataract>},
+    :exception_recipients => %w{niklas+exceptions@lanpartei.de}
+  }
 end

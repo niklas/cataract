@@ -135,6 +135,8 @@ gem 'kat', github: 'niklas/kat', branch: 'remove-andand-depdendency'
 # mounts and diskspace
 gem 'sys-filesystem', require: 'sys/filesystem'
 
+gem 'exception_notification'
+
 group :event_server do
   gem 'sinatra'
   gem 'redis'
