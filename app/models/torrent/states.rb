@@ -80,7 +80,7 @@ class Torrent
         self.status = :archived
       end
     end
-  rescue Torrent::RTorrent::Offline
+  rescue Cataract.transfer_adapter_class::Offline
     # ignore
   end
 

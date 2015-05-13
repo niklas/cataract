@@ -1,5 +1,5 @@
 Before '~@rtorrent' do
-  Torrent::RTorrent.offline!
+  Cataract.transfer_adapter_class.offline!
 end
 
 require Rails.root/'spec/support/rtorrent_spec_helper'
@@ -39,6 +39,6 @@ Given /^rtorrent list contains the following:$/ do |table|
     end
   end
   # we recreate RTorrent interface on every request
-  Torrent::RTorrent.any_instance.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
+  Cataract.transfer_adapter_class.any_instance.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
 end
 

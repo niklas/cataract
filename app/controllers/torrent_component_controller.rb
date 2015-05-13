@@ -5,7 +5,7 @@ class TorrentComponentController < InheritedResources::Base
   before_filter :refresh_torrent, except: [:index]
   load_and_authorize_resource except: [:index], class: false
 
-  rescue_from Torrent::RTorrent::Offline do |exception|
+  rescue_from Cataract.transfer_adapter_class::Offline do |exception|
     render status: 502, text: I18n.t('rtorrent.exceptions.offline')
   end
 

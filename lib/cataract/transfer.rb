@@ -1,5 +1,5 @@
 # collects the values considering the transfer of a torrent
-class Transfer < Struct.new(:torrent)
+class Cataract::Transfer < Struct.new(:torrent)
   @@serializable_attributes = []
 
   def self.serializable_attr_accessor(attr)

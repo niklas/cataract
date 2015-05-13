@@ -80,7 +80,7 @@ describe Move do
       end
 
       it "should stop running torrent" do
-        Torrent::RTorrent.online!
+        Cataract.transfer_adapter_class.online!
         multiple.should_receive(:stop)
         move.work!
       end

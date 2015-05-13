@@ -1,6 +1,4 @@
-require 'transfer'
-
-describe Transfer do
+describe Cataract::Transfer do
 
   context 'left_seconds' do
 
