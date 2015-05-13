@@ -112,8 +112,7 @@ describe Move, 'target' do
                                 stop: true, save!: true, 'content_directory=' => true, content_directory: nil )
 
     move = Move.new
-    move.should_receive(:publish).at_least(:once)
-    move.should_receive(:publish_destroy).once
+    move.should_receive(:publish).at_least(5).times
     move.stub(:torrent).and_return(torrent)
     move.stub(:final_directory).and_return(double('dir', full_path: 'final_dir'))
 
