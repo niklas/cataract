@@ -19,20 +19,26 @@ get '/subscribe' do
   end
 end
 
+def maybe_delay(message)
+  json = JSON.parse(message)
+  if meta = json['_meta']
+    if delay = meta['delay']
+      sleep delay
+    end
+    json.delete('_meta')
+    json.to_json
+  else
+    message
+  end
+end
+
 Thread.new do
   redis = Redis.connect
   redis.psubscribe('message', 'message.*') do |on|
     on.pmessage do |match, channel, message|
       channel = channel.sub('message.', '')
+      message = maybe_delay message
 
-      json = JSON.parse(message)
-      if meta = json['_meta']
-        if delay = meta['delay']
-          sleep delay
-        end
-        json.delete('_meta')
-        message = json.to_json
-      end
 
       conns.each do |out|
         out << "event: #{channel}\n"
