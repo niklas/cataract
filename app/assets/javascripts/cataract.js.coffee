@@ -48,7 +48,7 @@ Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend
     if jqxhr and jqxhr.status is 500
       Ember.Rails.flashMessages.createMessage
         severity: 'error'
-        message: jqxhr.responseJSON.error
+        message: if jqxhr.responseJSON? then jqxhr.responseJSON.error else jqxhr.statusText
       # stop propagating
       false
     else
