@@ -31,7 +31,7 @@ class TransferController < TorrentComponentController
     @transfers ||= torrents_for_collection.tap do  |torrents|
         authorize! :index, Torrent
         Torrent.remote.apply torrents, Fields
-        torrents.reject(&:active?).each(&:finally_stop!)
+        torrents.reject { |t| t.transfer.active? }.each(&:finally_stop!)
       end.map(&:transfer)
   end
 
