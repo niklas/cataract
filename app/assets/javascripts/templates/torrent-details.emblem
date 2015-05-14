@@ -16,9 +16,6 @@
     unless isCollapsed
       unless content.isMoving
         icon-button action='dialog' param='movePayload' severity="info" icon="share" name="move" | Move
-  unless isCollapsed
-    if content.payloadExists
-      p= info_hash
 
 .col-md-3.text-right
   unless content.isRemote

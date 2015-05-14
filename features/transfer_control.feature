@@ -16,7 +16,8 @@ Feature: Transferring torrents
     Given I am on the recent list page
       And the tick interval is reached
      When I explore the first torrent
-      And I click on the start link
+     Then I should see "AE596A610B269617E9163E69F82AFDACE20324DD"
+     When I click on the start link
       And I wait for the spinner to disappear
      Then I should see the stop link
       But I should not see the start link

@@ -9,6 +9,9 @@
   .title
     = content.title
 
+  unless isCollapsed
+    code= content.infoHash
+
   if showPayload
     if isShowingFiles
       payload-files content=content.payload.filenames
