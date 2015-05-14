@@ -28,7 +28,7 @@ class Torrent
   end
 
   def transfer
-    @transfer ||= Cataract::Transfer.new self
+    @transfer ||= Cataract::Transfer.new torrent_id: id, info_hash: info_hash
   end
 
   def remote

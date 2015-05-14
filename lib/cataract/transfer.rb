@@ -43,12 +43,12 @@ class Cataract::Transfer
 
   # FIXME spaghetti
   def fetch!(fields=[])
-    Torrent.remote.apply [torrent], fields
+    Torrent.remote.apply [self], fields
   end
 
-  def XXXupdate(attrs={})
+  def update(attrs={})
     attrs.except(:hash).each do |attr, value|
-      send("#{attr.to_s.sub(/\?$/,'')}=", value)
+      public_send("#{attr.to_s.sub(/\?$/,'')}=", value)
     end
   end
 

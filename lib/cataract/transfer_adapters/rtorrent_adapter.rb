@@ -178,12 +178,13 @@ module Cataract
     end
 
     # sets the specified fields on the given torrents' transfer(s)
-    def apply(torrents, fields)
-      by_hash = torrents.group_by(&:info_hash)
+    def apply(list, fields)
+      by_hash = list.group_by(&:info_hash)
 
       all(fields).each do |remote|
-        if torrent = torrents.find { |t| t.info_hash == remote[:hash] }
-          torrent.transfer.update( remote )
+        if item = by_hash[remote[:hash]].first
+          item = item.transfer if item.respond_to?(:transfer)
+          item.update( remote )
         end
       end
     end
