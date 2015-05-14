@@ -20,7 +20,7 @@ class Torrent
   #alias_method_chain :method_missing, :xml_rpc
 
   def self.remote
-    @remote ||= Cataract::TransferAdapters::RTorrentAdapter.new rtorrent_socket_path
+    @remote ||= Cataract.transfer_adapter
   end
 
   def self.reset_remote!
@@ -33,10 +33,6 @@ class Torrent
 
   def remote
     self.class.remote
-  end
-
-  def self.rtorrent_socket_path
-    Rails.root/'tmp'/'rtorrent.socket'
   end
 
   # rTorrent deletes the torrent file if removing a tied torrent, so we will

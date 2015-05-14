@@ -17,9 +17,9 @@ describe Torrent do
     end
 
     it "uses fixed socket path" do
-      Torrent.rtorrent_socket_path.should be_a(Pathname)
+      Cataract.rtorrent_socket_path.should be_a(Pathname)
       path = double 'socket path'
-      Torrent.stub(:rtorrent_socket_path).and_return(path)
+      Cataract.stub(:rtorrent_socket_path).and_return(path)
       proxy_class.should_receive(:new).with(path)
       torrent.remote
     end

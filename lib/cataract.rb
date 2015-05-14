@@ -17,6 +17,10 @@ module Cataract
   end
 
   def self.transfer_adapter
-    transfer_adapter_class.new
+    transfer_adapter_class.new rtorrent_socket_path
+  end
+
+  def self.rtorrent_socket_path
+    @rtorrent_socket_path ||=  Pathname.new(__FILE__)/'..'/'..'/'tmp'/'rtorrent.socket'
   end
 end
