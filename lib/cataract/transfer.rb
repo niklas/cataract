@@ -30,7 +30,7 @@ class Cataract::Transfer < Struct.new(:torrent)
   end
 
   def read_attribute_for_serialization(attr)
-    unless attr.in?( @@serializable_attributes + [:torrent_id, :progress])
+    unless attr.in?( @@serializable_attributes + [:torrent_id, :progress, :info_hash])
       raise ArgumentError, "cannot serialize #{attr}"
     else
       send(attr)
@@ -46,6 +46,10 @@ class Cataract::Transfer < Struct.new(:torrent)
     attrs.except(:hash).each do |attr, value|
       send("#{attr.to_s.sub(/\?$/,'')}=", value)
     end
+  end
+
+  def info_hash
+    torrent.info_hash
   end
 
 end

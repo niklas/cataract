@@ -6,6 +6,7 @@ Cataract.Transfer = DS.Model.extend
   eta: attr 'string'
   torrent: DS.belongsTo('torrent')
   active: attr 'boolean'
+  infoHash: attr 'string'
 
   isFinished: Ember.computed 'progress', ->
     @get('progress') is 100

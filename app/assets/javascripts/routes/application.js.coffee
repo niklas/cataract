@@ -10,11 +10,6 @@ Cataract.ApplicationRoute = Ember.Route.extend
     store = @get('store')
     @controllerFor('moves').set       'model', store.findAll('move')
 
-    store.findAll('transfer').then (transfers)=>
-      @controllerFor('transfers').set 'model', transfers
-    , (jqxhr)=>
-      @controllerFor('application').transfersError(jqxhr)
-
     store.find('setting', 'all').then (settings)=>
       @controllerFor('settings').set 'model', settings
 
