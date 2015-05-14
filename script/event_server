@@ -66,7 +66,7 @@ run_transfer_publisher = true
 Thread.new do
   while run_transfer_publisher
     if conns.length > 0
-      transfers = Cataract.transfer_adapter.all
+      transfers = Cataract.transfer_adapter.all(:up_rate, :down_rate, :completed_bytes, :active?)
       json = transfers.to_json
       json = [
         { id: 'AE596A610B269617E9163E69F82AFDACE20324DD', up_rate: rand(10000), down_rate: rand(50000), progress: rand(99) }
