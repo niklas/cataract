@@ -11,7 +11,6 @@ Cataract.TransfersController = Ember.ArrayController.extend
           parsed.forEach (attrs)->
             if have = having.findProperty('infoHash', attrs.id)
               attrs.id = have.get('id')
-              console?.debug "pushing", attrs
               store.pushPayload 'transfer', { transfers: [attrs] }
   ).on('init')
 
