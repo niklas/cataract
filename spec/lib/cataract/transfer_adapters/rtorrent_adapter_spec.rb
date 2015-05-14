@@ -144,6 +144,9 @@ describe Cataract::TransferAdapters::RTorrentAdapter do
   end
 
   context "running" do
+    let(:rtorrent) do
+      described_class.new(rtorrent_socket_path, fields: [:up_rate, :down_rate, :completed_bytes])
+    end
     before { start_rtorrent }
     after  { stop_rtorrent }
 
@@ -155,32 +158,32 @@ describe Cataract::TransferAdapters::RTorrentAdapter do
         @first.start!
         @second  = create :torrent_with_picture_of_tails_and_a_poem, content_directory: incoming
         @second.load!
-        sleep 10 # rtorrent needs a moment
+        sleep 1 # rtorrent needs a moment
       end
 
-      let(:results) { rtorrent.all(:up_rate, :down_rate, :completed_bytes) }
-      let(:first_result) { results.find { |r| r[:hash] == @first.info_hash } }
-      let(:second_result) { results.find { |r| r[:hash] == @second.info_hash } }
+      let(:results) { rtorrent.all() }
+      let(:first_result) { results.find { |r| r.info_hash == @first.info_hash } }
+      let(:second_result) { results.find { |r| r.info_hash == @second.info_hash } }
 
       # put it all in one block to reduce test suite runtime
-      it "should be multicallable" do
-        results.should be_a(Array)
-        results.should have(2).records
+      context '#all' do
+        subject { rtorrent.all }
+        it 'returns transfers for each torrent' do
+          results.should have(2).records
 
-        results.each do |result|
-          result.should be_a(Hash)      # associative Array
-          result.should have_key(:hash) # info_hash
+          results.each do |result|
+            result.should be_a(Cataract::Transfer)
+          end
+
+          first_result.should be_present
+          first_result.completed_bytes.should == 73451
+
+          second_result.should be_present
+          second_result.completed_bytes.should be_zero
         end
-
-        first_result.should be_present
-        first_result.should be_matching({hash: @first.info_hash, completed_bytes: 73451}, :ignore_additional=>true)
-
-        second_result.should be_present
-        second_result.should be_matching({hash: @second.info_hash}, :ignore_additional=>true)
       end
-
-
     end
 
   end
+
 end

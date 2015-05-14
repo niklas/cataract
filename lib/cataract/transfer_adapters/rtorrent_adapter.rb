@@ -30,6 +30,11 @@ module Cataract
 
     SCGIPath = '/RPC2'
 
+    def initialize(socket_path, options={})
+      super(socket_path)
+      @fields = options.fetch(:fields) { [:completed_bytes] }
+    end
+
     def new_socket(socket_path, async)
       #UNIXSocket.new(info.to_path)
       SCGI::WrappedSocket.new( UNIXSocket.new(socket_path.to_path), SCGIPath )
@@ -176,7 +181,7 @@ module Cataract
     def apply(torrents, fields)
       by_hash = torrents.group_by(&:info_hash)
 
-      all(*fields).each do |remote|
+      all(fields).each do |remote|
         if torrent = torrents.find { |t| t.info_hash == remote[:hash] }
           torrent.transfer.update( remote )
         end
@@ -187,8 +192,12 @@ module Cataract
       torrents.find { |h| h[:hash] == info_hash }
     end
 
-    def all(*fields)
-      multicall(*fields)
+    def all(fields=@fields)
+      multicall(*fields).map do |remote|
+        attrs = remote.dup.except(:hash)
+        attrs[:info_hash] = remote[:hash]
+        Cataract::Transfer.new attrs
+      end
     end
 
 

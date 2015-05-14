@@ -15,4 +15,8 @@ module Cataract
   def self.transfer_adapter_class
     Cataract::TransferAdapters::RTorrentAdapter
   end
+
+  def self.transfer_adapter
+    transfer_adapter_class.new
+  end
 end
