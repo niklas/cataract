@@ -8,6 +8,10 @@ Bundler.require :event_server
 require 'json'
 
 conns = []
+DEBUG = true
+
+
+Thread.abort_on_exception = DEBUG
 
 get '/subscribe' do
   content_type 'text/event-stream'
@@ -32,6 +36,17 @@ def maybe_delay(message)
   end
 end
 
+def publish(io, channel, message)
+  io << "event: #{channel}\n"
+  io << "data: #{message}\n\n"
+end
+
+def debug(message=nil)
+  if DEBUG
+    $stderr.puts block_given?? yield : message
+  end
+end
+
 Thread.new do
   redis = Redis.connect
   redis.psubscribe('message', 'message.*') do |on|
@@ -41,9 +56,26 @@ Thread.new do
 
 
       conns.each do |out|
-        out << "event: #{channel}\n"
-        out << "data: #{message}\n\n"
+        publish out, channel, message
       end
     end
+  end
+end
+
+run_transfer_publisher = true
+Thread.new do
+  while run_transfer_publisher
+    if conns.length > 0
+      json = [
+        { id: 'ABC', up_rate: 23, down_rate: 42, progress: rand(99) }
+      ].to_json
+
+      debug { "will publish transfers to #{conns.length} clients" }
+      conns.each do |out|
+        publish out, 'transfers', json
+      end
+    end
+
+    sleep 1
   end
 end
