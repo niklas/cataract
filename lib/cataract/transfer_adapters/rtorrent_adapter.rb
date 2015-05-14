@@ -181,10 +181,10 @@ module Cataract
     def apply(list, fields)
       by_hash = list.group_by(&:info_hash)
 
-      all(fields).each do |remote|
+      multicall(Array(fields)).each do |remote|
         if item = by_hash[remote[:hash]].first
           item = item.transfer if item.respond_to?(:transfer)
-          item.update( remote )
+          item.update( build_transfer_attributes remote )
         end
       end
     end
@@ -194,10 +194,8 @@ module Cataract
     end
 
     def all(fields=@fields)
-      multicall(*fields).map do |remote|
-        attrs = remote.dup.except(:hash)
-        attrs[:info_hash] = remote[:hash]
-        Cataract::Transfer.new attrs
+      multicall(Array(fields)).map do |remote|
+        Cataract::Transfer.new build_transfer_attributes(remote)
       end
     end
 
@@ -219,8 +217,8 @@ module Cataract
       hash
     end
 
-    def multicall(*remote_fields)
-      mapping = build_multicall_mapping *remote_fields
+    def multicall(remote_fields=@fields)
+      mapping = build_multicall_mapping remote_fields
       call(one_of('d.multicall', 'd.multicall2'), '', *mapping.values).map do |it|
         {}.tap do |h|
           mapping.keys.each_with_index do |meth,i|
@@ -231,11 +229,30 @@ module Cataract
     end
     # give a list of rubiesque fields, get back hash, mapping them to multicall
     # string. Always includes the torrrent's hash
-    def build_multicall_mapping(*fields)
+    def build_multicall_mapping(fields)
       (fields << :hash).each_with_object({}) do |field, mapping|
         unless field.to_s.ends_with?('!')
           mapping[field] = "#{self.class.map_method_name(field)}="
         end
+      end
+    end
+
+    def build_transfer_attributes(source)
+      {}.tap do |attrs|
+        attrs[:info_hash] = source[:hash]
+        source.except(:hash).each do |remote_name, value|
+          name = transfer_setter_name(remote_name)
+          attrs[name] = value
+        end
+      end
+    end
+
+    def transfer_setter_name(meth)
+      case meth
+      when /^(.+)\?$/   # booleans
+        $1
+      else
+        meth
       end
     end
 

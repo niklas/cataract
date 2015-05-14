@@ -19,4 +19,8 @@ describe Cataract::Transfer do
 
   end
 
+  it 'can be serialized' do
+    subject.should respond_to(:read_attribute_for_serialization)
+  end
+
 end

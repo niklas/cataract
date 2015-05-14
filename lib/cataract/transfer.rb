@@ -1,6 +1,7 @@
 # collects the values considering the transfer of a torrent
 class Cataract::Transfer
   include ActiveModel::Model
+  include ActiveModel::Serialization
   attr_accessor :info_hash,
                 :torrent_id,
                 :completed_bytes,

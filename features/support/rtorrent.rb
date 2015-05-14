@@ -27,7 +27,7 @@ end
 Then /^rtorrent should download #{capture_model}$/ do |m|
   torrent = model!(m)
   torrent.info_hash.should_not be_blank
-  Torrent.remote.all(:active?).select {|r| r[:hash] ==  torrent.info_hash}.should be_present
+  Torrent.remote.all(:active?).select {|r| r.info_hash ==  torrent.info_hash}.should be_present
 end
 
 Given /^rtorrent list contains the following:$/ do |table|

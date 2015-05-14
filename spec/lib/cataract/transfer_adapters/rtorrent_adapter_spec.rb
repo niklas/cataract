@@ -100,7 +100,7 @@ describe Cataract::TransferAdapters::RTorrentAdapter do
     let(:archived) { create :torrent  }
     let(:torrent) { create :torrent_with_picture_of_tails, content_directory: incoming }
     before :each do
-      rtorrent.stub(:all).and_return(progress_array)
+      rtorrent.stub(:multicall).and_return(progress_array)
       rtorrent.apply torrents, [:up_rate, :down_rate, :active?]
     end
 
@@ -144,8 +144,15 @@ describe Cataract::TransferAdapters::RTorrentAdapter do
   end
 
   context "running" do
+    let(:fields) {[
+      :up_rate,
+      :down_rate,
+      :active?,
+      :open?,
+      :completed_bytes,
+    ]}
     let(:rtorrent) do
-      described_class.new(rtorrent_socket_path, fields: [:up_rate, :down_rate, :completed_bytes])
+      described_class.new(rtorrent_socket_path, fields: fields)
     end
     before { start_rtorrent }
     after  { stop_rtorrent }
