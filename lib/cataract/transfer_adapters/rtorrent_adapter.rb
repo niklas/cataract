@@ -94,7 +94,6 @@ module Cataract
       define_method name do |torrent|
         block.call call_with_torrent(mapped, torrent)
       end
-      Torrent.delegate name, to: :transfer
     end
 
     def self.reader(name)
@@ -231,7 +230,7 @@ module Cataract
     # string. Always includes the torrrent's hash
     def build_multicall_mapping(fields)
       (fields << :hash).each_with_object({}) do |field, mapping|
-        unless field.to_s.ends_with?('!')
+        unless field =~ /!$/
           mapping[field] = "#{self.class.map_method_name(field)}="
         end
       end

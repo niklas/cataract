@@ -26,7 +26,7 @@ module RTorrentSpecHelper
         end
       end
       Torrent.reset_remote!
-      Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
+      Cataract.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
     else
       raise "could not start rtorrent"
     end

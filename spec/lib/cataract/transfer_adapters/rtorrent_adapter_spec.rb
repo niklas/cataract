@@ -112,20 +112,21 @@ describe Cataract::TransferAdapters::RTorrentAdapter do
         down_rate: 42,
         :"active?" => '1'
       }] }
+      let(:transfer) { torrent.transfer }
 
       it "should set up rate" do
-        torrent.up_rate.should_not be_nil
-        torrent.up_rate.should == 23
+        transfer.up_rate.should_not be_nil
+        transfer.up_rate.should == 23
       end
 
       it "should set down rate" do
-        torrent.down_rate.should_not be_nil
-        torrent.down_rate.should == 42
+        transfer.down_rate.should_not be_nil
+        transfer.down_rate.should == 42
       end
 
       it "should set active state" do # so the TransferController can mark them as stopped
-        torrent.should be_active
-        archived.should_not be_active
+        transfer.should be_active
+        archived.transfer.should_not be_active
       end
 
     end
@@ -133,10 +134,11 @@ describe Cataract::TransferAdapters::RTorrentAdapter do
     context "for archived torrent" do
       let(:torrents) { [ archived ] }
       let(:progress_array) { [] }
+      let(:transfer) { archived.transfer }
 
       it "should not set rates" do
-        archived.up_rate.should be_nil
-        archived.down_rate.should be_nil
+        transfer.up_rate.should be_nil
+        transfer.down_rate.should be_nil
       end
 
     end

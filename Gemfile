@@ -141,4 +141,5 @@ group :event_server do
   gem 'sinatra'
   gem 'redis'
   gem 'thin', require: false
+  gem 'activemodel'
 end
