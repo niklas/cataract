@@ -119,7 +119,7 @@ class Torrent
     end
 
     def destroy
-      torrent.stop unless Torrent.remote.offline?
+      torrent.stop unless Cataract.transfer_adapter.offline?
       if exists?
         FileUtils.rm_rf path
         torrent.payload_exists = false

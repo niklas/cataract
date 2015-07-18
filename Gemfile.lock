@@ -511,6 +511,7 @@ PLATFORMS
 DEPENDENCIES
   active_attr
   active_model_serializers (~> 0.8.1)
+  activemodel
   acts_as_list
   ancestry
   better_errors

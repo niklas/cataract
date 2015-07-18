@@ -141,4 +141,7 @@ group :event_server do
   gem 'sinatra'
   gem 'redis'
   gem 'thin', require: false
+  gem 'activemodel'
+  gem 'scgi'
+  gem 'xmlrpcs'
 end

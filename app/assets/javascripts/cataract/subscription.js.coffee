@@ -28,9 +28,9 @@ Cataract.initializer
     source.addModelEventListener = (model)->
       source.addEventListener model, (event)->
         parsed = JSON.parse(event.data)
-        if 'object' is typeof(parsed)
-          if attr = parsed[model]
-            have = store.recordForId(model, attr.id).get('updatedAt')
+        if 'object' is Ember.typeOf(parsed)
+          if (attr = parsed[model]) and (have = store.recordForId(model, attr.id))
+            have = have.get('updatedAt')
             fresh = attr.updated_at
             if have and fresh and fresh < have
               return # skip update, is out of date
@@ -38,6 +38,6 @@ Cataract.initializer
 
       source.addEventListener 'delete_' + model, (event)->
         parsed = JSON.parse(event.data)
-        if 'object' is typeof(parsed)
+        if 'object' is Ember.typeOf(parsed)
           if (id = parsed.id) and (have = store.recordForId(model, parsed.id))
             have.unloadRecord()

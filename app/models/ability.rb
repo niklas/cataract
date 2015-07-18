@@ -7,7 +7,7 @@ class Ability
       can :manage, Disk
       can :manage, Directory
       can :manage, Setting
-      can :manage, Transfer
+      can :manage, Cataract::Transfer
       can :manage, :payload # Emu
       can :manage, Torrent::Payload
       can :manage, Move

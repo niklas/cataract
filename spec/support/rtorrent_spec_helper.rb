@@ -13,7 +13,7 @@ module RTorrentSpecHelper
   end
 
   def start_rtorrent(seconds=15)
-    Torrent::RTorrent.online!
+    Cataract.transfer_adapter_class.online!
     FileUtils.rm rtorrent_socket_path if rtorrent_socket_path.exist?
     FileUtils.mkdir_p socket_path unless socket_path.exist?
 
@@ -26,7 +26,7 @@ module RTorrentSpecHelper
         end
       end
       Torrent.reset_remote!
-      Torrent.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
+      Cataract.stub(:rtorrent_socket_path).and_return(rtorrent_socket_path)
     else
       raise "could not start rtorrent"
     end
@@ -36,7 +36,7 @@ module RTorrentSpecHelper
   end
 
   def stop_rtorrent
-    Torrent::RTorrent.offline!
+    Cataract.transfer_adapter_class.offline!
     if @rtorrent_pid
       Rails.logger.debug "killing rtorrent with pid: #{@rtorrent_pid}"
       Process.kill 'TERM', @rtorrent_pid

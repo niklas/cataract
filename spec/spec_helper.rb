@@ -13,7 +13,7 @@
     config.include Devise::TestHelpers, :type => :controller
 
     config.before :each do
-      Torrent::RTorrent.offline!
+      Cataract.transfer_adapter_class.offline!
     end
 
     config.after :each do

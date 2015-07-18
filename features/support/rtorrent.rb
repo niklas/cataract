@@ -1,5 +1,5 @@
 Before '~@rtorrent' do
-  Torrent::RTorrent.offline!
+  Cataract.transfer_adapter_class.offline!
 end
 
 require Rails.root/'spec/support/rtorrent_spec_helper'
@@ -21,13 +21,13 @@ end
 
 Then /^the rtorrent (\w+) view (should|should not) contain #{capture_model}$/ do |view, should_or_not, m|
   should_or_not.gsub!(/\s/,'_')
-  Torrent.remote.download_list(view).send should_or_not, include( model!(m).info_hash )
+  Cataract.transfer_adapter.download_list(view).send should_or_not, include( model!(m).info_hash )
 end
 
 Then /^rtorrent should download #{capture_model}$/ do |m|
   torrent = model!(m)
   torrent.info_hash.should_not be_blank
-  Torrent.remote.all(:active?).select {|r| r[:hash] ==  torrent.info_hash}.should be_present
+  Cataract.transfer_adapter.all(:active?).select {|r| r.info_hash ==  torrent.info_hash}.should be_present
 end
 
 Given /^rtorrent list contains the following:$/ do |table|
@@ -39,6 +39,8 @@ Given /^rtorrent list contains the following:$/ do |table|
     end
   end
   # we recreate RTorrent interface on every request
-  Torrent::RTorrent.any_instance.stub(:all).and_return(table.hashes.map(&:symbolize_keys))
+  adapters = Cataract.transfer_adapter_class.any_instance
+  adapters.stub(:multicall).and_return(table.hashes.map(&:symbolize_keys))
+  adapters.stub(:offline?).and_return(false)
 end
 

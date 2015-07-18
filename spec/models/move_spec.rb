@@ -80,7 +80,7 @@ describe Move do
       end
 
       it "should stop running torrent" do
-        Torrent::RTorrent.online!
+        Cataract.transfer_adapter_class.online!
         multiple.should_receive(:stop)
         move.work!
       end
@@ -112,8 +112,7 @@ describe Move, 'target' do
                                 stop: true, save!: true, 'content_directory=' => true, content_directory: nil )
 
     move = Move.new
-    move.should_receive(:publish).at_least(:once)
-    move.should_receive(:publish_destroy).once
+    move.should_receive(:publish).at_least(5).times
     move.stub(:torrent).and_return(torrent)
     move.stub(:final_directory).and_return(double('dir', full_path: 'final_dir'))
 

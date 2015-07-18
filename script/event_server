@@ -6,8 +6,15 @@ require 'rubygems'
 require 'bundler'
 Bundler.require :event_server
 require 'json'
+require 'active_model'
+$: << File.expand_path('../../lib/', __FILE__)
+require 'cataract'
 
 conns = []
+DEBUG = true
+
+
+Thread.abort_on_exception = DEBUG
 
 get '/subscribe' do
   content_type 'text/event-stream'
@@ -32,6 +39,17 @@ def maybe_delay(message)
   end
 end
 
+def publish(io, channel, message)
+  io << "event: #{channel}\n"
+  io << "data: #{message}\n\n"
+end
+
+def debug(message=nil)
+  if DEBUG
+    $stderr.puts block_given?? yield : message
+  end
+end
+
 Thread.new do
   redis = Redis.connect
   redis.psubscribe('message', 'message.*') do |on|
@@ -41,9 +59,31 @@ Thread.new do
 
 
       conns.each do |out|
-        out << "event: #{channel}\n"
-        out << "data: #{message}\n\n"
+        publish out, channel, message
       end
     end
+  end
+end
+
+run_transfer_publisher = true
+Thread.new do
+  while run_transfer_publisher
+    begin
+      if conns.length > 0
+        transfers = Cataract.transfer_adapter.all([:up_rate, :down_rate, :completed_bytes, :active?, :size_bytes])
+        x = transfers.first
+        x.up_rate = rand(10000)
+        x.completed_bytes = rand(x.size_bytes)
+        json = transfers.to_json
+
+        conns.each do |out|
+          publish out, 'transfers', json
+        end
+      end
+    rescue Cataract.transfer_adapter_class::Error
+      sleep 10
+    end
+
+    sleep 1
   end
 end

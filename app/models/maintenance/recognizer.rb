@@ -56,7 +56,7 @@ class Maintenance::Recognizer < Maintenance::Base
           t.fetch!
           t.save!
           t.start!
-        rescue Torrent::RTorrent::CouldNotFindInfoHash => e
+        rescue Cataract.transfer_adapter_class::CouldNotFindInfoHash => e
         end
       end
     end

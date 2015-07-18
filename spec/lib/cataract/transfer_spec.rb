@@ -1,6 +1,4 @@
-require 'transfer'
-
-describe Transfer do
+describe Cataract::Transfer do
 
   context 'left_seconds' do
 
@@ -19,6 +17,10 @@ describe Transfer do
       subject.left_seconds.should be_infinite
     end
 
+  end
+
+  it 'can be serialized' do
+    subject.should respond_to(:read_attribute_for_serialization)
   end
 
 end

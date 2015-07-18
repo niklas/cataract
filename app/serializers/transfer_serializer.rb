@@ -7,6 +7,7 @@ class TransferSerializer < BaseSerializer
              :up_rate,
              :active,
              :eta,
+             :info_hash,
              :down_rate
 
   def eta

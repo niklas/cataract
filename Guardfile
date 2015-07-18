@@ -11,6 +11,11 @@ group :test, :halt_on_fail => true do
     watch('spec/spec_helper.rb')  { "spec" }
     #watch(%r{^spec/factories/.+$}) { 'spec' }
 
+    watch('lib/cataract/transfer.rb')                      {
+      Dir['spec/lib/cataract/transfer_adapters/*_spec.rb'] +
+      %w(spec/lib/cataract/transfer_spec.rb)
+    }
+
     # Rails example
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
