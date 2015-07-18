@@ -178,10 +178,10 @@ module Cataract
 
     # sets the specified fields on the given torrents' transfer(s)
     def apply(list, fields)
-      by_hash = list.group_by(&:info_hash)
+      by_hash = list.index_by(&:info_hash)
 
       multicall(Array(fields)).each do |remote|
-        if item = by_hash[remote[:hash]].first
+        if item = by_hash[remote[:hash]]
           item = item.transfer if item.respond_to?(:transfer)
           item.update( build_transfer_attributes remote )
         end
