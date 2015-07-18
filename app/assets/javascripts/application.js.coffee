@@ -2,23 +2,24 @@
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
 #= require moment
+# early ember conf
+#= require_self
 #= require ember
 #= require ember-data
+#= require active-model-adapter
 #= require ember-rails-flash
 # FIXME must compile rails session
 #= require ember-template-compiler
 #= require pagination_support
 #= require bindWithDelay
 #
-#= require ./cataract
 #= require ./lib/loaded_page
-#= require active-model-adapter
-#= require_self
 #= require cataract
 
 
 window.EmberENV =
   nothing: true
+  ENABLE_DS_FILTER: true
 
 jQuery ->
   search = ->
