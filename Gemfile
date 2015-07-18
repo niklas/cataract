@@ -118,7 +118,7 @@ gem 'ember-emblem-template'
 gem 'emblem-source', '~> 0.4'
 gem 'ember-data-source'
 
-gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
+gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git', branch: 'develop'
 gem 'newrelic_rpm'
 
 gem "rails-bookmarklet", :git => "https://github.com/oliverfriedmann/rails-bookmarklet.git"
