@@ -5,10 +5,10 @@ gem 'pg'
 
 
 # Gems used only for assets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0.3'
 gem 'uglifier', '>= 1.2.3'
 gem 'jquery-rails'
-gem 'bootstrap-sass', '~> 3.1.1'
+gem 'bootstrap-sass', '3.3.5.1'
 gem 'jquery-ui-rails'
 
 

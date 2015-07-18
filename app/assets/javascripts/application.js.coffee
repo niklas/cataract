@@ -1,5 +1,4 @@
 #= require jquery
-#= require_self
 #= require jquery_ujs
 #= require jquery.scrollTo-1.4.3.1
 #= require moment
@@ -14,6 +13,10 @@
 #
 #= require ./cataract
 #= require ./lib/loaded_page
+#= require active-model-adapter
+#= require_self
+#= require cataract
+
 
 window.EmberENV =
   nothing: true
