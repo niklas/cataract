@@ -8,12 +8,7 @@ Cataract.FlashItemView = Ember.Rails.FlashItemView.extend
     .property('content.severity')
   delay: 23 * 1000
   fadeDuration: 1000
-  template: Ember.Handlebars.compile """
-  {{#with view.content}}
-    <a class="close" {{action "closeQuickly" target=view}}> ×</a>
-    <span class="message">{{message}}</span>
-  {{/with}}
-  """
+  templateName: 'flash-item'
 
   closeQuickly: ->
     @set 'fadeDuration', @get('fadeDuration') / 3

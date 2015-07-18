@@ -111,11 +111,12 @@ gem 'feed-abstract'
 
 gem 'dalli'
 
-# https://github.com/emberjs/ember-rails/issues/165
-gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
-gem 'ember-source', '~> 1.9.0'
-gem 'ember-data-source', '1.0.0.beta.16.1'
-gem 'emblem-rails'
+# https://github.com/alexspeller/emblem-rails/issues/36
+gem 'ember-rails', '~> 0.19.0'
+gem 'ember-source', '~> 1.11.3.1'
+gem 'ember-emblem-template'
+gem 'emblem-source', '~> 0.4'
+gem 'ember-data-source'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'
 gem 'newrelic_rpm'

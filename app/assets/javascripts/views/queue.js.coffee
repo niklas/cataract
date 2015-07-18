@@ -1,5 +1,5 @@
 Cataract.QueueItemView = Ember.View.extend
-  template: Ember.Handlebars.compile '<a href="#">{{view.content.title}}</a>'
+  templateName: 'queue-item'
 
 Cataract.QueueView = Ember.CollectionView.extend
   tagName: 'ul'

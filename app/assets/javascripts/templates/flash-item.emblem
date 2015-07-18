@@ -1,0 +1,4 @@
+a class="close" click="closeQuickly"
+  span class="message"
+    x
+    = view.content.message

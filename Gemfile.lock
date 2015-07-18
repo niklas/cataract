@@ -6,19 +6,6 @@ GIT
       coffee-rails
 
 GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 94d81e5c1bbb5dc16168522e9835a957cf72ed4f
-  specs:
-    ember-rails (0.17.0)
-      active_model_serializers
-      barber (>= 0.7.0)
-      ember-data-source (>= 1.0.0.beta.5)
-      ember-source (>= 1.1.0)
-      execjs (>= 1.2)
-      jquery-rails (>= 1.0.17)
-      railties (>= 3.1)
-
-GIT
   remote: git://github.com/niklas/ember-rails-flash.git
   revision: de3c3665d2bdafa9e5cebfb8dee713919ae38223
   specs:
@@ -87,6 +74,8 @@ GEM
       activesupport (= 4.1.9)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    active-model-adapter-source (1.13.4)
+      ember-data-source (>= 1.13, < 3.0)
     active_attr (0.8.5)
       activemodel (>= 3.0.2, < 5.0)
       activesupport (>= 3.0.2, < 5.0)
@@ -111,12 +100,9 @@ GEM
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
     arel (5.0.1.20140414130214)
-    barber (0.7.0)
-      ember-source
-      execjs
-    barber-emblem (0.1.2)
-      barber (>= 0.4.1)
-      emblem-source
+    barber (0.9.1)
+      ember-source (>= 1.0, < 2)
+      execjs (>= 1.2, < 3)
     bcrypt (3.1.10)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -197,20 +183,31 @@ GEM
     email_spec (1.6.0)
       launchy (~> 2.1)
       mail (~> 2.2)
-    ember-data-source (1.0.0.beta.16.1)
-      ember-source (~> 1.8)
-    ember-source (1.9.1)
-      handlebars-source (~> 2.0)
-    emblem-rails (0.2.2)
-      barber-emblem (~> 0.1.1)
-      ember-rails (>= 0.14.0)
+    ember-data-source (1.13.5)
+      ember-source (>= 1.8, < 3.0)
+    ember-emblem-template (0.2.2)
+      barber (>= 0.9.0)
+      sprockets (>= 2.1, < 3.0)
+    ember-handlebars-template (0.3.0)
+      barber (>= 0.9.0)
+      sprockets (>= 2.1, < 3.3)
+      tilt
+    ember-rails (0.19.0)
+      active-model-adapter-source (>= 1.13.0)
+      active_model_serializers
+      ember-data-source (>= 1.13.0)
+      ember-handlebars-template (>= 0.1.1, < 1.0)
+      ember-source (>= 1.8.0)
+      jquery-rails (>= 1.0.17)
+      railties (>= 3.1)
+    ember-source (1.11.3.1)
     emblem-source (0.4.0)
     erubis (2.7.0)
     eventmachine (1.0.7)
     exception_notification (4.1.0)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
-    execjs (2.4.0)
+    execjs (2.5.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.5.0)
@@ -264,7 +261,6 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    handlebars-source (2.0.0)
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
@@ -291,12 +287,12 @@ GEM
       rack (>= 1.2.1)
       rake
     jasmine-core (2.2.0)
-    jquery-rails (3.1.2)
+    jquery-rails (3.1.3)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.3)
       railties (>= 3.2.16)
-    json (1.8.2)
+    json (1.8.3)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -325,8 +321,8 @@ GEM
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
-    minitest (5.5.1)
-    multi_json (1.11.0)
+    minitest (5.7.0)
+    multi_json (1.11.2)
     multi_test (0.1.2)
     nenv (0.2.0)
     net-http-digest_auth (1.4)
@@ -369,7 +365,7 @@ GEM
     pry-stack_explorer (0.4.9.2)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    rack (1.5.2)
+    rack (1.5.5)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -447,7 +443,7 @@ GEM
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
-    sprockets (2.12.3)
+    sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -529,11 +525,12 @@ DEPENDENCIES
   devise
   diff_matcher
   email_spec
-  ember-data-source (= 1.0.0.beta.16.1)
-  ember-rails!
+  ember-data-source
+  ember-emblem-template
+  ember-rails (~> 0.19.0)
   ember-rails-flash!
-  ember-source (~> 1.9.0)
-  emblem-rails
+  ember-source (~> 1.11.3.1)
+  emblem-source (~> 0.4)
   exception_notification
   factory_girl_rails
   fakefs

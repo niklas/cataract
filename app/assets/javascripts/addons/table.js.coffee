@@ -1,5 +1,5 @@
 Cataract.PlainContentView = Ember.View.extend
-  template: Ember.Handlebars.compile '{{view.content}}'
+  templateName: 'plain-content'
 
 Cataract.TableCellView = Ember.ContainerView.extend
   tagName: 'td'
@@ -20,7 +20,7 @@ Cataract.Table = Ember.ContainerView.extend
         contentBinding: 'parentView.parentView.columns'
         itemViewClass: Ember.View.extend
           tagName: 'th'
-          template: Ember.Handlebars.compile '{{view.content.name}}'
+          templateName: 'table-header'
     @set 'tbody', Ember.CollectionView.create
       tagName: 'tbody'
       contentBinding: 'parentView.content'
