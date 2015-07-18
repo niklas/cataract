@@ -71,9 +71,6 @@ Thread.new do
     begin
       if conns.length > 0
         transfers = Cataract.transfer_adapter.all([:up_rate, :down_rate, :completed_bytes, :active?, :size_bytes])
-        x = transfers.first
-        x.up_rate = rand(10000)
-        x.completed_bytes = rand(x.size_bytes)
         json = transfers.to_json
 
         conns.each do |out|
