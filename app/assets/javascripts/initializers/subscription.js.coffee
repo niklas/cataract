@@ -22,7 +22,7 @@ Ember.Application.initializer
     application.register 'subscription:main', Ember.Object.extend(source: source)
     application.inject('controller', 'serverEvents', 'subscription:main')
 
-    store = container.lookup('store:main')
+    store = container.lookup('service:store')
 
     # model: singular model name, for example 'torrent'
     source.addModelEventListener = (model)->
