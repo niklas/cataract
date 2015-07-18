@@ -5,10 +5,15 @@ describe Torrent do
     Torrent.new.should respond_to(:refresh!)
   end
   describe 'refreshing' do
+    before do
+      # FIXME refactor responsibilities, too strong coupling
+      Cataract.transfer_adapter_class.online! # fake
+      Cataract.stub transfer_adapter: Cataract.transfer_adapter
+    end
 
     describe 'a running torrent that was stopped manually' do
       before do
-        Torrent.remote.stub(:all).once.and_return([])
+        Cataract.transfer_adapter.should_receive(:multicall).once.and_return([])
       end
       let(:torrent) { create :running_torrent }
 
@@ -20,7 +25,7 @@ describe Torrent do
 
     describe 'a running torrent that was stopped manually' do
       before do
-        Torrent.remote.stub(:all).once.and_return([
+        Cataract.transfer_adapter.should_receive(:multicall).once.and_return([
           { hash: torrent.info_hash, active?: false }
         ])
       end

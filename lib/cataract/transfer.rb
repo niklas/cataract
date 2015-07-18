@@ -44,7 +44,7 @@ class Cataract::Transfer
 
   # FIXME spaghetti
   def fetch!(fields=[])
-    Torrent.remote.apply [self], fields
+    Cataract.transfer_adapter.apply [self], fields
   end
 
   def update(attrs={})
