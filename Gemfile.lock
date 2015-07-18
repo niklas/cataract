@@ -513,6 +513,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-model-adapter-source (~> 1.13)
   active_attr
   active_model_serializers (~> 0.8.1)
   activemodel

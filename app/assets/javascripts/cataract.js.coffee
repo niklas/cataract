@@ -38,26 +38,6 @@ Cataract = CataractApplication.create
 jQuery.ajaxSetup
   dataType: 'json'
 
-DS.RailsRESTSerializer = DS.ActiveModelSerializer.extend()
-DS.RailsRESTAdapter = DS.ActiveModelAdapter.extend
-  defaultSerializer: 'DS/railsREST'
-
-Cataract.ApplicationAdapter = DS.RailsRESTAdapter.extend
-  ajaxError: (jqxhr)->
-    if jqxhr and jqxhr.status is 500
-      Ember.Rails.flashMessages.createMessage
-        severity: 'error'
-        message: if jqxhr.responseJSON? then jqxhr.responseJSON.error else jqxhr.statusText
-      # stop propagating
-      false
-    else
-      @_super(jqxhr)
-#DS.RESTAdapter.configure "plurals",
-#  directory: 'directories'
-#  detected_directory: 'detected_directories'
-#
-#DS.RESTAdapter.configure 'Cataract.Torrent', sideloadAs: 'torrents'
-
 window.Cataract = Cataract
 
 if console?
