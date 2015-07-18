@@ -114,7 +114,7 @@ gem 'dalli'
 # https://github.com/emberjs/ember-rails/issues/165
 gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
 gem 'ember-source', '~> 1.9.0'
-gem 'ember-data-source', '1.0.0.beta.15'
+gem 'ember-data-source', '1.0.0.beta.16.1'
 gem 'emblem-rails'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git'

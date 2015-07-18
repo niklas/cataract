@@ -197,7 +197,7 @@ GEM
     email_spec (1.6.0)
       launchy (~> 2.1)
       mail (~> 2.2)
-    ember-data-source (1.0.0.beta.15)
+    ember-data-source (1.0.0.beta.16.1)
       ember-source (~> 1.8)
     ember-source (1.9.1)
       handlebars-source (~> 2.0)
@@ -529,7 +529,7 @@ DEPENDENCIES
   devise
   diff_matcher
   email_spec
-  ember-data-source (= 1.0.0.beta.15)
+  ember-data-source (= 1.0.0.beta.16.1)
   ember-rails!
   ember-rails-flash!
   ember-source (~> 1.9.0)
