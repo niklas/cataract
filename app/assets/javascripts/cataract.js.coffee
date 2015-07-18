@@ -1,4 +1,5 @@
 #= require_self
+#= require ./lib/poly_disk_directory
 #= require_tree ./adapters
 #= require_tree ./mixins
 #= require_tree ./models
