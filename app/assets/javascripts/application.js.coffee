@@ -5,6 +5,8 @@
 #= require ember
 #= require ember-data
 #= require ember-rails-flash
+# FIXME must compile rails session
+#= require ember-template-compiler
 #= require pagination_support
 #= require bindWithDelay
 #
