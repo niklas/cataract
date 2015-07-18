@@ -42,7 +42,7 @@ Cataract.TorrentsController =
     # If we do none of this, the delay until the list is show will be increased
     # by a factor of ~10, (more than 10s for ~200 records)
     @set 'isFetching', true
-    @get('store').findQuery('torrent', opts).then =>
+    @get('store').query('torrent', opts).then =>
       console?.debug "fetched torrents", opts
       @gotoFirstPage()
       @set 'isFetching', false
@@ -188,7 +188,7 @@ Cataract.TorrentsController =
     running = list.filterProperty('status', 'running').mapProperty('id')
     store = @get('store')
     existing = store.find
-    fetch = store.findQuery 'transfer', running: running.join(',')
+    fetch = store.query 'transfer', running: running.join(',')
 
     fetch.then (transfers) =>
       # time as passed => recalculate
