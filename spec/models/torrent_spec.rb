@@ -77,7 +77,8 @@ describe Torrent do
   describe 'running' do
     let(:torrent) { build :torrent_with_picture_of_tails }
     it "should be stopped when clearing" do
-      Torrent.remote.stub :offline? => false
+      transfers = Cataract.transfer_adapter_class.any_instance
+      transfers.stub :offline? => false
       torrent.should_receive(:stop)
       torrent.payload.destroy
     end
