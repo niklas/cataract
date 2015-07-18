@@ -6,7 +6,7 @@ url = ->
   else
     "#{l.protocol}//#{l.host}/subscribe"
 
-Cataract.initializer
+Ember.Application.initializer
   name: 'subscription' # to server side events
   # subscribe to it from a controller with
   # @get('serverEvents.source').addEventListener <channel>, (event)->
