@@ -16,20 +16,20 @@ Ember.PaginationSupport = Ember.Mixin.create
     total = get(this, "total")
     return rangeStop  if rangeStop < total
     total
-  .property("total", "rangeStart", "rangeWindowSize").cacheable()
+  .property("total", "rangeStart", "rangeWindowSize")
   hasPrevious: Ember.computed ->
     get(this, "rangeStart") > 0
-  .property("rangeStart").cacheable()
+  .property("rangeStart")
   hasNext: Ember.computed ->
     get(this, "rangeStop") < get(this, "total")
-  .property("rangeStop", "total").cacheable()
+  .property("rangeStop", "total")
 
   page: Ember.computed ->
     (get(this, "rangeStart") / get(this, "rangeWindowSize")) + 1
-  .property("rangeStart", "rangeWindowSize").cacheable()
+  .property("rangeStart", "rangeWindowSize")
   totalPages: Ember.computed ->
     Math.ceil get(this, "total") / get(this, "rangeWindowSize")
-  .property("total", "rangeWindowSize").cacheable()
+  .property("total", "rangeWindowSize")
   pageDidChange: (->
     Ember.run.once this, @didRequestRange
   ).observes("total", "rangeStart")
