@@ -1,5 +1,13 @@
-# Override the default adapter with the `DS.ActiveModelAdapter` which
+Cataract.ApplicationAdapter = DS.ActiveModelAdapter.extend
+  ajaxError: (jqxhr)->
+    if jqxhr and jqxhr.status is 500
+      Ember.Rails.flashMessages.createMessage
+        severity: 'error'
+        message: if jqxhr.responseJSON? then jqxhr.responseJSON.error else jqxhr.statusText
+      # stop propagating
+      false
+    else
+      @_super(jqxhr)
 
-Cataract.ApplicationAdapter = DS.ActiveModelAdapter.extend({
-
-})
+  # TODO only transfers
+  shouldReloadAll: -> true
