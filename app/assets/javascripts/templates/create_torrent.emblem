@@ -11,6 +11,6 @@ modal-dialog action="createTorrent" heading="Add Torrent" primary="Add" secondar
         select-directory elementId="content_directory" content=directories selection=contentPolyDirectory classNames='form-control'
 
       .form-group
-        Cataract.FileField file=filedata filename=filename label="File"
+        file-field file=filedata filename=filename label="File"
 
       drop-zone action="uploadTorrent" inviting=controllers.application.dragging
