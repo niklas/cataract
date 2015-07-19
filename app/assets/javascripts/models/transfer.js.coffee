@@ -4,7 +4,7 @@ Cataract.Transfer = DS.Model.extend
   upRate: attr 'number'
   downRate: attr 'number'
   eta: attr 'string'
-  torrent: DS.belongsTo('torrent')
+  torrent: DS.belongsTo('torrent', async: false)
   active: attr 'boolean'
   infoHash: attr 'string'
 

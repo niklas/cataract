@@ -3,8 +3,8 @@ attr = DS.attr
 Cataract.BaseDirectory = DS.Model.extend
   name: attr('string')
   relativePath: attr('string')
-  disk: DS.belongsTo('disk')
-  parentDirectory: DS.belongsTo('directory')
+  disk: DS.belongsTo('disk', async: false)
+  parentDirectory: DS.belongsTo('directory', async: false)
   nameWithDisk: Ember.computed 'name', 'disk.name', ->
     "#{@get('name')} (#{@get('disk.name')})"
 

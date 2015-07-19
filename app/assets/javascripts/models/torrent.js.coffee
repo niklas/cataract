@@ -25,7 +25,7 @@ Cataract.Torrent = DS.Model.extend
       payload.save().then ->
         torrent.set('payloadExists', false)
 
-  contentDirectory: DS.belongsTo('directory')
+  contentDirectory: DS.belongsTo('directory', async: false)
   contentPolyDirectory: Cataract.PolyDiskDirectory.attr('contentDirectory')
 
   fetchAutomatically: attr 'boolean'

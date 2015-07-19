@@ -2,7 +2,7 @@ attr = DS.attr
 Cataract.Setting = DS.Model.extend
 
   # OPTIMIZE must simulate association because there is no reflecting assoc in Cataract.Directory ?
-  incomingDirectory: DS.belongsTo('directory', async: true)
+  incomingDirectory: DS.belongsTo('directory', async: false)
   disableSignup: attr 'boolean'
   bookmarkLink: attr 'string'
 

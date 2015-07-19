@@ -1,10 +1,10 @@
 attr = DS.attr
 
 Cataract.Payload = DS.Model.extend
-  directory: DS.belongsTo('directory')
+  directory: DS.belongsTo('directory', async: false)
   size: attr 'number'
   filenames: attr 'staticArray'
-  torrent: DS.belongsTo('torrent')
+  torrent: DS.belongsTo('torrent', async: false)
 
   hasContent: (->
     @get('filenames')?.length || 0 > 0
