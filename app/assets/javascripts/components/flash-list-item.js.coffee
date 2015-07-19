@@ -1,4 +1,5 @@
 Cataract.FlashListItemComponent = Ember.Component.extend
+  classNames: ['flash']
   classNameBindings: ['basicClassName', 'alertClass']
   alertClass:
     Ember.computed ->
@@ -6,11 +7,11 @@ Cataract.FlashListItemComponent = Ember.Component.extend
     .property('content.severity')
   delay: 23 * 1000
   fadeDuration: 1000
-  templateName: 'flash-item'
 
-  closeQuickly: ->
-    @set 'fadeDuration', @get('fadeDuration') / 3
-    @close()
+  actions:
+    closeQuickly: ->
+      @set 'fadeDuration', @get('fadeDuration') / 3
+      @close()
 
   close: ->
     @stopTimeout()
