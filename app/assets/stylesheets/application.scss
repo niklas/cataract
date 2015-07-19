@@ -9,6 +9,8 @@
 
 $navbar_shift: 60px;
 
+/* we want glyphicons from fonts */
+@import "bootstrap-sprockets";
 /* overwrite boostrap variables here */
 @import "bootstrap";
 @import "bootstrap/theme";
