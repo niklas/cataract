@@ -59,8 +59,8 @@ Cataract.PolyDiskDirectory = Ember.Object.extend
 
 
 Cataract.PolyDiskDirectory.attr = (name)->
-  Ember.computed (key, value)->
-    if arguments.length > 1
+  Ember.computed name,
+    get: ->
+      @get "#{name}.poly"
+    set: -> (key, value)->
       @set name, if value? then value.get('alternatives.firstObject') else value
-    @get "#{name}.poly"
-  .property(name)
