@@ -8,6 +8,8 @@
 #= require ember-data
 #= require active-model-adapter
 #= require ember-rails-flash
+#= require bootstrap-sprockets
+#= require bootstrap/modal
 # FIXME must compile rails session
 #= require ember-template-compiler
 #= require pagination_support
