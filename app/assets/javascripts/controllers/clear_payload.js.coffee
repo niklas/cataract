@@ -1,6 +1,6 @@
-Cataract.ClearPayloadController = Ember.ObjectController.extend
-  clearWithSize: Ember.computed 'payload.size', ->
-    q = quantify @get('payload.size')
+Cataract.ClearPayloadController = Ember.Controller.extend
+  clearWithSize: Ember.computed 'model.payload.size', ->
+    q = quantify @get('model.payload.size')
     "Clear #{q.val.toFixed(1)} #{q.factor}iB"
   actions:
     clearPayload: ->

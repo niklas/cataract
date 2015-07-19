@@ -5,27 +5,27 @@ modal-dialog action="createDirectory" heading="new Directory" primary="Create Di
 
       .form-group
         label for="directory_name" Name
-        = input value=name class="form-control" elementId="directory_name"
+        = input value=model.name class="form-control" elementId="directory_name"
 
       .form-group
         label for="directory_disk" Disk
-        = select-disk selection=disk content=disks elementId="directory_disk" classNames='form-control'
+        = select-disk selection=model.disk content=disks elementId="directory_disk" classNames='form-control'
 
       .form-group
         label for="directory_parent" Parent
-        = select-directory selection=parentDirectory content=disk.directories elementId="directory_parent" classNames='form-control' prompt="[Root]"
+        = select-directory selection=model.parentDirectory content=disk.directories elementId="directory_parent" classNames='form-control' prompt="[Root]"
 
       .checkbox
         label
-          = input type="checkbox" checked=showSubDirs
+          = input type="checkbox" checked=model.showSubDirs
           | contains more directories
 
       .checkbox
         label
-          = input type="checkbox" checked=subscribed disabled=showSubDirs
+          = input type="checkbox" checked=model.subscribed disabled=model.showSubDirs
           | subscribe
 
-      if subscribed
+      if model.subscribed
         .form-group
           label for="directory_filter" Filter
-          = input value=filter class="form-control" elementId="directory_filter"
+          = input value=model.filter class="form-control" elementId="directory_filter"

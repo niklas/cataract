@@ -1,4 +1,4 @@
-Cataract.MovePayloadController = Ember.ObjectController.extend
+Cataract.MovePayloadController = Ember.Controller.extend
   needs: ['directories', 'disks']
   directoriesBinding: 'controllers.directories.polies'
   disksBinding: 'controllers.disks'

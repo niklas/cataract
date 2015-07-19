@@ -1,7 +1,7 @@
 modal-dialog action="clearPayload" heading="Clear Torrent" primary=clearWithSize secondary="still need it" size="small"
   p
-    if payloadExists
-      | Really delete the payload of '#{title}'?
+    if model.payloadExists
+      | Really delete the payload of '#{model.title}'?
         (If you want it back, you'll have to restart downloading it)
     else
       | Looking for payload to clear

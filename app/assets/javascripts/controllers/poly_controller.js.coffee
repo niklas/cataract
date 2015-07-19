@@ -1,2 +1,2 @@
-Cataract.PolyController = Ember.ObjectController.extend
+Cataract.PolyController = Ember.Controller.extend
   needs: ['directories', 'torrents']

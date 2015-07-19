@@ -1,2 +1,2 @@
-Cataract.TorrentController = Ember.ObjectController.extend
+Cataract.TorrentController = Ember.Controller.extend
   needs: ['torrents', 'directories', 'disks']

@@ -1,6 +1,6 @@
 alias = Ember.computed.alias
 
-Cataract.DirectoryController = Ember.ObjectController.extend
+Cataract.DirectoryController = Ember.Controller.extend
   needs: [
     'library'
   ]

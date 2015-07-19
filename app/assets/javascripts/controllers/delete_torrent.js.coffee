@@ -1,4 +1,4 @@
-Cataract.DeleteTorrentController = Ember.ObjectController.extend
+Cataract.DeleteTorrentController = Ember.Controller.extend
   deletePayload: false
   askForPayloadBinding: 'content.payloadExists'
   actions:

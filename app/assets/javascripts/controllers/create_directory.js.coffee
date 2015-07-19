@@ -1,4 +1,4 @@
-Cataract.CreateDirectoryController = Ember.ObjectController.extend
+Cataract.CreateDirectoryController = Ember.Controller.extend
   needs: ['disks']
   disksBinding: 'controllers.disks'
   directoriesBinding: 'content.disk.directories'

@@ -1,4 +1,4 @@
-Cataract.CreateTorrentController = Ember.ObjectController.extend
+Cataract.CreateTorrentController = Ember.Controller.extend
   needs: [
     'application'
     'settings'

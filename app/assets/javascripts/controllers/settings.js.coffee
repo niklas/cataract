@@ -1,4 +1,4 @@
-Cataract.SettingsController = Ember.ObjectController.extend
+Cataract.SettingsController = Ember.Controller.extend
   needs: ['directories']
 
   directoriesBinding: 'controllers.directories.directories'

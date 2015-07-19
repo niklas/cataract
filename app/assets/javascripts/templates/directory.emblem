@@ -1,7 +1,7 @@
-save-or-cancel content=this cancelAction="rollback" saveAction="save" classNames="pull-right"
+save-or-cancel content=model cancelAction="rollback" saveAction="save" classNames="pull-right"
 h2.title
-  small= disk.name
-  each d in ancestorsAndSelf
+  small= model.disk.name
+  each d in model.ancestorsAndSelf
     '
     | /
     '
@@ -12,12 +12,12 @@ unless showSubDirs
   .form-horizontal
     .checkbox.text-right
       label
-        = input type="checkbox" checked=subscribed
-        span.subscribed.label class={subscribed:label-success:label-default} subscribed
-    if subscribed
+        = input type="checkbox" checked=model.subscribed
+        span.subscribed.label class={model.subscribed:label-success:label-default} subscribed
+    if model.subscribed
       .form-group
         label for="directoryFilter" Filter
-        = input value=filter classNames='form-control' elementId="directoryFilter"
+        = input value=model.filter classNames='form-control' elementId="directoryFilter"
 
 else
   .row
@@ -27,14 +27,14 @@ else
       | Create Subdirectory
 
 ul.nav.nav-tabs
-  unless showSubDirs
+  unless model.showSubDirs
     presentation-li
-      link-to 'directory.online' this
+      link-to 'directory.online' model
         | available episodes online
   else
-    if hasDetectedSubDirs
+    if model.hasDetectedSubDirs
       presentation-li
-        link-to 'directory.detect' this
+        link-to 'directory.detect' model
           | detected Children
 = outlet
 
