@@ -11,6 +11,7 @@ modal-dialog action="createTorrent" heading="Add Torrent" primary="Add" secondar
         select-directory elementId="content_directory" content=directories selection=contentPolyDirectory classNames='form-control'
 
       .form-group
-        file-field file=filedata filename=filename label="File"
+        label for="content_file" File
+        file-field file=filedata filename=filename id="content_file"
 
       drop-zone action="uploadTorrent" inviting=controllers.application.dragging
