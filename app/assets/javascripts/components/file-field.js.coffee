@@ -4,11 +4,10 @@ Cataract.FileFieldComponent = Ember.Component.extend
   type: 'file'
 
   change: (event)->
-    parent = @get('parentView')
     reader = new FileReader()
-    reader.onload = (upload)->
-      parent.set('file', upload.target.result)
+    reader.onload = (upload)=>
+      @set('file', upload.target.result)
     first = event.target.files[0]
-    parent.set('filename', first.name)
+    @set('filename', first.name)
     reader.readAsDataURL(first)
 
