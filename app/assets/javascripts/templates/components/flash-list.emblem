@@ -1,0 +1,2 @@
+each content as |fl|
+  flash-list-item content=fl
