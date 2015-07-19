@@ -113,9 +113,9 @@ gem 'dalli'
 
 # https://github.com/alexspeller/emblem-rails/issues/36
 gem 'ember-rails', '~> 0.19.0'
-gem 'ember-source', '~> 1.11.3.1'
+gem 'ember-source', '~> 1.13.0'
 gem 'ember-emblem-template'
-gem 'emblem-source', '~> 0.4'
+gem 'emblem-source'
 gem 'ember-data-source'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git', branch: 'develop'

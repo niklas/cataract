@@ -206,7 +206,7 @@ GEM
       ember-source (>= 1.8.0)
       jquery-rails (>= 1.0.17)
       railties (>= 3.1)
-    ember-source (1.11.3.1)
+    ember-source (1.13.4.1)
     emblem-source (0.4.0)
     erubis (2.7.0)
     eventmachine (1.0.7)
@@ -538,8 +538,8 @@ DEPENDENCIES
   ember-emblem-template
   ember-rails (~> 0.19.0)
   ember-rails-flash!
-  ember-source (~> 1.11.3.1)
-  emblem-source (~> 0.4)
+  ember-source (~> 1.13.0)
+  emblem-source
   exception_notification
   factory_girl_rails
   fakefs
