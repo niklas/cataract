@@ -13,6 +13,10 @@
 #= require_tree ./routes
 #= require ./router
 
+# https://github.com/ember-data/active-model-adapter/issues/13
+DS.ActiveModelSerializer.reopen
+  isNewSerializerAPI: true
+
 CataractApplication = Ember.Application.extend
   rootElement: '#ember'
   autoinit: false

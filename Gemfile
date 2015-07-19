@@ -119,7 +119,7 @@ gem 'emblem-source'
 gem 'ember-data-source'
 
 gem 'ember-rails-flash', git: 'git://github.com/niklas/ember-rails-flash.git', branch: 'develop'
-gem 'active-model-adapter-source', '~>1.13'
+gem 'active-model-adapter-source', '~>1.13.4'
 gem 'newrelic_rpm'
 
 gem "rails-bookmarklet", :git => "https://github.com/oliverfriedmann/rails-bookmarklet.git"
