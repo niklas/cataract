@@ -11,5 +11,5 @@ Cataract.DiskLinkComponent = Ember.Component.extend
     'isMounted:mounted:unmounted'
   ]
 
-  activeBinding: 'childViews.firstObject.active'
+  active: -> @get 'childViews.firstObject.active'
 
