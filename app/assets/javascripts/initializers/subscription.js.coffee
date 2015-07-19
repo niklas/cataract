@@ -6,7 +6,7 @@ url = ->
   else
     "#{l.protocol}//#{l.host}/subscribe"
 
-Ember.Application.initializer
+Ember.Application.instanceInitializer
   name: 'subscription' # to server side events
   # subscribe to it from a controller with
   # @get('serverEvents.source').addEventListener <channel>, (event)->
