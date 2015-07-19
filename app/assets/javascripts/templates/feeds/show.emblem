@@ -3,7 +3,7 @@ h2.title
   .small= url
 
 ul.remote-torrents.list-group.container-fluid
-  each tor in remoteTorrents
+  each remoteTorrents as |tor|
     li.list-group-item.remote.torrent.row
       .col-md-5.title
         = tor.title

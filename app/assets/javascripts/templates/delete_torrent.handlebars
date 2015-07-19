@@ -1,7 +1,7 @@
 {{#modal-dialog action="deleteTorrent" heading="Delete Torrent" primary="Delete" secondary="Keep" size="small"}}
   {{#if askForPayload}}
     <label>
-      {{view Ember.Checkbox checkedBinding="deletePayload"}}
+      {{input type="checkbox" checked=deletePayload}}
       Also delete payload
       <span class="size">{{content.payload.humanSize}}</span>
     </label>

@@ -1,2 +1,2 @@
 a href='#'
-  = view.content.title
+  = content.title

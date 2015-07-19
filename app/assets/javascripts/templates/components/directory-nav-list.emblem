@@ -1,5 +1,5 @@
 if header
   li.nav-header= header
-each dir in content
+each content as |dir|
   directory-nav-list-item content=dir torrents=torrents isUnfiltered=isUnfiltered
 

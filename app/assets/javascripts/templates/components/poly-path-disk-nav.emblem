@@ -2,6 +2,6 @@
   .col-xs-3.col-md-2
     disk-item content=noDisk tagName='div'
   if content.length
-    each disk in content
+    each content as |disk|
       .col-xs-3.col-md-2
         disk-item content=disk tagName='div'

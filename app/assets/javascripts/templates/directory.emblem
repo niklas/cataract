@@ -1,7 +1,7 @@
 save-or-cancel content=model cancelAction="rollback" saveAction="save" classNames="pull-right"
 h2.title
   small= model.disk.name
-  each d in model.ancestorsAndSelf
+  each model.ancestorsAndSelf as |d|
     '
     | /
     '
@@ -13,7 +13,7 @@ unless showSubDirs
     .checkbox.text-right
       label
         = input type="checkbox" checked=model.subscribed
-        span.subscribed.label class={model.subscribed:label-success:label-default} subscribed
+        span.subscribed.label class="{{model.subscribed:label-success:label-default}}" subscribed
     if model.subscribed
       .form-group
         label for="directoryFilter" Filter

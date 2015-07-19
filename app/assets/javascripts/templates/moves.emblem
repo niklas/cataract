@@ -5,7 +5,7 @@ ul#queue.nav.pull-right
       a.dropdown-toggle href="#" data-toggle="dropdown"
         span.badge.badge.info= moves.length
       ul.dropdown-menu
-        each move in moves
+        each moves as |move|
           li
             a href="#"
               = move.title

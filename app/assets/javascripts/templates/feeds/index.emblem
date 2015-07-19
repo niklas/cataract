@@ -1,5 +1,5 @@
 ul.feeds.list-group.container-fluid
-  each feed in controller
+  each as |feed|
     li.feed.list-group-item.row
       .col-sm-6
         link-to 'feeds.show' feed classNames="title"

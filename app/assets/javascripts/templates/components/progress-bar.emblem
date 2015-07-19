@@ -1,4 +1,4 @@
-.progress-bar style=style class={:progress-bar-success}
-  .percent class={isBeginning:text-primary} style=textStyle
+.progress-bar style="{{style}}" class="{{:progress-bar-success}}"
+  .percent class="{{isBeginning:text-primary}}" style="{{textStyle}}"
     = percentage
     | %

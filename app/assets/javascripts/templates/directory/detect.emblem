@@ -1,7 +1,7 @@
 if hasDetectedSubDirs
   .row
     ul.new.directories
-      each dir in detectedChildren
+      each detectedChildren as |dir|
         li
           a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
           span.name= dir.name

@@ -5,4 +5,4 @@ if isLoaded
     if hasCurrentPath
       link-to (query-params path=undefined disk=undefined) class="btn btn-warning" | reset Directory
   .well.fs
-    directory-nav-list content=controller.roots classNames="root" torrents=controllers.torrents isUnfiltered=controller.isUnfiltered
+    directory-nav-list content=roots classNames="root" torrents=controllers.torrents isUnfiltered=isUnfiltered

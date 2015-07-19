@@ -14,7 +14,7 @@ nav.navbar.navbar-default.navbar-fixed-top role="navigation"
       button.btn.btn-xs.navbar-btn click="refreshTransfers" refresh
       form.navbar-form.navbar-left role="search"
         .form-group
-          delayed-input value=controller.terms classNames="form-control search-query" elementId="torrent_search_terms"
+          delayed-input value=terms classNames="form-control search-query" elementId="torrent_search_terms"
       ul.nav.navbar-nav
         = outlet 'nav'
         = partial "torrents/navigation"

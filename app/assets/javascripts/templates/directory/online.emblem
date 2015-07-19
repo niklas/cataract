@@ -1,6 +1,6 @@
 .row
   ul#remote-torrents.new.torrents.container-fluid.remote-torrents
-    each tor in content
+    each content as |tor|
       li.remote.torrent.row
 
         .col-md-5.title
@@ -16,5 +16,5 @@
           .col-md-3
             icon-button action='createFromRemote' param=tor severity="success" icon="play" name='start' | Download
         else
-          with tor.torrent as content
+          with tor.torrent as |content|
             partial 'torrent-details'

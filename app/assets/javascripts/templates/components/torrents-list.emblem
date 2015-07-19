@@ -1,6 +1,6 @@
 if wantsCircleView
-  each t in content itemController='torrent'
+  each content as |t|
     = torrent-circle-item content=t
 else
-  each t in content itemController='torrent'
+  each content as |t|
     = torrent-item content=t
