@@ -11,5 +11,5 @@ if content.hasDetectedDirs
   ul.new.directories.list-group
     each content.detectedDirectories as |dir|
       li.list-group-item
-        a.btn.btn-warning.btn-sm.pull-right click="createDirectoryFromDetected dir" href="#" Import
+        a.btn.btn-warning.btn-sm.pull-right click="'createDirectoryFromDetected' dir" href="#" Import
         span.name= dir.name

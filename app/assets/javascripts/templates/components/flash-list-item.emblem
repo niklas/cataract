@@ -1,4 +1,4 @@
-a class="close" click="closeQuickly"
+a class="close" click="'closeQuickly'"
   | x
 span class="message"
   == content.message

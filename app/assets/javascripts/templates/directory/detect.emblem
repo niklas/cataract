@@ -3,6 +3,6 @@ if hasDetectedSubDirs
     ul.new.directories
       each detectedChildren as |dir|
         li
-          a.btn.btn-warning.btn-mini click="createDirectoryFromDetected dir" href="#" Import
+          a.btn.btn-warning.btn-mini click="'createDirectoryFromDetected' dir" href="#" Import
           span.name= dir.name
 
