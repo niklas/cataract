@@ -1,6 +1,6 @@
 .col-md-5
   if showPayload
-    if content.hasFiles
+    if hasFiles
       button.btn.btn-sm.count.pull-right click="toggleFiles"
         = content.payload.filesCount
   unless isCollapsed

@@ -1,6 +1,7 @@
 #= require_self
 #= require ./lib/poly_disk_directory
 #= require ./lib/quantify
+#= require_tree ./addons
 #= require_tree ./adapters
 #= require_tree ./mixins
 #= require_tree ./initializers
