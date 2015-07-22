@@ -9,6 +9,8 @@ treeProperty = (dependentKey, property) ->
   insert = (list, here, dir) ->
     herePath = here.get(property) || ''
     dirPath  = dir.get(property)  || ''
+    if herePath is '' and dirPath is ''
+      return
     if herePath is dirPath # dir is an alternative of here
       here.get('alternatives').addObject dir
       dir.set(backProperty, here)
