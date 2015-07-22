@@ -42,7 +42,7 @@ Feature: Add and Subscribe to Series
       # TODo create automatically first, but offer field as auto-search
       And I fill in "Filter" with "shame frowns"
       And I press "Create Directory"
-     Then I should see notice "Directory 'Series' created"
+     Then I should see notice "Directory 'Shame of Frowns' created"
       And I should see "aDisk / Series / Shame of Frowns" within the content title
       And a directory "Frowns" should exist with name: "Shame of Frowns", disk: the disk
       And the directory "Series" should be the directory "Frowns"'s parent
