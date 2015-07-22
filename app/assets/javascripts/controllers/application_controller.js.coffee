@@ -64,7 +64,8 @@ Cataract.ApplicationController = Ember.Controller.extend
 
   # 'disk' is just the id from the query params
   diskObject: Ember.computed 'disk', ->
-    @get('store').find 'disk', @get('disk')
+    if id = @get('disk')
+      @get('store').find 'disk', id
 
   # TODO i18n
   # human readable current age
