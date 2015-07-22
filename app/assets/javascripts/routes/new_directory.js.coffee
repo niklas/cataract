@@ -1,7 +1,7 @@
 Cataract.NewDirectoryRoute = Ember.Route.extend
   model: ->
     app = @controllerFor('application')
-    @get('store').createRecord 'directory',
+    Ember.Object.create
       disk:            @modelFor('disk') || app.get('diskObject')
       parentDirectory: @modelFor('directory') || app.get('directory')
       virtual: false

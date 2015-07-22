@@ -5,6 +5,16 @@ Cataract.CreateDirectoryController = Ember.Controller.extend
 
   actions:
     createDirectory: ->
-      @get('content').save().then (dir) =>
+      dummy = @get('content')
+      @get('store').createRecord('directory', dummy.getProperties(
+        'disk'
+        'directory'
+        'virtual'
+        'name'
+        'parentDirectory'
+        'showSubDirs'
+        'subscribed'
+        'filter'
+      )).save().then (dir) =>
         @send 'closeModal'
         @transitionToRoute 'directory', dir
