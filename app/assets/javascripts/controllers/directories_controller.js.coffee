@@ -10,7 +10,6 @@ Cataract.DirectoriesController = Ember.ArrayController.extend Cataract.PolyDiskT
   isUnfiltered: Ember.computed.not('isFiltered')
   rootsBinding: 'root.children'
 
-  contentBinding: 'roots'
   isLoaded: Ember.computed.not('directories.isPending')
 
   findPolyByPath: (path)->

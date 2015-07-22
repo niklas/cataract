@@ -13,8 +13,9 @@ Cataract.PolyDiskDirectory = Ember.Object.extend
   hasMoreAlternatives: Ember.computed 'alternatives.length', ->
     ( @get('alternatives.length') || 0) > 1
 
-  children: Ember.computed ->
+  children: Ember.computed(->
     Cataract.SortedArray.create(sortProperties: ['name'])
+  ).readOnly()
   parent: null
   ancestorsAndSelf: Ember.computed ->
     list = [ this ]
