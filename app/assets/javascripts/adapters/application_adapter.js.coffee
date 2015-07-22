@@ -11,3 +11,4 @@ Cataract.ApplicationAdapter = DS.ActiveModelAdapter.extend
 
   # TODO only transfers
   shouldReloadAll: -> true
+  shouldBackgroundReloadRecord: -> false
