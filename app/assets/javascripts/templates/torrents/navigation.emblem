@@ -1,11 +1,14 @@
 presentation-li
-  link-to 'recent' | Recent
+  link-to 'recent' activeParent=true
+   | Recent
 presentation-li
-  link-to 'running' | Running
+  link-to 'running' activeParent=true
+  | Running
 presentation-li
-  link-to 'library' | Library
+  link-to 'library' activeParent=true
+   | Library
 presentation-li
-  link-to-add active=adding
+  link-to-add active=adding activeParent=true
     | Add
 
 li.dropdown

@@ -4,4 +4,3 @@ Cataract.PresentationLiComponent = Ember.Component.extend
 
   classNameBindings: ['active']
   attributeBindings: ['role']
-  active: -> @get 'childViews.firstObject.active'
