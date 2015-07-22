@@ -13,7 +13,7 @@ modal-dialog action="createDirectory" heading="new Directory" primary="Create Di
 
       .form-group
         label for="directory_parent" Parent
-        = select-directory selection=model.parentDirectory content=disk.directories elementId="directory_parent" classNames='form-control' prompt="[Root]"
+        = select-directory selection=model.parentDirectory content=directories elementId="directory_parent" classNames='form-control' prompt="[Root]"
 
       .checkbox
         label

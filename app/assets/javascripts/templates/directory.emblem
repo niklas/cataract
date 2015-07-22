@@ -7,7 +7,7 @@ h2.title
     '
     = d.name
 
-unless showSubDirs
+unless model.showSubDirs
 
   .form-horizontal
     .checkbox.text-right
