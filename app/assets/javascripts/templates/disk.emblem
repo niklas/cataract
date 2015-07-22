@@ -1,4 +1,4 @@
-h2.title= name
+h2.title= content.name
 
 .actions
   link-to 'new_directory' class="btn btn-primary btn-sm"
@@ -6,10 +6,10 @@ h2.title= name
     '
     | Create Directory
 
-if hasDetectedDirs
+if content.hasDetectedDirs
   h2 Detected
   ul.new.directories.list-group
-    each detectedDirectories as |dir|
+    each content.detectedDirectories as |dir|
       li.list-group-item
         a.btn.btn-warning.btn-sm.pull-right click="createDirectoryFromDetected dir" href="#" Import
         span.name= dir.name
