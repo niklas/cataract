@@ -13,4 +13,6 @@ Cataract.DiskItemComponent = Ember.Component.extend
 
   statsVisible: true
 
+  detailsVisible: Ember.computed.and 'statsVisible', 'content.id'
+
   active: -> @get 'childViews.firstObject.active'

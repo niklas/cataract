@@ -1,3 +1,6 @@
+if detailsVisible
+  link-to 'disk' content title="Details" class="pull-right"
+    i.glyphicon.glyphicon-pencil
 disk-link content=content label=label
 if statsVisible
   if content.size

@@ -22,16 +22,3 @@ Cataract.LibraryController = Ember.Controller.extend
       @get('allRootDirectories')
   noDirectory: Ember.computed.not 'directory'
   diskNavVisible: Ember.computed.and 'poly', 'noDirectory'
-
-  locationDidChange: (->
-    if directory = @get('directory')
-      Ember.run.next =>
-        @transitionToRoute 'directory', directory
-    else if disk = @get('disk')
-      Ember.run.next =>
-        @transitionToRoute 'disk', disk
-    else
-      Ember.run.next =>
-        @transitionToRoute 'library.index'
-
-  ).observes('directory', 'disk', 'poly')
