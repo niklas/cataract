@@ -119,6 +119,9 @@ module HtmlSelectorsHelpers
     when 'the page title'
       "h1#title"
 
+    when 'the library heading'
+      'h2.library'
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

@@ -1,5 +1,5 @@
 if directory
-  h1
+  h2.library
     = directory.pathWithDisk
     link-to 'directory' directory title="Details" class="pull-right"
       i.glyphicon.glyphicon-pencil

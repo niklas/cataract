@@ -67,6 +67,7 @@ Feature: Disks in Library
       And I am on the library page
      When I follow "aDisk"
       And I follow "Series" within the directories list within the content
+      And I follow "Details" within the library heading
       And I follow "detected Children" within the content
      Then I should see a list of the following new directories:
        | Name       |
