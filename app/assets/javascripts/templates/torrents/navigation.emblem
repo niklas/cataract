@@ -3,7 +3,7 @@ presentation-li
    | Recent
 presentation-li
   link-to 'running' activeParent=true
-  | Running
+   | Running
 presentation-li
   link-to 'library' activeParent=true
    | Library
