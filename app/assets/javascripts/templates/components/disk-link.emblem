@@ -1,4 +1,4 @@
-link-to (query-params disk=content.id) class="name"
+link-to (query-params disk=content.id) activeParent=true
   i.glyphicon class="{{isMounted:glyphicon-hdd:glyphicon-warning-sign}}"
   '
   span.name= label

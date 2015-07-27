@@ -7,9 +7,5 @@ Cataract.DiskLinkComponent = Ember.Component.extend
   targetRoute: 'disk' # the route for the target
   classNames: ['disk']
   classNameBindings: [
-    'active'
     'isMounted:mounted:unmounted'
   ]
-
-  active: -> @get 'childViews.firstObject.active'
-

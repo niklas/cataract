@@ -5,7 +5,6 @@ Cataract.DirectoryNavListItemComponent = Ember.Component.extend
   tagName: 'li'
   classNames: ['directory']
   classNameBindings: ['active', 'content.exists:existing:missing']
-  active: -> @get 'childViews.firstObject.active'
   isVisible: Ember.computed.or('hasResults', 'isUnfiltered')
   hasResults: Ember.computed 'torrents.arrangedContent.@each.contentPolyDirectory', 'content.descendantsAndSelf.@each', ->
     torrents = @get('torrents.arrangedContent')

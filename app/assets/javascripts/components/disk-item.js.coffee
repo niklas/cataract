@@ -7,12 +7,9 @@ Cataract.DiskItemComponent = Ember.Component.extend
   tagName: 'li'
   classNames: ['disk', 'list-group-item']
   classNameBindings: [
-    'active'
     'isMounted:mounted:unmounted'
   ]
 
   statsVisible: true
 
   detailsVisible: Ember.computed.and 'statsVisible', 'content.id'
-
-  active: -> @get 'childViews.firstObject.active'
