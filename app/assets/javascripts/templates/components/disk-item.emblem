@@ -1,6 +1,3 @@
-if detailsVisible
-  link-to 'disk' content (query-params disk=content.id) title="Details" class="pull-right"
-    i.glyphicon.glyphicon-pencil
 disk-link content=content label=label
 if statsVisible
   if content.size
@@ -11,4 +8,6 @@ if statsVisible
       dd.size= human-kilo-bytes content.size short=true
       dt Free
       dd.free= human-kilo-bytes content.free short=true
+  link-to 'disk' content (query-params disk=content.id) title="Details" class="pull-left"
+    i.glyphicon.glyphicon-pencil
 = yield
