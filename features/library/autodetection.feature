@@ -39,7 +39,8 @@ Feature: Disks in Library
         | directory | media/adisk/Movies |
         | directory | media/adisk/Röbels |
      When I go to the library page
-      And I follow "aDisk" within the content
+     # only one disk link
+      And I follow "Details" within the disk tab
      Then I should see a list of the following new directories:
        | Name   |
        | Movies |

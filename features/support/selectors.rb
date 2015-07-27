@@ -22,8 +22,8 @@ module HtmlSelectorsHelpers
     when /^the detail bar$/
       '#bar'
 
-    when /^the disks tab$/
-      '.disk-nav'
+    when /^the disks? tab$/
+      '.disk-nav .fs'
 
     when /^the torrents? list$/
       "ul#torrents"
