@@ -3,6 +3,6 @@ if isLoaded
     link-to (query-params filterDirectories=true)  class="btn btn-default" | present
     link-to (query-params filterDirectories=false) class="btn btn-default" | all Directories
     if hasCurrentPath
-      link-to (query-params path=undefined disk=undefined) class="btn btn-warning" | reset Directory
+      link-to (query-params path='null' disk='null') class="btn btn-warning" | reset Directory
   .well.fs
     directory-nav-list content=roots classNames="root" torrents=controllers.torrents isUnfiltered=isUnfiltered
